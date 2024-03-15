@@ -15,3 +15,28 @@ maso ftw ml
 maso ftw ts no longer starts big. eats platforms, trees, and wood to grow bigger
 
 adjusted maso mutant attack duration randomization range
+fixed ts having ftw wood eating in maso
+
+fixed snow ench actually being timestop
+
+april fools abom boss was revealed to me in a dream
+restored emode nerf to ftw ml homing eyes
+ftw mutant disables gold shell
+ftw mutant does everything (and i do mean EVERYTHING) 10% faster
+mutant only lifesteals off npcs in ftw, not maso
+ftw qb has no attack limitations when subjects alive
+ftw wof has unnerfed move speed
+fixed an exploit that allowed getting drops from tim's dark casters pre-skeletron
+removed some of abom's telegraphs in maso
+fishron and pigron no longer inflict anticoagulation
+nekomi set buffed, it has small graze inherently (will only charge meter, no adoration damage bonus) (TEST IT)
+added a VERY VERY VERY weak meteor shower to meteor ench
+ftw fishron has ex ai
+ftw baron has a desperation...
+added localization april fools names for mutant and abom
+ftw eow head instakills
+
+ftw qb has extended deathray barrage
+ftw fishron no longer has real fish ex's passive -80% max life
+ftw eow and destro head use ml iframes
+triggering ftw mutant 22 despawns him

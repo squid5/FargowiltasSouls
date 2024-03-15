@@ -67,10 +67,11 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             if (EModeGlobalNPC.spawnFishronEX)
             {
                 IsEX = true;
-                npc.GivenName = Language.GetTextValue("Mods.FargowiltasSouls.NPCs.DukeFishronEX.DisplayName");
                 npc.damage *= 3;// 1.5);
                 npc.defense *= 30;
             }
+            if (EModeGlobalNPC.spawnFishronEX || Main.getGoodWorld)
+                npc.GivenName = Language.GetTextValue("Mods.FargowiltasSouls.NPCs.DukeFishronEX.DisplayName");
         }
 
         public override void OnFirstTick(NPC npc)
@@ -141,7 +142,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
             #region duke ex ai
 
-            if (IsEX) //fishron EX
+            if (IsEX || Main.getGoodWorld) //fishron EX
             {
                 npc.FargoSouls().MutantNibble = false;
                 npc.FargoSouls().LifePrevious = int.MaxValue; //cant stop the healing
@@ -153,7 +154,8 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     Main.LocalPlayer.AddBuff(ModContent.BuffType<OceanicSealBuff>(), 2);
                     Main.LocalPlayer.AddBuff(ModContent.BuffType<MutantPresenceBuff>(), 2); //LUL
                 }
-                EModeGlobalNPC.fishBossEX = npc.whoAmI;
+                if (IsEX)
+                    EModeGlobalNPC.fishBossEX = npc.whoAmI;
                 npc.position += npc.velocity * 0.5f;
                 switch ((int)npc.ai[0])
                 {
@@ -161,7 +163,8 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                         if (npc.ai[2] == 2 && FargoSoulsUtil.HostCheck) //create spell circle
                         {
                             int ritual1 = Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, Vector2.Zero,
-                                ModContent.ProjectileType<FishronRitual>(), 0, 0f, Main.myPlayer, npc.lifeMax, npc.whoAmI);
+                                ModContent.ProjectileType<FishronRitual>(), 0, 0f, Main.myPlayer, npc.lifeMax, npc.whoAmI,
+                                IsEX ? 0 : 1);
                             if (ritual1 == Main.maxProjectiles) //failed to spawn projectile, abort spawn
                                 npc.active = false;
                             SoundEngine.PlaySound(SoundID.Item84, npc.Center);
@@ -187,7 +190,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                                 FargoSoulsUtil.NewNPCEasy(npc.GetSource_FromThis(), spawnPos, NPCID.DetonatingBubble);
 
                                 FargoSoulsUtil.NewNPCEasy(npc.GetSource_FromThis(), npc.Center,
-                                    ModContent.NPCType<DetonatingBubbleEX>(),
+                                    IsEX ? ModContent.NPCType<DetonatingBubbleEX>() : NPCID.DetonatingBubble,
                                     velocity: npc.DirectionTo(Main.player[npc.target].Center));
                             }
                         }
@@ -206,7 +209,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                             for (int i = 0; i < max; i++)
                             {
                                 FargoSoulsUtil.NewNPCEasy(npc.GetSource_FromThis(), npc.Center,
-                                    ModContent.NPCType<DetonatingBubbleEX>(),
+                                    IsEX ? ModContent.NPCType<DetonatingBubbleEX>() : NPCID.DetonatingBubble,
                                     velocity: Vector2.Normalize(Vector2.UnitY.RotatedBy(rotation * i)));
                             }
 
@@ -254,10 +257,10 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                             if (FargoSoulsUtil.HostCheck)
                             {
                                 FargoSoulsUtil.NewNPCEasy(npc.GetSource_FromThis(), npc.Center,
-                                    ModContent.NPCType<DetonatingBubbleEX>(),
+                                    IsEX ? ModContent.NPCType<DetonatingBubbleEX>() : NPCID.DetonatingBubble,
                                     velocity: Vector2.Normalize(npc.velocity.RotatedBy(Math.PI / 2)));
                                 FargoSoulsUtil.NewNPCEasy(npc.GetSource_FromThis(), npc.Center,
-                                    ModContent.NPCType<DetonatingBubbleEX>(),
+                                    IsEX ? ModContent.NPCType<DetonatingBubbleEX>() : NPCID.DetonatingBubble,
                                     velocity: Vector2.Normalize(npc.velocity.RotatedBy(-Math.PI / 2)));
                             }
                         }
@@ -312,10 +315,10 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                             if (FargoSoulsUtil.HostCheck)
                             {
                                 FargoSoulsUtil.NewNPCEasy(npc.GetSource_FromThis(), npc.Center,
-                                    ModContent.NPCType<DetonatingBubbleEX>(),
+                                    IsEX ? ModContent.NPCType<DetonatingBubbleEX>() : NPCID.DetonatingBubble,
                                     velocity: Vector2.Normalize(npc.velocity.RotatedBy(Math.PI / 2)));
                                 FargoSoulsUtil.NewNPCEasy(npc.GetSource_FromThis(), npc.Center,
-                                    ModContent.NPCType<DetonatingBubbleEX>(),
+                                    IsEX ? ModContent.NPCType<DetonatingBubbleEX>() : NPCID.DetonatingBubble,
                                     velocity: Vector2.Normalize(npc.velocity.RotatedBy(-Math.PI / 2)));
                             }
                         }
@@ -821,7 +824,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
         {
             base.OnHitPlayer(npc, target, hurtInfo);
 
-            target.AddBuff(ModContent.BuffType<AnticoagulationBuff>(), 600);
+            //target.AddBuff(ModContent.BuffType<AnticoagulationBuff>(), 600);
             target.AddBuff(ModContent.BuffType<MutantNibbleBuff>(), 600);
             target.AddBuff(ModContent.BuffType<DefenselessBuff>(), 600);
             target.AddBuff(BuffID.Rabies, 3600);
@@ -983,7 +986,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
         {
             base.OnHitPlayer(npc, target, hurtInfo);
 
-            target.AddBuff(ModContent.BuffType<AnticoagulationBuff>(), 600);
+            //target.AddBuff(ModContent.BuffType<AnticoagulationBuff>(), 600);
             target.AddBuff(ModContent.BuffType<DefenselessBuff>(), 600);
             target.AddBuff(ModContent.BuffType<MutantNibbleBuff>(), 300);
             target.AddBuff(ModContent.BuffType<OceanicMaulBuff>(), 20 * 60);

@@ -46,6 +46,8 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
         public Queue<float> attackHistory = new();
         public int attackCount;
 
+        public int hyper;
+
         public float endTimeVariance;
 
         public bool ShouldDrawAura;
@@ -126,6 +128,8 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
                 Music = MusicID.OtherworldlyTowers;
             }
             SceneEffectPriority = SceneEffectPriority.BossHigh;
+
+            NPC.GivenName = Language.GetTextValue("Mods.FargowiltasSouls.NPCs.MutantBoss_April.DisplayName");
         }
 
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
@@ -364,6 +368,12 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
                 Item.NewItem(NPC.GetSource_Loot(), player.Hitbox, ModContent.ItemType<MutantsCurse>());
                 droppedSummon = true;
             }
+
+            if (Main.getGoodWorld && ++hyper > 10 + 1)
+            {
+                hyper = 0;
+                NPC.AI();
+            }
         }
 
         #region helper functions
@@ -423,6 +433,8 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
                     if (Main.expertMode)
                     {
                         Main.LocalPlayer.AddBuff(ModContent.BuffType<MutantPresenceBuff>(), 2);
+                        if (Main.getGoodWorld)
+                            Main.LocalPlayer.AddBuff(ModContent.BuffType<GoldenStasisCDBuff>(), 2);
                     }
 
                     if (WorldSavingSystem.EternityMode && AttackChoice < 0 && AttackChoice > -6)
@@ -654,11 +666,11 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
 
         bool AliveCheck(Player p, bool forceDespawn = false)
         {
-            if (WorldSavingSystem.SwarmActive || forceDespawn || (!p.active || p.dead || Vector2.Distance(NPC.Center, p.Center) > 3000f) && NPC.localAI[3] > 0)
+            if (WorldSavingSystem.SwarmActive || forceDespawn || (!p.active || p.dead || Vector2.Distance(NPC.Center, p.Center) > 3000f || p.FargoSouls().The22Incident >= 22) && NPC.localAI[3] > 0)
             {
                 NPC.TargetClosest();
                 p = Main.player[NPC.target];
-                if (WorldSavingSystem.SwarmActive || forceDespawn || !p.active || p.dead || Vector2.Distance(NPC.Center, p.Center) > 3000f)
+                if (WorldSavingSystem.SwarmActive || forceDespawn || !p.active || p.dead || Vector2.Distance(NPC.Center, p.Center) > 3000f || p.FargoSouls().The22Incident >= 22)
                 {
                     if (NPC.timeLeft > 30)
                         NPC.timeLeft = 30;
