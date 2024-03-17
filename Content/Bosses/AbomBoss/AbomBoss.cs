@@ -242,10 +242,16 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
                 }
             }
 
-            if (Main.player[Main.myPlayer].active && NPC.Distance(Main.player[Main.myPlayer].Center) < 3000f)
+            if (Main.LocalPlayer.active && NPC.Distance(Main.LocalPlayer.Center) < 3000f)
             {
                 if (WorldSavingSystem.EternityMode)
-                    Main.player[Main.myPlayer].AddBuff(ModContent.BuffType<AbomPresenceBuff>(), 2);
+                    Main.LocalPlayer.AddBuff(ModContent.BuffType<AbomPresenceBuff>(), 2);
+
+                if (NPC.life == 1 && WorldSavingSystem.MasochistModeReal)
+                {
+                    Main.LocalPlayer.AddBuff(ModContent.BuffType<TimeStopCDBuff>(), 2);
+                    Main.LocalPlayer.AddBuff(ModContent.BuffType<GoldenStasisCDBuff>(), 2);
+                }
             }
 
             Player player = Main.player[NPC.target];
@@ -332,20 +338,20 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
                     if (NPC.buffType[0] != 0)
                         NPC.DelBuff(0);
 
-                    Music = MusicID.OtherworldlyPlantera;
-                    bool foundMod = ModLoader.TryGetMod("FargowiltasMusic", out Mod musicMod);
-                    if (foundMod)
-                    {
-                        if (FargoSoulsUtil.AprilFools && musicMod.Version >= Version.Parse("0.1.5.1"))
-                            Music = MusicLoader.GetMusicSlot(musicMod, "Assets/Music/Gigachad");
-                        else if (musicMod.Version >= Version.Parse("0.1.5"))
-                            Music = MusicLoader.GetMusicSlot(musicMod, "Assets/Music/Laevateinn_P2");
-                        else
-                            Music = MusicLoader.GetMusicSlot(musicMod, "Assets/Music/Stigma");
-                    }
-
                     if (++NPC.ai[1] > 120)
                     {
+                        Music = MusicID.OtherworldlyPlantera;
+                        bool foundMod = ModLoader.TryGetMod("FargowiltasMusic", out Mod musicMod);
+                        if (foundMod)
+                        {
+                            if (FargoSoulsUtil.AprilFools && musicMod.Version >= Version.Parse("0.1.5.1"))
+                                Music = MusicLoader.GetMusicSlot(musicMod, "Assets/Music/Gigachad");
+                            else if (musicMod.Version >= Version.Parse("0.1.5"))
+                                Music = MusicLoader.GetMusicSlot(musicMod, "Assets/Music/Laevateinn_P2");
+                            else
+                                Music = MusicLoader.GetMusicSlot(musicMod, "Assets/Music/Stigma");
+                        }
+
                         //because this breaks the background???
                         if (Main.GameModeInfo.IsJourneyMode && CreativePowerManager.Instance.GetPower<CreativePowers.FreezeTime>().Enabled)
                             CreativePowerManager.Instance.GetPower<CreativePowers.FreezeTime>().SetPowerInfo(false);
@@ -643,11 +649,11 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
                         NPC.ai[3] = 0;
                         if (FargoSoulsUtil.HostCheck)
                         {
-                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Normalize(NPC.velocity), ModContent.ProjectileType<AbomSickle>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage), 0, Main.myPlayer);
+                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Normalize(NPC.velocity), ModContent.ProjectileType<AbomPhoenix>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage), 0, Main.myPlayer);
                             if (NPC.localAI[3] > 1)
                             {
-                                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Normalize(NPC.velocity).RotatedBy(Math.PI / 2), ModContent.ProjectileType<AbomSickle>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage), 0, Main.myPlayer);
-                                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Normalize(NPC.velocity).RotatedBy(-Math.PI / 2), ModContent.ProjectileType<AbomSickle>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage), 0, Main.myPlayer);
+                                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Normalize(NPC.velocity).RotatedBy(Math.PI / 2), ModContent.ProjectileType<AbomPhoenix>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage), 0, Main.myPlayer);
+                                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Normalize(NPC.velocity).RotatedBy(-Math.PI / 2), ModContent.ProjectileType<AbomPhoenix>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage), 0, Main.myPlayer);
                             }
                         }
                     }
