@@ -1,73 +1,73 @@
+using FargowiltasSouls.Core.Globals;
 using FargowiltasSouls.Core.Systems;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.Audio;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace FargowiltasSouls.Content.Bosses.AbomBoss
+namespace FargowiltasSouls.Content.Projectiles.Masomode
 {
-    public class AbomDeathScythe : ModProjectile
+    public class FrostShardFriendly : ModProjectile
     {
-        public override string Texture => "Terraria/Images/Projectile_274";
+        public override string Texture => "Terraria/Images/Projectile_349";
 
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("Abominationn Scythe");
+            Main.projFrames[Projectile.type] = 5;
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 6;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
         }
 
         public override void SetDefaults()
         {
-            Projectile.width = 40;
-            Projectile.height = 40;
-            Projectile.penetrate = -1;
-            Projectile.timeLeft = 300;
-            Projectile.alpha = 100;
-            Projectile.aiStyle = -1;
-            Projectile.ignoreWater = true;
-            Projectile.tileCollide = false;
-            Projectile.hostile = true;
-        }
+            Projectile.width = 10;
+            Projectile.height = 10;
+            Projectile.aiStyle = 1;
+            AIType = ProjectileID.FrostShard;
+            Projectile.timeLeft = 360;
+            Projectile.extraUpdates = 1;
+            Projectile.coldDamage = true;
 
-        public override bool? CanDamage()
-        {
-            return WorldSavingSystem.MasochistModeReal;
-        }
-
-        public override bool? CanHitNPC(NPC target)
-        {
-            if (target.townNPC)
-                return false;
-            return null;
+            Projectile.friendly = true;
+            Projectile.DamageType = DamageClass.Magic;
         }
 
         public override void AI()
         {
-            if (Projectile.localAI[0] == 0)
+            Projectile.frameCounter++;
+            if (Projectile.frameCounter > 4)
             {
-                Projectile.localAI[0] = Main.rand.NextBool() ? -1 : 1;
-                SoundEngine.PlaySound(SoundID.Item71, Projectile.Center);
+                Projectile.frameCounter = 0;
+                Projectile.frame++;
+                if (Projectile.frame > 5)
+                    Projectile.frame = 0;
             }
-
-            Projectile.velocity.X *= 0.96f;
-            Projectile.velocity.Y -= 0.6f;
-
-            Projectile.rotation += Projectile.localAI[0];
         }
 
-        public override void OnHitPlayer(Player target, Player.HurtInfo info)
+        public override void OnKill(int timeLeft)
         {
-            if (WorldSavingSystem.EternityMode)
-                target.AddBuff(ModContent.BuffType<Buffs.Boss.AbomFangBuff>(), 300);
+            SoundEngine.PlaySound(SoundID.Item27, Projectile.position);
+            for (int index1 = 0; index1 < 3; ++index1)
+            {
+                int index2 = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Snow, 0.0f, 0.0f, 0, new Color(), 1f);
+                Main.dust[index2].noGravity = true;
+                Main.dust[index2].noLight = true;
+                Main.dust[index2].scale = 0.7f;
+            }
+        }
+
+        public override Color? GetAlpha(Color lightColor)
+        {
+            return new Color(200, 200, 200, Projectile.alpha);
         }
 
         public override bool PreDraw(ref Color lightColor)
         {
-            Texture2D texture2D13 = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
-            int num156 = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value.Height / Main.projFrames[Projectile.type]; //ypos of lower right corner of sprite to draw
+            Texture2D texture2D13 = TextureAssets.Projectile[Projectile.type].Value;
+            int num156 = TextureAssets.Projectile[Projectile.type].Value.Height / Main.projFrames[Projectile.type]; //ypos of lower right corner of sprite to draw
             int y3 = num156 * Projectile.frame; //ypos of upper left corner of sprite to draw
             Rectangle rectangle = new(0, y3, texture2D13.Width, num156);
             Vector2 origin2 = rectangle.Size() / 2f;
@@ -86,11 +86,6 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
 
             Main.EntitySpriteDraw(texture2D13, Projectile.Center - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), Projectile.GetAlpha(lightColor), Projectile.rotation, origin2, Projectile.scale, SpriteEffects.None, 0);
             return false;
-        }
-
-        public override Color? GetAlpha(Color lightColor)
-        {
-            return Color.White * Projectile.Opacity;
         }
     }
 }

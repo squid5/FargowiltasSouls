@@ -37,6 +37,8 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
         private bool droppedSummon = false;
         public int ritualProj, ringProj, spriteProj, ritualProjMaso;
 
+        string TownNPCName;
+
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Abominationn");
@@ -110,7 +112,8 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
             }
             SceneEffectPriority = SceneEffectPriority.BossMedium;
 
-            NPC.GivenName = Language.GetTextValue("Mods.FargowiltasSouls.NPCs.AbomBoss_April.DisplayName");
+            if (FargoSoulsUtil.AprilFools)
+                NPC.GivenName = Language.GetTextValue("Mods.FargowiltasSouls.NPCs.AbomBoss_April.DisplayName");
         }
 
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
@@ -159,6 +162,7 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
                 if (n != -1 && n != Main.maxNPCs)
                 {
                     NPC.Bottom = Main.npc[n].Bottom;
+                    TownNPCName = Main.npc[n].GivenName;
 
                     Main.npc[n].life = 0;
                     Main.npc[n].active = false;
@@ -274,7 +278,8 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
                         if (FargoSoulsUtil.HostCheck)
                         {
                             int trollSpeedUp = WorldSavingSystem.MasochistModeReal ? 2 : 1;
-                            for (int i = 0; i < 30; i++)
+                            int max = WorldSavingSystem.MasochistModeReal ? 120 : 30;
+                            for (int i = 0; i < max; i++)
                             {
                                 Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center,
                                     trollSpeedUp * Vector2.UnitX.RotatedBy(Main.rand.NextDouble() * Math.PI) * Main.rand.NextFloat(30f),
@@ -289,6 +294,8 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
                                 if (n != Main.maxNPCs)
                                 {
                                     Main.npc[n].homeless = true;
+                                    if (TownNPCName != default)
+                                        Main.npc[n].GivenName = TownNPCName;
                                     if (Main.netMode == NetmodeID.Server)
                                         NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n);
                                 }
@@ -1469,6 +1476,8 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
                             if (n != Main.maxNPCs)
                             {
                                 Main.npc[n].homeless = true;
+                                if (TownNPCName != default)
+                                    Main.npc[n].GivenName = TownNPCName;
                                 if (Main.netMode == NetmodeID.Server)
                                     NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n);
                             }

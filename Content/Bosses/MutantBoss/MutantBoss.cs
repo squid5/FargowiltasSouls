@@ -57,6 +57,10 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
         public ref float AttackChoice => ref NPC.ai[0];
         public Vector2 AuraCenter = Vector2.Zero;
 
+        string TownNPCName;
+
+        public const int HyperMax = 5;
+
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Mutant");
@@ -179,6 +183,7 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
                 if (n != -1 && n != Main.maxNPCs)
                 {
                     NPC.Bottom = Main.npc[n].Bottom;
+                    TownNPCName = Main.npc[n].GivenName;
 
                     Main.npc[n].life = 0;
                     Main.npc[n].active = false;
@@ -356,8 +361,11 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
 
             if (AttackChoice < 0 && NPC.life > 1 && drainLifeInP3) //in desperation
             {
-                int time = WorldSavingSystem.MasochistModeReal ? 4350 : 480 + 240 + 420 + 480 + 1020 - 60;
-                NPC.life -= NPC.lifeMax / time;
+                int time = 480 + 240 + 420 + 480 + 1020 - 60;
+                if (WorldSavingSystem.MasochistModeReal)
+                    time = Main.getGoodWorld ? 5000 : 4350;
+                int drain = NPC.lifeMax / time;
+                NPC.life -= drain;
                 if (NPC.life < 1)
                     NPC.life = 1;
             }
@@ -371,7 +379,7 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
                 droppedSummon = true;
             }
 
-            if (Main.getGoodWorld && ++hyper > 10 + 1)
+            if (WorldSavingSystem.MasochistModeReal && Main.getGoodWorld && ++hyper > HyperMax + 1)
             {
                 hyper = 0;
                 NPC.AI();
@@ -668,11 +676,11 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
 
         bool AliveCheck(Player p, bool forceDespawn = false)
         {
-            if (WorldSavingSystem.SwarmActive || forceDespawn || (!p.active || p.dead || Vector2.Distance(NPC.Center, p.Center) > 3000f || p.FargoSouls().The22Incident >= 22) && NPC.localAI[3] > 0)
+            if (WorldSavingSystem.SwarmActive || forceDespawn || (!p.active || p.dead || Vector2.Distance(NPC.Center, p.Center) > 3000f) && NPC.localAI[3] > 0)
             {
                 NPC.TargetClosest();
                 p = Main.player[NPC.target];
-                if (WorldSavingSystem.SwarmActive || forceDespawn || !p.active || p.dead || Vector2.Distance(NPC.Center, p.Center) > 3000f || p.FargoSouls().The22Incident >= 22)
+                if (WorldSavingSystem.SwarmActive || forceDespawn || !p.active || p.dead || Vector2.Distance(NPC.Center, p.Center) > 3000f)
                 {
                     if (NPC.timeLeft > 30)
                         NPC.timeLeft = 30;
@@ -688,6 +696,8 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
                             if (n != Main.maxNPCs)
                             {
                                 Main.npc[n].homeless = true;
+                                if (TownNPCName != default)
+                                    Main.npc[n].GivenName = TownNPCName;
                                 if (Main.netMode == NetmodeID.Server)
                                     NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n);
                             }
@@ -1823,7 +1833,7 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
 
             int pillarAttackDelay = 60;
 
-            if (Main.getGoodWorld)
+            if (Main.zenithWorld)
                 player.confused = true;
 
             if (NPC.ai[2] == 0 && NPC.ai[3] == 0) //target one corner of arena
@@ -1836,8 +1846,15 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
                     Clone(1, -1, pillarAttackDelay * 2);
                     Clone(1, 1, pillarAttackDelay * 3);
                     if (WorldSavingSystem.MasochistModeReal)
+                    {
                         Clone(1, 1, pillarAttackDelay * 6);
-                    
+                        if (Main.getGoodWorld)
+                        {
+                            Clone(-1, 1, pillarAttackDelay * 7);
+                            Clone(1, -1, pillarAttackDelay * 8);
+                        }
+                    }
+
                     Projectile.NewProjectile(NPC.GetSource_FromThis(), player.Center, new Vector2(0, -4), ModContent.ProjectileType<BrainofConfusion>(), 0, 0, Main.myPlayer);
                 }
 
@@ -2908,7 +2925,11 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
                     NPC.localAI[1] = 5;
 
                 if (WorldSavingSystem.MasochistModeReal)
+                {
                     NPC.localAI[1] += Main.rand.Next(6);
+                    if (Main.getGoodWorld)
+                        NPC.localAI[1] += 5;
+                }
                 NPC.localAI[2] = Main.rand.NextBool() ? -1 : 1; //pick a random rotation direction
                 NPC.netUpdate = true;
             }
@@ -3675,7 +3696,7 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
             int endTime = 1020;
             if (WorldSavingSystem.MasochistModeReal)
                 endTime += 180;
-            if (++NPC.ai[2] > endTime)
+            if (++NPC.ai[2] > endTime && NPC.life <= 1)
             {
                 NPC.netUpdate = true;
                 AttackChoice--;
@@ -3817,6 +3838,8 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
                     if (n != Main.maxNPCs)
                     {
                         Main.npc[n].homeless = true;
+                        if (TownNPCName != default)
+                            Main.npc[n].GivenName = TownNPCName;
                         if (Main.netMode == NetmodeID.Server)
                             NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n);
                     }
