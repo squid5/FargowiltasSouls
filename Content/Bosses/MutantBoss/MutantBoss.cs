@@ -199,6 +199,16 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
             AuraCenter = NPC.Center;
         }
 
+        public override bool PreAI()
+        {
+            if (WorldSavingSystem.MasochistModeReal && !Main.dedServ)
+            {
+                if (!Main.LocalPlayer.ItemTimeIsZero && (Main.LocalPlayer.HeldItem.type == ItemID.RodofDiscord || Main.LocalPlayer.HeldItem.type == ItemID.RodOfHarmony))
+                    Main.LocalPlayer.AddBuff(ModContent.BuffType<TimeFrozenBuff>(), 600);
+            }
+            return base.PreAI();
+        }
+
         public override void AI()
         {
             EModeGlobalNPC.mutantBoss = NPC.whoAmI;
@@ -1838,7 +1848,7 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
 
             int pillarAttackDelay = 60;
 
-            if (Main.zenithWorld)
+            if (Main.zenithWorld && NPC.ai[1] > 180)
                 player.confused = true;
 
             if (NPC.ai[2] == 0 && NPC.ai[3] == 0) //target one corner of arena
@@ -3912,7 +3922,7 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
         {
             base.OnKill();
 
-            if (!playerInvulTriggered && WorldSavingSystem.EternityMode)
+            if (WorldSavingSystem.MasochistModeReal || (!playerInvulTriggered && WorldSavingSystem.EternityMode))
             {
                 Item.NewItem(NPC.GetSource_Loot(), NPC.Hitbox, ModContent.ItemType<PhantasmalEnergy>());
             }

@@ -244,7 +244,7 @@ GoldEnchant: {
 	Tooltip:
 		'''
 		Your attacks inflict Midas
-		Automatically sends coins to your piggy bank when picked up
+		Automatically sends coins to your piggy bank when picked up, this works passively
 		Press the Gold hotkey to be encased in a Golden Shell
 		You will not be able to move or attack, but will be immune to all damage
 		Press again to exit early
@@ -3396,5 +3396,9 @@ TogglerIconItem: {
 
 RazorContainer: {
 	DisplayName: Razor Container
-	Tooltip: Spawns 2? razor blades that hover around you. Hit them with a melee attack to send them flying dealing extra damage
+	Tooltip:
+		'''
+		Spawns a razor blade that hovers around your cursor. Hit it with a melee attack to send it flying dealing extra damage and armor pen
+		'Some yellow fur is still stuck at the bottom' 
+		'''
 }
