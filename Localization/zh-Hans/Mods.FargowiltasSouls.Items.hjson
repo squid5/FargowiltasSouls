@@ -3407,7 +3407,7 @@ TogglerIconItem: {
 }
 
 RazorContainer: {
-	DisplayName: 剃刀收纳盒
+	DisplayName: 利刃收纳盒
 	Tooltip:
 		'''
 		生成一个悬停在你的光标周围的伤害性刀片。使用近战武器会使其飞出去，具有额外护甲穿透且必定暴击。
