@@ -313,6 +313,7 @@ MeteorEnchant: {
 		'''
 		大幅增加移动速度和加速度并降低动量影响
 		移动时会产生火焰尾迹
+		攻击时偶尔落下一阵流星雨
 		《Drop a draco on 'em》
 		'''
 }
@@ -3407,10 +3408,9 @@ TogglerIconItem: {
 }
 
 RazorContainer: {
-	// DisplayName: Razor Container
-	/* Tooltip:
+	DisplayName: 利刃收纳盒
+	Tooltip:
 		'''
-		Spawns a razor blade that hovers around your cursor. Hit it with a melee attack to send it flying dealing extra damage and armor pen
-		'Some yellow fur is still stuck at the bottom' 
-		''' */
-}
+		生成一个悬停在你的光标周围的伤害性刀片。使用近战武器会使其飞出去，具有额外护甲穿透且必定暴击。
+		“底部还粘着一些黄色皮毛”
+		'''

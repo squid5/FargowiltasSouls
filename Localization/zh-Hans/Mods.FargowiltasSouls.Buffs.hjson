@@ -727,5 +727,5 @@ HellFireMarkedBuff: {
 
 MagicalCurseBuff: {
 	DisplayName: 魔法诅咒
-	// Description: Mods.FargowiltasSouls.Buffs.MagicalCurseBuff.Description
+	Description: Mods.FargowiltasSouls.Buffs.MagicalCurseBuff.Description
 }
