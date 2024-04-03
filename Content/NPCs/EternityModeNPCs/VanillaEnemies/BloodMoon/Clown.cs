@@ -60,7 +60,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.BloodMoo
 
                 if (FargoSoulsUtil.HostCheck)
                 {
-                    if (FargoSoulsUtil.AnyBossAlive())
+                    if (LumUtils.AnyBosses())
                     {
                         Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, Vector2.Zero, ProjectileID.BouncyGrenade, 60, 8f, Main.myPlayer);
                     }

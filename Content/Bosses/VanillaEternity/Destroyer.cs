@@ -113,7 +113,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     npc.localAI[2] += WorldSavingSystem.MasochistModeReal ? 3 : 6;
                     if (FargoSoulsUtil.HostCheck)
                     {
-                        Vector2 distance = npc.DirectionTo(Main.player[npc.target].Center) * 14f;
+                        Vector2 distance = npc.SafeDirectionTo(Main.player[npc.target].Center) * 14f;
                         int type = ModContent.ProjectileType<MechElectricOrbHoming>();
                         Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, distance, type, ProjectileDamage(npc), 0f, Main.myPlayer, npc.target, ai2: MechElectricOrb.Blue);
                     }
@@ -183,7 +183,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
                     for (int i = 0; i < max; i++)
                     {
-                        Vector2 speed = npc.DirectionTo(pivot).RotatedBy(2 * Math.PI / max * i);
+                        Vector2 speed = npc.SafeDirectionTo(pivot).RotatedBy(2 * Math.PI / max * i);
                         Vector2 spawnPos = pivot - speed * 600;
                         Projectile.NewProjectile(npc.GetSource_FromThis(), spawnPos, 0.2f * speed, ModContent.ProjectileType<DestroyerLaser>(), ProjectileDamage(npc), 0f, Main.myPlayer, 1f, ai1: NPCID.TheDestroyer);
                     }
@@ -260,7 +260,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                 }
 
                 float comparisonSpeed = Main.player[npc.target].velocity.Length() * 1.5f;
-                float rotationDifference = MathHelper.WrapAngle(npc.velocity.ToRotation() - npc.DirectionTo(Main.player[npc.target].Center).ToRotation());
+                float rotationDifference = MathHelper.WrapAngle(npc.velocity.ToRotation() - npc.SafeDirectionTo(Main.player[npc.target].Center).ToRotation());
                 bool inFrontOfMe = Math.Abs(rotationDifference) < MathHelper.ToRadians(90 / 2);
                 if (maxSpeed < comparisonSpeed && inFrontOfMe) //player is moving faster than my top speed
                 {
@@ -274,7 +274,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                 num15 = 0.4f;
                 num16 = 0.5f;
 
-                target += Main.player[npc.target].DirectionTo(npc.Center) * 600;
+                target += Main.player[npc.target].SafeDirectionTo(npc.Center) * 600;
 
                 if (++AttackModeTimer > 120) //move way faster if still not in range
                     maxSpeed *= 2f;
@@ -286,10 +286,10 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     IsCoiling = true;
 
                     //angle difference from npc velocity, to angle towards player
-                    float rotationDiff = MathHelper.WrapAngle(npc.DirectionTo(Main.player[npc.target].Center).ToRotation() - npc.velocity.ToRotation());
+                    float rotationDiff = MathHelper.WrapAngle(npc.SafeDirectionTo(Main.player[npc.target].Center).ToRotation() - npc.velocity.ToRotation());
                     RotationDirection = Math.Sign(rotationDiff);
 
-                    npc.velocity = 20 * npc.DirectionTo(Main.player[npc.target].Center).RotatedBy(-MathHelper.PiOver2 * RotationDirection);
+                    npc.velocity = 20 * npc.SafeDirectionTo(Main.player[npc.target].Center).RotatedBy(-MathHelper.PiOver2 * RotationDirection);
 
                     npc.netUpdate = true;
                     NetSync(npc);
@@ -418,7 +418,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     }
                     else
                     {
-                        target += npc.DirectionTo(target).RotatedBy(MathHelper.PiOver2) * 1200;
+                        target += npc.SafeDirectionTo(target).RotatedBy(MathHelper.PiOver2) * 1200;
 
                         if (npc.Distance(target) < 1200)
                         {
@@ -444,7 +444,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
                     targetPos += segment.DirectionFrom(targetPos) * Math.Min(300, segment.Distance(targetPos)); //slightly between player and npc
 
-                    float accelerationAngle = segment.DirectionTo(targetPos).ToRotation();
+                    float accelerationAngle = segment.SafeDirectionTo(targetPos).ToRotation();
 
                     double maxStarModifier = 0.5 + 0.5 * Math.Sin(MathHelper.Pi / (maxMechElectricOrbIntervals - 1) * SecondaryAttackTimer++);
                     int maxStarsInOneWave = (int)(maxStarModifier * (8.0 - 7.0 * npc.life / npc.lifeMax));
@@ -453,7 +453,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     //Main.NewText($"{Counter3} {maxStarModifier} {maxStarsInOneWave} {maxMechElectricOrbIntervals}");
                     for (int i = -maxStarsInOneWave; i <= maxStarsInOneWave; i++)
                     {
-                        Vector2 offset = segment.DirectionTo(targetPos).RotatedBy(MathHelper.PiOver2);
+                        Vector2 offset = segment.SafeDirectionTo(targetPos).RotatedBy(MathHelper.PiOver2);
                         float offsetLength = 1000 / Math.Max(maxStarsInOneWave, 1) * i;
                         int travelTime = 30 + Math.Abs(i) * 5;
                         Vector2 individualTarget = targetPos + offset * offsetLength;
@@ -493,7 +493,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     if (npc.Distance(target) < 400)
                     {
                         SecondaryAttackTimer = 1;
-                        npc.velocity = 20f * npc.DirectionTo(target);//.RotatedBy(MathHelper.ToRadians(30) * (Main.rand.NextBool() ? -1 : 1));
+                        npc.velocity = 20f * npc.SafeDirectionTo(target);//.RotatedBy(MathHelper.ToRadians(30) * (Main.rand.NextBool() ? -1 : 1));
 
                         if (!WorldSavingSystem.MasochistModeReal) //deflect away at the last second
                         {
@@ -507,7 +507,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                 }
                 else
                 {
-                    double angle = npc.DirectionTo(target).ToRotation() - npc.velocity.ToRotation();
+                    double angle = npc.SafeDirectionTo(target).ToRotation() - npc.velocity.ToRotation();
                     while (angle > Math.PI)
                         angle -= 2.0 * Math.PI;
                     while (angle < -Math.PI)
@@ -887,7 +887,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                         float speed = 2f + npc.Distance(Main.player[npc.target].Center) / 360;
                         if (speed > 16f)
                             speed = 16f;
-                        int p = Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, speed * npc.DirectionTo(Main.player[npc.target].Center), ProjectileID.DeathLaser, FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 0f, Main.myPlayer);
+                        int p = Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, speed * npc.SafeDirectionTo(Main.player[npc.target].Center), ProjectileID.DeathLaser, FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 0f, Main.myPlayer);
                         if (p != Main.maxProjectiles)
                             Main.projectile[p].timeLeft = Math.Min((int)(npc.Distance(Main.player[npc.target].Center) / speed) + 180, 600);
                     }
@@ -1078,7 +1078,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
             npc.buffImmune[BuffID.Suffocation] = true;
 
-            if (Main.rand.NextBool(4) && !FargoSoulsUtil.AnyBossAlive() && npc.FargoSouls().CanHordeSplit)
+            if (Main.rand.NextBool(4) && !LumUtils.AnyBosses() && npc.FargoSouls().CanHordeSplit)
                 EModeGlobalNPC.Horde(npc, 8);
         }
 
@@ -1121,7 +1121,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                 {
                     if (AttackTimer == 0)
                     {
-                        TargetOrbitRotation = Main.player[npc.target].DirectionTo(npc.Center).ToRotation(); //when shooting laser, stop orbiting
+                        TargetOrbitRotation = Main.player[npc.target].SafeDirectionTo(npc.Center).ToRotation(); //when shooting laser, stop orbiting
 
                         npc.netUpdate = true;
                         NetSync(npc);
@@ -1129,7 +1129,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
                     const int attackTime = 110;
 
-                    Vector2 towardsPlayer = 6f * npc.DirectionTo(Main.player[npc.target].Center);
+                    Vector2 towardsPlayer = 6f * npc.SafeDirectionTo(Main.player[npc.target].Center);
                     int dustID = WorldSavingSystem.EternityMode && SoulConfig.Instance.BossRecolors ? DustID.GemSapphire : DustID.GemRuby;
                     float dustScale = 0.5f + 2.5f * AttackTimer / attackTime;
                     int d = Dust.NewDust(npc.position, npc.width, npc.height, dustID, 2f * towardsPlayer.X, 2f * towardsPlayer.Y, 0, default, dustScale);
@@ -1150,7 +1150,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
                 float orbitDistance = ShootLaser ? 440 : 220; //LAUGH
                 Vector2 vel = Main.player[npc.target].Center - npc.Center;
-                vel += orbitDistance * (ShootLaser ? Vector2.UnitX.RotatedBy(TargetOrbitRotation) : Main.player[npc.target].DirectionTo(npc.Center).RotatedBy(MathHelper.ToRadians(22) * OrbitDirection));
+                vel += orbitDistance * (ShootLaser ? Vector2.UnitX.RotatedBy(TargetOrbitRotation) : Main.player[npc.target].SafeDirectionTo(npc.Center).RotatedBy(MathHelper.ToRadians(22) * OrbitDirection));
 
                 npc.position += (Main.player[npc.target].position - Main.player[npc.target].oldPosition) / 3;
 

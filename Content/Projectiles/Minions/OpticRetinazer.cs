@@ -71,7 +71,7 @@ namespace FargowiltasSouls.Content.Projectiles.Minions
                     Vector2 targetPos = target + Projectile.DirectionFrom(target) * 300;
                     if (Projectile.Distance(targetPos) > 50)
                         Movement(targetPos, 0.5f);
-                    Projectile.rotation = Projectile.DirectionTo(target).ToRotation() - (float)Math.PI / 2;
+                    Projectile.rotation = Projectile.SafeDirectionTo(target).ToRotation() - (float)Math.PI / 2;
 
                     if (++Projectile.localAI[0] > 15)
                     {
@@ -79,7 +79,7 @@ namespace FargowiltasSouls.Content.Projectiles.Minions
                         if (Projectile.owner == Main.myPlayer)
                         {
                             Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center,
-                                Projectile.DirectionTo(target) * 12, ModContent.ProjectileType<OpticLaser>(),
+                                Projectile.SafeDirectionTo(target) * 12, ModContent.ProjectileType<OpticLaser>(),
                                 Projectile.damage, Projectile.knockBack, Projectile.owner);
                             Projectile.ai[1] = Main.rand.NextFloat(10, 30);
                             Projectile.netUpdate = true;

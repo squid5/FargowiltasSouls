@@ -35,7 +35,7 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
                 telegraphTimer++;
                 if (Main.rand.NextBool(30))
                 {
-                    Particle spark = new SparkParticle(Projectile.Center + Vector2.UnitY * (900 - Main.rand.Next(30, 300)), -Vector2.UnitY.RotatedByRandom(MathHelper.PiOver2 * 0.2f) * Main.rand.NextFloat(3, 13), Color.Cyan, Main.rand.NextFloat(0.3f, 0.7f), Main.rand.Next(10, 25));
+                    FargoParticle spark = new SparkParticle(Projectile.Center + Vector2.UnitY * (900 - Main.rand.Next(30, 300)), -Vector2.UnitY.RotatedByRandom(MathHelper.PiOver2 * 0.2f) * Main.rand.NextFloat(3, 13), Color.Cyan, Main.rand.NextFloat(0.3f, 0.7f), Main.rand.Next(10, 25));
                     spark.Spawn();
                 }
                 

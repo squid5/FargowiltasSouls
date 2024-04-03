@@ -653,7 +653,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     npc.position.Y += npc.velocity.Y * 0.25f;
 
                     if (!npc.noTileCollide && npc.HasValidTarget && Collision.SolidCollision(npc.position, npc.width, npc.height)) //unstick from walls
-                        npc.position += npc.DirectionTo(Main.player[npc.target].Center) * 4;
+                        npc.position += npc.SafeDirectionTo(Main.player[npc.target].Center) * 4;
 
                     //disable attacks when nearby
                     if (npc.HasValidTarget && npc.Distance(Main.player[npc.target].Center) < 350 && !WorldSavingSystem.MasochistModeReal)

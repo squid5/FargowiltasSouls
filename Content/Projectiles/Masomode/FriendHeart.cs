@@ -47,7 +47,7 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
                 if (target.CanBeChasedBy())
                 {
                     if (Projectile.Distance(target.Center) > 40f)
-                        Projectile.velocity = (Projectile.velocity * 16f + 17f * Projectile.DirectionTo(target.Center)) / 17f;
+                        Projectile.velocity = (Projectile.velocity * 16f + 17f * Projectile.SafeDirectionTo(target.Center)) / 17f;
                     else if (Projectile.velocity.Length() < 17)
                         Projectile.velocity *= 1.05f;
                 }

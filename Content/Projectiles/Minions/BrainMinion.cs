@@ -47,7 +47,7 @@ namespace FargowiltasSouls.Content.Projectiles.Minions
                 Projectile.frame = (Projectile.frame + 1) % 11;
             }
 
-            Projectile.velocity = Vector2.Lerp(Projectile.velocity, Projectile.DirectionTo(player.Center), 0.05f);
+            Projectile.velocity = Vector2.Lerp(Projectile.velocity, Projectile.SafeDirectionTo(player.Center), 0.05f);
 
             Projectile.ai[0]++;
             Projectile.alpha = (int)(Math.Cos(Projectile.ai[0] * MathHelper.TwoPi / 180) * 122.5 + 122.5);
@@ -55,7 +55,7 @@ namespace FargowiltasSouls.Content.Projectiles.Minions
             {
 
                 Projectile.Center = player.Center + Main.rand.NextVector2CircularEdge(300, 300);
-                Projectile.velocity = Projectile.DirectionTo(player.Center) * 8;
+                Projectile.velocity = Projectile.SafeDirectionTo(player.Center) * 8;
                 Projectile.netUpdate = true;
                 Projectile.ai[0] = 0;
             }

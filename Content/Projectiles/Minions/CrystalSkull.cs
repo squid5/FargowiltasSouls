@@ -110,7 +110,7 @@ namespace FargowiltasSouls.Content.Projectiles.Minions
                     {
                         Projectile.NewProjectile(
                             Projectile.GetSource_FromThis(), Projectile.Center,
-                            12f * Projectile.DirectionTo(Main.MouseWorld).RotatedByRandom(MathHelper.ToRadians(4)),
+                            12f * Projectile.SafeDirectionTo(Main.MouseWorld).RotatedByRandom(MathHelper.ToRadians(4)),
                             ModContent.ProjectileType<ShadowflamesFriendly>(), Projectile.damage, Projectile.knockBack,
                             Projectile.owner);
                     }

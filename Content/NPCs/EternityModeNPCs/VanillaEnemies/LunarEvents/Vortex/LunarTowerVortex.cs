@@ -145,7 +145,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEve
                     if (FargoSoulsUtil.HostCheck)
                     {
                         Vector2 pos = npc.Center - Vector2.UnitY * npc.height * 0.8f;
-                        Vector2 vel = second ? pos.DirectionTo(player.Center) * 6 : Vector2.Zero;
+                        Vector2 vel = second ? pos.SafeDirectionTo(player.Center) * 6 : Vector2.Zero;
                         Projectile.NewProjectile(npc.GetSource_FromThis(), pos, vel.RotatedBy(Math.PI / 2), ProjectileID.CultistBossLightningOrb, FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 3f, Main.myPlayer);
                         if (second)
                         {

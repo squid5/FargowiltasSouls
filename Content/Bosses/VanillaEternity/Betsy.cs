@@ -78,8 +78,8 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                 EntranceTimer++;
                 npc.dontTakeDamage = true;
                 npc.TargetClosest(false);
-                npc.spriteDirection = Math.Sign(npc.DirectionTo(Main.player[npc.target].Center).X);
-                npc.rotation = npc.DirectionTo(Main.player[npc.target].Center).ToRotation();
+                npc.spriteDirection = Math.Sign(npc.SafeDirectionTo(Main.player[npc.target].Center).X);
+                npc.rotation = npc.SafeDirectionTo(Main.player[npc.target].Center).ToRotation();
                 if (npc.spriteDirection == -1)
                 {
                     npc.rotation += MathHelper.Pi;

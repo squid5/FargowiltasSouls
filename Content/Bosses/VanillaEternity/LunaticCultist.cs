@@ -220,7 +220,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                                 {
                                     int max = NPC.CountNPCS(NPCID.CultistBossClone) * 2 + 6;
 
-                                    Vector2 baseOffset = npc.DirectionTo(Main.player[npc.target].Center);
+                                    Vector2 baseOffset = npc.SafeDirectionTo(Main.player[npc.target].Center);
                                     const float spawnOffset = 1200f;
                                     const float speed = 7f;
                                     const float ai0 = spawnOffset / speed;
@@ -274,7 +274,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                                         }
                                         else
                                         {
-                                            Vector2 vel = Main.npc[i].DirectionTo(Main.player[npc.target].Center).RotatedByRandom(MathHelper.ToRadians(5));
+                                            Vector2 vel = Main.npc[i].SafeDirectionTo(Main.player[npc.target].Center).RotatedByRandom(MathHelper.ToRadians(5));
                                             vel *= Main.rand.NextFloat(4f, 6f);
                                             Projectile.NewProjectile(npc.GetSource_FromThis(), Main.npc[i].Center, vel, ModContent.ProjectileType<LightningVortexHostile>(), damage * 6 / 15, 0, Main.myPlayer);
                                         }

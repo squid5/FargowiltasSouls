@@ -107,13 +107,13 @@ namespace FargowiltasSouls.Content.Patreon.Purified
                 float movespeed = Math.Max(Projectile.Distance(Main.projectile[head].Center) / 40f, 14f);
 
                 if (Projectile.Distance(Main.projectile[head].Center) > 64)
-                    Projectile.velocity = Vector2.Lerp(Projectile.velocity, Projectile.DirectionTo(Main.projectile[head].Center) * movespeed, 0.04f);
+                    Projectile.velocity = Vector2.Lerp(Projectile.velocity, Projectile.SafeDirectionTo(Main.projectile[head].Center) * movespeed, 0.04f);
                 Projectile.rotation = 0;
                 Projectile.direction = Projectile.spriteDirection = Main.projectile[head].spriteDirection;
 
                 if (targetting)
                 {
-                    Projectile.rotation = Projectile.DirectionTo(targetnpc.Center).ToRotation();
+                    Projectile.rotation = Projectile.SafeDirectionTo(targetnpc.Center).ToRotation();
                     Projectile.direction = Projectile.spriteDirection = 1;
 
                     if (++Projectile.localAI[0] > 60)
@@ -121,7 +121,7 @@ namespace FargowiltasSouls.Content.Patreon.Purified
                         Projectile.localAI[0] = -Main.rand.Next(20);
                         if (Projectile.owner == Main.myPlayer)
                         {
-                            int p = Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, 16f * Projectile.DirectionTo(targetnpc.Center), ProjectileID.CannonballFriendly, Projectile.damage, Projectile.knockBack, Projectile.owner);
+                            int p = Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, 16f * Projectile.SafeDirectionTo(targetnpc.Center), ProjectileID.CannonballFriendly, Projectile.damage, Projectile.knockBack, Projectile.owner);
                             if (p != Main.maxProjectiles)
                             {
                                 Main.projectile[p].DamageType = DamageClass.Summon;

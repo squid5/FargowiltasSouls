@@ -138,7 +138,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Timber
             float distance = npc.width / 2 + Projectile.width;
             if (Projectile.Distance(npc.Center) < distance)
             {
-                Vector2 target = Projectile.Center + Projectile.DirectionTo(npc.Center) * distance;
+                Vector2 target = Projectile.Center + Projectile.SafeDirectionTo(npc.Center) * distance;
                 npc.Center = Vector2.Lerp(npc.Center, target, 0.1f);
             }
         }

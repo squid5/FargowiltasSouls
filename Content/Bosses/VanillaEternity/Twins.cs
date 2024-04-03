@@ -204,7 +204,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                 if (npc.localAI[1] >= (npc.ai[1] == 0 ? 175 : 55)) //hijacking vanilla laser code
                 {
                     npc.localAI[1] = 0;
-                    Vector2 vel = npc.DirectionTo(Main.player[npc.target].Center);
+                    Vector2 vel = npc.SafeDirectionTo(Main.player[npc.target].Center);
                     Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center + (npc.width - 24) * vel, vel, ModContent.ProjectileType<MechElectricOrbTwins>(), FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 0f, Main.myPlayer, npc.target, ai2: MechElectricOrb.Yellow);
                 }
 
@@ -634,7 +634,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
                     if (npc.HasValidTarget && retinazer != null)
                     {
-                        Vector2 target = retinazer.Center + retinazer.DirectionTo(npc.Center) * 100;
+                        Vector2 target = retinazer.Center + retinazer.SafeDirectionTo(npc.Center) * 100;
                         npc.velocity = (target - npc.Center) / 60;
 
                         float rotationInterval = 2f * (float)Math.PI * 1.2f / 4f / 60f * 0.65f;
@@ -663,7 +663,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
                         if (++FlameWheelSpreadTimer < 30) //snap to reti, don't do contact damage
                         {
-                            npc.rotation = npc.DirectionTo(retinazer.Center).ToRotation() - (float)Math.PI / 2;
+                            npc.rotation = npc.SafeDirectionTo(retinazer.Center).ToRotation() - (float)Math.PI / 2;
                             RealRotation = npc.rotation;
                         }
                         else if (++ProjectileTimer % 15 == 0) //rings of stars
@@ -790,7 +790,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                 if (npc.rotation < -PI)
                     npc.rotation += 2 * PI;
 
-                float targetRotation = npc.DirectionTo(Main.player[npc.target].Center).ToRotation() - PI / 2;
+                float targetRotation = npc.SafeDirectionTo(Main.player[npc.target].Center).ToRotation() - PI / 2;
                 if (targetRotation > PI)
                     targetRotation -= 2 * PI;
                 if (targetRotation < -PI)

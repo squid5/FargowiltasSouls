@@ -540,15 +540,15 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     if (TimeToFly)
                     {
 
-                        npc.velocity = Math.Min(npc.velocity.Length(), 20f) * npc.DirectionTo(target);
-                        npc.position += 8f * npc.DirectionTo(target);
+                        npc.velocity = Math.Min(npc.velocity.Length(), 20f) * npc.SafeDirectionTo(target);
+                        npc.position += 8f * npc.SafeDirectionTo(target);
 
                         if (npc.Distance(target) < 300f)
                         {
                             TimeToFly = false;
                             NetSync(npc);
 
-                            npc.velocity += 8f * npc.DirectionTo(target).RotatedByRandom(MathHelper.PiOver4);
+                            npc.velocity += 8f * npc.SafeDirectionTo(target).RotatedByRandom(MathHelper.PiOver4);
                             npc.netUpdate = true;
                         }
                     }

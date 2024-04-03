@@ -110,7 +110,7 @@ namespace FargowiltasSouls.Content.Projectiles.ChallengerItems
                         Projectile.localAI[1] = Projectile.Distance(Main.MouseWorld);
                         if (Projectile.localAI[1] < 200) //minimum throwing distance
                             Projectile.localAI[1] = 200;
-                        Projectile.velocity = Projectile.DirectionTo(Main.MouseWorld);
+                        Projectile.velocity = Projectile.SafeDirectionTo(Main.MouseWorld);
                         Projectile.netUpdate = true;
                     }
                 }

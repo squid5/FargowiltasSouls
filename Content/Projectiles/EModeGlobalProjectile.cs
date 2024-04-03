@@ -1292,7 +1292,7 @@ namespace FargowiltasSouls.Content.Projectiles
                     NPC plantera = FargoSoulsUtil.NPCExists(NPC.plantBoss, NPCID.Plantera);
                     if (plantera != null && FargoSoulsUtil.HostCheck)
                     {
-                        Vector2 vel = 200f / 25f * projectile.DirectionTo(plantera.Center);
+                        Vector2 vel = 200f / 25f * projectile.SafeDirectionTo(plantera.Center);
                         Projectile.NewProjectile(plantera.GetSource_FromThis(), projectile.Center - projectile.oldVelocity, vel, ModContent.ProjectileType<DicerPlantera>(), projectile.damage, projectile.knockBack, projectile.owner, 0, 0);
                     }
                     break;

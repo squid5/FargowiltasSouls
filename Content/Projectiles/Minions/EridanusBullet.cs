@@ -50,7 +50,7 @@ namespace FargowiltasSouls.Content.Projectiles.Minions
                 }
                 else
                 {
-                    Projectile.velocity = Projectile.DirectionTo(Main.npc[ai0].Center) * Projectile.velocity.Length(); //fuck it homing
+                    Projectile.velocity = Projectile.SafeDirectionTo(Main.npc[ai0].Center) * Projectile.velocity.Length(); //fuck it homing
                 }
             }
             else

@@ -6,17 +6,16 @@ using Terraria.ModLoader;
 using Terraria.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using FargowiltasSouls.Core.Systems;
-using FargowiltasSouls.Common.Graphics.Primitives;
+
 using FargowiltasSouls.Assets.ExtraTextures;
-using FargowiltasSouls.Common.Graphics.Shaders;
+
+using Luminance.Core.Graphics;
 
 namespace FargowiltasSouls.Content.Bosses.Lifelight
 {
 
-    public class LifeBomb : ModProjectile, IPixelPrimitiveDrawer
+    public class LifeBomb : ModProjectile, IPixelatedPrimitiveRenderer
     {
-
-        public PrimDrawer TrailDrawer { get; private set; } = null;
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Life Mine");
@@ -98,11 +97,12 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
         {
             return Color.Lerp(Color.Gold, Color.Transparent, completionRatio) * 0.7f;
         }
-        public void DrawPixelPrimitives(SpriteBatch spriteBatch)
+        public void RenderPixelatedPrimitives(SpriteBatch spriteBatch)
         {
-            TrailDrawer ??= new PrimDrawer(WidthFunction, ColorFunction, ShaderManager.GetShaderIfExists("BlobTrail"));
+            if (!ShaderManager.TryGetShader("FargowiltasSouls.BlobTrail", out ManagedShader shader))
+                return;
             FargoSoulsUtil.SetTexture1(FargosTextureRegistry.FadedStreak.Value);
-            TrailDrawer.DrawPixelPrims(Projectile.oldPos, Projectile.Size * 0.5f - Main.screenPosition, 44);
+            PrimitiveRenderer.RenderTrail(Projectile.oldPos, new(WidthFunction, ColorFunction, _ => Projectile.Size * 0.5f, Pixelate: true, Shader: shader), 44);
         }
     }
 }

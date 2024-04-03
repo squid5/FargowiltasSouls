@@ -5,7 +5,7 @@ using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Common.Graphics.Particles
 {
-	public class ElectricSpark : Particle
+	public class ElectricSpark : FargoParticle
 	{
 		public readonly bool UseBloom;
 		public override bool UseAdditiveBlend => true;

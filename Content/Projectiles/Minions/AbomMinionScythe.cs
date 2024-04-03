@@ -61,7 +61,7 @@ namespace FargowiltasSouls.Content.Projectiles.Minions
                 NPC n = FargoSoulsUtil.NPCExists(Projectile.ai[0]);
                 if (n.Alive())
                 {
-                    Vector2 desiredVelocity = Projectile.DirectionTo(n.Center) * desiredFlySpeedInPixelsPerFrame;
+                    Vector2 desiredVelocity = Projectile.SafeDirectionTo(n.Center) * desiredFlySpeedInPixelsPerFrame;
                     Projectile.velocity = Vector2.Lerp(Projectile.velocity, desiredVelocity, 1f / amountOfFramesToLerpBy);
                 }
                 else

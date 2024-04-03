@@ -1,5 +1,5 @@
 ﻿using FargowiltasSouls.Assets.ExtraTextures;
-using FargowiltasSouls.Common.Graphics.Primitives;
+
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -8,14 +8,13 @@ using Terraria.ModLoader;
 using Terraria.ID;
 using FargowiltasSouls.Core.Systems;
 using FargowiltasSouls.Content.Projectiles.Deathrays;
-using FargowiltasSouls.Common.Graphics.Shaders;
+
+using Luminance.Core.Graphics;
 
 namespace FargowiltasSouls.Content.Bosses.MutantBoss
 {
-	public class MutantDeathrayAim : BaseDeathray, IPixelPrimitiveDrawer
+	public class MutantDeathrayAim : BaseDeathray, IPixelatedPrimitiveRenderer
     {
-        public PrimDrawer LaserDrawer { get; private set; } = null;
-
         public override string Texture => "FargowiltasSouls/Content/Projectiles/Deathrays/PhantasmalDeathrayML";
         public MutantDeathrayAim() : base(60) { }
 
@@ -78,7 +77,7 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
             //num804 += 1.57079637f;
             //Projectile.velocity = num804.ToRotationVector2();
 
-            Projectile.velocity = Projectile.velocity.ToRotation().AngleLerp(npc.DirectionTo(Main.player[npc.target].Center + Main.player[npc.target].velocity * 30).ToRotation(), 0.2f).ToRotationVector2();
+            Projectile.velocity = Projectile.velocity.ToRotation().AngleLerp(npc.SafeDirectionTo(Main.player[npc.target].Center + Main.player[npc.target].velocity * 30).ToRotation(), 0.2f).ToRotationVector2();
             Projectile.rotation = Projectile.velocity.ToRotation() - (float)Math.PI / 2;
 
             float num805 = 3f;
@@ -138,15 +137,13 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
             color.A = 100;
             return color;
         }
-
-        public void DrawPixelPrimitives(SpriteBatch spriteBatch)
+        public void RenderPixelatedPrimitives(SpriteBatch spriteBatch)
         {
             if (Projectile.hide)
                 return;
 
-            Shader shader = ShaderManager.GetShaderIfExists("GenericDeathray");
-
-			LaserDrawer ??= new PrimDrawer(WidthFunction, ColorFunction, shader);
+            if (!ShaderManager.TryGetShader("FargowiltasSouls.GenericDeathray", out ManagedShader shader))
+                return;
 
             // Get the laser end position.
             Vector2 laserEnd = Projectile.Center + Projectile.velocity.SafeNormalize(Vector2.UnitY) * drawDistance * 1.1f;
@@ -165,13 +162,13 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
             // GameShaders.Misc["FargoswiltasSouls:MutantDeathray"].UseImage1(); cannot be used due to only accepting vanilla paths.
             FargoSoulsUtil.SetTexture1(FargosTextureRegistry.MutantStreak.Value);
             // The laser should fade to this in the middle.
-            shader.SetMainColor(FargoSoulsUtil.AprilFools ? new Color(255, 255, 183, 100) : new Color(183, 252, 253, 100));
-            shader.WrappedEffect.Parameters["stretchAmount"].SetValue(3);
-            shader.WrappedEffect.Parameters["scrollSpeed"].SetValue(2f);
-            shader.WrappedEffect.Parameters["uColorFadeScaler"].SetValue(1f);
-            shader.WrappedEffect.Parameters["useFadeIn"].SetValue(true);
+            shader.TrySetParameter("mainColor", FargoSoulsUtil.AprilFools ? new Color(255, 255, 183, 100) : new Color(183, 252, 253, 100));
+            shader.TrySetParameter("stretchAmount", 3);
+            shader.TrySetParameter("scrollSpeed", 2f);
+            shader.TrySetParameter("uColorFadeScaler", 1f);
+            shader.TrySetParameter("useFadeIn", true);
 
-            LaserDrawer.DrawPixelPrims(baseDrawPoints, -Main.screenPosition, 20);
+            PrimitiveRenderer.RenderTrail(baseDrawPoints, new(WidthFunction, ColorFunction, Pixelate: true, Shader: shader), 20);
         }
     }
 }

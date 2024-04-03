@@ -61,7 +61,7 @@ namespace FargowiltasSouls.Content.Projectiles.Souls
                 if (Projectile.Distance(player.Center) < 300) 
                 {
                     float speed = 1;
-                    Projectile.velocity = Projectile.DirectionTo(player.Center) * speed;
+                    Projectile.velocity = Projectile.SafeDirectionTo(player.Center) * speed;
                 } 
                 else
                 {

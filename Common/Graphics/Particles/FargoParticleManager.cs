@@ -3,14 +3,14 @@ using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Common.Graphics.Particles
 {
-	public class ParticleManager : ModSystem
+	public class FargoParticleManager : ModSystem
 	{
 		public override void Load()
 		{
 			On_Main.DrawProjectiles += DrawParticles_Projectiles;
 			On_Main.DrawDust += DrawParticles_Dust;
 			On_Main.DrawInfernoRings += DrawParticles_AfterEverything;
-			Particle.ActiveParticles = new();
+			FargoParticle.ActiveParticles = new();
 
 		}
 
@@ -19,31 +19,32 @@ namespace FargowiltasSouls.Common.Graphics.Particles
 			On_Main.DrawProjectiles -= DrawParticles_Projectiles;
 			On_Main.DrawDust -= DrawParticles_Dust;
 			On_Main.DrawInfernoRings -= DrawParticles_AfterEverything;
-			Particle.ActiveParticles.Clear();
-			Particle.ActiveParticles = null;
+			FargoParticle.ActiveParticles.Clear();
+			FargoParticle.ActiveParticles = null;
 		}
 
 		private void DrawParticles_Projectiles(On_Main.orig_DrawProjectiles orig, Main self)
 		{
-			Particle.DrawParticles(Main.spriteBatch, ParticleLayers.BeforeProjectiles);
+			FargoParticle.DrawParticles(Main.spriteBatch, FargoParticleLayers.BeforeProjectiles);
 			orig(self);
-			Particle.DrawParticles(Main.spriteBatch, ParticleLayers.AfterProjectiles);
+			FargoParticle.DrawParticles(Main.spriteBatch, FargoParticleLayers.AfterProjectiles);
 		}
 
 		private void DrawParticles_Dust(On_Main.orig_DrawDust orig, Main self)
 		{
 			orig(self);
-			Particle.DrawParticles(Main.spriteBatch, ParticleLayers.Dust);
+			FargoParticle.DrawParticles(Main.spriteBatch, FargoParticleLayers.Dust);
 		}
 
 		private void DrawParticles_AfterEverything(On_Main.orig_DrawInfernoRings orig, Main self)
 		{
 			orig(self);
-			Particle.DrawParticles(Main.spriteBatch, ParticleLayers.AfterEverything);
+			FargoParticle.DrawParticles(Main.spriteBatch, FargoParticleLayers.AfterEverything);
 		}
 
-		public override void PostUpdateDusts() => Particle.UpdateParticles();
+		public override void PostUpdateDusts() => FargoParticle.UpdateParticles();
 
-		public override void ClearWorld() => Particle.ActiveParticles?.Clear();
+		public override void ClearWorld() => FargoParticle.ActiveParticles?.Clear();
 	}
+	
 }

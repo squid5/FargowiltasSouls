@@ -162,6 +162,8 @@ namespace FargowiltasSouls.Core.Globals
         {
             if (npc.boss || npc.type == NPCID.EaterofWorldsHead)
                 boss = npc.whoAmI;
+            if (!LumUtils.AnyBosses())
+                boss = -1;
 
             bool retval = base.PreAI(npc);
             if (TimeFrozen)

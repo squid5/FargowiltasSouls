@@ -18,7 +18,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
             {
                 OriginalPosition = Projectile.position;
                 DesiredPosition = new Vector2(Projectile.ai[1], Projectile.ai[2]);
-                Projectile.rotation = Projectile.DirectionTo(DesiredPosition).ToRotation() - (float)Math.PI / 2;
+                Projectile.rotation = Projectile.SafeDirectionTo(DesiredPosition).ToRotation() - (float)Math.PI / 2;
             }
             Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.GemTopaz, Projectile.velocity.X, Projectile.velocity.Y, 0, default, 0.25f);
             

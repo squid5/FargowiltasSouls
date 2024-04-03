@@ -1,6 +1,7 @@
 ﻿namespace FargowiltasSouls.Common.Graphics.Particles
 {
-	public enum ParticleLayers
+	
+	public enum FargoParticleLayers
 	{
 		BeforeProjectiles,
 		AfterProjectiles,
@@ -8,4 +9,5 @@
 		Dust,
 		AfterEverything
 	}
+	
 }

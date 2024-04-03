@@ -9,8 +9,9 @@ using FargowiltasSouls.Content.Bosses.Lifelight;
 using Terraria.DataStructures;
 using System.IO;
 using System;
-using FargowiltasSouls.Common.Graphics.Shaders;
-using FargowiltasSouls.Common.Graphics.Primitives;
+
+
+using Luminance.Core.Graphics;
 
 namespace FargowiltasSouls.Content.Projectiles
 {
@@ -19,11 +20,6 @@ namespace FargowiltasSouls.Content.Projectiles
 	/// </summary>
 	public class ArcTelegraph : ModProjectile
     {
-        public PrimDrawer TelegraphDrawer
-        {
-            get;
-            private set;
-        }
 
         public ref float Timer => ref Projectile.ai[0];
 
@@ -107,10 +103,11 @@ namespace FargowiltasSouls.Content.Projectiles
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
 
-            Shader shader = ShaderManager.GetShaderIfExists("Vertex_ArcTelegraph");
+            if (!ShaderManager.TryGetShader("FargowiltasSouls.Vertex_ArcTelegraph", out ManagedShader shader))
+                return false;
 
             FargoSoulsUtil.SetTexture1(ModContent.Request<Texture2D>("Terraria/Images/Extra_193").Value);
-            shader.SetMainColor(Color.Lerp(Color.DeepSkyBlue, Color.SlateBlue, 0.7f));
+            shader.TrySetParameter("mainColor", Color.Lerp(Color.DeepSkyBlue, Color.SlateBlue, 0.7f));
 			shader.Apply();
 
             VertexStrip vertexStrip = new();

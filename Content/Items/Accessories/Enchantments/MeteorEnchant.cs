@@ -140,7 +140,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
                                 Vector2 targetPos = target.Center + predictive;
                                 if (pos.Y < targetPos.Y)
                                 {
-                                    Vector2 accurateVel = vel.Length() * pos.DirectionTo(targetPos);
+                                    Vector2 accurateVel = vel.Length() * pos.SafeDirectionTo(targetPos);
                                     vel = Vector2.Lerp(vel, accurateVel, Main.rand.NextFloat());
                                 }
                             }

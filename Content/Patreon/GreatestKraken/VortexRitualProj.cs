@@ -214,7 +214,7 @@ namespace FargowiltasSouls.Content.Patreon.GreatestKraken
             }
             else
             {
-                Projectile.velocity = Projectile.DirectionTo(mousePos);
+                Projectile.velocity = Projectile.SafeDirectionTo(mousePos);
             }
 
             Lighting.AddLight(Projectile.Center, 0.4f, 0.85f, 0.9f);

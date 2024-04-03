@@ -67,7 +67,7 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
                     int p = Player.FindClosest(Projectile.Center, 0, 0);
                     if (p != -1)
                     {
-                        Projectile.velocity = Projectile.DirectionTo(Main.player[p].Center);
+                        Projectile.velocity = Projectile.SafeDirectionTo(Main.player[p].Center);
                         Projectile.ai[0] = 1f;
                         Projectile.ai[1] = p; //now used for tracking player
                         Projectile.netUpdate = true;

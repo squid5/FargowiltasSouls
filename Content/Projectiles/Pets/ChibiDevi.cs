@@ -212,10 +212,10 @@ namespace FargowiltasSouls.Content.Projectiles.Pets
             Projectile.spriteDirection = Projectile.direction;
 
 
-            bool bossAlive = FargoSoulsUtil.AnyBossAlive();
+            bool bossAlive = LumUtils.AnyBosses();
             //only do idle talk when awake, not a boss fight, and not in danger
             if (TalkCDs[(int)TalkType.Idle] < 60 && (bossAlive || asleep || player.statLife < player.statLifeMax2 / 2))
-                TalkCDs[(int)TalkType.Idle] = Math.Max(TalkCDs[(int)TalkType.Idle], (int)FargoSoulsUtil.SecondsToFrames(12));
+                TalkCDs[(int)TalkType.Idle] = Math.Max(TalkCDs[(int)TalkType.Idle], LumUtils.SecondsToFrames(12));
 
             if (bossAlive)
             {

@@ -57,7 +57,7 @@ namespace FargowiltasSouls.Content.Bosses.TrojanSquirrel
                         {
                             //dont attack unless player is in 90 degree cone in front of squrrl
                             float baseAngle = NPC.direction > 0 ? 0f : MathHelper.Pi;
-                            if (Math.Abs(MathHelper.WrapAngle(NPC.DirectionTo(Main.player[NPC.target].Center).ToRotation() - baseAngle)) > MathHelper.PiOver4)
+                            if (Math.Abs(MathHelper.WrapAngle(NPC.SafeDirectionTo(Main.player[NPC.target].Center).ToRotation() - baseAngle)) > MathHelper.PiOver4)
                             {
                                 NPC.ai[1] = stallPoint;
                             }
@@ -69,7 +69,7 @@ namespace FargowiltasSouls.Content.Bosses.TrojanSquirrel
                                     NPC.ai[2] = NPC.ai[2] == 0 ? 1 : 0;
                                 NPC.netUpdate = true;
 
-                                body.localAI[3] = Math.Sign(body.DirectionTo(Main.player[body.target].Center).X);
+                                body.localAI[3] = Math.Sign(body.SafeDirectionTo(Main.player[body.target].Center).X);
                                 body.netUpdate = true;
                             }
                         }
@@ -104,7 +104,7 @@ namespace FargowiltasSouls.Content.Bosses.TrojanSquirrel
                             Vector2 pos = GetShootPos();
 
                             float baseAngle = NPC.direction > 0 ? 0f : MathHelper.Pi;
-                            float angle = NPC.DirectionTo(Main.player[NPC.target].Center).ToRotation();
+                            float angle = NPC.SafeDirectionTo(Main.player[NPC.target].Center).ToRotation();
                             if (Math.Abs(MathHelper.WrapAngle(angle - baseAngle)) > MathHelper.PiOver2)
                                 angle = MathHelper.PiOver2 * Math.Sign(angle);
 

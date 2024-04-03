@@ -98,7 +98,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Terra
                 if (Projectile.alpha < 0)
                     Projectile.alpha = 0;
 
-                Projectile.velocity = 4f * Projectile.DirectionTo(Main.player[npc.target].Center);
+                Projectile.velocity = 4f * Projectile.SafeDirectionTo(Main.player[npc.target].Center);
 
                 if (++Projectile.ai[1] > 60) //grow
                 {

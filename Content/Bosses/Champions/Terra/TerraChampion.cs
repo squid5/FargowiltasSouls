@@ -192,7 +192,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Terra
                     if (NPC.Distance(targetPos) > 50)
                         Movement(targetPos, 0.16f, 32f);
 
-                    NPC.rotation = NPC.DirectionTo(player.Center).ToRotation();
+                    NPC.rotation = NPC.SafeDirectionTo(player.Center).ToRotation();
 
                     if (++NPC.localAI[0] > 50)
                     {
@@ -204,7 +204,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Terra
 
                             if (FargoSoulsUtil.HostCheck)
                             {
-                                Vector2 dir = NPC.DirectionTo(player.Center);
+                                Vector2 dir = NPC.SafeDirectionTo(player.Center);
                                 float ai1New = Main.rand.NextBool() ? 1 : -1; //randomize starting direction
                                 Vector2 vel = Vector2.Normalize(dir) * 22f;
                                 Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, vel, ModContent.ProjectileType<HostileLightning>(),
@@ -266,7 +266,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Terra
                     }
                     else
                     {
-                        float rotationDifference = MathHelper.WrapAngle(NPC.velocity.ToRotation() - NPC.DirectionTo(player.Center).ToRotation());
+                        float rotationDifference = MathHelper.WrapAngle(NPC.velocity.ToRotation() - NPC.SafeDirectionTo(player.Center).ToRotation());
                         bool inFrontOfMe = Math.Abs(rotationDifference) < MathHelper.ToRadians(90 / 2);
 
                         bool proceed = NPC.localAI[0] > 300 && (NPC.localAI[0] > 360 || inFrontOfMe);
@@ -294,7 +294,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Terra
                         {
                             SoundEngine.PlaySound(SoundID.Roar, player.Center);
                             NPC.localAI[1] = 1;
-                            NPC.velocity = NPC.DirectionTo(player.Center) * 24;
+                            NPC.velocity = NPC.SafeDirectionTo(player.Center) * 24;
                         }
 
                         if (++NPC.localAI[2] > 2)
@@ -302,7 +302,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Terra
                             NPC.localAI[2] = 0;
                             if (FargoSoulsUtil.HostCheck)
                             {
-                                Vector2 vel = NPC.DirectionTo(player.Center) * 12;
+                                Vector2 vel = NPC.SafeDirectionTo(player.Center) * 12;
                                 Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, vel, ModContent.ProjectileType<TerraFireball>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage), 0f, Main.myPlayer);
 
                                 float offset = NPC.velocity.ToRotation() - vel.ToRotation();
@@ -312,7 +312,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Terra
                             }
                         }
 
-                        double angle = NPC.DirectionTo(player.Center).ToRotation() - NPC.velocity.ToRotation();
+                        double angle = NPC.SafeDirectionTo(player.Center).ToRotation() - NPC.velocity.ToRotation();
                         while (angle > Math.PI)
                             angle -= 2.0 * Math.PI;
                         while (angle < -Math.PI)
@@ -341,7 +341,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Terra
                     }
                     else //circle at distance to pull segments away
                     {
-                        NPC.velocity = NPC.DirectionTo(player.Center).RotatedBy(Math.PI / 2) * 36;
+                        NPC.velocity = NPC.SafeDirectionTo(player.Center).RotatedBy(Math.PI / 2) * 36;
                     }
 
                     if (++NPC.localAI[0] > 180)
@@ -360,7 +360,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Terra
 
                         if (NPC.localAI[0] == 0)
                         {
-                            NPC.localAI[1] = NPC.DirectionTo(player.Center).ToRotation();
+                            NPC.localAI[1] = NPC.SafeDirectionTo(player.Center).ToRotation();
                             SoundEngine.PlaySound(SoundID.Roar, player.Center);
                         }
 
@@ -412,7 +412,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Terra
                             NPC.localAI[1] = 0;
                             NPC.localAI[2] = 0;
                             NPC.localAI[3] = 0;
-                            NPC.velocity = NPC.DirectionTo(player.Center) * NPC.velocity.Length();
+                            NPC.velocity = NPC.SafeDirectionTo(player.Center) * NPC.velocity.Length();
                         }
                     }
                     break;
@@ -428,12 +428,12 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Terra
                     {
                         SoundEngine.PlaySound(SoundID.Roar, player.Center);
                         NPC.localAI[1] = 1;
-                        NPC.velocity = NPC.DirectionTo(player.Center) * 36;
+                        NPC.velocity = NPC.SafeDirectionTo(player.Center) * 36;
                     }
 
                     if (NPC.localAI[3] == 0)
                     {
-                        double angle = NPC.DirectionTo(player.Center).ToRotation() - NPC.velocity.ToRotation();
+                        double angle = NPC.SafeDirectionTo(player.Center).ToRotation() - NPC.velocity.ToRotation();
                         while (angle > Math.PI)
                             angle -= 2.0 * Math.PI;
                         while (angle < -Math.PI)
@@ -486,7 +486,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Terra
                         NPC.ai[1]++;
                         NPC.localAI[0] = 0;
                         NPC.localAI[1] = NPC.Distance(player.Center);
-                        NPC.velocity = 32f * NPC.DirectionTo(player.Center).RotatedBy(Math.PI / 2);
+                        NPC.velocity = 32f * NPC.SafeDirectionTo(player.Center).RotatedBy(Math.PI / 2);
                         SoundEngine.PlaySound(SoundID.Roar, player.Center);
                     }
                     NPC.rotation = NPC.velocity.ToRotation();
@@ -598,7 +598,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Terra
             }
 
             float comparisonSpeed = player.velocity.Length() * 1.5f;
-            float rotationDifference = MathHelper.WrapAngle(NPC.velocity.ToRotation() - NPC.DirectionTo(player.Center).ToRotation());
+            float rotationDifference = MathHelper.WrapAngle(NPC.velocity.ToRotation() - NPC.SafeDirectionTo(player.Center).ToRotation());
             bool inFrontOfMe = Math.Abs(rotationDifference) < MathHelper.ToRadians(90 / 2);
             if (maxSpeed < comparisonSpeed && inFrontOfMe) //player is moving faster than my top speed
             {

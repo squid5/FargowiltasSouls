@@ -131,7 +131,7 @@ namespace FargowiltasSouls.Content.Items
                     return false;
             }
 
-            if (item.type == ItemID.RodofDiscord && FargoSoulsUtil.AnyBossAlive())
+            if (item.type == ItemID.RodofDiscord && LumUtils.AnyBosses())
             {
                 player.chaosState = true;
             }
@@ -146,7 +146,7 @@ namespace FargowiltasSouls.Content.Items
                 ePlayer.CobaltHitCounter = 0;
             }
 
-            if (item.type == ItemID.RodOfHarmony && FargoSoulsUtil.AnyBossAlive())
+            if (item.type == ItemID.RodOfHarmony && LumUtils.AnyBosses())
             {
                 player.hurtCooldowns[0] = 0;
                 var defense = player.statDefense;

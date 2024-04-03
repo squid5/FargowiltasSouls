@@ -8,13 +8,14 @@ using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Common.Graphics.Particles
 {
+	
 	/// <summary>
 	/// Represents a particle instance.
 	/// </summary>
-	public abstract class Particle
+	public abstract class FargoParticle
 	{
 		#region Statics
-		internal static List<Particle> ActiveParticles = new();
+		internal static List<FargoParticle> ActiveParticles = new();
 
 		public static int AnimationRate => 6;
 
@@ -69,14 +70,14 @@ namespace FargowiltasSouls.Common.Graphics.Particles
 		/// </summary>
 		/// <param name="spriteBatch"></param>
 		/// <param name="layerToDraw"></param>
-		internal static void DrawParticles(SpriteBatch spriteBatch, ParticleLayers layerToDraw)
+		internal static void DrawParticles(SpriteBatch spriteBatch, FargoParticleLayers layerToDraw)
 		{
 			if (!ActiveParticles.Any(particle => particle.Layer == layerToDraw))
 				return;
 
-			List<Particle> additiveParticles = new();
-			List<Particle> nonPreMultipliedparticles = new();
-			List<Particle> alphaParticles = new();
+			List<FargoParticle> additiveParticles = new();
+			List<FargoParticle> nonPreMultipliedparticles = new();
+			List<FargoParticle> alphaParticles = new();
 
 			// Only draw the correct layer.
 			foreach (var particle in ActiveParticles.Where(p => p.Layer == layerToDraw))
@@ -184,7 +185,7 @@ namespace FargowiltasSouls.Common.Graphics.Particles
 		/// <summary>
 		/// The draw layer for the particle. Is the dust layer by default.
 		/// </summary>
-		public ParticleLayers Layer = ParticleLayers.Dust;
+		public FargoParticleLayers Layer = FargoParticleLayers.Dust;
 
 		/// <summary>
 		/// The texture of the particle. By default, this is the particle texture folder plus the type name.
@@ -250,7 +251,7 @@ namespace FargowiltasSouls.Common.Graphics.Particles
 		/// </summary>
 		/// <param name="fadeIn"></param>
 		/// <returns></returns>
-		public Particle SetFadeIn(bool fadeIn = true)
+		public FargoParticle SetFadeIn(bool fadeIn = true)
 		{
 			FadeIn = fadeIn;
 			return this;
@@ -261,7 +262,7 @@ namespace FargowiltasSouls.Common.Graphics.Particles
 		/// </summary>
 		/// <param name="layer"></param>
 		/// <returns></returns>
-		public Particle SpecifyLayer(ParticleLayers layer)
+		public FargoParticle SpecifyLayer(FargoParticleLayers layer)
 		{
 			Layer = layer;
 			return this;
@@ -283,7 +284,7 @@ namespace FargowiltasSouls.Common.Graphics.Particles
 			// Stay within the chosen particle limit by removing the earliest, non important particle.
 			if (ActiveParticles.Count > MaxParticleCount)
 			{
-				Particle particleToRemove = ActiveParticles.FirstOrDefault(particle => !particle.Important);
+				FargoParticle particleToRemove = ActiveParticles.FirstOrDefault(particle => !particle.Important);
 				if (particleToRemove != null)
 					ActiveParticles.Remove(particleToRemove);
 			}
@@ -293,4 +294,5 @@ namespace FargowiltasSouls.Common.Graphics.Particles
 		}
 		#endregion
 	}
+	
 }

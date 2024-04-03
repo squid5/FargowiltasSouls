@@ -5,7 +5,7 @@ using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Common.Graphics.Particles
 {
-	public class FogPuff : Particle
+	public class FogPuff : FargoParticle
 	{
 		public readonly bool UseBloom;
 

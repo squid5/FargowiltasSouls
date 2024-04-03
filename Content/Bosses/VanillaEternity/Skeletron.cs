@@ -277,7 +277,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                             if (modifier > 1f || WorldSavingSystem.MasochistModeReal) //cap it, or force it to cap in emode
                                 modifier = 1f;
                             int actualNumberToSpawn = (int)(max * modifier);
-                            Vector2 baseVel = npc.DirectionTo(Main.player[npc.target].Center).RotatedBy(MathHelper.ToRadians(gap) * j);
+                            Vector2 baseVel = npc.SafeDirectionTo(Main.player[npc.target].Center).RotatedBy(MathHelper.ToRadians(gap) * j);
                             for (int k = 0; k < actualNumberToSpawn; k++) //a fan of skulls
                             {
                                 if (FargoSoulsUtil.HostCheck)
@@ -407,7 +407,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                 case 1: //ring of babies
                     {
                         const int max = 16;
-                        Vector2 baseOffset = npc.DirectionTo(Main.player[npc.target].Center);
+                        Vector2 baseOffset = npc.SafeDirectionTo(Main.player[npc.target].Center);
                         for (int i = 0; i < max; i++)
                         {
                             int p = Projectile.NewProjectile(npc.GetSource_FromThis(), Main.player[npc.target].Center + 1000 * baseOffset.RotatedBy(2 * Math.PI / max * i),
@@ -610,10 +610,10 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                         }
                         else if (AttackTimer % 7 == 0 && FargoSoulsUtil.HostCheck) 
                         {
-                            Vector2 vel = npc.DirectionTo(Main.player[npc.target].Center);
+                            Vector2 vel = npc.SafeDirectionTo(Main.player[npc.target].Center);
                             if (AttackTimer < GuardianTime * 3 / 4) //first quarter of projectiles are shot towards player, other three quarters are shot straight out
                             {
-                                vel = head.DirectionTo(npc.Center);
+                                vel = head.SafeDirectionTo(npc.Center);
                             }
                             Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, vel, ModContent.ProjectileType<SkeletronGuardian2>(), FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 0f, Main.myPlayer);
                         }
@@ -694,7 +694,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                 ref float handSide = ref npc.ai[0];
                 if (AttackTimer == GuardianTime + 30) //lock rotation to player
                 {
-                    lockedRotation = (-head.DirectionTo(player.Center)).ToRotation();
+                    lockedRotation = (-head.SafeDirectionTo(player.Center)).ToRotation();
                     rotDir = -handSide;
                     if (secondSet)
                     {
@@ -736,7 +736,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                                 {
                                     for (int i = 0; i < 2; i++)
                                     {
-                                        Vector2 vel = head.DirectionTo(npc.Center) * 10;
+                                        Vector2 vel = head.SafeDirectionTo(npc.Center) * 10;
                                         vel = vel.RotatedBy(i * rotDir * MathHelper.Pi / 22); //curve second slightly inward so you can't blindspot in center
                                         int p = Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, vel, ModContent.ProjectileType<SkeletronGuardian2>(), FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 0f, Main.myPlayer);
                                     }
@@ -810,7 +810,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     {
                         Vector2 vel = Vector2.UnitX.RotatedBy(MathHelper.TwoPi * (float)i / sparks).RotatedByRandom(MathHelper.Pi / sparks);
                         vel *= Main.rand.NextFloat(3, 8);
-                        Particle p = new SparkParticle(npc.Center, vel, Color.Red, 1, LungeWindup);
+                        FargoParticle p = new SparkParticle(npc.Center, vel, Color.Red, 1, LungeWindup);
                         p.Spawn();
                         Timer = 1;
                     }
@@ -826,11 +826,11 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     if (Timer < LungeWindup)
                     {
                         float modifier = 1 - (float)(Timer / LungeWindup);
-                        storedVel = -npc.DirectionTo(player.Center) * modifier * 3;
+                        storedVel = -npc.SafeDirectionTo(player.Center) * modifier * 3;
                     }
                     if (Timer == LungeWindup)
                     {
-                        storedVel = npc.DirectionTo(player.Center) * 30;
+                        storedVel = npc.SafeDirectionTo(player.Center) * 30;
                     }
                     if (Timer > LungeWindup + 10 && Timer <= LungeWindup + 30)
                     {
@@ -838,7 +838,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     }
                     if (Timer > LungeWindup + 30)
                     {
-                        storedVel += npc.DirectionTo(restPos) * 0.3f;
+                        storedVel += npc.SafeDirectionTo(restPos) * 0.3f;
                         if (Timer > LungeWindup + 100 || npc.Distance(restPos) < npc.width)
                         {
                             Timer = 0;

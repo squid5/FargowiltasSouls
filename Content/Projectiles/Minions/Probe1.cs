@@ -58,7 +58,7 @@ namespace FargowiltasSouls.Content.Projectiles.Minions
                         if (npcs.Count > 0)
                         {
                             NPC npc = Main.rand.Next(npcs);
-                            Projectile.rotation = Projectile.DirectionTo(npc.Center).ToRotation();
+                            Projectile.rotation = Projectile.SafeDirectionTo(npc.Center).ToRotation();
                             int p = Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, new Vector2(16f, 0f).RotatedBy(Projectile.rotation).RotatedByRandom(MathHelper.PiOver4 / 2),
                                 ModContent.ProjectileType<LightningArc>(), Projectile.damage, Projectile.knockBack, Projectile.owner, Projectile.rotation, Main.rand.Next(100));
                             if (p != Main.maxProjectiles)

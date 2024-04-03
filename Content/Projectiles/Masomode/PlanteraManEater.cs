@@ -103,9 +103,9 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
                     if (player == null || !player.active)
                         return;
                     float extension = Math.Min(npc.Distance(player.Center), defaultDistance - arenaDistance);
-                    Vector2 target = originPos + Projectile.DirectionTo(Main.player[npc.target].Center) * extension;
+                    Vector2 target = originPos + Projectile.SafeDirectionTo(Main.player[npc.target].Center) * extension;
 
-                    Projectile.rotation = Projectile.DirectionTo(originPos).ToRotation();
+                    Projectile.rotation = Projectile.SafeDirectionTo(originPos).ToRotation();
 
                     Vector2 distance = target - Projectile.Center;
                     float length = distance.Length();
@@ -167,7 +167,7 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
                 for (int i = 0; i < length; i += increment)
                 {
                     if (!Main.dedServ)
-                        Gore.NewGore(Projectile.GetSource_FromThis(), Projectile.Center + Projectile.DirectionTo(originPos) * (i + Main.rand.NextFloat(increment)), Vector2.Zero,
+                        Gore.NewGore(Projectile.GetSource_FromThis(), Projectile.Center + Projectile.SafeDirectionTo(originPos) * (i + Main.rand.NextFloat(increment)), Vector2.Zero,
                         ModContent.Find<ModGore>(Mod.Name, Main.rand.NextBool() ? "Gore_386" : "Gore_387").Type, Projectile.scale);
                 }
             }

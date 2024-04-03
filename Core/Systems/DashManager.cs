@@ -97,7 +97,7 @@ namespace FargowiltasSouls.Core.Systems
         public static MethodInfo DashHandleMethod { get; set; }
         public override void Load()
         {
-            DashHandleMethod = typeof(Player).GetMethod("DoCommonDashHandle", FargoSoulsUtil.UniversalBindingFlags);
+            DashHandleMethod = typeof(Player).GetMethod("DoCommonDashHandle", LumUtils.UniversalBindingFlags);
         }
         public static void HandleDash(out bool dashing, out int dir)
         {

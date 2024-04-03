@@ -107,7 +107,7 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
                 if (NPC.ai[3] == 0) //store angle for attack
                 {
                     NPC.localAI[2] = NPC.Distance(Main.player[NPC.target].Center);
-                    NPC.ai[3] = NPC.DirectionTo(Main.player[NPC.target].Center).ToRotation();
+                    NPC.ai[3] = NPC.SafeDirectionTo(Main.player[NPC.target].Center).ToRotation();
 
                     if (NPC.whoAmI == NPC.FindFirstNPC(NPC.type) && FargoSoulsUtil.HostCheck) //reticle telegraph
                     {

@@ -50,7 +50,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Terra
 
                 /*if (Projectile.Distance(Main.player[Main.npc[ai0].target].Center) > 600)
                 {
-                    Projectile.velocity = 3f * Projectile.DirectionTo(Main.player[Main.npc[ai0].target].Center);
+                    Projectile.velocity = 3f * Projectile.SafeDirectionTo(Main.player[Main.npc[ai0].target].Center);
                 }*/
             }
             else
