@@ -157,8 +157,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
         }
         public void RenderPixelatedPrimitives(SpriteBatch spriteBatch)
         {
-            if (!ShaderManager.TryGetShader("FargowiltasSouls.LifelightDeathray", out ManagedShader shader))
-                return;
+            ManagedShader shader = ShaderManager.GetShader("FargowiltasSouls.LifelightDeathray");
             FargoSoulsUtil.SetTexture1(FargosTextureRegistry.FadedStreak.Value);
 
             Vector2 start = Projectile.Center;

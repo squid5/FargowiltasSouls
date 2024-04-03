@@ -99,8 +99,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
         }
         public void RenderPixelatedPrimitives(SpriteBatch spriteBatch)
         {
-            if (!ShaderManager.TryGetShader("FargowiltasSouls.BlobTrail", out ManagedShader shader))
-                return;
+            ManagedShader shader = ShaderManager.GetShader("FargowiltasSouls.BlobTrail");
             FargoSoulsUtil.SetTexture1(FargosTextureRegistry.FadedStreak.Value);
             PrimitiveRenderer.RenderTrail(Projectile.oldPos, new(WidthFunction, ColorFunction, _ => Projectile.Size * 0.5f, Pixelate: true, Shader: shader), 44);
         }

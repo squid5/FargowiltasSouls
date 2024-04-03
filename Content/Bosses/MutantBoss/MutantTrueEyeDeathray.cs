@@ -144,8 +144,7 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
         {
             if (Projectile.hide)
                 return;
-            if (!ShaderManager.TryGetShader("FargowiltasSouls.BlobTrail", out ManagedShader shader))
-                return;
+            ManagedShader shader = ShaderManager.GetShader("FargowiltasSouls.BlobTrail");
 
             // Get the laser end position.
             Vector2 laserEnd = Projectile.Center + Projectile.velocity.SafeNormalize(Vector2.UnitY) * drawDistance * 1.1f;

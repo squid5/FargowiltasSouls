@@ -145,8 +145,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Will
             if (Projectile.velocity == Vector2.Zero)
                 return false;
 
-            if (!ShaderManager.TryGetShader("FargowiltasSouls.WillDeathray", out ManagedShader shader))
-                return false;
+            ManagedShader shader = ShaderManager.GetShader("FargowiltasSouls.WillDeathray");
 
             // Get the laser end position.
             Vector2 laserEnd = Projectile.Center + Projectile.velocity.SafeNormalize(Vector2.UnitY) * drawDistance;

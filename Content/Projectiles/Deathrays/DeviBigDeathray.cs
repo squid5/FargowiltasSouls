@@ -192,10 +192,8 @@ namespace FargowiltasSouls.Content.Projectiles.Deathrays
             if (Projectile.hide)
                 return;
 
-            if (!ShaderManager.TryGetShader("FargowiltasSouls.DeviTouhouDeathray", out ManagedShader laser))
-                return;
-            if (!ShaderManager.TryGetShader("FargowiltasSouls.DeviRing", out ManagedShader ring))
-                return;
+            ManagedShader laser = ShaderManager.GetShader("FargowiltasSouls.DeviTouhouDeathray");
+            ManagedShader ring = ShaderManager.GetShader("FargowiltasSouls.DeviRing");
 
             // Get the laser end position.
             Vector2 laserEnd = Projectile.Center + Projectile.velocity.SafeNormalize(Vector2.UnitY) * drawDistance;

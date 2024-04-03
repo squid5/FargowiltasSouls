@@ -103,8 +103,7 @@ namespace FargowiltasSouls.Content.Projectiles
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
 
-            if (!ShaderManager.TryGetShader("FargowiltasSouls.Vertex_ArcTelegraph", out ManagedShader shader))
-                return false;
+            ManagedShader shader = ShaderManager.GetShader("FargowiltasSouls.Vertex_ArcTelegraph");
 
             FargoSoulsUtil.SetTexture1(ModContent.Request<Texture2D>("Terraria/Images/Extra_193").Value);
             shader.TrySetParameter("mainColor", Color.Lerp(Color.DeepSkyBlue, Color.SlateBlue, 0.7f));

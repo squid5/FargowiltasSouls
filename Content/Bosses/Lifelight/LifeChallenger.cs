@@ -3150,8 +3150,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
         {
             if (InternalRuneFormation != Formations.Spear)
                 return;
-            if (!ShaderManager.TryGetShader("FargowiltasSouls.BlobTrail", out ManagedShader shader))
-                return;
+            ManagedShader shader = ShaderManager.GetShader("FargowiltasSouls.BlobTrail");
             FargoSoulsUtil.SetTexture1(FargosTextureRegistry.FadedStreak.Value);
             PrimitiveRenderer.RenderTrail(NPC.oldPos, new(WidthFunction, ColorFunction, _ => NPC.Size * 0.5f, Pixelate: true, Shader: shader), 44);
         }

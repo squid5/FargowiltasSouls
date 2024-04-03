@@ -93,12 +93,10 @@ Right click pattern becomes denser with up to 12 empty minion slots
             {
                 Main.spriteBatch.End(); //end and begin main.spritebatch to apply a shader
                 Main.spriteBatch.Begin(SpriteSortMode.Immediate, null, null, null, null, null, Main.UIScaleMatrix);
-                if (ShaderManager.TryGetShader("FargowiltasSouls.Text", out ManagedShader shader))
-                {
-                    shader.TrySetParameter("mainColor", new Color(255, 48, 154));
-                    shader.TrySetParameter("secondaryColor", new Color(255, 169, 240));
-                    shader.Apply("PulseCircle");
-                }
+                ManagedShader shader = ShaderManager.GetShader("FargowiltasSouls.Text");
+                shader.TrySetParameter("mainColor", new Color(255, 48, 154));
+                shader.TrySetParameter("secondaryColor", new Color(255, 169, 240));
+                shader.Apply("PulseCircle");
                 Utils.DrawBorderString(Main.spriteBatch, line.Text, new Vector2(line.X, line.Y), new Color(255, 169, 240), 1); //draw the tooltip manually
                 Main.spriteBatch.End(); //then end and begin again to make remaining tooltip lines draw in the default way
                 Main.spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, Main.UIScaleMatrix);

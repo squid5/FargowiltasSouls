@@ -159,8 +159,7 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
             if (Projectile.hide)
                 return;
 
-            if (!ShaderManager.TryGetShader("FargowiltasSouls.GenericDeathray", out ManagedShader shader))
-                return;
+            ManagedShader shader = ShaderManager.GetShader("FargowiltasSouls.GenericDeathray");
 
             // Get the laser end position.
             Vector2 laserEnd = Projectile.Center + Projectile.velocity.SafeNormalize(Vector2.UnitY) * drawDistance * 1.1f;
