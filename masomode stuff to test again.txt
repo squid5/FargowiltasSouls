@@ -3,3 +3,4 @@ gfb mutant says something when he kills you/despawns
 maso ftw fishron is only retro fish ex ai, doesnt also stack modern emode ai
 fixed fish ex actually multiplicatively multiplying his damage by x1.5 every single time he phase changes
 fixed penetrator sword not flipping with you with gravity
+AccessoryEffectPlayer changed MethodInfo to Expression<Func<AccessoryEffect, Delegate>>???????? idfk
