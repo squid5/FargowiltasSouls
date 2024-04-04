@@ -6,5 +6,4 @@ fixed penetrator sword not flipping with you with gravity
 AccessoryEffectPlayer changed MethodInfo to Expression<Func<AccessoryEffect, Delegate>>???????? idfk
 pearlwood ench adjustment
 	you debuff install it
-	has a 3sec cooldown to disable after activating so you cant spam the key
 	you only get crit while the star is actually chasing you
