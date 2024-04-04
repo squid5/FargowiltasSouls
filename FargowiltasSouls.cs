@@ -114,7 +114,6 @@ namespace FargowiltasSouls
 
 
             ToggleLoader.Load();
-
             FargoUIManager.LoadUI();
 
             if (Main.netMode != NetmodeID.Server)
