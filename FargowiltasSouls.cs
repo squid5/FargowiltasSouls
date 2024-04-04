@@ -112,7 +112,6 @@ namespace FargowiltasSouls
             DebuffInstallKey = KeybindLoader.RegisterKeybind(this, "DebuffInstall", "Y");
             AmmoCycleKey = KeybindLoader.RegisterKeybind(this, "AmmoCycle", "L");
 
-
             ToggleLoader.Load();
             FargoUIManager.LoadUI();
 

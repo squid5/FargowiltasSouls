@@ -2,7 +2,7 @@
 sampler uImage1 : register(s1);
 sampler uImage2 : register(s2);
 
-float time;
+float globalTime;
 float3 mainColor;
 matrix worldViewProjection;
 
@@ -16,14 +16,14 @@ struct VertexShaderInput
 {
     float4 Position : POSITION0;
     float4 Color : COLOR0;
-    float2 TextureCoordinates : TEXCOORD0;
+    float3 TextureCoordinates : TEXCOORD0;
 };
 
 struct VertexShaderOutput
 {
     float4 Position : SV_POSITION;
     float4 Color : COLOR0;
-    float2 TextureCoordinates : TEXCOORD0;
+    float3 TextureCoordinates : TEXCOORD0;
 };
 
 VertexShaderOutput VertexShaderFunction(in VertexShaderInput input)
@@ -44,9 +44,10 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 {
     float4 color = input.Color;
     float2 coords = input.TextureCoordinates;
+	coords.y = (coords.y - 0.5) / input.TextureCoordinates.z + 0.5;
     
 	// Get the fade map pixel.
-    float4 fadeMapColor = tex2D(uImage1, float2(frac(coords.x * stretchAmount - time * scrollSpeed), coords.y));
+	float4 fadeMapColor = tex2D(uImage1, float2(frac(coords.x * stretchAmount - globalTime * scrollSpeed), coords.y));
     
     // Calcuate the grayscale version of the pixel and use it as the opacity.
     float opacity = fadeMapColor.r;

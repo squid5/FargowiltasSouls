@@ -2,9 +2,8 @@
 sampler uImage1 : register(s1);
 sampler uImage2 : register(s2);
 
-float time;
+float globalTime;
 float3 mainColor;
-
 matrix worldViewProjection;
 
 // These 3 are required if using primitives. They are the same for any shader being applied to them
@@ -15,14 +14,14 @@ struct VertexShaderInput
 {
     float4 Position : POSITION0;
     float4 Color : COLOR0;
-    float2 TextureCoordinates : TEXCOORD0;
+    float3 TextureCoordinates : TEXCOORD0;
 };
 
 struct VertexShaderOutput
 {
     float4 Position : SV_POSITION;
     float4 Color : COLOR0;
-    float2 TextureCoordinates : TEXCOORD0;
+    float3 TextureCoordinates : TEXCOORD0;
 };
 
 VertexShaderOutput VertexShaderFunction(in VertexShaderInput input)
@@ -45,13 +44,15 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
     // This can also be copy pasted along with the above.
     float4 color = input.Color;
     float2 coords = input.TextureCoordinates;
+    
+	coords.y = (coords.y - 0.5) / input.TextureCoordinates.z + 0.5;
 
     // This basically makes the prim wiggle based on a sine wave.
-    float y = coords.y + sin(coords.x * 68 + time * 6.283) * 0.05;
+	float y = coords.y + sin(coords.x * 68 + globalTime * 6.283) * 0.05;
     
     // Get the pixel of the fade map. What coords.x is being multiplied by determines
     // how many times the uImage1 is copied to cover the entirety of the prim. 2, 2
-    float4 fadeMapColor = tex2D(uImage1, float2(frac(coords.x * 0.7 - time * 1.5), coords.y));
+	float4 fadeMapColor = tex2D(uImage1, float2(frac(coords.x * 2 - globalTime * 2), coords.y));
     
     // Use the red value for the opacity, as the provided image *should* be grayscale.
     float opacity = fadeMapColor.r;

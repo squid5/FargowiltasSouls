@@ -1,23 +1,21 @@
 ﻿sampler uImage0 : register(s0);
 sampler uImage1 : register(s1);
-sampler uImage2 : register(s2);
 
-float time;
-float3 mainColor;
+float globalTime;
 matrix worldViewProjection;
 
 struct VertexShaderInput
 {
     float4 Position : POSITION0;
     float4 Color : COLOR0;
-    float2 TextureCoordinates : TEXCOORD0;
+    float3 TextureCoordinates : TEXCOORD0;
 };
 
 struct VertexShaderOutput
 {
     float4 Position : SV_POSITION;
     float4 Color : COLOR0;
-    float2 TextureCoordinates : TEXCOORD0;
+    float3 TextureCoordinates : TEXCOORD0;
 };
 
 VertexShaderOutput VertexShaderFunction(in VertexShaderInput input)
@@ -32,32 +30,20 @@ VertexShaderOutput VertexShaderFunction(in VertexShaderInput input)
     return output;
 }
 
-float InverseLerp(float from, float to, float x)
-{
-    return saturate((x - from) / (to - from));
-}
-
 float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 {
     float4 color = input.Color;
     float2 coords = input.TextureCoordinates;
+	coords.y = (coords.y - 0.5) / input.TextureCoordinates.z + 0.5;
     
-    float bloomFadeout = sin(3.1415 * coords.y);
-    float4 baseTexture = (tex2D(uImage1, float2(frac(coords.x * 4.3 - time * 3), coords.y)).r + bloomFadeout) * color;
+    // Get the pixel of the fade map. What coords.x is being multiplied by determines
+    // how many times the uImage1 is copied to cover the entirety of the prim. 2, 2
+	float fadeMapBrightness = tex2D(uImage1, float2(frac(coords.x * 0.7 - globalTime * 1.5), coords.y)).r;
     
-    float noise = tex2D(uImage2, float2(frac(coords.x * 5 - time * 3.5), coords.y)).r;
-    float4 noiseTexture = InverseLerp(0.4, 0.5, pow(noise * bloomFadeout, 1.2)) * float4(mainColor, 1);
-    
-    float opacity = 1;
-    
-    if (coords.x < 0.05)
-        opacity *= pow(coords.x / 0.05, 6);
-    if (coords.x > 0.95)
-        opacity *= pow(1 - (coords.x - 0.95) / 0.05, 6);
-    
-    opacity *= bloomFadeout;
-    
-    return baseTexture * 1.33 * opacity + noiseTexture * opacity;
+    // You determine what this is by simply fucking around with changing stuff and seeing how it changes,
+    // until you get something that looks cool.
+    float bloomOpacity = lerp(pow(sin(coords.y * 3.141), lerp(2, 6, coords.x)), 0.7, coords.x);
+    return color * pow(bloomOpacity, 5) * lerp(2, 6, fadeMapBrightness);
 }
 
 technique Technique1
