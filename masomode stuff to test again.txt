@@ -1,2 +1,4 @@
 ﻿maso cultist pillar spawns just a vision (dragon is gfb)
 gfb mutant says something when he kills you/despawns
+maso ftw fishron is only retro fish ex ai, doesnt also stack modern emode ai
+fixed fish ex actually multiplicatively multiplying his damage by x1.5 every single time he phase changes
