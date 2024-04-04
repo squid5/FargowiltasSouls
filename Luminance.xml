@@ -1629,7 +1629,7 @@
             The opacity of the filter. As long as this is above 0, the filter will be applied for that frame.
             </summary>
         </member>
-        <member name="M:Luminance.Core.Graphics.ManagedScreenFilter.#ctor(Terraria.Ref{Microsoft.Xna.Framework.Graphics.Effect})">
+        <member name="M:Luminance.Core.Graphics.ManagedScreenFilter.#ctor(ReLogic.Content.Asset{Microsoft.Xna.Framework.Graphics.Effect})">
             <summary>
             A wrapper class for <see cref="T:Microsoft.Xna.Framework.Graphics.Effect"/> that is focused around screen filter effects.
             </summary>
@@ -1798,14 +1798,14 @@
             <param name="name">The name of the filter.</param>
             <param name="filter">The filter output.</param>
         </member>
-        <member name="M:Luminance.Core.Graphics.ShaderManager.SetShader(System.String,Terraria.Ref{Microsoft.Xna.Framework.Graphics.Effect})">
+        <member name="M:Luminance.Core.Graphics.ShaderManager.SetShader(System.String,ReLogic.Content.Asset{Microsoft.Xna.Framework.Graphics.Effect})">
             <summary>
                 Sets a shader with a given name in the registry manually.
             </summary>
             <param name="name">The name of the shader.</param>
             <param name="newShaderData">The shader data reference to save.</param>
         </member>
-        <member name="M:Luminance.Core.Graphics.ShaderManager.SetFilter(System.String,Terraria.Ref{Microsoft.Xna.Framework.Graphics.Effect})">
+        <member name="M:Luminance.Core.Graphics.ShaderManager.SetFilter(System.String,ReLogic.Content.Asset{Microsoft.Xna.Framework.Graphics.Effect})">
             <summary>
                 Sets a filter with a given name in the registry manually.
             </summary>
