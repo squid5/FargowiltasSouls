@@ -2,9 +2,9 @@ sampler uImage0 : register(s0);
 sampler uImage1 : register(s1);
 sampler uImage2 : register(s2);
 
-float time;
+float globalTime;
 float opacity;
-matrix worldViewProjection;
+matrix uWorldViewProjection;
 
 float stretchAmount;
 float scrollSpeed;
@@ -14,20 +14,20 @@ struct VertexShaderInput
 {
     float4 Position : POSITION0;
     float4 Color : COLOR0;
-    float2 TextureCoordinates : TEXCOORD0;
+    float3 TextureCoordinates : TEXCOORD0;
 };
 
 struct VertexShaderOutput
 {
     float4 Position : SV_POSITION;
     float4 Color : COLOR0;
-    float2 TextureCoordinates : TEXCOORD0;
+    float3 TextureCoordinates : TEXCOORD0;
 };
 
 VertexShaderOutput VertexShaderFunction(in VertexShaderInput input)
 {
     VertexShaderOutput output = (VertexShaderOutput) 0;
-    float4 pos = mul(input.Position, worldViewProjection);
+    float4 pos = mul(input.Position, uWorldViewProjection);
     output.Position = pos;
     
     output.Color = input.Color;
@@ -40,15 +40,16 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 {
     float4 color = input.Color;
     float2 coords = input.TextureCoordinates;
+	coords.y = (coords.y - 0.5) / input.TextureCoordinates.z + 0.5;
     
     float adjustedXposition = (sin(((coords.x * 2) - 1) * 1.57079) + 1) * 2;
     
 	// Get the fade map pixel.
     float4 fadeMapColor;
     if (reverseDirection)
-        fadeMapColor = tex2D(uImage1, float2(frac(adjustedXposition * stretchAmount - time * scrollSpeed), coords.y));
+		fadeMapColor = tex2D(uImage1, float2(frac(adjustedXposition * stretchAmount - globalTime * scrollSpeed), coords.y));
     else
-        fadeMapColor = tex2D(uImage1, float2(frac(adjustedXposition * stretchAmount + time * scrollSpeed), coords.y));
+		fadeMapColor = tex2D(uImage1, float2(frac(adjustedXposition * stretchAmount + globalTime * scrollSpeed), coords.y));
     
     // Calcuate the grayscale version of the pixel and use it as the opacity.
     float finalOpacity = fadeMapColor.r;

@@ -144,7 +144,7 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
         {
             if (Projectile.hide)
                 return;
-            ManagedShader shader = ShaderManager.GetShader("FargowiltasSouls.BlobTrail");
+            ManagedShader shader = ShaderManager.GetShader("FargowiltasSouls.GenericDeathray");
 
             // Get the laser end position.
             Vector2 laserEnd = Projectile.Center + Projectile.velocity.SafeNormalize(Vector2.UnitY) * drawDistance * 1.1f;
@@ -153,7 +153,7 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
 
             // This allows the drawing to be pushed back, which is needed due to the shader fading in at the start to avoid
             // sharp lines.
-            Vector2 initialDrawPoint = Projectile.Center - Projectile.velocity * 70f;
+            Vector2 initialDrawPoint = Projectile.Center;// - Projectile.velocity * 70f;
             Vector2[] baseDrawPoints = new Vector2[8];
             for (int i = 0; i < baseDrawPoints.Length; i++)
                 baseDrawPoints[i] = Vector2.Lerp(initialDrawPoint, laserEnd, i / (float)(baseDrawPoints.Length - 1f));
@@ -169,7 +169,7 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
             shader.TrySetParameter("uColorFadeScaler", 1f);
             shader.TrySetParameter("useFadeIn", true);
 
-            PrimitiveRenderer.RenderTrail(Projectile.oldPos, new(WidthFunction, ColorFunction, Pixelate: true, Shader: shader), 20);
+            PrimitiveRenderer.RenderTrail(baseDrawPoints, new(WidthFunction, ColorFunction, Pixelate: true, Shader: shader), 20);
         }
     }
 }

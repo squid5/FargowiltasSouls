@@ -2,28 +2,28 @@
 sampler uImage1 : register(s1);
 sampler uImage2 : register(s2);
 
-float time;
+float globalTime;
 float3 mainColor;
-matrix worldViewProjection;
+matrix uWorldViewProjection;
 
 struct VertexShaderInput
 {
     float4 Position : POSITION0;
     float4 Color : COLOR0;
-    float2 TextureCoordinates : TEXCOORD0;
+    float3 TextureCoordinates : TEXCOORD0;
 };
 
 struct VertexShaderOutput
 {
     float4 Position : SV_POSITION;
     float4 Color : COLOR0;
-    float2 TextureCoordinates : TEXCOORD0;
+    float3 TextureCoordinates : TEXCOORD0;
 };
 
 VertexShaderOutput VertexShaderFunction(in VertexShaderInput input)
 {
     VertexShaderOutput output = (VertexShaderOutput) 0;
-    float4 pos = mul(input.Position, worldViewProjection);
+    float4 pos = mul(input.Position, uWorldViewProjection);
     output.Position = pos;
     
     output.Color = input.Color;
@@ -41,11 +41,12 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 {
     float4 color = input.Color;
     float2 coords = input.TextureCoordinates;
+	coords.y = (coords.y - 0.5) / input.TextureCoordinates.z + 0.5;
     
     float bloomFadeout = sin(3.1415 * coords.y);
-    float4 baseTexture = (tex2D(uImage1, float2(frac(coords.x * 4.3 - time * 3), coords.y)).r + bloomFadeout) * color;
+	float4 baseTexture = (tex2D(uImage1, float2(frac(coords.x * 4.3 - globalTime * 3), coords.y)).r + bloomFadeout) * color;
     
-    float noise = tex2D(uImage2, float2(frac(coords.x * 5 - time * 3.5), coords.y)).r;
+	float noise = tex2D(uImage2, float2(frac(coords.x * 5 - globalTime * 3.5), coords.y)).r;
     float4 noiseTexture = InverseLerp(0.4, 0.5, pow(noise * bloomFadeout, 1.2)) * float4(mainColor, 1);
     
     float opacity = 1;

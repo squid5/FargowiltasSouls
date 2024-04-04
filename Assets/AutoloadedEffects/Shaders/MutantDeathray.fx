@@ -2,9 +2,9 @@
 sampler uImage1 : register(s1);
 sampler uImage2 : register(s2);
 
-float time;
+float globalTime;
 float3 mainColor;
-matrix worldViewProjection;
+matrix uWorldViewProjection;
 
 // These 3 are required if using primitives. They are the same for any shader being applied to them
 // so you can copy paste them to any other prim shaders and use the VertexShaderOutput input in the
@@ -14,20 +14,20 @@ struct VertexShaderInput
 {
     float4 Position : POSITION0;
     float4 Color : COLOR0;
-    float2 TextureCoordinates : TEXCOORD0;
+    float3 TextureCoordinates : TEXCOORD0;
 };
 
 struct VertexShaderOutput
 {
     float4 Position : SV_POSITION;
     float4 Color : COLOR0;
-    float2 TextureCoordinates : TEXCOORD0;
+    float3 TextureCoordinates : TEXCOORD0;
 };
 
 VertexShaderOutput VertexShaderFunction(in VertexShaderInput input)
 {
     VertexShaderOutput output = (VertexShaderOutput) 0;
-    float4 pos = mul(input.Position, worldViewProjection);
+    float4 pos = mul(input.Position, uWorldViewProjection);
     output.Position = pos;
     
     output.Color = input.Color;
@@ -44,33 +44,33 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
     // This can also be copy pasted along with the above.
     float4 color = input.Color;
     float2 coords = input.TextureCoordinates;
-
-    // This basically makes the prim wiggle based on a sine wave.
-    float y = coords.y + sin(coords.x * 68 + time * 6.283) * 0.05;
+	coords.y = (coords.y - 0.5) / input.TextureCoordinates.z + 0.5;
+    
+    if (coords.x < 0.05)
+        coords.y /= pow(coords.x / 0.05, 0.4);
     
     // Get the pixel of the fade map. What coords.x is being multiplied by determines
-    // how many times the uImage1 is copied to cover the entirety of the prim. 2, 2
-    float4 fadeMapColor = tex2D(uImage1, float2(frac(coords.x * 2 - time * 2), coords.y));
+    // how many times the uImage1 is copied to cover the entirety of the prim. 4, 4.6
+	float4 fadeMapColor = tex2D(uImage1, float2(frac(coords.x * 2 - globalTime * 4.6), coords.y));
     
     // Use the red value for the opacity, as the provided image *should* be grayscale.
     float opacity = fadeMapColor.r;
     // Lerp between the base color, and the provided color based on the opacity of the fademap.
-    float4 changedColor = lerp(float4(mainColor, 1), color, 0.1);
-    float4 colorCorrected = lerp(color, changedColor, fadeMapColor.r);
+    float4 colorCorrected = lerp(color, float4(mainColor, 1), fadeMapColor.r);
     
     // Fade out at the top and bottom of the streak.
-    if (coords.y < 0.2)
-        opacity *= pow(coords.y / 0.2, 6);
-    if (coords.y > 0.8)
-        opacity *= pow(1 - (coords.y - 0.8) / 0.8, 6);
+    if (coords.y < 0.35)
+        opacity *= pow(coords.y / 0.35, 6);
+    if (coords.y > 0.65)
+        opacity *= pow(1 - (coords.y - 0.65) / 0.8, 6);
     
-    // Fade out at the end of the streak.
-    if (coords.x < 0.07)
-        opacity *= pow(coords.x / 0.07, 6);
+    //// Fade out at the top and bottom of the streak.
+    if (coords.x < 0.1)
+        opacity *= pow(coords.x / 0.1, 6);
     if (coords.x > 0.95)
         opacity *= pow(1 - (coords.x - 0.95) / 0.05, 6);
     
-    return colorCorrected * opacity * 1.2;
+    return colorCorrected * pow(opacity, 0.5);
 }
 
 technique Technique1

@@ -1,27 +1,27 @@
 ﻿sampler uImage0 : register(s0);
 sampler uImage1 : register(s1);
 
-float time;
-matrix worldViewProjection;
+float globalTime;
+matrix uWorldViewProjection;
 
 struct VertexShaderInput
 {
     float4 Position : POSITION0;
     float4 Color : COLOR0;
-    float2 TextureCoordinates : TEXCOORD0;
+    float3 TextureCoordinates : TEXCOORD0;
 };
 
 struct VertexShaderOutput
 {
     float4 Position : SV_POSITION;
     float4 Color : COLOR0;
-    float2 TextureCoordinates : TEXCOORD0;
+    float3 TextureCoordinates : TEXCOORD0;
 };
 
 VertexShaderOutput VertexShaderFunction(in VertexShaderInput input)
 {
     VertexShaderOutput output = (VertexShaderOutput) 0;
-    float4 pos = mul(input.Position, worldViewProjection);
+    float4 pos = mul(input.Position, uWorldViewProjection);
     output.Position = pos;
     
     output.Color = input.Color;
@@ -34,10 +34,11 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 {
     float4 color = input.Color;
     float2 coords = input.TextureCoordinates;
-
+	coords.y = (coords.y - 0.5) / input.TextureCoordinates.z + 0.5;
+    
     // Get the pixel of the fade map. What coords.x is being multiplied by determines
     // how many times the uImage1 is copied to cover the entirety of the prim. 2, 2
-    float fadeMapBrightness = tex2D(uImage1, float2(frac(coords.x * 0.7 - time * 1.5), coords.y)).r;
+	float fadeMapBrightness = tex2D(uImage1, float2(frac(coords.x * 0.7 - globalTime * 1.5), coords.y)).r;
     
     // You determine what this is by simply fucking around with changing stuff and seeing how it changes,
     // until you get something that looks cool.
