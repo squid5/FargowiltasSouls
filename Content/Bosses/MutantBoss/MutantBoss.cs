@@ -103,6 +103,11 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
         {
             NPC.width = 120;//34;
             NPC.height = 120;//50;
+            if (Main.getGoodWorld)
+            {
+                NPC.width = Player.defaultWidth;
+                NPC.height = Player.defaultHeight;
+            }
             NPC.damage = 444;
             NPC.defense = 255;
             NPC.value = Item.buyPrice(7);
@@ -192,6 +197,16 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
                 }
             }
             AuraCenter = NPC.Center;
+        }
+
+        public override bool PreAI()
+        {
+            if (WorldSavingSystem.MasochistModeReal && !Main.dedServ)
+            {
+                if (!Main.LocalPlayer.ItemTimeIsZero && (Main.LocalPlayer.HeldItem.type == ItemID.RodofDiscord || Main.LocalPlayer.HeldItem.type == ItemID.RodOfHarmony))
+                    Main.LocalPlayer.AddBuff(ModContent.BuffType<TimeFrozenBuff>(), 600);
+            }
+            return base.PreAI();
         }
 
         public override void AI()
@@ -687,6 +702,7 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
                     NPC.velocity.Y -= 1f;
                     if (NPC.timeLeft == 1)
                     {
+                        EdgyBossText(GFBQuote(36));
                         if (NPC.position.Y < 0)
                             NPC.position.Y = 0;
                         if (FargoSoulsUtil.HostCheck && ModContent.TryFind("Fargowiltas", "Mutant", out ModNPC modNPC) && !NPC.AnyNPCs(modNPC.Type))
@@ -1833,7 +1849,7 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
 
             int pillarAttackDelay = 60;
 
-            if (Main.zenithWorld)
+            if (Main.zenithWorld && NPC.ai[1] > 180)
                 player.confused = true;
 
             if (NPC.ai[2] == 0 && NPC.ai[3] == 0) //target one corner of arena
@@ -3907,7 +3923,7 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
         {
             base.OnKill();
 
-            if (!playerInvulTriggered && WorldSavingSystem.EternityMode)
+            if (WorldSavingSystem.MasochistModeReal || (!playerInvulTriggered && WorldSavingSystem.EternityMode))
             {
                 Item.NewItem(NPC.GetSource_Loot(), NPC.Hitbox, ModContent.ItemType<PhantasmalEnergy>());
             }

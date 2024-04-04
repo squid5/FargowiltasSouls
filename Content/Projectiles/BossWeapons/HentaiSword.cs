@@ -71,12 +71,23 @@ namespace FargowiltasSouls.Content.Projectiles.BossWeapons
 
         public override void AI()
         {
-            //dont rotate on first tick
+            if (Projectile.localAI[0] == 0)
+                Projectile.ai[2] = 1;
+
+            //dont rotate on first few ticks
             if (Projectile.localAI[0]++ > 1)
                 Projectile.velocity = Projectile.velocity.RotatedBy(MathHelper.Pi / MAXTIME * Projectile.ai[0]);
-            Projectile.rotation = Projectile.velocity.ToRotation();
 
             Player projOwner = Main.player[Projectile.owner];
+
+            if (Projectile.ai[2] != projOwner.gravDir)
+            {
+                Projectile.ai[2] = projOwner.gravDir;
+                Projectile.ai[0] *= -1;
+                Projectile.velocity.Y *= -1;
+            }
+
+            Projectile.rotation = Projectile.velocity.ToRotation();
             Vector2 ownerMountedCenter = projOwner.RotatedRelativePoint(projOwner.MountedCenter);
             Projectile.Center = ownerMountedCenter - Projectile.velocity / 2;
             Projectile.direction = projOwner.direction;
@@ -189,6 +200,7 @@ namespace FargowiltasSouls.Content.Projectiles.BossWeapons
             for (int i = 0; i < MUTANT_SWORD_MAX; i++)
             {
                 Color glowcolor = Color.Lerp(new Color(196, 247, 255, 0), Color.Transparent, 0.9f);
+                glowcolor *= Projectile.Opacity;
                 float increment = MathHelper.Lerp(1f, 0.05f, (float)i / MUTANT_SWORD_MAX);
                 for (float j = 0; j < ProjectileID.Sets.TrailCacheLength[Projectile.type]; j += increment) //reused betsy fireball scaling trail thing
                 {
@@ -213,6 +225,7 @@ namespace FargowiltasSouls.Content.Projectiles.BossWeapons
             for (int i = -1; i <= 1; i += 2)
             {
                 Color glowcolor = Color.Lerp(new Color(196, 247, 255, 0), Color.Transparent, 0.9f);
+                glowcolor *= Projectile.Opacity;
                 float increment = MathHelper.Lerp(1f, 0.05f, (float)i / MUTANT_SWORD_MAX);
                 for (float j = 0; j < ProjectileID.Sets.TrailCacheLength[Projectile.type]; j += increment) //reused betsy fireball scaling trail thing
                 {

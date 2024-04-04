@@ -466,11 +466,17 @@ namespace FargowiltasSouls.Content.Projectiles
                             }
                         }
                         break;
+
                     case var _ when SpearRework.ReworkedSpears.Contains(projectile.type):
                         {
                             projectile.damage = (int)(projectile.damage * 1.5f);
                             break;
                         }
+
+                    case ProjectileID.StarCloakStar:
+                        if (!Main.hardMode)
+                            projectile.damage /= 2;
+                        break;
 
                     default:
                         break;
@@ -1348,6 +1354,12 @@ namespace FargowiltasSouls.Content.Projectiles
             if (FargoSoulsUtil.BossIsAlive(ref EModeGlobalNPC.moonBoss, NPCID.MoonLordCore)
                 && sourceNPC is NPC
                 && sourceNPC.TryGetGlobalNPC(out MoonLordBodyPart _))
+            {
+                target.AddBuff(ModContent.BuffType<CurseoftheMoonBuff>(), 180);
+            }
+
+            if (FargoSoulsUtil.BossIsAlive(ref EModeGlobalNPC.cultBoss, NPCID.CultistBoss)
+                && target.Distance(Main.npc[EModeGlobalNPC.cultBoss].Center) < 2400)
             {
                 target.AddBuff(ModContent.BuffType<CurseoftheMoonBuff>(), 180);
             }

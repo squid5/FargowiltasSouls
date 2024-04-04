@@ -537,7 +537,7 @@ namespace FargowiltasSouls.Core.ModPlayers
             {
                 if (WorldSavingSystem.MasochistModeReal && FargoSoulsUtil.BossIsAlive(ref EModeGlobalNPC.mutantBoss, ModContent.NPCType<MutantBoss>()) && EModeGlobalNPC.mutantBoss.IsWithinBounds(Main.maxNPCs))
                 {
-                    if (info.Damage > 1)
+                    if (!Player.HasBuff(ModContent.BuffType<TimeFrozenBuff>()))
                     {
                         The22Incident++;
                         Rectangle rect = new Rectangle((int)Player.Center.X - 111, (int)Player.Center.Y, 222, 222);
@@ -545,7 +545,6 @@ namespace FargowiltasSouls.Core.ModPlayers
                             CombatText.NewText(rect, Color.DarkOrange, The22Incident, true);
                         if (The22Incident >= 22)
                         {
-                            Player.ResetEffects();
                             Player.KillMe(Terraria.DataStructures.PlayerDeathReason.ByCustomReason(Language.GetTextValue("Mods.FargowiltasSouls.DeathMessage.TwentyTwo", Player.name)), 22222222, 0);
                             Projectile.NewProjectile(Player.GetSource_Death(), Player.Center, Vector2.Zero, ModContent.ProjectileType<TwentyTwo>(), 0, 0f, Main.myPlayer);
                             Screenshake = 120;

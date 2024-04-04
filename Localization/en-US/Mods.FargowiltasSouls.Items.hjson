@@ -244,7 +244,7 @@ GoldEnchant: {
 	Tooltip:
 		'''
 		Your attacks inflict Midas
-		Automatically sends coins to your piggy bank when picked up
+		Automatically sends coins to your piggy bank when picked up, this works passively
 		Press the Gold hotkey to be encased in a Golden Shell
 		You will not be able to move or attack, but will be immune to all damage
 		Press again to exit early
@@ -443,8 +443,8 @@ PearlwoodEnchant: {
 	DisplayName: Pearlwood Enchantment
 	Tooltip:
 		'''
-		Your attacks have an extra chance to crit
-		A damaging star follows your every move
+		Press the Debuff Install key to spawn a damaging star that chases you
+		While the star is active, your attacks can roll an extra chance to crit
 		'You can't outrun your own reflection'
 		'''
 }
@@ -933,7 +933,7 @@ TimberForce: {
 		[i:FargowiltasSouls/RichMahoganyEnchant] All grappling hooks shoot, pull, and retract 2.5x as fast
 		[i:FargowiltasSouls/EbonwoodEnchant][i:FargowiltasSouls/ShadewoodEnchant] You have an aura of Corruption and Bleeding
 		[i:FargowiltasSouls/PalmWoodEnchant] Double tap down to spawn up to 2 palm tree sentries
-		[i:FargowiltasSouls/PearlwoodEnchant] Crits reroll favorably 2 times, and a damaging star follows you
+		[i:FargowiltasSouls/PearlwoodEnchant] Press the Debuff Install key to spawn a damaging star and gain crit reroll
 		'Extremely rigid'
 		'''
 }
@@ -1188,7 +1188,7 @@ FusedLens: {
 		When inflicted with Cursed Inferno, 15% increased attack speed
 		When inflicted with Ichor, 15% increased critical strike chance
 		When losing health to damage over time, you inflict Cursed Inferno and Ichor
-		Press the Debuff Install key to inflict yourself with Cursed Inferno and Ichor for 30 seconds
+		Press the Debuff Install key to inflict yourself with Cursed Inferno and Ichor
 		'Too melted to improve vision'
 		'''
 }
@@ -3396,5 +3396,9 @@ TogglerIconItem: {
 
 RazorContainer: {
 	DisplayName: Razor Container
-	Tooltip: Spawns 2? razor blades that hover around you. Hit them with a melee attack to send them flying dealing extra damage
+	Tooltip:
+		'''
+		Spawns a razor blade that hovers around your cursor. Hit it with a melee attack to send it flying dealing extra damage and armor pen
+		'Some yellow fur is still stuck at the bottom' 
+		'''
 }
