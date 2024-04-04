@@ -2,7 +2,7 @@
 float globalTime;
 float3 mainColor;
 
-matrix worldViewProjection;
+matrix uWorldViewProjection;
 
 struct VertexShaderInput
 {
@@ -21,7 +21,7 @@ struct VertexShaderOutput
 VertexShaderOutput MainVS(in VertexShaderInput input)
 {
     VertexShaderOutput output;
-    output.Position = mul(input.Position, worldViewProjection);
+    output.Position = mul(input.Position, uWorldViewProjection);
     output.Color = input.Color;
     output.TextureCoordinates = input.TextureCoordinates;
     return output;

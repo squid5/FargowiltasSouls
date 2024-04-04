@@ -2,7 +2,7 @@
 sampler uImage1 : register(s1);
 
 float globalTime;
-matrix worldViewProjection;
+matrix uWorldViewProjection;
 
 struct VertexShaderInput
 {
@@ -21,7 +21,7 @@ struct VertexShaderOutput
 VertexShaderOutput VertexShaderFunction(in VertexShaderInput input)
 {
     VertexShaderOutput output = (VertexShaderOutput) 0;
-    float4 pos = mul(input.Position, worldViewProjection);
+    float4 pos = mul(input.Position, uWorldViewProjection);
     output.Position = pos;
     
     output.Color = input.Color;

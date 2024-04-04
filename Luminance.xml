@@ -1520,7 +1520,7 @@
         </member>
         <member name="T:Luminance.Core.Graphics.IPixelatedPrimitiveRenderer">
             <summary>
-            Use to sucessfully render primitives with pixelation with an NPC or Projectile.
+            Use to successfully render primitives with pixelation with an NPC or Projectile.
             </summary>
         </member>
         <member name="P:Luminance.Core.Graphics.IPixelatedPrimitiveRenderer.LayerToRenderTo">
@@ -1624,14 +1624,14 @@
             A managed copy of all parameter data. Used to minimize excess SetValue calls, in cases where the value aren't actually being changed.
             </summary>
         </member>
-        <member name="M:Luminance.Core.Graphics.ManagedScreenFilter.#ctor(Terraria.Ref{Microsoft.Xna.Framework.Graphics.Effect})">
-            <summary>
-            A wrapper class for <see cref="P:Luminance.Core.Graphics.ManagedScreenFilter.Effect"/> that is focused around screen filter effects.
-            </summary>
-        </member>
         <member name="P:Luminance.Core.Graphics.ManagedScreenFilter.Opacity">
             <summary>
             The opacity of the filter. As long as this is above 0, the filter will be applied for that frame.
+            </summary>
+        </member>
+        <member name="M:Luminance.Core.Graphics.ManagedScreenFilter.#ctor(Terraria.Ref{Microsoft.Xna.Framework.Graphics.Effect})">
+            <summary>
+            A wrapper class for <see cref="T:Microsoft.Xna.Framework.Graphics.Effect"/> that is focused around screen filter effects.
             </summary>
         </member>
         <member name="M:Luminance.Core.Graphics.ManagedScreenFilter.SetMainColor(Microsoft.Xna.Framework.Color)">
@@ -1812,6 +1812,16 @@
             <param name="name">The name of the filter.</param>
             <param name="newShaderData">The shader data reference to save.</param>
         </member>
+        <member name="P:Luminance.Core.Graphics.ShaderRecompilationMonitor.CompilerPath">
+            <summary>
+            The path to the central mod compiler.
+            </summary>
+        </member>
+        <member name="M:Luminance.Core.Graphics.ShaderRecompilationMonitor.CreateCompilerDirectory">
+            <summary>
+            Creates the compiler directory in accordance with <see cref="P:Luminance.Core.Graphics.ShaderRecompilationMonitor.CompilerPath"/>.
+            </summary>
+        </member>
         <member name="M:Luminance.Core.Graphics.ShaderRecompilationMonitor.LoadForMod(Terraria.ModLoader.Mod)">
             <summary>
             Attempts to load all potential shader watchers for a given mod.
@@ -1827,13 +1837,12 @@
             </remarks>
             <param name="mod">The mod to check for.</param>
         </member>
-        <member name="M:Luminance.Core.Graphics.ShaderRecompilationMonitor.TryToWatchPath(Terraria.ModLoader.Mod,System.String,System.String)">
+        <member name="M:Luminance.Core.Graphics.ShaderRecompilationMonitor.TryToWatchPath(Terraria.ModLoader.Mod,System.String)">
             <summary>
             Attempts to create a new shader watcher for a given mod over a given path.
             </summary>
             <param name="mod">The mod that should own the shader watcher.</param>
             <param name="path">The path that the shader watcher should oversee.</param>
-            <param name="compilerPath">The mod's compiler path.</param>
         </member>
         <member name="M:Luminance.Core.Graphics.ShaderRecompilationMonitor.ProcessCompilationsForWatcher(Luminance.Core.Graphics.ShaderRecompilationMonitor.ShaderWatcher)">
             <summary>
@@ -1841,11 +1850,10 @@
             </summary>
             <param name="watcher">The shader watcher to process</param>
         </member>
-        <member name="M:Luminance.Core.Graphics.ShaderRecompilationMonitor.StartCompilerProcess(Luminance.Core.Graphics.ShaderRecompilationMonitor.ShaderWatcher)">
+        <member name="M:Luminance.Core.Graphics.ShaderRecompilationMonitor.StartCompilerProcess">
             <summary>
             Starts EasyXNB.
             </summary>
-            <param name="watcher">The watcher responsible for compilation.</param>
         </member>
         <member name="M:Luminance.Core.Graphics.ShaderRecompilationMonitor.ProcessCompiledFile(Luminance.Core.Graphics.ShaderRecompilationMonitor.CompilingFile,Luminance.Core.Graphics.ShaderRecompilationMonitor.ShaderWatcher,System.String)">
             <summary>
@@ -1855,12 +1863,11 @@
             <param name="watcher">The shader watcher responsible for the file.</param>
             <param name="compilerDirectory">The directory that contains the compiler executable.</param>
         </member>
-        <member name="M:Luminance.Core.Graphics.ShaderRecompilationMonitor.MoveFileToCompilingFolder(Luminance.Core.Graphics.ShaderRecompilationMonitor.CompilingFile,System.String)">
+        <member name="M:Luminance.Core.Graphics.ShaderRecompilationMonitor.MoveFileToCompilingFolder(Luminance.Core.Graphics.ShaderRecompilationMonitor.CompilingFile)">
             <summary>
             Moves a given compiling file to the compilation directory so that EasyXNB can run on it and acquire a new compiled shader.
             </summary>
             <param name="file">The file to move.</param>
-            <param name="compilerDirectory">The directory that contains the compiler executable.</param>
         </member>
         <member name="T:Luminance.Core.Graphics.BlockerSystem.BlockCondition">
             <summary>

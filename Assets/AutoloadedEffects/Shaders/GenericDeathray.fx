@@ -4,7 +4,7 @@ sampler uImage2 : register(s2);
 
 float globalTime;
 float3 mainColor;
-matrix worldViewProjection;
+matrix uWorldViewProjection;
 
 // These must be set or this will not work properly.
 float stretchAmount;
@@ -29,7 +29,7 @@ struct VertexShaderOutput
 VertexShaderOutput VertexShaderFunction(in VertexShaderInput input)
 {
     VertexShaderOutput output = (VertexShaderOutput) 0;
-    float4 pos = mul(input.Position, worldViewProjection);
+    float4 pos = mul(input.Position, uWorldViewProjection);
     output.Position = pos;
     
     output.Color = input.Color;

@@ -4,7 +4,7 @@ sampler uImage2 : register(s2);
 
 float globalTime;
 float3 mainColor;
-matrix worldViewProjection;
+matrix uWorldViewProjection;
 
 // These 3 are required if using primitives. They are the same for any shader being applied to them
 // so you can copy paste them to any other prim shaders and use the VertexShaderOutput input in the
@@ -27,7 +27,7 @@ struct VertexShaderOutput
 VertexShaderOutput VertexShaderFunction(in VertexShaderInput input)
 {
     VertexShaderOutput output = (VertexShaderOutput) 0;
-    float4 pos = mul(input.Position, worldViewProjection);
+    float4 pos = mul(input.Position, uWorldViewProjection);
     output.Position = pos;
     
     output.Color = input.Color;
