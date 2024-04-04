@@ -3,6 +3,7 @@ using FargowiltasSouls.Content.Buffs.Masomode;
 using FargowiltasSouls.Core;
 using FargowiltasSouls.Core.Globals;
 using FargowiltasSouls.Core.Systems;
+using Luminance.Core.Graphics;
 using Microsoft.CodeAnalysis;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -122,7 +123,7 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
             {
                 Vector2 dir = Vector2.Normalize(-Projectile.velocity.RotatedByRandom(MathF.PI * 0.2f));
                 float spd = Math.Max(4, Projectile.velocity.Length() / 2);
-                FargoParticle p = new ElectricSpark(Projectile.Center,  dir * spd, color * 0.7f, Main.rand.NextFloat(0.7f, 1f), 20);
+                Particle p = new ElectricSpark(Projectile.Center,  dir * spd, color * 0.7f, Main.rand.NextFloat(0.7f, 1f), 20);
                 p.Spawn();
             }
 

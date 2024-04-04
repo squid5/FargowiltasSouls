@@ -24,6 +24,7 @@ using Terraria.Map;
 using static tModPorter.ProgressUpdate;
 using FargowiltasSouls.Core;
 using Terraria.WorldBuilding;
+using Luminance.Core.Graphics;
 
 namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 {
@@ -401,7 +402,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                                 bool recolor = SoulConfig.Instance.BossRecolors && WorldSavingSystem.EternityMode;
                                 Color color = recolor ? Color.DeepSkyBlue : Color.LimeGreen;
                                 Color color2 = recolor ? Color.DarkBlue : Color.ForestGreen;
-                                FargoParticle particle = new ExpandingBloomParticle(npc.Center, Vector2.Zero, color, Vector2.Zero, Vector2.One * 100f, 20, true, color2);
+                                Particle particle = new ExpandingBloomParticle(npc.Center, Vector2.Zero, color, Vector2.Zero, Vector2.One * 100f, 20, true, color2);
                                 particle.Spawn();
 
                                 foreach (Projectile p in Main.projectile.Where(p => p.active && p.type == ModContent.ProjectileType<CrystalLeafShot>() && p.ai[0] == npc.whoAmI)) //my crystal leaves
@@ -679,7 +680,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                         bool recolor = SoulConfig.Instance.BossRecolors && WorldSavingSystem.EternityMode;
                         Color color = recolor ? Color.DeepSkyBlue : Color.LimeGreen;
                         Color color2 = recolor ? Color.DarkBlue : Color.ForestGreen;
-                        FargoParticle particle = new ExpandingBloomParticle(npc.Center, Vector2.Zero, color, Vector2.Zero, Vector2.One * 100f, 20, true, color2);
+                        Particle particle = new ExpandingBloomParticle(npc.Center, Vector2.Zero, color, Vector2.Zero, Vector2.One * 100f, 20, true, color2);
                         particle.Spawn();
 
                         foreach (Projectile p in Main.projectile.Where(p => p.active && p.type == ModContent.ProjectileType<CrystalLeafShot>() && p.ai[0] == npc.whoAmI)) //my crystal leaves

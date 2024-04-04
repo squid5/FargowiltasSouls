@@ -27,6 +27,7 @@ using FargowiltasSouls.Common.Graphics.Particles;
 using FargowiltasSouls.Content.Items.Placables.Relics;
 using Terraria.Localization;
 using System.Reflection;
+using Luminance.Core.Graphics;
 
 namespace FargowiltasSouls.Content.Bosses.BanishedBaron
 {
@@ -565,7 +566,7 @@ namespace FargowiltasSouls.Content.Bosses.BanishedBaron
                         if (Main.rand.NextBool(2) && Main.netMode != NetmodeID.Server)
                         {
                             Vector2 backPos = NPC.Center - Vector2.Normalize(NPC.velocity) * 120 / 2f + Main.rand.NextVector2Circular(10, 10);
-                            FargoParticle p = new Bubble(backPos, -NPC.velocity.RotatedByRandom(MathF.PI * 0.12f) * Main.rand.NextFloat(0.6f, 1f) / 2f, 1, 30, rotation: Main.rand.NextFloat(MathF.Tau));
+                            Particle p = new Bubble(backPos, -NPC.velocity.RotatedByRandom(MathF.PI * 0.12f) * Main.rand.NextFloat(0.6f, 1f) / 2f, 1, 30, rotation: Main.rand.NextFloat(MathF.Tau));
                             p.Spawn();
                             Dust.NewDust(backPos, 2, 2, DustID.Water, -NPC.velocity.X, -NPC.velocity.Y, 0, default, 1f);
                         }
@@ -785,7 +786,7 @@ namespace FargowiltasSouls.Content.Bosses.BanishedBaron
                     
                 for (int i = 0; i < 5; i++)
                 {
-                    FargoParticle p = new SparkParticle(propellerPos, -NPC.rotation.ToRotationVector2().RotatedByRandom(MathHelper.Pi / 8) * Main.rand.NextFloat(8, 12), Color.Orange, 1, 40);
+                    Particle p = new SparkParticle(propellerPos, -NPC.rotation.ToRotationVector2().RotatedByRandom(MathHelper.Pi / 8) * Main.rand.NextFloat(8, 12), Color.Orange, 1, 40);
                     p.Spawn();
                 }
             }
@@ -863,7 +864,7 @@ namespace FargowiltasSouls.Content.Bosses.BanishedBaron
                 SoundEngine.PlaySound(SoundID.Item14, exCenter);
                 Vector2 pos = exCenter; //circle with highest density in middle
                 Vector2 vel = NPC.velocity;
-                FargoParticle p = new ExpandingBloomParticle(pos, vel, Color.Lerp(Color.Yellow, Color.Red, Main.rand.NextFloat()), startScale: Vector2.One * 3, endScale: Vector2.One * 6, lifetime: 15);
+                Particle p = new ExpandingBloomParticle(pos, vel, Color.Lerp(Color.Yellow, Color.Red, Main.rand.NextFloat()), startScale: Vector2.One * 3, endScale: Vector2.One * 6, lifetime: 15);
                 p.Spawn();
 
                 Vector2 dir = Main.rand.NextVector2CircularEdge(1, 1);

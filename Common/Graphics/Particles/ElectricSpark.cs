@@ -49,7 +49,7 @@ namespace FargowiltasSouls.Common.Graphics.Particles
             Rectangle lightningRect = GetRandomLightningFrame();
             Vector2 lightningOrigin = lightningRect.Size() / 2f;
             spriteBatch.Draw(lightningTexture, Position - Main.screenPosition, lightningRect, DrawColor * Opacity, Rotation, lightningOrigin, Scale, SpriteEffects.None);
-            spriteBatch.Draw(lightningTexture, Position - Main.screenPosition, lightningRect, DrawColor * Opacity, Rotation, lightningOrigin, Scale * new Vector2(0.45f, 1f), SpriteEffects.None;
+            spriteBatch.Draw(lightningTexture, Position - Main.screenPosition, lightningRect, DrawColor * Opacity, Rotation, lightningOrigin, Scale * new Vector2(0.45f, 1f), SpriteEffects.None);
 
             if (UseBloom)
 				spriteBatch.Draw(lightningTexture, Position - Main.screenPosition, lightningRect, BloomColor * 0.5f * Opacity, Rotation, lightningOrigin, Scale, SpriteEffects.None);

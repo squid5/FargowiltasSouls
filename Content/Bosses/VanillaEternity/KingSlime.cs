@@ -13,6 +13,7 @@ using Terraria.DataStructures;
 using System;
 using FargowiltasSouls.Content.NPCs.EternityModeNPCs;
 using FargowiltasSouls.Common.Graphics.Particles;
+using Luminance.Core.Graphics;
 
 namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 {
@@ -115,7 +116,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     if (JumpTimer >= SpecialJumpTime && !SpecialJumping && (CertainAttackCooldown <= 0 || WorldSavingSystem.MasochistModeReal))
                     {
                         SoundEngine.PlaySound(SoundID.Item21 with { Pitch = -1, Volume = 1.5f }, npc.Center);
-                        FargoParticle p = new ExpandingBloomParticle(npc.Center, Vector2.Zero, Color.Blue, Vector2.One, Vector2.One * 60, 40, true, Color.Transparent);
+                        Particle p = new ExpandingBloomParticle(npc.Center, Vector2.Zero, Color.Blue, Vector2.One, Vector2.One * 60, 40, true, Color.Transparent);
                         SpecialJumping = true;
                         CertainAttackCooldown = 240;
                         p.Spawn();

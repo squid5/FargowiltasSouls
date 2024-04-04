@@ -21,6 +21,7 @@ using FargowiltasSouls.Common.Graphics.Particles;
 using Terraria.DataStructures;
 using Terraria.Localization;
 using Terraria.WorldBuilding;
+using Luminance.Core.Graphics;
 
 namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 {
@@ -810,7 +811,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     {
                         Vector2 vel = Vector2.UnitX.RotatedBy(MathHelper.TwoPi * (float)i / sparks).RotatedByRandom(MathHelper.Pi / sparks);
                         vel *= Main.rand.NextFloat(3, 8);
-                        FargoParticle p = new SparkParticle(npc.Center, vel, Color.Red, 1, LungeWindup);
+                        Particle p = new SparkParticle(npc.Center, vel, Color.Red, 1, LungeWindup);
                         p.Spawn();
                         Timer = 1;
                     }

@@ -1,4 +1,5 @@
 using FargowiltasSouls.Common.Graphics.Particles;
+using Luminance.Core.Graphics;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
@@ -57,7 +58,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEve
             {
                 //int d = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.SolarFlare);
                 //Main.dust[d].velocity.X = 0;
-                FargoParticle p = new ExpandingBloomParticle(
+                Particle p = new ExpandingBloomParticle(
                     position: Main.rand.NextVector2FromRectangle(Projectile.Hitbox),
                     velocity: Vector2.UnitY * Main.rand.NextFloat(-20, 0),
                     drawColor: Microsoft.Xna.Framework.Color.Goldenrod,

@@ -74,7 +74,7 @@ namespace FargowiltasSouls.Content.Bosses.DeviBoss
                 // THESE DO NOT CURRENTLY WORK, DO NOT USE.
 
                 //Vector2 velocity = Vector2.UnitY.RotatedByRandom(MathHelper.TwoPi) * Main.rand.NextFloat(4f, 6f);
-                //FargoParticle heart = new HeartParticle(Projectile.Center, velocity, Color.HotPink, 60, 1f, 1f);
+                //Particle heart = new HeartParticle(Projectile.Center, velocity, Color.HotPink, 60, 1f, 1f);
                 //ParticleManager.SpawnParticle(heart);
             }
             if (FargoSoulsUtil.BossIsAlive(ref EModeGlobalNPC.deviBoss, ModContent.NPCType<DeviBoss>()))

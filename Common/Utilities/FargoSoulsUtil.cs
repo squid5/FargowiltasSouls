@@ -18,6 +18,7 @@ using Terraria.ModLoader;
 using FargowiltasSouls.Core.Globals;
 using FargowiltasSouls.Common.Graphics.Particles;
 using System.Reflection;
+using Luminance.Core.Graphics;
 
 namespace FargowiltasSouls //lets everything access it without using
 {
@@ -583,7 +584,7 @@ namespace FargowiltasSouls //lets everything access it without using
                 Vector2 offset = spawnPos - Main.LocalPlayer.Center;
                 if (Math.Abs(offset.X) > Main.screenWidth * 0.6f || Math.Abs(offset.Y) > Main.screenHeight * 0.6f) //dont spawn dust if its pointless
                     continue;
-                FargoParticle p;
+                Particle p;
                 switch (particleType)
                 {
                     case 1:

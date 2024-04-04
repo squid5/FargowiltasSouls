@@ -947,7 +947,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                     //SoundEngine.PlaySound(SoundID.Tink, Main.LocalPlayer.Center);
 
                     Color color = Main.rand.NextFromList(Color.Goldenrod, Color.Pink, Color.Cyan);
-                    FargoParticle p = new SmallSparkle(
+                    Particle p = new SmallSparkle(
                         worldPosition: NPC.Center,
                         velocity: (Main.rand.NextFloat(5, 50) * Vector2.UnitX).RotatedByRandom(MathHelper.TwoPi),
                         drawColor: color,
@@ -973,7 +973,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                     for (int i = 0; i < 100; i++)
                     {
                         Color color = Main.rand.NextFromList(Color.Goldenrod, Color.Pink, Color.Cyan);
-                        FargoParticle p = new SmallSparkle(
+                        Particle p = new SmallSparkle(
                             worldPosition: NPC.Center,
                             velocity: (Main.rand.NextFloat(5, 50) * Vector2.UnitX).RotatedByRandom(MathHelper.TwoPi),
                             drawColor: color,
@@ -2752,7 +2752,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                 for (int i = 0; i < 400; i++)
                 {
                     Color color = Main.rand.NextFromList(Color.Goldenrod, Color.Pink, Color.Cyan);
-                    FargoParticle p = new SmallSparkle(
+                    Particle p = new SmallSparkle(
                         worldPosition: NPC.Center, 
                         velocity: (Main.rand.NextFloat(5, 50) * Vector2.UnitX).RotatedByRandom(MathHelper.TwoPi), 
                         drawColor: color, 

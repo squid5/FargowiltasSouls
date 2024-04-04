@@ -9,6 +9,7 @@ using FargowiltasSouls.Content.Bosses.VanillaEternity;
 using FargowiltasSouls.Content.NPCs.EternityModeNPCs;
 using FargowiltasSouls.Content.Items.Accessories.Enchantments;
 using FargowiltasSouls.Common.Graphics.Particles;
+using Luminance.Core.Graphics;
 
 namespace FargowiltasSouls.Content.Projectiles
 {
@@ -104,7 +105,7 @@ namespace FargowiltasSouls.Content.Projectiles
                         float sparkTime = 15;
                         Vector2 sparkVel = (Projectile.Center - sparkCenter) / sparkTime;
                         float sparkScale = 2f - modifier * 1.2f;
-                        FargoParticle spark = new SparkParticle(sparkCenter, sparkVel, color, sparkScale, (int)sparkTime);
+                        Particle spark = new SparkParticle(sparkCenter, sparkVel, color, sparkScale, (int)sparkTime);
                         spark.Spawn();
                     }
                     break;
@@ -166,7 +167,7 @@ namespace FargowiltasSouls.Content.Projectiles
                         float sparkTime = 15;
                         Vector2 sparkVel = (Projectile.Center - sparkCenter) / sparkTime;
                         float sparkScale = 2f - modifier * 1.2f;
-                        FargoParticle spark = new SparkParticle(sparkCenter, sparkVel, color, sparkScale, (int)sparkTime);
+                        Particle spark = new SparkParticle(sparkCenter, sparkVel, color, sparkScale, (int)sparkTime);
                         spark.Spawn();
                     }
                     break;

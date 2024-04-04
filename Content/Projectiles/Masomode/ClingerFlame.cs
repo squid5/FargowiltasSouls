@@ -1,4 +1,5 @@
 ﻿using FargowiltasSouls.Common.Graphics.Particles;
+using Luminance.Core.Graphics;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
@@ -59,7 +60,7 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
                 for (int i = 0; i < max; i++)
                 {
                     Vector2 pos = Main.rand.NextVector2FromRectangle(Projectile.Hitbox);
-                    FargoParticle p = new ExpandingBloomParticle(pos, new(Main.rand.NextFloat(-2, 2), Main.rand.NextFloat(-6, 6)), new(96, 248, 2), Vector2.One * 0.5f, Vector2.Zero, 10);
+                    Particle p = new ExpandingBloomParticle(pos, new(Main.rand.NextFloat(-2, 2), Main.rand.NextFloat(-6, 6)), new(96, 248, 2), Vector2.One * 0.5f, Vector2.Zero, 10);
                     p.Spawn();
                     /*
                     p.Velocity *= 0.5f;

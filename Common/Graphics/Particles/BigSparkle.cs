@@ -37,7 +37,7 @@ namespace FargowiltasSouls.Common.Graphics.Particles
 		{
 			if (UseBloom)
 			{
-				AtlasTexture bloomTexture = AtlasManager.GetTexture("Fargowiltas.Bloom");
+				AtlasTexture bloomTexture = AtlasManager.GetTexture("FargowiltasSouls.Bloom");
                 spriteBatch.Draw(bloomTexture, Position - Main.screenPosition, null, BloomColor with { A = 0 } * 0.5f * Opacity, 0f, bloomTexture.Frame.Size() * 0.5f, Scale * 0.17f, SpriteEffects.None);
             }
 				

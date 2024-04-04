@@ -12,6 +12,7 @@ using FargowiltasSouls.Core.Systems;
 using FargowiltasSouls.Content.Items.Summons;
 using FargowiltasSouls.Common.StateMachines;
 using static FargowiltasSouls.Content.Bosses.BanishedBaron.BanishedBaron;
+using Luminance.Core.Graphics;
 
 namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 {
@@ -330,7 +331,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 				float sparkTime = 15;
 				Vector2 sparkVel = (maskCenter - sparkCenter) / sparkTime;
 				float sparkScale = 2f - progress * 1.2f;
-				FargoParticle spark = new SparkParticle(sparkCenter, sparkVel, GlowColor, sparkScale, (int)sparkTime);
+				Particle spark = new SparkParticle(sparkCenter, sparkVel, GlowColor, sparkScale, (int)sparkTime);
 				spark.Spawn();
 			}
 			else if (Timer == TelegraphTime)

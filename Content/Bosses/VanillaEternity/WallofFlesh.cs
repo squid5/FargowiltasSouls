@@ -21,6 +21,7 @@ using Color = Microsoft.Xna.Framework.Color;
 using FargowiltasSouls.Content.Patreon.DanielTheRobot;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.Graphics.Shaders;
+using Luminance.Core.Graphics;
 
 namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 {
@@ -142,7 +143,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                         Main.dust[d].velocity *= speedModifier;
                         Main.dust[d].noGravity = true;
                         */
-                        FargoParticle p = new ExpandingBloomParticle(npc.Center + 32f * direction + vel * 50, -vel / 2, color, startScale: Vector2.Zero, endScale: Vector2.One * scale, lifetime: 25);
+                        Particle p = new ExpandingBloomParticle(npc.Center + 32f * direction + vel * 50, -vel / 2, color, startScale: Vector2.Zero, endScale: Vector2.One * scale, lifetime: 25);
                         p.Velocity *= 2f;
                         p.Spawn();
                     }
@@ -502,7 +503,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
                 if (TelegraphTimer % frequency == 0)
                 {
-                    FargoParticle p = new SparkParticle(eyeCenter + offset, vel, color, Main.rand.NextFloat(1.25f, 2f), 20);
+                    Particle p = new SparkParticle(eyeCenter + offset, vel, color, Main.rand.NextFloat(1.25f, 2f), 20);
                     p.Spawn();
                 }
 

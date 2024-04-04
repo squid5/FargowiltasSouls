@@ -177,7 +177,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
             float scale = MathHelper.Lerp(0.05f, 0.175f, FargoSoulsUtil.SineInOut(Projectile.scale));
             // Draw a nice bloom flare.
             Texture2D bloomFlare = FargosTextureRegistry.BloomFlareTexture.Value;
-            Texture2D bloom = FargoParticle.CommonBloomTexture;
+            Texture2D bloom = Particle.CommonBloomTexture;
             float rotation = Main.GlobalTimeWrappedHourly * 1.1f;
 
             Color bloomFlareColor1 = Color.OrangeRed with { A = 0 } * 0.7f;

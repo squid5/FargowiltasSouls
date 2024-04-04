@@ -1,6 +1,7 @@
 using FargowiltasSouls.Common.Graphics.Particles;
 using FargowiltasSouls.Content.Items.BossBags;
 using FargowiltasSouls.Content.Projectiles.Deathrays;
+using Luminance.Core.Graphics;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
@@ -50,7 +51,7 @@ namespace FargowiltasSouls.Content.Items.Weapons.Challengers
             if (Charges == 6)
             {
                 Vector2 pos = (player.gravDir > 0 ? player.Top + Vector2.UnitY * 7 : player.Bottom - Vector2.UnitY * 7);
-                FargoParticle p = new SmallSparkle(pos, Vector2.UnitX.RotatedByRandom(MathHelper.TwoPi) * Main.rand.NextFloat(2, 5), Color.DeepPink, 1f, 10,
+                Particle p = new SmallSparkle(pos, Vector2.UnitX.RotatedByRandom(MathHelper.TwoPi) * Main.rand.NextFloat(2, 5), Color.DeepPink, 1f, 10,
                     Main.rand.NextFloat(MathHelper.TwoPi), Main.rand.NextFloat(-MathHelper.Pi / 24, MathHelper.Pi / 24));
                 p.Spawn();
             }

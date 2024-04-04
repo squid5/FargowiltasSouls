@@ -2,6 +2,7 @@
 using FargowiltasSouls.Common.Graphics.Particles;
 using FargowiltasSouls.Content.Buffs.Masomode;
 using FargowiltasSouls.Core.Systems;
+using Luminance.Core.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -97,7 +98,7 @@ namespace FargowiltasSouls.Content.Bosses.BanishedBaron
                 {
                     if (Main.netMode != NetmodeID.Server)
                     {
-                        FargoParticle p = new Bubble(backPos, -Projectile.velocity.RotatedByRandom(MathF.PI * 0.12f) * Main.rand.NextFloat(0.6f, 1f) / 2f, 1, 30, rotation: Main.rand.NextFloat(MathF.Tau));
+                        Particle p = new Bubble(backPos, -Projectile.velocity.RotatedByRandom(MathF.PI * 0.12f) * Main.rand.NextFloat(0.6f, 1f) / 2f, 1, 30, rotation: Main.rand.NextFloat(MathF.Tau));
                         p.Spawn();
                     }
                     Dust.NewDust(backPos, 2, 2, DustID.Water, -Projectile.velocity.X, -Projectile.velocity.Y, 0, default, 1f);
@@ -186,7 +187,7 @@ namespace FargowiltasSouls.Content.Bosses.BanishedBaron
             {
                 Vector2 pos = Projectile.Center + new Vector2(0, Main.rand.NextFloat(ExplosionDiameter * 0.8f)).RotatedBy(Main.rand.NextFloat(MathHelper.TwoPi)); //circle with highest density in middle
                 Vector2 vel = (pos - Projectile.Center) / 500;
-                FargoParticle p = new ExpandingBloomParticle(pos, vel, Color.Lerp(Color.Yellow, Color.Red, pos.Distance(Projectile.Center) / (ExplosionDiameter / 2f)), startScale: Vector2.One * 3, endScale: Vector2.One * 6, lifetime: 60);
+                Particle p = new ExpandingBloomParticle(pos, vel, Color.Lerp(Color.Yellow, Color.Red, pos.Distance(Projectile.Center) / (ExplosionDiameter / 2f)), startScale: Vector2.One * 3, endScale: Vector2.One * 6, lifetime: 60);
                 p.Velocity *= 2f;
                 p.Spawn();
                 //int d = Dust.NewDust(pos, 0, 0, DustID.Fireworks, 0f, 0f, 0, default, 1.5f);

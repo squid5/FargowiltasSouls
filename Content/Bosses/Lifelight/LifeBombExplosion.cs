@@ -6,6 +6,9 @@ using Terraria.ModLoader;
 using Terraria.ID;
 using FargowiltasSouls.Core.Systems;
 using FargowiltasSouls.Common.Graphics.Particles;
+using Luminance.Core.Graphics;
+using Luminance.Common.Utilities;
+using FargowiltasSouls.Assets.ExtraTextures;
 
 namespace FargowiltasSouls.Content.Bosses.Lifelight
 {
@@ -94,8 +97,9 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
             //draw bloom
             float bloomScale = Projectile.scale * 1.5f;
             float bloomOpacity = 1;
-            Main.spriteBatch.Draw(FargoParticle.CommonBloomTexture, drawPos, null, Color.DarkGoldenrod with { A = 0 } * bloomOpacity, Projectile.rotation, FargoParticle.CommonBloomTexture.Size() * 0.5f, bloomScale, SpriteEffects.None, 0f);
-            Main.spriteBatch.Draw(FargoParticle.CommonBloomTexture, drawPos, null, Color.Gold with { A = 0 } * 0.4f * bloomOpacity, Projectile.rotation, FargoParticle.CommonBloomTexture.Size() * 0.5f, bloomScale * 0.66f, SpriteEffects.None, 0f);
+            Texture2D bloomTexture = FargosTextureRegistry.BloomTexture.Value;
+            Main.spriteBatch.Draw(bloomTexture, drawPos, null, Color.DarkGoldenrod with { A = 0 } * bloomOpacity, Projectile.rotation, bloomTexture.Size() * 0.5f, bloomScale, SpriteEffects.None, 0f);
+            Main.spriteBatch.Draw(bloomTexture, drawPos, null, Color.Gold with { A = 0 } * 0.4f * bloomOpacity, Projectile.rotation, bloomTexture.Size() * 0.5f, bloomScale * 0.66f, SpriteEffects.None, 0f);
             //Main.spriteBatch.End();
             //Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.ZoomMatrix);
             return false;
