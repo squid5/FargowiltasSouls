@@ -70,7 +70,7 @@ namespace FargowiltasSouls.Core.AccessoryEffectSystem
         {
             foreach (var hook in Hooks)
             {
-                hook.Value.AddRange(WhereMethodIsOverridden(AccessoryEffectLoader.AccessoryEffects, hook.Key));
+                hook.Value.AddRange(AccessoryEffectLoader.AccessoryEffects.WhereMethodIsOverridden(hook.Key));
             }
         }
         public override void Initialize()
