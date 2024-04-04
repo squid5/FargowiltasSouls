@@ -4,7 +4,7 @@ using Terraria;
 
 namespace FargowiltasSouls.Common.Graphics.Particles
 {
-	public class SmallSparkle : Particle
+	public class SmallSparkle : FargoParticle
 	{
 		public readonly bool UseBloom;
 

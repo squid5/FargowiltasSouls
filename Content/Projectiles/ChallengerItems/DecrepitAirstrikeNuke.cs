@@ -82,7 +82,7 @@ namespace FargowiltasSouls.Content.Projectiles.ChallengerItems
                 Projectile.netUpdate = true;
             }
             Vector2 target = TargetX * Vector2.UnitX + TargetY * Vector2.UnitY;
-            Projectile.rotation = (-Projectile.DirectionTo(target)).ToRotation();
+            Projectile.rotation = (-Projectile.SafeDirectionTo(target)).ToRotation();
             
             if (Projectile.timeLeft <= 3)
             {

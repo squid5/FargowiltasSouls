@@ -43,7 +43,7 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
             {
                 Projectile.localAI[1] = 1;
                 SoundEngine.PlaySound(SoundID.DD2_GhastlyGlaiveImpactGhost, Projectile.Center);
-                p = FargoSoulsUtil.AnyBossAlive() ? Main.npc[FargoSoulsGlobalNPC.boss].target : Player.FindClosest(Projectile.Center, 0, 0);
+                p = LumUtils.AnyBosses() ? Main.npc[FargoSoulsGlobalNPC.boss].target : Player.FindClosest(Projectile.Center, 0, 0);
                 Projectile.netUpdate = true;
                 Projectile.rotation = Main.rand.NextFloat(MathHelper.TwoPi);
             }

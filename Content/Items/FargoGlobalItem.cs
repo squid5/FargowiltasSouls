@@ -279,7 +279,7 @@ namespace FargowiltasSouls.Content.Items
                 player.FargoSouls().WasHurtBySomething = true; //with abom rebirth, die to chaos state
             }
             /*
-            if (item.type == ItemID.PotionOfReturn && FargoSoulsUtil.AnyBossAlive() && WorldSavingSystem.EternityMode)
+            if (item.type == ItemID.PotionOfReturn && LumUtils.AnyBosses() && WorldSavingSystem.EternityMode)
             {
                 return false;
             }

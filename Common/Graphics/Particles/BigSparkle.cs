@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework;
 
 namespace FargowiltasSouls.Common.Graphics.Particles
 {
-	public class BigSparkle : Particle
+	public class BigSparkle : FargoParticle
 	{
 		public readonly bool UseBloom;
 

@@ -1,5 +1,7 @@
 ﻿global using FargowiltasSouls.Core.ModPlayers;
 global using FargowiltasSouls.Core.Toggler;
+global using Luminance.Common.Utilities;
+global using LumUtils = Luminance.Common.Utilities.Utilities;
 using FargowiltasSouls.Content.Sky;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -36,6 +38,7 @@ using FargowiltasSouls.Content.Patreon.Volknet;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using FargowiltasSouls.Content.Items.Accessories.Enchantments;
 using FargowiltasSouls.Content.Items.Accessories.Forces;
+
 
 namespace FargowiltasSouls
 {

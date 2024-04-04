@@ -1,6 +1,7 @@
-﻿using FargowiltasSouls.Common.Graphics.Primitives;
-using FargowiltasSouls.Common.Graphics.Shaders;
+﻿
+
 using FargowiltasSouls.Content.Bosses.AbomBoss;
+using Luminance.Core.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -136,8 +137,6 @@ namespace FargowiltasSouls.Content.Projectiles.BossWeapons
             //target.immune[Projectile.owner] = Main.player[Projectile.owner].ownedProjectileCounts[ModContent.ProjectileType<BossWeapons.StyxGazer>()] > 0 ? 1 : 3;
         }
 
-        public PrimDrawer LaserDrawer { get; private set; } = null;
-
         public float WidthFunction(float _) => Projectile.width * Projectile.scale * 2;
 
         public static Color ColorFunction(float _) => new(253, 254, 32, 100);
@@ -148,9 +147,7 @@ namespace FargowiltasSouls.Content.Projectiles.BossWeapons
             if (Projectile.velocity == Vector2.Zero)
                 return false;
 
-            Shader shader = ShaderManager.GetShaderIfExists("WillBigDeathray");
-
-            LaserDrawer ??= new PrimDrawer(WidthFunction, ColorFunction, shader);
+            ManagedShader shader = ShaderManager.GetShader("FargowiltasSouls.WillBigDeathray");
 
             // Get the laser end position.
             Vector2 laserEnd = Projectile.Center + Projectile.velocity.SafeNormalize(Vector2.UnitY) * Projectile.localAI[1];
@@ -168,13 +165,14 @@ namespace FargowiltasSouls.Content.Projectiles.BossWeapons
 
             // The laser should fade to this in the middle.
             Color brightColor = Color.Black;
-            shader.SetMainColor(brightColor);
+            shader.TrySetParameter("mainColor", brightColor);
             // GameShaders.Misc["FargoswiltasSouls:MutantDeathray"].UseImage1(); cannot be used due to only accepting vanilla paths.
             Texture2D fademap = ModContent.Request<Texture2D>("FargowiltasSouls/Assets/ExtraTextures/Trails/WillStreak").Value;
             FargoSoulsUtil.SetTexture1(fademap);
             for (int j = 0; j < 2; j++)
             {
-                LaserDrawer.DrawPrims(baseDrawPoints.ToList(), -Main.screenPosition, 30);
+                PrimitiveSettings primSettings = new(WidthFunction, ColorFunction, Shader: shader);
+                PrimitiveRenderer.RenderTrail(baseDrawPoints, primSettings, 30);
 
                 for (int i = 0; i < baseDrawPoints.Length / 2; i++)
                 {
@@ -183,7 +181,7 @@ namespace FargowiltasSouls.Content.Projectiles.BossWeapons
                     baseDrawPoints[i] = baseDrawPoints[swap];
                     baseDrawPoints[swap] = temp;
                 }
-                LaserDrawer.DrawPrims(baseDrawPoints.ToList(), -Main.screenPosition, 30);
+                PrimitiveRenderer.RenderTrail(baseDrawPoints, primSettings, 30);
             }
             return false;
         }

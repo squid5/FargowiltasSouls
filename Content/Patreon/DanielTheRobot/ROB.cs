@@ -110,7 +110,7 @@ namespace FargowiltasSouls.Content.Patreon.DanielTheRobot
 
             Main.EntitySpriteDraw(texture2D13, Projectile.Center + drawOffset - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY), new Rectangle?(rectangle), Projectile.GetAlpha(lightColor), Projectile.rotation, origin2, Projectile.scale, effects, 0);
 
-            if (FargoSoulsUtil.AnyBossAlive())
+            if (LumUtils.AnyBosses())
             {
                 Main.EntitySpriteDraw((Texture2D)EyebrowAsset, Projectile.Center + drawOffset - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY), new Rectangle?(rectangle), Projectile.GetAlpha(lightColor), Projectile.rotation, origin2, Projectile.scale, effects, 0);
             }

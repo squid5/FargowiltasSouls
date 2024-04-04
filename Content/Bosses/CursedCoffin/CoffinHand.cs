@@ -115,14 +115,14 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
                 case 1: // normal grabby hand, circling player
                     {
                         const float RotationSpeed = MathF.Tau * 0.005f;
-                        Vector2 offset = target.DirectionTo(Projectile.Center);
+                        Vector2 offset = target.SafeDirectionTo(Projectile.Center);
 
                         offset = offset.RotatedBy(RotDir * RotationSpeed) * 350;
 
                         Vector2 desiredPos = target.Center + offset;
                         Movement(desiredPos, 0.2f, 30, 5, 0.2f, 15);
 
-                        Projectile.rotation = Projectile.DirectionTo(target.Center).ToRotation() + MathHelper.PiOver2;
+                        Projectile.rotation = Projectile.SafeDirectionTo(target.Center).ToRotation() + MathHelper.PiOver2;
                     }
                     break;  
                 case 2:

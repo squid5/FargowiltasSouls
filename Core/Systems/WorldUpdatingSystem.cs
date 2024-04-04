@@ -51,7 +51,7 @@ namespace FargowiltasSouls.Core.Systems
                     if (!Main.dedServ)
                         SoundEngine.PlaySound(SoundID.Roar, Main.LocalPlayer.Center);
                 }
-                else if (!EternityMode && FargoSoulsUtil.WorldIsExpertOrHarder() && !FargoSoulsUtil.AnyBossAlive())
+                else if (!EternityMode && FargoSoulsUtil.WorldIsExpertOrHarder() && !LumUtils.AnyBosses())
                 {
 					EternityMode = true;
                     FargoSoulsUtil.PrintLocalization($"Mods.{Mod.Name}.Message.{Name}.EternityOn", new Color(175, 75, 255));
@@ -97,7 +97,7 @@ namespace FargowiltasSouls.Core.Systems
                     }
                 }
 
-                if (!MasochistModeReal && EternityMode && ((FargoSoulsUtil.WorldIsMaster() && CanPlayMaso) || Main.zenithWorld) && !FargoSoulsUtil.AnyBossAlive())
+                if (!MasochistModeReal && EternityMode && ((FargoSoulsUtil.WorldIsMaster() && CanPlayMaso) || Main.zenithWorld) && !LumUtils.AnyBosses())
                 {
                     MasochistModeReal = true;
                     FargoSoulsUtil.PrintLocalization($"Mods.{Mod.Name}.Message.{Name}.MasochistOn{(Main.zenithWorld ? "Zenith" : "")}", new Color(51, 255, 191, 0));

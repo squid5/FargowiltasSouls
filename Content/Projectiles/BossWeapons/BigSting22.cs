@@ -61,7 +61,7 @@ namespace FargowiltasSouls.Content.Projectiles.BossWeapons
                 }
                 else
                 {
-                    Projectile.velocity = Projectile.velocity.Length() * Projectile.DirectionTo(npc.Center);
+                    Projectile.velocity = Projectile.velocity.Length() * Projectile.SafeDirectionTo(npc.Center);
                 }
 
                 Projectile.ai[1] = 1;

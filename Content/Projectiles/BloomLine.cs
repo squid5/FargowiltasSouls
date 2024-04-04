@@ -83,7 +83,7 @@ namespace FargowiltasSouls.Content.Projectiles
                         Player target = Main.player[lifelight.target];
                         if (lifelight != null && lifelight.active && target != null && target.active )
                         {
-                            Projectile.rotation = lifelight.DirectionTo(target.Center).ToRotation();
+                            Projectile.rotation = lifelight.SafeDirectionTo(target.Center).ToRotation();
                             Projectile.Center = lifelight.Center;
                         }
                     }

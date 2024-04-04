@@ -4,7 +4,7 @@ using Terraria;
 
 namespace FargowiltasSouls.Common.Graphics.Particles
 {
-	public abstract class BaseExpandingParticle : Particle
+	public abstract class BaseExpandingParticle : FargoParticle
 	{
 		public readonly Vector2 StartScale;
 

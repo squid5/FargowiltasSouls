@@ -416,7 +416,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Spirit
                             Projectile.NewProjectile(NPC.GetSource_FromThis(), target, Vector2.Zero, ProjectileID.SandnadoHostileMark, 0, 0f, Main.myPlayer);
 
                             int length = (int)NPC.Distance(target) / 10;
-                            Vector2 offset = NPC.DirectionTo(target) * 10f;
+                            Vector2 offset = NPC.SafeDirectionTo(target) * 10f;
                             for (int i = 0; i < length; i++) //dust warning line for sandnado
                             {
                                 int d = Dust.NewDust(NPC.Center + offset * i, 0, 0, DustID.Sandnado, 0f, 0f, 0, new Color());
@@ -531,7 +531,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Spirit
                                 Projectile.NewProjectile(NPC.GetSource_FromThis(), target, Vector2.Zero, ProjectileID.SandnadoHostileMark, 0, 0f, Main.myPlayer);
 
                                 int length = (int)NPC.Distance(target) / 10;
-                                Vector2 offset = NPC.DirectionTo(target) * 10f;
+                                Vector2 offset = NPC.SafeDirectionTo(target) * 10f;
                                 for (int i = 0; i < length; i++) //dust warning line for sandnado
                                 {
                                     int d = Dust.NewDust(NPC.Center + offset * i, 0, 0, DustID.Sandnado, 0f, 0f, 0, new Color());
@@ -632,7 +632,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Spirit
                                 const int max = 12; //hand ring
                                 for (int i = 0; i < max; i++)
                                 {
-                                    Vector2 vel = NPC.DirectionTo(player.Center).RotatedBy(Math.PI * 2 / max * i);
+                                    Vector2 vel = NPC.SafeDirectionTo(player.Center).RotatedBy(Math.PI * 2 / max * i);
                                     float ai0 = 1.04f;
                                     Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, vel, ModContent.ProjectileType<SpiritHand>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage), 0f, Main.myPlayer, ai0);
                                 }
@@ -780,7 +780,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Spirit
                             {
                                 for (int i = 0; i < 4; i++)
                                 {
-                                    Vector2 vel = NPC.DirectionTo(player.Center).RotatedBy(Math.PI / 6 * (Main.rand.NextDouble() - 0.5));
+                                    Vector2 vel = NPC.SafeDirectionTo(player.Center).RotatedBy(Math.PI / 6 * (Main.rand.NextDouble() - 0.5));
                                     float ai0 = Main.rand.NextFloat(1.04f, 1.06f);
                                     float ai1 = Main.rand.NextFloat(0.025f);
                                     Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, vel, ModContent.ProjectileType<SpiritHand>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage), 0f, Main.myPlayer, ai0, ai1);

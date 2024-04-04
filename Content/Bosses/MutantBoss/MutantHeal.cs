@@ -1,9 +1,10 @@
 ﻿using FargowiltasSouls.Assets.ExtraTextures;
-using FargowiltasSouls.Common.Graphics.Primitives;
-using FargowiltasSouls.Common.Graphics.Shaders;
+
+
 using FargowiltasSouls.Content.Buffs.Boss;
 using FargowiltasSouls.Content.Projectiles;
 using FargowiltasSouls.Core.Systems;
+using Luminance.Core.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -15,9 +16,8 @@ using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Content.Bosses.MutantBoss
 {
-	public class MutantHeal : ModProjectile, IPixelPrimitiveDrawer
+	public class MutantHeal : ModProjectile, IPixelatedPrimitiveRenderer
     {
-        public PrimDrawer TrailDrawer { get; private set; } = null;
 
         public override void SetStaticDefaults()
         {
@@ -149,7 +149,7 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
                 {
                     for (int i = 0; i < 2; i++) //make up for real spectre bolt having 3 extraUpdates
                     {
-                        Vector2 change = Projectile.DirectionTo(target.Center) * 5f;
+                        Vector2 change = Projectile.SafeDirectionTo(target.Center) * 5f;
                         Projectile.velocity = (Projectile.velocity * 29f + change) / 30f;
                     }
 
@@ -238,12 +238,11 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
         {
             return Color.Lerp(FargoSoulsUtil.AprilFools ? Color.Orange : Color.Cyan, Color.Transparent, completionRatio) * 0.7f;
         }
-
-        public void DrawPixelPrimitives(SpriteBatch spriteBatch)
+        public void RenderPixelatedPrimitives(SpriteBatch spriteBatch)
         {
-			TrailDrawer ??= new PrimDrawer(WidthFunction, ColorFunction, ShaderManager.GetShaderIfExists("BlobTrail"));
-			FargoSoulsUtil.SetTexture1(FargosTextureRegistry.FadedStreak.Value);
-			TrailDrawer.DrawPixelPrims(Projectile.oldPos, Projectile.Size * 0.5f - Main.screenPosition, 25);
-		}
+            ManagedShader shader = ShaderManager.GetShader("FargowiltasSouls.BlobTrail");
+            FargoSoulsUtil.SetTexture1(FargosTextureRegistry.FadedStreak.Value);
+            PrimitiveRenderer.RenderTrail(Projectile.oldPos, new(WidthFunction, ColorFunction, _ => Projectile.Size * 0.5f, Pixelate: true, Shader: shader), 25);
+        }
     }
 }

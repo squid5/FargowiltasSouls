@@ -279,7 +279,7 @@ namespace FargowiltasSouls.Content.Projectiles.Minions
         }
         private Vector2 MousePos(Player player)
         {
-            return player.Center + (player.Center.DirectionTo(Main.MouseWorld) * Math.Min((Main.MouseWorld - player.Center).Length(), MaxDistance));
+            return player.Center + (player.Center.SafeDirectionTo(Main.MouseWorld) * Math.Min((Main.MouseWorld - player.Center).Length(), MaxDistance));
         }
         private bool CheckRightClick(Player player)
         {

@@ -44,7 +44,7 @@ namespace FargowiltasSouls.Content.Projectiles.BossWeapons
             NPC npc = FargoSoulsUtil.NPCExists(Projectile.ai[2]);
             if (npc != null && Projectile.velocity != Vector2.Zero && npc.CanBeChasedBy())
             {
-                Projectile.velocity = Projectile.DirectionTo(npc.Center) * Projectile.velocity.Length();
+                Projectile.velocity = Projectile.SafeDirectionTo(npc.Center) * Projectile.velocity.Length();
             }
             else
             {

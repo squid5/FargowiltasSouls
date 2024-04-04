@@ -113,7 +113,7 @@ namespace FargowiltasSouls.Content.Bosses.TrojanSquirrel
                 Projectile.tileCollide = false;
 
                 const float speed = 12;
-                Projectile.velocity = speed * Projectile.DirectionTo(ChainOrigin);
+                Projectile.velocity = speed * Projectile.SafeDirectionTo(ChainOrigin);
 
                 Projectile.position += (npc.position - npc.oldPosition) / 2f;
 

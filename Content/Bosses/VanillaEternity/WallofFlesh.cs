@@ -134,7 +134,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                         float scale = !UseCorruptAttack ? 6f : 4f;
                         float speedModifier = !UseCorruptAttack ? 12f : 5f;
 
-                        Vector2 direction = npc.DirectionTo(Main.player[npc.target].Center).RotatedByRandom(MathHelper.Pi / 10);
+                        Vector2 direction = npc.SafeDirectionTo(Main.player[npc.target].Center).RotatedByRandom(MathHelper.Pi / 10);
                         Vector2 vel = speed * direction * Main.rand.NextFloat(0.4f, 0.8f);
 
                         /*
@@ -142,7 +142,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                         Main.dust[d].velocity *= speedModifier;
                         Main.dust[d].noGravity = true;
                         */
-                        Particle p = new ExpandingBloomParticle(npc.Center + 32f * direction + vel * 50, -vel / 2, color, startScale: Vector2.Zero, endScale: Vector2.One * scale, lifetime: 25);
+                        FargoParticle p = new ExpandingBloomParticle(npc.Center + 32f * direction + vel * 50, -vel / 2, color, startScale: Vector2.Zero, endScale: Vector2.One * scale, lifetime: 25);
                         p.Velocity *= 2f;
                         p.Spawn();
                     }
@@ -502,7 +502,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
                 if (TelegraphTimer % frequency == 0)
                 {
-                    Particle p = new SparkParticle(eyeCenter + offset, vel, color, Main.rand.NextFloat(1.25f, 2f), 20);
+                    FargoParticle p = new SparkParticle(eyeCenter + offset, vel, color, Main.rand.NextFloat(1.25f, 2f), 20);
                     p.Spawn();
                 }
 
@@ -733,7 +733,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                 npc.position += (Main.player[npc.target].position - Main.player[npc.target].oldPosition) / 3;
 
                 Vector2 vel = Main.player[npc.target].Center - npc.Center;
-                vel += 200f * Main.player[npc.target].DirectionTo(npc.Center);
+                vel += 200f * Main.player[npc.target].SafeDirectionTo(npc.Center);
                 npc.velocity = vel / 15;
             }
         }

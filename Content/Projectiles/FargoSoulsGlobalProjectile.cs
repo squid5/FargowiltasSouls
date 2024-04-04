@@ -682,14 +682,14 @@ namespace FargowiltasSouls.Content.Projectiles
                                 {
                                     projectile.rotation += (float)Math.PI;
                                 }
-                                vector2.DirectionTo(projectile.Center);
-                                Vector2 vector3 = vector2.DirectionTo(target);
+                                vector2.SafeDirectionTo(projectile.Center);
+                                Vector2 vector3 = vector2.SafeDirectionTo(target);
                                 Vector2 vector4 = projectile.velocity.SafeNormalize(Vector2.UnitY);
                                 float num6 = 2f;
                                 for (int i = 0; (float)i < num6; i++)
                                 {
                                     Dust dust = Dust.NewDustDirect(projectile.Center, 14, 14, DustID.GoldFlame, 0f, 0f, 110);
-                                    dust.velocity = vector2.DirectionTo(dust.position) * 2f;
+                                    dust.velocity = vector2.SafeDirectionTo(dust.position) * 2f;
                                     dust.position = projectile.Center + vector4.RotatedBy(num2 * ((float)Math.PI * 2f) * 2f + (float)i / num6 * ((float)Math.PI * 2f)) * 10f;
                                     dust.scale = 1f + 0.6f * Main.rand.NextFloat();
                                     dust.velocity += vector4 * 3f;
@@ -700,7 +700,7 @@ namespace FargowiltasSouls.Content.Projectiles
                                     if (Main.rand.NextBool(3))
                                     {
                                         Dust dust2 = Dust.NewDustDirect(projectile.Center, 20, 20, DustID.GoldFlame, 0f, 0f, 110);
-                                        dust2.velocity = vector2.DirectionTo(dust2.position) * 2f;
+                                        dust2.velocity = vector2.SafeDirectionTo(dust2.position) * 2f;
                                         dust2.position = projectile.Center + vector3 * -110f;
                                         dust2.scale = 0.45f + 0.4f * Main.rand.NextFloat();
                                         dust2.fadeIn = 0.7f + 0.4f * Main.rand.NextFloat();
@@ -1041,7 +1041,7 @@ namespace FargowiltasSouls.Content.Projectiles
                     //            const int totalUpdates = 2 + 1;
                     //            const int travelTime = TimeFreezeMoveDuration * totalUpdates;
 
-                    //            Vector2 spawnPos = projectile.Center + 16f * projectile.DirectionTo(Main.npc[target].Center);
+                    //            Vector2 spawnPos = projectile.Center + 16f * projectile.SafeDirectionTo(Main.npc[target].Center);
 
                     //            //adjust speed so it always lands just short of touching the enemy
                     //            Vector2 vel = Main.npc[target].Center - spawnPos;

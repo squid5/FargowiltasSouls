@@ -63,7 +63,7 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
                 {
                     int foundTarget = (int)Projectile.ai[0];
                     Player p = Main.player[foundTarget];
-                    Vector2 desiredVelocity = Projectile.DirectionTo(p.Center) * desiredFlySpeedInPixelsPerFrame;
+                    Vector2 desiredVelocity = Projectile.SafeDirectionTo(p.Center) * desiredFlySpeedInPixelsPerFrame;
                     Projectile.velocity = Vector2.Lerp(Projectile.velocity, desiredVelocity, 1f / amountOfFramesToLerpBy);
                 }
             }

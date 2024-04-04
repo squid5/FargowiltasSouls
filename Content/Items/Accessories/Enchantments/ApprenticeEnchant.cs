@@ -59,7 +59,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
         }
         public override void Load()
         {
-            ApprenticeShootMethod = typeof(Player).GetMethod("ItemCheck_Shoot", FargoSoulsUtil.UniversalBindingFlags);
+            ApprenticeShootMethod = typeof(Player).GetMethod("ItemCheck_Shoot", LumUtils.UniversalBindingFlags);
         }
         public static void ApprenticeShoot(Player player, int playerWhoAmI, Item item, int weaponDamage)
         {

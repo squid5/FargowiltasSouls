@@ -102,7 +102,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEve
                 Projectile.Center = pos;
                 if (Timer == 0)
                 {
-                    Projectile.rotation = pos.DirectionTo(player.Center).ToRotation();
+                    Projectile.rotation = pos.SafeDirectionTo(player.Center).ToRotation();
                 }
                 RotateTowards(player.Center, 6);
             }
@@ -187,7 +187,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEve
         }
         void RotateTowards(Vector2 target, float speed)
         {
-            Vector2 PV = Projectile.DirectionTo(target).RotatedBy(MathHelper.Pi); //offset because projectile funny
+            Vector2 PV = Projectile.SafeDirectionTo(target).RotatedBy(MathHelper.Pi); //offset because projectile funny
             Vector2 LV = Projectile.rotation.ToRotationVector2();
             float anglediff = (float)(Math.Atan2(PV.Y * LV.X - PV.X * LV.Y, LV.X * PV.X + LV.Y * PV.Y)); //real
             //change rotation towards target

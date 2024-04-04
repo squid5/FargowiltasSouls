@@ -1,8 +1,9 @@
 ﻿using FargowiltasSouls.Assets.ExtraTextures;
-using FargowiltasSouls.Common.Graphics.Primitives;
-using FargowiltasSouls.Common.Graphics.Shaders;
+
+
 using FargowiltasSouls.Content.Projectiles.Deathrays;
 using FargowiltasSouls.Content.Projectiles.Masomode;
+using Luminance.Core.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -14,10 +15,8 @@ using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Content.Bosses.DeviBoss
 {
-	public class DeviLightBall : LightBall, IPixelPrimitiveDrawer
+	public class DeviLightBall : LightBall, IPixelatedPrimitiveRenderer
     {
-        public PrimDrawer TrailDrawer { get; private set; } = null;
-
         public override bool DoNotSpawnDust => true;
 
         public override string Texture => "FargowiltasSouls/Content/Projectiles/Masomode/LightBall";
@@ -84,11 +83,11 @@ namespace FargowiltasSouls.Content.Bosses.DeviBoss
             return false;
         }
 
-        public void DrawPixelPrimitives(SpriteBatch spriteBatch)
+        public void RenderPixelatedPrimitives(SpriteBatch spriteBatch)
         {
-            TrailDrawer ??= new PrimDrawer(WidthFunction, ColorFunction, ShaderManager.GetShaderIfExists("BlobTrail"));
+            ManagedShader shader = ShaderManager.GetShader("FargowiltasSouls.BlobTrail");
             FargoSoulsUtil.SetTexture1(FargosTextureRegistry.FadedStreak.Value);
-            TrailDrawer.DrawPixelPrims(Projectile.oldPos, Projectile.Size * 0.5f - Main.screenPosition, 25);
+            PrimitiveRenderer.RenderTrail(Projectile.oldPos, new(WidthFunction, ColorFunction, _ => Projectile.Size * 0.5f, Pixelate: true, Shader: shader), 25);
         }
     }
 }

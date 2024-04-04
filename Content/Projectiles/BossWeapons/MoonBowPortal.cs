@@ -96,7 +96,7 @@ namespace FargowiltasSouls.Content.Projectiles.BossWeapons
                 Vector2 target = Main.MouseWorld;
                 if (Main.player[Projectile.owner].HasBuff<MoonBowBuff>())
                     target.Y += 16f; //aim correction for no grav
-                Vector2 vel = 32f * Projectile.DirectionTo(target);
+                Vector2 vel = 32f * Projectile.SafeDirectionTo(target);
                 Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center, vel, ProjectileID.MoonlordArrowTrail, Projectile.damage, Projectile.knockBack, Projectile.owner);
             }
         }

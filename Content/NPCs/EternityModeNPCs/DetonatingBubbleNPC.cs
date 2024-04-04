@@ -27,10 +27,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs
                 BuffID.Suffocation
             });
 
-            NPCID.Sets.NPCBestiaryDrawOffset.Add(NPC.type, new NPCID.Sets.NPCBestiaryDrawModifiers()
-            {
-                Hide = true
-            });
+            this.ExcludeFromBestiary();
         }
 
         public override void SetDefaults()

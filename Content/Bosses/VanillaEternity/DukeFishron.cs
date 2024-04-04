@@ -192,7 +192,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
                                 FargoSoulsUtil.NewNPCEasy(npc.GetSource_FromThis(), npc.Center,
                                     IsEX ? ModContent.NPCType<DetonatingBubbleEX>() : NPCID.DetonatingBubble,
-                                    velocity: npc.DirectionTo(Main.player[npc.target].Center));
+                                    velocity: npc.SafeDirectionTo(Main.player[npc.target].Center));
                             }
                         }
                         break;
@@ -627,7 +627,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                             if (FargoSoulsUtil.HostCheck)
                             {
                                 const float delay = 15;
-                                Vector2 baseVel = 100f / delay * npc.DirectionTo(Main.player[npc.target].Center);
+                                Vector2 baseVel = 100f / delay * npc.SafeDirectionTo(Main.player[npc.target].Center);
 
                                 const int max = 10;
                                 for (int i = 0; i < max; i++)
@@ -687,7 +687,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                                 float range = MathHelper.ToRadians(Main.rand.NextFloat(1f, 15f));
                                 for (int i = -1; i <= 1; i++)
                                 {
-                                    int p = Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, 8f * npc.DirectionTo(Main.player[npc.target].Center).RotatedBy(range * i),
+                                    int p = Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, 8f * npc.SafeDirectionTo(Main.player[npc.target].Center).RotatedBy(range * i),
                                         ModContent.ProjectileType<FishronBubble>(), FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 0f, Main.myPlayer);
                                     if (p != Main.maxProjectiles)
                                         Main.projectile[p].timeLeft = 90;

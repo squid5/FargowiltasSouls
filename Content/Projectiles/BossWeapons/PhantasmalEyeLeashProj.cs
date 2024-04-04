@@ -49,7 +49,7 @@ namespace FargowiltasSouls.Content.Projectiles.BossWeapons
                 {
                     if (Projectile.Distance(n.Center) > Math.Max(n.width, n.height))
                     {
-                        Vector2 desiredVelocity = Projectile.DirectionTo(n.Center) * desiredFlySpeedInPixelsPerFrame;
+                        Vector2 desiredVelocity = Projectile.SafeDirectionTo(n.Center) * desiredFlySpeedInPixelsPerFrame;
                         Projectile.velocity = Vector2.Lerp(Projectile.velocity, desiredVelocity, 1f / amountOfFramesToLerpBy);
                     }
                 }

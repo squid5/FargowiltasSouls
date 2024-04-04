@@ -126,7 +126,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Cosmos
                 int p = Player.FindClosest(Projectile.Center, 0, 0);
                 if (p != -1)
                 {
-                    Projectile.NewProjectile(Terraria.Entity.InheritSource(Projectile), Projectile.Center, 12f * Projectile.DirectionTo(Main.player[p].Center),
+                    Projectile.NewProjectile(Terraria.Entity.InheritSource(Projectile), Projectile.Center, 12f * Projectile.SafeDirectionTo(Main.player[p].Center),
                         ProjectileID.CultistBossFireBall, Projectile.damage, 0f, Main.myPlayer);
                 }
             }

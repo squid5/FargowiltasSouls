@@ -1,5 +1,5 @@
 ﻿using FargowiltasSouls.Assets.ExtraTextures;
-using FargowiltasSouls.Common.Graphics.Primitives;
+
 using FargowiltasSouls.Content.Buffs.Boss;
 using FargowiltasSouls.Content.Buffs.Masomode;
 using Microsoft.Xna.Framework;
@@ -11,13 +11,13 @@ using Terraria.ModLoader;
 using Terraria.ID;
 using FargowiltasSouls.Core.Systems;
 using FargowiltasSouls.Content.Projectiles.Deathrays;
-using FargowiltasSouls.Common.Graphics.Shaders;
+
+using Luminance.Core.Graphics;
 
 namespace FargowiltasSouls.Content.Bosses.MutantBoss
 {
-	public class MutantTrueEyeDeathray : BaseDeathray, IPixelPrimitiveDrawer
+	public class MutantTrueEyeDeathray : BaseDeathray, IPixelatedPrimitiveRenderer
     {
-        public PrimDrawer LaserDrawer { get; private set; } = null;
 
         public override string Texture => $"FargowiltasSouls/Content/Projectiles/Deathrays/{(FargoSoulsUtil.AprilFools ? "PhantasmalDeathray" : "PhantasmalDeathrayML")}";
         public MutantTrueEyeDeathray() : base(90) { }
@@ -140,14 +140,11 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
             return color;
         }
 
-        public void DrawPixelPrimitives(SpriteBatch spriteBatch)
+        public void RenderPixelatedPrimitives(SpriteBatch spriteBatch)
         {
             if (Projectile.hide)
                 return;
-
-            Shader shader = ShaderManager.GetShaderIfExists("GenericDeathray");
-
-			LaserDrawer ??= new PrimDrawer(WidthFunction, ColorFunction, shader);
+            ManagedShader shader = ShaderManager.GetShader("FargowiltasSouls.BlobTrail");
 
             // Get the laser end position.
             Vector2 laserEnd = Projectile.Center + Projectile.velocity.SafeNormalize(Vector2.UnitY) * drawDistance * 1.1f;
@@ -166,13 +163,13 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
             // GameShaders.Misc["FargoswiltasSouls:MutantDeathray"].UseImage1(); cannot be used due to only accepting vanilla paths.
             FargoSoulsUtil.SetTexture1(FargosTextureRegistry.MutantStreak.Value);
             // The laser should fade to this in the middle.
-            shader.SetMainColor(FargoSoulsUtil.AprilFools ? new Color(253, 252, 183, 100) : new Color(183, 252, 253, 100));
-            shader.WrappedEffect.Parameters["stretchAmount"].SetValue(3);
-            shader.WrappedEffect.Parameters["scrollSpeed"].SetValue(2f);
-            shader.WrappedEffect.Parameters["uColorFadeScaler"].SetValue(1f);
-            shader.WrappedEffect.Parameters["useFadeIn"].SetValue(true);
+            shader.TrySetParameter("mainColor", FargoSoulsUtil.AprilFools ? new Color(253, 252, 183, 100) : new Color(183, 252, 253, 100));
+            shader.TrySetParameter("stretchAmount", 3);
+            shader.TrySetParameter("scrollSpeed", 2f);
+            shader.TrySetParameter("uColorFadeScaler", 1f);
+            shader.TrySetParameter("useFadeIn", true);
 
-            LaserDrawer.DrawPixelPrims(baseDrawPoints, -Main.screenPosition, 20);
+            PrimitiveRenderer.RenderTrail(Projectile.oldPos, new(WidthFunction, ColorFunction, Pixelate: true, Shader: shader), 20);
         }
     }
 }

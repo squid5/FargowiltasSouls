@@ -251,9 +251,9 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Life
                     else if (NPC.ai[1] > 240)
                     {
                         NPC.ai[0] = -3;
-                        NPC.ai[1] = NPC.DirectionTo(player.Center).ToRotation();
+                        NPC.ai[1] = NPC.SafeDirectionTo(player.Center).ToRotation();
                         NPC.ai[2] = 0;
-                        NPC.ai[3] = NPC.DirectionTo(player.Center).ToRotation();
+                        NPC.ai[3] = NPC.SafeDirectionTo(player.Center).ToRotation();
                         NPC.netUpdate = true;
                     }
                     break;

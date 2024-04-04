@@ -192,7 +192,7 @@ namespace FargowiltasSouls.Content.Patreon.Duck
                     {
                         if (--count < 0)
                             break;
-                        Vector2 vel = Main.rand.NextFloat(10f, 20f) * target.DirectionTo(n.Center);
+                        Vector2 vel = Main.rand.NextFloat(10f, 20f) * target.SafeDirectionTo(n.Center);
                         Projectile.NewProjectile(Projectile.GetSource_FromThis(), target.Center, vel, ModContent.ProjectileType<Content.Projectiles.LightningArc>(),
                             Projectile.damage / 10, Projectile.knockBack / 10, Projectile.owner, vel.ToRotation(), Main.rand.Next(80));
                     }

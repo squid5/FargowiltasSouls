@@ -1,6 +1,7 @@
 ﻿using FargowiltasSouls.Assets.ExtraTextures;
-using FargowiltasSouls.Common.Graphics.Primitives;
-using FargowiltasSouls.Common.Graphics.Shaders;
+
+
+using Luminance.Core.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -9,9 +10,8 @@ using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Content.Bosses.DeviBoss
 {
-	public class DeviLostSoul : ModProjectile, IPixelPrimitiveDrawer
+	public class DeviLostSoul : ModProjectile, IPixelatedPrimitiveRenderer
     {
-        public PrimDrawer TrailDrawer { get; private set; } = null;
 
         public override void SetStaticDefaults()
         {
@@ -66,12 +66,11 @@ namespace FargowiltasSouls.Content.Bosses.DeviBoss
             Main.EntitySpriteDraw(texture2D13, Projectile.Center - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), Projectile.GetAlpha(lightColor), Projectile.rotation, origin2, Projectile.scale, spriteEffects, 0);
             return false;
         }
-
-        public void DrawPixelPrimitives(SpriteBatch spriteBatch)
+        public void RenderPixelatedPrimitives(SpriteBatch spriteBatch)
         {
-			TrailDrawer ??= new PrimDrawer(WidthFunction, ColorFunction, ShaderManager.GetShaderIfExists("BlobTrail"));
-			FargoSoulsUtil.SetTexture1(FargosTextureRegistry.FadedStreak.Value);
-			TrailDrawer.DrawPixelPrims(Projectile.oldPos, Projectile.Size * 0.5f - Main.screenPosition, 25);
-		}
+            ManagedShader shader = ShaderManager.GetShader("FargowiltasSouls.BlobTrail");
+            FargoSoulsUtil.SetTexture1(FargosTextureRegistry.FadedStreak.Value);
+            PrimitiveRenderer.RenderTrail(Projectile.oldPos, new(WidthFunction, ColorFunction, _ => Projectile.Size * 0.5f, Pixelate: true, Shader: shader), 25);
+        }
     }
 }

@@ -145,7 +145,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             {
                 float speed = npc.velocity.Length();
                 float modifier = 0.25f;
-                npc.velocity += npc.DirectionTo(Main.player[npc.target].Center) * modifier;
+                npc.velocity += npc.SafeDirectionTo(Main.player[npc.target].Center) * modifier;
                 npc.velocity = Vector2.Normalize(npc.velocity) * speed;
             }
             
@@ -209,7 +209,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                         if (npc.rotation < -PI)
                             npc.rotation += 2 * PI;
 
-                        float targetRotation = npc.DirectionTo(Main.player[npc.target].Center).ToRotation() - PI / 2;
+                        float targetRotation = npc.SafeDirectionTo(Main.player[npc.target].Center).ToRotation() - PI / 2;
                         if (targetRotation > PI)
                             targetRotation -= 2 * PI;
                         if (targetRotation < -PI)
@@ -260,7 +260,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                         if (npc.rotation < -PI)
                             npc.rotation += 2 * PI;
 
-                        float targetRotation = npc.DirectionTo(targetCenter).ToRotation() - PI / 2;
+                        float targetRotation = npc.SafeDirectionTo(targetCenter).ToRotation() - PI / 2;
                         if (targetRotation > PI)
                             targetRotation -= 2 * PI;
                         if (targetRotation < -PI)
@@ -375,7 +375,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                         if (mustRest && AITimer < restingTime + 90)
                         {
                             if (AITimer == 91)
-                                npc.velocity = npc.DirectionTo(Main.player[npc.target].Center) * npc.velocity.Length() * 0.75f;
+                                npc.velocity = npc.SafeDirectionTo(Main.player[npc.target].Center) * npc.velocity.Length() * 0.75f;
 
                             npc.velocity.X *= 0.98f;
                             if (Math.Abs(npc.Center.X - Main.player[npc.target].Center.X) < 300)
@@ -433,7 +433,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                         }
 
                         const float PI = (float)Math.PI;
-                        float targetRotation = MathHelper.WrapAngle(npc.DirectionTo(Main.player[npc.target].Center).ToRotation() - PI / 2);
+                        float targetRotation = MathHelper.WrapAngle(npc.SafeDirectionTo(Main.player[npc.target].Center).ToRotation() - PI / 2);
                         npc.rotation = MathHelper.WrapAngle(MathHelper.Lerp(npc.rotation, targetRotation, 0.07f));
 
                         if (npc.alpha > 0)
@@ -564,7 +564,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                         if (npc.alpha < 245 - delay && npc.alpha > 212 - delay) //latter value calibrates dash distance, basically
                         {
                             if (npc.HasValidTarget)
-                                npc.velocity = npc.DirectionTo(Main.player[npc.target].Center) * 50;
+                                npc.velocity = npc.SafeDirectionTo(Main.player[npc.target].Center) * 50;
 
                             
                         }
@@ -579,7 +579,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                         {
                             float speed = npc.velocity.Length();
                             float modifier = 1f;
-                            npc.velocity += npc.DirectionTo(Main.player[npc.target].Center) * modifier;
+                            npc.velocity += npc.SafeDirectionTo(Main.player[npc.target].Center) * modifier;
                             npc.velocity = Vector2.Normalize(npc.velocity) * speed;
 
                             

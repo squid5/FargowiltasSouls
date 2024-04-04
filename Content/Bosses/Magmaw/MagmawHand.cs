@@ -91,7 +91,7 @@ namespace FargowiltasSouls.Content.Bosses.Magmaw
             Vector2 origin2 = rectangle.Size() / 2f;
 
             NPC parent = GetParent();
-            Vector2 dir = Projectile.DirectionTo(parent.Center);
+            Vector2 dir = Projectile.SafeDirectionTo(parent.Center);
             int length = (int)Projectile.Distance(parent.Center);
             Vector2 offset = dir * length / 2f;
             Vector2 position = Projectile.Center - Main.screenLastPosition + new Vector2(0f, Projectile.gfxOffY) + offset;
@@ -126,9 +126,7 @@ namespace FargowiltasSouls.Content.Bosses.Magmaw
         public ref float Side => ref Projectile.ai[1];
         public override void AI()
         {
-            if (Side == 0) //Default to left side
-                Side = Left;
-            Side = Math.Sign(Side); //Make sure it's always 1 or -1
+            Side = LumUtils.NonZeroSign(Side); //Make sure it's always 1 or -1 (default to 1 if 0)
 
             NPC parent = GetParent();
             Magmaw magmaw = parent.As<Magmaw>();

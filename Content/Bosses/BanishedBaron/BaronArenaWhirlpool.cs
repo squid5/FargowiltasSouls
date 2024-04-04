@@ -89,11 +89,7 @@ namespace FargowiltasSouls.Content.Bosses.BanishedBaron
                 {
                     if (FargoSoulsUtil.HostCheck)
                     {
-                        int side = Math.Sign(player.Center.X - Projectile.Center.X);
-                        if (side == 0)
-                        {
-                            side = 1;
-                        }
+                        int side = LumUtils.NonZeroSign(player.Center.X - Projectile.Center.X);
                         if (WorldSavingSystem.MasochistModeReal) //sides alternate in maso
                         {
                             side = Timer % (wallAttackTime * 2) == 0 ? 1 : -1;

@@ -45,7 +45,7 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
                 SoundEngine.PlaySound(SoundID.Item120, Projectile.position);
                 if (FargoSoulsUtil.HostCheck)
                 {
-                    Vector2 vel = Projectile.DirectionTo(player.Center) * 7f;
+                    Vector2 vel = Projectile.SafeDirectionTo(player.Center) * 7f;
                     for (int i = -1; i <= 1; i++)
                         Projectile.NewProjectile(Terraria.Entity.InheritSource(Projectile), Projectile.Center, vel.RotatedBy(MathHelper.ToRadians(10) * i), ModContent.ProjectileType<AbomFrostWave>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
                 }

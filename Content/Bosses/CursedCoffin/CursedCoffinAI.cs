@@ -202,7 +202,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 
             if (Timer <= 1)
             {
-                initialDir = Player.DirectionTo(NPC.Center).ToRotation();
+                initialDir = Player.SafeDirectionTo(NPC.Center).ToRotation();
                 initialDist = NPC.Distance(Player.Center);
             }
             if (Timer <= PrepTime)
@@ -330,7 +330,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 				float sparkTime = 15;
 				Vector2 sparkVel = (maskCenter - sparkCenter) / sparkTime;
 				float sparkScale = 2f - progress * 1.2f;
-				Particle spark = new SparkParticle(sparkCenter, sparkVel, GlowColor, sparkScale, (int)sparkTime);
+				FargoParticle spark = new SparkParticle(sparkCenter, sparkVel, GlowColor, sparkScale, (int)sparkTime);
 				spark.Spawn();
 			}
 			else if (Timer == TelegraphTime)
@@ -373,7 +373,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 
 			if (Timer <= WavyShotFlightPrepTime)
 			{
-				Vector2 currentDir = Player.DirectionTo(NPC.Center);
+				Vector2 currentDir = Player.SafeDirectionTo(NPC.Center);
 				circleStart = currentDir.ToRotation();
 
 				float rot = FargoSoulsUtil.RotationDifference(currentDir, -Vector2.UnitY);
@@ -400,7 +400,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 					if (FargoSoulsUtil.HostCheck)
 					{
 						Vector2 maskCenter = MaskCenter();
-						Projectile.NewProjectile(NPC.GetSource_FromThis(), maskCenter, maskCenter.DirectionTo(Player.Center).RotatedBy(-MathHelper.Pi / 10) * 4, ModContent.ProjectileType<CoffinWaveShot>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage), 1f, Main.myPlayer, 1);
+						Projectile.NewProjectile(NPC.GetSource_FromThis(), maskCenter, maskCenter.SafeDirectionTo(Player.Center).RotatedBy(-MathHelper.Pi / 10) * 4, ModContent.ProjectileType<CoffinWaveShot>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage), 1f, Main.myPlayer, 1);
 					}
 				}
 			}

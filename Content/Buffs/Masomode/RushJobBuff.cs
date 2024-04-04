@@ -17,7 +17,7 @@ namespace FargowiltasSouls.Content.Buffs.Masomode
 
         public override void Update(Player player, ref int buffIndex)
         {
-            if (FargoSoulsUtil.AnyBossAlive() && player.buffTime[buffIndex] < 10)
+            if (LumUtils.AnyBosses() && player.buffTime[buffIndex] < 10)
                 player.buffTime[buffIndex] = 10;
         }
     }

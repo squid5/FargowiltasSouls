@@ -196,7 +196,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     {
                         if (FargoSoulsUtil.HostCheck)
                         {
-                            Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, npc.DirectionTo(Main.player[npc.target].Center).RotatedBy(Math.PI / 3 * i),
+                            Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, npc.SafeDirectionTo(Main.player[npc.target].Center).RotatedBy(Math.PI / 3 * i),
                                 ModContent.ProjectileType<GuardianDeathraySmall>(), 0, 0f, Main.myPlayer, -1f, npc.whoAmI);
                         }
                     }
@@ -300,7 +300,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     if (FargoSoulsUtil.HostCheck)
                     {
                         const int max = 16;
-                        Vector2 baseOffset = npc.DirectionTo(Main.player[npc.target].Center);
+                        Vector2 baseOffset = npc.SafeDirectionTo(Main.player[npc.target].Center);
                         for (int i = 0; i < max; i++)
                         {
                             Projectile.NewProjectile(npc.GetSource_FromThis(), Main.player[npc.target].Center + 1000 * baseOffset.RotatedBy(2 * Math.PI / max * i),

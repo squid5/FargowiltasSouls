@@ -67,7 +67,7 @@ namespace FargowiltasSouls.Content.Items.Weapons.BossDrops
             {
                 position = newPos;
                 if (velocity != Vector2.Zero)
-                    velocity = newPos.DirectionTo(Main.MouseWorld) * velocity.Length();
+                    velocity = newPos.SafeDirectionTo(Main.MouseWorld) * velocity.Length();
             }
         }
 
@@ -76,7 +76,7 @@ namespace FargowiltasSouls.Content.Items.Weapons.BossDrops
             //shoot an additional arrow when buffed
             if (player.HasBuff<MoonBowBuff>())
             {
-                Projectile.NewProjectile(source, player.Center, player.DirectionTo(Main.MouseWorld) * velocity.Length(), type, damage, knockback, player.whoAmI);
+                Projectile.NewProjectile(source, player.Center, player.SafeDirectionTo(Main.MouseWorld) * velocity.Length(), type, damage, knockback, player.whoAmI);
             }
             return base.Shoot(player, source, position, velocity, type, damage, knockback);
         }

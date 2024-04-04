@@ -79,12 +79,12 @@ namespace FargowiltasSouls.Content.Projectiles.Minions
                         }
                         else if (--Projectile.ai[1] < -30) //in target range for 1 second, initiate dash
                         {
-                            Projectile.velocity = Projectile.DirectionTo(npc.Center + npc.velocity * 10) * 30f;
+                            Projectile.velocity = Projectile.SafeDirectionTo(npc.Center + npc.velocity * 10) * 30f;
                             Projectile.ai[1] = 20;
                             Projectile.netUpdate = true;
                             collide = false;
                         }
-                        Projectile.rotation = Projectile.DirectionTo(npc.Center).ToRotation() - (float)Math.PI / 2;
+                        Projectile.rotation = Projectile.SafeDirectionTo(npc.Center).ToRotation() - (float)Math.PI / 2;
 
                         if (++Projectile.localAI[0] > 7)
                         {
@@ -93,7 +93,7 @@ namespace FargowiltasSouls.Content.Projectiles.Minions
                             if (Projectile.owner == Main.myPlayer)
                             {
                                 Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center - (Projectile.rotation + (float)Math.PI / 2).ToRotationVector2() * 60,
-                                    8 * Projectile.DirectionTo(npc.Center).RotatedByRandom(MathHelper.ToRadians(12)), ModContent.ProjectileType<OpticFlame>(),
+                                    8 * Projectile.SafeDirectionTo(npc.Center).RotatedByRandom(MathHelper.ToRadians(12)), ModContent.ProjectileType<OpticFlame>(),
                                     Projectile.damage, Projectile.knockBack, Projectile.owner);
                             }
                         }

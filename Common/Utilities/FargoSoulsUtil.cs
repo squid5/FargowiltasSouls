@@ -23,8 +23,8 @@ namespace FargowiltasSouls //lets everything access it without using
 {
 	public static partial class FargoSoulsUtil
     {
-
-        public static readonly BindingFlags UniversalBindingFlags = BindingFlags.Instance | BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public;
+        [Obsolete("Use Luminance's Utilities.UniversalBindingFlags instead.", error: false)]
+        public static readonly BindingFlags UniversalBindingFlags = LumUtils.UniversalBindingFlags;
 
         public static bool WorldIsExpertOrHarder() => Main.expertMode || (Main.GameModeInfo.IsJourneyMode && CreativePowerManager.Instance.GetPower<CreativePowers.DifficultySliderPower>().StrengthMultiplierToGiveNPCs >= 2);
 
@@ -226,16 +226,6 @@ namespace FargowiltasSouls //lets everything access it without using
             {
                 return false;
             }
-        }
-
-        public static bool AnyBossAlive()
-        {
-            if (FargoSoulsGlobalNPC.boss == -1)
-                return false;
-            if (Main.npc[FargoSoulsGlobalNPC.boss].active && (Main.npc[FargoSoulsGlobalNPC.boss].boss || Main.npc[FargoSoulsGlobalNPC.boss].type == NPCID.EaterofWorldsHead))
-                return true;
-            FargoSoulsGlobalNPC.boss = -1;
-            return false;
         }
 
         public static void ClearFriendlyProjectiles(int deletionRank = 0, int bossNpc = -1, bool clearSummonProjs = false)
@@ -593,7 +583,7 @@ namespace FargowiltasSouls //lets everything access it without using
                 Vector2 offset = spawnPos - Main.LocalPlayer.Center;
                 if (Math.Abs(offset.X) > Main.screenWidth * 0.6f || Math.Abs(offset.Y) > Main.screenHeight * 0.6f) //dont spawn dust if its pointless
                     continue;
-                Particle p;
+                FargoParticle p;
                 switch (particleType)
                 {
                     case 1:

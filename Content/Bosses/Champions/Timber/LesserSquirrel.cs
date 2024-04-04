@@ -106,7 +106,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Timber
                     bool canAttack = true;
                     if (spawnedByP1)
                         canAttack = NPC.AnyNPCs(ModContent.NPCType<TimberChampion>());
-                    //Vector2 vel = 4f * NPC.DirectionTo(Main.player[p].Center);
+                    //Vector2 vel = 4f * NPC.SafeDirectionTo(Main.player[p].Center);
                     //int type = ModContent.ProjectileType<DeviLostSoul>();
                     //float ai0 = 0;
                     //float ai1 = 0;

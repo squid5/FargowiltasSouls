@@ -120,7 +120,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEve
                 if (p != -1)
                 {
                     Projectile.localAI[1] =
-                        Projectile.Center == Main.player[p].Center ? 0 : Projectile.DirectionTo(Main.player[p].Center).ToRotation();
+                        Projectile.Center == Main.player[p].Center ? 0 : Projectile.SafeDirectionTo(Main.player[p].Center).ToRotation();
                     Projectile.localAI[1] += (float)Math.PI * 2 / 3 / 2;
                 }
             }

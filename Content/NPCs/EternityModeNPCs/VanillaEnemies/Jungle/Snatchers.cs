@@ -83,7 +83,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.Jungle
                     BiteTimer = -90; //cooldown
 
                     //retract towards home
-                    npc.velocity = 15f * npc.DirectionTo(new Vector2(npc.ai[0] * 16, npc.ai[1] * 16));
+                    npc.velocity = 15f * npc.SafeDirectionTo(new Vector2(npc.ai[0] * 16, npc.ai[1] * 16));
 
                     npc.netUpdate = true;
                     NetSync(npc);
