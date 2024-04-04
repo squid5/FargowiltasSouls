@@ -958,6 +958,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                         );
                     p.Spawn();
                     p.Position -= p.Velocity * 4; //implosion
+                    Main.NewText("e");
                 }
                 if (AI_Timer == 60f)
                 {

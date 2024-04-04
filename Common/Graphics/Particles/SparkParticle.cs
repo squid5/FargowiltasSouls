@@ -37,11 +37,11 @@ namespace FargowiltasSouls.Common.Graphics.Particles
 		public override void Draw(SpriteBatch spriteBatch)
 		{
 			Vector2 scale = new Vector2(0.5f, 1.6f) * Scale;
-			spriteBatch.Draw(Texture, Position - Main.screenPosition, null, DrawColor, Rotation, Texture.Frame.Size() * 0.5f, scale, 0);
-			spriteBatch.Draw(Texture, Position - Main.screenPosition, null, DrawColor, Rotation, Texture.Frame.Size() * 0.5f, scale * new Vector2(0.45f, 1f), 0);
+			spriteBatch.Draw(Texture, Position - Main.screenPosition, null, DrawColor, Rotation, null, scale, 0);
+			spriteBatch.Draw(Texture, Position - Main.screenPosition, null, DrawColor, Rotation, null, scale * new Vector2(0.45f, 1f), 0);
 
 			if (UseBloom)
-				spriteBatch.Draw(Texture, Position - Main.screenPosition, null, BloomColor * 0.5f, Rotation, Texture.Frame.Size() * 0.5f, scale, 0);
+				spriteBatch.Draw(Texture, Position - Main.screenPosition, null, BloomColor * 0.5f, Rotation, null, scale, 0);
 		}
 	}
 }

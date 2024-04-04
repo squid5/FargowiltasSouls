@@ -38,14 +38,14 @@ namespace FargowiltasSouls.Common.Graphics.Particles
 			if (UseBloom)
 			{
 				AtlasTexture bloomTexture = AtlasManager.GetTexture("FargowiltasSouls.Bloom");
-                spriteBatch.Draw(bloomTexture, Position - Main.screenPosition, null, BloomColor with { A = 0 } * 0.5f * Opacity, 0f, bloomTexture.Frame.Size() * 0.5f, Scale * 0.17f, SpriteEffects.None);
+                spriteBatch.Draw(bloomTexture, Position - Main.screenPosition, null, BloomColor with { A = 0 } * 0.5f * Opacity, 0f, null, Scale * 0.17f, SpriteEffects.None);
             }
 				
 
-			spriteBatch.Draw(Texture, Position - Main.screenPosition, null, DrawColor with { A = 0 }, Rotation, Texture.Frame.Size() * 0.5f, Scale, SpriteEffects.None);
+			spriteBatch.Draw(Texture, Position - Main.screenPosition, null, DrawColor with { A = 0 }, Rotation, null, Scale, SpriteEffects.None);
 
 			if (UseBloom)
-				spriteBatch.Draw(Texture, Position - Main.screenPosition, null, BloomColor with { A = 0 } * 0.5f, Rotation, Texture.Frame.Size() * 0.5f, Scale, SpriteEffects.None);
+				spriteBatch.Draw(Texture, Position - Main.screenPosition, null, BloomColor with { A = 0 } * 0.5f, Rotation, null, Scale, SpriteEffects.None);
 		}
 	}
 }

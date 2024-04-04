@@ -38,12 +38,11 @@ namespace FargowiltasSouls.Common.Graphics.Particles
 		public override void Draw(SpriteBatch spriteBatch)
 		{
             int height = Texture.Frame.Height / FrameCount;
-            Rectangle frame = new(0, CurrentFrame * height, Texture.Frame.Width, height);
-            Vector2 origin = frame.Size() * 0.5f;
+            Frame = new(0, CurrentFrame * height, Texture.Frame.Width, height);
 
             Vector2 screenPos = Position - Main.screenPosition;
 
-            spriteBatch.Draw(Texture, screenPos, frame, DrawColor * Opacity * BaseOpacity, Rotation, origin, Scale, SpriteEffects.None);
+            spriteBatch.Draw(Texture, screenPos, Frame, DrawColor * Opacity * BaseOpacity, Rotation, null, Scale, SpriteEffects.None);
         }
 	}
 }
