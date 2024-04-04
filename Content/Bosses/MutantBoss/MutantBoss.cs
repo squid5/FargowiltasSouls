@@ -3697,13 +3697,10 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
             {
                 if (!Main.dedServ)
                 {
-                    if (ShaderManager.TryGetFilter("FargowiltasSouls.FinalSpark", out ManagedScreenFilter filter))
-                    {
-                        filter.Activate();
-                        if (SoulConfig.Instance.ForcedFilters && Main.WaveQuality == 0)
-                            Main.WaveQuality = 1;
-                    }
-                    
+                    ManagedScreenFilter filter = ShaderManager.GetFilter("FargowiltasSouls.FinalSpark");
+                    filter.Activate();
+                    if (SoulConfig.Instance.ForcedFilters && Main.WaveQuality == 0)
+                        Main.WaveQuality = 1;
                 }
 
                 if (NPC.ai[1] % 3 == 0 && FargoSoulsUtil.HostCheck)

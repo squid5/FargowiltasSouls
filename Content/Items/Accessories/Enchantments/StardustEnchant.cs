@@ -82,17 +82,15 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
 
                 if (modPlayer.freezeLength > 0 && Main.netMode != NetmodeID.Server)
                 {
-                    if (ShaderManager.TryGetFilter("FargowiltasSouls.Invert", out ManagedScreenFilter filter))
+                    ManagedScreenFilter filter = ShaderManager.GetFilter("FargowiltasSouls.Invert");
+                    filter.SetFocusPosition(player.Center);
+                    if (modPlayer.freezeLength > 60)
                     {
-                        filter.SetFocusPosition(player.Center);
-                        if (modPlayer.freezeLength > 60)
-                        {
-                            filter.Activate();
-                        }
-
-                        if (SoulConfig.Instance.ForcedFilters && Main.WaveQuality == 0)
-                            Main.WaveQuality = 1;
+                        filter.Activate();
                     }
+
+                    if (SoulConfig.Instance.ForcedFilters && Main.WaveQuality == 0)
+                        Main.WaveQuality = 1;
                 }
 
                 /*for (int i = 0; i < Main.maxPlayers; i++)

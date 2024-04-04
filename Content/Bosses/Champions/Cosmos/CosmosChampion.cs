@@ -1457,10 +1457,8 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Cosmos
                     {
                         if (Main.netMode != NetmodeID.Server)
                         {
-                            if (ShaderManager.TryGetFilter("FargowiltasSouls.Invert", out ManagedScreenFilter filter))
-                            {
-                                filter.SetFocusPosition(NPC.Center);
-                            }
+                            ManagedScreenFilter filter = ShaderManager.GetFilter("FargowiltasSouls.Invert");
+                            filter.SetFocusPosition(NPC.Center);
                         }
                     }
 

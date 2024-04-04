@@ -243,12 +243,10 @@ namespace FargowiltasSouls.Content.Projectiles.BossWeapons
 
             if (!Main.dedServ)
             {
-                if (ShaderManager.TryGetFilter("FargowiltasSouls.FinalSpark", out ManagedScreenFilter spark))
-                {
-                    spark.Activate();
-                    if (SoulConfig.Instance.ForcedFilters && Main.WaveQuality == 0)
-                        Main.WaveQuality = 1;
-                }
+                ManagedScreenFilter filter = ShaderManager.GetFilter("FargowiltasSouls.FinalSpark");
+                spark.Activate();
+                if (SoulConfig.Instance.ForcedFilters && Main.WaveQuality == 0)
+                    Main.WaveQuality = 1;
             }
         }
 

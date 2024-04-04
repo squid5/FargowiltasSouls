@@ -50,29 +50,27 @@ namespace FargowiltasSouls.Content.Buffs.Souls
 
             if (!Main.dedServ && player.whoAmI == Main.myPlayer)
             {
-                if (ShaderManager.TryGetFilter("FargowiltasSouls.Invert", out ManagedScreenFilter filter))
-                {
-                    if (FargoSoulsUtil.BossIsAlive(ref EModeGlobalNPC.championBoss, ModContent.NPCType<CosmosChampion>())
+                ManagedScreenFilter filter = ShaderManager.GetFilter("FargowiltasSouls.Invert");
+                if (FargoSoulsUtil.BossIsAlive(ref EModeGlobalNPC.championBoss, ModContent.NPCType<CosmosChampion>())
                         && Main.npc[EModeGlobalNPC.championBoss].ai[0] == 15)
-                    {
-                        filter.SetFocusPosition(Main.npc[EModeGlobalNPC.championBoss].Center);
-                    }
-
-                    if (FargoSoulsUtil.BossIsAlive(ref EModeGlobalNPC.mutantBoss, ModContent.NPCType<MutantBoss>())
-                        && WorldSavingSystem.MasochistModeReal && Main.npc[EModeGlobalNPC.mutantBoss].ai[0] == -5)
-                    {
-                        filter.SetFocusPosition(Main.npc[EModeGlobalNPC.mutantBoss].Center);
-                    }
-
-                    if (player.buffTime[buffIndex] > 60)
-                        filter.Activate();
-
-                    if (player.buffTime[buffIndex] == 90)
-                        SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/ZaWarudoResume"), player.Center);
-
-                    if (SoulConfig.Instance.ForcedFilters && Main.WaveQuality == 0)
-                        Main.WaveQuality = 1;
+                {
+                    filter.SetFocusPosition(Main.npc[EModeGlobalNPC.championBoss].Center);
                 }
+
+                if (FargoSoulsUtil.BossIsAlive(ref EModeGlobalNPC.mutantBoss, ModContent.NPCType<MutantBoss>())
+                    && WorldSavingSystem.MasochistModeReal && Main.npc[EModeGlobalNPC.mutantBoss].ai[0] == -5)
+                {
+                    filter.SetFocusPosition(Main.npc[EModeGlobalNPC.mutantBoss].Center);
+                }
+
+                if (player.buffTime[buffIndex] > 60)
+                    filter.Activate();
+
+                if (player.buffTime[buffIndex] == 90)
+                    SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/ZaWarudoResume"), player.Center);
+
+                if (SoulConfig.Instance.ForcedFilters && Main.WaveQuality == 0)
+                    Main.WaveQuality = 1;
             }
         }
 
