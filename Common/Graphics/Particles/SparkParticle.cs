@@ -1,22 +1,25 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Luminance.Core.Graphics;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 
 namespace FargowiltasSouls.Common.Graphics.Particles
 {
-	public class SparkParticle : FargoParticle
+	public class SparkParticle : Particle
 	{
-		public readonly bool UseBloom;
+        public override string AtlasTextureName => "FargowiltasSouls.SparkParticle";
+        public Color BloomColor;
+        public readonly bool UseBloom;
 
-		public override bool UseAdditiveBlend => true;
+		public override BlendState BlendState => BlendState.Additive;
 
-		public SparkParticle(Vector2 worldPosition, Vector2 velocity, Color drawColor, float scale, int lifetime, bool useBloom = true, Color? bloomColor = null)
+        public SparkParticle(Vector2 worldPosition, Vector2 velocity, Color drawColor, float scale, int lifetime, bool useBloom = true, Color? bloomColor = null)
 		{
 			Position = worldPosition;
 			Velocity = velocity;
 			DrawColor = drawColor;
 			Scale = new(scale);
-			MaxLifetime = lifetime;
+			Lifetime = lifetime;
 			UseBloom = useBloom;
 			bloomColor ??= Color.White;
 			BloomColor = bloomColor.Value;
@@ -34,11 +37,11 @@ namespace FargowiltasSouls.Common.Graphics.Particles
 		public override void Draw(SpriteBatch spriteBatch)
 		{
 			Vector2 scale = new Vector2(0.5f, 1.6f) * Scale;
-			spriteBatch.Draw(MainTexture, Position - Main.screenPosition, null, DrawColor, Rotation, MainTexture.Size() * 0.5f, scale, 0, 0f);
-			spriteBatch.Draw(MainTexture, Position - Main.screenPosition, null, DrawColor, Rotation, MainTexture.Size() * 0.5f, scale * new Vector2(0.45f, 1f), 0, 0f);
+			spriteBatch.Draw(Texture, Position - Main.screenPosition, null, DrawColor, Rotation, Texture.Frame.Size() * 0.5f, scale, 0);
+			spriteBatch.Draw(Texture, Position - Main.screenPosition, null, DrawColor, Rotation, Texture.Frame.Size() * 0.5f, scale * new Vector2(0.45f, 1f), 0);
 
 			if (UseBloom)
-				spriteBatch.Draw(MainTexture, Position - Main.screenPosition, null, BloomColor * 0.5f, Rotation, MainTexture.Size() * 0.5f, scale, 0, 0f);
+				spriteBatch.Draw(Texture, Position - Main.screenPosition, null, BloomColor * 0.5f, Rotation, Texture.Frame.Size() * 0.5f, scale, 0);
 		}
 	}
 }

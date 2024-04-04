@@ -1,20 +1,25 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Microsoft.Xna.Framework;
+using Luminance.Core.Graphics;
 
 namespace FargowiltasSouls.Common.Graphics.Particles
 {
-	public class BigSparkle : FargoParticle
+	public class BigSparkle : Particle
 	{
-		public readonly bool UseBloom;
+        public override string AtlasTextureName => "FargowiltasSouls.BigSparkle";
 
-		public BigSparkle(Vector2 worldPosition, Vector2 velocity, Color drawColor, float scale, int lifetime, float rotation = 0f, float rotationSpeed = 0f, bool useBloom = true, Color? bloomColor = null)
+        public readonly bool UseBloom;
+
+        public Color BloomColor;
+
+        public BigSparkle(Vector2 worldPosition, Vector2 velocity, Color drawColor, float scale, int lifetime, float rotation = 0f, float rotationSpeed = 0f, bool useBloom = true, Color? bloomColor = null)
 		{
 			Position = worldPosition;
 			Velocity = velocity;
 			DrawColor = drawColor;
 			Scale = new(scale);
-			MaxLifetime = lifetime;
+			Lifetime = lifetime;
 			Rotation = rotation;
 			RotationSpeed = rotationSpeed;
 			UseBloom = useBloom;
@@ -24,20 +29,23 @@ namespace FargowiltasSouls.Common.Graphics.Particles
 
 		public override void Update()
 		{
-			Opacity = (FadeIn ? Utils.GetLerpValue(0f, DefaultFadeTime, Timer, true) : 1f) * Utils.GetLerpValue(MaxLifetime, MaxLifetime - DefaultFadeTime, Timer, true);
+			Opacity = Utils.GetLerpValue(Lifetime, Lifetime - 20, Time, true);
 			Velocity *= 0.99f;
 		}
 
 		public override void Draw(SpriteBatch spriteBatch)
 		{
 			if (UseBloom)
-				spriteBatch.Draw(CommonBloomTexture, Position - Main.screenPosition, null, BloomColor with { A = 0 } * 0.5f * Opacity, 0f, CommonBloomTexture.Size() * 0.5f, Scale * 0.17f,
-					SpriteEffects.None, 0f);
+			{
+				AtlasTexture bloomTexture = AtlasManager.GetTexture("Fargowiltas.Bloom");
+                spriteBatch.Draw(bloomTexture, Position - Main.screenPosition, null, BloomColor with { A = 0 } * 0.5f * Opacity, 0f, bloomTexture.Frame.Size() * 0.5f, Scale * 0.17f, SpriteEffects.None);
+            }
+				
 
-			spriteBatch.Draw(MainTexture, Position - Main.screenPosition, null, DrawColor with { A = 0 }, Rotation, MainTexture.Size() * 0.5f, Scale, SpriteEffects.None, 0f);
+			spriteBatch.Draw(Texture, Position - Main.screenPosition, null, DrawColor with { A = 0 }, Rotation, Texture.Frame.Size() * 0.5f, Scale, SpriteEffects.None);
 
 			if (UseBloom)
-				spriteBatch.Draw(MainTexture, Position - Main.screenPosition, null, BloomColor with { A = 0 } * 0.5f, Rotation, MainTexture.Size() * 0.5f, Scale, SpriteEffects.None, 0f);
+				spriteBatch.Draw(Texture, Position - Main.screenPosition, null, BloomColor with { A = 0 } * 0.5f, Rotation, Texture.Frame.Size() * 0.5f, Scale, SpriteEffects.None);
 		}
 	}
 }

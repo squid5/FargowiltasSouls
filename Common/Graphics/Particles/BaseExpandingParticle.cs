@@ -1,18 +1,23 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Terraria;
+using Luminance.Core.Graphics;
+using Luminance.Common.Utilities;
 
 namespace FargowiltasSouls.Common.Graphics.Particles
 {
-	public abstract class BaseExpandingParticle : FargoParticle
+	public abstract class BaseExpandingParticle : Particle
 	{
-		public readonly Vector2 StartScale;
+        public override string AtlasTextureName => "FargowiltasSouls.Bloom";
+
+        public readonly Vector2 StartScale;
 
 		public readonly Vector2 EndScale;
 
-		public readonly bool UseBloom;
+        public Color BloomColor;
 
-		public override Texture2D MainTexture => CommonBloomTexture;
+        public readonly bool UseBloom;
+
 
 		/// <summary>
 		/// The scale for a texture of size 100x100px.
@@ -26,9 +31,10 @@ namespace FargowiltasSouls.Common.Graphics.Particles
 			DrawColor = drawColor;
 			Scale = StartScale = startScale;
 			EndScale = endScale;
-			MaxLifetime = lifetime;
+			Lifetime = lifetime;
 			UseBloom = useExtraBloom;
 			extraBloomColor ??= Color.White;
+
 			BloomColor = extraBloomColor.Value;
 		}
 
@@ -40,10 +46,10 @@ namespace FargowiltasSouls.Common.Graphics.Particles
 
 		public sealed override void Draw(SpriteBatch spriteBatch)
 		{
-			spriteBatch.Draw(MainTexture, Position - Main.screenPosition, null, DrawColor with { A = 0 } * Opacity, Rotation, MainTexture.Size() * 0.5f, DrawScale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(Texture, Position - Main.screenPosition, Frame, DrawColor with { A = 0 } * Opacity, Rotation, Texture.Frame.Size() * 0.5f, Scale, Direction.ToSpriteDirection());
 
 			if (UseBloom)
-				spriteBatch.Draw(MainTexture, Position - Main.screenPosition, null, BloomColor with { A = 0 } * 0.4f * Opacity, Rotation, MainTexture.Size() * 0.5f, DrawScale * 0.66f, SpriteEffects.None, 0f);
+				spriteBatch.Draw(Texture, Position - Main.screenPosition, null, BloomColor with { A = 0 } * 0.4f * Opacity, Rotation, Texture.Frame.Size() * 0.5f, Scale * 0.66f, Direction.ToSpriteDirection());
 		}
 	}
 }
