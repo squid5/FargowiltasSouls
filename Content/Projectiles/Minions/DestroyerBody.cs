@@ -149,7 +149,7 @@ namespace FargowiltasSouls.Content.Projectiles.Minions
 
                     if (selectedTarget != -1) //shoot
                     {
-                        Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, 10f * Projectile.DirectionTo(Main.npc[selectedTarget].Center),
+                        Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, 10f * Projectile.SafeDirectionTo(Main.npc[selectedTarget].Center),
                             ProjectileID.MiniRetinaLaser, Projectile.damage, Projectile.knockBack, Projectile.owner);
                         SoundEngine.PlaySound(SoundID.Item12, Projectile.Center);
                     }

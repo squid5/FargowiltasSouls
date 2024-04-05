@@ -86,7 +86,7 @@ namespace FargowiltasSouls.Core.Globals
             if (!WorldSavingSystem.EternityMode) return;
 
             npc.value = (int)(npc.value * 1.3);
-            if (!npc.boss && !npc.townNPC && !npc.CountsAsACritter && npc.life > 10 && !Main.masterMode && !FargoSoulsUtil.AnyBossAlive())
+            if (!npc.boss && !npc.townNPC && !npc.CountsAsACritter && npc.life > 10 && !Main.masterMode && !LumUtils.AnyBosses())
             {
                 npc.lifeMax = (int)Math.Round(npc.lifeMax * 1.1f);
             }
@@ -258,7 +258,7 @@ namespace FargowiltasSouls.Core.Globals
             bool noInvasion = FargowiltasSouls.NoInvasion(spawnInfo);
             bool normalSpawn = !spawnInfo.PlayerInTown && noInvasion && !oldOnesArmy && noEvent;
 
-            bool bossCanSpawn = WorldSavingSystem.MasochistModeReal && !spawnInfo.Player.HasEffect<SinisterIconEffect>() && !FargoSoulsUtil.AnyBossAlive();
+            bool bossCanSpawn = WorldSavingSystem.MasochistModeReal && !spawnInfo.Player.HasEffect<SinisterIconEffect>() && !LumUtils.AnyBosses();
 
             //MASOCHIST MODE
             if (WorldSavingSystem.EternityMode)
@@ -432,7 +432,7 @@ namespace FargowiltasSouls.Core.Globals
                             if (Main.bloodMoon)
                             {
                                 pool[NPCID.ChatteringTeethBomb] = .1f;
-                                /*if (!sinisterIcon && !NPC.downedMechBoss2 && !FargoSoulsUtil.AnyBossAlive())
+                                /*if (!sinisterIcon && !NPC.downedMechBoss2 && !LumUtils.AnyBosses())
                                     pool[NPCID.EyeofCthulhu] = .004f;
 
                                 if (NPC.downedPlantBoss)
@@ -1281,7 +1281,7 @@ namespace FargowiltasSouls.Core.Globals
                 if (PaladinsShield)
                     modifiers.FinalDamage *= 0.5f;
 
-                if (WorldSavingSystem.MasochistModeReal && (npc.boss || FargoSoulsUtil.AnyBossAlive() && npc.Distance(Main.npc[FargoSoulsGlobalNPC.boss].Center) < 3000))
+                if (WorldSavingSystem.MasochistModeReal && (npc.boss || LumUtils.AnyBosses() && npc.Distance(Main.npc[FargoSoulsGlobalNPC.boss].Center) < 3000))
                     modifiers.FinalDamage *= 0.9f;
             }
 

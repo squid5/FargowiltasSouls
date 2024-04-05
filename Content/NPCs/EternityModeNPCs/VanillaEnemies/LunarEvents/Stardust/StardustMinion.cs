@@ -38,10 +38,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEve
             Main.npcFrameCount[NPC.type] = 2;
             NPCID.Sets.CantTakeLunchMoney[Type] = true;
             NPCID.Sets.SpecificDebuffImmunity[Type] = NPCID.Sets.SpecificDebuffImmunity[NPCID.LunarTowerStardust];
-            NPCID.Sets.NPCBestiaryDrawOffset.Add(NPC.type, new NPCID.Sets.NPCBestiaryDrawModifiers()
-            {
-                Hide = true
-            });
+            this.ExcludeFromBestiary();
         }
 
         public override void SetDefaults()
@@ -158,7 +155,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEve
                         Vector2 desiredLocation = parent.Center + NearParent * rotation.ToRotationVector2();
                         NPC.velocity = (desiredLocation - NPC.Center) * speedFactor;
                         float fromCenter = NPC.DirectionFrom(parent.Center).ToRotation();
-                        float toPlayer = NPC.DirectionTo(player.Center).ToRotation();
+                        float toPlayer = NPC.SafeDirectionTo(player.Center).ToRotation();
                         if (parentModNPC.AttackTimer > ReactionTime)
                         {
                             if (parentModNPC.AttackTimer > ReactionTime && player.active && !player.ghost && Math.Abs(toPlayer - fromCenter) < MathHelper.Pi / 8)
@@ -177,7 +174,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEve
                         Player player = Main.player[parent.target];
                         if (substate != (float)States.Rush && player.active && !player.ghost)
                         {
-                            NPC.velocity = NPC.DirectionTo(player.Center) * RushSpeed;
+                            NPC.velocity = NPC.SafeDirectionTo(player.Center) * RushSpeed;
                             substate = (float)States.Rush;
                         }
                         if (NPC.Distance(parent.Center) > parentModNPC.AuraSize)
@@ -230,7 +227,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEve
                         if (substate != (float)States.Curve && substate != HomeBack && player.active && !player.ghost)
                         {
                             int side = Main.rand.NextBool() ? 1 : -1;
-                            NPC.velocity = NPC.DirectionTo(player.Center).RotatedBy(90 * side);
+                            NPC.velocity = NPC.SafeDirectionTo(player.Center).RotatedBy(90 * side);
                             LockPos = (player.Center - parent.Center) * Main.rand.NextFloat(0.8f, 1.2f);
                             substate = (float)States.Curve;
                             NPC.netUpdate = true;
@@ -270,7 +267,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEve
             float rotation;
             if (telegraph)
             {
-                rotation = parent.DirectionTo(initialLock).ToRotation() + (parentModNPC.CellRotation * Side);
+                rotation = parent.SafeDirectionTo(initialLock).ToRotation() + (parentModNPC.CellRotation * Side);
                 
             }
             else
@@ -282,7 +279,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEve
             NPC.velocity = (desiredLocation - NPC.Center) * speedFactor;
             if (telegraph)
             {
-                LockPos = (parent.DirectionTo(initialLock).ToRotation() + (parentModNPC.CellRotation * Side)).ToRotationVector2();
+                LockPos = (parent.SafeDirectionTo(initialLock).ToRotation() + (parentModNPC.CellRotation * Side)).ToRotationVector2();
             }
         }
         public override bool CheckDead()
@@ -329,7 +326,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEve
 
         void RotateTowards(Vector2 target, float speed)
         {
-            Vector2 PV = NPC.DirectionTo(target);
+            Vector2 PV = NPC.SafeDirectionTo(target);
             Vector2 LV = NPC.velocity;
             float anglediff = (float)(Math.Atan2(PV.Y * LV.X - PV.X * LV.Y, LV.X * PV.X + LV.Y * PV.Y)); //real
             //change rotation towards target

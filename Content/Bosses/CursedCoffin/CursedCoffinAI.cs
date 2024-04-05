@@ -15,6 +15,7 @@ using static FargowiltasSouls.Content.Bosses.BanishedBaron.BanishedBaron;
 using FargowiltasSouls.Content.WorldGeneration;
 using FargowiltasSouls.Content.Projectiles.Masomode;
 using Fargowiltas.Projectiles;
+using Luminance.Core.Graphics;
 
 namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 {
@@ -221,7 +222,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 
             if (Timer <= 1)
             {
-                initialDir = Player.DirectionTo(NPC.Center).ToRotation();
+                initialDir = Player.SafeDirectionTo(NPC.Center).ToRotation();
                 initialDist = NPC.Distance(Player.Center);
             }
             if (Timer <= PrepTime)

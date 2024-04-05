@@ -1,7 +1,8 @@
 ﻿using FargowiltasSouls.Assets.ExtraTextures;
-using FargowiltasSouls.Common.Graphics.Shaders;
+
 using FargowiltasSouls.Content.Items.Accessories.Souls;
 using FargowiltasSouls.Content.PlayerDrawLayers;
+using Luminance.Core.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
@@ -36,7 +37,7 @@ namespace FargowiltasSouls.Common.Graphics.Drawers
 
 		public override void Load()
 		{
-			WingTarget = new(true, RenderTargetManager.CreateScreenSizedTarget, true);
+			WingTarget = new(true, ManagedRenderTarget.CreateScreenSizedTarget, true);
 			Main.OnPreDraw += PrepareWingTarget;
 			On_LegacyPlayerRenderer.DrawPlayers += DrawWingTarget;
 			On_PlayerDrawLayers.DrawPlayer_09_Wings += PreventDefaultWingDrawing;
@@ -91,21 +92,21 @@ namespace FargowiltasSouls.Common.Graphics.Drawers
 				break;
 			}
 
-			if (!ShaderManager.HasLoaded || Main.gameMenu || !WingsInUse)
+			if (!ShaderManager.HasFinishedLoading || Main.gameMenu || !WingsInUse)
 				return;
 
-			WingTarget.SwapTo();
+			WingTarget.SwapToRenderTarget();
 
 			// Prepare the shader.
-			var shader = ShaderManager.GetShaderIfExists("EternitySoulWings");
+			var shader = ShaderManager.GetShader("EternitySoulWings");
 			FargoSoulsUtil.SetTexture1(FargosTextureRegistry.TurbulentNoise.Value);
 			FargoSoulsUtil.SetTexture2(FargosTextureRegistry.ColorNoiseMap.Value);
 
-			shader.WrappedEffect.Parameters["lighting"]?.SetValue(Color.White.ToVector3());
-			shader.WrappedEffect.Parameters["resolution"]?.SetValue(WingTarget.Target.Size() / 2);
-			shader.ApplyParams();
+			shader.TrySetParameter("lightning", Color.White);
+            shader.TrySetParameter("resolution", WingTarget.Target.Size() / 2);
+            shader.Apply();
 
-			Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearWrap, DepthStencilState.None, Main.Rasterizer, shader.WrappedEffect, Matrix.Identity);
+			Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearWrap, DepthStencilState.None, Main.Rasterizer, shader.Shader.Value, Matrix.Identity);
 
 			for (int i = 0; i < Main.maxPlayers; i++)
 			{

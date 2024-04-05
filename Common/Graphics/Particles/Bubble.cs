@@ -2,52 +2,47 @@
 using Terraria;
 using Microsoft.Xna.Framework;
 using Terraria.ModLoader;
+using Luminance.Core.Graphics;
 
 namespace FargowiltasSouls.Common.Graphics.Particles
 {
 	public class Bubble : Particle
 	{
-		public readonly bool UseBloom;
+        public override string AtlasTextureName => "FargowiltasSouls.Bubble";
+
+        public readonly bool UseBloom;
 
 		public readonly float BaseOpacity = 1;
-		public override int MaxFrames => 2;
-		public override bool UseNonPreMultipliedBlend => true;
-		public Bubble(Vector2 worldPosition, Vector2 velocity, float scale, int lifetime, float baseOpacity = 1, float rotation = 0f, float rotationSpeed = 0f)
+		public override int FrameCount => 2;
+		public int CurrentFrame = 0;
+        public override BlendState BlendState => BlendState.NonPremultiplied;
+        public Bubble(Vector2 worldPosition, Vector2 velocity, float scale, int lifetime, float baseOpacity = 1, float rotation = 0f, float rotationSpeed = 0f)
 		{
 			Position = worldPosition;
 			Velocity = velocity;
 			DrawColor = Color.White;
 			Scale = new(scale);
-			MaxLifetime = lifetime;
+			Lifetime = lifetime;
 			Rotation = rotation;
 			RotationSpeed = rotationSpeed;
 			UseBloom = false;
 
 			BaseOpacity = baseOpacity;
-
-            CurrentFrame = Main.rand.Next(MaxFrames);
-
-			Height = MainTexture.Height / MaxFrames;
-			Width = MainTexture.Width;
+            CurrentFrame = Main.rand.Next(FrameCount);
 		}
 		public override void Update()
 		{
-			Opacity = (FadeIn ? Utils.GetLerpValue(0f, DefaultFadeTime, Timer, true) : 1f) * Utils.GetLerpValue(MaxLifetime, MaxLifetime - DefaultFadeTime, Timer, true);
+			Opacity = Utils.GetLerpValue(Lifetime, Lifetime - 20, Time, true);
 			Velocity *= 0.99f;
 		}
 		public override void Draw(SpriteBatch spriteBatch)
 		{
-            Rectangle? frame = null;
-            Vector2 origin = MainTexture.Size() * 0.5f;
-            if (UsesFrames)
-            {
-                frame = new(0, CurrentFrame * Height, Width, Height);
-                origin = frame.Value.Size() * 0.5f;
-            }
+            int height = Texture.Frame.Height / FrameCount;
+            Frame = new(0, CurrentFrame * height, Texture.Frame.Width, height);
 
             Vector2 screenPos = Position - Main.screenPosition;
 
-            spriteBatch.Draw(MainTexture, screenPos, frame, DrawColor * Opacity * BaseOpacity, Rotation, origin, Scale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(Texture, screenPos, Frame, DrawColor * Opacity * BaseOpacity, Rotation, null, Scale, SpriteEffects.None);
         }
 	}
 }

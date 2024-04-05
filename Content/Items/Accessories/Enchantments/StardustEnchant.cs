@@ -1,9 +1,10 @@
-﻿using FargowiltasSouls.Common.Graphics.Shaders;
+﻿
 using FargowiltasSouls.Content.Buffs.Souls;
 using FargowiltasSouls.Content.Projectiles;
 using FargowiltasSouls.Core;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using FargowiltasSouls.Core.Toggler.Content;
+using Luminance.Core.Graphics;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
@@ -81,7 +82,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
 
                 if (modPlayer.freezeLength > 0 && Main.netMode != NetmodeID.Server)
                 {
-                    ScreenFilter filter = ShaderManager.GetFilterIfExists("Invert");
+                    ManagedScreenFilter filter = ShaderManager.GetFilter("FargowiltasSouls.Invert");
                     filter.SetFocusPosition(player.Center);
                     if (modPlayer.freezeLength > 60)
                     {

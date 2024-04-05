@@ -74,7 +74,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.Jungle
                     if (Timer == 0) //if player behind blocks, periodically dash closer
                     {
                         if (!Collision.CanHitLine(npc.Center, 0, 0, Main.player[npc.target].Center, 0, 0))
-                            npc.velocity = Math.Min(6f, npc.velocity.Length()) * npc.DirectionTo(Main.player[npc.target].Center);
+                            npc.velocity = Math.Min(6f, npc.velocity.Length()) * npc.SafeDirectionTo(Main.player[npc.target].Center);
 
                         //move in more frequently when especially far away
                         if (npc.Distance(Main.player[npc.target].Center) > 1200)

@@ -106,7 +106,7 @@ namespace FargowiltasSouls.Content.Projectiles.Pets
                     const int rampupTime = 480;
                     float lerp = Math.Min(++Projectile.ai[2] / rampupTime, 1f);
                     float betterHoming = 0.03f * lerp;
-                    Projectile.velocity = Vector2.Lerp(Projectile.velocity, Projectile.DirectionTo(player.Center) * Projectile.velocity.Length(), betterHoming);
+                    Projectile.velocity = Vector2.Lerp(Projectile.velocity, Projectile.SafeDirectionTo(player.Center) * Projectile.velocity.Length(), betterHoming);
 
                     Projectile.rotation = Projectile.velocity.ToRotation();
                     if (Projectile.spriteDirection > 0)

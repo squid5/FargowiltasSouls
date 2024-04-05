@@ -59,10 +59,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
             NPCID.Sets.MPAllowedEnemies[Type] = true;
 
             NPCID.Sets.CantTakeLunchMoney[Type] = true;
-            NPCID.Sets.NPCBestiaryDrawOffset.Add(NPC.type, new NPCID.Sets.NPCBestiaryDrawModifiers()
-            {
-                Hide = true
-            });
+            this.ExcludeFromBestiary();
             NPC.AddDebuffImmunities(new List<int>
             {
                 BuffID.Confused,
@@ -265,7 +262,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
                     BiteTimer = -90; //cooldown
 
                     // dash away otherwise it's bullshit
-                    NPC.velocity = -NPC.DirectionTo(victim.Center) * 50;
+                    NPC.velocity = -NPC.SafeDirectionTo(victim.Center) * 50;
 
                     NPC.netUpdate = true;
 
@@ -288,7 +285,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
                         Timer = 0;
                         AI3 = 0;
                     }
-                    Movement(player.Center + player.Center.DirectionTo(NPC.Center) * 300, 0.1f, 10, 5, 0.08f, 20);
+                    Movement(player.Center + player.Center.SafeDirectionTo(NPC.Center) * 300, 0.1f, 10, 5, 0.08f, 20);
                     break;
                 case CursedCoffin.BehaviorStates.HoveringForSlam:
                     if (newState)
@@ -345,7 +342,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
             {
                 if (coffin.Timer < 0 || owner.velocity.Y == 0)
                     AI3 = 1;
-                NPC.velocity = Vector2.Lerp(NPC.velocity, NPC.DirectionTo(owner.Center) * Math.Min(Math.Max(20, owner.velocity.Length()), NPC.Distance(owner.Center)), 0.2f);
+                NPC.velocity = Vector2.Lerp(NPC.velocity, NPC.SafeDirectionTo(owner.Center) * Math.Min(Math.Max(20, owner.velocity.Length()), NPC.Distance(owner.Center)), 0.2f);
                 LerpOpacity(0.15f);
                 LerpScale(0.4f);
             }
@@ -387,7 +384,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
                 NPC.velocity *= 0.97f;
                 LerpOpacity(1f, 0.4f);
                 LerpScale(1f, 0.4f);
-                //Movement(player.Center + player.Center.DirectionTo(NPC.Center) * 300, 0.1f, 10, 5, 0.08f, 20);
+                //Movement(player.Center + player.Center.SafeDirectionTo(NPC.Center) * 300, 0.1f, 10, 5, 0.08f, 20);
             }
         }
         void SlowCharges(NPC owner)
@@ -399,7 +396,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
             Player player = Main.player[owner.target];
             if (Timer <= 1)
             {
-                AI3 = NPC.DirectionTo(player.Center).ToRotation() + Main.rand.NextFloat(-MathHelper.PiOver2 * 0.6f, MathHelper.PiOver2 * 0.6f);
+                AI3 = NPC.SafeDirectionTo(player.Center).ToRotation() + Main.rand.NextFloat(-MathHelper.PiOver2 * 0.6f, MathHelper.PiOver2 * 0.6f);
                 NPC.netUpdate = true;
                 // Get the corner with the biggest difference in angle to player (to make npc avoid player on course to the corner)
                 float CrossProduct(Vector2 v1, Vector2 v2) => (v1.X * v2.Y) - (v1.Y * v2.X); // Ordering by cross product gives the biggest undirected angle difference between two vectors

@@ -175,7 +175,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                 if (npc.ai[1] == 1f && npc.ai[2] > 2f) //spinning
                 {
                     EndSpin = true;
-                    //if (npc.HasValidTarget) npc.position += npc.DirectionTo(Main.player[npc.target].Center) * 5;
+                    //if (npc.HasValidTarget) npc.position += npc.SafeDirectionTo(Main.player[npc.target].Center) * 5;
 
                     if (++ProjectileAttackTimer > 90) //projectile attack
                     {
@@ -193,7 +193,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                             const int max = 8;
                             for (int i = 0; i < max; i++)
                             {
-                                Vector2 speed = 12f * npc.DirectionTo(Main.player[npc.target].Center).RotatedBy(2 * Math.PI / max * i);
+                                Vector2 speed = 12f * npc.SafeDirectionTo(Main.player[npc.target].Center).RotatedBy(2 * Math.PI / max * i);
                                 for (int j = -starMax; j <= starMax; j++)
                                 {
                                     int p = Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, speed.RotatedBy(MathHelper.ToRadians(2f) * j),
@@ -341,14 +341,14 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                 if (!(npc.ai[1] == 1f && npc.ai[2] > 2f) || npc.ai[1] == 2) // when not spinning or dg phase
                 {
                     float pushStrength = 1f * (1 - distance / minDist);
-                    npc.velocity -= pushStrength * npc.DirectionTo(Main.player[npc.target].Center);
+                    npc.velocity -= pushStrength * npc.SafeDirectionTo(Main.player[npc.target].Center);
                 }
             }
 
             //accel at player whenever out of range
             if (npc.HasValidTarget && npc.Distance(Main.player[npc.target].Center) > 900)
             {
-                npc.velocity += 0.1f * npc.DirectionTo(Main.player[npc.target].Center);
+                npc.velocity += 0.1f * npc.SafeDirectionTo(Main.player[npc.target].Center);
             }
 
             EModeUtils.DropSummon(npc, "MechSkull", NPC.downedMechBoss3, ref DroppedSummon, Main.hardMode);
@@ -590,7 +590,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                 {
                     npc.localAI[0] = 0;
 
-                    Vector2 baseVel = npc.DirectionTo(Main.player[npc.target].Center);
+                    Vector2 baseVel = npc.SafeDirectionTo(Main.player[npc.target].Center);
                     for (int j = -2; j <= 2; j++)
                     {
                         if (FargoSoulsUtil.HostCheck)
@@ -666,7 +666,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                 else if (npc.ai[2] == 180)
                 {
                     SoundEngine.PlaySound(SoundID.Item18 with { Volume = 1.25f }, npc.Center);
-                    npc.velocity = npc.DirectionTo(Main.player[npc.target].Center) * 20f;
+                    npc.velocity = npc.SafeDirectionTo(Main.player[npc.target].Center) * 20f;
                     IdleOffsetX *= -1;
                     IdleOffsetY *= -1;
 
@@ -688,7 +688,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     npc.netUpdate = true;
                 }
 
-                npc.rotation = head.DirectionTo(npc.Center).ToRotation() - (float)Math.PI / 2;
+                npc.rotation = head.SafeDirectionTo(npc.Center).ToRotation() - (float)Math.PI / 2;
 
                 return true;
             }
@@ -738,7 +738,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                             IdleOffsetX = (int)offset.Length();
                             if (IdleOffsetX < 300)
                                 IdleOffsetX = 300;
-                            SpinRotation = head.DirectionTo(npc.Center).ToRotation();
+                            SpinRotation = head.SafeDirectionTo(npc.Center).ToRotation();
 
                             npc.netUpdate = true;
                         }
@@ -761,7 +761,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                             npc.netUpdate = true;
                         }
                     }
-                    npc.rotation = head.DirectionTo(npc.Center).ToRotation() - (float)Math.PI / 2;
+                    npc.rotation = head.SafeDirectionTo(npc.Center).ToRotation() - (float)Math.PI / 2;
 
                     if (npc.type == NPCID.PrimeLaser)
                         npc.localAI[1] = 0;
@@ -833,7 +833,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                             {
                                 for (int i = -1; i <= 1; i += 2)
                                 {
-                                    Vector2 baseVel = npc.DirectionTo(Main.player[npc.target].Center).RotatedBy(MathHelper.ToRadians(20) * i);
+                                    Vector2 baseVel = npc.SafeDirectionTo(Main.player[npc.target].Center).RotatedBy(MathHelper.ToRadians(20) * i);
                                     for (int j = -3; j <= 3; j++)
                                     {
                                         if (FargoSoulsUtil.HostCheck)
@@ -848,7 +848,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                             {
                                 npc.localAI[1] = 0;
 
-                                Vector2 baseVel = npc.DirectionTo(Main.player[npc.target].Center);
+                                Vector2 baseVel = npc.SafeDirectionTo(Main.player[npc.target].Center);
                                 for (int j = -3; j <= 3; j++)
                                 {
                                     if (FargoSoulsUtil.HostCheck)
@@ -916,12 +916,12 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                                     if (npc.velocity.Y > 0 && vel.Y < 0)
                                         npc.velocity.Y -= moveSpeed;
                                 }
-                                npc.rotation = npc.DirectionTo(Main.player[npc.target].Center).ToRotation() - (float)Math.PI / 2;
+                                npc.rotation = npc.SafeDirectionTo(Main.player[npc.target].Center).ToRotation() - (float)Math.PI / 2;
                             }
                             else if (AttackTimer == 90)
                             {
                                 SoundEngine.PlaySound(SoundID.Item18 with { Volume = 1.25f }, npc.Center);
-                                npc.velocity = npc.DirectionTo(Main.player[npc.target].Center) * (npc.dontTakeDamage ? 20f : 25f);
+                                npc.velocity = npc.SafeDirectionTo(Main.player[npc.target].Center) * (npc.dontTakeDamage ? 20f : 25f);
                                 npc.rotation = npc.velocity.ToRotation() - (float)Math.PI / 2;
 
                                 npc.netUpdate = true;

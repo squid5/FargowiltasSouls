@@ -133,7 +133,7 @@ namespace FargowiltasSouls.Content.Projectiles
 
                 if (Projectile.localAI[0] == 90 && FargoSoulsUtil.HostCheck)
                 {
-                    Vector2 vector2_3 = 24f * (player != null && Projectile.ai[0] == 0 ? Projectile.DirectionTo(player.Center) : Projectile.ai[1].ToRotationVector2());
+                    Vector2 vector2_3 = 24f * (player != null && Projectile.ai[0] == 0 ? Projectile.SafeDirectionTo(player.Center) : Projectile.ai[1].ToRotationVector2());
                     float ai1New = Main.rand.NextBool() ? 1 : -1; //randomize starting direction
                     int type = useVanillaLightning ? ProjectileID.VortexLightning : ModContent.ProjectileType<HostileLightning>();
                     int p = Projectile.NewProjectile(Terraria.Entity.InheritSource(Projectile), Projectile.Center, vector2_3,

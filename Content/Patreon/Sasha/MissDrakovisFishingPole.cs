@@ -88,7 +88,7 @@ namespace FargowiltasSouls.Content.Patreon.Sasha
                         {
                             if (Main.npc[i].active && Main.npc[i].CanBeChasedBy() && player.Distance(Main.npc[i].Center) < 1000f)
                             {
-                                Vector2 bulletSpeed = 2f * speed.Length() * player.DirectionTo(Main.npc[i].Center);
+                                Vector2 bulletSpeed = 2f * speed.Length() * player.SafeDirectionTo(Main.npc[i].Center);
                                 Projectile.NewProjectile(source, position, bulletSpeed, type, damage / 2, knockback, player.whoAmI);
                             }
                         }

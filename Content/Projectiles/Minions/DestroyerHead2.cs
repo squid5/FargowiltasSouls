@@ -155,7 +155,7 @@ namespace FargowiltasSouls.Content.Projectiles.Minions
 
                 if (Projectile.Distance(mousePos) > 50)
                 {
-                    Vector2 desiredVelocity = Projectile.DirectionTo(mousePos) * desiredFlySpeedInPixelsPerFrame;
+                    Vector2 desiredVelocity = Projectile.SafeDirectionTo(mousePos) * desiredFlySpeedInPixelsPerFrame;
                     Projectile.velocity = Vector2.Lerp(Projectile.velocity, desiredVelocity, 1f / amountOfFramesToLerpBy);
                 }
             }

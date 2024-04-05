@@ -90,7 +90,7 @@ Attack speed bonuses are half as effective
 
                     NPC target = Main.npc.FirstOrDefault(n => n.active && n.Distance(Player.Center) < 360 && n.CanBeChasedBy() && Collision.CanHit(Player.position, Player.width, Player.height, n.position, n.width, n.height));
                     if (target != null)
-                        vel = Player.DirectionTo(target.Center);
+                        vel = Player.SafeDirectionTo(target.Center);
 
                     vel *= 8f;
 

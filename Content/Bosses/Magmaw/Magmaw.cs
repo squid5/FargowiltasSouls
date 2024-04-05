@@ -388,7 +388,7 @@ namespace FargowiltasSouls.Content.Bosses.Magmaw
         void RotateTowards(Vector2 target, float speed)
         {
             Vector2 LV = NPC.rotation.ToRotationVector2();
-            Vector2 PV = NPC.DirectionTo(target);
+            Vector2 PV = NPC.SafeDirectionTo(target);
             float anglediff = FargoSoulsUtil.RotationDifference(LV, PV);
             //change rotation towards target
             NPC.rotation = NPC.rotation.ToRotationVector2().RotatedBy(Math.Sign(anglediff) * Math.Min(Math.Abs(anglediff), speed * MathHelper.Pi / 180)).ToRotation();

@@ -37,7 +37,7 @@ namespace FargowiltasSouls.Content.Projectiles.Deathrays
                 if (Projectile.localAI[0] < maxTime - 30)
                 {
                     int target = npc.type == NPCID.MoonLordCore ? npc.target : Main.npc[(int)npc.ai[3]].target;
-                    Projectile.velocity = npc.DirectionTo(Main.player[target].Center).RotatedBy(Projectile.ai[0]);
+                    Projectile.velocity = npc.SafeDirectionTo(Main.player[target].Center).RotatedBy(Projectile.ai[0]);
                 }
             }
             else

@@ -21,6 +21,7 @@ using Color = Microsoft.Xna.Framework.Color;
 using FargowiltasSouls.Content.Patreon.DanielTheRobot;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.Graphics.Shaders;
+using Luminance.Core.Graphics;
 
 namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 {
@@ -134,7 +135,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                         float scale = !UseCorruptAttack ? 6f : 4f;
                         float speedModifier = !UseCorruptAttack ? 12f : 5f;
 
-                        Vector2 direction = npc.DirectionTo(Main.player[npc.target].Center).RotatedByRandom(MathHelper.Pi / 10);
+                        Vector2 direction = npc.SafeDirectionTo(Main.player[npc.target].Center).RotatedByRandom(MathHelper.Pi / 10);
                         Vector2 vel = speed * direction * Main.rand.NextFloat(0.4f, 0.8f);
 
                         /*
@@ -733,7 +734,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                 npc.position += (Main.player[npc.target].position - Main.player[npc.target].oldPosition) / 3;
 
                 Vector2 vel = Main.player[npc.target].Center - npc.Center;
-                vel += 200f * Main.player[npc.target].DirectionTo(npc.Center);
+                vel += 200f * Main.player[npc.target].SafeDirectionTo(npc.Center);
                 npc.velocity = vel / 15;
             }
         }

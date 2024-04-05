@@ -55,7 +55,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Spirit
                     int p = Player.FindClosest(Projectile.Center, 0, 0);
                     if (p != -1)
                     {
-                        Projectile.velocity = Projectile.DirectionTo(Main.player[p].Center) * 30;
+                        Projectile.velocity = Projectile.SafeDirectionTo(Main.player[p].Center) * 30;
                         Projectile.ai[0] = 1f;
                         Projectile.netUpdate = true;
 

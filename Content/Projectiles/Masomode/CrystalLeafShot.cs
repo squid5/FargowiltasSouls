@@ -98,14 +98,14 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
                     if (player.Alive())
                     {
                         Vector2 LV = Projectile.velocity;
-                        Vector2 PV = Projectile.DirectionTo(player.Center);
+                        Vector2 PV = Projectile.SafeDirectionTo(player.Center);
                         float anglediff = FargoSoulsUtil.RotationDifference(LV, PV);
                         //change rotation towards target
                         Projectile.velocity = Projectile.velocity.RotatedBy(Math.Sign(anglediff) * Math.Min(Math.Abs(anglediff),  MathHelper.Pi / redirectTime));
                         Projectile.rotation = Projectile.velocity.ToRotation();
 
                         /*
-                        float angledif = FargoSoulsUtil.RotationDifference(Projectile.rotation.ToRotationVector2(), Projectile.DirectionTo(player.Center));
+                        float angledif = FargoSoulsUtil.RotationDifference(Projectile.rotation.ToRotationVector2(), Projectile.SafeDirectionTo(player.Center));
                         float amt = MathHelper.Min(Math.Abs(angledif), MathHelper.Pi / redirectTime);
                         Projectile.rotation += amt * Math.Sign(angledif);
                         Projectile.velocity = Projectile.rotation.ToRotationVector2() * Projectile.velocity

@@ -36,7 +36,7 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
             else if (npc.GetGlobalNPC<MoonLordCore>().VulnerabilityState == 4 && npc.GetGlobalNPC<MoonLordCore>().VulnerabilityTimer < 60 && !npc.dontTakeDamage)
                 Projectile.velocity = (Main.player[npc.target].Center - Projectile.Center) * 0.05f;
             else
-                Projectile.velocity = Projectile.DirectionTo(target);
+                Projectile.velocity = Projectile.SafeDirectionTo(target);
 
             threshold += 6;
             if (threshold > maxSize)

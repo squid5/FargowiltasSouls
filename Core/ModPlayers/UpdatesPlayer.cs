@@ -207,7 +207,7 @@ namespace FargowiltasSouls.Core.ModPlayers
             if (MutantAntibodies && Player.wet)
             {
                 Player.wingTime = Player.wingTimeMax;
-                Player.AddBuff(ModContent.BuffType<RefreshedBuff>(), (int)FargoSoulsUtil.SecondsToFrames(30f));
+                Player.AddBuff(ModContent.BuffType<RefreshedBuff>(), LumUtils.SecondsToFrames(30f));
             }
 
             if (StyxSet)

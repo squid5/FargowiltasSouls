@@ -88,14 +88,14 @@ namespace FargowiltasSouls.Core.ModPlayers
             if (!WorldSavingSystem.EternityMode)
                 return;
 
-            if (ModLoader.TryGetMod("AlchemistNPC", out Mod alchNPC) && FargoSoulsUtil.AnyBossAlive())
+            if (ModLoader.TryGetMod("AlchemistNPC", out Mod alchNPC) && LumUtils.AnyBosses())
             {
                 if (alchNPC.TryFind("GreaterDangersense", out ModBuff greaterDangersense))
                 {
                     MurderBuff(greaterDangersense.Type);
                 }
             }
-            if (ModLoader.TryGetMod("AlchemistNPCLite", out Mod alchNPCLite) && FargoSoulsUtil.AnyBossAlive())
+            if (ModLoader.TryGetMod("AlchemistNPCLite", out Mod alchNPCLite) && LumUtils.AnyBosses())
             {
                 if (alchNPCLite.TryFind("GreaterDangersense", out ModBuff greaterDangersense))
                 {
@@ -296,7 +296,7 @@ namespace FargowiltasSouls.Core.ModPlayers
                         LightningCounter++;
 
                         int lighntningMinSeconds = WorldSavingSystem.MasochistModeReal ? 10 : 17;
-                        if (LightningCounter >= (int)FargoSoulsUtil.SecondsToFrames(lighntningMinSeconds))
+                        if (LightningCounter >= LumUtils.SecondsToFrames(lighntningMinSeconds))
                         {
                             Point tileCoordinates = Player.Top.ToTileCoordinates();
 
@@ -328,7 +328,7 @@ namespace FargowiltasSouls.Core.ModPlayers
                             }
                             */
                             
-                            if (FargoSoulsUtil.AnyBossAlive() && !WorldSavingSystem.MasochistModeReal)
+                            if (LumUtils.AnyBosses() && !WorldSavingSystem.MasochistModeReal)
                             {
                                 LightningCounter = 0;
                             }
@@ -695,7 +695,7 @@ namespace FargowiltasSouls.Core.ModPlayers
             if (!WorldSavingSystem.EternityMode)
                 return;
 
-            if (FargoSoulsUtil.AnyBossAlive())
+            if (LumUtils.AnyBosses())
                 Main.LocalPlayer.AddBuff(ModContent.BuffType<RushJobBuff>(), 10);
         }
     }

@@ -89,7 +89,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                         for (int i = 0; i < 16; i++)
                         {
                             Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center,
-                                8f * npc.DirectionTo(Main.player[npc.target].Center).RotatedBy(MathHelper.Pi / 8 * i),
+                                8f * npc.SafeDirectionTo(Main.player[npc.target].Center).RotatedBy(MathHelper.Pi / 8 * i),
                                 ProjectileID.FrostWave, FargoSoulsUtil.ScaledProjectileDamage(npc.damage, 0.8f), 0f, Main.myPlayer);
                         }
                     }

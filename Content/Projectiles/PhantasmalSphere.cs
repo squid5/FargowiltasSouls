@@ -60,7 +60,7 @@ namespace FargowiltasSouls.Content.Projectiles
                 }
                 else
                 {
-                    Projectile.velocity = Projectile.DirectionTo(n.Center + n.velocity * 10) * 32f;
+                    Projectile.velocity = Projectile.SafeDirectionTo(n.Center + n.velocity * 10) * 32f;
                 }
             }
 

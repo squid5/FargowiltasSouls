@@ -126,7 +126,7 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
                 if (Projectile.rotation < -PI)
                     Projectile.rotation += 2 * PI;
 
-                float targetRotation = Projectile.DirectionTo(targetCenter).ToRotation() - PI / 2;
+                float targetRotation = Projectile.SafeDirectionTo(targetCenter).ToRotation() - PI / 2;
                 if (targetRotation > PI)
                     targetRotation -= 2 * PI;
                 if (targetRotation < -PI)
@@ -245,7 +245,7 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
                 if (mustRest && Timer < restingTime + 90)
                 {
                     if (Timer == 91)
-                        Projectile.velocity = Projectile.DirectionTo(player.Center) * Projectile.velocity.Length() * 0.75f;
+                        Projectile.velocity = Projectile.SafeDirectionTo(player.Center) * Projectile.velocity.Length() * 0.75f;
 
                     Projectile.velocity.X *= 0.98f;
                     if (Math.Abs(Projectile.Center.X - player.Center.X) < 300)
@@ -303,7 +303,7 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
                 }
 
                 const float PI = (float)Math.PI;
-                float targetRotation = MathHelper.WrapAngle(Projectile.DirectionTo(player.Center).ToRotation() - PI / 2);
+                float targetRotation = MathHelper.WrapAngle(Projectile.SafeDirectionTo(player.Center).ToRotation() - PI / 2);
                 Projectile.rotation = MathHelper.WrapAngle(MathHelper.Lerp(Projectile.rotation, targetRotation, 0.07f));
 
                 if (alphaCounter > 0)

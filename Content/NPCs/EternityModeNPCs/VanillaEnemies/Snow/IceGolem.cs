@@ -63,7 +63,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.Snow
                     const int max = 12;
                     for (int i = 0; i < max; i++)
                     {
-                        Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, 6f * npc.DirectionTo(Main.player[npc.target].Center).RotatedBy(MathHelper.TwoPi / max * i),
+                        Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, 6f * npc.SafeDirectionTo(Main.player[npc.target].Center).RotatedBy(MathHelper.TwoPi / max * i),
                             ModContent.ProjectileType<FrostfireballHostile>(), FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 0f, Main.myPlayer, npc.target, 180 + Main.rand.Next(-60, 60));
                     }
                 }

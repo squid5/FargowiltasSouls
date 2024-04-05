@@ -104,7 +104,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.Cavern
                     }
                     if (Timer == 120)
                     {
-                        npc.velocity = npc.DirectionTo(player.Center) * 20;
+                        npc.velocity = npc.SafeDirectionTo(player.Center) * 20;
                         SoundEngine.PlaySound(SoundID.DD2_SonicBoomBladeSlash, npc.Center);
                         npc.noGravity = true;
                         //npc.noTileCollide = true;
@@ -168,10 +168,10 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.Cavern
                 void Flight()
                 {
 
-                    //if (Math.Abs(npc.velocity.ToRotation() - npc.DirectionTo(player.Center).ToRotation()) > Math.PI) //if velociting in the wrong direction, change direction toward player
-                        //npc.velocity = npc.DirectionTo(player.Center);
+                    //if (Math.Abs(npc.velocity.ToRotation() - npc.SafeDirectionTo(player.Center).ToRotation()) > Math.PI) //if velociting in the wrong direction, change direction toward player
+                        //npc.velocity = npc.SafeDirectionTo(player.Center);
 
-                    //npc.velocity += npc.DirectionTo(player.Center) * 0.5f;
+                    //npc.velocity += npc.SafeDirectionTo(player.Center) * 0.5f;
                     FlyToward(player.Center);
                     npc.noTileCollide = true;
                     npc.noGravity = true;

@@ -445,11 +445,11 @@ namespace FargowiltasSouls.Core.ModPlayers
             SandsofTime = wasSandsOfTime;
             NymphsPerfumeRespawn = wasNymphsPerfumeRespawn;
 
-            if (SandsofTime && !FargoSoulsUtil.AnyBossAlive() && Player.respawnTimer > 10)
+            if (SandsofTime && !LumUtils.AnyBosses() && Player.respawnTimer > 10)
                 Player.respawnTimer -= Eternity ? 6 : 1;
 
             //maso disables respawning during mp boss
-            /*if (WorldSavingSystem.MasochistModeReal && FargoSoulsUtil.AnyBossAlive())
+            /*if (WorldSavingSystem.MasochistModeReal && LumUtils.AnyBosses())
             {
                 if (Player.respawnTimer < 10)
                     Player.respawnTimer = 10;
@@ -930,7 +930,7 @@ namespace FargowiltasSouls.Core.ModPlayers
                     Player.hurtCooldowns[1] = 180;
                     string text = Language.GetTextValue($"Mods.{Mod.Name}.Message.Revived");
                     Main.NewText(text, Color.LimeGreen);
-                    Player.AddBuff(ModContent.BuffType<MutantRebirthBuff>(), (int)FargoSoulsUtil.SecondsToFrames(120f));
+                    Player.AddBuff(ModContent.BuffType<MutantRebirthBuff>(), LumUtils.SecondsToFrames(120f));
                     retVal = false;
 
                     Projectile.NewProjectile(Player.GetSource_Accessory(MutantSetBonusItem), Player.Center, -Vector2.UnitY, ModContent.ProjectileType<GiantDeathray>(), (int)(7000 * Player.ActualClassDamage(DamageClass.Magic)), 10f, Player.whoAmI);

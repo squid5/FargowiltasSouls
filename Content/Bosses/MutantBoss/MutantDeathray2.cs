@@ -1,5 +1,5 @@
 ﻿using FargowiltasSouls.Assets.ExtraTextures;
-using FargowiltasSouls.Common.Graphics.Primitives;
+
 using FargowiltasSouls.Content.Buffs.Boss;
 using FargowiltasSouls.Content.Buffs.Masomode;
 using FargowiltasSouls.Content.Projectiles.Deathrays;
@@ -11,14 +11,13 @@ using Terraria.Audio;
 using Terraria.ModLoader;
 using Terraria.ID;
 using FargowiltasSouls.Core.Systems;
-using FargowiltasSouls.Common.Graphics.Shaders;
+
+using Luminance.Core.Graphics;
 
 namespace FargowiltasSouls.Content.Bosses.MutantBoss
 {
-	public class MutantDeathray2 : MutantSpecialDeathray, IPixelPrimitiveDrawer
+	public class MutantDeathray2 : MutantSpecialDeathray, IPixelatedPrimitiveRenderer
     {
-        public PrimDrawer LaserDrawer { get; private set; } = null;
-
         public MutantDeathray2() : base(180) { }
 
         public override void SetStaticDefaults()
@@ -155,14 +154,12 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
             return color;
         }
 
-        public void DrawPixelPrimitives(SpriteBatch spriteBatch)
+        public void RenderPixelatedPrimitives(SpriteBatch spriteBatch)
         {
             if (Projectile.hide)
                 return;
 
-            Shader shader = ShaderManager.GetShaderIfExists("GenericDeathray");
-
-            LaserDrawer ??= new PrimDrawer(WidthFunction, ColorFunction, shader);
+            ManagedShader shader = ShaderManager.GetShader("FargowiltasSouls.GenericDeathray");
 
             // Get the laser end position.
             Vector2 laserEnd = Projectile.Center + Projectile.velocity.SafeNormalize(Vector2.UnitY) * drawDistance * 1.1f;
@@ -180,14 +177,14 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
 
             // GameShaders.Misc["FargoswiltasSouls:MutantDeathray"].UseImage1(); cannot be used due to only accepting vanilla paths.
             FargoSoulsUtil.SetTexture1(FargosTextureRegistry.MutantStreak.Value);
-            // The laser should fade to this in the middle.
-            shader.SetMainColor(FargoSoulsUtil.AprilFools ? new Color(255, 255, 183, 100) : new Color(183, 252, 253, 100));
-            shader.WrappedEffect.Parameters["stretchAmount"].SetValue(3);
-            shader.WrappedEffect.Parameters["scrollSpeed"].SetValue(2f);
-            shader.WrappedEffect.Parameters["uColorFadeScaler"].SetValue(1f);
-            shader.WrappedEffect.Parameters["useFadeIn"].SetValue(true);
+            shader.TrySetParameter("mainColor", FargoSoulsUtil.AprilFools ? new Color(255, 255, 183, 100) : new Color(183, 252, 253, 100));
+            shader.TrySetParameter("stretchAmount", 3);
+            shader.TrySetParameter("scrollSpeed", 2f);
+            shader.TrySetParameter("uColorFadeScaler", 1f);
+            shader.TrySetParameter("useFadeIn", true);
 
-            LaserDrawer.DrawPixelPrims(baseDrawPoints, -Main.screenPosition, 20);
+            PrimitiveRenderer.RenderTrail(baseDrawPoints, new(WidthFunction, ColorFunction, Pixelate: true, Shader: shader), 20);
+
         }
     }
 }

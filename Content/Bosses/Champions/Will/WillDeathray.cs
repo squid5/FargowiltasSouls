@@ -1,8 +1,7 @@
-﻿using FargowiltasSouls.Common.Graphics.Primitives;
-using FargowiltasSouls.Common.Graphics.Shaders;
-using FargowiltasSouls.Content.Buffs.Masomode;
+﻿using FargowiltasSouls.Content.Buffs.Masomode;
 using FargowiltasSouls.Content.Projectiles.Deathrays;
 using FargowiltasSouls.Core.Systems;
+using Luminance.Core.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -17,8 +16,6 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Will
 	public class WillDeathray : BaseDeathray
     {
         public WillDeathray() : base(420, sheeting: TextureSheeting.Horizontal) { }
-
-        public PrimDrawer LaserDrawer { get; private set; } = null;
 
         public override void SetStaticDefaults()
         {
@@ -148,9 +145,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Will
             if (Projectile.velocity == Vector2.Zero)
                 return false;
 
-            Shader shader = ShaderManager.GetShaderIfExists("WillDeathray");
-
-            LaserDrawer ??= new PrimDrawer(WidthFunction, ColorFunction, shader);
+            ManagedShader shader = ShaderManager.GetShader("FargowiltasSouls.WillDeathray");
 
             // Get the laser end position.
             Vector2 laserEnd = Projectile.Center + Projectile.velocity.SafeNormalize(Vector2.UnitY) * drawDistance;
@@ -168,12 +163,12 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Will
 
             // The laser should fade to this in the middle.
             Color brightColor = new(252, 252, 192, 100);
-            shader.SetMainColor(brightColor);
+            shader.TrySetParameter("mainColor", brightColor);
             // GameShaders.Misc["FargoswiltasSouls:MutantDeathray"].UseImage1(); cannot be used due to only accepting vanilla paths.
             Texture2D fademap = ModContent.Request<Texture2D>("FargowiltasSouls/Assets/ExtraTextures/Trails/WillStreak").Value;
             FargoSoulsUtil.SetTexture1(fademap);
 
-            LaserDrawer.DrawPrims(baseDrawPoints.ToList(), -Main.screenPosition, 30);
+            PrimitiveRenderer.RenderTrail(baseDrawPoints, new(WidthFunction, ColorFunction, Shader: shader), 30);
             return false;
         }
     }

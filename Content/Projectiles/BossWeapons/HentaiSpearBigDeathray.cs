@@ -1,9 +1,10 @@
 ﻿using FargowiltasSouls.Assets.ExtraTextures;
-using FargowiltasSouls.Common.Graphics.Primitives;
-using FargowiltasSouls.Common.Graphics.Shaders;
+
+
 using FargowiltasSouls.Content.Buffs.Masomode;
 using FargowiltasSouls.Content.Projectiles.Deathrays;
 using FargowiltasSouls.Core;
+using Luminance.Core.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -210,7 +211,7 @@ namespace FargowiltasSouls.Content.Projectiles.BossWeapons
             //    dustTimer = 50;
 
             //    float diff = MathHelper.WrapAngle(Projectile.rotation - oldRot);
-            //    //if (npc.HasPlayerTarget && Math.Abs(MathHelper.WrapAngle(npc.DirectionTo(Main.player[npc.target].Center).ToRotation() - Projectile.velocity.ToRotation())) < Math.Abs(diff)) diff = 0;
+            //    //if (npc.HasPlayerTarget && Math.Abs(MathHelper.WrapAngle(npc.SafeDirectionTo(Main.player[npc.target].Center).ToRotation() - Projectile.velocity.ToRotation())) < Math.Abs(diff)) diff = 0;
             //    diff *= 15f;
 
             //    const int ring = 220; //LAUGH
@@ -242,7 +243,8 @@ namespace FargowiltasSouls.Content.Projectiles.BossWeapons
 
             if (!Main.dedServ)
             {
-                ShaderManager.GetFilterIfExists("FinalSpark").Activate();
+                ManagedScreenFilter filter = ShaderManager.GetFilter("FargowiltasSouls.FinalSpark");
+                spark.Activate();
                 if (SoulConfig.Instance.ForcedFilters && Main.WaveQuality == 0)
                     Main.WaveQuality = 1;
             }
@@ -261,7 +263,6 @@ namespace FargowiltasSouls.Content.Projectiles.BossWeapons
 
         public bool BeBrighter => Projectile.ai[0] > 0f;
 
-        public PrimDrawer LaserDrawer { get; private set; } = null;
 
         public float WidthFunction(float trailInterpolant)
         {
@@ -286,10 +287,7 @@ namespace FargowiltasSouls.Content.Projectiles.BossWeapons
             if (Projectile.velocity == Vector2.Zero)
                 return false;
 
-            Shader shader = ShaderManager.GetShaderIfExists("MutantDeathray");
-
-            // If it isnt set, set the prim instance.
-            LaserDrawer ??= new(WidthFunction, ColorFunction, shader);
+            ManagedShader shader = ShaderManager.GetShader("FargowiltasSouls.MutantDeathray");
 
             // Get the laser end position.
             Vector2 laserEnd = Projectile.Center + Projectile.velocity.SafeNormalize(Vector2.UnitY) * drawDistance;
@@ -307,7 +305,7 @@ namespace FargowiltasSouls.Content.Projectiles.BossWeapons
 
             // The laser should fade to white in the middle.
             Color brightColor = new(194, 255, 242, 100);
-            shader.SetMainColor(brightColor);
+            shader.TrySetParameter("mainColor", brightColor);
             FargoSoulsUtil.SetTexture1(FargosTextureRegistry.MutantStreak.Value);
             // Draw a big glow above the start of the laser, to help mask the intial fade in due to the immense width.
 
@@ -316,7 +314,7 @@ namespace FargowiltasSouls.Content.Projectiles.BossWeapons
             Vector2 glowDrawPosition = Projectile.Center - Projectile.velocity * (BeBrighter ? 90f : 180f);
 
             Main.EntitySpriteDraw(glowTexture, glowDrawPosition - Main.screenPosition, null, brightColor, Projectile.rotation, glowTexture.Size() * 0.5f, Projectile.scale * 0.4f, SpriteEffects.None, 0);
-            LaserDrawer.DrawPrims(baseDrawPoints, -Main.screenPosition, 60);
+            PrimitiveRenderer.RenderTrail(baseDrawPoints, new(WidthFunction, ColorFunction, Shader: shader), 60);
             return false;
         }
     }

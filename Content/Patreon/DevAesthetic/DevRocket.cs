@@ -73,8 +73,8 @@ namespace FargowiltasSouls.Content.Patreon.DevAesthetic
                 Vector2 targetPos = npc.Center;
                 float offset = 120 * Projectile.timeLeft / (30 * Projectile.MaxUpdates) * 2;
                 if (Projectile.Distance(targetPos) > offset)
-                    targetPos += Projectile.DirectionTo(npc.Center).RotatedBy(MathHelper.PiOver2) * offset * Math.Sign(Projectile.localAI[0]);
-                Vector2 targetSpeed = Projectile.DirectionTo(targetPos) * Math.Abs(Projectile.localAI[0]);
+                    targetPos += Projectile.SafeDirectionTo(npc.Center).RotatedBy(MathHelper.PiOver2) * offset * Math.Sign(Projectile.localAI[0]);
+                Vector2 targetSpeed = Projectile.SafeDirectionTo(targetPos) * Math.Abs(Projectile.localAI[0]);
                 const int factor = 8;
                 Projectile.velocity = (Projectile.velocity * (factor - 1) + targetSpeed) / factor;
             }

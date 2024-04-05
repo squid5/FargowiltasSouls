@@ -54,7 +54,7 @@ namespace FargowiltasSouls.Content.Projectiles.BossWeapons
             int farDistance = owner.FargoSouls().RockeaterDistance;
             int midDistance = (closeDistance + farDistance) / 2;
 
-            Vector2 middleOfSweetspot = owner.Center + owner.DirectionTo(target.Center) * midDistance;
+            Vector2 middleOfSweetspot = owner.Center + owner.SafeDirectionTo(target.Center) * midDistance;
             Vector2 targetPoint = FargoSoulsUtil.ClosestPointInHitbox(target.Hitbox, middleOfSweetspot);
             float dist = Vector2.Distance(targetPoint, owner.Center);
 

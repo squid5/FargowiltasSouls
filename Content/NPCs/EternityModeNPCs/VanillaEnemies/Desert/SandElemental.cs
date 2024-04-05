@@ -63,7 +63,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.Desert
                     AttackTarget.Y -= 650;
 
                     int length = (int)npc.Distance(AttackTarget) / 10;
-                    Vector2 offset = npc.DirectionTo(AttackTarget) * 10f;
+                    Vector2 offset = npc.SafeDirectionTo(AttackTarget) * 10f;
                     for (int i = 0; i < length; i++) //dust warning line
                     {
                         int d = Dust.NewDust(npc.Center + offset * i, 0, 0, DustID.Sandnado, 0f, 0f, 0, new Color());
@@ -100,7 +100,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.Desert
             //        Projectile.NewProjectile(target, Vector2.Zero, ProjectileID.SandnadoHostileMark, 0, 0f, Main.myPlayer);
 
             //        int length = (int)npc.Distance(target) / 10;
-            //        Vector2 offset = npc.DirectionTo(target) * 10f;
+            //        Vector2 offset = npc.SafeDirectionTo(target) * 10f;
             //        for (int i = 0; i < length; i++) //dust warning line for sandnado
             //        {
             //            int d = Dust.NewDust(npc.Center + offset * i, 0, 0, 269, 0f, 0f, 0, new Color());

@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Luminance.Core.Graphics;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
@@ -7,8 +8,10 @@ namespace FargowiltasSouls.Common.Graphics.Particles
 {
 	public class ElectricSpark : Particle
 	{
-		public readonly bool UseBloom;
-		public override bool UseAdditiveBlend => true;
+        public override string AtlasTextureName => "FargowiltasSouls.ElectricSpark";
+        public readonly bool UseBloom;
+		public Color BloomColor;
+		public override BlendState BlendState => BlendState.Additive;
 		public static int FadeTime => 15;
 
 		public ElectricSpark(Vector2 worldPosition, Vector2 velocity, Color drawColor, float scale, int lifetime, bool useBloom = true, Color? bloomColor = null)
@@ -17,7 +20,7 @@ namespace FargowiltasSouls.Common.Graphics.Particles
 			Velocity = velocity;
 			DrawColor = drawColor;
 			Scale = new(scale);
-			MaxLifetime = lifetime;
+			Lifetime = lifetime;
 			UseBloom = useBloom;
 			bloomColor ??= Color.White;
 			BloomColor = bloomColor.Value;
@@ -33,23 +36,22 @@ namespace FargowiltasSouls.Common.Graphics.Particles
 
 		public override void Draw(SpriteBatch spriteBatch)
 		{
-			Texture2D lightningTexture = MainTexture;
+			AtlasTexture lightningTexture = Texture;
             int lightningFrames = 5;
 
             Rectangle GetRandomLightningFrame()
             {
-                int frameHeight = lightningTexture.Height / lightningFrames;
+                int frameHeight = lightningTexture.Frame.Height / lightningFrames;
                 int frame = Main.rand.Next(lightningFrames);
-                return new(0, frameHeight * frame, lightningTexture.Width, frameHeight);
+                return new(0, frameHeight * frame, lightningTexture.Frame.Width, frameHeight);
             }
 
-            Rectangle lightningRect = GetRandomLightningFrame();
-            Vector2 lightningOrigin = lightningRect.Size() / 2f;
-            spriteBatch.Draw(lightningTexture, Position - Main.screenPosition, lightningRect, DrawColor * Opacity, Rotation, lightningOrigin, Scale, SpriteEffects.None, 0);
-            spriteBatch.Draw(lightningTexture, Position - Main.screenPosition, lightningRect, DrawColor * Opacity, Rotation, lightningOrigin, Scale * new Vector2(0.45f, 1f), SpriteEffects.None, 0);
+            Frame = GetRandomLightningFrame();
+            spriteBatch.Draw(lightningTexture, Position - Main.screenPosition, Frame, DrawColor * Opacity, Rotation, null, Scale, SpriteEffects.None);
+            spriteBatch.Draw(lightningTexture, Position - Main.screenPosition, Frame, DrawColor * Opacity, Rotation, null, Scale * new Vector2(0.45f, 1f), SpriteEffects.None);
 
             if (UseBloom)
-				spriteBatch.Draw(lightningTexture, Position - Main.screenPosition, lightningRect, BloomColor * 0.5f * Opacity, Rotation, lightningOrigin, Scale, SpriteEffects.None, 0f);
+				spriteBatch.Draw(lightningTexture, Position - Main.screenPosition, Frame, BloomColor * 0.5f * Opacity, Rotation, null, Scale, SpriteEffects.None);
 		}
 	}
 }

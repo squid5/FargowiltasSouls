@@ -87,7 +87,7 @@ namespace FargowiltasSouls.Content.Projectiles
                         if (abom != null)
                         {
                             Projectile.Center = abom.Center;
-                            Projectile.rotation = abom.DirectionTo(Main.player[abom.target].Center).ToRotation() + Projectile.ai[1];
+                            Projectile.rotation = abom.SafeDirectionTo(Main.player[abom.target].Center).ToRotation() + Projectile.ai[1];
                         }
                     }
                     break;
@@ -135,8 +135,8 @@ namespace FargowiltasSouls.Content.Projectiles
                         {
                             Projectile.Center = abom.Center;
                             if (counter == 0)
-                                Projectile.rotation = abom.DirectionTo(Main.player[abom.target].Center).ToRotation();
-                            float targetRot = abom.DirectionTo(Main.player[abom.target].Center).ToRotation() + Projectile.ai[1];
+                                Projectile.rotation = abom.SafeDirectionTo(Main.player[abom.target].Center).ToRotation();
+                            float targetRot = abom.SafeDirectionTo(Main.player[abom.target].Center).ToRotation() + Projectile.ai[1];
                             while (targetRot < -(float)Math.PI)
                                 targetRot += 2f * (float)Math.PI;
                             while (targetRot > (float)Math.PI)
@@ -197,7 +197,7 @@ namespace FargowiltasSouls.Content.Projectiles
                         Player p = FargoSoulsUtil.PlayerExists(Projectile.ai[1]);
                         if (p != null)
                         {
-                            Projectile.rotation = Projectile.DirectionTo(p.Center).ToRotation();
+                            Projectile.rotation = Projectile.SafeDirectionTo(p.Center).ToRotation();
                         }
                         else
                         {

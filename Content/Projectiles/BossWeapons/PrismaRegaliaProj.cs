@@ -61,7 +61,7 @@ namespace FargowiltasSouls.Content.Projectiles.BossWeapons
 
             if (player.channel)
             {
-                Projectile.velocity = player.DirectionTo(Main.MouseWorld);
+                Projectile.velocity = player.SafeDirectionTo(Main.MouseWorld);
                 Projectile.Center = player.MountedCenter + Projectile.velocity * HoldoutRangeMin;
                 Projectile.friendly = false;
                 if (chargeLevel < maxCharge)

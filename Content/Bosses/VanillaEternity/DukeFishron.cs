@@ -203,7 +203,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
                                 FargoSoulsUtil.NewNPCEasy(npc.GetSource_FromThis(), npc.Center,
                                     IsEX ? ModContent.NPCType<DetonatingBubbleEX>() : NPCID.DetonatingBubble,
-                                    velocity: npc.DirectionTo(Main.player[npc.target].Center));
+                                    velocity: npc.SafeDirectionTo(Main.player[npc.target].Center));
                             }
                         }
                         break;

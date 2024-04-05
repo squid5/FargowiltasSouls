@@ -71,7 +71,7 @@ namespace FargowiltasSouls.Content.Projectiles.JungleMimic
                     NPC targetNPC = FargoSoulsUtil.NPCExists(FargoSoulsUtil.FindClosestHostileNPC(Projectile.Center, 1000, true));
                     if (targetNPC != null)
                     {
-                        Vector2 shootVel = Projectile.DirectionTo(targetNPC.Center);
+                        Vector2 shootVel = Projectile.SafeDirectionTo(targetNPC.Center);
                         SoundEngine.PlaySound(SoundID.Item11, Projectile.Center);
                         Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, shootVel * 14f + targetNPC.velocity / 2, ModContent.ProjectileType<JungleMimicSummonCoin>(), Projectile.damage / 4, Projectile.knockBack, Main.myPlayer);
                     }
@@ -120,7 +120,7 @@ namespace FargowiltasSouls.Content.Projectiles.JungleMimic
                             }
                         }
 
-                        Vector2 dashVel = Projectile.DirectionTo(targetNPC.Center);
+                        Vector2 dashVel = Projectile.SafeDirectionTo(targetNPC.Center);
                         Projectile.velocity = Vector2.Lerp(Projectile.velocity, dashVel * 18, 0.03f);
                         Projectile.rotation = 0;
                         Projectile.tileCollide = false;

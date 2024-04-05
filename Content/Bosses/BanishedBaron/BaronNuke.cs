@@ -2,6 +2,7 @@
 using FargowiltasSouls.Common.Graphics.Particles;
 using FargowiltasSouls.Content.Buffs.Masomode;
 using FargowiltasSouls.Core.Systems;
+using Luminance.Core.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -38,7 +39,7 @@ namespace FargowiltasSouls.Content.Bosses.BanishedBaron
             Projectile.ignoreWater = true;
             Projectile.scale = 1f;
             Projectile.light = 1;
-            Projectile.timeLeft = (int)FargoSoulsUtil.SecondsToFrames(60);
+            Projectile.timeLeft = LumUtils.SecondsToFrames(60);
         }
 
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) //circular hitbox

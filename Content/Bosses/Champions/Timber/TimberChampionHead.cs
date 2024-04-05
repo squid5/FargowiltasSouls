@@ -39,10 +39,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Timber
                     ModContent.BuffType<ClippedWingsBuff>()
             });
 
-            NPCID.Sets.NPCBestiaryDrawOffset.Add(NPC.type, new NPCID.Sets.NPCBestiaryDrawModifiers()
-            {
-                Hide = true
-            });
+            this.ExcludeFromBestiary();
         }
 
         public override void SetDefaults()
@@ -391,7 +388,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Timber
                             if (WorldSavingSystem.EternityMode)
                             {
                                 targetPos = player.Center + 150 * NPC.DirectionFrom(player.Center).RotatedBy(MathHelper.ToRadians(10));
-                                NPC.velocity = NPC.DirectionTo(targetPos) * NPC.velocity.Length();
+                                NPC.velocity = NPC.SafeDirectionTo(targetPos) * NPC.velocity.Length();
                                 Movement(targetPos, 0.25f, 24f);
                             }
                             else
@@ -408,7 +405,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Timber
 
                                 SoundEngine.PlaySound(SoundID.Item92, NPC.Center);
 
-                                Vector2 speed = 32f * NPC.DirectionTo(player.Center).RotatedByRandom(Math.PI / 2);
+                                Vector2 speed = 32f * NPC.SafeDirectionTo(player.Center).RotatedByRandom(Math.PI / 2);
                                 float ai1 = noMoreChainsTime + endlag - NPC.ai[1];
                                 if (FargoSoulsUtil.HostCheck)
                                 {

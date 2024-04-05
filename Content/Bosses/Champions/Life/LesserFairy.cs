@@ -85,7 +85,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Life
 
                 if (NPC.Distance(Main.player[NPC.target].Center) < 300)
                 {
-                    NPC.velocity = NPC.DirectionTo(Main.player[NPC.target].Center) * NPC.velocity.Length();
+                    NPC.velocity = NPC.SafeDirectionTo(Main.player[NPC.target].Center) * NPC.velocity.Length();
                 }
             }
             else if (counter > 300)

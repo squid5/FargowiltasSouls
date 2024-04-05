@@ -24,10 +24,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Terra
 
             NPCID.Sets.ImmuneToAllBuffs[Type] = true;
 
-            NPCID.Sets.NPCBestiaryDrawOffset.Add(NPC.type, new NPCID.Sets.NPCBestiaryDrawModifiers()
-            {
-                Hide = true
-            });
+            this.ExcludeFromBestiary();
         }
 
         public override void SetDefaults()
@@ -120,7 +117,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Terra
             }
 
             NPC.Center = segment.oldPos[pastPos] + segment.Size / 2;
-            NPC.rotation = NPC.DirectionTo(segment.Center).ToRotation();
+            NPC.rotation = NPC.SafeDirectionTo(segment.Center).ToRotation();
             if (NPC.Distance(NPC.oldPos[pastPos - 1] + NPC.Size / 2) > 45 * NPC.scale)
             {
                 NPC.oldPos[pastPos - 1] = NPC.position + Vector2.Normalize(NPC.oldPos[pastPos - 1] - NPC.position) * 45 * NPC.scale;

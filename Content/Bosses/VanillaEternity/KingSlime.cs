@@ -13,6 +13,7 @@ using Terraria.DataStructures;
 using System;
 using FargowiltasSouls.Content.NPCs.EternityModeNPCs;
 using FargowiltasSouls.Common.Graphics.Particles;
+using Luminance.Core.Graphics;
 
 namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 {
