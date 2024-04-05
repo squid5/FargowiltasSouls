@@ -48,10 +48,24 @@ namespace FargowiltasSouls.Core.AccessoryEffectSystem
         public bool[] EquippedEffects = Array.Empty<bool>();
         public Item[] EffectItems = Array.Empty<Item>();
 
-        private static readonly Dictionary<MethodInfo, List<AccessoryEffect>> Hooks = new();
+        private static readonly Dictionary<Expression<Func<AccessoryEffect, Delegate>>, List<AccessoryEffect>> Hooks = new();
 
         public bool Active(AccessoryEffect effect) => ActiveEffects[effect.Index];
         public bool Equipped(AccessoryEffect effect) => EquippedEffects[effect.Index];
+
+        // Replacements for old TMod methods which are now deprecated and refuse to load; should be changed later to newer methods for better mod loading performance, but complicated to do
+        public static IEnumerable<T> WhereMethodIsOverridden<T>(IEnumerable<T> providers, MethodInfo method)
+        {
+            if (!method.IsVirtual)
+                throw new ArgumentException("Non-virtual method: " + method);
+
+            return providers.Where(p => HasOverride(p.GetType(), method));
+        }
+        public static bool HasOverride(Type t, MethodInfo baseMethod)
+            => baseMethod.DeclaringType!.IsInterface ? t.IsAssignableTo(baseMethod.DeclaringType) : GetDerivedDefinition(t, baseMethod).DeclaringType != baseMethod.DeclaringType;
+        public static MethodInfo GetDerivedDefinition(Type t, MethodInfo baseMethod)
+            => t.GetMethods().Single(m => m.GetBaseDefinition() == baseMethod);
+
         public override void SetStaticDefaults()
         {
             foreach (var hook in Hooks)
@@ -68,10 +82,10 @@ namespace FargowiltasSouls.Core.AccessoryEffectSystem
         }
         #region Overrides
 
-        private static List<AccessoryEffect> AddHook<F>(Expression<Func<AccessoryEffect, F>> expr) where F : Delegate
+        private static List<AccessoryEffect> AddHook<F>(Expression<Func<AccessoryEffect, Delegate>> expr)
         {
             var effectSet = new List<AccessoryEffect>();
-            Hooks.Add(expr.ToMethodInfo(), effectSet);
+            Hooks.Add(expr, effectSet);
             return effectSet;
         }
         public override void ResetEffects()

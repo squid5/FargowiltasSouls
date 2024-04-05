@@ -702,6 +702,7 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
                     NPC.velocity.Y -= 1f;
                     if (NPC.timeLeft == 1)
                     {
+                        EdgyBossText(GFBQuote(36));
                         if (NPC.position.Y < 0)
                             NPC.position.Y = 0;
                         if (FargoSoulsUtil.HostCheck && ModContent.TryFind("Fargowiltas", "Mutant", out ModNPC modNPC) && !NPC.AnyNPCs(modNPC.Type))
