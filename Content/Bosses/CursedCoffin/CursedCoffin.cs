@@ -20,7 +20,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
     [AutoloadBossHead]
     public partial class CursedCoffin : ModNPC
     {
-        public const bool Enabled = false;
+        public const bool Enabled = true;
         public override bool IsLoadingEnabled(Mod mod) => Enabled; 
 
 		#region Variables
@@ -146,6 +146,14 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
                 NPC.HitSound = SoundID.NPCHit4;
             }
             base.ModifyHitByItem(player, item, ref modifiers);
+        }
+        public override bool CanHitPlayer(Player target, ref int cooldownSlot)
+        {
+			if (StateMachine.CurrentState == null || StateMachine.CurrentState.ID != BehaviorStates.SlamWShockwave)
+				return false;
+			if (NPC.velocity.Y <= 0)
+				return false;
+            return base.CanHitPlayer(target, ref cooldownSlot);
         }
         public Rectangle TopHitbox()
         {

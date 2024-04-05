@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using FargowiltasSouls.Content.WorldGeneration;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -7,11 +8,10 @@ using Terraria.GameContent.Generation;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.WorldBuilding;
+using static tModPorter.ProgressUpdate;
 
 namespace FargowiltasSouls.Core.Systems
 {
-    // TODO: 1.7 pyramid gen 
-    /*
     public class PyramidGenSystem : ModSystem
     {
         public override void Load()
@@ -22,7 +22,7 @@ namespace FargowiltasSouls.Core.Systems
         {
             Terraria.On_WorldGen.Pyramid -= OnPyramidGen;
         }
-        public Point PyramidLocation = new();
+        public Point PyramidLocation = new(); // Doesn't save. Only used within worldgen.
         public override void PreWorldGen()
         {
             PyramidLocation = new();
@@ -100,10 +100,11 @@ namespace FargowiltasSouls.Core.Systems
             // Find index of Pyramid pass
             int pyramidIndex = tasks.FindIndex(g => g.Name == "Pyramids");
             // Generate Cursed Coffin arena right after Pyramid pass
-            tasks.Insert(pyramidIndex + 1, new PassLegacy("CursedCoffinArena", delegate
+            tasks.Insert(pyramidIndex + 1, new PassLegacy("CursedCoffinArena", (progress, config) => 
             {
                 if (!ModLoader.HasMod("Remnants")) // don't do this if remnants is enabled, because it's not compatible. instead use item that spawns the arena if you have remnants
                 {
+                    progress.Message = "Burying a sarcophagus";
                     if (PyramidLocation == Point.Zero)
                     {
                         Rectangle undergroundDesertLocation = GenVars.UndergroundDesertLocation;
@@ -111,10 +112,13 @@ namespace FargowiltasSouls.Core.Systems
                         int y = undergroundDesertLocation.Top - 10;
                         WorldGen.Pyramid(x, y);
                     }
-
+                    if (PyramidLocation != Point.Zero)
+                    {
+                        CoffinArena.Generate(PyramidLocation);
+                    }
                 }
             }));
         }
     }
-    */
+    
 }

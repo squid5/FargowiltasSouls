@@ -102,23 +102,22 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 
 			StateMachine.RegisterTransition(BehaviorStates.SlamWShockwave, null, false, () => Timer == -1);
 
-			StateMachine.RegisterTransition(BehaviorStates.WavyShotCircle, null, false, () =>
+			StateMachine.RegisterTransition(BehaviorStates.WavyShotCircle, BehaviorStates.WavyShotSlam, false, () =>
 			{
 				int telegraphTime = WorldSavingSystem.MasochistModeReal ? 60 : 70;
 				//bool phase1Condition = Timer == telegraphTime && (WorldSavingSystem.MasochistModeReal || !PhaseTwo);
 				bool phase2InitialCondition = Timer > telegraphTime + (WorldSavingSystem.MasochistModeReal || AI3 < 1 ? 20 : 50);
 				bool phase2SecondaryCondition = PhaseTwo && AI3 < 1 && WorldSavingSystem.EternityMode;
 				return/* phase1Condition || */(phase2InitialCondition && !phase2SecondaryCondition);
-			});
-
-			StateMachine.RegisterTransition(BehaviorStates.WavyShotFlight, BehaviorStates.SlamWShockwave, false, () => Timer >= WavyShotFlightPrepTime + WavyShotFlightCirclingTime + WavyShotFlightEndTime, () =>
+			}, 
+			() =>
 			{
-				Frame = 0;
-				NPC.velocity.X /= 2;
-				NPC.velocity.Y = -4;
-				LockVector1 = Player.Top - Vector2.UnitY * 250;
-                AI2 = 3; // only slam once
+                Frame = 0;
+                NPC.velocity.X /= 2;
+                NPC.velocity.Y = -2;
             });
+
+			StateMachine.RegisterTransition(BehaviorStates.WavyShotSlam, null, false, () => Timer == -1);
 
 			StateMachine.RegisterTransition(BehaviorStates.GrabbyHands, BehaviorStates.SlamWShockwave, false, () => Timer > 40 && Frame <= 0 && Timer > AI3 + 10, () =>
 			{
@@ -128,20 +127,12 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
                 NPC.velocity.X /= 2;
 			});
 
-			StateMachine.RegisterTransition(BehaviorStates.RandomStuff, BehaviorStates.SlamWShockwave, false, () => Timer > RandomStuffOpenTime + 310 && Frame <= 0 && NPC.Center.Y < Player.Center.Y - 100, () =>
+			StateMachine.RegisterTransition(BehaviorStates.RandomStuff, null, false, () => Timer > RandomStuffOpenTime + 310 && Frame <= 0, () =>
 			{
 				NPC.noTileCollide = true;
 				LockVector1 = Player.Top - Vector2.UnitY * 250;
 				NPC.velocity.Y = -4;
                 NPC.velocity.X /= 2;
-				NPC.velocity = Vector2.Zero;
-				NPC.rotation = 0;
-				NPC.frameCounter = 0;
-				Frame = 0;
-			});
-
-			StateMachine.RegisterTransition(BehaviorStates.RandomStuff, BehaviorStates.WavyShotFlight, false, () => Timer > RandomStuffOpenTime + 310 && Frame <= 0 && NPC.Center.Y >= Player.Center.Y - 100, () =>
-			{
 				NPC.velocity = Vector2.Zero;
 				NPC.rotation = 0;
 				NPC.frameCounter = 0;

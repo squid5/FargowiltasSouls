@@ -16,6 +16,8 @@ using FargowiltasSouls.Common.Graphics.Particles;
 using Terraria.Audio;
 using FargowiltasSouls.Content.Buffs.Boss;
 using Terraria.ModLoader.IO;
+using FargowiltasSouls.Content.WorldGeneration;
+using System.Linq;
 
 namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 {
@@ -42,6 +44,10 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 
         public int BiteTimer;
         public int BittenPlayer = -1;
+
+        public bool RotateToVelocity = true;
+
+        Vector2 LockVector1 = new();
 
         #endregion
         #region Standard
@@ -102,6 +108,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
             writer.Write(NPC.localAI[3]);
             writer.Write7BitEncodedInt(BiteTimer);
             writer.Write7BitEncodedInt(BittenPlayer);
+            writer.WriteVector2(LockVector1);
         }
 
         public override void ReceiveExtraAI(BinaryReader reader)
@@ -112,6 +119,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
             NPC.localAI[3] = reader.ReadSingle();
             BiteTimer = reader.Read7BitEncodedInt();
             BittenPlayer = reader.Read7BitEncodedInt();
+            LockVector1 = reader.ReadVector2();
         }
         public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers)
         {
@@ -191,7 +199,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
         {
             (float)CursedCoffin.BehaviorStates.PhaseTransition,
             (float)CursedCoffin.BehaviorStates.WavyShotCircle,
-            (float)CursedCoffin.BehaviorStates.WavyShotFlight,
+            (float)CursedCoffin.BehaviorStates.WavyShotSlam,
             (float)CursedCoffin.BehaviorStates.RandomStuff,
             (float)CursedCoffin.BehaviorStates.GrabbyHands
         };
@@ -230,8 +238,8 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
             // share healthbar
             NPC.lifeMax = owner.lifeMax = Math.Min(NPC.lifeMax, owner.lifeMax);
             NPC.life = owner.life = Math.Min(NPC.life, owner.life);
-            NPC.rotation = NPC.velocity.ToRotation() + MathHelper.PiOver2;
 
+            RotateToVelocity = true;
             NPC.dontTakeDamage = NPC.scale < 0.5f;
 
             if (!(owner.target.IsWithinBounds(Main.maxPlayers) && Main.player[owner.target] is Player player && player.Alive()))
@@ -325,6 +333,8 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
                     break;
             }
             State = (float)coffin.StateMachine.CurrentState.ID;
+            if (RotateToVelocity)
+                NPC.rotation = NPC.velocity.ToRotation() + MathHelper.PiOver2;
         }
         void SlamSupport(NPC owner)
         {
@@ -385,20 +395,35 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
             LerpOpacity(1f, 0.4f);
             LerpScale(1f, 0.4f);
 
+
             Player player = Main.player[owner.target];
             if (Timer <= 1)
             {
                 AI3 = NPC.DirectionTo(player.Center).ToRotation() + Main.rand.NextFloat(-MathHelper.PiOver2 * 0.6f, MathHelper.PiOver2 * 0.6f);
                 NPC.netUpdate = true;
+                // Get the corner with the biggest difference in angle to player (to make npc avoid player on course to the corner)
+                float CrossProduct(Vector2 v1, Vector2 v2) => (v1.X * v2.Y) - (v1.Y * v2.X); // Ordering by cross product gives the biggest undirected angle difference between two vectors
+                List<Vector2> corners = CoffinArena.TopArenaCorners(NPC);
+                CursedCoffin coffin = owner.As<CursedCoffin>();
+                if (coffin.StateMachine.CurrentState != null && coffin.StateMachine.CurrentState.ID == CursedCoffin.BehaviorStates.WavyShotSlam)
+                    LockVector1 = corners.OrderByDescending(x => x.Distance(player.Center)).First();
+                else
+                    LockVector1 = corners.OrderByDescending(x => Math.Abs(CrossProduct(NPC.DirectionTo(x), NPC.DirectionTo(player.Center)))).First();
             }
             else if (Timer < 80)
             {
-                Vector2 dir = Vector2.Lerp(player.DirectionTo(NPC.Center), owner.DirectionTo(player.Center), Timer / 140);
-                Movement(player.Center + dir * 300, 0.2f, 20, 10, 0.1f, 20);
+                //Vector2 dir = Vector2.Lerp(player.DirectionTo(NPC.Center), owner.DirectionTo(player.Center), Timer / 140);
+                //Vector2 desiredPos = CursedCoffin.ClampWithinArena(player.Center + dir * 300, NPC);
+                Movement(LockVector1, 0.2f, 20, 10, 0.1f, 20);
+                
+                NPC.rotation = MathHelper.Lerp(NPC.rotation, NPC.DirectionTo(player.Center).ToRotation() + MathHelper.PiOver2, 0.1f);
+                RotateToVelocity = false;
             }
             else if (Timer < 90)
             {
                 NPC.velocity *= 0.94f;
+                NPC.rotation = MathHelper.Lerp(NPC.rotation, NPC.DirectionTo(player.Center).ToRotation() + MathHelper.PiOver2, 0.1f);
+                RotateToVelocity = false;
             }
             else //if (Timer < 240) edit: no longer loops, just continues charging
             {
@@ -409,7 +434,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
                     speed /= 2;
                 else if (!WorldSavingSystem.MasochistModeReal)
                     speed /= 1.1f;
-                float inertia = 10f;
+                float inertia = 20f;
                 vectorToIdlePosition.Normalize();
                 vectorToIdlePosition *= speed;
                 NPC.velocity = (NPC.velocity * (inertia - 1f) + vectorToIdlePosition) / inertia;
@@ -421,23 +446,10 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
                 if (NPC.velocity.Length() > 6.5f)
                     NPC.velocity *= 0.97f;
 
-                if (Timer <= 130 && !WorldSavingSystem.MasochistModeReal)
-                    NPC.velocity *= Timer / 130;
-                /*
-                Movement(player.Center, 0.02f, 10, 10, 0.04f, 10);
-                */
-                // do animation
+                //if (Timer <= 130 && !WorldSavingSystem.MasochistModeReal)
+                //    NPC.velocity *= Timer / 130;
+
             }
-            /*
-            else if (Timer < 250)
-            {
-                NPC.velocity *= 0.97f;
-            }
-            else
-            {
-                Timer = 0;
-            }
-            */
             Timer++;
         }
         void Artillery(NPC owner)
