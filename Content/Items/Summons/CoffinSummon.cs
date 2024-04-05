@@ -46,7 +46,7 @@ namespace FargowiltasSouls.Content.Items.Summons
 
         public override bool CanUseItem(Player Player)
         {
-            if (Player.ZoneDesert && (Player.ZoneDirtLayerHeight || Player.ZoneRockLayerHeight))
+            if (Player.ZoneDesert)// && (Player.ZoneDirtLayerHeight || Player.ZoneRockLayerHeight))
                 return !NPC.AnyNPCs(NPCType<CursedCoffin>()); //not (x or y)
             return false;
         }
