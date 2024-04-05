@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using FargowiltasSouls.Content.WorldGeneration;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -268,6 +269,7 @@ namespace FargowiltasSouls.Core.Systems
             if (tag.ContainsKey("CoffinArenaCenterY"))
                 coffinY = tag.GetAsInt("CoffinArenaCenterY");
             CoffinArenaCenter = new(coffinX, coffinY);
+            CoffinArena.Rectangle = new(coffinX - CoffinArena.Width / 2, coffinY - CoffinArena.Height / 2, CoffinArena.Width, CoffinArena.Height);
         }
 
         public override void NetReceive(BinaryReader reader)

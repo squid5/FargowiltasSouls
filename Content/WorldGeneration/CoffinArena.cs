@@ -13,20 +13,23 @@ namespace FargowiltasSouls.Content.WorldGeneration
 {
     public static class CoffinArena
     {
-        public const int ArenaWidth = 60;
+        public const int Width = 60;
 
-        public const int ArenaHeight = 35;
+        public const int Height = 35;
+
+        public static Point Center => WorldSavingSystem.CoffinArenaCenter;
+        public static Rectangle Rectangle = new();
 
         public static bool TileIsPyramid(Tile tile) => (tile.TileType == TileID.SandstoneBrick || tile.WallType == WallID.SandstoneBrick);
 
         public static bool CheckSpot(int x, int y)
         {
             Point point = new(x, y);
-            for (int xOff = -ArenaWidth / 2; xOff < ArenaWidth / 2; xOff++)
+            for (int xOff = -Width / 2; xOff < Width / 2; xOff++)
             {
                 if (!TileIsPyramid(Main.tile[point.X + xOff, point.Y - 1])) // fail if not pyramid above
                     return false;
-                for (int yOff = 0; yOff < ArenaHeight; yOff++)
+                for (int yOff = 0; yOff < Height; yOff++)
                     if (TileIsPyramid(Main.tile[point.X + xOff, point.Y + yOff])) // fail if pyramid here; aka passage
                         return false;
             }
@@ -66,18 +69,21 @@ namespace FargowiltasSouls.Content.WorldGeneration
                     break;
                 attempt++;
             }
-
             Point arenaTopCenter = new(pyramidBottom.X + xOffset, pyramidBottom.Y - 1);
+            Place(arenaTopCenter);
+        }
 
+        public static void Place(Point arenaTopCenter)
+        {
             // Place arena
-            for (int x = 0; x < ArenaWidth; x++) 
+            for (int x = 0; x < Width; x++)
             {
-                for (int y = 0; y < ArenaHeight; y++)
+                for (int y = 0; y < Height; y++)
                 {
-                    Point point = new(arenaTopCenter.X - (ArenaWidth / 2) + x, arenaTopCenter.Y + y);
+                    Point point = new(arenaTopCenter.X - (Width / 2) + x, arenaTopCenter.Y + y);
                     WorldGen.KillTile(point.X, point.Y);
                     WorldGen.KillWall(point.X, point.Y);
-                    if (x == 0 || y == 0 || x == ArenaWidth - 1 || y == ArenaHeight - 1) // place blocks on border
+                    if (x == 0 || y == 0 || x == Width - 1 || y == Height - 1) // place blocks on border
                     {
                         WorldGen.PlaceTile(point.X, point.Y, TileID.SandstoneBrick, mute: true, forced: true);
                     }
@@ -88,30 +94,31 @@ namespace FargowiltasSouls.Content.WorldGeneration
                     }
                 }
             }
-            WorldSavingSystem.CoffinArenaCenter = new(arenaTopCenter.X, arenaTopCenter.Y + ArenaHeight / 2);
+            WorldSavingSystem.CoffinArenaCenter = new(arenaTopCenter.X, arenaTopCenter.Y + Height / 2);
+            Rectangle = new(arenaTopCenter.X - Width / 2, arenaTopCenter.Y, Width, Height);
         }
 
-        public static Vector2 ClampWithinArena(Vector2 vector, NPC npc)
+        public static Vector2 ClampWithinArena(Vector2 vector, Entity entityToPadBasedOn)
         {
-            Vector2 center = WorldSavingSystem.CoffinArenaCenter.ToWorldCoordinates();
-            float xBound = (ArenaWidth * 8) - npc.width * 0.6f;
-            float yBound = (ArenaHeight * 8) - npc.height * 0.6f;
+            Vector2 center = Center.ToWorldCoordinates();
+            float xBound = (Width * 8) - entityToPadBasedOn.width * 0.6f;
+            float yBound = (Height * 8) - entityToPadBasedOn.height * 0.6f;
             vector.X = Math.Clamp(vector.X, center.X - xBound, center.X + xBound);
             vector.Y = Math.Clamp(vector.Y, center.Y - yBound, center.Y + yBound);
             return vector;
         }
         public static List<Vector2> ArenaCorners(Entity entityToPadBasedOn)
         {
-            Vector2 center = WorldSavingSystem.CoffinArenaCenter.ToWorldCoordinates();
-            Vector2 xBound = Vector2.UnitX * ((ArenaWidth * 8) - entityToPadBasedOn.width * 0.6f);
-            Vector2 yBound = Vector2.UnitY * ((ArenaHeight * 8) - entityToPadBasedOn.height * 0.6f);
+            Vector2 center = Center.ToWorldCoordinates();
+            Vector2 xBound = Vector2.UnitX * ((Width * 8) - entityToPadBasedOn.width * 0.6f);
+            Vector2 yBound = Vector2.UnitY * ((Height * 8) - entityToPadBasedOn.height * 0.6f);
             return new List<Vector2>() { center - xBound - yBound, center - xBound + yBound, center + xBound - yBound, center + xBound + yBound };
         }
         public static List<Vector2> TopArenaCorners(Entity entityToPadBasedOn)
         {
-            Vector2 center = WorldSavingSystem.CoffinArenaCenter.ToWorldCoordinates();
-            Vector2 xBound = Vector2.UnitX * ((ArenaWidth * 8) - entityToPadBasedOn.width * 0.6f);
-            Vector2 yBound = Vector2.UnitY * ((ArenaHeight * 8) - entityToPadBasedOn.height * 0.6f);
+            Vector2 center = Center.ToWorldCoordinates();
+            Vector2 xBound = Vector2.UnitX * ((Width * 8) - entityToPadBasedOn.width * 0.6f);
+            Vector2 yBound = Vector2.UnitY * ((Height * 8) - entityToPadBasedOn.height * 0.6f);
             return new List<Vector2>() { center - xBound - yBound, center + xBound - yBound};
         }
     }

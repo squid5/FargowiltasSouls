@@ -12,6 +12,7 @@ using FargowiltasSouls.Content.Buffs.Masomode;
 using FargowiltasSouls.Content.Buffs.Boss;
 using System.IO;
 using FargowiltasSouls.Core.Systems;
+using FargowiltasSouls.Content.WorldGeneration;
 
 namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 {
@@ -40,12 +41,14 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
             Projectile.Opacity = 0.2f;
         }
         public ref float Timer => ref Projectile.localAI[0];
+        public ref float RotDir => ref Projectile.localAI[1];
         public ref float State => ref Projectile.ai[1];
-        public ref float RotDir => ref Projectile.ai[2];
+        public ref float TargetPlayer => ref Projectile.ai[2];
 
         private int CaughtPlayer = -1;
         public override void SendExtraAI(BinaryWriter writer)
         {
+            writer.Write(RotDir);
             writer.Write(Timer);
         }
         public override void ReceiveExtraAI(BinaryReader reader)
@@ -60,7 +63,10 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
             target.buffImmune[ModContent.BuffType<CoffinTossBuff>()] = true;
             Projectile.frame = 1;
             Timer = 0;
-            State = 100;
+            if (State == 44)
+                State = 66;
+            else
+                State = 100;
             Projectile.velocity = -Vector2.UnitY * 5;
             Projectile.damage = 0;
             CaughtPlayer = target.whoAmI;
@@ -107,6 +113,10 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
             }
             CursedCoffin coffin = owner.As<CursedCoffin>();
             Player target = Main.player[owner.target];
+            if (((int)TargetPlayer).IsWithinBounds(Main.maxPlayers))
+            {
+                target = Main.player[(int)TargetPlayer];
+            }
             if (!target.Alive())
                 return;
 
@@ -123,6 +133,9 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
                         Movement(desiredPos, 0.2f, 30, 5, 0.2f, 15);
 
                         Projectile.rotation = Projectile.SafeDirectionTo(target.Center).ToRotation() + MathHelper.PiOver2;
+
+                        if (coffin.StateMachine.CurrentState == null || coffin.StateMachine.CurrentState.ID != CursedCoffin.BehaviorStates.GrabbyHands)
+                            Projectile.Kill();
                     }
                     break;  
                 case 2:
@@ -139,6 +152,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
                     }
                     break;
                 case 22: //stun punish grab
+                case 44: // YOU CAN'T ESCAPE
                     {
                         Vector2 vectorToIdlePosition = target.Center - Projectile.Center;
                         float speed = 28f;
@@ -154,6 +168,8 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
                         
                     }
                     break;
+                
+                case 66: // pull back into arena
                 case 100: //grabbed player, toss
                     {
                         if (!CaughtPlayer.IsWithinBounds(Main.maxPlayers))
@@ -171,13 +187,11 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 
                         if (Timer >= 60)
                         {
+                            State = 101;
+                            owner.netUpdate = true;
                             victim.AddBuff(ModContent.BuffType<CoffinTossBuff>(), 100);
                             victim.velocity = Projectile.DirectionFrom(owner.Center) * 30;
-
                             coffin.MashTimer = 15; // reset mash cap
-                            owner.netUpdate = true;
-
-                            State = 101;
                             break;
                         }
                         else
@@ -188,11 +202,13 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
                             if (victim.Alive() && (Projectile.Distance(victim.Center) < 160 || victim.whoAmI != Main.myPlayer) && victim.FargoSouls().MashCounter < mashCap)
                             {
                                 victim.AddBuff(ModContent.BuffType<GrabbedBuff>(), 2);
-                                Projectile.velocity *= 0.96f;
                                 victim.Center = Projectile.Center;
                                 victim.fullRotation = Projectile.DirectionFrom(owner.Center).ToRotation() + MathHelper.PiOver2;
                                 victim.fullRotationOrigin = victim.Center - victim.position;
-                                
+                                if (State == 66)
+                                    Projectile.velocity = Vector2.Lerp(Projectile.velocity, Projectile.SafeDirectionTo(CoffinArena.Center.ToWorldCoordinates()) * 5, 0.15f);
+                                else
+                                    Projectile.velocity *= 0.96f;
                             }
                             else // escaped
                             {

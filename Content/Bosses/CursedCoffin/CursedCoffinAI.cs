@@ -16,6 +16,7 @@ using FargowiltasSouls.Content.WorldGeneration;
 using FargowiltasSouls.Content.Projectiles.Masomode;
 using Fargowiltas.Projectiles;
 using Luminance.Core.Graphics;
+using FargowiltasSouls.Content.Buffs.Masomode;
 
 namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 {
@@ -45,6 +46,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 			WavyShotSlam,
 			GrabbyHands,
 			RandomStuff,
+			YouCantEscape,
 
 			// For the state machine.
 			RefillAttacks,
@@ -96,9 +98,12 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 			Rectangle nextFrameHitbox = new((int)(nextCenter.X - Main.LocalPlayer.Hitbox.Width / 2), (int)(nextCenter.Y - Main.LocalPlayer.Hitbox.Height / 2), Main.LocalPlayer.Hitbox.Width, Main.LocalPlayer.Hitbox.Height);
 			if (nextFrameHitbox.Intersects(NPC.Hitbox))
 			{
-				Main.LocalPlayer.position -= Main.LocalPlayer.velocity;
-				Main.LocalPlayer.velocity = Vector2.Zero;
-				Main.LocalPlayer.velocity -= Main.LocalPlayer.DirectionTo(NPC.Center) * 0.3f;
+				if (!Main.LocalPlayer.Hitbox.Intersects(NPC.Hitbox))
+				{
+                    Main.LocalPlayer.position -= Main.LocalPlayer.velocity;
+                    Main.LocalPlayer.velocity = Vector2.Zero;
+                }
+				Main.LocalPlayer.velocity -= Main.LocalPlayer.DirectionTo(NPC.Center) * 0.5f;
                 /*
 				Vector2 dir = Main.LocalPlayer.DirectionTo(NPC.Center);
 				Vector2 vel = Main.LocalPlayer.velocity;
@@ -196,12 +201,20 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 			}
 			else if (Timer == 20)
 			{
-				SoundEngine.PlaySound(ShotSFX, NPC.Center);
-				if (FargoSoulsUtil.HostCheck)
-				{
-					Vector2 dir = NPC.rotation.ToRotationVector2();
-					Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, dir * 4, ModContent.ProjectileType<CoffinHand>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage, 0.1f), 1f, Main.myPlayer, NPC.whoAmI, 22);
-				}
+                IEnumerable<Player> stunned = Main.player.Where(p => p.Alive() && p.HasBuff<StunnedBuff>());
+                if (stunned.Any())
+                {
+                    SoundEngine.PlaySound(ShotSFX, NPC.Center);
+                    if (FargoSoulsUtil.HostCheck)
+                    {
+                        foreach (Player player in stunned)
+                        {
+                            Vector2 dir = NPC.rotation.ToRotationVector2();
+                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, dir * 4, ModContent.ProjectileType<CoffinHand>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage, 0.1f), 1f, Main.myPlayer, NPC.whoAmI, 22, player.whoAmI);
+                        }
+                    }
+                }
+                SoundEngine.PlaySound(ShotSFX, NPC.Center);
 			}
 			else
 			{
@@ -209,6 +222,38 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 					Frame--;
 			}
 		}
+        [AutoloadAsBehavior<BehaviorStates>(BehaviorStates.YouCantEscape)]
+        public void YouCantEscape()
+        {
+            NPC.velocity *= 0.95f;
+            if (Timer < 20)
+            {
+                if (++NPC.frameCounter % 4 == 3)
+                    if (Frame < Main.npcFrameCount[Type] - 1)
+                        Frame++;
+            }
+            else if (Timer == 20)
+            {
+				IEnumerable<Player> outsideArena = Main.player.Where(p => p.Alive() && !CoffinArena.Rectangle.Contains(p.Center.ToTileCoordinates()));
+				if (outsideArena.Any())
+				{
+                    SoundEngine.PlaySound(ShotSFX, NPC.Center);
+                    if (FargoSoulsUtil.HostCheck)
+                    {
+						foreach (Player player in outsideArena)
+						{
+                            Vector2 dir = NPC.rotation.ToRotationVector2();
+                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, dir * 4, ModContent.ProjectileType<CoffinHand>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage, 0.1f), 1f, Main.myPlayer, NPC.whoAmI, 44, player.whoAmI);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                if (++NPC.frameCounter % 60 == 59)
+                    Frame--;
+            }
+        }
         [AutoloadAsBehavior<BehaviorStates>(BehaviorStates.SpiritGrabPunish)]
         public void SpiritGrabPunish()
         {
@@ -384,7 +429,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 			}
 			else if (Timer > TelegraphTime + (WorldSavingSystem.MasochistModeReal || AI3 < 1 ? 20 : 50)) // + endlag
 			{
-				if (PhaseTwo && AI3 < 1 && WorldSavingSystem.EternityMode)
+				if (PhaseTwo && AI3 < 1 && WorldSavingSystem.MasochistModeReal)
 				{
 					AI3 = 1;
 					Timer = 0;
@@ -405,13 +450,20 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
                     SoundEngine.PlaySound(SoundID.Item14 with { Pitch = -0.5f }, NPC.Center);
                     SoundEngine.PlaySound(SlamSFX, NPC.Center);
                     Timer = -180;
-					int dir = Math.Sign(Player.Center.X - WorldSavingSystem.CoffinArenaCenter.ToWorldCoordinates().X);
-                    for (int i = 0; i < 20; i++)
+					int dir = Math.Sign(Player.Center.X - CoffinArena.Center.ToWorldCoordinates().X);
+					const int ProjCount = 20;
+                    for (int i = 0; i < ProjCount; i++)
                     {
-						Vector2 centerTop = WorldSavingSystem.CoffinArenaCenter.ToWorldCoordinates() - Vector2.UnitY * CoffinArena.ArenaHeight * 8f;
-						Vector2 projPos = centerTop + dir * Vector2.UnitX * (CoffinArena.ArenaWidth * 8) * ((float)i / 20);
+						Vector2 centerTop = CoffinArena.Center.ToWorldCoordinates() - Vector2.UnitY * CoffinArena.Height * 8f;
+						Vector2 projPos = centerTop + dir * Vector2.UnitX * (CoffinArena.Width * 8) * ((float)i / ProjCount);
+						projPos.X += Main.rand.NextFloat(-10, 10);
+						projPos.Y += Main.rand.NextFloat(-3, 4);
+
+						int leniencyTime = WorldSavingSystem.MasochistModeReal ? -10 : WorldSavingSystem.EternityMode ? -10 : Main.expertMode ? 10 : 20;
+
+						int fromWall = ProjCount - i;
                         Projectile.NewProjectile(NPC.GetSource_FromThis(), projPos, Vector2.Zero,
-                                ModContent.ProjectileType<SlimeSpike2>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage), 0f, Main.myPlayer);
+                                ModContent.ProjectileType<FallingSandstone>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage), 0f, Main.myPlayer, leniencyTime + (int)(fromWall * 1.5f) + Main.rand.Next(60, 80));
                     }
 
                     return;
@@ -516,9 +568,9 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 
 			HoverSound();
 			Vector2 desiredPos = 
-				WorldSavingSystem.CoffinArenaCenter.ToWorldCoordinates() + 
-				Vector2.UnitY * ((CoffinArena.ArenaHeight * 8) - (NPC.height)) + 
-				Vector2.UnitX * Math.Sign(NPC.Center.X - Player.Center.X) * (CoffinArena.ArenaWidth * 8 - (NPC.width * 1.5f));
+				CoffinArena.Center.ToWorldCoordinates() + 
+				Vector2.UnitY * ((CoffinArena.Height * 8) - (NPC.height)) + 
+				Vector2.UnitX * Math.Sign(NPC.Center.X - Player.Center.X) * (CoffinArena.Width * 8 - (NPC.width * 1.5f));
 			Movement(desiredPos, 0.1f, 20, 5, 0.08f, 20);
 
 			int frameTime = (int)MathF.Floor(RandomStuffOpenTime / Main.npcFrameCount[Type]);

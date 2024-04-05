@@ -1,5 +1,6 @@
 ﻿using FargowiltasSouls.Common.StateMachines;
 using FargowiltasSouls.Content.Buffs.Masomode;
+using FargowiltasSouls.Content.WorldGeneration;
 using FargowiltasSouls.Core.Systems;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
@@ -68,20 +69,38 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 			// An example of using this function to apply a transition to a bunch of states at once, in this case for an interrupting attack.
 			StateMachine.ApplyToAllStatesExcept((state) =>
 			{
-				StateMachine.RegisterTransition(state, BehaviorStates.StunPunish, false, () => Player.HasBuff<StunnedBuff>() && !Main.projectile.Any(p => p.TypeAlive<CoffinHand>()));
-			}, BehaviorStates.StunPunish, BehaviorStates.PhaseTransition);
+				StateMachine.RegisterTransition(state, BehaviorStates.StunPunish, false, () => 
+				{
+					return Main.player.Any(p => p.Alive() && p.HasBuff<StunnedBuff>()) && !Main.projectile.Any(p => p.TypeAlive<CoffinHand>());
+				});
+			}, BehaviorStates.StunPunish, BehaviorStates.PhaseTransition, BehaviorStates.YouCantEscape, BehaviorStates.SpiritGrabPunish);
+
+			// Pull back if you go outside the arena
+            StateMachine.ApplyToAllStatesExcept((state) =>
+            {
+                StateMachine.RegisterTransition(state, BehaviorStates.YouCantEscape, false, () =>
+                {
+					return Main.player.Any(p => p.Alive() && !CoffinArena.Rectangle.Contains(p.Center.ToTileCoordinates()));
+                });
+            }, BehaviorStates.StunPunish, BehaviorStates.PhaseTransition, BehaviorStates.YouCantEscape, BehaviorStates.SpiritGrabPunish);
 
             // Same as above, for spirit grab punish
             StateMachine.ApplyToAllStatesExcept((state) =>
             {
                 StateMachine.RegisterTransition(state, BehaviorStates.SpiritGrabPunish, false, () => ForceGrabPunish != 0, () => ForceGrabPunish = 0);
-            }, BehaviorStates.SpiritGrabPunish, BehaviorStates.PhaseTransition);
+            }, BehaviorStates.StunPunish, BehaviorStates.PhaseTransition, BehaviorStates.YouCantEscape, BehaviorStates.SpiritGrabPunish);
 
             StateMachine.RegisterTransition(BehaviorStates.StunPunish, null, false, () => Timer > 20 && Frame <= 0, () =>
 			{
 				NPC.frameCounter = 0;
 				Frame = 0;
 			});
+
+            StateMachine.RegisterTransition(BehaviorStates.YouCantEscape, null, false, () => Timer > 20 && Frame <= 0, () =>
+            {
+                NPC.frameCounter = 0;
+                Frame = 0;
+            });
 
             StateMachine.RegisterTransition(BehaviorStates.SpiritGrabPunish, BehaviorStates.SlamWShockwave, false, () => Timer > 60, () =>
             {
@@ -107,7 +126,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 				int telegraphTime = WorldSavingSystem.MasochistModeReal ? 60 : 70;
 				//bool phase1Condition = Timer == telegraphTime && (WorldSavingSystem.MasochistModeReal || !PhaseTwo);
 				bool phase2InitialCondition = Timer > telegraphTime + (WorldSavingSystem.MasochistModeReal || AI3 < 1 ? 20 : 50);
-				bool phase2SecondaryCondition = PhaseTwo && AI3 < 1 && WorldSavingSystem.EternityMode;
+				bool phase2SecondaryCondition = PhaseTwo && AI3 < 1 && WorldSavingSystem.MasochistModeReal;
 				return/* phase1Condition || */(phase2InitialCondition && !phase2SecondaryCondition);
 			}, 
 			() =>

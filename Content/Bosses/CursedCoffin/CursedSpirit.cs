@@ -238,6 +238,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 
             RotateToVelocity = true;
             NPC.dontTakeDamage = NPC.scale < 0.5f;
+            NPC.noTileCollide = true;
 
             if (!(owner.target.IsWithinBounds(Main.maxPlayers) && Main.player[owner.target] is Player player && player.Alive()))
                 return;
@@ -252,7 +253,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
                     && victim.FargoSouls().MashCounter < 20)
                 {
                     victim.AddBuff(ModContent.BuffType<GrabbedBuff>(), 2);
-                    NPC.velocity *= 0.92f;
+                    NPC.velocity *= 0.2f;
                     victim.velocity = Vector2.Zero;
                     victim.Center = Vector2.Lerp(victim.Center, NPC.Center, 0.1f);
                 }
@@ -262,9 +263,11 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
                     BiteTimer = -90; //cooldown
 
                     // dash away otherwise it's bullshit
-                    NPC.velocity = -NPC.SafeDirectionTo(victim.Center) * 50;
+                    NPC.velocity = -NPC.SafeDirectionTo(victim.Center) * 12;
 
                     NPC.netUpdate = true;
+                    Timer = 0;
+                    AI3 = 0;
 
                     if (Main.netMode == NetmodeID.Server)
                         NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, NPC.whoAmI);
@@ -313,7 +316,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
                     break;
                     */
                 case var _ when SlowChargeStates.Contains((float)coffin.StateMachine.CurrentState.ID):
-                    if (newState)
+                    if (!SlowChargeStates.Contains(State))
                     {
                         Timer = 0;
                         AI3 = 0;
@@ -389,9 +392,20 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
         }
         void SlowCharges(NPC owner)
         {
-            LerpOpacity(1f, 0.4f);
-            LerpScale(1f, 0.4f);
+            
+            
 
+            if (Timer < 80)
+            {
+                LerpScale(0.8f, 0.4f);
+                LerpOpacity(0.5f, 0.4f);
+            }
+            else
+            {
+                LerpScale(1f, 0.4f);
+                LerpOpacity(1f, 0.4f);
+            }
+                
 
             Player player = Main.player[owner.target];
             if (Timer <= 1)
@@ -399,7 +413,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
                 AI3 = NPC.SafeDirectionTo(player.Center).ToRotation() + Main.rand.NextFloat(-MathHelper.PiOver2 * 0.6f, MathHelper.PiOver2 * 0.6f);
                 NPC.netUpdate = true;
                 // Get the corner with the biggest difference in angle to player (to make npc avoid player on course to the corner)
-                float CrossProduct(Vector2 v1, Vector2 v2) => (v1.X * v2.Y) - (v1.Y * v2.X); // Ordering by cross product gives the biggest undirected angle difference between two vectors
+                static float CrossProduct(Vector2 v1, Vector2 v2) => (v1.X * v2.Y) - (v1.Y * v2.X); // Ordering by cross product gives the biggest undirected angle difference between two vectors
                 List<Vector2> corners = CoffinArena.TopArenaCorners(NPC);
                 CursedCoffin coffin = owner.As<CursedCoffin>();
                 if (coffin.StateMachine.CurrentState != null && coffin.StateMachine.CurrentState.ID == CursedCoffin.BehaviorStates.WavyShotSlam)
@@ -418,13 +432,26 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
             }
             else if (Timer < 90)
             {
-                NPC.velocity *= 0.94f;
-                NPC.rotation = MathHelper.Lerp(NPC.rotation, NPC.DirectionTo(player.Center).ToRotation() + MathHelper.PiOver2, 0.1f);
-                RotateToVelocity = false;
+                NPC.velocity = Vector2.Lerp(Vector2.Zero, NPC.DirectionTo(player.Center) * 3, 0.2f);
             }
             else //if (Timer < 240) edit: no longer loops, just continues charging
             {
+                if (Timer > 110)
+                    NPC.noTileCollide = false;
                 SoundEngine.PlaySound(CursedCoffin.SpiritDroneSFX, NPC.Center);
+
+                if (Timer > 180 || (Timer > 110 && Collision.SolidTiles(NPC.position + NPC.velocity, NPC.width, NPC.height)))
+                {
+                    Timer = 0;
+                    return;
+                }
+                if (NPC.velocity.LengthSquared() < 10 * 10)
+                {
+                    NPC.velocity += Utils.SafeNormalize(NPC.velocity, Vector2.Zero) * 0.5f;
+                }
+                NPC.velocity = NPC.velocity.ClampLength(0, 10);
+
+                /*
                 Vector2 vectorToIdlePosition = player.Center - NPC.Center;
                 float speed = 6.5f;
                 if (!WorldSavingSystem.EternityMode)
@@ -442,10 +469,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
                 }
                 if (NPC.velocity.Length() > 6.5f)
                     NPC.velocity *= 0.97f;
-
-                //if (Timer <= 130 && !WorldSavingSystem.MasochistModeReal)
-                //    NPC.velocity *= Timer / 130;
-
+                */
             }
             Timer++;
         }
