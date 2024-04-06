@@ -56,7 +56,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 			{
 				SoundEngine.PlaySound(PhaseTransitionSFX, NPC.Center);
 				NPC.netUpdate = true;
-				if (FargoSoulsUtil.HostCheck)
+				if (FargoSoulsUtil.HostCheck && Main.expertMode)
 				{
 					Vector2 maskCenter = MaskCenter();
 					NPC.NewNPC(NPC.GetSource_FromAI(), (int)maskCenter.X, (int)maskCenter.Y, ModContent.NPCType<CursedSpirit>(), ai0: NPC.whoAmI);
@@ -144,6 +144,8 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 				LockVector1 = Player.Top - Vector2.UnitY * 250;
 				NPC.velocity.Y = -4;
                 NPC.velocity.X /= 2;
+				if (NPC.velocity.X.NonZeroSign() != NPC.HorizontalDirectionTo(Player.Center))
+					NPC.velocity.X = 0;
 			});
 
 			StateMachine.RegisterTransition(BehaviorStates.RandomStuff, null, false, () => Timer > RandomStuffOpenTime + 310 && Frame <= 0, () =>

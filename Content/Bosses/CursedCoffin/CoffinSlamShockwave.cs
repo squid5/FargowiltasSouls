@@ -35,7 +35,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
             Projectile.light = 1;
             Projectile.timeLeft = 60 * 3;
         }
-
+        public float ScaleX = 1;
         public override void AI()
         {
             
@@ -44,6 +44,9 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 
             if (Math.Abs(Projectile.velocity.X) < 15)
                 Projectile.velocity.X *= 1.035f;
+
+            ScaleX = Projectile.scale / 2 + (Math.Abs(Projectile.velocity.X) / 7);
+            Projectile.width = (int)(52f * ScaleX);
 
             int p = Player.FindClosest(Projectile.Center, 0, 0);
             if (p.IsWithinBounds(Main.maxPlayers) && Main.player[p] is Player player && player.Alive())
@@ -98,7 +101,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
             Vector2 drawPos = Projectile.Center;
             Texture2D texture = TextureAssets.Projectile[Type].Value;
 
-            Vector2 scale = Vector2.UnitX * (Projectile.scale / 2 + (Math.Abs(Projectile.velocity.X) / 13)) + Vector2.UnitY * Projectile.scale;
+            Vector2 scale = Vector2.UnitX * ScaleX + Vector2.UnitY * Projectile.scale;
 
             int sizeY = texture.Height / Main.projFrames[Type]; //ypos of lower right corner of sprite to draw
             int frameY = Projectile.frame * sizeY;

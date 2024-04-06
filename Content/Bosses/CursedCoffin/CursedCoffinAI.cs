@@ -184,7 +184,8 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 			const int TransTime = 60;
 			if (Timer > TransTime - 5)
 				PhaseTwo = true;
-            NPC.velocity = -Vector2.UnitY * 5 * (1 - (Timer / (TransTime * 1.5f)));
+			//NPC.velocity = -Vector2.UnitY * 5 * (1 - (Timer / (TransTime * 1.5f)));
+			NPC.velocity = (CoffinArena.Center.ToWorldCoordinates() - NPC.Center) * 0.05f;
             NPC.rotation = Main.rand.NextFloat(MathF.Tau * 0.06f * (Timer / TransTime));
 			SoundEngine.PlaySound(SpiritDroneSFX, NPC.Center);
 		}
@@ -318,7 +319,9 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 		{
 			ref float Counter = ref AI2;
 
-            NPC.noTileCollide = (NPC.Bottom.Y + NPC.velocity.Y < Player.Bottom.Y - 16);
+			NPC.noTileCollide = (NPC.Bottom.Y + NPC.velocity.Y < Player.Bottom.Y - 16);
+
+
 
             if (Timer >= 0)
 			{
@@ -376,10 +379,9 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 					NPC.velocity = Vector2.Zero;
 				}
 			}
-            else
-            {
-                //NPC.noTileCollide = false;
-            }
+            if (Math.Abs(NPC.Center.X - CoffinArena.Center.ToWorldCoordinates().X) > (CoffinArena.Width * 8) - NPC.width / 2)
+                if (NPC.velocity.X.NonZeroSign() != NPC.HorizontalDirectionTo(CoffinArena.Center.ToWorldCoordinates()))
+                    NPC.velocity.X = 0;
         }
 
 		[AutoloadAsBehavior<BehaviorStates>(BehaviorStates.WavyShotCircle)]
@@ -459,7 +461,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 						projPos.X += Main.rand.NextFloat(-10, 10);
 						projPos.Y += Main.rand.NextFloat(-3, 4);
 
-						int leniencyTime = WorldSavingSystem.MasochistModeReal ? -10 : WorldSavingSystem.EternityMode ? -10 : Main.expertMode ? 10 : 20;
+						int leniencyTime = WorldSavingSystem.MasochistModeReal ? -30 : WorldSavingSystem.EternityMode ? -10 : Main.expertMode ? 10 : 20;
 
 						int fromWall = ProjCount - i;
                         Projectile.NewProjectile(NPC.GetSource_FromThis(), projPos, Vector2.Zero,
@@ -482,17 +484,21 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 		{
 			NPC.noTileCollide = true;
 			HoverSound();
+
+            Vector2 offset = -Vector2.UnitY * 300 + Vector2.UnitX * Math.Sign(NPC.Center.X - Player.Center.X) * 200;
+            Vector2 desiredPos = Player.Center + offset;
+            desiredPos = CoffinArena.ClampWithinArena(desiredPos, NPC);
+            Movement(desiredPos, 0.1f, 10, 5, 0.08f, 20);
+            /*
 			if (Timer < 40)
 			{
-				Vector2 offset = -Vector2.UnitY * 300 + Vector2.UnitX * Math.Sign(NPC.Center.X - Player.Center.X) * 200;
-				Vector2 desiredPos = Player.Center + offset;
-				desiredPos = CoffinArena.ClampWithinArena(desiredPos, NPC);
-                Movement(desiredPos, 0.1f, 10, 5, 0.08f, 20);
+				
 			}
 			else
 				NPC.velocity *= 0.97f;
+			*/
 
-			if (Timer == 2)
+            if (Timer == 2)
 			{
 				AI3 = Main.rand.Next(90, 103); // time for hands to grab
 				NPC.netUpdate = true;
@@ -519,11 +525,28 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 				if (FargoSoulsUtil.HostCheck)
 				{
 					Vector2 dir = NPC.rotation.ToRotationVector2();
-					Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, dir * 4, ModContent.ProjectileType<CoffinHand>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage, 0.1f), 1f, Main.myPlayer, NPC.whoAmI, 1, 1);
-					Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, dir * 4, ModContent.ProjectileType<CoffinHand>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage, 0.1f), 1f, Main.myPlayer, NPC.whoAmI, 1, -1);
-					if (WorldSavingSystem.EternityMode)
-						Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, (NPC.rotation + MathHelper.PiOver2).ToRotationVector2() * 4, ModContent.ProjectileType<CoffinHand>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage, 0.5f), 1f, Main.myPlayer, NPC.whoAmI, 1, Main.rand.NextBool() ? 1.5f : -1.5f);
-				}
+					int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, dir * 4, ModContent.ProjectileType<CoffinHand>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage, 0.1f), 1f, Main.myPlayer, NPC.whoAmI, 1);
+					if (p.IsWithinBounds(Main.maxProjectiles))
+					{
+						Main.projectile[p].localAI[1] = 1;
+						Main.projectile[p].netUpdate = true;
+					}
+                    p = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, dir * 4, ModContent.ProjectileType<CoffinHand>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage, 0.1f), 1f, Main.myPlayer, NPC.whoAmI, 1);
+                    if (p.IsWithinBounds(Main.maxProjectiles))
+                    {
+                        Main.projectile[p].localAI[1] = -1;
+                        Main.projectile[p].netUpdate = true;
+                    }
+                    if (WorldSavingSystem.EternityMode)
+					{
+						p = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, (NPC.rotation + MathHelper.PiOver2).ToRotationVector2() * 4, ModContent.ProjectileType<CoffinHand>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage, 0.5f), 1f, Main.myPlayer, NPC.whoAmI, 1);
+                        if (p.IsWithinBounds(Main.maxProjectiles))
+                        {
+                            Main.projectile[p].localAI[1] = Main.rand.NextBool() ? 1.5f : -1.5f;
+                            Main.projectile[p].netUpdate = true;
+                        }
+                    }
+                }
 			}
 			else
 			{
@@ -548,16 +571,30 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 
 
 				float velY = -10; // initial y vel
-				if (yDif < 0) // if player is above
-				{
-					float arcTop = yDif - 300;
-					// calculate initial y vel that results in good arc above
-					float newVelY = -MathF.Sqrt(-arcTop * gravity) / 1.5f;
-					if (newVelY < velY)
-						velY = newVelY;
-				}
+                float arcTop = yDif - 290;
 
-				float t = -velY / gravity + MathF.Sqrt(MathF.Pow(velY / gravity, 2) + (2 * yDif / gravity));
+				do
+				{
+					arcTop -= 10;
+                    if (yDif < 0) // if player is above
+                    {
+
+                        // calculate initial y vel that results in good arc above
+                        if (-arcTop * gravity >= 0) // imaginary sqrt is BAD
+                        {
+                            float newVelY = -MathF.Sqrt(-arcTop * gravity) / 1.5f;
+                            if (newVelY < velY)
+                                velY = newVelY;
+                        }
+                    }
+                }
+				while (MathF.Pow(velY / gravity, 2) + (2 * yDif / gravity) < 0);
+
+                float sqrtNum = MathF.Pow(velY / gravity, 2) + (2 * yDif / gravity);
+
+				if (sqrtNum < 0) // imaginary sqrt is BAD
+					sqrtNum = 0;
+                float t = -velY / gravity + MathF.Sqrt(sqrtNum);
 				float velX = xDif / t;
 				return velX * Vector2.UnitX + velY * Vector2.UnitY;
 			}
@@ -566,11 +603,16 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 			Vector2 dir = CalculateAngle();
 			NPC.rotation = Vector2.Lerp(NPC.rotation.ToRotationVector2(), dir, Timer / 35).ToRotation();
 
-			HoverSound();
+            float angle = NPC.rotation % MathF.Tau;
+            float incline = MathF.Abs(MathF.Sin(angle));
+            float angledHeight = (int)(MathHelper.Lerp(NPC.height, NPC.width, incline) * NPC.scale);
+
+            HoverSound();
 			Vector2 desiredPos = 
 				CoffinArena.Center.ToWorldCoordinates() + 
-				Vector2.UnitY * ((CoffinArena.Height * 8) - (NPC.height)) + 
+				Vector2.UnitY * ((CoffinArena.Height * 8) - (angledHeight)) + 
 				Vector2.UnitX * Math.Sign(NPC.Center.X - Player.Center.X) * (CoffinArena.Width * 8 - (NPC.width * 1.5f));
+			CoffinArena.ClampWithinArena(desiredPos, NPC);
 			Movement(desiredPos, 0.1f, 20, 5, 0.08f, 20);
 
 			int frameTime = (int)MathF.Floor(RandomStuffOpenTime / Main.npcFrameCount[Type]);

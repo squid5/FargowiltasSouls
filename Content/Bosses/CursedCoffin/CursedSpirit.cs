@@ -374,7 +374,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
                     {
                         if (i == 0)
                             continue;
-                        Vector2 vel = Vector2.UnitY.RotatedBy(i * MathF.Tau * (0.047f + Main.rand.NextFloat(0.02f))) * (6 + Math.Abs(i));
+                        Vector2 vel = Vector2.UnitY.RotatedBy(i * MathF.Tau * (0.041f + Main.rand.NextFloat(0.02f))) * (6 + Math.Abs(i));
                         Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Bottom + NPC.velocity, vel, ModContent.ProjectileType<CoffinDarkSouls>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage), 1f, Main.myPlayer, NPC.whoAmI, -0.135f);
                         // ghost projs, neg grav
                     }
@@ -569,6 +569,8 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
             Vector2 drawPos = NPC.Center - screenPos;
             SpriteEffects spriteEffects = NPC.direction == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
+            Color glowColor = CursedCoffin.GlowColor;
+
             int trailLength = NPCID.Sets.TrailCacheLength[NPC.type];
             if (NPC.scale > 0.5f)
                 trailLength /= 2;
@@ -577,13 +579,22 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
             {
                 Vector2 oldPos = NPC.oldPos[i];
 
-                DrawData oldGlow = new(bodytexture, oldPos + NPC.Size / 2f - screenPos + new Vector2(0, NPC.gfxOffY), NPC.frame, NPC.GetAlpha(drawColor) * (0.5f / i), NPC.rotation, NPC.Size / 2, NPC.scale, spriteEffects, 0);
+                DrawData oldGlow = new(bodytexture, oldPos + NPC.Size / 2f - screenPos + new Vector2(0, NPC.gfxOffY), NPC.frame, NPC.GetAlpha(glowColor * (0.5f / i)), NPC.rotation, NPC.Size / 2, NPC.scale, spriteEffects, 0);
                 GameShaders.Misc["LCWingShader"].UseColor(Color.Blue).UseSecondaryColor(Color.Black);
                 GameShaders.Misc["LCWingShader"].Apply(oldGlow);
                 oldGlow.Draw(spriteBatch);
             }
-
-            spriteBatch.Draw(origin: NPC.Size / 2, texture: bodytexture, position: drawPos, sourceRectangle: NPC.frame, color: NPC.GetAlpha(drawColor), rotation: NPC.rotation, scale: NPC.scale, effects: spriteEffects, layerDepth: 0f);
+            /*
+            for (int j = 0; j < 12; j++)
+            {
+                float spinOffset = 0;// Main.GameUpdateCount * 0.001f * j;
+                float magnitude = 12;
+                Vector2 afterimageOffset = (MathHelper.TwoPi * (j + spinOffset) / 12f).ToRotationVector2() * magnitude * NPC.scale;
+               
+                spriteBatch.Draw(bodytexture, drawPos + afterimageOffset, NPC.frame, glowColor, NPC.rotation, NPC.Size / 2, NPC.scale, spriteEffects, 0f);
+            }
+            */
+            spriteBatch.Draw(bodytexture, drawPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, NPC.Size / 2, NPC.scale, spriteEffects, 0f);
             return false;
         }
         public override void DrawBehind(int index)

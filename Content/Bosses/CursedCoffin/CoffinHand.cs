@@ -246,7 +246,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
                     break;
             }
         }
-        private static readonly Color GlowColor = new(224, 196, 252, 0);
+        private static readonly Color GlowColor = Color.Purple with { A = 0 }; //new(224, 196, 252, 0);
         public override bool PreDraw(ref Color lightColor)
         {
             //draw projectile

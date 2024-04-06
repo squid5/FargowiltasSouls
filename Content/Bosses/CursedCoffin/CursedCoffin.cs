@@ -14,6 +14,7 @@ using FargowiltasSouls.Core.Systems;
 using FargowiltasSouls.Content.Buffs.Souls;
 using tModPorter;
 using Microsoft.CodeAnalysis;
+using FargowiltasSouls.Content.WorldGeneration;
 
 namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 {
@@ -50,11 +51,11 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 
 		public Vector2 MaskCenter() => NPC.Center - Vector2.UnitY * NPC.height * NPC.scale / 4;
 
-		public static readonly Color GlowColor = new(224, 196, 252, 0);
+		public static readonly Color GlowColor = Color.Purple with { A = 0 };//new(224, 196, 252, 0);
 
-		#endregion
-		#region Standard
-		public override void SetStaticDefaults()
+        #endregion
+        #region Standard
+        public override void SetStaticDefaults()
 		{
 			Main.npcFrameCount[NPC.type] = 4;
 			NPCID.Sets.TrailCacheLength[NPC.type] = 18; //decrease later if not needed
@@ -147,6 +148,11 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
             }
             base.ModifyHitByItem(player, item, ref modifiers);
         }
+        public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers)
+        {
+			if (!CoffinArena.Rectangle.Contains(Player.Center.ToTileCoordinates()))
+				modifiers.Null();
+        }
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
         {
 			if (StateMachine.CurrentState == null || StateMachine.CurrentState.ID != BehaviorStates.SlamWShockwave)
@@ -234,19 +240,29 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 			Texture2D bodytexture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
 			Vector2 drawPos = NPC.Center - screenPos;
 			SpriteEffects spriteEffects = NPC.direction == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+			Vector2 origin = new Vector2(bodytexture.Width / 2, bodytexture.Height / 2 / Main.npcFrameCount[NPC.type]);
 
 			for (int i = 0; i < (ExtraTrail ? NPCID.Sets.TrailCacheLength[NPC.type] : NPCID.Sets.TrailCacheLength[NPC.type] / 4); i++)
 			{
 				Vector2 value4 = NPC.oldPos[i];
 				int oldFrame = Frame;
 				Rectangle oldRectangle = new(0, oldFrame * bodytexture.Height / Main.npcFrameCount[NPC.type], bodytexture.Width, bodytexture.Height / Main.npcFrameCount[NPC.type]);
-				DrawData oldGlow = new(bodytexture, value4 + NPC.Size / 2f - screenPos + new Vector2(0, NPC.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(oldRectangle), drawColor * (0.5f / i), NPC.rotation, new Vector2(bodytexture.Width / 2, bodytexture.Height / 2 / Main.npcFrameCount[NPC.type]), NPC.scale, spriteEffects, 0);
+				DrawData oldGlow = new(bodytexture, value4 + NPC.Size / 2f - screenPos + new Vector2(0, NPC.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(oldRectangle), GlowColor * (0.5f / i), NPC.rotation, origin, NPC.scale, spriteEffects, 0);
 				GameShaders.Misc["LCWingShader"].UseColor(Color.Blue).UseSecondaryColor(Color.Black);
 				GameShaders.Misc["LCWingShader"].Apply(oldGlow);
 				oldGlow.Draw(spriteBatch);
 			}
+            for (int j = 0; j < 12; j++)
+            {
+                float spinOffset = (Main.GameUpdateCount * 0.001f * j) % 12;
+                float magnitude = 3f + ((j % 5) * 3f * MathF.Sin(Main.GameUpdateCount * MathHelper.TwoPi / (10 + ((j - 6f) * 28f))));
+                Vector2 afterimageOffset = (MathHelper.TwoPi * (j + spinOffset) / 12f).ToRotationVector2() * magnitude * NPC.scale;
+                Color glowColor = GlowColor;
 
-			spriteBatch.Draw(origin: new Vector2(bodytexture.Width / 2, bodytexture.Height / 2 / Main.npcFrameCount[NPC.type]), texture: bodytexture, position: drawPos, sourceRectangle: NPC.frame, color: drawColor, rotation: NPC.rotation, scale: NPC.scale, effects: spriteEffects, layerDepth: 0f);
+
+                spriteBatch.Draw(bodytexture, drawPos + afterimageOffset, NPC.frame, glowColor, NPC.rotation, origin, NPC.scale, spriteEffects, 0f);
+            }
+            spriteBatch.Draw(bodytexture, drawPos, NPC.frame, drawColor, NPC.rotation, origin, NPC.scale, spriteEffects, 0f);
 
 			if (!PhaseTwo)
 			{
