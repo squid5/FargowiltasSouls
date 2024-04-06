@@ -43,17 +43,20 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
         public ref float Timer => ref Projectile.localAI[0];
         public ref float RotDir => ref Projectile.localAI[1];
         public ref float State => ref Projectile.ai[1];
-        public ref float TargetPlayer => ref Projectile.ai[2];
+
+        public int TargetPlayer = -1;
 
         private int CaughtPlayer = -1;
         public override void SendExtraAI(BinaryWriter writer)
         {
             writer.Write(RotDir);
             writer.Write(Timer);
+            writer.Write7BitEncodedInt(TargetPlayer);
         }
         public override void ReceiveExtraAI(BinaryReader reader)
         {
             Timer = reader.ReadSingle();
+            TargetPlayer = reader.Read7BitEncodedInt();
         }
         
         public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers)
@@ -113,9 +116,13 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
             }
             CursedCoffin coffin = owner.As<CursedCoffin>();
             Player target = Main.player[owner.target];
-            if (((int)TargetPlayer).IsWithinBounds(Main.maxPlayers))
+            if (State == 22 || State == 44)
             {
-                target = Main.player[(int)TargetPlayer];
+                TargetPlayer = (int)Projectile.ai[2];
+            }
+            if (TargetPlayer.IsWithinBounds(Main.maxPlayers))
+            {
+                target = Main.player[TargetPlayer];
             }
             if (!target.Alive())
                 return;
