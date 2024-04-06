@@ -195,7 +195,7 @@ namespace FargowiltasSouls.Content.Items
         {
             if (player.Eternity().MythrilHalberdTimer >= 120 && (item.type == ItemID.MythrilSword))
             {
-                damage *= 5 * player.FargoSouls().AttackSpeed;
+                damage *= 8 * player.FargoSouls().AttackSpeed;
             }
         }
         public override bool Shoot(Item item, Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
@@ -266,7 +266,7 @@ namespace FargowiltasSouls.Content.Items
 
             if (player.Eternity().MythrilHalberdTimer >= 120 && (item.type == ItemID.MythrilHalberd))
             {
-                damage = (int)(damage * 5 * player.FargoSouls().AttackSpeed);
+                damage = (int)(damage * 8 * player.FargoSouls().AttackSpeed);
                 player.Eternity().MythrilHalberdTimer = 0;
             }
         }
