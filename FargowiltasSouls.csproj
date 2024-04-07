@@ -9,11 +9,15 @@
   </PropertyGroup>
   <ItemGroup>
     <AdditionalFiles Remove="Content\Items\Items\**" />
+    <AdditionalFiles Remove="Content\WorldGen\**" />
     <Compile Remove="Content\Items\Items\**" />
+    <Compile Remove="Content\WorldGen\**" />
     <Compile Remove="Folders to Port\**" />
     <EmbeddedResource Remove="Content\Items\Items\**" />
+    <EmbeddedResource Remove="Content\WorldGen\**" />
     <EmbeddedResource Remove="Folders to Port\**" />
     <None Remove="Content\Items\Items\**" />
+    <None Remove="Content\WorldGen\**" />
     <None Remove="Folders to Port\**" />
   </ItemGroup>
   <ItemGroup>
@@ -25,7 +29,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Assets\ExtraTextures\Noise\" />
-    <Folder Include="Content\WorldGen\" />
     <Folder Include="Common\Graphics\Shaders\Compiler\" />
   </ItemGroup>
   <ItemGroup>
@@ -34,6 +37,9 @@
     </Reference>
     <Reference Include="Luminance">
       <HintPath>Luminance.dll</HintPath>
+    </Reference>
+    <Reference Include="StructureHelper">
+      <HintPath>StructureHelper.dll</HintPath>
     </Reference>
   </ItemGroup>
 </Project>
