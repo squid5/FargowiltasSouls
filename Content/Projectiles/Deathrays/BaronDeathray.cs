@@ -147,7 +147,7 @@ namespace FargowiltasSouls.Content.Projectiles.Deathrays
             shader.TrySetParameter("uColorFadeScaler", 0.8f);
             shader.TrySetParameter("useFadeIn", false);
 
-            PrimitiveRenderer.RenderTrail(baseDrawPoints, new(WidthFunction, ColorFunction, Shader: shader), 10);
+            PrimitiveRenderer.RenderTrail(baseDrawPoints, new(WidthFunction, ColorFunction, Shader: shader, Pixelate: true), 10);
         }
     }
 }

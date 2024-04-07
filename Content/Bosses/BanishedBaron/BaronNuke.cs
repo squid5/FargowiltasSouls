@@ -187,7 +187,7 @@ namespace FargowiltasSouls.Content.Bosses.BanishedBaron
             {
                 Vector2 pos = Projectile.Center + new Vector2(0, Main.rand.NextFloat(ExplosionDiameter * 0.8f)).RotatedBy(Main.rand.NextFloat(MathHelper.TwoPi)); //circle with highest density in middle
                 Vector2 vel = (pos - Projectile.Center) / 500;
-                Particle p = new ExpandingBloomParticle(pos, vel, Color.Lerp(Color.Yellow, Color.Red, pos.Distance(Projectile.Center) / (ExplosionDiameter / 2f)), startScale: Vector2.One * 3, endScale: Vector2.One * 6, lifetime: 60);
+                Particle p = new ExpandingBloomParticle(pos, vel, Color.Lerp(Color.Yellow, Color.Red, pos.Distance(Projectile.Center) / (ExplosionDiameter / 2f)), startScale: Vector2.One * 3, endScale: Vector2.One * 0, lifetime: 60);
                 p.Velocity *= 2f;
                 p.Spawn();
                 //int d = Dust.NewDust(pos, 0, 0, DustID.Fireworks, 0f, 0f, 0, default, 1.5f);
