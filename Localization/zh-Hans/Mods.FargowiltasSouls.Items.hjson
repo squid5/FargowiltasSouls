@@ -942,8 +942,8 @@ WillForce: {
 	Tooltip:
 		'''
 		[i:FargowiltasSouls/GoldEnchant] 按下“金身”键会将你包裹在一个黄金壳中
-		[i:FargowiltasSouls/GoldEnchant] 捡起钱币时，自动将它们存进猪猪存钱罐中
-		[i:FargowiltasSouls/PlatinumEnchant] 敌人死亡时有20%的几率获得五倍的战利品
+		[i:FargowiltasSouls/GoldEnchant] 捡起钱币时，自动将它们存进猪猪存钱罐中（这个效果放在物品栏中也能生效）
+		[i:FargowiltasSouls/PlatinumEnchant] 敌人死亡时有33%的几率获得五倍的战利品
 		[i:FargowiltasSouls/GladiatorEnchant] 双击下键召唤一个旗子，靠近旗子时获得增益
 		[i:FargowiltasSouls/GladiatorEnchant] 长矛将倾泄在被攻击的敌人身上
 		[i:FargowiltasSouls/RedRidingEnchant] 连续攻击命中会获得额外伤害加成

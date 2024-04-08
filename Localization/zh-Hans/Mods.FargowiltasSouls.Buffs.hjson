@@ -425,7 +425,7 @@ ShadowflameBuff: {
 
 SmiteBuff: {
 	DisplayName: 惩戒
-	Description: 降低生命恢复速度，受到的伤害增加10%
+	Description: 无法恢复生命，受到的伤害增加20%
 }
 
 SqueakyToyBuff: {
