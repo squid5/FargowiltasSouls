@@ -3423,3 +3423,8 @@ RazorContainer: {
 		'Some yellow fur is still stuck at the bottom' 
 		''' */
 }
+
+CoffinRoominator: {
+	// DisplayName: Coffin Roominator
+	// Tooltip: ""
+}

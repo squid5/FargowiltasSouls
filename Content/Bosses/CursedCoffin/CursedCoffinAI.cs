@@ -94,16 +94,21 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 
 			// Pushaway collision (solid object)
 			// this is jank
-			Vector2 nextCenter = Main.LocalPlayer.Center + Main.LocalPlayer.velocity;
-			Rectangle nextFrameHitbox = new((int)(nextCenter.X - Main.LocalPlayer.Hitbox.Width / 2), (int)(nextCenter.Y - Main.LocalPlayer.Hitbox.Height / 2), Main.LocalPlayer.Hitbox.Width, Main.LocalPlayer.Hitbox.Height);
+			Player localPlayer = Main.LocalPlayer;
+			Vector2 nextCenter = localPlayer.Center + localPlayer.velocity;
+			Rectangle nextFrameHitbox = new((int)(nextCenter.X - localPlayer.Hitbox.Width / 2), (int)(nextCenter.Y - localPlayer.Hitbox.Height / 2), localPlayer.Hitbox.Width, localPlayer.Hitbox.Height);
 			if (nextFrameHitbox.Intersects(NPC.Hitbox))
 			{
 				if (!Main.LocalPlayer.Hitbox.Intersects(NPC.Hitbox))
 				{
+					Main.LocalPlayer.velocity.X /= 2;
+					Main.LocalPlayer.position.X -= Math.Sign(localPlayer.Center.X - NPC.Center.X) * 8;
+					/*
                     Main.LocalPlayer.position -= Main.LocalPlayer.velocity;
                     Main.LocalPlayer.velocity = Vector2.Zero;
+					*/
                 }
-				Main.LocalPlayer.velocity -= Main.LocalPlayer.DirectionTo(NPC.Center) * 0.5f;
+				Main.LocalPlayer.velocity -= Main.LocalPlayer.DirectionTo(NPC.Center);
                 /*
 				Vector2 dir = Main.LocalPlayer.DirectionTo(NPC.Center);
 				Vector2 vel = Main.LocalPlayer.velocity;

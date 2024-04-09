@@ -18,6 +18,8 @@ namespace FargowiltasSouls.Content.WorldGeneration
     {
         public const int Width = 60;
 
+        private const int PaddedWidth = Width + 2;
+
         public const int Height = 35;
 
         public static Point Center => WorldSavingSystem.CoffinArenaCenter;
@@ -27,14 +29,14 @@ namespace FargowiltasSouls.Content.WorldGeneration
 
         public static bool CheckSpot(int x, int y)
         {
-            Point point = new(x, y);
-            for (int xOff = -Width / 2; xOff < Width / 2; xOff++)
+            for (int xOff = -PaddedWidth / 2; xOff < PaddedWidth / 2; xOff++)
             {
-                if (!TileIsPyramid(Main.tile[point.X + xOff, point.Y - 1])) // fail if not pyramid above
-                    return false;
                 for (int yOff = 0; yOff < Height; yOff++)
-                    if (TileIsPyramid(Main.tile[point.X + xOff, point.Y + yOff])) // fail if pyramid here; aka passage
+                {
+                    Tile tile = Main.tile[x + xOff, y + yOff];
+                    if (tile.WallType == WallID.SandstoneBrick && tile.TileType != TileID.SandstoneBrick) // invalid position if hallway
                         return false;
+                }
             }
             return true;
         }
@@ -42,63 +44,42 @@ namespace FargowiltasSouls.Content.WorldGeneration
         public static void Generate(Point pyramidTop)
         {
             // Find bottom of pyramid
-            int pyramidHeight = 0;
-            while (pyramidHeight < 300) // max bound
+            int curYSearch = 0;
+            while (++curYSearch < 300) // max bound
             {
-                bool foundBottom = false;
-                pyramidHeight++;
-                for (int x = -(int)(pyramidHeight / 4f); x < (int)(pyramidHeight / 4f); x++)
+                int xSearchWidth = curYSearch - (PaddedWidth / 2);
+                if (xSearchWidth < 0) // too thin
+                    continue;
+                for (int curXSearch = -xSearchWidth; curXSearch <= xSearchWidth; curXSearch++)
                 {
-                    if (!TileIsPyramid(Main.tile[pyramidTop.X + x, pyramidTop.Y + pyramidHeight]))
-                    {
-                        foundBottom = true;
-                        break;
-                    }
+                    bool validSpot = CheckSpot(pyramidTop.X + curXSearch, pyramidTop.Y + curYSearch);
+                    if (!validSpot) 
+                        continue;
+                    Point arenaTopCenter = new(pyramidTop.X + curXSearch, pyramidTop.Y + curYSearch);
+                    Place(arenaTopCenter);
+                    Place(arenaTopCenter);
+                    return;
                 }
-                if (foundBottom)
-                    break;
             }
-
-            Point pyramidBottom = new(pyramidTop.X, pyramidTop.Y + pyramidHeight);
-
-            // Find spot for arena, avoiding the passage
-            int xOffset = 0;
-            int attempt = 0;
-            while (attempt < 100)
-            {
-                xOffset = WorldGen.genRand.Next(-pyramidHeight, pyramidHeight); // property of pyramid triangle; bottom width = 2 * height
-                bool validSpot = CheckSpot(pyramidBottom.X + xOffset, pyramidBottom.Y);
-                if (validSpot)
-                    break;
-                attempt++;
-            }
-            Point arenaTopCenter = new(pyramidBottom.X + xOffset, pyramidBottom.Y - 1);
-            Place(arenaTopCenter);
         }
 
         public static void Place(Point arenaTopCenter)
         {
             Point16 arenaTopLeft = new(arenaTopCenter.X - (Width / 2) + 1, arenaTopCenter.Y);
             StructureHelper.Generator.GenerateStructure("Content/WorldGeneration/CoffinArena", arenaTopLeft, ModLoader.GetMod("FargowiltasSouls"));
-            foreach (int x in new List<int> { arenaTopLeft.X, arenaTopLeft.X + Width })
+            foreach (int x in new List<int> { arenaTopLeft.X - 1, arenaTopLeft.X + Width - 2 })
             {
                 for (int y = 0; y < Height; y++)
                 {
-                    Point point = new(arenaTopCenter.X - (Width / 2) + x, arenaTopCenter.Y + y);
+                    Point point = new(x, arenaTopCenter.Y + y);
                     WorldGen.KillTile(point.X, point.Y);
                     WorldGen.KillWall(point.X, point.Y);
-                    if (x == 0 || y == 0 || x == Width - 1 || y == Height - 1) // place blocks on border
-                    {
-                        WorldGen.PlaceTile(point.X, point.Y, TileID.SandstoneBrick, mute: true, forced: true);
-                    }
-                    else
-                    {
-                        WorldGen.PlaceWall(point.X, point.Y, WallID.SandstoneBrick, true);
-                        WorldGen.ReplaceWall(point.X, point.Y, WallID.SandstoneBrick);
-                    }
+                    WorldGen.PlaceTile(point.X, point.Y, TileID.SandstoneBrick, mute: true, forced: true);
                 }
             }
-            
+            WorldSavingSystem.CoffinArenaCenter = new(arenaTopCenter.X, arenaTopCenter.Y + Height / 2);
+            Rectangle = new(arenaTopCenter.X - Width / 2, arenaTopCenter.Y, Width, Height);
+
             /*
             // Place arena
             for (int x = 0; x < Width; x++)
