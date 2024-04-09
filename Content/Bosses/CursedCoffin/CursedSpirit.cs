@@ -55,7 +55,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
         {
             Main.npcFrameCount[NPC.type] = 9;
             NPCID.Sets.TrailCacheLength[NPC.type] = 20;
-            NPCID.Sets.TrailingMode[NPC.type] = 2;
+            NPCID.Sets.TrailingMode[NPC.type] = 3;
             NPCID.Sets.MPAllowedEnemies[Type] = true;
 
             NPCID.Sets.CantTakeLunchMoney[Type] = true;
@@ -572,17 +572,25 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
             Color glowColor = CursedCoffin.GlowColor;
 
             int trailLength = NPCID.Sets.TrailCacheLength[NPC.type];
-            if (NPC.scale > 0.5f)
+            if (NPC.scale < 0.5f)
                 trailLength /= 2;
 
             for (int i = 0; i < trailLength; i++)
             {
                 Vector2 oldPos = NPC.oldPos[i];
 
-                DrawData oldGlow = new(bodytexture, oldPos + NPC.Size / 2f - screenPos + new Vector2(0, NPC.gfxOffY), NPC.frame, NPC.GetAlpha(glowColor * (0.5f / i)), NPC.rotation, NPC.Size / 2, NPC.scale, spriteEffects, 0);
+                DrawData oldGlow = new(bodytexture, oldPos + NPC.Size / 2f - screenPos + new Vector2(0, NPC.gfxOffY), NPC.frame, NPC.GetAlpha(glowColor * (0.8f / i)), NPC.oldRot[i], NPC.Size / 2, NPC.scale, spriteEffects, 0);
                 GameShaders.Misc["LCWingShader"].UseColor(Color.Blue).UseSecondaryColor(Color.Black);
                 GameShaders.Misc["LCWingShader"].Apply(oldGlow);
                 oldGlow.Draw(spriteBatch);
+            }
+            for (int j = 0; j < 12; j++)
+            {
+                float spinOffset = (Main.GameUpdateCount * 0.001f * j) % 12;
+                float magnitude = 1f + ((j % 5) * 2f * MathF.Sin(Main.GameUpdateCount * MathHelper.TwoPi / (10 + ((j - 6f) * 28f))));
+                Vector2 afterimageOffset = (MathHelper.TwoPi * (j + spinOffset) / 12f).ToRotationVector2() * magnitude * NPC.scale;
+
+                spriteBatch.Draw(bodytexture, drawPos + afterimageOffset, NPC.frame, NPC.GetAlpha(glowColor * NPC.Opacity), NPC.rotation, NPC.Size / 2, NPC.scale, spriteEffects, 0f);
             }
             /*
             for (int j = 0; j < 12; j++)

@@ -22,7 +22,7 @@ namespace FargowiltasSouls.Core.Systems
         {
             Terraria.On_WorldGen.Pyramid -= OnPyramidGen;
         }
-        public Point PyramidLocation = new(); // Doesn't save. Only used within worldgen.
+        public static Point PyramidLocation = new(); // Doesn't save. Only used within worldgen.
         public override void PreWorldGen()
         {
             PyramidLocation = new();
