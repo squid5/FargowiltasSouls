@@ -731,6 +731,6 @@ MagicalCurseBuff: {
 }
 
 PearlwoodStarBuff: {
-	// DisplayName: Pearlwood Star Buff
-	// Description: Mods.FargowiltasSouls.Buffs.PearlwoodStarBuff.Description
+	DisplayName: 破坏之星
+	Description: 破坏之星将会跟随你
 }
