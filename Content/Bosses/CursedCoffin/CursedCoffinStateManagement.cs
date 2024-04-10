@@ -1,4 +1,5 @@
 ﻿using FargowiltasSouls.Common.StateMachines;
+using FargowiltasSouls.Content.Buffs.Boss;
 using FargowiltasSouls.Content.Buffs.Masomode;
 using FargowiltasSouls.Content.WorldGeneration;
 using FargowiltasSouls.Core.Systems;
@@ -71,7 +72,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 			{
 				StateMachine.RegisterTransition(state, BehaviorStates.StunPunish, false, () => 
 				{
-					return Main.player.Any(p => p.Alive() && p.HasBuff<StunnedBuff>()) && !Main.projectile.Any(p => p.TypeAlive<CoffinHand>());
+					return Main.player.Any(p => p.Alive() && p.HasBuff<StunnedBuff>() && !p.HasBuff<GrabbedBuff>()) && !Main.projectile.Any(p => p.TypeAlive<CoffinHand>());
 				});
 			}, BehaviorStates.StunPunish, BehaviorStates.PhaseTransition, BehaviorStates.YouCantEscape, BehaviorStates.SpiritGrabPunish);
 
@@ -80,7 +81,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
             {
                 StateMachine.RegisterTransition(state, BehaviorStates.YouCantEscape, false, () =>
                 {
-					return Main.player.Any(p => p.Alive() && !CoffinArena.Rectangle.Contains(p.Center.ToTileCoordinates()));
+					return Main.player.Any(p => p.Alive() && !CoffinArena.Rectangle.Contains(p.Center.ToTileCoordinates()) && !p.HasBuff<GrabbedBuff>());
                 });
             }, BehaviorStates.StunPunish, BehaviorStates.PhaseTransition, BehaviorStates.YouCantEscape, BehaviorStates.SpiritGrabPunish);
 

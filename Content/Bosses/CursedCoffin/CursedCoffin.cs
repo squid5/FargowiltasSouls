@@ -155,7 +155,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
         }
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
         {
-			if (StateMachine.CurrentState == null || StateMachine.CurrentState.ID != BehaviorStates.SlamWShockwave)
+			if (StateMachine.CurrentState == null || (StateMachine.CurrentState.ID != BehaviorStates.SlamWShockwave && StateMachine.CurrentState.ID != BehaviorStates.WavyShotSlam))
 				return false;
 			if (NPC.velocity.Y <= 0)
 				return false;

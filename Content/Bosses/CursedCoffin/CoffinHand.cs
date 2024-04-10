@@ -192,7 +192,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
                         }
                         victim.buffImmune[ModContent.BuffType<StunnedBuff>()] = true; // cannot be stunned while grabbed, and removes stun
 
-                        if (Timer >= 60)
+                        if (Timer >= 60 && State != 66)
                         {
                             State = 101;
                             owner.netUpdate = true;

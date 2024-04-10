@@ -461,8 +461,16 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 					const int ProjCount = 20;
                     for (int i = 0; i < ProjCount; i++)
                     {
-						Vector2 centerTop = CoffinArena.Center.ToWorldCoordinates() - Vector2.UnitY * CoffinArena.Height * 8f;
-						Vector2 projPos = centerTop + dir * Vector2.UnitX * (CoffinArena.Width * 8) * ((float)i / ProjCount);
+						Vector2 center = CoffinArena.Center.ToWorldCoordinates();
+						Vector2 projPos = center + dir * Vector2.UnitX * (CoffinArena.Width * 8) * ((float)i / ProjCount);
+						Point tile = projPos.ToTileCoordinates();
+						for (int safety = 0; safety < 100; safety++)
+						{
+							if (Main.tile[tile.X, tile.Y].HasUnactuatedTile && Main.tile[tile.X, tile.Y].TileType == TileID.SandstoneBrick)
+								break;
+							tile.Y -= 1;
+                        }
+						projPos = tile.ToWorldCoordinates();
 						projPos.X += Main.rand.NextFloat(-10, 10);
 						projPos.Y += Main.rand.NextFloat(-3, 4);
 
