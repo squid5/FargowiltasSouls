@@ -11,3 +11,4 @@ deerclops inflicts broken armor
 marked for death makes you take x1.5 base damage, not final damage
 
 ftw fishron buffed, faster p1/p2 dashes
+ftw trojan squrrel starts at x2 size
