@@ -1,15 +1,15 @@
-using System.IO;
-using Terraria.ModLoader.IO;
+using FargowiltasSouls.Content.Buffs.Masomode;
+using FargowiltasSouls.Content.Projectiles;
+using FargowiltasSouls.Core.Globals;
+using FargowiltasSouls.Core.NPCMatching;
 using Microsoft.Xna.Framework;
 using System;
+using System.IO;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
-using FargowiltasSouls.Content.Projectiles;
-using FargowiltasSouls.Content.Buffs.Masomode;
-using FargowiltasSouls.Core.Globals;
-using FargowiltasSouls.Core.NPCMatching;
+using Terraria.ModLoader.IO;
 
 namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEvents.Vortex
 {
@@ -127,7 +127,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEve
             base.AI(npc);
 
             //default: if (npc.localAI[2] >= 360f + Main.rand.Next(360) && etc)
-            if (npc.localAI[2] >= 180f + Main.rand.Next(180) && npc.Distance(Main.player[npc.target].Center) < 400f && Math.Abs(npc.DirectionTo(Main.player[npc.target].Center).Y) < 0.5f && Collision.CanHitLine(npc.Center, 0, 0, Main.player[npc.target].Center, 0, 0))
+            if (npc.localAI[2] >= 180f + Main.rand.Next(180) && npc.Distance(Main.player[npc.target].Center) < 400f && Math.Abs(npc.SafeDirectionTo(Main.player[npc.target].Center).Y) < 0.5f && Collision.CanHitLine(npc.Center, 0, 0, Main.player[npc.target].Center, 0, 0))
             {
                 npc.localAI[2] = 0f;
                 Counter = 1;

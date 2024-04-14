@@ -1,15 +1,11 @@
-﻿using FargowiltasSouls.Common.Graphics.Particles;
-using FargowiltasSouls.Content.Buffs.Souls;
+﻿using FargowiltasSouls.Content.Buffs.Souls;
 using FargowiltasSouls.Content.Items.Accessories.Enchantments;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
-using FargowiltasSouls.Core.ModPlayers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection.Metadata;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
@@ -167,7 +163,7 @@ namespace FargowiltasSouls.Content.Projectiles.Minions
             SlashRotation = Projectile.rotation;
             Projectile.rotation -= GetSide(player) * MathHelper.Pi * 0.9f;
             SlashArc = (Projectile.rotation - SlashRotation + MathHelper.Pi + MathHelper.TwoPi) % MathHelper.TwoPi - MathHelper.Pi;
-            
+
             for (int i = 0; i < Projectile.localNPCImmunity.Length; i++)
             {
                 Projectile.localNPCImmunity[i] = 0;
@@ -273,13 +269,13 @@ namespace FargowiltasSouls.Content.Projectiles.Minions
                 p.velocity = targetVel;
                 // Don't know if this will help but here it is
                 p.netUpdate = true;
-                
+
             }
 
         }
         private Vector2 MousePos(Player player)
         {
-            return player.Center + (player.Center.DirectionTo(Main.MouseWorld) * Math.Min((Main.MouseWorld - player.Center).Length(), MaxDistance));
+            return player.Center + (player.Center.SafeDirectionTo(Main.MouseWorld) * Math.Min((Main.MouseWorld - player.Center).Length(), MaxDistance));
         }
         private bool CheckRightClick(Player player)
         {
@@ -347,7 +343,7 @@ namespace FargowiltasSouls.Content.Projectiles.Minions
                 const int SlashImages = 100; //lol
                 for (int i = 0; i < SlashImages; i++)
                 {
-                    float frac = 1-((float)i / SlashImages);
+                    float frac = 1 - ((float)i / SlashImages);
                     float angle = sword.SlashRotation + (sword.SlashArc * frac);
                     Vector2 imagePos = proj.Center - Main.screenPosition + (angle - MathHelper.PiOver2).ToRotationVector2() * value.Width * proj.scale / 2;
                     float imageRot = angle - MathHelper.PiOver2;

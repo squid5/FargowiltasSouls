@@ -1,22 +1,19 @@
-using Microsoft.Xna.Framework;
-using Terraria;
-using Terraria.Audio;
-using Terraria.ID;
-using Terraria.ModLoader;
 using FargowiltasSouls.Content.Buffs.Masomode;
-using FargowiltasSouls.Core.Systems;
-using Terraria.DataStructures;
-using Microsoft.CodeAnalysis;
 using FargowiltasSouls.Content.Projectiles.Souls;
-using FargowiltasSouls.Content.Projectiles;
-using System;
+using FargowiltasSouls.Core.Systems;
+using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using System.Linq;
+using Terraria;
+using Terraria.Audio;
+using Terraria.DataStructures;
+using Terraria.ID;
 using Terraria.Localization;
+using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Content.Items
 {
-	public class EModeGlobalItem : GlobalItem
+    public class EModeGlobalItem : GlobalItem
     {
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
         {
@@ -39,7 +36,7 @@ namespace FargowiltasSouls.Content.Items
                             text[1] = (char)((int)text[1] - 1);
                             tooltip.Text = new string(text.ToArray());
                         }
-                        
+
                         tooltip.Text += "\n" + Language.GetTextValue("Mods.FargowiltasSouls.Items.Extra.DefensePrefixMaxLife", life);
                     }
                 }
@@ -112,7 +109,7 @@ namespace FargowiltasSouls.Content.Items
             {
                 if (item.type == ItemID.OrichalcumSword) //reset stats to default
                 {
-                    Item dummy = new Item(ItemID.OrichalcumSword);
+                    Item dummy = new(ItemID.OrichalcumSword);
                     item.shoot = dummy.shoot;
                     item.shootSpeed = dummy.shootSpeed;
                     dummy.active = false;
@@ -120,7 +117,7 @@ namespace FargowiltasSouls.Content.Items
                 }
                 return base.CanUseItem(item, player);
             }
-                
+
 
             EModePlayer ePlayer = player.Eternity();
 
@@ -131,7 +128,7 @@ namespace FargowiltasSouls.Content.Items
                     return false;
             }
 
-            if (item.type == ItemID.RodofDiscord && FargoSoulsUtil.AnyBossAlive())
+            if (item.type == ItemID.RodofDiscord && LumUtils.AnyBosses())
             {
                 player.chaosState = true;
             }
@@ -146,7 +143,7 @@ namespace FargowiltasSouls.Content.Items
                 ePlayer.CobaltHitCounter = 0;
             }
 
-            if (item.type == ItemID.RodOfHarmony && FargoSoulsUtil.AnyBossAlive())
+            if (item.type == ItemID.RodOfHarmony && LumUtils.AnyBosses())
             {
                 player.hurtCooldowns[0] = 0;
                 var defense = player.statDefense;
@@ -156,7 +153,7 @@ namespace FargowiltasSouls.Content.Items
                 player.Hurt(PlayerDeathReason.ByCustomReason(Language.GetTextValue("Mods.FargowiltasSouls.DeathMessage.RodOfHarmony", player.name)), player.statLifeMax2 / 7, 0, false, false, 0, false);
                 player.statDefense = defense;
                 player.endurance = endurance;
-                
+
             }
             //TODO: mana pot rework
             /*
@@ -188,7 +185,7 @@ namespace FargowiltasSouls.Content.Items
             {
                 Main.time = 18000;
             }
-            
+
             return base.UseItem(item, player);
         }
         public override void ModifyWeaponDamage(Item item, Player player, ref StatModifier damage)

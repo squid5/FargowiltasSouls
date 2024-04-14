@@ -1,8 +1,9 @@
-﻿using FargowiltasSouls.Common.Graphics.Shaders;
+﻿
 using FargowiltasSouls.Content.Items.Accessories.Enchantments;
 using FargowiltasSouls.Content.Items.Accessories.Masomode;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using FargowiltasSouls.Core.Toggler.Content;
+using Luminance.Core.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -13,14 +14,13 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
-using Terraria.UI;
 
 namespace FargowiltasSouls.Content.Items.Accessories.Souls
 {
-	[AutoloadEquip(EquipType.Wings)]
+    [AutoloadEquip(EquipType.Wings)]
     public class EternitySoul : FlightMasteryWings
     {
-        
+
         public override bool HasSupersonicSpeed => true;
 
         public override bool Eternity => true;
@@ -41,7 +41,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Souls
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(6, 10));
             ItemID.Sets.AnimatesAsSoul[Item.type] = true;
         }
-        
+
         public override void SafeModifyTooltips(List<TooltipLine> tooltips)
         {
             if (Item.social)
@@ -53,7 +53,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Souls
 
             string description = Language.GetTextValue("Mods.FargowiltasSouls.Items.EternitySoul.Extra.Additional");
             description += "                                                                                                                                               "; // blankspaces for consistent box size lmao
-            
+
             if (Main.GameUpdateCount % 5 == 0 || EternitySoulSystem.TooltipLines == null)
             {
                 EternitySoulSystem.TooltipLines = new();
@@ -82,7 +82,10 @@ namespace FargowiltasSouls.Content.Items.Accessories.Souls
             {
                 Main.spriteBatch.End(); //end and begin main.spritebatch to apply a shader
                 Main.spriteBatch.Begin(SpriteSortMode.Immediate, null, null, null, null, null, Main.UIScaleMatrix);
-                ShaderManager.GetShaderIfExists("Text").SetMainColor(new Color(42, 42, 99)).SetSecondaryColor(FargowiltasSouls.EModeColor()).Apply(true, "PulseUpwards");
+                ManagedShader shader = ShaderManager.GetShader("FargowiltasSouls.Text");
+                shader.TrySetParameter("mainColor", new Color(42, 42, 99));
+                shader.TrySetParameter("secondaryColor", FargowiltasSouls.EModeColor());
+                shader.Apply("PulseUpwards");
                 Utils.DrawBorderString(Main.spriteBatch, line.Text, new Vector2(line.X, line.Y), Color.White, 1); //draw the tooltip manually
                 Main.spriteBatch.End(); //then end and begin again to make remaining tooltip lines draw in the default way
                 Main.spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, Main.UIScaleMatrix);

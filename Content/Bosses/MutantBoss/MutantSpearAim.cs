@@ -1,7 +1,5 @@
 ﻿using FargowiltasSouls.Content.Buffs.Boss;
 using FargowiltasSouls.Content.Buffs.Masomode;
-using FargowiltasSouls.Content.Projectiles;
-using FargowiltasSouls.Content.Projectiles.BossWeapons;
 using FargowiltasSouls.Core.Systems;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -14,7 +12,7 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
     public class MutantSpearAim : ModProjectile
     {
         public override string Texture => FargoSoulsUtil.AprilFools ?
-            "FargowiltasSouls/Content/Bosses/MutantBoss/MutantSpear_April" : 
+            "FargowiltasSouls/Content/Bosses/MutantBoss/MutantSpear_April" :
             "FargowiltasSouls/Content/Projectiles/BossWeapons/HentaiSpear";
 
         public override void SetStaticDefaults()
@@ -76,16 +74,16 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
                 Projectile.Center = mutant.Center;
 
                 if (Projectile.localAI[0] == 0) //ensure it faces the right way on tick 1
-                    Projectile.rotation = mutant.DirectionTo(Main.player[mutant.target].Center).ToRotation();
+                    Projectile.rotation = mutant.SafeDirectionTo(Main.player[mutant.target].Center).ToRotation();
 
                 if (Projectile.ai[1] > 1)
                 {
                     if (!(Projectile.ai[1] == 4 && Projectile.timeLeft < System.Math.Abs(Projectile.localAI[1]) + 5))
-                        Projectile.rotation = Projectile.rotation.AngleLerp(mutant.DirectionTo(Main.player[mutant.target].Center + Main.player[mutant.target].velocity * 30).ToRotation(), 0.2f);
+                        Projectile.rotation = Projectile.rotation.AngleLerp(mutant.SafeDirectionTo(Main.player[mutant.target].Center + Main.player[mutant.target].velocity * 30).ToRotation(), 0.2f);
                 }
                 else
                 {
-                    Projectile.rotation = mutant.DirectionTo(Main.player[mutant.target].Center).ToRotation();
+                    Projectile.rotation = mutant.SafeDirectionTo(Main.player[mutant.target].Center).ToRotation();
                 }
             }
             else

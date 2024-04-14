@@ -1,19 +1,19 @@
-using System.IO;
-using Terraria.ModLoader.IO;
+using FargowiltasSouls.Content.Buffs.Boss;
+using FargowiltasSouls.Core.Globals;
+using FargowiltasSouls.Core.NPCMatching;
+using FargowiltasSouls.Core.Systems;
 using Microsoft.Xna.Framework;
+using System.IO;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
-using FargowiltasSouls.Content.Buffs.Boss;
-using FargowiltasSouls.Core.Systems;
-using FargowiltasSouls.Core.Globals;
-using FargowiltasSouls.Core.NPCMatching;
+using Terraria.ModLoader.IO;
 
 namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.Jungle
 {
-	public class Snatchers : EModeNPCBehaviour
+    public class Snatchers : EModeNPCBehaviour
     {
         public override NPCMatcher CreateMatcher() => new NPCMatcher().MatchTypeRange(
             NPCID.Snatcher,
@@ -83,7 +83,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.Jungle
                     BiteTimer = -90; //cooldown
 
                     //retract towards home
-                    npc.velocity = 15f * npc.DirectionTo(new Vector2(npc.ai[0] * 16, npc.ai[1] * 16));
+                    npc.velocity = 15f * npc.SafeDirectionTo(new Vector2(npc.ai[0] * 16, npc.ai[1] * 16));
 
                     npc.netUpdate = true;
                     NetSync(npc);

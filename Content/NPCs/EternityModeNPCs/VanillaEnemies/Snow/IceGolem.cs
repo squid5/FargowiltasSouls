@@ -1,17 +1,16 @@
-using System.IO;
-using Terraria.ModLoader.IO;
 using FargowiltasSouls.Content.Projectiles.Masomode;
+using FargowiltasSouls.Core.Globals;
+using FargowiltasSouls.Core.NPCMatching;
 using Microsoft.Xna.Framework;
-using System;
+using System.IO;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using FargowiltasSouls.Core.Globals;
-using FargowiltasSouls.Core.NPCMatching;
+using Terraria.ModLoader.IO;
 
 namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.Snow
 {
-	public class IceGolem : EModeNPCBehaviour
+    public class IceGolem : EModeNPCBehaviour
     {
         public override NPCMatcher CreateMatcher() => new NPCMatcher().MatchType(NPCID.IceGolem);
 
@@ -63,7 +62,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.Snow
                     const int max = 12;
                     for (int i = 0; i < max; i++)
                     {
-                        Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, 6f * npc.DirectionTo(Main.player[npc.target].Center).RotatedBy(MathHelper.TwoPi / max * i),
+                        Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, 6f * npc.SafeDirectionTo(Main.player[npc.target].Center).RotatedBy(MathHelper.TwoPi / max * i),
                             ModContent.ProjectileType<FrostfireballHostile>(), FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 0f, Main.myPlayer, npc.target, 180 + Main.rand.Next(-60, 60));
                     }
                 }

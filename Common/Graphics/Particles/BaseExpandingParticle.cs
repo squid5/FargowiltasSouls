@@ -1,49 +1,54 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using Luminance.Core.Graphics;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 
 namespace FargowiltasSouls.Common.Graphics.Particles
 {
-	public abstract class BaseExpandingParticle : Particle
-	{
-		public readonly Vector2 StartScale;
+    public abstract class BaseExpandingParticle : Particle
+    {
+        public override string AtlasTextureName => "FargowiltasSouls.Bloom";
 
-		public readonly Vector2 EndScale;
+        public readonly Vector2 StartScale;
 
-		public readonly bool UseBloom;
+        public readonly Vector2 EndScale;
 
-		public override Texture2D MainTexture => CommonBloomTexture;
+        public Color BloomColor;
 
-		/// <summary>
-		/// The scale for a texture of size 100x100px.
-		/// </summary>
-		public virtual Vector2 DrawScale => Scale * 0.3f;
+        public readonly bool UseBloom;
 
-		public BaseExpandingParticle(Vector2 position, Vector2 velocity, Color drawColor, Vector2 startScale, Vector2 endScale, int lifetime, bool useExtraBloom = false, Color? extraBloomColor = null)
-		{
-			Position = position;
-			Velocity = velocity;
-			DrawColor = drawColor;
-			Scale = StartScale = startScale;
-			EndScale = endScale;
-			MaxLifetime = lifetime;
-			UseBloom = useExtraBloom;
-			extraBloomColor ??= Color.White;
-			BloomColor = extraBloomColor.Value;
-		}
 
-		public sealed override void Update()
-		{
-			Opacity = MathHelper.Lerp(1f, 0f, FargoSoulsUtil.SineInOut(LifetimeRatio));
-			Scale = Vector2.Lerp(StartScale, EndScale, FargoSoulsUtil.SineInOut(LifetimeRatio));
-		}
+        /// <summary>
+        /// The scale for a texture of size 100x100px.
+        /// </summary>
+        public virtual Vector2 DrawScale => Scale * 0.3f;
+
+        public BaseExpandingParticle(Vector2 position, Vector2 velocity, Color drawColor, Vector2 startScale, Vector2 endScale, int lifetime, bool useExtraBloom = false, Color? extraBloomColor = null)
+        {
+            Position = position;
+            Velocity = velocity;
+            DrawColor = drawColor;
+            Scale = StartScale = startScale;
+            EndScale = endScale;
+            Lifetime = lifetime;
+            UseBloom = useExtraBloom;
+            extraBloomColor ??= Color.White;
+
+            BloomColor = extraBloomColor.Value;
+        }
+
+        public sealed override void Update()
+        {
+            Opacity = MathHelper.Lerp(1f, 0f, FargoSoulsUtil.SineInOut(LifetimeRatio));
+            Scale = Vector2.Lerp(StartScale, EndScale, FargoSoulsUtil.SineInOut(LifetimeRatio));
+        }
 
 		public sealed override void Draw(SpriteBatch spriteBatch)
 		{
-			spriteBatch.Draw(MainTexture, Position - Main.screenPosition, null, DrawColor with { A = 0 } * Opacity, Rotation, MainTexture.Size() * 0.5f, DrawScale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(Texture, Position - Main.screenPosition, Frame, DrawColor with { A = 0 } * Opacity, Rotation, null, DrawScale, Direction.ToSpriteDirection());
 
 			if (UseBloom)
-				spriteBatch.Draw(MainTexture, Position - Main.screenPosition, null, BloomColor with { A = 0 } * 0.4f * Opacity, Rotation, MainTexture.Size() * 0.5f, DrawScale * 0.66f, SpriteEffects.None, 0f);
+				spriteBatch.Draw(Texture, Position - Main.screenPosition, null, BloomColor with { A = 0 } * 0.4f * Opacity, Rotation, null, DrawScale * 0.66f, Direction.ToSpriteDirection());
 		}
 	}
 }

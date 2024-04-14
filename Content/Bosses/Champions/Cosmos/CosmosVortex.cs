@@ -1,5 +1,4 @@
-﻿using FargowiltasSouls.Content.Projectiles;
-using FargowiltasSouls.Core.Systems;
+﻿using FargowiltasSouls.Core.Systems;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -113,7 +112,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Cosmos
                 if (p != -1)
                 {
                     Projectile.localAI[1] =
-                        Projectile.Center == Main.player[p].Center ? 0 : Projectile.DirectionTo(Main.player[p].Center).ToRotation();
+                        Projectile.Center == Main.player[p].Center ? 0 : Projectile.SafeDirectionTo(Main.player[p].Center).ToRotation();
                     Projectile.localAI[1] += (float)Math.PI * 2 / 3 / 2;
                 }
             }

@@ -37,7 +37,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Souls
 
             modPlayer.SupersonicSoul = true;
 
-            if (Player.AddEffect<SupersonicSpeedEffect>(item) && !modPlayer.noSupersonic && !FargoSoulsUtil.AnyBossAlive())
+            if (Player.AddEffect<SupersonicSpeedEffect>(item) && !modPlayer.noSupersonic && !LumUtils.AnyBosses())
             {
                 // 5 is the default value, I removed the config for it because the new toggler doesn't have sliders
                 Player.runAcceleration += 5f * .1f;

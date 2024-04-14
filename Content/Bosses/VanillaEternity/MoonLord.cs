@@ -1,9 +1,15 @@
-using System.IO;
-using Terraria.ModLoader.IO;
+using FargowiltasSouls.Common.Utilities;
+using FargowiltasSouls.Content.Bosses.MutantBoss;
+using FargowiltasSouls.Content.Buffs.Masomode;
+using FargowiltasSouls.Content.Projectiles;
 using FargowiltasSouls.Content.Projectiles.Deathrays;
 using FargowiltasSouls.Content.Projectiles.Masomode;
+using FargowiltasSouls.Core.Globals;
+using FargowiltasSouls.Core.NPCMatching;
+using FargowiltasSouls.Core.Systems;
 using Microsoft.Xna.Framework;
 using System;
+using System.IO;
 using System.Linq;
 using Terraria;
 using Terraria.Audio;
@@ -11,18 +17,11 @@ using Terraria.GameContent.Creative;
 using Terraria.Graphics.Effects;
 using Terraria.ID;
 using Terraria.ModLoader;
-
-using FargowiltasSouls.Content.Projectiles;
-using FargowiltasSouls.Content.Buffs.Masomode;
-using FargowiltasSouls.Core.Systems;
-using FargowiltasSouls.Core.Globals;
-using FargowiltasSouls.Common.Utilities;
-using FargowiltasSouls.Core.NPCMatching;
-using FargowiltasSouls.Content.Bosses.MutantBoss;
+using Terraria.ModLoader.IO;
 
 namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 {
-	public abstract class MoonLord : EModeNPCBehaviour
+    public abstract class MoonLord : EModeNPCBehaviour
     {
         public abstract int GetVulnerabilityState(NPC npc);
 
@@ -63,7 +62,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     default: break;
                 }
             }
-            
+
 
             return base.CanBeHitByProjectile(npc, projectile);
         }
@@ -357,25 +356,25 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                             if (++AttackMemory == 10)
                             {
                                 if (FargoSoulsUtil.HostCheck)
-                                    Projectile.NewProjectile(npc.GetSource_FromThis(), Main.npc[(int)npc.localAI[0]].Center, Main.npc[(int)npc.localAI[0]].DirectionTo(player.Center), ModContent.ProjectileType<PhantasmalDeathrayMLSmall>(),
+                                    Projectile.NewProjectile(npc.GetSource_FromThis(), Main.npc[(int)npc.localAI[0]].Center, Main.npc[(int)npc.localAI[0]].SafeDirectionTo(player.Center), ModContent.ProjectileType<PhantasmalDeathrayMLSmall>(),
                                         60, 0f, Main.myPlayer, baseRotation * Main.rand.NextFloat(0.9f, 1.1f), npc.localAI[0]);
                             }
                             else if (AttackMemory == 20)
                             {
                                 if (FargoSoulsUtil.HostCheck)
-                                    Projectile.NewProjectile(npc.GetSource_FromThis(), Main.npc[(int)npc.localAI[1]].Center, Main.npc[(int)npc.localAI[2]].DirectionTo(player.Center), ModContent.ProjectileType<PhantasmalDeathrayMLSmall>(),
+                                    Projectile.NewProjectile(npc.GetSource_FromThis(), Main.npc[(int)npc.localAI[1]].Center, Main.npc[(int)npc.localAI[2]].SafeDirectionTo(player.Center), ModContent.ProjectileType<PhantasmalDeathrayMLSmall>(),
                                         60, 0f, Main.myPlayer, -baseRotation * Main.rand.NextFloat(0.9f, 1.1f), npc.localAI[1]);
                             }
                             else if (AttackMemory == 30)
                             {
                                 if (FargoSoulsUtil.HostCheck)
-                                    Projectile.NewProjectile(npc.GetSource_FromThis(), Main.npc[(int)npc.localAI[2]].Center, Main.npc[(int)npc.localAI[1]].DirectionTo(player.Center), ModContent.ProjectileType<PhantasmalDeathrayMLSmall>(),
+                                    Projectile.NewProjectile(npc.GetSource_FromThis(), Main.npc[(int)npc.localAI[2]].Center, Main.npc[(int)npc.localAI[1]].SafeDirectionTo(player.Center), ModContent.ProjectileType<PhantasmalDeathrayMLSmall>(),
                                         60, 0f, Main.myPlayer, baseRotation * Main.rand.NextFloat(0.9f, 1.1f), npc.localAI[2]);
                             }
                             else if (AttackMemory == 40)
                             {
                                 if (FargoSoulsUtil.HostCheck)
-                                    Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, npc.DirectionTo(player.Center), ModContent.ProjectileType<PhantasmalDeathrayMLSmall>(),
+                                    Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, npc.SafeDirectionTo(player.Center), ModContent.ProjectileType<PhantasmalDeathrayMLSmall>(),
                                         60, 0f, Main.myPlayer, -baseRotation * Main.rand.NextFloat(0.9f, 1.1f), npc.whoAmI);
                             }
                         }
@@ -395,12 +394,12 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                                         {
                                             for (int i = 0; i < 4; i++)
                                             {
-                                                Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, p.DirectionTo(Main.player[npc.target].Center).RotatedBy(MathHelper.TwoPi / 4 * i), ModContent.ProjectileType<MoonLordMoon>(),
+                                                Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, p.SafeDirectionTo(Main.player[npc.target].Center).RotatedBy(MathHelper.TwoPi / 4 * i), ModContent.ProjectileType<MoonLordMoon>(),
                                                     60, 0f, Main.myPlayer, p.identity, 1450);
                                             }
                                             for (int i = 0; i < 4; i++)
                                             {
-                                                Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, p.DirectionTo(Main.player[npc.target].Center).RotatedBy(MathHelper.TwoPi / 4 * (i + 0.5f)), ModContent.ProjectileType<MoonLordMoon>(),
+                                                Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, p.SafeDirectionTo(Main.player[npc.target].Center).RotatedBy(MathHelper.TwoPi / 4 * (i + 0.5f)), ModContent.ProjectileType<MoonLordMoon>(),
                                                     60, 0f, Main.myPlayer, p.identity, -950);
                                             }
                                         }
@@ -525,7 +524,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                                     {
                                         for (int j = -2; j <= 2; j++)
                                         {
-                                            Vector2 vel = 9f * bodyPart.DirectionTo(Main.player[npc.target].Center).RotatedBy(MathHelper.Pi / 5 * j);
+                                            Vector2 vel = 9f * bodyPart.SafeDirectionTo(Main.player[npc.target].Center).RotatedBy(MathHelper.Pi / 5 * j);
                                             FargoSoulsUtil.NewNPCEasy(npc.GetSource_FromAI(),
                                                 bodyPart.Center, NPCID.AncientLight, 0,
                                                 0f,
@@ -557,7 +556,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                 if (!SkyManager.Instance["FargowiltasSouls:MoonLordSky"].IsActive())
                     SkyManager.Instance.Activate("FargowiltasSouls:MoonLordSky");
 
-                void HandleScene(string name)
+                static void HandleScene(string name)
                 {
                     if (!Filters.Scene[$"FargowiltasSouls:{name}"].IsActive())
                         Filters.Scene.Activate($"FargowiltasSouls:{name}");

@@ -1,5 +1,4 @@
 ﻿using FargowiltasSouls.Content.Buffs.Masomode;
-using FargowiltasSouls.Content.Projectiles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -11,7 +10,7 @@ using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEvents.Vortex
 {
-	public class VortexVortex : ModProjectile
+    public class VortexVortex : ModProjectile
     {
         public override string Texture => "Terraria/Images/Projectile_578";
 
@@ -48,7 +47,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEve
 
             if (Projectile.ai[1] == 0)
                 time = 30;
-            
+
             void Suck()
             {
                 Player player = Main.LocalPlayer;
@@ -120,7 +119,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEve
                 if (p != -1)
                 {
                     Projectile.localAI[1] =
-                        Projectile.Center == Main.player[p].Center ? 0 : Projectile.DirectionTo(Main.player[p].Center).ToRotation();
+                        Projectile.Center == Main.player[p].Center ? 0 : Projectile.SafeDirectionTo(Main.player[p].Center).ToRotation();
                     Projectile.localAI[1] += (float)Math.PI * 2 / 3 / 2;
                 }
             }

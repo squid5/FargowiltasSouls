@@ -1,10 +1,10 @@
 ﻿using FargowiltasSouls.Assets.ExtraTextures;
-using FargowiltasSouls.Common.Graphics.Primitives;
-using FargowiltasSouls.Common.Graphics.Shaders;
+
+
+using Luminance.Core.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -12,11 +12,9 @@ using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Content.Projectiles.Deathrays
 {
-	public class DeviDeathray : BaseDeathray, IPixelPrimitiveDrawer
+    public class DeviDeathray : BaseDeathray, IPixelatedPrimitiveRenderer
     {
         public override string Texture => "FargowiltasSouls/Content/Projectiles/Deathrays/DeviDeathray";
-
-        public PrimDrawer LaserDrawer { get; private set; } = null;
 
         public DeviDeathray() : base(60, drawDistance: 3500) { }
 
@@ -91,7 +89,7 @@ namespace FargowiltasSouls.Content.Projectiles.Deathrays
             Vector2 vector79 = Projectile.Center + Projectile.velocity * (Projectile.localAI[1] - 14f);
             for (int num809 = 0; num809 < 1; num809 = num3 + 1)
             {
-                float num810 = Projectile.velocity.ToRotation() + (Main.rand.NextBool(2)? -1f : 1f) * 1.57079637f;
+                float num810 = Projectile.velocity.ToRotation() + (Main.rand.NextBool(2) ? -1f : 1f) * 1.57079637f;
                 float num811 = (float)Main.rand.NextDouble() * 2f + 2f;
                 Vector2 vector80 = new((float)Math.Cos((double)num810) * num811, (float)Math.Sin((double)num810) * num811);
                 int num812 = Dust.NewDust(vector79, 0, 0, DustID.GemAmethyst, vector80.X, vector80.Y, 0, default, 1f);
@@ -141,13 +139,12 @@ namespace FargowiltasSouls.Content.Projectiles.Deathrays
 
         public override bool PreDraw(ref Color lightColor) => false;
 
-        public void DrawPixelPrimitives(SpriteBatch spriteBatch)
+        public void RenderPixelatedPrimitives(SpriteBatch spriteBatch)
         {
             if (Projectile.hide)
                 return;
 
-            Shader shader = ShaderManager.GetShaderIfExists("GenericDeathray");
-			LaserDrawer ??= new PrimDrawer(WidthFunction, ColorFunction, shader);
+            ManagedShader shader = ShaderManager.GetShader("FargowiltasSouls.GenericDeathray");
 
             // Get the laser end position.
             Vector2 laserEnd = Projectile.Center + Projectile.velocity.SafeNormalize(Vector2.UnitY) * drawDistance * 1.1f;
@@ -159,15 +156,14 @@ namespace FargowiltasSouls.Content.Projectiles.Deathrays
                 baseDrawPoints[i] = Vector2.Lerp(initialDrawPoint, laserEnd, i / (float)(baseDrawPoints.Length - 1f));
 
             // Set shader parameters.
-            shader.SetMainColor(new Color(240, 220, 240, 0));
+            shader.TrySetParameter("mainColor", new Color(240, 220, 240, 0));
             FargoSoulsUtil.SetTexture1(FargosTextureRegistry.GenericStreak.Value);
-            shader.WrappedEffect.Parameters["stretchAmount"].SetValue(3);
-            shader.WrappedEffect.Parameters["scrollSpeed"].SetValue(1f);
-            shader.WrappedEffect.Parameters["uColorFadeScaler"].SetValue(0.8f);
-            shader.WrappedEffect.Parameters["useFadeIn"].SetValue(false);
+            shader.TrySetParameter("stretchAmount", 3);
+            shader.TrySetParameter("scrollSpeed", 1f);
+            shader.TrySetParameter("uColorFadeScaler", 0.8f);
+            shader.TrySetParameter("useFadeIn", false);
 
-            // I cannot gut this much more than this, so if its lagging im afraid im not sure what to tell you.
-            LaserDrawer.DrawPixelPrims(baseDrawPoints.ToList(), -Main.screenPosition, 10);
+            PrimitiveRenderer.RenderTrail(baseDrawPoints, new(WidthFunction, ColorFunction, Pixelate: true, Shader: shader), 10);
         }
     }
 }

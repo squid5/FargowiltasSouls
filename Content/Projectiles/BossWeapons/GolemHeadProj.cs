@@ -70,7 +70,7 @@ namespace FargowiltasSouls.Content.Projectiles.BossWeapons
                     headsStacked = 0; //cancel my damage boost
 
                     Projectile.ai[1] = 1000; //fly immediately, no delay
-                    Projectile.localAI[0] = Projectile.DirectionTo(Main.MouseWorld).ToRotation();
+                    Projectile.localAI[0] = Projectile.SafeDirectionTo(Main.MouseWorld).ToRotation();
                     Projectile.netUpdate = true;
                 }
             }
@@ -94,7 +94,7 @@ namespace FargowiltasSouls.Content.Projectiles.BossWeapons
 
                     if (Projectile.Distance(player.Center) > 16 * 6)
                     {
-                        Vector2 desiredVelocity = desiredFlySpeedInPixelsPerFrame * 0.5f * Projectile.DirectionTo(player.Center);
+                        Vector2 desiredVelocity = desiredFlySpeedInPixelsPerFrame * 0.5f * Projectile.SafeDirectionTo(player.Center);
                         Projectile.velocity = Vector2.Lerp(Projectile.velocity, desiredVelocity, 1f / amountOfFramesToLerpBy);
                     }
                 }
@@ -111,7 +111,7 @@ namespace FargowiltasSouls.Content.Projectiles.BossWeapons
                 if (Projectile.ai[1] == 0 && Projectile.owner == Main.myPlayer && (player.dead || player.ghost || !player.controlUseItem || player.HeldItem.type != ModContent.ItemType<GolemTome2>()))
                 {
                     Projectile.ai[1] = 1;
-                    Projectile.localAI[0] = player.DirectionTo(Main.MouseWorld).ToRotation();
+                    Projectile.localAI[0] = player.SafeDirectionTo(Main.MouseWorld).ToRotation();
                     Projectile.netUpdate = true;
                 }
 
@@ -129,7 +129,7 @@ namespace FargowiltasSouls.Content.Projectiles.BossWeapons
                             Projectile.damage = (int)(Projectile.damage * (1.0 + 2.0 * headsStacked / maxHeadsStacked));
 
                             Projectile.ai[1] = -1;
-                            Projectile.velocity = 24f * player.DirectionTo(Main.MouseWorld);
+                            Projectile.velocity = 24f * player.SafeDirectionTo(Main.MouseWorld);
                             Projectile.netUpdate = true;
                         }
                     }
@@ -167,7 +167,7 @@ namespace FargowiltasSouls.Content.Projectiles.BossWeapons
 
                     if (npc.active && npc.CanBeChasedBy()) //target is still valid
                     {
-                        Vector2 desiredVelocity = Projectile.DirectionTo(npc.Center) * desiredFlySpeedInPixelsPerFrame;
+                        Vector2 desiredVelocity = Projectile.SafeDirectionTo(npc.Center) * desiredFlySpeedInPixelsPerFrame;
                         float homingModifier = 0.75f + 0.75f * headsStacked / maxHeadsStacked;
                         Projectile.velocity = Vector2.Lerp(Projectile.velocity, desiredVelocity, 1f / amountOfFramesToLerpBy * homingModifier);
                     }

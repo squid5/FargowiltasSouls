@@ -20,6 +20,7 @@ using System.Drawing;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System.Collections.Generic;
+using Luminance.Core.Graphics;
 
 namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 {
@@ -273,7 +274,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                             if (npc.HasPlayerTarget)
                             {
                                 if (!Main.dedServ)
-                                    Main.LocalPlayer.FargoSouls().Screenshake = 20;
+                                    ScreenShakeSystem.StartShake(15, shakeStrengthDissipationIncrement: 15f / 20);
 
                                 if (FargoSoulsUtil.HostCheck)
                                     Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, Vector2.Zero, ProjectileID.DD2OgreSmash, 0, 0, Main.myPlayer);
@@ -653,7 +654,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     npc.position.Y += npc.velocity.Y * 0.25f;
 
                     if (!npc.noTileCollide && npc.HasValidTarget && Collision.SolidCollision(npc.position, npc.width, npc.height)) //unstick from walls
-                        npc.position += npc.DirectionTo(Main.player[npc.target].Center) * 4;
+                        npc.position += npc.SafeDirectionTo(Main.player[npc.target].Center) * 4;
 
                     //disable attacks when nearby
                     if (npc.HasValidTarget && npc.Distance(Main.player[npc.target].Center) < 350 && !WorldSavingSystem.MasochistModeReal)

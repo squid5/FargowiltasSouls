@@ -6,7 +6,7 @@ using Terraria.ID;
 
 namespace FargowiltasSouls.Content.Projectiles.Masomode
 {
-	public class QueenFlocko : AbomFlocko
+    public class QueenFlocko : AbomFlocko
     {
         public override void SetDefaults()
         {
@@ -47,7 +47,7 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
                 SoundEngine.PlaySound(SoundID.Item120, Projectile.position);
                 if (FargoSoulsUtil.HostCheck)
                 {
-                    Vector2 vel = Projectile.DirectionTo(player.Center) * 7f;
+                    Vector2 vel = Projectile.SafeDirectionTo(player.Center) * 7f;
                     for (int i = -1; i <= 1; i++)
                     {
                         Vector2 velocity = vel.RotatedBy(MathHelper.ToRadians(4) * i);

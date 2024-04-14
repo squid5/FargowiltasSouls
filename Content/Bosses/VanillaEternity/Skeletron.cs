@@ -1,30 +1,28 @@
-using System.IO;
-using Terraria.ModLoader.IO;
+using FargowiltasSouls.Common.Graphics.Particles;
+using FargowiltasSouls.Common.Utilities;
+using FargowiltasSouls.Content.Bosses.Champions.Shadow;
+using FargowiltasSouls.Content.Bosses.DeviBoss;
+using FargowiltasSouls.Content.Buffs.Masomode;
 using FargowiltasSouls.Content.Projectiles.Masomode;
+using FargowiltasSouls.Core.Globals;
+using FargowiltasSouls.Core.NPCMatching;
+using FargowiltasSouls.Core.Systems;
+using Luminance.Core.Graphics;
 using Microsoft.Xna.Framework;
 using System;
+using System.IO;
 using System.Linq;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using FargowiltasSouls.Content.Buffs.Masomode;
-using FargowiltasSouls.Core.Systems;
-using FargowiltasSouls.Core.Globals;
-using FargowiltasSouls.Common.Utilities;
-using FargowiltasSouls.Content.Bosses.Champions.Shadow;
-using FargowiltasSouls.Core.NPCMatching;
-using FargowiltasSouls.Content.Bosses.DeviBoss;
-using FargowiltasSouls.Content.Patreon.DanielTheRobot;
-using FargowiltasSouls.Common.Graphics.Particles;
-using Terraria.DataStructures;
-using Terraria.Localization;
-using Terraria.WorldBuilding;
+using Terraria.ModLoader.IO;
 
 namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 {
-	public class SkeletronHead : EModeNPCBehaviour
+    public class SkeletronHead : EModeNPCBehaviour
     {
         public override NPCMatcher CreateMatcher() => new NPCMatcher().MatchType(NPCID.SkeletronHead);
 
@@ -184,7 +182,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                 if (++npc.localAI[2] >= cooldown) //spray bones
                 {
                     npc.localAI[2] = 0f;
-                    if (cooldown > 0 && npc.HasPlayerTarget && FargoSoulsUtil.HostCheck && (!NPC.AnyNPCs(NPCID.SkeletronHand)|| npc.ai[1] == 2f))
+                    if (cooldown > 0 && npc.HasPlayerTarget && FargoSoulsUtil.HostCheck && (!NPC.AnyNPCs(NPCID.SkeletronHand) || npc.ai[1] == 2f))
                     {
                         Vector2 speed = Vector2.Normalize(Main.player[npc.target].Center - npc.Center) * 6f;
                         for (int i = 0; i < 8; i++)
@@ -277,7 +275,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                             if (modifier > 1f || WorldSavingSystem.MasochistModeReal) //cap it, or force it to cap in emode
                                 modifier = 1f;
                             int actualNumberToSpawn = (int)(max * modifier);
-                            Vector2 baseVel = npc.DirectionTo(Main.player[npc.target].Center).RotatedBy(MathHelper.ToRadians(gap) * j);
+                            Vector2 baseVel = npc.SafeDirectionTo(Main.player[npc.target].Center).RotatedBy(MathHelper.ToRadians(gap) * j);
                             for (int k = 0; k < actualNumberToSpawn; k++) //a fan of skulls
                             {
                                 if (FargoSoulsUtil.HostCheck)
@@ -387,7 +385,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
         void DungeonGuardianAttack(NPC npc)
         {
-            switch(Main.rand.Next(4))
+            switch (Main.rand.Next(4))
             {
                 case 0: //walls of guardians
                     for (int i = 0; i < 4; i++)
@@ -407,7 +405,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                 case 1: //ring of babies
                     {
                         const int max = 16;
-                        Vector2 baseOffset = npc.DirectionTo(Main.player[npc.target].Center);
+                        Vector2 baseOffset = npc.SafeDirectionTo(Main.player[npc.target].Center);
                         for (int i = 0; i < max; i++)
                         {
                             int p = Projectile.NewProjectile(npc.GetSource_FromThis(), Main.player[npc.target].Center + 1000 * baseOffset.RotatedBy(2 * Math.PI / max * i),
@@ -568,7 +566,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
         public override bool SafePreAI(NPC npc)
         {
             bool result = base.SafePreAI(npc);
-            
+
 
             if (WorldSavingSystem.SwarmActive)
                 return result;
@@ -576,7 +574,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             NPC head = FargoSoulsUtil.NPCExists(npc.ai[1], NPCID.SkeletronHead);
             if (head == null)
                 return result;
-            
+
             if (npc.timeLeft < 60) //never despawn normally
                 npc.timeLeft = 60;
 
@@ -608,12 +606,12 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                         {
                             AttackTimer++; //pause here, dont begin guardians attack until in range
                         }
-                        else if (AttackTimer % 7 == 0 && FargoSoulsUtil.HostCheck) 
+                        else if (AttackTimer % 7 == 0 && FargoSoulsUtil.HostCheck)
                         {
-                            Vector2 vel = npc.DirectionTo(Main.player[npc.target].Center);
+                            Vector2 vel = npc.SafeDirectionTo(Main.player[npc.target].Center);
                             if (AttackTimer < GuardianTime * 3 / 4) //first quarter of projectiles are shot towards player, other three quarters are shot straight out
                             {
-                                vel = head.DirectionTo(npc.Center);
+                                vel = head.SafeDirectionTo(npc.Center);
                             }
                             Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, vel, ModContent.ProjectileType<SkeletronGuardian2>(), FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 0f, Main.myPlayer);
                         }
@@ -694,7 +692,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                 ref float handSide = ref npc.ai[0];
                 if (AttackTimer == GuardianTime + 30) //lock rotation to player
                 {
-                    lockedRotation = (-head.DirectionTo(player.Center)).ToRotation();
+                    lockedRotation = (-head.SafeDirectionTo(player.Center)).ToRotation();
                     rotDir = -handSide;
                     if (secondSet)
                     {
@@ -705,7 +703,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                         lockedRotation += rotDir * MathHelper.Pi * 2f / 16f;
                     }
                     lockedDistance = Math.Max(head.Distance(player.Center), head.width + npc.width);
-                    
+
                     AI_Timer = rotwaveTime - 45; //no desyncing
                     collisionCooldown = 30 + 20;
                     NetSync(npc);
@@ -729,18 +727,18 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                         {
                             if (CollidingWithOtherHand(npc))
                             {
-                                
+
                                 SoundEngine.PlaySound(SoundID.DD2_MonkStaffGroundImpact, npc.Center);
                                 collisionCooldown = 20;
                                 if (FargoSoulsUtil.HostCheck)
                                 {
                                     for (int i = 0; i < 2; i++)
                                     {
-                                        Vector2 vel = head.DirectionTo(npc.Center) * 10;
+                                        Vector2 vel = head.SafeDirectionTo(npc.Center) * 10;
                                         vel = vel.RotatedBy(i * rotDir * MathHelper.Pi / 22); //curve second slightly inward so you can't blindspot in center
                                         int p = Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, vel, ModContent.ProjectileType<SkeletronGuardian2>(), FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 0f, Main.myPlayer);
                                     }
-                                    
+
                                 }
                                 rotDir = -rotDir;
                             }
@@ -764,7 +762,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                         lockedRotation += rotDir * MathHelper.Pi / halfRotationTime;
                     }
                     Vector2 desiredPos = head.Center + (lockedRotation.ToRotationVector2() * desiredDistance);
-                    
+
                     npc.velocity = (desiredPos - npc.Center) * moveStrength;
                     npc.velocity += head.velocity;
                 }
@@ -784,7 +782,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                         PrepareLunge();
                     }
                 }
-                if (head.life > head.lifeMax * 0.75f && AI_Timer % rotwaveTime == rotwaveTime / 2 && head.ai[2] + ClapWindup < 800) 
+                if (head.life > head.lifeMax * 0.75f && AI_Timer % rotwaveTime == rotwaveTime / 2 && head.ai[2] + ClapWindup < 800)
                 {
                     int sideToLunge = AI_Timer % (rotwaveTime * 2) == rotwaveTime / 2 ? 1 : -1;
                     if (handSide == sideToLunge)
@@ -826,11 +824,11 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     if (Timer < LungeWindup)
                     {
                         float modifier = 1 - (float)(Timer / LungeWindup);
-                        storedVel = -npc.DirectionTo(player.Center) * modifier * 3;
+                        storedVel = -npc.SafeDirectionTo(player.Center) * modifier * 3;
                     }
                     if (Timer == LungeWindup)
                     {
-                        storedVel = npc.DirectionTo(player.Center) * 30;
+                        storedVel = npc.SafeDirectionTo(player.Center) * 30;
                     }
                     if (Timer > LungeWindup + 10 && Timer <= LungeWindup + 30)
                     {
@@ -838,7 +836,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     }
                     if (Timer > LungeWindup + 30)
                     {
-                        storedVel += npc.DirectionTo(restPos) * 0.3f;
+                        storedVel += npc.SafeDirectionTo(restPos) * 0.3f;
                         if (Timer > LungeWindup + 100 || npc.Distance(restPos) < npc.width)
                         {
                             Timer = 0;
@@ -932,13 +930,13 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             base.OnHitPlayer(npc, target, hurtInfo);
 
             target.AddBuff(ModContent.BuffType<LethargicBuff>(), 300);
-            
+
             //not while spinning outside maso
             if (!HeadSpinning(npc) || WorldSavingSystem.MasochistModeReal)
             {
                 target.AddBuff(BuffID.Dazed, 60);
             }
-            
+
         }
         public static bool HeadSpinning(NPC npc)
         {

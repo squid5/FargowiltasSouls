@@ -64,7 +64,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Life
 
                 if (Projectile.ai[1] != -1 && Main.player[(int)Projectile.ai[1]].active && !Main.player[(int)Projectile.ai[1]].dead)
                 {
-                    Projectile.velocity = Projectile.DirectionTo(Main.player[(int)Projectile.ai[1]].Center);
+                    Projectile.velocity = Projectile.SafeDirectionTo(Main.player[(int)Projectile.ai[1]].Center);
                     Projectile.netUpdate = true;
                 }
                 else

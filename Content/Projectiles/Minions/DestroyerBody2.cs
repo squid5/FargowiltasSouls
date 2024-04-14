@@ -157,7 +157,7 @@ namespace FargowiltasSouls.Content.Projectiles.Minions
 
                     if (selectedTarget != -1) //shoot
                     {
-                        Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.DirectionTo(Main.npc[selectedTarget].Center).RotatedBy(Main.rand.NextFloat(-MathHelper.PiOver4, MathHelper.PiOver4)),
+                        Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.SafeDirectionTo(Main.npc[selectedTarget].Center).RotatedBy(Main.rand.NextFloat(-MathHelper.PiOver4, MathHelper.PiOver4)),
                             ModContent.ProjectileType<MechElectricOrbHomingFriendly>(), Projectile.damage, Projectile.knockBack, Projectile.owner, selectedTarget);
                     }
                 }
@@ -182,8 +182,12 @@ namespace FargowiltasSouls.Content.Projectiles.Minions
                     -Projectile.velocity.Y * 0.2f, 100);
                 Main.dust[dust].velocity *= 2f;
             }
-            int g = Gore.NewGore(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.velocity / 2, ModContent.Find<ModGore>("FargowiltasSouls/DestroyerGunEXBody").Type, Projectile.scale);
-            Main.gore[g].timeLeft = 20;
+            if (!Main.dedServ)
+            {
+                int g = Gore.NewGore(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.velocity / 2, ModContent.Find<ModGore>("FargowiltasSouls/DestroyerGunEXBodyGore").Type, Projectile.scale);
+                Main.gore[g].timeLeft = 20;
+            }
+                
         }
     }
 }

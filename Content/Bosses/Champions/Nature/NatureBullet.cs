@@ -66,7 +66,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Nature
                 SoundEngine.PlaySound(SoundID.Item11, Projectile.Center);
                 int p = Player.FindClosest(Projectile.Center, 0, 0);
                 if (p != -1)
-                    Projectile.velocity = Projectile.DirectionTo(Main.player[p].Center) * Projectile.localAI[1];
+                    Projectile.velocity = Projectile.SafeDirectionTo(Main.player[p].Center) * Projectile.localAI[1];
                 else
                     Projectile.Kill();
             }

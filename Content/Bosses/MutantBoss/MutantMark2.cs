@@ -1,6 +1,5 @@
 ﻿using FargowiltasSouls.Content.Buffs.Boss;
 using FargowiltasSouls.Content.Buffs.Masomode;
-using FargowiltasSouls.Content.Projectiles;
 using FargowiltasSouls.Core.Systems;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -57,7 +56,7 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
             {
                 Projectile.netUpdate = true;
                 Player target = Main.player[Player.FindClosest(Projectile.position, Projectile.width, Projectile.height)];
-                Projectile.velocity = Projectile.DirectionTo(target.Center) * 15;
+                Projectile.velocity = Projectile.SafeDirectionTo(target.Center) * 15;
                 SoundEngine.PlaySound(SoundID.Item84, Projectile.Center);
             }
         }

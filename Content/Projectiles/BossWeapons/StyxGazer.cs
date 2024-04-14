@@ -1,10 +1,10 @@
-﻿using FargowiltasSouls.Common.Graphics.Primitives;
-using FargowiltasSouls.Common.Graphics.Shaders;
+﻿
+
 using FargowiltasSouls.Content.Bosses.AbomBoss;
+using Luminance.Core.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -106,7 +106,7 @@ namespace FargowiltasSouls.Content.Projectiles.BossWeapons
             Vector2 vector79 = Projectile.Center + Projectile.velocity * (Projectile.localAI[1] - 14f);
             for (int num809 = 0; num809 < 2; num809 = num3 + 1)
             {
-                float num810 = Projectile.velocity.ToRotation() + (Main.rand.NextBool(2)? -1f : 1f) * 1.57079637f;
+                float num810 = Projectile.velocity.ToRotation() + (Main.rand.NextBool(2) ? -1f : 1f) * 1.57079637f;
                 float num811 = (float)Main.rand.NextDouble() * 2f + 2f;
                 Vector2 vector80 = new((float)Math.Cos((double)num810) * num811, (float)Math.Sin((double)num810) * num811);
                 int num812 = Dust.NewDust(vector79, 0, 0, DustID.CopperCoin, vector80.X, vector80.Y, 0, default, 1f);
@@ -192,7 +192,6 @@ namespace FargowiltasSouls.Content.Projectiles.BossWeapons
             target.AddBuff(ModContent.BuffType<Buffs.Masomode.MutantNibbleBuff>(), 300);
         }
 
-        public PrimDrawer LaserDrawer { get; private set; } = null;
 
         public float WidthFunction(float _) => Projectile.width * Projectile.scale * 2;
 
@@ -204,9 +203,7 @@ namespace FargowiltasSouls.Content.Projectiles.BossWeapons
             if (Projectile.velocity == Vector2.Zero)
                 return false;
 
-            Shader shader = ShaderManager.GetShaderIfExists("WillBigDeathray");
-
-            LaserDrawer ??= new PrimDrawer(WidthFunction, ColorFunction, shader);
+            ManagedShader shader = ShaderManager.GetShader("FargowiltasSouls.WillBigDeathray");
 
             // Get the laser end position.
             Vector2 laserEnd = Projectile.Center + Projectile.velocity.SafeNormalize(Vector2.UnitY) * drawDistance;
@@ -224,13 +221,14 @@ namespace FargowiltasSouls.Content.Projectiles.BossWeapons
 
             // The laser should fade to this in the middle.
             Color brightColor = Color.Black;
-            shader.SetMainColor(brightColor);
+            shader.TrySetParameter("mainColor", brightColor);
             // GameShaders.Misc["FargoswiltasSouls:MutantDeathray"].UseImage1(); cannot be used due to only accepting vanilla paths.
             Texture2D fademap = ModContent.Request<Texture2D>("FargowiltasSouls/Assets/ExtraTextures/Trails/WillStreak").Value;
             FargoSoulsUtil.SetTexture1(fademap);
             for (int j = 0; j < 2; j++)
             {
-                LaserDrawer.DrawPrims(baseDrawPoints.ToList(), -Main.screenPosition, 30);
+                PrimitiveSettings primSettings = new(WidthFunction, ColorFunction, Shader: shader);
+                PrimitiveRenderer.RenderTrail(baseDrawPoints, primSettings, 30);
 
                 for (int i = 0; i < baseDrawPoints.Length / 2; i++)
                 {
@@ -239,7 +237,7 @@ namespace FargowiltasSouls.Content.Projectiles.BossWeapons
                     baseDrawPoints[i] = baseDrawPoints[swap];
                     baseDrawPoints[swap] = temp;
                 }
-                LaserDrawer.DrawPrims(baseDrawPoints.ToList(), -Main.screenPosition, 30);
+                PrimitiveRenderer.RenderTrail(baseDrawPoints, primSettings, 30);
             }
             return false;
         }

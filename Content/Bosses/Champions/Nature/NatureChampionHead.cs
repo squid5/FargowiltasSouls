@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.IO;
 using Terraria;
 using Terraria.Audio;
-using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -23,10 +22,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Nature
             Main.npcFrameCount[NPC.type] = 4;
             NPCID.Sets.CantTakeLunchMoney[Type] = true;
 
-            NPCID.Sets.NPCBestiaryDrawOffset.Add(NPC.type, new NPCID.Sets.NPCBestiaryDrawModifiers()
-            {
-                Hide = true
-            });
+            this.ExcludeFromBestiary();
 
             NPC.AddDebuffImmunities(new List<int>
             {
@@ -159,7 +155,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Nature
                             const int max = 12;
                             for (int i = 0; i < max; i++)
                             {
-                                Vector2 speed = 20f * NPC.DirectionTo(player.Center).RotatedBy(2 * Math.PI / max * i);
+                                Vector2 speed = 20f * NPC.SafeDirectionTo(player.Center).RotatedBy(2 * Math.PI / max * i);
                                 Projectile.NewProjectile(npc.GetSource_FromThis(), NPC.Center, speed, ModContent.ProjectileType<NatureFireball>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage), 0f, Main.myPlayer);
                             }
                         }
@@ -197,7 +193,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Nature
                             const int max = 12;
                             for (int i = 0; i < max; i++)
                             {
-                                Vector2 speed = 24f * NPC.DirectionTo(player.Center).RotatedBy(2 * Math.PI / max * i);
+                                Vector2 speed = 24f * NPC.SafeDirectionTo(player.Center).RotatedBy(2 * Math.PI / max * i);
                                 Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, speed, ModContent.ProjectileType<NatureFireball>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage), 0f, Main.myPlayer);
                             }
                         }
@@ -377,7 +373,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Nature
                         if (++NPC.ai[2] == 90)
                         {
                             NPC.netUpdate = true;
-                            NPC.localAI[1] = NPC.DirectionTo(body.Center - Vector2.UnitY * 300).ToRotation();
+                            NPC.localAI[1] = NPC.SafeDirectionTo(body.Center - Vector2.UnitY * 300).ToRotation();
 
                             if (FargoSoulsUtil.HostCheck)
                             {
@@ -413,7 +409,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Nature
 
             if (NPC.Distance(body.Center) > 1400) //try to prevent going too far from body, will cause neck to disappear
             {
-                NPC.Center = body.Center + body.DirectionTo(NPC.Center) * 1400f;
+                NPC.Center = body.Center + body.SafeDirectionTo(NPC.Center) * 1400f;
             }
         }
 

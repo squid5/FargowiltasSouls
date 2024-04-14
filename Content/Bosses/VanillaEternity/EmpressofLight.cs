@@ -1,21 +1,21 @@
-using System.IO;
-using Terraria.ModLoader.IO;
+using FargowiltasSouls.Common.Utilities;
+using FargowiltasSouls.Content.Buffs.Masomode;
+using FargowiltasSouls.Core.Globals;
+using FargowiltasSouls.Core.NPCMatching;
+using FargowiltasSouls.Core.Systems;
 using Microsoft.Xna.Framework;
 using System;
+using System.IO;
 using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
-using FargowiltasSouls.Content.Buffs.Masomode;
-using FargowiltasSouls.Core.Systems;
-using FargowiltasSouls.Core.Globals;
-using FargowiltasSouls.Common.Utilities;
-using FargowiltasSouls.Core.NPCMatching;
+using Terraria.ModLoader.IO;
 
 namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 {
-	public class EmpressofLight : EModeNPCBehaviour
+    public class EmpressofLight : EModeNPCBehaviour
     {
         public override NPCMatcher CreateMatcher() => new NPCMatcher().MatchType(NPCID.HallowBoss);
 
@@ -247,7 +247,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                         }
 
                         if (npc.ai[1] == delay)
-                            startRotation = npc.HasValidTarget ? npc.DirectionTo(Main.player[npc.target].Center).ToRotation() : MathHelper.PiOver2;
+                            startRotation = npc.HasValidTarget ? npc.SafeDirectionTo(Main.player[npc.target].Center).ToRotation() : MathHelper.PiOver2;
 
                         if (npc.ai[1] >= delay && npc.ai[1] < delay + max)
                         {
@@ -315,7 +315,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
             const float radius = 600;
             if (Main.player[npc.target].Distance(targetPos) > radius)
-                targetPos = Main.player[npc.target].Center + Main.player[npc.target].DirectionTo(targetPos) * radius;
+                targetPos = Main.player[npc.target].Center + Main.player[npc.target].SafeDirectionTo(targetPos) * radius;
 
             if (AttackTimer % 90 == 30) //rapid fire sound effect
                 SoundEngine.PlaySound(SoundID.Item164, Main.player[npc.target].Center);
@@ -553,7 +553,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                         float ai1 = (npc.ai[1] - 10) / 30f;
 
                         Vector2 vel = Main.rand.NextFloat(24f) * direction * Vector2.UnitY;
-                        vel.X += 30f * Math.Sign(npc.DirectionTo(Main.player[npc.target].Center).X);
+                        vel.X += 30f * Math.Sign(npc.SafeDirectionTo(Main.player[npc.target].Center).X);
 
                         if (FargoSoulsUtil.HostCheck)
                             Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, vel, ProjectileID.HallowBossRainbowStreak, FargoSoulsUtil.ScaledProjectileDamage(BaseProjDmg(npc), 1.5f), 0f, Main.myPlayer, npc.target, ai1);

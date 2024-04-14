@@ -111,7 +111,7 @@ namespace FargowiltasSouls.Content.Patreon.Purified
                     float movespeed = Math.Max(Projectile.Distance(targetnpc.Center) / 40f, 18f);
 
                     if (Projectile.Distance(targetnpc.Center) > 32)
-                        Projectile.velocity = Vector2.Lerp(Projectile.velocity, Projectile.DirectionTo(targetnpc.Center) * movespeed, 0.05f);
+                        Projectile.velocity = Vector2.Lerp(Projectile.velocity, Projectile.SafeDirectionTo(targetnpc.Center) * movespeed, 0.05f);
                 }
                 else
                 {
@@ -120,7 +120,7 @@ namespace FargowiltasSouls.Content.Patreon.Purified
                     float movespeed = Math.Max(Projectile.Distance(Main.projectile[head].Center) / 40f, 14f);
 
                     if (Projectile.Distance(Main.projectile[head].Center) > 32)
-                        Projectile.velocity = Vector2.Lerp(Projectile.velocity, Projectile.DirectionTo(Main.projectile[head].Center) * movespeed, 0.04f);
+                        Projectile.velocity = Vector2.Lerp(Projectile.velocity, Projectile.SafeDirectionTo(Main.projectile[head].Center) * movespeed, 0.04f);
                 }
 
                 Projectile.position += Main.projectile[head].velocity * 0.8f;

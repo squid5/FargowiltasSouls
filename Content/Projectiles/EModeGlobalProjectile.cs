@@ -25,6 +25,7 @@ using FargowiltasSouls.Content.Bosses.Champions.Timber;
 using FargowiltasSouls.Content.Bosses.Champions.Will;
 using FargowiltasSouls.Content.Bosses.Champions.Spirit;
 using FargowiltasSouls.Core;
+using Luminance.Core.Graphics;
 
 namespace FargowiltasSouls.Content.Projectiles
 {
@@ -1030,7 +1031,8 @@ namespace FargowiltasSouls.Content.Projectiles
                             : Main.rand.NextFloat(4f, 6f);
 
                         if (!Main.dedServ && Main.LocalPlayer.active)
-                            Main.LocalPlayer.FargoSouls().Screenshake = 2;
+                            if (ScreenShakeSystem.OverallShakeIntensity < 7)
+                                ScreenShakeSystem.SetUniversalRumble(7);
                     }
                     break;
 
@@ -1292,7 +1294,7 @@ namespace FargowiltasSouls.Content.Projectiles
                     NPC plantera = FargoSoulsUtil.NPCExists(NPC.plantBoss, NPCID.Plantera);
                     if (plantera != null && FargoSoulsUtil.HostCheck)
                     {
-                        Vector2 vel = 200f / 25f * projectile.DirectionTo(plantera.Center);
+                        Vector2 vel = 200f / 25f * projectile.SafeDirectionTo(plantera.Center);
                         Projectile.NewProjectile(plantera.GetSource_FromThis(), projectile.Center - projectile.oldVelocity, vel, ModContent.ProjectileType<DicerPlantera>(), projectile.damage, projectile.knockBack, projectile.owner, 0, 0);
                     }
                     break;

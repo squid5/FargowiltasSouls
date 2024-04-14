@@ -1,7 +1,8 @@
-﻿using FargowiltasSouls.Common.Graphics.Shaders;
+﻿
 using FargowiltasSouls.Content.Items.Accessories.Masomode;
 using FargowiltasSouls.Content.Items.Materials;
 using FargowiltasSouls.Content.Projectiles.BossWeapons;
+using Luminance.Core.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -11,7 +12,7 @@ using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Content.Items.Weapons.FinalUpgrades
 {
-	public class SparklingLove : SoulsItem
+    public class SparklingLove : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -92,7 +93,10 @@ Right click pattern becomes denser with up to 12 empty minion slots
             {
                 Main.spriteBatch.End(); //end and begin main.spritebatch to apply a shader
                 Main.spriteBatch.Begin(SpriteSortMode.Immediate, null, null, null, null, null, Main.UIScaleMatrix);
-				ShaderManager.GetShaderIfExists("Text").SetMainColor(new Color(255, 48, 154)).SetSecondaryColor(new Color(255, 169, 240)).Apply(true, "PulseCircle");
+                ManagedShader shader = ShaderManager.GetShader("FargowiltasSouls.Text");
+                shader.TrySetParameter("mainColor", new Color(255, 48, 154));
+                shader.TrySetParameter("secondaryColor", new Color(255, 169, 240));
+                shader.Apply("PulseCircle");
                 Utils.DrawBorderString(Main.spriteBatch, line.Text, new Vector2(line.X, line.Y), new Color(255, 169, 240), 1); //draw the tooltip manually
                 Main.spriteBatch.End(); //then end and begin again to make remaining tooltip lines draw in the default way
                 Main.spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, Main.UIScaleMatrix);

@@ -33,7 +33,7 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
                 foreach (Projectile p in Main.projectile.Where(p => p.active && p.friendly && p.Distance(Projectile.Center) < suckRange && !FargoSoulsUtil.IsSummonDamage(p) && FargoSoulsUtil.CanDeleteProjectile(p) && p.type != ModContent.ProjectileType<Minions.LunarCultistLightningArc>()))
                 {
                     //suck in nearby friendly projs
-                    p.velocity = p.DirectionTo(Projectile.Center) * p.velocity.Length();
+                    p.velocity = p.SafeDirectionTo(Projectile.Center) * p.velocity.Length();
                     p.velocity *= 1.015f;
 
                     //kill ones that actually fall in and retaliate
@@ -44,7 +44,7 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
                         {
                             suck = 6;
 
-                            Vector2 dir = Projectile.DirectionTo(player.Center).RotatedByRandom(MathHelper.ToRadians(10));
+                            Vector2 dir = Projectile.SafeDirectionTo(player.Center).RotatedByRandom(MathHelper.ToRadians(10));
                             float ai1New = Main.rand.NextBool() ? 1 : -1; //randomize starting direction
                             Vector2 vel = Vector2.Normalize(dir) * 6f;
                             Projectile.NewProjectile(Terraria.Entity.InheritSource(Projectile), Projectile.Center, vel * 6, ModContent.ProjectileType<CosmosLightning>(),

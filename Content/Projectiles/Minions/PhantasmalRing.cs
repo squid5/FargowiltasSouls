@@ -1,6 +1,5 @@
 ﻿using FargowiltasSouls.Content.Items.Armor;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
-using FargowiltasSouls.Core.Toggler.Content;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -80,7 +79,7 @@ namespace FargowiltasSouls.Content.Projectiles.Minions
                     NPC npc = FargoSoulsUtil.NPCExists(FargoSoulsUtil.FindClosestHostileNPCPrioritizingMinionFocus(Projectile, 1500, true));
                     if (npc != null)
                     {
-                        Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.DirectionTo(npc.Center), ModContent.ProjectileType<RingDeathray>(), Projectile.damage, 0f, Projectile.owner, Projectile.identity, Projectile.localAI[1]);
+                        Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.SafeDirectionTo(npc.Center), ModContent.ProjectileType<RingDeathray>(), Projectile.damage, 0f, Projectile.owner, Projectile.identity, Projectile.localAI[1]);
                     }
                 }
             }

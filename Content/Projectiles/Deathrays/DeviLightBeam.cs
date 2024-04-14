@@ -1,5 +1,6 @@
-﻿using FargowiltasSouls.Common.Graphics.Primitives;
+﻿
 using FargowiltasSouls.Content.Buffs.Masomode;
+using Luminance.Core.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -10,11 +11,10 @@ using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Content.Projectiles.Deathrays
 {
-    public class DeviLightBeam : BaseDeathray, IPixelPrimitiveDrawer
+    public class DeviLightBeam : BaseDeathray, IPixelatedPrimitiveRenderer
     {
         public override string Texture => "FargowiltasSouls/Content/Projectiles/Deathrays/AbomDeathray";
 
-        public PrimDrawer LaserDrawer { get; private set; } = null;
 
         public DeviLightBeam() : base(30 * 3) { }
 
@@ -117,7 +117,7 @@ namespace FargowiltasSouls.Content.Projectiles.Deathrays
             return base.PreDraw(ref lightColor);
         }
 
-        public void DrawPixelPrimitives(SpriteBatch spriteBatch)
+        public void RenderPixelatedPrimitives(SpriteBatch spriteBatch)
         {
             //LaserDrawer ??= new PrimDrawer(WidthFunction, ColorFunction, GameShaders.Misc["FargowiltasSouls:GenericDeathray"]);
 

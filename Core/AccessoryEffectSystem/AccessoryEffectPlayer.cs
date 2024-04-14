@@ -1,44 +1,12 @@
-﻿using FargowiltasSouls.Content.Bosses.AbomBoss;
-using FargowiltasSouls.Content.Bosses.DeviBoss;
-using FargowiltasSouls.Content.Bosses.MutantBoss;
-using FargowiltasSouls.Content.Buffs.Masomode;
-using FargowiltasSouls.Content.Buffs.Souls;
-using FargowiltasSouls.Content.Items.Accessories.Enchantments;
-using FargowiltasSouls.Content.Items.Accessories.Expert;
-using FargowiltasSouls.Content.Items.Accessories.Masomode;
-using FargowiltasSouls.Content.Items.Accessories.Souls;
-using FargowiltasSouls.Content.Items.Armor;
-using FargowiltasSouls.Content.Projectiles.Masomode;
-using FargowiltasSouls.Content.Projectiles.Minions;
-using FargowiltasSouls.Content.Projectiles.Souls;
-using FargowiltasSouls.Content.Projectiles;
-using FargowiltasSouls.Core.Globals;
-using FargowiltasSouls.Core.Systems;
-using FargowiltasSouls.Core.Toggler;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Linq.Expressions;
 using Terraria;
-using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static Terraria.Collision;
-using FargowiltasSouls.Content.Items.Consumables;
-using FargowiltasSouls.Content.Items.Weapons.Challengers;
-using FargowiltasSouls.Content.Items.Weapons.SwarmDrops;
-using System.Data;
-using Terraria.DataStructures;
-using Terraria.Graphics.Shaders;
-using Terraria.UI;
-using Terraria.WorldBuilding;
-using Microsoft.CodeAnalysis;
 using Terraria.ModLoader.Core;
-using System.Linq.Expressions;
-using System.Reflection;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace FargowiltasSouls.Core.AccessoryEffectSystem
 {
@@ -52,19 +20,6 @@ namespace FargowiltasSouls.Core.AccessoryEffectSystem
 
         public bool Active(AccessoryEffect effect) => ActiveEffects[effect.Index];
         public bool Equipped(AccessoryEffect effect) => EquippedEffects[effect.Index];
-
-        // Replacements for old TMod methods which are now deprecated and refuse to load; should be changed later to newer methods for better mod loading performance, but complicated to do
-        public static IEnumerable<T> WhereMethodIsOverridden<T>(IEnumerable<T> providers, MethodInfo method)
-        {
-            if (!method.IsVirtual)
-                throw new ArgumentException("Non-virtual method: " + method);
-
-            return providers.Where(p => HasOverride(p.GetType(), method));
-        }
-        public static bool HasOverride(Type t, MethodInfo baseMethod)
-            => baseMethod.DeclaringType!.IsInterface ? t.IsAssignableTo(baseMethod.DeclaringType) : GetDerivedDefinition(t, baseMethod).DeclaringType != baseMethod.DeclaringType;
-        public static MethodInfo GetDerivedDefinition(Type t, MethodInfo baseMethod)
-            => t.GetMethods().Single(m => m.GetBaseDefinition() == baseMethod);
 
         public override void SetStaticDefaults()
         {
@@ -123,7 +78,7 @@ namespace FargowiltasSouls.Core.AccessoryEffectSystem
             {
                 if (Active(effect))
                     effect.PostUpdateEquips(Player);
-                
+
             }
         }
         private static List<AccessoryEffect> HookUpdateBadLifeRegen = AddHook<Action<Player>>(p => p.UpdateBadLifeRegen);

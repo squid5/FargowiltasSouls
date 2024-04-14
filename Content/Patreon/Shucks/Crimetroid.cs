@@ -87,7 +87,7 @@ namespace FargowiltasSouls.Content.Patreon.Shucks
             if (!player.velocity.HasNaNs() && player.velocity != Vector2.Zero)
                 maxSpeed += player.velocity.Length() / 2;
 
-            Vector2 change = Projectile.DirectionTo(focus) * maxSpeed;
+            Vector2 change = Projectile.SafeDirectionTo(focus) * maxSpeed;
             if (Projectile.localAI[0] != 0)
             {
                 change = change.RotatedBy(Projectile.localAI[0]);

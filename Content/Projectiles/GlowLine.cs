@@ -15,6 +15,7 @@ using FargowiltasSouls.Content.Bosses.AbomBoss;
 using FargowiltasSouls.Content.Bosses.DeviBoss;
 using FargowiltasSouls.Content.Bosses.MutantBoss;
 using FargowiltasSouls.Core;
+using Luminance.Core.Graphics;
 
 namespace FargowiltasSouls.Content.Projectiles
 {
@@ -87,7 +88,7 @@ namespace FargowiltasSouls.Content.Projectiles
                         if (abom != null)
                         {
                             Projectile.Center = abom.Center;
-                            Projectile.rotation = abom.DirectionTo(Main.player[abom.target].Center).ToRotation() + Projectile.ai[1];
+                            Projectile.rotation = abom.SafeDirectionTo(Main.player[abom.target].Center).ToRotation() + Projectile.ai[1];
                         }
                     }
                     break;
@@ -135,8 +136,8 @@ namespace FargowiltasSouls.Content.Projectiles
                         {
                             Projectile.Center = abom.Center;
                             if (counter == 0)
-                                Projectile.rotation = abom.DirectionTo(Main.player[abom.target].Center).ToRotation();
-                            float targetRot = abom.DirectionTo(Main.player[abom.target].Center).ToRotation() + Projectile.ai[1];
+                                Projectile.rotation = abom.SafeDirectionTo(Main.player[abom.target].Center).ToRotation();
+                            float targetRot = abom.SafeDirectionTo(Main.player[abom.target].Center).ToRotation() + Projectile.ai[1];
                             while (targetRot < -(float)Math.PI)
                                 targetRot += 2f * (float)Math.PI;
                             while (targetRot > (float)Math.PI)
@@ -197,7 +198,7 @@ namespace FargowiltasSouls.Content.Projectiles
                         Player p = FargoSoulsUtil.PlayerExists(Projectile.ai[1]);
                         if (p != null)
                         {
-                            Projectile.rotation = Projectile.DirectionTo(p.Center).ToRotation();
+                            Projectile.rotation = Projectile.SafeDirectionTo(p.Center).ToRotation();
                         }
                         else
                         {
@@ -229,7 +230,7 @@ namespace FargowiltasSouls.Content.Projectiles
                         Projectile.rotation = Projectile.velocity.ToRotation();
 
                         if (Main.LocalPlayer.active && !Main.dedServ)
-                            Main.LocalPlayer.FargoSouls().Screenshake = 30;
+                            ScreenShakeSystem.StartShake(15, shakeStrengthDissipationIncrement: 15f / 30);
 
                         if (counter == maxTime)
                         {

@@ -1,13 +1,9 @@
-﻿using FargowiltasSouls.Common.Graphics.Primitives;
-using FargowiltasSouls.Common.Graphics.Shaders;
-using FargowiltasSouls.Content.Projectiles;
-using FargowiltasSouls.Content.Projectiles.Deathrays;
+﻿using FargowiltasSouls.Content.Projectiles.Deathrays;
 using FargowiltasSouls.Core.Systems;
+using Luminance.Core.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
 using System;
-using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -158,7 +154,7 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
                 }
             }
         }
-        
+
         public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
             target.velocity.X = target.Center.X < Main.npc[(int)Projectile.ai[1]].Center.X ? -15f : 15f;
@@ -175,8 +171,6 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
             target.AddBuff(BuffID.WitheredWeapon, 600);
         }
 
-        public PrimDrawer LaserDrawer { get; private set; } = null;
-
         public float WidthFunction(float _) => Projectile.width * Projectile.scale * 2;
 
         public static Color ColorFunction(float _) => new(253, 254, 32, 100);
@@ -187,9 +181,7 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
             if (Projectile.velocity == Vector2.Zero)
                 return false;
 
-            Shader shader = ShaderManager.GetShaderIfExists("WillBigDeathray");
-
-            LaserDrawer ??= new PrimDrawer(WidthFunction, ColorFunction, shader);
+            ManagedShader shader = ShaderManager.GetShader("FargowiltasSouls.WillBigDeathray");
 
             // Get the laser end position.
             Vector2 laserEnd = Projectile.Center + Projectile.velocity.SafeNormalize(Vector2.UnitY) * drawDistance;
@@ -207,13 +199,14 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
 
             // The laser should fade to this in the middle.
             Color brightColor = Color.Black;
-            shader.SetMainColor(brightColor);
+            shader.TrySetParameter("mainColor", brightColor);
             // GameShaders.Misc["FargoswiltasSouls:MutantDeathray"].UseImage1(); cannot be used due to only accepting vanilla paths.
             Texture2D fademap = ModContent.Request<Texture2D>("FargowiltasSouls/Assets/ExtraTextures/Trails/WillStreak").Value;
             FargoSoulsUtil.SetTexture1(fademap);
             for (int j = 0; j < 2; j++)
             {
-                LaserDrawer.DrawPrims(baseDrawPoints.ToList(), -Main.screenPosition, 30);
+                PrimitiveSettings primSettings = new(WidthFunction, ColorFunction, Shader: shader);
+                PrimitiveRenderer.RenderTrail(baseDrawPoints, primSettings, 30);
 
                 for (int i = 0; i < baseDrawPoints.Length / 2; i++)
                 {
@@ -222,7 +215,7 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
                     baseDrawPoints[i] = baseDrawPoints[swap];
                     baseDrawPoints[swap] = temp;
                 }
-                LaserDrawer.DrawPrims(baseDrawPoints.ToList(), -Main.screenPosition, 30);
+                PrimitiveRenderer.RenderTrail(baseDrawPoints, primSettings, 30);
             }
             return false;
         }
