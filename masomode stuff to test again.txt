@@ -15,3 +15,4 @@ ftw trojan squrrel starts at x2 size
 fixed? shadow champ orbs being impossible to pop in mp
 maso reti aura is god eater
 fixed a render issue with mutant spear spin in ftw
+fixed ftw mutant nuke not syncing up with the actual explosions
