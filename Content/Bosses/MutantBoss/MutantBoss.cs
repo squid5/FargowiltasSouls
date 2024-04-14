@@ -2978,7 +2978,10 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
                 bool shouldAttack = true;
                 if (++NPC.ai[2] > NPC.localAI[1])
                 {
-                    ChooseNextAttack(11, 16, 19, 20, WorldSavingSystem.MasochistModeReal ? 44 : 26, 31, 33, 35, 42, 44, 45/*, 47*/);
+                    if (Main.getGoodWorld) // Can't combo into slime rain in ftw
+                        ChooseNextAttack(11, 16, 19, 20, WorldSavingSystem.MasochistModeReal ? 44 : 26, 31, 33, /*35,*/ 42, 44, 45/*, 47*/);
+                    else
+                        ChooseNextAttack(11, 16, 19, 20, WorldSavingSystem.MasochistModeReal ? 44 : 26, 31, 33, 35, 42, 44, 45/*, 47*/);
                     shouldAttack = false;
                 }
 
