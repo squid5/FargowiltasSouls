@@ -14,3 +14,4 @@ ftw fishron buffed, faster p1/p2 dashes
 ftw trojan squrrel starts at x2 size
 fixed? shadow champ orbs being impossible to pop in mp
 maso reti aura is god eater
+fixed a render issue with mutant spear spin in ftw
