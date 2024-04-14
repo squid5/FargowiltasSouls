@@ -134,7 +134,7 @@ namespace FargowiltasSouls.Content.Projectiles
                         }
                         if (speed <= 60f)
                         {
-                            speed += 3/60f;
+                            speed += 3 / 60f;
                         }
                     }
                     else
@@ -178,7 +178,7 @@ namespace FargowiltasSouls.Content.Projectiles
 
         public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
-            target.velocity = target.DirectionTo(Projectile.Center) * 4f;
+            target.velocity = target.SafeDirectionTo(Projectile.Center) * 4f;
         }
 
         public override void OnKill(int timeLeft)

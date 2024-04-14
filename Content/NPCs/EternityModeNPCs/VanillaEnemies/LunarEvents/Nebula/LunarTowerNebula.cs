@@ -3,12 +3,10 @@ using FargowiltasSouls.Content.Projectiles;
 using FargowiltasSouls.Core.NPCMatching;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
-using System;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
-using FargowiltasSouls.Core.Systems;
 
 namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEvents.Nebula
 {
@@ -35,7 +33,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEve
             MassiveNebulaArcanum
 
         }
-        public override List<int> RandomAttacks => new List<int>() //these are randomly chosen attacks in p1
+        public override List<int> RandomAttacks => new() //these are randomly chosen attacks in p1
         {
             (int)Attacks.MirageDeathray,
             (int)Attacks.TeleportJumpscare,
@@ -317,10 +315,10 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEve
                             float speed = Main.rand.NextFloat(5f, 6f);
                             speed *= 0.9f;
                             Vector2 pos = player.Center + posOffset;
-                            Vector2 vel = pos.DirectionTo(player.Center) * speed;
+                            Vector2 vel = pos.SafeDirectionTo(player.Center) * speed;
                             Projectile.NewProjectile(npc.GetSource_FromThis(), pos, vel, ModContent.ProjectileType<PillarNebulaBlaze>(), FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 3f, Main.myPlayer, 0.03f, ai2: npc.whoAmI);
                         }
-                        
+
                     }
                 }
             }

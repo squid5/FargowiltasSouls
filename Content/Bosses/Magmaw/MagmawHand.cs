@@ -1,18 +1,12 @@
-﻿using Microsoft.Xna.Framework;
+﻿using FargowiltasSouls.Content.Projectiles;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Terraria.Audio;
-using Terraria.DataStructures;
-using Terraria.ID;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ModLoader;
-using FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.PirateInvasion;
-using Microsoft.Xna.Framework.Graphics;
-using FargowiltasSouls.Content.Projectiles;
 
 namespace FargowiltasSouls.Content.Bosses.Magmaw
 {
@@ -91,12 +85,12 @@ namespace FargowiltasSouls.Content.Bosses.Magmaw
             Vector2 origin2 = rectangle.Size() / 2f;
 
             NPC parent = GetParent();
-            Vector2 dir = Projectile.DirectionTo(parent.Center);
+            Vector2 dir = Projectile.SafeDirectionTo(parent.Center);
             int length = (int)Projectile.Distance(parent.Center);
             Vector2 offset = dir * length / 2f;
             Vector2 position = Projectile.Center - Main.screenLastPosition + new Vector2(0f, Projectile.gfxOffY) + offset;
             //const float resolutionCompensation = 128f / 24f; //i made the image higher res, this compensates to keep original display size
-            
+
             Rectangle destination = new((int)position.X, (int)position.Y, length, ArmWidth);//(int)(rectangle.Height * Projectile.scale / resolutionCompensation));
 
             Color drawColor = Color.Orange * Projectile.Opacity * (Main.mouseTextColor / 255f) * 0.9f;
@@ -126,9 +120,7 @@ namespace FargowiltasSouls.Content.Bosses.Magmaw
         public ref float Side => ref Projectile.ai[1];
         public override void AI()
         {
-            if (Side == 0) //Default to left side
-                Side = Left;
-            Side = Math.Sign(Side); //Make sure it's always 1 or -1
+            Side = LumUtils.NonZeroSign(Side); //Make sure it's always 1 or -1 (default to 1 if 0)
 
             NPC parent = GetParent();
             Magmaw magmaw = parent.As<Magmaw>();

@@ -105,16 +105,16 @@ namespace FargowiltasSouls.Content.Projectiles
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            target.AddBuff(BuffID.BetsysCurse, (int)FargoSoulsUtil.SecondsToFrames(20));
+            target.AddBuff(BuffID.BetsysCurse, LumUtils.SecondsToFrames(20));
 
             if (Projectile.owner == Main.myPlayer)
             {
                 Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ProjectileID.SolarWhipSwordExplosion, 0, 0f, Main.myPlayer);
-                
-                int reducedCooldown = (int)FargoSoulsUtil.SecondsToFrames(2.5f);
+
+                int reducedCooldown = LumUtils.SecondsToFrames(2.5f);
                 if (Main.player[Projectile.owner].FargoSouls().SpecialDashCD > reducedCooldown)
                     Main.player[Projectile.owner].FargoSouls().SpecialDashCD = reducedCooldown;
-                
+
             }
         }
 

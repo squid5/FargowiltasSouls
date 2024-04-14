@@ -15,7 +15,7 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
             base.SetStaticDefaults();
             ProjectileID.Sets.TrailCacheLength[Type] = 7;
             ProjectileID.Sets.TrailingMode[Type] = 2;
-            
+
         }
         public override void SetDefaults()
         {
@@ -45,7 +45,7 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
                     Player target = FargoSoulsUtil.PlayerExists(Player.FindClosest(Projectile.Center, 0, 0));
                     if (target != null)
                     {
-                        Projectile.velocity = Projectile.DirectionTo(target.Center) * 20;
+                        Projectile.velocity = Projectile.SafeDirectionTo(target.Center) * 20;
                         Projectile.netUpdate = true;
                     }
                 }

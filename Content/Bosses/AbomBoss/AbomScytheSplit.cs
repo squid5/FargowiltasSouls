@@ -65,7 +65,7 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
                     int p = Player.FindClosest(Projectile.Center, 0, 0);
                     if (p != -1)
                     {
-                        Vector2 vel = Projectile.ai[1] == 0 ? Vector2.Normalize(Projectile.velocity) : Projectile.DirectionTo(Main.player[p].Center);
+                        Vector2 vel = Projectile.ai[1] == 0 ? Vector2.Normalize(Projectile.velocity) : Projectile.SafeDirectionTo(Main.player[p].Center);
                         vel *= 30f;
                         int max = Projectile.ai[1] == 0 ? 6 : WorldSavingSystem.MasochistModeReal ? 10 : 8;
                         for (int i = 0; i < max; i++)

@@ -1,16 +1,16 @@
-﻿using System;
+﻿using FargowiltasSouls.Content.Buffs.Masomode;
+using FargowiltasSouls.Core.Globals;
+using FargowiltasSouls.Core.NPCMatching;
+using FargowiltasSouls.Core.Systems;
+using System;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
-using FargowiltasSouls.Content.Buffs.Masomode;
-using FargowiltasSouls.Core.Globals;
-using FargowiltasSouls.Core.NPCMatching;
-using FargowiltasSouls.Core.Systems;
 
 namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.Jungle
 {
-	public class Hornets : EModeNPCBehaviour
+    public class Hornets : EModeNPCBehaviour
     {
         public override NPCMatcher CreateMatcher() => new NPCMatcher().MatchTypeRange(
             NPCID.Hornet,
@@ -74,7 +74,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.Jungle
                     if (Timer == 0) //if player behind blocks, periodically dash closer
                     {
                         if (!Collision.CanHitLine(npc.Center, 0, 0, Main.player[npc.target].Center, 0, 0))
-                            npc.velocity = Math.Min(6f, npc.velocity.Length()) * npc.DirectionTo(Main.player[npc.target].Center);
+                            npc.velocity = Math.Min(6f, npc.velocity.Length()) * npc.SafeDirectionTo(Main.player[npc.target].Center);
 
                         //move in more frequently when especially far away
                         if (npc.Distance(Main.player[npc.target].Center) > 1200)

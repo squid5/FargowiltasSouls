@@ -1,10 +1,11 @@
 ﻿using FargowiltasSouls.Assets.ExtraTextures;
 using FargowiltasSouls.Common.Graphics.Particles;
-using FargowiltasSouls.Common.Graphics.Primitives;
-using FargowiltasSouls.Common.Graphics.Shaders;
+
+
 using FargowiltasSouls.Content.Buffs.Masomode;
 using FargowiltasSouls.Content.Projectiles.Deathrays;
 using FargowiltasSouls.Core.Systems;
+using Luminance.Core.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -14,17 +15,11 @@ using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Content.Bosses.Lifelight
 {
-    public class LifeChalDeathray : BaseDeathray, IPixelPrimitiveDrawer
+    public class LifeChalDeathray : BaseDeathray, IPixelatedPrimitiveRenderer
     {
-        public PrimDrawer BeamDrawer
-        {
-            get;
-            private set;
-        }
+        PixelationPrimitiveLayer LayerToRenderTo => PixelationPrimitiveLayer.AfterProjectiles;
 
-        public bool RenderOverProjectiles => true;
-
-		public override string Texture => "FargowiltasSouls/Content/Projectiles/Deathrays/AbomDeathray";
+        public override string Texture => "FargowiltasSouls/Content/Projectiles/Deathrays/AbomDeathray";
 
         public LifeChalDeathray() : base(3600) { }
 
@@ -33,6 +28,11 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
             base.SetStaticDefaults();
 
             // DisplayName.SetDefault("Holy Deathray");
+        }
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            Projectile.timeLeft *= 10;
         }
 
         public override void AI()
@@ -121,7 +121,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
             }
 
             SpawnSparks();
-		}
+        }
 
         public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
@@ -140,65 +140,68 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
             {
                 Vector2 position = Projectile.Center + Projectile.velocity * 30f + Main.rand.NextVector2Circular(10f, 10f);
 
-				Vector2 velocity = Main.rand.NextFloat(MathF.Tau).ToRotationVector2() * Main.rand.NextFloat(7f, 15f);
+                Vector2 velocity = Main.rand.NextFloat(MathF.Tau).ToRotationVector2() * Main.rand.NextFloat(7f, 15f);
 
                 Color color = Color.Lerp(Color.Gold, Color.OrangeRed, Main.rand.NextFloat(0f, 0.5f));
                 if (Main.rand.NextBool(3))
                     color = Color.Lerp(color, Color.Pink, Main.rand.NextFloat(0f, 0.6f));
 
-				new SparkParticle(position, velocity, color, Main.rand.NextFloat(1.5f, 1.9f), Main.rand.Next(25, 45),
+                new SparkParticle(position, velocity, color, Main.rand.NextFloat(1.5f, 1.9f), Main.rand.Next(25, 45),
                     true, Color.PaleGoldenrod).Spawn();
             }
         }
 
         public override bool PreDraw(ref Color lightColor) => false;
 
-		public float WidthFunction(float completionRatio) => Projectile.scale * Projectile.width;
+        public float WidthFunction(float completionRatio) => Projectile.scale * Projectile.width;
 
         public Color ColorFunction(float completionRatio)
         {
-			float colorInterpolant = MathF.Sin(Main.GlobalTimeWrappedHourly * -3.2f + completionRatio * 23f) * 0.5f + 0.5f;
-			return Color.Lerp(Color.Lerp(Color.Gold, Color.PaleGoldenrod, colorInterpolant * 0.67f), Color.White, 0.1f);
+            float colorInterpolant = MathF.Sin(Main.GlobalTimeWrappedHourly * -3.2f + completionRatio * 23f) * 0.5f + 0.5f;
+            return Color.Lerp(Color.Lerp(Color.Gold, Color.PaleGoldenrod, colorInterpolant * 0.67f), Color.White, 0.1f);
         }
-
-        public void DrawPixelPrimitives(SpriteBatch spriteBatch)
+        public void RenderPixelatedPrimitives(SpriteBatch spriteBatch)
         {
-            Shader shader = ShaderManager.GetShaderIfExists("LifelightDeathray");
-            BeamDrawer = new PrimDrawer(WidthFunction, ColorFunction, shader);
+            ManagedShader shader = ShaderManager.GetShader("FargowiltasSouls.LifelightDeathray");
+            FargoSoulsUtil.SetTexture1(FargosTextureRegistry.FadedStreak.Value);
 
             Vector2 start = Projectile.Center;
             Vector2 end = Projectile.Center + Projectile.velocity * Projectile.localAI[1];
-            Vector2[] points = new Vector2[8]; 
+            Vector2[] points = new Vector2[8];
 
             for (int i = 0; i < points.Length; i++)
                 points[i] = Vector2.Lerp(start, end, (float)i / points.Length);
 
-            shader.SetMainColor(Color.Pink);
+            shader.TrySetParameter("mainColor", Color.Pink);
             FargoSoulsUtil.SetTexture1(FargosTextureRegistry.SmokyNoise.Value);
-			FargoSoulsUtil.SetTexture2(FargosTextureRegistry.WavyNoise.Value);
+            FargoSoulsUtil.SetTexture2(FargosTextureRegistry.WavyNoise.Value);
 
-			BeamDrawer.DrawPixelPrims(points, -Main.screenPosition, 40);
-			Vector2 drawPosition = Projectile.Center + Projectile.velocity.SafeNormalize(Vector2.Zero) * 30f - Main.screenPosition;
+            PrimitiveRenderer.RenderTrail(points, new(WidthFunction, ColorFunction, Pixelate: true, Shader: shader), 40);
+            Vector2 drawPosition = Projectile.Center + Projectile.velocity.SafeNormalize(Vector2.Zero) * 30f - Main.screenPosition;
             float opacity = Utils.GetLerpValue(0f, 5f, Projectile.localAI[0], true);
             float scale = MathHelper.Lerp(0.05f, 0.175f, FargoSoulsUtil.SineInOut(Projectile.scale));
-			// Draw a nice bloom flare.
-			Texture2D bloomFlare = FargosTextureRegistry.BloomFlareTexture.Value;
-            Texture2D bloom = Particle.CommonBloomTexture;
+            // Draw a nice bloom flare.
+            Texture2D bloomFlare = FargosTextureRegistry.BloomFlareTexture.Value;
+            Texture2D bloom = FargosTextureRegistry.BloomParticleTexture.Value;
             float rotation = Main.GlobalTimeWrappedHourly * 1.1f;
 
-			Color bloomFlareColor1 = Color.OrangeRed with { A = 0 } * 0.7f;
-			Color bloomFlareColor2 = Color.Gold with { A = 0 } * 0.7f;
+            Color bloomFlareColor1 = Color.OrangeRed with { A = 0 } * 0.7f;
+            Color bloomFlareColor2 = Color.Gold with { A = 0 } * 0.7f;
 
             float bigGlowOpacity = MathHelper.Lerp(0.3f, 0.4f, (1f + MathF.Sin(MathF.PI * Main.GlobalTimeWrappedHourly)) * 0.5f);
-			Main.spriteBatch.Draw(bloom, Projectile.Center - Main.screenPosition, null, Color.Gold with { A = 0 } * bigGlowOpacity, 0f, bloom.Size() * 0.5f, 10f, 0, 0f);
+            Main.spriteBatch.Draw(bloom, Projectile.Center - Main.screenPosition, null, Color.Gold with { A = 0 } * bigGlowOpacity, 0f, bloom.Size() * 0.5f, 10f, 0, 0f);
 
 
-			float orbScale = MathHelper.Lerp(1.2f, 1.6f, (1f + MathF.Sin(MathF.PI * Main.GlobalTimeWrappedHourly * 9.5f)) * 0.5f);
-			Main.spriteBatch.Draw(bloom, drawPosition, null, Color.PaleGoldenrod with { A = 0 }, 0f, bloom.Size() * 0.5f, orbScale, 0, 0f);
+            float orbScale = MathHelper.Lerp(1.2f, 1.6f, (1f + MathF.Sin(MathF.PI * Main.GlobalTimeWrappedHourly * 9.5f)) * 0.5f);
+            Main.spriteBatch.Draw(bloom, drawPosition, null, Color.PaleGoldenrod with { A = 0 }, 0f, bloom.Size() * 0.5f, orbScale, 0, 0f);
 
-			Main.spriteBatch.Draw(bloomFlare, drawPosition, null, bloomFlareColor1, rotation, bloomFlare.Size() * 0.5f, scale, 0, 0f);
-			Main.spriteBatch.Draw(bloomFlare, drawPosition, null, bloomFlareColor2, -rotation, bloomFlare.Size() * 0.5f, scale, 0, 0f);
+            Main.spriteBatch.Draw(bloomFlare, drawPosition, null, bloomFlareColor1, rotation, bloomFlare.Size() * 0.5f, scale, 0, 0f);
+            Main.spriteBatch.Draw(bloomFlare, drawPosition, null, bloomFlareColor2, -rotation, bloomFlare.Size() * 0.5f, scale, 0, 0f);
+        }
+        public void DrawPixelPrimitives(SpriteBatch spriteBatch)
+        {
 
-		}
-	}
+
+        }
+    }
 }

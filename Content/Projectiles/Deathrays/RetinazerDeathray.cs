@@ -1,5 +1,6 @@
 ﻿using FargowiltasSouls.Content.Bosses.VanillaEternity;
 using FargowiltasSouls.Core.Systems;
+using Luminance.Core.Graphics;
 using Microsoft.Xna.Framework;
 using System;
 using Terraria;
@@ -53,8 +54,8 @@ namespace FargowiltasSouls.Content.Projectiles.Deathrays
             if (WorldSavingSystem.MasochistModeReal)
             {
                 maxScale = Main.rand.NextFloat(2.5f, 5f);
-                if (!Main.dedServ && Main.LocalPlayer.FargoSouls().Screenshake < 2)
-                    Main.LocalPlayer.FargoSouls().Screenshake = 2;
+                if (!Main.dedServ && ScreenShakeSystem.OverallShakeIntensity < 7)
+                    ScreenShakeSystem.SetUniversalRumble(7);
             }
             Projectile.localAI[0] += 1f;
             if (Projectile.localAI[0] >= maxTime)
@@ -96,7 +97,7 @@ namespace FargowiltasSouls.Content.Projectiles.Deathrays
             Vector2 vector79 = Projectile.Center + Projectile.velocity * (Projectile.localAI[1] - 14f);
             for (int num809 = 0; num809 < 2; num809 = num3 + 1)
             {
-                float num810 = Projectile.velocity.ToRotation() + (Main.rand.NextBool(2)? -1f : 1f) * 1.57079637f;
+                float num810 = Projectile.velocity.ToRotation() + (Main.rand.NextBool(2) ? -1f : 1f) * 1.57079637f;
                 float num811 = (float)Main.rand.NextDouble() * 2f + 2f;
                 Vector2 vector80 = new((float)Math.Cos((double)num810) * num811, (float)Math.Sin((double)num810) * num811);
                 int num812 = Dust.NewDust(vector79, 0, 0, DustID.CopperCoin, vector80.X, vector80.Y, 0, default, 1f);

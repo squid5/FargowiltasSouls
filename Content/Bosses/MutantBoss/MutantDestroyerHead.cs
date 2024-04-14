@@ -16,7 +16,7 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
     public class MutantDestroyerHead : ModProjectile
     {
         public override string Texture => FargoSoulsUtil.AprilFools ?
-            "FargowiltasSouls/Content/Bosses/MutantBoss/MutantDestroyerHead_April" : 
+            "FargowiltasSouls/Content/Bosses/MutantBoss/MutantDestroyerHead_April" :
             "FargowiltasSouls/Assets/ExtraTextures/Resprites/NPC_134";
 
         public override void SetStaticDefaults()
@@ -87,7 +87,7 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
                     desiredFlySpeedInPixelsPerFrame *= 2;
                     amountOfFramesToLerpBy /= 2;
                 }
-                Vector2 desiredVelocity = Projectile.DirectionTo(p.Center) * desiredFlySpeedInPixelsPerFrame;
+                Vector2 desiredVelocity = Projectile.SafeDirectionTo(p.Center) * desiredFlySpeedInPixelsPerFrame;
                 Projectile.velocity = Vector2.Lerp(Projectile.velocity, desiredVelocity, 1f / amountOfFramesToLerpBy);
             }
 

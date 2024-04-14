@@ -14,10 +14,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs
             // DisplayName.SetDefault("Brain of Cthulhu");
             //DisplayName.AddTranslation((int)GameCulture.CultureName.Chinese, "克苏鲁之脑");
 
-            NPCID.Sets.NPCBestiaryDrawOffset.Add(NPC.type, new NPCID.Sets.NPCBestiaryDrawModifiers()
-            {
-                Hide = true
-            });
+            this.ExcludeFromBestiary();
         }
 
         public override void SetDefaults()
@@ -108,7 +105,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs
         }
         public override void BossHeadSlot(ref int index)
         {
-            index = -1; 
+            index = -1;
             base.BossHeadSlot(ref index);
         }
     }

@@ -67,7 +67,7 @@ namespace FargowiltasSouls.Content.Projectiles.BossWeapons
             else
             {
                 Projectile.extraUpdates = 0;
-                Projectile.velocity = Projectile.DirectionTo(Main.player[Projectile.owner].Center) * (Projectile.velocity.Length() + 1f / 10f);
+                Projectile.velocity = Projectile.SafeDirectionTo(Main.player[Projectile.owner].Center) * (Projectile.velocity.Length() + 1f / 10f);
 
                 if (Projectile.Distance(Main.player[Projectile.owner].Center) <= Projectile.velocity.Length())
                     Projectile.Kill();

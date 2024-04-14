@@ -1,9 +1,10 @@
-﻿using FargowiltasSouls.Common.Graphics.Shaders;
+﻿
 using FargowiltasSouls.Content.Bosses.Champions.Cosmos;
 using FargowiltasSouls.Content.Bosses.MutantBoss;
 using FargowiltasSouls.Core;
 using FargowiltasSouls.Core.Globals;
 using FargowiltasSouls.Core.Systems;
+using Luminance.Core.Graphics;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -11,7 +12,7 @@ using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Content.Buffs.Souls
 {
-	public class TimeFrozenBuff : ModBuff
+    public class TimeFrozenBuff : ModBuff
     {
         public override void SetStaticDefaults()
         {
@@ -49,10 +50,9 @@ namespace FargowiltasSouls.Content.Buffs.Souls
 
             if (!Main.dedServ && player.whoAmI == Main.myPlayer)
             {
-                ScreenFilter filter = ShaderManager.GetFilterIfExists("Invert");
-
+                ManagedScreenFilter filter = ShaderManager.GetFilter("FargowiltasSouls.Invert");
                 if (FargoSoulsUtil.BossIsAlive(ref EModeGlobalNPC.championBoss, ModContent.NPCType<CosmosChampion>())
-                && Main.npc[EModeGlobalNPC.championBoss].ai[0] == 15)
+                        && Main.npc[EModeGlobalNPC.championBoss].ai[0] == 15)
                 {
                     filter.SetFocusPosition(Main.npc[EModeGlobalNPC.championBoss].Center);
                 }

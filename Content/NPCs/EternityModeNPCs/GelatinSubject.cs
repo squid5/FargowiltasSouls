@@ -25,10 +25,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs
             NPCID.Sets.TrailingMode[NPC.type] = 1;
             NPCID.Sets.CantTakeLunchMoney[Type] = true;
             NPCID.Sets.SpecificDebuffImmunity[Type] = NPCID.Sets.SpecificDebuffImmunity[NPCID.QueenSlimeBoss];
-            NPCID.Sets.NPCBestiaryDrawOffset.Add(NPC.type, new NPCID.Sets.NPCBestiaryDrawModifiers()
-            {
-                Hide = true
-            });
+            this.ExcludeFromBestiary();
         }
 
         public override void SetDefaults()
@@ -69,7 +66,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs
             }
 
             //if (NPC.HasValidTarget && NPC.Distance(Main.player[NPC.target].Center) > 300)
-            //    NPC.velocity += NPC.DirectionTo(Main.player[NPC.target].Center) * 0.05f;
+            //    NPC.velocity += NPC.SafeDirectionTo(Main.player[NPC.target].Center) * 0.05f;
 
             NPC.spriteDirection = NPC.direction;
             NPC.rotation = Math.Abs(NPC.velocity.X * .1f) * NPC.direction;
@@ -93,7 +90,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs
             }
 
             //if moving towards you, slow down
-            if (NPC.HasValidTarget && Math.Abs(MathHelper.WrapAngle(NPC.velocity.ToRotation() - NPC.DirectionTo(Main.player[NPC.target].Center).ToRotation())) < MathHelper.PiOver2)
+            if (NPC.HasValidTarget && Math.Abs(MathHelper.WrapAngle(NPC.velocity.ToRotation() - NPC.SafeDirectionTo(Main.player[NPC.target].Center).ToRotation())) < MathHelper.PiOver2)
             {
                 if (NPC.Distance(Main.player[NPC.target].Center) < 16 * 5)
                 {

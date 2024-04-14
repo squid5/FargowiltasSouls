@@ -1,4 +1,3 @@
-using FargowiltasSouls.Content.Projectiles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -70,7 +69,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Timber
 
                 const int increment = 150; //dust
                 int distance = (int)Projectile.Distance(npc.Center);
-                Vector2 direction = Projectile.DirectionTo(npc.Center);
+                Vector2 direction = Projectile.SafeDirectionTo(npc.Center);
                 for (int i = 2; i < distance; i += increment)
                 {
                     float offset = i + Main.rand.NextFloat(-increment, increment);

@@ -1,7 +1,17 @@
-﻿using FargowiltasSouls.Content.Projectiles.Masomode;
+﻿using FargowiltasSouls.Content.BossBars;
+using FargowiltasSouls.Content.Buffs.Masomode;
+using FargowiltasSouls.Content.Items.Accessories.Forces;
+using FargowiltasSouls.Content.Items.Pets;
+using FargowiltasSouls.Content.Items.Placables.Relics;
+using FargowiltasSouls.Content.Projectiles.Masomode;
+using FargowiltasSouls.Core.Globals;
+using FargowiltasSouls.Core.ItemDropRules;
+using FargowiltasSouls.Core.Systems;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -10,16 +20,6 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
-using FargowiltasSouls.Content.Items.Pets;
-using FargowiltasSouls.Content.Items.Placables.Relics;
-using FargowiltasSouls.Content.Items.Accessories.Forces;
-using FargowiltasSouls.Content.Buffs.Masomode;
-using FargowiltasSouls.Core.ItemDropRules;
-using FargowiltasSouls.Core.Systems;
-using FargowiltasSouls.Content.BossBars;
-using FargowiltasSouls.Core.Globals;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace FargowiltasSouls.Content.Bosses.Champions.Shadow
 {
@@ -37,8 +37,8 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Shadow
             NPCID.Sets.BossBestiaryPriority.Add(NPC.type);
 
             NPC.AddDebuffImmunities(new List<int>
-            { 
-				BuffID.Confused,
+            {
+                BuffID.Confused,
                 BuffID.Chilled,
                 BuffID.OnFire,
                 BuffID.Suffocation,
@@ -261,7 +261,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Shadow
                             {
                                 if (Main.npc[i].active && Main.npc[i].type == ModContent.NPCType<ShadowOrbNPC>() && Main.npc[i].ai[0] == NPC.whoAmI)
                                 {
-                                    Vector2 vel = NPC.DirectionTo(Main.npc[i].Center).RotatedBy(Math.PI / 2);
+                                    Vector2 vel = NPC.SafeDirectionTo(Main.npc[i].Center).RotatedBy(Math.PI / 2);
                                     Projectile.NewProjectile(NPC.GetSource_FromThis(), Main.npc[i].Center, vel, ProjectileID.DemonSickle, FargoSoulsUtil.ScaledProjectileDamage(NPC.damage, 4f / 3), 0f, Main.myPlayer);
                                 }
                             }
@@ -426,7 +426,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Shadow
                                 {
                                     for (int i = 0; i < 20; i++)
                                     {
-                                        Vector2 vel = NPC.DirectionTo(player.Center).RotatedBy(Math.PI / 6 * (Main.rand.NextDouble() - 0.5) + 2 * Math.PI / 3 * j);
+                                        Vector2 vel = NPC.SafeDirectionTo(player.Center).RotatedBy(Math.PI / 6 * (Main.rand.NextDouble() - 0.5) + 2 * Math.PI / 3 * j);
                                         float ai0 = Main.rand.NextFloat(1.04f, 1.06f);
                                         float ai1 = Main.rand.NextFloat(0.05f);
                                         Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, vel, ModContent.ProjectileType<ShadowFlameburst>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage, 4f / 3), 0f, Main.myPlayer, ai0, ai1);
@@ -442,7 +442,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Shadow
 
                                     for (int i = 0; i < 25; i++)
                                     {
-                                        Vector2 vel = NPC.DirectionTo(player.Center).RotatedBy(Math.PI / 6 * (Main.rand.NextDouble() - 0.5) + Math.PI / 2 * j);
+                                        Vector2 vel = NPC.SafeDirectionTo(player.Center).RotatedBy(Math.PI / 6 * (Main.rand.NextDouble() - 0.5) + Math.PI / 2 * j);
                                         float ai0 = Main.rand.NextFloat(1.04f, 1.06f);
                                         float ai1 = Main.rand.NextFloat(0.06f);
                                         Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, vel, ModContent.ProjectileType<ShadowFlameburst>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage, 4f / 3), 0f, Main.myPlayer, ai0, ai1);
@@ -453,7 +453,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Shadow
                             {
                                 for (int i = 0; i < 40; i++)
                                 {
-                                    Vector2 vel = 3f * NPC.DirectionTo(player.Center).RotatedBy(Math.PI / 6 * (Main.rand.NextDouble() - 0.5));
+                                    Vector2 vel = 3f * NPC.SafeDirectionTo(player.Center).RotatedBy(Math.PI / 6 * (Main.rand.NextDouble() - 0.5));
                                     float max = 0.0075f;
                                     float ai0 = Main.rand.NextFloat(1.04f, 1.06f);
                                     float ai1 = Main.rand.NextFloat(-max, max);

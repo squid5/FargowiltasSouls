@@ -1,16 +1,9 @@
-using Fargowiltas.Projectiles;
-using FargowiltasSouls.Content.Bosses.Champions.Cosmos;
 using FargowiltasSouls.Content.Buffs;
-using FargowiltasSouls.Core.Systems;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.FlowAnalysis.DataFlow;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using Terraria;
-using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -46,7 +39,7 @@ namespace FargowiltasSouls.Content.Projectiles.BossWeapons
         public override void AI()
         {
             Player player = Main.player[Projectile.owner];
-            
+
             if (!player.active)
             {
                 Projectile.Kill();
@@ -96,7 +89,7 @@ namespace FargowiltasSouls.Content.Projectiles.BossWeapons
                 Vector2 target = Main.MouseWorld;
                 if (Main.player[Projectile.owner].HasBuff<MoonBowBuff>())
                     target.Y += 16f; //aim correction for no grav
-                Vector2 vel = 32f * Projectile.DirectionTo(target);
+                Vector2 vel = 32f * Projectile.SafeDirectionTo(target);
                 Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center, vel, ProjectileID.MoonlordArrowTrail, Projectile.damage, Projectile.knockBack, Projectile.owner);
             }
         }

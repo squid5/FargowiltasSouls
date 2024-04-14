@@ -1,14 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using Terraria;
-using Terraria.GameContent.Biomes;
-using Terraria.GameContent.Generation;
-using Terraria.ID;
-using Terraria.ModLoader;
-using Terraria.WorldBuilding;
-
-namespace FargowiltasSouls.Core.Systems
+﻿namespace FargowiltasSouls.Core.Systems
 {
     // TODO: 1.7 pyramid gen 
     /*

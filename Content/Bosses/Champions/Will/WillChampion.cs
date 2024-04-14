@@ -1,6 +1,14 @@
-﻿using Microsoft.Xna.Framework;
+﻿using FargowiltasSouls.Content.Buffs.Masomode;
+using FargowiltasSouls.Content.Items.Accessories.Forces;
+using FargowiltasSouls.Content.Items.Pets;
+using FargowiltasSouls.Content.Items.Placables.Relics;
+using FargowiltasSouls.Core.Globals;
+using FargowiltasSouls.Core.ItemDropRules;
+using FargowiltasSouls.Core.Systems;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using Terraria;
 using Terraria.Audio;
@@ -9,14 +17,6 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
-using FargowiltasSouls.Content.Items.Pets;
-using FargowiltasSouls.Content.Items.Placables.Relics;
-using FargowiltasSouls.Content.Items.Accessories.Forces;
-using FargowiltasSouls.Content.Buffs.Masomode;
-using FargowiltasSouls.Core.ItemDropRules;
-using FargowiltasSouls.Core.Systems;
-using FargowiltasSouls.Core.Globals;
-using System.Collections.Generic;
 
 namespace FargowiltasSouls.Content.Bosses.Champions.Will
 {
@@ -216,7 +216,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Will
                             if (FargoSoulsUtil.HostCheck)
                             {
                                 Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<WillShell>(), 0, 0f, Main.myPlayer, 0f, NPC.whoAmI);
-                                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.DirectionTo(player.Center) * 12f, ModContent.ProjectileType<WillBomb>(), NPC.defDamage / 4, 0f, Main.myPlayer, 12f / 40f, NPC.whoAmI);
+                                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.SafeDirectionTo(player.Center) * 12f, ModContent.ProjectileType<WillBomb>(), NPC.defDamage / 4, 0f, Main.myPlayer, 12f / 40f, NPC.whoAmI);
                             }
 
                             if (FargoSoulsUtil.HostCheck)
@@ -353,7 +353,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Will
                             }
                             else //actually just dash
                             {
-                                NPC.velocity = NPC.DirectionTo(player.Center) * 33f;
+                                NPC.velocity = NPC.SafeDirectionTo(player.Center) * 33f;
 
                                 SoundEngine.PlaySound(SoundID.NPCHit14, NPC.Center);
                             }
@@ -447,7 +447,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Will
 
                 case 2: //arena bomb
                     NPC.velocity *= 0.975f;
-                    NPC.rotation = NPC.DirectionTo(player.Center).ToRotation();
+                    NPC.rotation = NPC.SafeDirectionTo(player.Center).ToRotation();
                     NPC.direction = NPC.spriteDirection = NPC.Center.X < player.Center.X ? 1 : -1;
 
                     if (++NPC.ai[1] == 30) //spawn bomb
@@ -456,7 +456,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Will
 
                         if (FargoSoulsUtil.HostCheck)
                         {
-                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.DirectionTo(player.Center) * 12f, ModContent.ProjectileType<WillBomb>(), NPC.defDamage / 4, 0f, Main.myPlayer, 12f / 40f, NPC.whoAmI);
+                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.SafeDirectionTo(player.Center) * 12f, ModContent.ProjectileType<WillBomb>(), NPC.defDamage / 4, 0f, Main.myPlayer, 12f / 40f, NPC.whoAmI);
                         }
                     }
                     else if (NPC.ai[1] > 120)
@@ -603,7 +603,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Will
                                 }
                                 spawn = spawn.RotatedBy(NPC.rotation);
                                 spawn += NPC.Center;
-                                Vector2 projVel = NPC.DirectionTo(player.Center).RotatedBy((Main.rand.NextDouble() - 0.5) * Math.PI / 10);
+                                Vector2 projVel = NPC.SafeDirectionTo(player.Center).RotatedBy((Main.rand.NextDouble() - 0.5) * Math.PI / 10);
                                 projVel.Normalize();
                                 projVel *= Main.rand.NextFloat(8f, 12f);
                                 int type = ProjectileID.CultistBossFireBall;

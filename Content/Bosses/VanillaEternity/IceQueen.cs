@@ -1,17 +1,17 @@
-using System.IO;
-using Terraria.ModLoader.IO;
+using FargowiltasSouls.Content.Buffs.Masomode;
 using FargowiltasSouls.Content.Projectiles.Masomode;
+using FargowiltasSouls.Core.Globals;
+using FargowiltasSouls.Core.NPCMatching;
 using Microsoft.Xna.Framework;
+using System.IO;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using FargowiltasSouls.Content.Buffs.Masomode;
-using FargowiltasSouls.Core.Globals;
-using FargowiltasSouls.Core.NPCMatching;
+using Terraria.ModLoader.IO;
 
 namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 {
-	public class IceQueen : EModeNPCBehaviour
+    public class IceQueen : EModeNPCBehaviour
     {
         public override NPCMatcher CreateMatcher() => new NPCMatcher().MatchType(NPCID.IceQueen);
 
@@ -89,7 +89,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                         for (int i = 0; i < 16; i++)
                         {
                             Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center,
-                                8f * npc.DirectionTo(Main.player[npc.target].Center).RotatedBy(MathHelper.Pi / 8 * i),
+                                8f * npc.SafeDirectionTo(Main.player[npc.target].Center).RotatedBy(MathHelper.Pi / 8 * i),
                                 ProjectileID.FrostWave, FargoSoulsUtil.ScaledProjectileDamage(npc.damage, 0.8f), 0f, Main.myPlayer);
                         }
                     }

@@ -1,5 +1,6 @@
 ﻿using FargowiltasSouls.Content.Projectiles;
 using FargowiltasSouls.Content.Projectiles.Deathrays;
+using Luminance.Core.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -55,7 +56,8 @@ namespace FargowiltasSouls.Content.Patreon.Duck
             Player player = Main.player[Projectile.owner];
 
             if (!Main.dedServ && Main.LocalPlayer.active)
-                Main.LocalPlayer.FargoSouls().Screenshake = 20;
+                if (ScreenShakeSystem.OverallShakeIntensity < 7)
+                    ScreenShakeSystem.SetUniversalRumble(7);
 
             Projectile.velocity = Projectile.velocity.SafeNormalize(-Vector2.UnitY);
 
@@ -192,7 +194,7 @@ namespace FargowiltasSouls.Content.Patreon.Duck
                     {
                         if (--count < 0)
                             break;
-                        Vector2 vel = Main.rand.NextFloat(10f, 20f) * target.DirectionTo(n.Center);
+                        Vector2 vel = Main.rand.NextFloat(10f, 20f) * target.SafeDirectionTo(n.Center);
                         Projectile.NewProjectile(Projectile.GetSource_FromThis(), target.Center, vel, ModContent.ProjectileType<Content.Projectiles.LightningArc>(),
                             Projectile.damage / 10, Projectile.knockBack / 10, Projectile.owner, vel.ToRotation(), Main.rand.Next(80));
                     }

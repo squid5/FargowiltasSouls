@@ -1,4 +1,5 @@
 ﻿using FargowiltasSouls.Content.Projectiles;
+using Luminance.Core.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
@@ -48,8 +49,9 @@ namespace FargowiltasSouls.Content.Patreon.Volknet.Projectiles
         {
             CastLights();
 
-            if (!Main.dedServ && Main.LocalPlayer.FargoSouls().Screenshake < 30)
-                Main.LocalPlayer.FargoSouls().Screenshake = 30;
+            if (!Main.dedServ)
+                if (ScreenShakeSystem.OverallShakeIntensity < 8)
+                    ScreenShakeSystem.SetUniversalRumble(8);
 
             if (Projectile.ai[1] < LaserWidth / 2)       //20
             {
@@ -128,7 +130,7 @@ namespace FargowiltasSouls.Content.Patreon.Volknet.Projectiles
                 int index2 = Dust.NewDust(target.position, target.width, target.height, DustID.ChlorophyteWeapon, 0f, 0f, 100, new Color(), 4f);
                 Main.dust[index2].noGravity = true;
                 Main.dust[index2].noLight = true;
-                Main.dust[index2].velocity = Projectile.DirectionTo(target.Center) * 9f + Main.rand.NextVector2Circular(12f, 12f);
+                Main.dust[index2].velocity = Projectile.SafeDirectionTo(target.Center) * 9f + Main.rand.NextVector2Circular(12f, 12f);
                 Main.dust[index2].velocity *= 2;
             }
         }

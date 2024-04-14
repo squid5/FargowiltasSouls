@@ -4,7 +4,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.IO;
-using FargowiltasSouls.Common.Utilities;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -25,10 +24,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Earth
             //new
             NPCID.Sets.ImmuneToRegularBuffs[Type] = true;
 
-            NPCID.Sets.NPCBestiaryDrawOffset.Add(NPC.type, new NPCID.Sets.NPCBestiaryDrawModifiers()
-            {
-                Hide = true
-            });
+            this.ExcludeFromBestiary();
         }
 
         public override void SetDefaults()
@@ -177,7 +173,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Earth
                     {
                         NPC.rotation = 0;
 
-                        targetPos = player.Center + player.DirectionTo(NPC.Center) * 400;
+                        targetPos = player.Center + player.SafeDirectionTo(NPC.Center) * 400;
                         if (NPC.ai[3] < 0 && targetPos.X < player.Center.X + 400) //stay on your original side
                             targetPos.X = player.Center.X + 400;
                         if (NPC.ai[3] > 0 && targetPos.X > player.Center.X - 400)
@@ -196,12 +192,12 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Earth
 
                         NPC.localAI[3] = 1;
                         NPC.velocity *= NPC.localAI[2] == 1 ? 0.8f : 0.95f;
-                        NPC.rotation = NPC.DirectionTo(player.Center).ToRotation() - (float)Math.PI / 2;
+                        NPC.rotation = NPC.SafeDirectionTo(player.Center).ToRotation() - (float)Math.PI / 2;
                     }
                     else if (NPC.ai[1] == 120) //dash
                     {
                         NPC.localAI[3] = 1;
-                        NPC.velocity = NPC.DirectionTo(player.Center) * (head.localAI[2] == 1 ? 20 : 16);
+                        NPC.velocity = NPC.SafeDirectionTo(player.Center) * (head.localAI[2] == 1 ? 20 : 16);
                     }
                     else //while dashing
                     {

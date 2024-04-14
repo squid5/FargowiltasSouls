@@ -1,37 +1,33 @@
+using FargowiltasSouls.Content.Buffs;
+using FargowiltasSouls.Content.Buffs.Boss;
+using FargowiltasSouls.Content.Buffs.Masomode;
+using FargowiltasSouls.Content.Buffs.Souls;
+using FargowiltasSouls.Content.Items.Accessories.Enchantments;
+using FargowiltasSouls.Content.Items.Accessories.Forces;
+using FargowiltasSouls.Content.Items.Accessories.Masomode;
+using FargowiltasSouls.Content.Items.Accessories.Souls;
+using FargowiltasSouls.Content.Items.Dyes;
+using FargowiltasSouls.Content.Items.Weapons.SwarmDrops;
+using FargowiltasSouls.Content.Projectiles;
+using FargowiltasSouls.Core.AccessoryEffectSystem;
+using FargowiltasSouls.Core.Systems;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
-using Terraria.GameContent;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
-using FargowiltasSouls.Content.Projectiles;
-using FargowiltasSouls.Content.Items.Dyes;
-using FargowiltasSouls.Content.Items.Accessories.Enchantments;
-using FargowiltasSouls.Content.Buffs;
-using FargowiltasSouls.Content.Buffs.Souls;
-using FargowiltasSouls.Content.Buffs.Masomode;
-using FargowiltasSouls.Content.Items;
-using FargowiltasSouls.Content.Items.Accessories.Forces;
-using FargowiltasSouls.Content.Buffs.Boss;
-using FargowiltasSouls.Core.Systems;
-using FargowiltasSouls.Core.Globals;
-using FargowiltasSouls.Content.Items.Accessories.Souls;
-using FargowiltasSouls.Content.Items.Weapons.SwarmDrops;
 using static FargowiltasSouls.Core.Systems.DashManager;
-using FargowiltasSouls.Core.AccessoryEffectSystem;
-using FargowiltasSouls.Content.Items.Accessories.Masomode;
 
 namespace FargowiltasSouls.Core.ModPlayers
 {
-	public partial class FargoSoulsPlayer : ModPlayer
+    public partial class FargoSoulsPlayer : ModPlayer
     {
         public ToggleBackend Toggler = new();
 
@@ -47,7 +43,6 @@ namespace FargowiltasSouls.Core.ModPlayers
         public float WingTimeModifier = 1f;
 
         public bool FreeEaterSummon = true;
-        public int Screenshake;
 
         public bool RustRifleReloading = false;
         public float RustRifleReloadZonePos = 0;
@@ -82,7 +77,7 @@ namespace FargowiltasSouls.Core.ModPlayers
             if (RabiesVaccine) playerData.Add("RabiesVaccine");
             if (DeerSinew) playerData.Add("DeerSinew");
             if (HasClickedWrench) playerData.Add("HasClickedWrench");
-            
+
 
             tag.Add($"{Mod.Name}.{Player.name}.Data", playerData);
 
@@ -174,15 +169,13 @@ namespace FargowiltasSouls.Core.ModPlayers
             }
 
         }
-        
+
         public override void ResetEffects()
         {
             HasDash = false;
             FargoDash = DashType.None;
 
             AttackSpeed = 1f;
-            if (Screenshake > 0)
-                Screenshake--;
 
             if (NoUsingItems > 0)
                 NoUsingItems--;
@@ -231,7 +224,7 @@ namespace FargowiltasSouls.Core.ModPlayers
             LavaWet = false;
 
             WoodEnchantItem = null;
-			WoodEnchantDiscount = false;
+            WoodEnchantDiscount = false;
             fireNoDamage = false;
 
             SnowVisual = false;
@@ -240,7 +233,7 @@ namespace FargowiltasSouls.Core.ModPlayers
             CrystalEnchantActive = false;
             IronRecipes = false;
             ChlorophyteEnchantActive = false;
-            PearlwoodEnchantItem = null;
+            PearlwoodStar = false;
 
             if (!MonkEnchantActive)
                 Player.ClearBuff(ModContent.BuffType<MonkBuff>());
@@ -445,11 +438,11 @@ namespace FargowiltasSouls.Core.ModPlayers
             SandsofTime = wasSandsOfTime;
             NymphsPerfumeRespawn = wasNymphsPerfumeRespawn;
 
-            if (SandsofTime && !FargoSoulsUtil.AnyBossAlive() && Player.respawnTimer > 10)
+            if (SandsofTime && !LumUtils.AnyBosses() && Player.respawnTimer > 10)
                 Player.respawnTimer -= Eternity ? 6 : 1;
 
             //maso disables respawning during mp boss
-            /*if (WorldSavingSystem.MasochistModeReal && FargoSoulsUtil.AnyBossAlive())
+            /*if (WorldSavingSystem.MasochistModeReal && LumUtils.AnyBosses())
             {
                 if (Player.respawnTimer < 10)
                     Player.respawnTimer = 10;
@@ -513,7 +506,7 @@ namespace FargowiltasSouls.Core.ModPlayers
             The22Incident = 0;
         }
 
-        
+
 
         public override void ModifyLuck(ref float luck)
         {
@@ -873,7 +866,7 @@ namespace FargowiltasSouls.Core.ModPlayers
                 }
             }
 
-            
+
         }
         public void ConcentratedRainbowMatterTryAutoHeal()
         {
@@ -930,7 +923,7 @@ namespace FargowiltasSouls.Core.ModPlayers
                     Player.hurtCooldowns[1] = 180;
                     string text = Language.GetTextValue($"Mods.{Mod.Name}.Message.Revived");
                     Main.NewText(text, Color.LimeGreen);
-                    Player.AddBuff(ModContent.BuffType<MutantRebirthBuff>(), (int)FargoSoulsUtil.SecondsToFrames(120f));
+                    Player.AddBuff(ModContent.BuffType<MutantRebirthBuff>(), LumUtils.SecondsToFrames(120f));
                     retVal = false;
 
                     Projectile.NewProjectile(Player.GetSource_Accessory(MutantSetBonusItem), Player.Center, -Vector2.UnitY, ModContent.ProjectileType<GiantDeathray>(), (int)(7000 * Player.ActualClassDamage(DamageClass.Magic)), 10f, Player.whoAmI);
@@ -1273,12 +1266,6 @@ namespace FargowiltasSouls.Core.ModPlayers
             Player.HealEffect(amount);
         }
 
-        public override void ModifyScreenPosition()
-        {
-            if (Screenshake > 0)
-                Main.screenPosition += Main.rand.NextVector2Circular(7, 7);
-        }
-
         public override void CopyClientState(ModPlayer clientClone)
         {
             FargoSoulsPlayer modPlayer = clientClone as FargoSoulsPlayer;
@@ -1361,7 +1348,7 @@ namespace FargowiltasSouls.Core.ModPlayers
                 int force = BaseEnchant.Force[type];
                 if (force <= 0)
                     return BaseEnchant.CraftsInto[type] > 0 && CheckForces(BaseEnchant.CraftsInto[type]); //check force of enchant it crafts into, recursively
-                return ForceEffects.Contains(force); 
+                return ForceEffects.Contains(force);
             }
             bool CheckWizard(int type)
             {

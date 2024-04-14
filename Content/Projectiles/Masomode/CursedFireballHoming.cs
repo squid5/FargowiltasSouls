@@ -74,7 +74,7 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
                 float num = 24f;
                 for (int index1 = 0; index1 < num; ++index1)
                 {
-                    Vector2 v = 2 * (Vector2.UnitX * 0.0f + -Vector2.UnitY.RotatedBy(index1 * (6.28318548202515 / (double)num), new Vector2()) * new Vector2(1f, 4f)).RotatedBy((double)Projectile.DirectionTo(Main.player[(int)Projectile.ai[0]].Center).ToRotation(), new Vector2());
+                    Vector2 v = 2 * (Vector2.UnitX * 0.0f + -Vector2.UnitY.RotatedBy(index1 * (6.28318548202515 / (double)num), new Vector2()) * new Vector2(1f, 4f)).RotatedBy((double)Projectile.SafeDirectionTo(Main.player[(int)Projectile.ai[0]].Center).ToRotation(), new Vector2());
                     int index2 = Dust.NewDust(Projectile.Center, 0, 0, DustID.CursedTorch, 0.0f, 0.0f, 200, default, 1f);
                     Main.dust[index2].scale = 2f;
                     Main.dust[index2].fadeIn = 1.3f;
@@ -83,7 +83,7 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
                     Main.dust[index2].velocity = v.SafeNormalize(Vector2.UnitY) * 1.5f;
                 }
 
-                Projectile.velocity = Projectile.DirectionTo(Main.player[(int)Projectile.ai[0]].Center) * 16f;
+                Projectile.velocity = Projectile.SafeDirectionTo(Main.player[(int)Projectile.ai[0]].Center) * 16f;
             }
 
             if (Projectile.localAI[1] < 120 + Projectile.ai[1])

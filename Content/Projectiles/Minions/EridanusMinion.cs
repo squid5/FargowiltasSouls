@@ -92,7 +92,7 @@ namespace FargowiltasSouls.Content.Projectiles.Minions
                                 float length = player.Distance(npc.Center) - 300;
                                 if (length > 300)
                                     length = 300;
-                                Vector2 home = player.Center + player.DirectionTo(npc.Center) * length;
+                                Vector2 home = player.Center + player.SafeDirectionTo(npc.Center) * length;
                                 Projectile.Center = Vector2.Lerp(Projectile.Center, home, 0.15f);
                                 Projectile.velocity *= 0.8f;
 
@@ -102,7 +102,7 @@ namespace FargowiltasSouls.Content.Projectiles.Minions
                                     if (Main.myPlayer == Projectile.owner && player.HeldItem.CountsAsClass(DamageClass.Melee))
                                     {
                                         const float maxRange = 700;
-                                        int p = Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center + Projectile.DirectionTo(npc.Center) * 40, 16f * Projectile.DirectionTo(npc.Center).RotatedByRandom(MathHelper.ToRadians(15)),
+                                        int p = Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center + Projectile.SafeDirectionTo(npc.Center) * 40, 16f * Projectile.SafeDirectionTo(npc.Center).RotatedByRandom(MathHelper.ToRadians(15)),
                                             ModContent.ProjectileType<EridanusFist>(), (int)(Projectile.originalDamage * Main.player[Projectile.owner].GetDamage(DamageClass.Melee).Additive / 3), Projectile.knockBack / 2, Main.myPlayer, maxRange);
                                         if (p != Main.maxProjectiles)
                                             Main.projectile[p].CritChance = (int)player.ActualClassCrit(DamageClass.Melee);
@@ -110,7 +110,7 @@ namespace FargowiltasSouls.Content.Projectiles.Minions
                                 }
 
                                 Projectile.frame = player.HeldItem.CountsAsClass(DamageClass.Melee) ? 6 : 5;
-                                Projectile.rotation = Projectile.DirectionTo(npc.Center).ToRotation();
+                                Projectile.rotation = Projectile.SafeDirectionTo(npc.Center).ToRotation();
                                 if (Projectile.spriteDirection < 0)
                                     Projectile.rotation += (float)Math.PI;
                             }
@@ -129,7 +129,7 @@ namespace FargowiltasSouls.Content.Projectiles.Minions
                                     Projectile.localAI[0] = 0;
                                     if (Main.myPlayer == Projectile.owner && player.HeldItem.CountsAsClass(DamageClass.Ranged))
                                     {
-                                        int p = Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, 12f * Projectile.DirectionTo(npc.Center), ModContent.ProjectileType<EridanusBullet>(),
+                                        int p = Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, 12f * Projectile.SafeDirectionTo(npc.Center), ModContent.ProjectileType<EridanusBullet>(),
                                             (int)(Projectile.originalDamage * Main.player[Projectile.owner].GetDamage(DamageClass.Ranged).Additive * 1.5f), Projectile.knockBack * 2, Main.myPlayer, npc.whoAmI);
                                         if (p != Main.maxProjectiles)
                                             Main.projectile[p].CritChance = (int)player.ActualClassCrit(DamageClass.Ranged);
@@ -210,7 +210,7 @@ namespace FargowiltasSouls.Content.Projectiles.Minions
                                     {
                                         int modifier = Math.Sign(Projectile.Center.Y - npc.Center.Y);
                                         Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center + 3000 * Projectile.DirectionFrom(npc.Center) * modifier,
-                                            Projectile.DirectionTo(npc.Center) * modifier, ModContent.ProjectileType<EridanusDeathray>(),
+                                            Projectile.SafeDirectionTo(npc.Center) * modifier, ModContent.ProjectileType<EridanusDeathray>(),
                                             Projectile.damage, Projectile.knockBack / 4, Main.myPlayer);
                                     }
                                 }
@@ -218,7 +218,7 @@ namespace FargowiltasSouls.Content.Projectiles.Minions
                                 if (!playerIsAttacking && Projectile.localAI[0] < 7)
                                     Projectile.frame = 6;
 
-                                Projectile.rotation = Projectile.DirectionTo(npc.Center).ToRotation();
+                                Projectile.rotation = Projectile.SafeDirectionTo(npc.Center).ToRotation();
                                 if (Projectile.spriteDirection < 0)
                                     Projectile.rotation += (float)Math.PI;
                             }

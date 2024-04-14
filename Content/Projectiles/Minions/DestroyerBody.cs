@@ -149,7 +149,7 @@ namespace FargowiltasSouls.Content.Projectiles.Minions
 
                     if (selectedTarget != -1) //shoot
                     {
-                        Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, 10f * Projectile.DirectionTo(Main.npc[selectedTarget].Center),
+                        Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, 10f * Projectile.SafeDirectionTo(Main.npc[selectedTarget].Center),
                             ProjectileID.MiniRetinaLaser, Projectile.damage, Projectile.knockBack, Projectile.owner);
                         SoundEngine.PlaySound(SoundID.Item12, Projectile.Center);
                     }
@@ -171,7 +171,7 @@ namespace FargowiltasSouls.Content.Projectiles.Minions
             }
             if (!Main.dedServ)
             {
-                int g = Gore.NewGore(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.velocity / 2, ModContent.Find<ModGore>("FargowiltasSouls/DestroyerBody").Type, Projectile.scale);
+                int g = Gore.NewGore(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.velocity / 2, ModContent.Find<ModGore>("FargowiltasSouls/DestroyerBodyGore").Type, Projectile.scale);
                 Main.gore[g].timeLeft = 20;
             }
         }

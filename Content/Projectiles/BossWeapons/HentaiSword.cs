@@ -1,5 +1,6 @@
 ﻿using FargowiltasSouls.Content.Buffs.Masomode;
 using FargowiltasSouls.Content.Projectiles.Masomode;
+using Luminance.Core.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -71,12 +72,23 @@ namespace FargowiltasSouls.Content.Projectiles.BossWeapons
 
         public override void AI()
         {
-            //dont rotate on first tick
+            if (Projectile.localAI[0] == 0)
+                Projectile.ai[2] = 1;
+
+            //dont rotate on first few ticks
             if (Projectile.localAI[0]++ > 1)
                 Projectile.velocity = Projectile.velocity.RotatedBy(MathHelper.Pi / MAXTIME * Projectile.ai[0]);
-            Projectile.rotation = Projectile.velocity.ToRotation();
 
             Player projOwner = Main.player[Projectile.owner];
+
+            if (Projectile.ai[2] != projOwner.gravDir)
+            {
+                Projectile.ai[2] = projOwner.gravDir;
+                Projectile.ai[0] *= -1;
+                Projectile.velocity.Y *= -1;
+            }
+
+            Projectile.rotation = Projectile.velocity.ToRotation();
             Vector2 ownerMountedCenter = projOwner.RotatedRelativePoint(projOwner.MountedCenter);
             Projectile.Center = ownerMountedCenter - Projectile.velocity / 2;
             Projectile.direction = projOwner.direction;
@@ -152,7 +164,7 @@ namespace FargowiltasSouls.Content.Projectiles.BossWeapons
                     Vector2 spawnPos = target.Center;
 
                     if (!Main.dedServ && Main.LocalPlayer.active)
-                        Main.LocalPlayer.FargoSouls().Screenshake = 30;
+                        ScreenShakeSystem.StartShake(15, shakeStrengthDissipationIncrement: 15f / 30);
 
                     if (!Main.dedServ)
                         SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/Thunder"), spawnPos);

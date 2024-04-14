@@ -1,5 +1,4 @@
 using FargowiltasSouls.Content.Bosses.TrojanSquirrel;
-using FargowiltasSouls.Content.Projectiles;
 using Microsoft.Xna.Framework;
 using System;
 using Terraria;
@@ -34,14 +33,14 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Timber
                 return;
             }
 
-            Projectile.rotation = npc.DirectionTo(Projectile.Center).ToRotation() + MathHelper.PiOver2;
+            Projectile.rotation = npc.SafeDirectionTo(Projectile.Center).ToRotation() + MathHelper.PiOver2;
 
             if (--Projectile.ai[1] > 0)
             {
                 if (!Projectile.tileCollide && !Collision.SolidCollision(Projectile.Center, 0, 0))
                     Projectile.tileCollide = true;
 
-                Projectile.velocity = npc.DirectionTo(Main.player[npc.target].Center) * Projectile.velocity.Length();
+                Projectile.velocity = npc.SafeDirectionTo(Main.player[npc.target].Center) * Projectile.velocity.Length();
             }
             else
             {
@@ -56,19 +55,19 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Timber
 
                     Projectile.localAI[0] = 1;
 
-                    Projectile.localAI[1] = npc.DirectionTo(Projectile.Center).ToRotation();
+                    Projectile.localAI[1] = npc.SafeDirectionTo(Projectile.Center).ToRotation();
                 }
 
                 if (Projectile.Distance(npc.Center) > 600)
                     npc.localAI[0] = Math.Sign(Projectile.Center.X - npc.Center.X);
 
-                if (Math.Abs(MathHelper.WrapAngle(npc.DirectionTo(Main.player[npc.target].Center).ToRotation() - npc.DirectionTo(Projectile.Center).ToRotation())) > MathHelper.PiOver2)
+                if (Math.Abs(MathHelper.WrapAngle(npc.SafeDirectionTo(Main.player[npc.target].Center).ToRotation() - npc.SafeDirectionTo(Projectile.Center).ToRotation())) > MathHelper.PiOver2)
                 {
                     Projectile.Kill();
                     return;
                 }
 
-                Vector2 tug = 42f * npc.DirectionTo(Projectile.Center);
+                Vector2 tug = 42f * npc.SafeDirectionTo(Projectile.Center);
                 float lerp = Math.Min(npc.Distance(Projectile.Center) / 2400, 1f);
                 lerp = lerp * 0.8f + 0.2f;
                 lerp *= 0.06f;

@@ -1,11 +1,8 @@
 ﻿
-using FargowiltasSouls.Content.Projectiles.Souls;
+using FargowiltasSouls.Content.Buffs.Souls;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
-using FargowiltasSouls.Core.ModPlayers;
-using FargowiltasSouls.Core.Toggler;
 using FargowiltasSouls.Core.Toggler.Content;
 using Microsoft.Xna.Framework;
-using System;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -13,7 +10,7 @@ using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
 {
-	public class PearlwoodEnchant : BaseEnchant
+    public class PearlwoodEnchant : BaseEnchant
     {
         public override void SetStaticDefaults()
         {
@@ -27,7 +24,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
 
         public override Color nameColor => new(173, 154, 95);
 
-        
+
         public override void SetDefaults()
         {
             base.SetDefaults();
@@ -39,7 +36,6 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.AddEffect<PearlwoodEffect>(Item);
-            player.FargoSouls().PearlwoodEnchantItem = Item;
         }
         public override void AddRecipes()
         {
@@ -57,7 +53,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
     }
     public class PearlwoodEffect : AccessoryEffect
     {
-        
+
         public override Header ToggleHeader => Header.GetHeader<TimberHeader>();
         public override int ToggleItemType => ModContent.ItemType<PearlwoodEnchant>();
         public override void PostUpdateEquips(Player player)
@@ -67,6 +63,12 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
         public static void PearlwoodStar(Player player, Item item)
         {
             FargoSoulsPlayer modPlayer = player.FargoSouls();
+
+            if (!modPlayer.PearlwoodStar)
+                return;
+
+            player.AddBuff(ModContent.BuffType<PearlwoodStarBuff>(), 2);
+
             if (modPlayer.PearlwoodTrail[modPlayer.PearlwoodIndex] != Vector2.Zero) //check if trail actually exists
             {
                 modPlayer.PStarelinePos = modPlayer.PearlwoodTrail[modPlayer.PearlwoodIndex]; //set stareline position
@@ -95,6 +97,9 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
         }
         public override void OnHitNPCEither(Player player, NPC target, NPC.HitInfo hitInfo, DamageClass damageClass, int baseDamage, Projectile projectile, Item item)
         {
+            if (!player.FargoSouls().PStarelineActive)
+                return;
+
             if (hitInfo.Crit)
             {
                 SoundEngine.PlaySound(SoundID.Item25, target.position);
@@ -115,6 +120,9 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
         public static void PearlwoodCritReroll(Player player, ref NPC.HitModifiers modifiers, DamageClass damageClass)
         {
             FargoSoulsPlayer modPlayer = player.FargoSouls();
+
+            if (!modPlayer.PStarelineActive)
+                return;
 
             int rerolls = modPlayer.ForceEffect<PearlwoodEnchant>() ? 2 : 1;
             for (int i = 0; i < rerolls; i++)

@@ -117,7 +117,7 @@ namespace FargowiltasSouls.Content.Projectiles.BossWeapons
             if (Projectile.ai[0] == 1)
             {
                 Projectile.localAI[0] += 0.1f;
-                Projectile.position += Projectile.DirectionTo(Main.player[Projectile.owner].Center) * Projectile.localAI[0];
+                Projectile.position += Projectile.SafeDirectionTo(Main.player[Projectile.owner].Center) * Projectile.localAI[0];
 
                 if (Projectile.Distance(Main.player[Projectile.owner].Center) <= Projectile.localAI[0])
                     Projectile.Kill();

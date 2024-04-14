@@ -29,7 +29,7 @@ namespace FargowiltasSouls.Content.Projectiles.BossWeapons
 
                 if (Projectile.owner == Main.myPlayer)
                 {
-                    Projectile.velocity = Projectile.DirectionTo(Main.MouseWorld) * Projectile.velocity.Length();
+                    Projectile.velocity = Projectile.SafeDirectionTo(Main.MouseWorld) * Projectile.velocity.Length();
                     Projectile.netUpdate = true;
                 }
             }

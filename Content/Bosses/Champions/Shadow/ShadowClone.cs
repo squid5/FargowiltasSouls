@@ -67,10 +67,10 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Shadow
                 Projectile.velocity = Vector2.Zero;
                 Projectile.position += player.velocity / 4f;
                 Projectile.netUpdate = true;
-                Projectile.localAI[0] = Projectile.DirectionTo(player.Center).ToRotation();
+                Projectile.localAI[0] = Projectile.SafeDirectionTo(player.Center).ToRotation();
                 if (FargoSoulsUtil.HostCheck)
                 {
-                    Projectile.NewProjectile(Terraria.Entity.InheritSource(Projectile), Projectile.Center, Projectile.DirectionTo(player.Center), ModContent.ProjectileType<ShadowDeathraySmall>(), 0, 0f, Main.myPlayer);
+                    Projectile.NewProjectile(Terraria.Entity.InheritSource(Projectile), Projectile.Center, Projectile.SafeDirectionTo(player.Center), ModContent.ProjectileType<ShadowDeathraySmall>(), 0, 0f, Main.myPlayer);
                 }
             }
             else if (Projectile.ai[1] == -30)

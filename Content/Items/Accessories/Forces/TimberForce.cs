@@ -1,12 +1,11 @@
 ﻿using FargowiltasSouls.Content.Items.Accessories.Enchantments;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Content.Items.Accessories.Forces
 {
-	public class TimberForce : BaseForce
+    public class TimberForce : BaseForce
     {
 
         public override void SetStaticDefaults()
@@ -34,7 +33,6 @@ namespace FargowiltasSouls.Content.Items.Accessories.Forces
             player.AddEffect<ShadewoodEffect>(Item);
             player.AddEffect<PalmwoodEffect>(Item);
             player.AddEffect<PearlwoodEffect>(Item);
-            player.FargoSouls().PearlwoodEnchantItem = Item;
         }
 
         public override void UpdateVanity(Player player)
