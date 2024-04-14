@@ -3,7 +3,6 @@ using FargowiltasSouls.Content.Projectiles.Masomode;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -155,12 +154,12 @@ namespace FargowiltasSouls.Content.Projectiles.BossWeapons
             }
             target.AddBuff(ModContent.BuffType<CurseoftheMoonBuff>(), 600);
 
-            if (target.lifeMax > 5 && Projectile.localAI[1] == 0)
+            if (Projectile.owner == Main.myPlayer && target.lifeMax > 5)
             {
-                Projectile.localAI[1] = 1;
-
-                if (Main.projectile.Where(p => p.active && p.owner == Projectile.owner && p.type == ModContent.ProjectileType<HentaiSwordBlast>()).Count() <= 0)
+                if (Main.player[Projectile.owner].ownedProjectileCounts[ModContent.ProjectileType<HentaiSwordBlast>()] < 8)
                 {
+                    Main.player[Projectile.owner].ownedProjectileCounts[ModContent.ProjectileType<HentaiSwordBlast>()] += 8;
+
                     Vector2 spawnPos = target.Center;
 
                     if (!Main.dedServ && Main.LocalPlayer.active)
@@ -175,11 +174,8 @@ namespace FargowiltasSouls.Content.Projectiles.BossWeapons
                     {
                         Vector2 angle = baseDirection.RotatedBy(MathHelper.TwoPi / max * i);
                         float ai1 = 30; //number of chains
-                        if (Projectile.owner == Main.myPlayer)
-                        {
-                            Projectile.NewProjectile(Projectile.GetSource_FromThis(), spawnPos + Main.rand.NextVector2Circular(Projectile.width, Projectile.height), Vector2.Zero, ModContent.ProjectileType<HentaiSwordBlast>(),
-                                Projectile.damage, Projectile.knockBack * 3, Projectile.owner, MathHelper.WrapAngle(angle.ToRotation()), ai1);
-                        }
+                        Projectile.NewProjectile(Projectile.GetSource_FromThis(), spawnPos + Main.rand.NextVector2Circular(Projectile.width, Projectile.height), Vector2.Zero, ModContent.ProjectileType<HentaiSwordBlast>(),
+                            Projectile.damage, Projectile.knockBack * 3, Projectile.owner, MathHelper.WrapAngle(angle.ToRotation()), ai1);
                     }
                 }
             }
