@@ -19,5 +19,4 @@ fixed ftw mutant nuke not syncing up with the actual explosions
 ftw mutant counts to 22 twice as fast
 maso eow uses group attacks more often
 maso eow group attacks only use every other head
-fixed penetrator m1 chain explosions not working in mp
 fixed spore dash and ash fireballs ignoring toggle in mp
