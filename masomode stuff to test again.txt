@@ -17,3 +17,5 @@ maso reti aura is god eater
 fixed a render issue with mutant spear spin in ftw
 fixed ftw mutant nuke not syncing up with the actual explosions
 ftw mutant counts to 22 twice as fast
+maso eow uses group attacks more often
+maso eow group attacks only use every other head
