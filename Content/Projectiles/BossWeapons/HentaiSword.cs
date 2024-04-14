@@ -3,6 +3,7 @@ using FargowiltasSouls.Content.Projectiles.Masomode;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -154,12 +155,12 @@ namespace FargowiltasSouls.Content.Projectiles.BossWeapons
             }
             target.AddBuff(ModContent.BuffType<CurseoftheMoonBuff>(), 600);
 
-            if (Projectile.owner == Main.myPlayer && target.lifeMax > 5)
+            if (Projectile.owner == Main.myPlayer && target.lifeMax > 5 && Projectile.localAI[1] == 0)
             {
-                if (Main.player[Projectile.owner].ownedProjectileCounts[ModContent.ProjectileType<HentaiSwordBlast>()] < 8)
-                {
-                    Main.player[Projectile.owner].ownedProjectileCounts[ModContent.ProjectileType<HentaiSwordBlast>()] += 8;
+                Projectile.localAI[1] = 1;
 
+                if (Main.projectile.Where(p => p.active && p.owner == Projectile.owner && p.type == ModContent.ProjectileType<HentaiSwordBlast>()).Count() <= 0)
+                {
                     Vector2 spawnPos = target.Center;
 
                     if (!Main.dedServ && Main.LocalPlayer.active)
