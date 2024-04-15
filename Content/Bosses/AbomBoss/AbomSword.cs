@@ -184,9 +184,7 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
             if (Projectile.velocity == Vector2.Zero)
                 return false;
 
-            Shader shader = ShaderManager.GetShaderIfExists("WillBigDeathray");
-
-            LaserDrawer ??= new PrimDrawer(WidthFunction, ColorFunction, shader);
+            ManagedShader shader = ShaderManager.GetShader("FargowiltasSouls.WillBigDeathray");
 
             // Get the laser end position.
             Vector2 laserEnd = Projectile.Center + Projectile.velocity.SafeNormalize(Vector2.UnitY) * drawDistance;

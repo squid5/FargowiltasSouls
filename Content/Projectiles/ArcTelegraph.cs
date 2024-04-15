@@ -11,9 +11,6 @@ using Terraria.Graphics;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-
-using Luminance.Core.Graphics;
-
 namespace FargowiltasSouls.Content.Projectiles
 {
     /// <summary>

@@ -10,13 +10,12 @@ using Terraria.DataStructures;
 using FargowiltasSouls.Common.Graphics.Particles;
 using FargowiltasSouls.Core.Systems;
 using FargowiltasSouls.Content.Items.Summons;
-using FargowiltasSouls.Common.StateMachines;
-using static FargowiltasSouls.Content.Bosses.BanishedBaron.BanishedBaron;
 using FargowiltasSouls.Content.WorldGeneration;
 using FargowiltasSouls.Content.Projectiles.Masomode;
 using Fargowiltas.Projectiles;
 using Luminance.Core.Graphics;
 using FargowiltasSouls.Content.Buffs.Masomode;
+using Luminance.Common.StateMachines;
 
 namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 {
@@ -130,8 +129,8 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
                 StateMachine.StateStack.Push(StateMachine.StateRegistry[BehaviorStates.RefillAttacks]);
 
             // Update the state machine.
-            StateMachine.ProcessBehavior();
-			StateMachine.ProcessTransitions();
+            StateMachine.PerformBehaviors();
+            StateMachine.PerformStateTransitionCheck();
 
 			// Ensure that there is a valid state timer to get.
 			if (StateMachine.StateStack.Count > 0)
@@ -141,7 +140,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 
 		#region States
 		// These might have 0 references, but it is automatically called due to having the attribute, do not remove!
-		[AutoloadAsBehavior<BehaviorStates>(BehaviorStates.Opening)]
+		[AutoloadAsBehavior<EntityAIState<BehaviorStates>, BehaviorStates>(BehaviorStates.Opening)]
 		public void Opening()
 		{
 			if (Timer >= 0)
@@ -181,7 +180,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 			}
 		}
 
-		[AutoloadAsBehavior<BehaviorStates>(BehaviorStates.PhaseTransition)]
+		[AutoloadAsBehavior<EntityAIState<BehaviorStates>, BehaviorStates>(BehaviorStates.PhaseTransition)]
 		public void PhaseTransition()
 		{
 			HoverSound();
@@ -195,7 +194,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 			SoundEngine.PlaySound(SpiritDroneSFX, NPC.Center);
 		}
 
-		[AutoloadAsBehavior<BehaviorStates>(BehaviorStates.StunPunish)]
+		[AutoloadAsBehavior<EntityAIState<BehaviorStates>, BehaviorStates>(BehaviorStates.StunPunish)]
 		public void StunPunish()
 		{
 			NPC.velocity *= 0.95f;
@@ -228,7 +227,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 					Frame--;
 			}
 		}
-        [AutoloadAsBehavior<BehaviorStates>(BehaviorStates.YouCantEscape)]
+        [AutoloadAsBehavior<EntityAIState<BehaviorStates>, BehaviorStates>(BehaviorStates.YouCantEscape)]
         public void YouCantEscape()
         {
             NPC.velocity *= 0.95f;
@@ -260,7 +259,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
                     Frame--;
             }
         }
-        [AutoloadAsBehavior<BehaviorStates>(BehaviorStates.SpiritGrabPunish)]
+        [AutoloadAsBehavior<EntityAIState<BehaviorStates>, BehaviorStates>(BehaviorStates.SpiritGrabPunish)]
         public void SpiritGrabPunish()
         {
             ref float initialDir = ref AI2;
@@ -285,7 +284,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
                 NPC.velocity = (desiredPos - NPC.Center);
             }
         }
-        [AutoloadAsBehavior<BehaviorStates>(BehaviorStates.HoveringForSlam)]
+        [AutoloadAsBehavior<EntityAIState<BehaviorStates>, BehaviorStates>(BehaviorStates.HoveringForSlam)]
 		public void HoveringForSlam()
 		{
 			const float WaveAmpX = 200;
@@ -319,7 +318,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 			}
 		}
 
-		[AutoloadAsBehavior<BehaviorStates>(BehaviorStates.SlamWShockwave)]
+		[AutoloadAsBehavior<EntityAIState<BehaviorStates>, BehaviorStates>(BehaviorStates.SlamWShockwave)]
 		public void SlamWShockwave()
 		{
 			ref float Counter = ref AI2;
@@ -389,7 +388,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
                     NPC.velocity.X = 0;
         }
 
-		[AutoloadAsBehavior<BehaviorStates>(BehaviorStates.WavyShotCircle)]
+		[AutoloadAsBehavior<EntityAIState<BehaviorStates>, BehaviorStates>(BehaviorStates.WavyShotCircle)]
 		public void WavyShotCircle()
 		{
 			int TelegraphTime = WorldSavingSystem.MasochistModeReal ? 60 : 70;
@@ -445,7 +444,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 			}
 		}
 
-		[AutoloadAsBehavior<BehaviorStates>(BehaviorStates.WavyShotSlam)]
+		[AutoloadAsBehavior<EntityAIState<BehaviorStates>, BehaviorStates>(BehaviorStates.WavyShotSlam)]
 		public void WavyShotSlam()
 		{
 			NPC.noTileCollide = false;
@@ -492,7 +491,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
             }
         }
 
-		[AutoloadAsBehavior<BehaviorStates>(BehaviorStates.GrabbyHands)]
+		[AutoloadAsBehavior<EntityAIState<BehaviorStates>, BehaviorStates>(BehaviorStates.GrabbyHands)]
 		public void GrabbyHands()
 		{
 			NPC.noTileCollide = true;
@@ -568,7 +567,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 			}
 		}
 
-		[AutoloadAsBehavior<BehaviorStates>(BehaviorStates.RandomStuff)]
+		[AutoloadAsBehavior<EntityAIState<BehaviorStates>, BehaviorStates>(BehaviorStates.RandomStuff)]
 		public void RandomStuff()
 		{
 			ref float RandomProj = ref AI3;

@@ -10,14 +10,13 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Graphics.Shaders;
-using FargowiltasSouls.Core.Systems;
 using FargowiltasSouls.Content.Buffs;
 using FargowiltasSouls.Common.Graphics.Particles;
-using Terraria.Audio;
-using FargowiltasSouls.Content.Buffs.Boss;
 using Terraria.ModLoader.IO;
 using FargowiltasSouls.Content.WorldGeneration;
 using System.Linq;
+using Terraria.ModLoader;
+using Terraria.ID;
 
 namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 {
