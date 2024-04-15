@@ -1,7 +1,5 @@
 ﻿using FargowiltasSouls.Content.Buffs.Boss;
 using FargowiltasSouls.Content.Buffs.Masomode;
-using FargowiltasSouls.Content.Projectiles;
-using FargowiltasSouls.Content.Projectiles.BossWeapons;
 using FargowiltasSouls.Core.Systems;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -165,7 +163,7 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
             Color color26 = lightColor;
             color26 = Projectile.GetAlpha(color26);
 
-            if (WorldSavingSystem.MasochistModeReal) //reflects projs indicator trail
+            /*if (WorldSavingSystem.MasochistModeReal) //reflects projs indicator trail
             {
                 for (float i = 0; i < ProjectileID.Sets.TrailCacheLength[Projectile.type]; i += 0.1f)
                 {
@@ -197,7 +195,7 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
                         SpriteEffects.None,
                         0);
                 }
-            }
+            }*/
 
             for (int i = 0; i < ProjectileID.Sets.TrailCacheLength[Projectile.type]; i++)
             {

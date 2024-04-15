@@ -11,7 +11,7 @@ using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Content.Items.Weapons.Challengers
 {
-	public class RoseTintedVisor : SoulsItem
+    public class RoseTintedVisor : SoulsItem
     {
 
         public override void SetStaticDefaults()
@@ -82,7 +82,7 @@ namespace FargowiltasSouls.Content.Items.Weapons.Challengers
         }
         public override void AddRecipes()
         {
-            CreateRecipe().AddIngredient<BanishedBaronBag>(2).AddTile(TileID.Solidifier).Register();
+            CreateRecipe().AddIngredient<BanishedBaronBag>(2).AddTile(TileID.Solidifier).DisableDecraft().Register();
         }
     }
 }

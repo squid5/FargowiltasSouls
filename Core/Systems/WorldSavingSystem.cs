@@ -252,7 +252,7 @@ namespace FargowiltasSouls.Core.Systems
                             ModItem item = ModContent.Find<ModItem>(entry);
                             IronUsedList.Add(item.Type);
                         }
-                        
+
                     }
                 }
             }

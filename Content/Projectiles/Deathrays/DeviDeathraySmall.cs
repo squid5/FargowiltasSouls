@@ -2,12 +2,11 @@
 using Luminance.Core.Graphics;
 using Microsoft.Xna.Framework;
 using System;
-using System.Linq;
 using Terraria;
 
 namespace FargowiltasSouls.Content.Projectiles.Deathrays
 {
-	public class DeviDeathraySmall : BaseDeathray
+    public class DeviDeathraySmall : BaseDeathray
     {
         public override string Texture => "FargowiltasSouls/Content/Projectiles/Deathrays/DeviDeathray";
 

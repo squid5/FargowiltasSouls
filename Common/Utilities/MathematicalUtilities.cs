@@ -1,6 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-
-namespace FargowiltasSouls
+﻿namespace FargowiltasSouls
 {
 	public static partial class FargoSoulsUtil
 	{

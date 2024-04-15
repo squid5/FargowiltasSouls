@@ -23,6 +23,7 @@ using FargowiltasSouls.Content.Items.Accessories.Masomode;
 using FargowiltasSouls.Core.Systems;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using Terraria.Localization;
+using Luminance.Core.Graphics;
 
 namespace FargowiltasSouls.Core.ModPlayers
 {
@@ -426,7 +427,7 @@ namespace FargowiltasSouls.Core.ModPlayers
                 ((MutantBoss)Main.npc[EModeGlobalNPC.mutantBoss].ModNPC).playerInvulTriggered = true;
 
             if (DeathMarked)
-                modifiers.FinalDamage *= 1.5f;
+                modifiers.SourceDamage *= 1.5f;
 
             if (Player.whoAmI == Main.myPlayer && !noDodge && Player.HasEffect<SqueakEffect>() && Main.rand.NextBool(10))
             {
@@ -539,7 +540,7 @@ namespace FargowiltasSouls.Core.ModPlayers
                 {
                     if (!Player.HasBuff(ModContent.BuffType<TimeFrozenBuff>()))
                     {
-                        The22Incident++;
+                        The22Incident += Main.getGoodWorld ? 2 : 1;
                         Rectangle rect = new Rectangle((int)Player.Center.X - 111, (int)Player.Center.Y, 222, 222);
                         for (int i = 0; i < The22Incident; i++)
                             CombatText.NewText(rect, Color.DarkOrange, The22Incident, true);
@@ -547,7 +548,7 @@ namespace FargowiltasSouls.Core.ModPlayers
                         {
                             Player.KillMe(Terraria.DataStructures.PlayerDeathReason.ByCustomReason(Language.GetTextValue("Mods.FargowiltasSouls.DeathMessage.TwentyTwo", Player.name)), 22222222, 0);
                             Projectile.NewProjectile(Player.GetSource_Death(), Player.Center, Vector2.Zero, ModContent.ProjectileType<TwentyTwo>(), 0, 0f, Main.myPlayer);
-                            Screenshake = 120;
+                            ScreenShakeSystem.StartShake(15, shakeStrengthDissipationIncrement: 15f / 120);
                         }
                     }
                 }

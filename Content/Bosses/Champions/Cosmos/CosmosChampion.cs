@@ -1,8 +1,23 @@
-﻿using FargowiltasSouls.Content.Projectiles;
+﻿using Fargowiltas.NPCs;
+using FargowiltasSouls.Content.Bosses.MutantBoss;
+using FargowiltasSouls.Content.Buffs.Masomode;
+using FargowiltasSouls.Content.Buffs.Souls;
+using FargowiltasSouls.Content.Items.Accessories.Forces;
+using FargowiltasSouls.Content.Items.BossBags;
+using FargowiltasSouls.Content.Items.Materials;
+using FargowiltasSouls.Content.Items.Placables.Relics;
+using FargowiltasSouls.Content.Items.Placables.Trophies;
+using FargowiltasSouls.Content.Projectiles;
+using FargowiltasSouls.Core.Globals;
+using FargowiltasSouls.Core.ItemDropRules;
+using FargowiltasSouls.Core.Systems;
+using Luminance.Core.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent.Bestiary;
@@ -336,7 +351,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Cosmos
                         NPC.ai[1] = 1;
 
                         if (!Main.dedServ && Main.LocalPlayer.active)
-                            Main.LocalPlayer.FargoSouls().Screenshake = 30;
+                            ScreenShakeSystem.StartShake(15, shakeStrengthDissipationIncrement: 15f / 30);
 
                         SoundEngine.PlaySound(SoundID.Roar, NPC.Center);
 
@@ -455,7 +470,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Cosmos
                         SoundEngine.PlaySound(SoundID.Item92, NPC.Center);
 
                         if (!Main.dedServ && Main.LocalPlayer.active)
-                            Main.LocalPlayer.FargoSouls().Screenshake = 30;
+                            ScreenShakeSystem.StartShake(15, shakeStrengthDissipationIncrement: 15f / 30);
 
                         //int type; //for dust
 
@@ -750,7 +765,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Cosmos
                     {
                         if (Animation != 5 && FargoSoulsUtil.HostCheck)
                             Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<GlowRing>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage), 0f, Main.myPlayer, NPC.whoAmI, -23);
-                        
+
                     }
 
                     if (++NPC.ai[1] > 60)
@@ -941,7 +956,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Cosmos
                                 if (WorldSavingSystem.EternityMode && NPC.localAI[2] != 0f) //emode p2, do chain blasts
                                 {
                                     if (!Main.dedServ && Main.LocalPlayer.active)
-                                        Main.LocalPlayer.FargoSouls().Screenshake = 30;
+                                        ScreenShakeSystem.StartShake(15, shakeStrengthDissipationIncrement: 15f / 30);
 
                                     if (FargoSoulsUtil.HostCheck) //chain explosions
                                     {
@@ -1661,7 +1676,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Cosmos
                 NPC.frame.Y += frameHeight;
             }
 
-            if (NPC.frame.Y > frameHeight * HandsBackFrame-1)
+            if (NPC.frame.Y > frameHeight * HandsBackFrame - 1)
             {
                 NPC.frame.Y = 0;
             }

@@ -2,7 +2,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
-using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Common.Graphics.Particles
 {
@@ -26,8 +25,8 @@ namespace FargowiltasSouls.Common.Graphics.Particles
 			BloomColor = bloomColor.Value;
 		}
 
-		public override void Update()
-		{
+        public override void Update()
+        {
             Velocity *= 0.95f;
             Scale *= 0.95f;
             Opacity = FargoSoulsUtil.SineInOut(1f - LifetimeRatio);

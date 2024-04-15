@@ -1,6 +1,13 @@
-﻿using Microsoft.Xna.Framework;
+﻿using FargowiltasSouls.Content.Buffs.Masomode;
+using FargowiltasSouls.Content.Items.Accessories.Forces;
+using FargowiltasSouls.Content.Items.Placables.Relics;
+using FargowiltasSouls.Core.Globals;
+using FargowiltasSouls.Core.ItemDropRules;
+using FargowiltasSouls.Core.Systems;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent.Bestiary;
@@ -15,6 +22,7 @@ using FargowiltasSouls.Core.Systems;
 using FargowiltasSouls.Core.Globals;
 using FargowiltasSouls.Content.Buffs.Souls;
 using System.Collections.Generic;
+using Luminance.Core.Graphics;
 
 namespace FargowiltasSouls.Content.Bosses.Champions.Earth
 {
@@ -134,7 +142,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Earth
                     NPC.netUpdate = true;
 
                     if (!Main.dedServ && Main.LocalPlayer.active)
-                        Main.LocalPlayer.FargoSouls().Screenshake = 30;
+                        ScreenShakeSystem.StartShake(15, shakeStrengthDissipationIncrement: 15f / 30);
 
                     if (FargoSoulsUtil.HostCheck)
                     {
@@ -189,7 +197,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Earth
                             //Projectile.NewProjectile(npc.GetSource_FromThis(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<Projectiles.GlowRing>(), 0, 0f, Main.myPlayer, NPC.whoAmI, -3);
 
                             if (!Main.dedServ && Main.LocalPlayer.active)
-                                Main.LocalPlayer.FargoSouls().Screenshake = 30;
+                                ScreenShakeSystem.StartShake(15, shakeStrengthDissipationIncrement: 15f / 30);
 
                             if (FargoSoulsUtil.HostCheck)
                             {

@@ -6,9 +6,7 @@ using FargowiltasSouls.Core.Systems;
 using Luminance.Core.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
 using System;
-using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -159,7 +157,7 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
                 }
             }
         }
-        
+
         public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
             target.velocity.X = target.Center.X < Main.npc[(int)Projectile.ai[1]].Center.X ? -15f : 15f;
@@ -186,7 +184,9 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
             if (Projectile.velocity == Vector2.Zero)
                 return false;
 
-            ManagedShader shader = ShaderManager.GetShader("FargowiltasSouls.WillBigDeathray");
+            Shader shader = ShaderManager.GetShaderIfExists("WillBigDeathray");
+
+            LaserDrawer ??= new PrimDrawer(WidthFunction, ColorFunction, shader);
 
             // Get the laser end position.
             Vector2 laserEnd = Projectile.Center + Projectile.velocity.SafeNormalize(Vector2.UnitY) * drawDistance;
