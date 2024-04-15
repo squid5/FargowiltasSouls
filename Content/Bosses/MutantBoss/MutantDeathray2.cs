@@ -14,6 +14,7 @@ using Terraria.ID;
 using FargowiltasSouls.Core.Systems;
 
 using Luminance.Core.Graphics;
+using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Content.Bosses.MutantBoss
 {

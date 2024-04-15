@@ -141,7 +141,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 
                         Projectile.rotation = Projectile.SafeDirectionTo(target.Center).ToRotation() + MathHelper.PiOver2;
 
-                        if (coffin.StateMachine.CurrentState == null || coffin.StateMachine.CurrentState.ID != CursedCoffin.BehaviorStates.GrabbyHands)
+                        if (coffin.StateMachine.CurrentState == null || coffin.StateMachine.CurrentState.Identifier != CursedCoffin.BehaviorStates.GrabbyHands)
                             Projectile.Kill();
                     }
                     break;  
