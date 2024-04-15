@@ -2133,6 +2133,19 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
         }
         public void AttackReactionShotgun()
         {
+            // Attack currently disabled because of shader drawing issues
+            if (PhaseOne)
+            {
+                oldP1state = P1state;
+                P1stateReset();
+            }
+            else
+            {
+                oldstate = state;
+                StateReset();
+            }
+            return;
+
             ref float RandomSide = ref NPC.localAI[1];
             ref float RandomWindup = ref NPC.localAI[2];
             ref float RandomAngle = ref NPC.localAI[0];
@@ -3258,7 +3271,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
 
             List<int> GetDoableStates() // gets the states doable at the current situation and refill availablestates if necessary
             {
-                List<int> excludedStates = new();
+                HashSet<int> excludedStates = new();
                 // get distance
                 float distance = 4000;
                 if (NPC.target.IsWithinBounds(Main.maxPlayers) && Main.player[NPC.target] is Player player && player.Alive())
@@ -3283,6 +3296,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                     excludedStates.Add((int)P2States.SlurpBurp);
                     excludedStates.Add((int)P2States.RuneExpand);
                 }
+                
                 List<int> doableStates = availablestates.Except(excludedStates).ToList();
                 if (doableStates.Count < 1) // if there's no possible states to do, refill list and re-remove conditionals
                 {
