@@ -1,14 +1,3 @@
 NEW UPDATE - V {ModVersion}
-The mod is now dependent on the Luminance library mod. This mainly matters internally, but will marginally improve performance in some areas.
-
--Masochist Retinazer aura now inflicts God Eater instead
--Masochist EoW uses group attacks more often, and only uses half of his heads for them
--FTW Mutant can't combo direct spear throw into slime rain
--FTW Mutant counts to 22 twice as fast
--Buffed FTW Duke Fishron dashes
--FTW Trojan Squirrel starts at 2x size
--GFB Lifelight phase transition lasts a bit longer
--Tweaked GFB Mutant text
--Some fixes to GFB Banished Baron
--Fixed Shadow Champion orbs being bugged in multiplayer
--Fixed various netcode, visual and other lesser issues 
+-Fixed crashing issue with Soul of Eternity wings
+-Disabled Lifelight reaction shotgun attack because of shader issues
