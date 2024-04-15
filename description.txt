@@ -6,6 +6,13 @@ If you intend to use this mod with the Calamity Mod, use the official Fargo's So
 Fargo Discord: https://discord.gg/Rgen4Vv
 Fargo Wiki: https://fargosmods.wiki.gg
 
+NEW UPDATE - v1.6.9.2
+-Fixed crashing issue with Soul of Eternity wings
+-Disabled Lifelight reaction shotgun attack because of shader issues
+
+NEW UPDATE - v1.6.9.1
+-Fixed Baron game crash
+
 NEW UPDATE - v1.6.9
 The mod is now dependent on the Luminance library mod. This mainly matters internally, but will marginally improve performance in some areas.
 
