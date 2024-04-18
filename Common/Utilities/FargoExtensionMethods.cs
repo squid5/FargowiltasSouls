@@ -89,7 +89,6 @@ namespace FargowiltasSouls //lets everything access it without using
 
         public static void Null(ref this Player.HurtInfo hurtInfo)
         {
-            // hurtInfo.Damage = 0;
             object unboxedHurtInfo = hurtInfo;
             _damageFieldHurtInfo.SetValue(unboxedHurtInfo, 0);
             hurtInfo = (Player.HurtInfo)unboxedHurtInfo;

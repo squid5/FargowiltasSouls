@@ -447,7 +447,7 @@ namespace FargowiltasSouls.Content.Items
             }
             if (item.prefix >= PrefixID.Hard && item.prefix <= PrefixID.Warding)
             {
-                ItemBalance(tooltips, EModeChange.Neutral, "DefensePrefix");
+                ItemBalance(tooltips, EModeChange.Neutral, "DefensePrefix" + (Main.hardMode ? "_HM" : ""));
             }
             //else if (item.CountsAsClass(DamageClass.Summon))
             //{
