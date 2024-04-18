@@ -113,7 +113,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
     {
         public override void PostSetupRecipes()
         {
-            SetFactory factory = new(ContentSamples.ItemsByType.Count);
+            SetFactory factory = new(ItemLoader.ItemCount);
             BaseEnchant.CraftsInto = factory.CreateIntSet();
             foreach (BaseEnchant modItem in ModContent.GetContent<BaseEnchant>())
             {

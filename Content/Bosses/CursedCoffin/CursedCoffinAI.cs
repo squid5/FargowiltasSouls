@@ -255,7 +255,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
             }
             else
             {
-                if (++NPC.frameCounter % 60 == 59)
+                if (++NPC.frameCounter % 30 == 29)
                     Frame--;
             }
         }

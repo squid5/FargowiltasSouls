@@ -15,6 +15,7 @@ using FargowiltasSouls.Content.Buffs.Souls;
 using tModPorter;
 using Microsoft.CodeAnalysis;
 using FargowiltasSouls.Content.WorldGeneration;
+using System.Linq;
 
 namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 {
@@ -42,8 +43,12 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
         //NPC.ai[] overrides
         public float Timer
         {
-            get => StateMachine.CurrentState.Time;
-            set => StateMachine.CurrentState.Time = (int)value;
+            get => StateMachine.StateStack.Any() ? StateMachine.CurrentState.Time : 0;
+            set 
+            {
+                if (StateMachine.StateStack.Any())
+                    StateMachine.CurrentState.Time = (int)value;
+            }
         }
         /// <summary>
         /// Setting this to a number except 0 immediately forces the SpiritGrabPunish state.
@@ -154,12 +159,12 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
         }
         public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers)
         {
-			if (!CoffinArena.Rectangle.Contains(Player.Center.ToTileCoordinates()))
+			if (StateMachine.StateStack.Any() && StateMachine.CurrentState.Identifier == BehaviorStates.YouCantEscape)
 				modifiers.Null();
         }
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
         {
-			if (StateMachine.CurrentState == null || (StateMachine.CurrentState.Identifier != BehaviorStates.SlamWShockwave && StateMachine.CurrentState.Identifier != BehaviorStates.WavyShotSlam))
+			if (!StateMachine.StateStack.Any() || (StateMachine.CurrentState.Identifier != BehaviorStates.SlamWShockwave && StateMachine.CurrentState.Identifier != BehaviorStates.WavyShotSlam))
 				return false;
 			if (NPC.velocity.Y <= 0)
 				return false;
@@ -271,7 +276,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 			if (!PhaseTwo)
 			{
 				float shakeFactor = 1;
-				if (StateMachine.CurrentState != null && StateMachine.CurrentState.Identifier == BehaviorStates.PhaseTransition)
+				if (StateMachine.StateStack.Any() && StateMachine.CurrentState.Identifier == BehaviorStates.PhaseTransition)
 					shakeFactor = 3 + 5 * (Timer / 60);
 				Texture2D glowTexture = ModContent.Request<Texture2D>(Texture + "_MaskGlow", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 				Color glowColor = GlowColor;

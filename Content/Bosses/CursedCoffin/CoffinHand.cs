@@ -141,7 +141,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 
                         Projectile.rotation = Projectile.SafeDirectionTo(target.Center).ToRotation() + MathHelper.PiOver2;
 
-                        if (coffin.StateMachine.CurrentState == null || coffin.StateMachine.CurrentState.Identifier != CursedCoffin.BehaviorStates.GrabbyHands)
+                        if (!coffin.StateMachine.StateStack.Any() || coffin.StateMachine.CurrentState.Identifier != CursedCoffin.BehaviorStates.GrabbyHands)
                             Projectile.Kill();
                     }
                     break;  
@@ -206,14 +206,18 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
                             int mashCap = coffin.MashTimer;
                             if (WorldSavingSystem.MasochistModeReal) // practically inescapable on maso
                                 mashCap += 666;
-                            if (victim.Alive() && (Projectile.Distance(victim.Center) < 160 || victim.whoAmI != Main.myPlayer) && victim.FargoSouls().MashCounter < mashCap)
+
+                            Vector2 arenaCenter = CoffinArena.Center.ToWorldCoordinates();
+                            bool releaseAtCenter = State == 66 && Projectile.Distance(arenaCenter) < 100;
+
+                            if (victim.Alive() && (Projectile.Distance(victim.Center) < 160 || victim.whoAmI != Main.myPlayer) && victim.FargoSouls().MashCounter < mashCap && !releaseAtCenter)
                             {
                                 victim.AddBuff(ModContent.BuffType<GrabbedBuff>(), 2);
                                 victim.Center = Projectile.Center;
                                 victim.fullRotation = Projectile.DirectionFrom(owner.Center).ToRotation() + MathHelper.PiOver2;
                                 victim.fullRotationOrigin = victim.Center - victim.position;
                                 if (State == 66)
-                                    Projectile.velocity = Vector2.Lerp(Projectile.velocity, Projectile.SafeDirectionTo(CoffinArena.Center.ToWorldCoordinates()) * 5, 0.15f);
+                                    Projectile.velocity = Vector2.Lerp(Projectile.velocity, Projectile.SafeDirectionTo(arenaCenter) * 15, 0.15f);
                                 else
                                     Projectile.velocity *= 0.96f;
                             }

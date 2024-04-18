@@ -274,7 +274,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
                 return;
             }
 
-            if (coffin.StateMachine.CurrentState == null)
+            if (!coffin.StateMachine.StateStack.Any())
                 return;
 
             bool newState = (float)coffin.StateMachine.CurrentState.Identifier != State;
@@ -415,7 +415,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
                 static float CrossProduct(Vector2 v1, Vector2 v2) => (v1.X * v2.Y) - (v1.Y * v2.X); // Ordering by cross product gives the biggest undirected angle difference between two vectors
                 List<Vector2> corners = CoffinArena.TopArenaCorners(NPC);
                 CursedCoffin coffin = owner.As<CursedCoffin>();
-                if (coffin.StateMachine.CurrentState != null && coffin.StateMachine.CurrentState.Identifier == CursedCoffin.BehaviorStates.WavyShotSlam)
+                if (coffin.StateMachine.StateStack.Any() && coffin.StateMachine.CurrentState.Identifier == CursedCoffin.BehaviorStates.WavyShotSlam)
                     LockVector1 = corners.OrderByDescending(x => x.Distance(player.Center)).First();
                 else
                     LockVector1 = corners.OrderByDescending(x => Math.Abs(CrossProduct(NPC.DirectionTo(x), NPC.DirectionTo(player.Center)))).First();
