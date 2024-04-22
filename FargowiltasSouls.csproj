@@ -17,6 +17,7 @@
     <None Remove="Folders to Port\**" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="Assets\UI\OncomingMutantWithAura.png" />
     <None Remove="Common\Graphics\Particles\ParticleTextures\BloomParticle.png" />
   </ItemGroup>
   <ItemGroup>
