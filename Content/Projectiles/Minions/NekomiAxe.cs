@@ -159,7 +159,7 @@ namespace FargowiltasSouls.Content.Projectiles.Minions
         public override void OnKill(int timeleft)
         {
             if (!Main.dedServ && Main.LocalPlayer.active)
-                ScreenShakeSystem.StartShake(15, shakeStrengthDissipationIncrement: 15f / 60);
+                ScreenShakeSystem.StartShake(10, shakeStrengthDissipationIncrement: 10f / 30);
 
             MakeDust();
 

@@ -283,8 +283,8 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     if (EnteredPhase3)
                     {
                         if (!Main.dedServ)
-                            if (ScreenShakeSystem.OverallShakeIntensity < 7)
-                                ScreenShakeSystem.SetUniversalRumble(7);
+                            if (ScreenShakeSystem.OverallShakeIntensity < 6)
+                                ScreenShakeSystem.SetUniversalRumble(6);
 
                         if (npc.ai[1] > 30) //roaring
                         {

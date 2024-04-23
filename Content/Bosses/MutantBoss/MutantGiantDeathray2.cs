@@ -73,8 +73,8 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
             base.AI();
 
             if (!Main.dedServ && Main.LocalPlayer.active)
-                if (ScreenShakeSystem.OverallShakeIntensity < 7)
-                    ScreenShakeSystem.SetUniversalRumble(7);
+                if (ScreenShakeSystem.OverallShakeIntensity < 6)
+                    ScreenShakeSystem.SetUniversalRumble(6);
 
             Projectile.timeLeft = 2;
 

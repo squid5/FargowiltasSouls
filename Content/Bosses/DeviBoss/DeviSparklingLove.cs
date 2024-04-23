@@ -107,7 +107,7 @@ namespace FargowiltasSouls.Content.Bosses.DeviBoss
                     Projectile.NewProjectile(Terraria.Entity.InheritSource(Projectile), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<GlowRing>(), 0, 0f, Main.myPlayer, -1, -14);
 
                 if (!Main.dedServ && Main.LocalPlayer.active)
-                    ScreenShakeSystem.StartShake(15, shakeStrengthDissipationIncrement: 15f / 30);
+                    ScreenShakeSystem.StartShake(10, shakeStrengthDissipationIncrement: 10f / 30);
 
                 if (FargoSoulsUtil.HostCheck)
                 {

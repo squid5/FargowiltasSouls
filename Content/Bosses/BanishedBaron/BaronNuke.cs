@@ -181,7 +181,7 @@ namespace FargowiltasSouls.Content.Bosses.BanishedBaron
         }
         public override void OnKill(int timeLeft)
         {
-            ScreenShakeSystem.StartShake(15, shakeStrengthDissipationIncrement: 15f / 30);
+            ScreenShakeSystem.StartShake(10, shakeStrengthDissipationIncrement: 10f / 30);
 
             for (int i = 0; i < 200; i++)
             {

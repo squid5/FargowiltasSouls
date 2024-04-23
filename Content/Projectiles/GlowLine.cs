@@ -230,7 +230,7 @@ namespace FargowiltasSouls.Content.Projectiles
                         Projectile.rotation = Projectile.velocity.ToRotation();
 
                         if (Main.LocalPlayer.active && !Main.dedServ)
-                            ScreenShakeSystem.StartShake(15, shakeStrengthDissipationIncrement: 15f / 30);
+                            ScreenShakeSystem.StartShake(10, shakeStrengthDissipationIncrement: 10f / 30);
 
                         if (counter == maxTime)
                         {

@@ -171,7 +171,7 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
         public override void OnKill(int timeLeft)
         {
             if (Main.LocalPlayer.active && !Main.dedServ)
-                ScreenShakeSystem.StartShake(15, shakeStrengthDissipationIncrement: 15f / 30);
+                ScreenShakeSystem.StartShake(10, shakeStrengthDissipationIncrement: 10f / 30);
 
             SoundEngine.PlaySound(SoundID.Item92, Projectile.Center);
             var type = (int)Projectile.ai[0] switch

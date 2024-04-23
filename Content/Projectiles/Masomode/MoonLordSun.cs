@@ -159,7 +159,7 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
             else
             {
                 if (!Main.dedServ && Main.LocalPlayer.active)
-                    ScreenShakeSystem.StartShake(15, shakeStrengthDissipationIncrement: 15f / 30);
+                    ScreenShakeSystem.StartShake(10, shakeStrengthDissipationIncrement: 10f / 30);
 
                 if (FargoSoulsUtil.HostCheck) //chain explosions
                 {

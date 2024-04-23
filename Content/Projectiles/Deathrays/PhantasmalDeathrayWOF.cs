@@ -51,12 +51,12 @@ namespace FargowiltasSouls.Content.Projectiles.Deathrays
             if (WorldSavingSystem.MasochistModeReal)
             {
                 maxScale = Main.rand.NextFloat(2.5f, 5f);
-                if (!Main.dedServ && ScreenShakeSystem.OverallShakeIntensity < 10)
-                    ScreenShakeSystem.SetUniversalRumble(10);
+                if (!Main.dedServ && ScreenShakeSystem.OverallShakeIntensity < 6)
+                    ScreenShakeSystem.SetUniversalRumble(6);
             }
             else
-                if (!Main.dedServ && ScreenShakeSystem.OverallShakeIntensity < 5)
-                    ScreenShakeSystem.SetUniversalRumble(5);
+                if (!Main.dedServ && ScreenShakeSystem.OverallShakeIntensity < 3)
+                    ScreenShakeSystem.SetUniversalRumble(3);
             Projectile.localAI[0] += 1f;
             if (Projectile.localAI[0] >= maxTime)
             {

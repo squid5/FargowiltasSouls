@@ -376,7 +376,7 @@ namespace FargowiltasSouls.Core.ModPlayers
                 MutantEyeCD = 3600;
 
                 if (!Main.dedServ && Main.LocalPlayer.active)
-                    ScreenShakeSystem.StartShake(15, shakeStrengthDissipationIncrement: 15f / 30);
+                    ScreenShakeSystem.StartShake(10, shakeStrengthDissipationIncrement: 10f / 30);
 
                 const int invulTime = 90;
                 Player.immune = true;
@@ -602,7 +602,7 @@ namespace FargowiltasSouls.Core.ModPlayers
                             if (Player.HasEffect<LihzahrdBoulders>())
                             {
                                 if (!Main.dedServ)
-                                    ScreenShakeSystem.StartShake(15, shakeStrengthDissipationIncrement: 15f / 60);
+                                    ScreenShakeSystem.StartShake(10, shakeStrengthDissipationIncrement: 10f / 30);
 
                                 if (Player.whoAmI == Main.myPlayer)
                                 {

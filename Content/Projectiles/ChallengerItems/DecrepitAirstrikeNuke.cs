@@ -104,7 +104,7 @@ namespace FargowiltasSouls.Content.Projectiles.ChallengerItems
 
         public override void OnKill(int timeLeft)
         {
-            ScreenShakeSystem.StartShake(15, shakeStrengthDissipationIncrement: 15f / 30);
+            ScreenShakeSystem.StartShake(10, shakeStrengthDissipationIncrement: 10f / 30);
             void EchsplodeMinion(Projectile p, ref int hitsLeft)
             {
                 if (hitsLeft <= 0)

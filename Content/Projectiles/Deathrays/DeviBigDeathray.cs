@@ -46,8 +46,8 @@ namespace FargowiltasSouls.Content.Projectiles.Deathrays
         public override void AI()
         {
             if (!Main.dedServ && Main.LocalPlayer.active)
-                if (ScreenShakeSystem.OverallShakeIntensity < 7)
-                    ScreenShakeSystem.SetUniversalRumble(7);
+                if (ScreenShakeSystem.OverallShakeIntensity < 6)
+                    ScreenShakeSystem.SetUniversalRumble(6);
 
             Vector2? vector78 = null;
             if (Projectile.velocity.HasNaNs() || Projectile.velocity == Vector2.Zero)

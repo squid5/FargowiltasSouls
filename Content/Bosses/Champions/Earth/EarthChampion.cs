@@ -142,7 +142,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Earth
                     NPC.netUpdate = true;
 
                     if (!Main.dedServ && Main.LocalPlayer.active)
-                        ScreenShakeSystem.StartShake(15, shakeStrengthDissipationIncrement: 15f / 30);
+                        ScreenShakeSystem.StartShake(10, shakeStrengthDissipationIncrement: 10f / 30);
 
                     if (FargoSoulsUtil.HostCheck)
                     {
@@ -197,7 +197,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Earth
                             //Projectile.NewProjectile(npc.GetSource_FromThis(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<Projectiles.GlowRing>(), 0, 0f, Main.myPlayer, NPC.whoAmI, -3);
 
                             if (!Main.dedServ && Main.LocalPlayer.active)
-                                ScreenShakeSystem.StartShake(15, shakeStrengthDissipationIncrement: 15f / 30);
+                                ScreenShakeSystem.StartShake(10, shakeStrengthDissipationIncrement: 10f / 30);
 
                             if (FargoSoulsUtil.HostCheck)
                             {

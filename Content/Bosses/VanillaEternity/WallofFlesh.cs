@@ -212,7 +212,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                         npc.HasValidTarget && Main.player[npc.target].ZoneUnderworldHeight ? Main.player[npc.target].Center : npc.Center);
 
                     if (Main.LocalPlayer.active)
-                        ScreenShakeSystem.StartShake(25, shakeStrengthDissipationIncrement: 25f / 90);
+                        ScreenShakeSystem.StartShake(15, shakeStrengthDissipationIncrement: 15f / 90);
                 }
             }
 
@@ -270,7 +270,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                         npc.HasValidTarget && Main.player[npc.target].ZoneUnderworldHeight ? Main.player[npc.target].Center : npc.Center);
 
                     if (Main.LocalPlayer.active)
-                        ScreenShakeSystem.StartShake(25, shakeStrengthDissipationIncrement: 25f / 90);
+                        ScreenShakeSystem.StartShake(15, shakeStrengthDissipationIncrement: 15f / 90);
                 }
             }
 
@@ -300,7 +300,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                             npc.HasValidTarget && Main.player[npc.target].ZoneUnderworldHeight ? Main.player[npc.target].Center : npc.Center);
 
                         if (Main.LocalPlayer.active)
-                            ScreenShakeSystem.StartShake(50, shakeStrengthDissipationIncrement: 50f / 180);
+                            ScreenShakeSystem.StartShake(20, shakeStrengthDissipationIncrement: 20f  / 180);
                     }
                 }
             }

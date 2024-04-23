@@ -1031,8 +1031,8 @@ namespace FargowiltasSouls.Content.Projectiles
                             : Main.rand.NextFloat(4f, 6f);
 
                         if (!Main.dedServ && Main.LocalPlayer.active)
-                            if (ScreenShakeSystem.OverallShakeIntensity < 7)
-                                ScreenShakeSystem.SetUniversalRumble(7);
+                            if (ScreenShakeSystem.OverallShakeIntensity < 6)
+                                ScreenShakeSystem.SetUniversalRumble(6);
                     }
                     break;
 

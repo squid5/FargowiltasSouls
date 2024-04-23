@@ -637,7 +637,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                 }
 
                 if (!Main.dedServ)
-                    ScreenShakeSystem.StartShake(15, shakeStrengthDissipationIncrement: 15f / 60);
+                    ScreenShakeSystem.StartShake(10, shakeStrengthDissipationIncrement: 10f / 60);
 
                 if (WorldSavingSystem.EternityMode && !WorldSavingSystem.DownedBoss[(int)WorldSavingSystem.Downed.Lifelight] && FargoSoulsUtil.HostCheck)
                     Item.NewItem(NPC.GetSource_Loot(), Main.player[NPC.target].Hitbox, ModContent.ItemType<FragilePixieLamp>());
@@ -1030,7 +1030,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                     SoundEngine.PlaySound(SoundID.Item92 with { Pitch = -0.5f }, NPC.Center);
 
                     if (!Main.dedServ)
-                        ScreenShakeSystem.StartShake(15, shakeStrengthDissipationIncrement: 15f / 60);
+                        ScreenShakeSystem.StartShake(10, shakeStrengthDissipationIncrement: 10f / 60);
 
                     if (FargoSoulsUtil.HostCheck)
                     {
