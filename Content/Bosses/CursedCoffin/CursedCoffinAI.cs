@@ -216,7 +216,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
                         foreach (Player player in stunned)
                         {
                             Vector2 dir = NPC.rotation.ToRotationVector2();
-                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, dir * 4, ModContent.ProjectileType<CoffinHand>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage, 0.1f), 1f, Main.myPlayer, NPC.whoAmI, 22, player.whoAmI);
+                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, dir * 4, ModContent.ProjectileType<CoffinHand>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage, 0.5f), 1f, Main.myPlayer, NPC.whoAmI, 22, player.whoAmI);
                         }
                     }
                 }
@@ -249,7 +249,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 						foreach (Player player in outsideArena)
 						{
                             Vector2 dir = NPC.rotation.ToRotationVector2();
-                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, dir * 4, ModContent.ProjectileType<CoffinHand>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage, 0.1f), 1f, Main.myPlayer, NPC.whoAmI, 44, player.whoAmI);
+                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, dir * 4, ModContent.ProjectileType<CoffinHand>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage, 0.5f), 1f, Main.myPlayer, NPC.whoAmI, 44, player.whoAmI);
                         }
                     }
                 }
@@ -538,13 +538,13 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 				if (FargoSoulsUtil.HostCheck)
 				{
 					Vector2 dir = NPC.rotation.ToRotationVector2();
-					int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, dir * 4, ModContent.ProjectileType<CoffinHand>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage, 0.1f), 1f, Main.myPlayer, NPC.whoAmI, 1);
+					int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, dir * 4, ModContent.ProjectileType<CoffinHand>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage, 0.5f), 1f, Main.myPlayer, NPC.whoAmI, 1);
 					if (p.IsWithinBounds(Main.maxProjectiles))
 					{
 						Main.projectile[p].localAI[1] = 1;
 						Main.projectile[p].netUpdate = true;
 					}
-                    p = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, dir * 4, ModContent.ProjectileType<CoffinHand>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage, 0.1f), 1f, Main.myPlayer, NPC.whoAmI, 1);
+                    p = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, dir * 4, ModContent.ProjectileType<CoffinHand>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage, 0.5f), 1f, Main.myPlayer, NPC.whoAmI, 1);
                     if (p.IsWithinBounds(Main.maxProjectiles))
                     {
                         Main.projectile[p].localAI[1] = -1;
