@@ -115,7 +115,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
                 return;
             }
             CursedCoffin coffin = owner.As<CursedCoffin>();
-            Player target = Main.player[owner.target];
+            Entity target = Main.player[owner.target];
             if (State == 22 || State == 44)
             {
                 TargetPlayer = (int)Projectile.ai[2];
@@ -124,7 +124,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
             {
                 target = Main.player[TargetPlayer];
             }
-            if (!target.Alive())
+            if (target == null || !target.active)
                 return;
 
             switch (State) // current state

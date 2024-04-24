@@ -20,6 +20,9 @@ namespace FargowiltasSouls.Content.WorldGeneration
 
         public const int Height = 35; // Height of internal room
 
+        public static int VectorWidth => Width * 16;
+        public static int VectorHeight => Height * 16;
+
         public static Point16 StructureSize = Point16.Zero;
         private static int PaddedWidth => StructureSize.X + 2;
         public static Point Center => WorldSavingSystem.CoffinArenaCenter;

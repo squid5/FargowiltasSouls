@@ -1,3 +1,4 @@
+using FargowiltasSouls.Content.Bosses.CursedCoffin;
 using FargowiltasSouls.Content.Buffs;
 using FargowiltasSouls.Content.Buffs.Boss;
 using FargowiltasSouls.Content.Buffs.Masomode;
@@ -53,6 +54,8 @@ namespace FargowiltasSouls.Core.ModPlayers
         public bool fireNoDamage = false;
 
         public int The22Incident;
+
+        public bool SpawnedCoffinGhost = false;
 
         public Dictionary<int, bool> KnownBuffsToPurify = new();
 
@@ -169,7 +172,6 @@ namespace FargowiltasSouls.Core.ModPlayers
             }
 
         }
-
         public override void ResetEffects()
         {
             HasDash = false;
@@ -184,6 +186,8 @@ namespace FargowiltasSouls.Core.ModPlayers
 
             WingTimeModifier = 1f;
 
+            if (Player.Alive())
+                SpawnedCoffinGhost = false;
 
             QueenStingerItem = null;
             EridanusSet = false;
@@ -428,6 +432,14 @@ namespace FargowiltasSouls.Core.ModPlayers
             if (NymphsPerfumeRespawn)
                 NymphsPerfumeRestoreLife = 6;
         }
+        public override void ModifyScreenPosition()
+        {
+            Projectile ghost = Main.projectile.FirstOrDefault(p => p.TypeAlive<CoffinPlayerSoul>() && p.owner == Player.whoAmI);
+            if (ghost != null && ghost.Alive())
+            {
+                Main.screenPosition = ghost.Center - (new Vector2(Main.screenWidth, Main.screenHeight) / 2);
+            }
+        }
         public override void UpdateDead()
         {
             bool wasSandsOfTime = SandsofTime;
@@ -437,6 +449,12 @@ namespace FargowiltasSouls.Core.ModPlayers
 
             SandsofTime = wasSandsOfTime;
             NymphsPerfumeRespawn = wasNymphsPerfumeRespawn;
+
+            if (!SpawnedCoffinGhost && NPC.AnyNPCs(ModContent.NPCType<CursedCoffin>()))
+            {
+                SpawnedCoffinGhost = true;
+                Projectile.NewProjectile(Player.GetSource_FromThis(), Player.Center, Vector2.Zero, ModContent.ProjectileType<CoffinPlayerSoul>(), 0, 0, Player.whoAmI);
+            }
 
             if (SandsofTime && !LumUtils.AnyBosses() && Player.respawnTimer > 10)
                 Player.respawnTimer -= Eternity ? 6 : 1;

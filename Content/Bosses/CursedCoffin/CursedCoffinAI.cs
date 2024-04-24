@@ -123,6 +123,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 			if (!Targeting())
 				return;
 			NPC.timeLeft = 60;
+            NPC.Opacity = 1;
 
 			// Refill the attacks if empty.
 			if ((StateMachine?.StateStack?.Count ?? 1) <= 0)
@@ -696,16 +697,35 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 		{
 			Player player = Main.player[NPC.target];
 			//Targeting
-			if (!player.active || player.dead || player.ghost || NPC.Distance(player.Center) > 2400)
+			if (!player.active || player.dead || player.ghost || NPC.Distance(player.Center) > CoffinArena.Width * 24)
 			{
 				NPC.TargetClosest(false);
 				player = Main.player[NPC.target];
-				if (!player.active || player.dead || player.ghost || NPC.Distance(player.Center) > 2400)
+				if (!player.active || player.dead || player.ghost || NPC.Distance(player.Center) > CoffinArena.Width * 24)
 				{
-					if (NPC.timeLeft > 60)
-						NPC.timeLeft = 60;
-					NPC.velocity.Y -= 0.4f;
-					return false;
+                    bool canDespawn = false;
+                    if (Main.projectile.Any(p => p.TypeAlive<CoffinPlayerSoul>() && p.Distance(NPC.Center) > NPC.width / 2))
+                    {
+                        if (++NPC.frameCounter % 6 == 5)
+                            if (Frame < Main.npcFrameCount[Type] - 1)
+                                Frame++;
+                    }
+                    else
+                    {
+                        if (++NPC.frameCounter % 6 == 5)
+                            if (Frame > 0)
+                                Frame--;
+                        canDespawn = true;
+                    }
+                    NPC.velocity *= 0.94f;
+                    if (NPC.timeLeft > 60)
+                        NPC.timeLeft = 60;
+                    if (NPC.Opacity > 0)
+                        NPC.Opacity -= 1 / 180f;
+                    else if (canDespawn)
+                        NPC.active = false;
+
+                    return false;
 				}
 			}
 			return true;
