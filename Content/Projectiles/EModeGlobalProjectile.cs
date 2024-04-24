@@ -210,6 +210,9 @@ namespace FargowiltasSouls.Content.Projectiles
                     projectile.idStaticNPCHitCooldown = 10;
                     projectile.penetrate = 45;
                     break;
+                case ProjectileID.HoundiusShootiusFireball:
+                    projectile.extraUpdates += 1;
+                    break;
                 default:
                     break;
             }

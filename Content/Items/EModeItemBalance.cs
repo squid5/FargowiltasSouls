@@ -201,7 +201,7 @@ namespace FargowiltasSouls.Content.Items
                     return EModeChange.Buff;
 
                 case ItemID.HoundiusShootius:
-                    balanceTextKeys = new string[] { "Damage" };
+                    balanceTextKeys = new string[] { "Damage", "HoundiusShootius" };
                     balanceNumber = 1.2f;
                     return EModeChange.Buff;
 
