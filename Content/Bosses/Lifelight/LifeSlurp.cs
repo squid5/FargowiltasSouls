@@ -116,6 +116,8 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                 }
                 if (!home && homingonPlayer && !chosenDirection)
                 {
+                    if (!WorldSavingSystem.EternityMode)
+                        Projectile.Kill();
                     double rotationrad = MathHelper.ToRadians(Main.rand.Next(-100, 100));
                     vectorToIdlePosition.Normalize();
                     vectorToIdlePosition = vectorToIdlePosition.RotatedBy(rotationrad) * speed;
