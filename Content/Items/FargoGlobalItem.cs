@@ -129,7 +129,8 @@ namespace FargowiltasSouls.Content.Items
             ItemID.TrueExcalibur,
             //ItemID.PiercingStarlight,
             ItemID.TheHorsemansBlade,
-            ModContent.ItemType<TheBaronsTusk>()
+            ModContent.ItemType<TheBaronsTusk>(),
+            ItemID.LucyTheAxe
         };
         public override void ModifyItemScale(Item item, Player player, ref float scale)
         {
@@ -137,7 +138,7 @@ namespace FargowiltasSouls.Content.Items
 
 
             if (player.HasEffect<TungstenEffect>()
-                && !item.IsAir && item.IsWeapon() && (!item.noMelee || TungstenAlwaysAffects.Contains(item.type)))
+                && !item.IsAir && ((item.IsWeapon() && !item.noMelee) || TungstenAlwaysAffects.Contains(item.type)))
             {
                 scale *= TungstenEffect.TungstenIncreaseWeaponSize(modPlayer);
             }

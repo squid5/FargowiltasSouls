@@ -206,6 +206,10 @@ namespace FargowiltasSouls.Content.Projectiles
                 case ProjectileID.SuperStar:
                     projectile.penetrate = 7;
                     break;
+                case ProjectileID.WeatherPainShot:
+                    projectile.idStaticNPCHitCooldown = 10;
+                    projectile.penetrate = 45;
+                    break;
                 default:
                     break;
             }
