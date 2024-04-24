@@ -103,7 +103,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
         public override void SetDefaults(NPC npc)
         {
             base.SetDefaults(npc);
-            npc.lifeMax = (int)Math.Round(npc.lifeMax * 1.5f);
+            npc.lifeMax = (int)Math.Round(npc.lifeMax * 1.75f);
         }
 
         public override bool SafePreAI(NPC npc)
