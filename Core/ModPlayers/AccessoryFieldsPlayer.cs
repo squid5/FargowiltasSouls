@@ -100,6 +100,7 @@ namespace FargowiltasSouls.Core.ModPlayers
         public bool ValhallaEnchantActive = false;
 
         public bool AncientShadowEnchantActive = false;
+        public int AncientShadowFlameCooldown;
         public int ShadowOrbRespawnTimer;
 
         public Item PlatinumEffect;
