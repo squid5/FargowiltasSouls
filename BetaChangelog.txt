@@ -1,1 +1,1 @@
-﻿
+﻿halved molten ench dot (doesnt effect force upgrade)

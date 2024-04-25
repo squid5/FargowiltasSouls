@@ -52,12 +52,12 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
                 Lighting.AddLight((int)(player.Center.X / 16f), (int)(player.Center.Y / 16f), 0.65f, 0.4f, 0.1f);
                 int buff = BuffID.OnFire;
                 float distance = 200f;
-                int baseDamage = 40;
+                int baseDamage = 20;
 
                 if (player.FargoSouls().ForceEffect<MoltenEnchant>())
                 {
                     distance *= 1.5f;
-                    baseDamage *= 2;
+                    baseDamage *= 4;
                 }
 
                 int damage = FargoSoulsUtil.HighestDamageTypeScaling(player, baseDamage);
