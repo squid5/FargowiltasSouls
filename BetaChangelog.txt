@@ -4,3 +4,4 @@ improved mutant sword/devi axe hitbox, you can no longer dodge devi axe by stand
 maso wof eye lasers inflict burning
 parrot can also spawn in ug jungle in hm
 maso parrot can spawn in jungle phm (no loot until hm)
+dg doesnt spawn from ancient seal
