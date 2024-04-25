@@ -25,10 +25,6 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
         int MassDefenseTimer;
         bool UseMassDefense;
 
-        public override void SetDefaults(NPC npc)
-        {
-            npc.defense += 7;
-        }
         public override void OnFirstTick(NPC npc)
         {
             base.OnFirstTick(npc);
@@ -110,8 +106,8 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
         public override void SafeOnHitByProjectile(NPC npc, Projectile projectile, NPC.HitInfo hit, int damageDone)
         {
-            //if (!FargoSoulsUtil.IsSummonDamage(projectile) && projectile.damage > 5)
-                //projectile.damage = (int)Math.Min(projectile.damage - 1, projectile.damage * 0.75);
+            if (!FargoSoulsUtil.IsSummonDamage(projectile) && projectile.damage > 5)
+                projectile.damage = (int)Math.Min(projectile.damage - 1, projectile.damage * 0.8);
 
             base.SafeOnHitByProjectile(npc, projectile, hit, damageDone);
         }
