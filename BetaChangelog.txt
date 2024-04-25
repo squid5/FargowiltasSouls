@@ -1,2 +1,3 @@
 ﻿halved molten ench dot (doesnt effect force upgrade)
 maso ftw prime swipe limbs use vanilla ai instead
+improved mutant sword/devi axe hitbox, you can no longer dodge devi axe by standing still
