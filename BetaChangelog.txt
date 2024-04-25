@@ -1,1 +1,2 @@
 ﻿halved molten ench dot (doesnt effect force upgrade)
+maso ftw prime swipe limbs use vanilla ai instead
