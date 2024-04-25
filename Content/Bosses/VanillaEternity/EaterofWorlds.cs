@@ -25,6 +25,10 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
         int MassDefenseTimer;
         bool UseMassDefense;
 
+        public override void SetDefaults(NPC npc)
+        {
+            npc.defense += 7;
+        }
         public override void OnFirstTick(NPC npc)
         {
             base.OnFirstTick(npc);
@@ -69,6 +73,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             base.ModifyIncomingHit(npc, ref modifiers);
         }
 
+
         public override bool CheckDead(NPC npc)
         {
             if (WorldSavingSystem.SwarmActive)
@@ -101,6 +106,14 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
             if (EaterofWorldsHead.HaveSpawnDR > 0)
                 modifiers.FinalDamage /= projectile.numHits + 1;
+        }
+
+        public override void SafeOnHitByProjectile(NPC npc, Projectile projectile, NPC.HitInfo hit, int damageDone)
+        {
+            //if (!FargoSoulsUtil.IsSummonDamage(projectile) && projectile.damage > 5)
+                //projectile.damage = (int)Math.Min(projectile.damage - 1, projectile.damage * 0.75);
+
+            base.SafeOnHitByProjectile(npc, projectile, hit, damageDone);
         }
 
         public override void OnHitPlayer(NPC npc, Player target, Player.HurtInfo hurtInfo)

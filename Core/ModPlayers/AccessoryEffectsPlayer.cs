@@ -244,11 +244,11 @@ namespace FargowiltasSouls.Core.ModPlayers
             Player.manaRegenDelay = Math.Max(Player.manaRegenDelay, 30);
 
             SoundEngine.PlaySound(SoundID.Item28, Player.Center);
+            int damage = (int)(14 * Player.ActualClassDamage(DamageClass.Magic));
+            if (!Main.hardMode)
+                damage = 0;
 
-            Projectile.NewProjectile(Player.GetSource_Accessory(FrigidGemstoneItem),
-                Player.Center, 12f * Player.SafeDirectionTo(Main.MouseWorld), ProjectileID.IceBlock,
-                (int)(14 * Player.ActualClassDamage(DamageClass.Magic)), 2f,
-                Player.whoAmI, Player.tileTargetX, Player.tileTargetY);
+            Projectile.NewProjectile(Player.GetSource_Accessory(FrigidGemstoneItem), Player.Center, 12f * Player.SafeDirectionTo(Main.MouseWorld), ProjectileID.IceBlock, damage, 2f, Player.whoAmI, Player.tileTargetX, Player.tileTargetY);
         }
 
 
