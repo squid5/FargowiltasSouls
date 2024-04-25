@@ -1,1 +1,9 @@
-﻿
+﻿halved molten ench dot (doesnt effect force upgrade)
+maso ftw prime swipe limbs use vanilla ai instead
+improved mutant sword/devi axe hitbox, you can no longer dodge devi axe by standing still
+maso wof eye lasers inflict burning
+parrot can also spawn in ug jungle in hm
+maso parrot can spawn in jungle phm (no loot until hm)
+dg doesnt spawn from ancient seal
+nurse heal during boss fight message is more clear that she cant heal because boss alive
+ACTUALLY fixed maso ftw fishron gaining several thousand damage/defense on phase transition

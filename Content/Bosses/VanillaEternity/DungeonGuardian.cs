@@ -45,7 +45,6 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
         {
             base.SetDefaults(npc);
 
-            npc.boss = true;
             npc.lifeMax /= 8;
         }
 
@@ -54,6 +53,12 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             base.LoadSprites(npc, recolor);
 
             LoadNPCSprite(recolor, npc.type);
+        }
+
+        public override bool SafePreAI(NPC npc)
+        {
+            npc.boss = true;
+            return base.SafePreAI(npc);
         }
 
         public override void AI(NPC npc)

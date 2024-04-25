@@ -43,9 +43,17 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
             if (projHitbox.Intersects(targetHitbox))
                 return true;
 
+            //linger the hitbox so player doesn't phase through by flying towards it
             Rectangle trailHitbox = projHitbox;
             trailHitbox.X = (int)Projectile.oldPosition.X;
             trailHitbox.Y = (int)Projectile.oldPosition.Y;
+            if (trailHitbox.Intersects(targetHitbox))
+                return true;
+
+            //lerp so there's no gap
+            trailHitbox = projHitbox;
+            trailHitbox.X = (int)MathHelper.Lerp(Projectile.position.X, Projectile.oldPosition.X, 0.5f);
+            trailHitbox.Y = (int)MathHelper.Lerp(Projectile.position.Y, Projectile.oldPosition.Y, 0.5f);
             if (trailHitbox.Intersects(targetHitbox))
                 return true;
 

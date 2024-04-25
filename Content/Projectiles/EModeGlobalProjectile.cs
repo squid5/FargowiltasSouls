@@ -1469,10 +1469,12 @@ namespace FargowiltasSouls.Content.Projectiles
                     break;
 
                 case ProjectileID.EyeLaser:
-                case ProjectileID.GoldenShowerHostile:
-                case ProjectileID.CursedFlameHostile:
                     if (sourceNPC != null && (sourceNPC.type == NPCID.WallofFlesh || sourceNPC.type == NPCID.WallofFleshEye))
+                    {
                         target.AddBuff(BuffID.OnFire, 300);
+                        if (WorldSavingSystem.MasochistModeReal)
+                            target.AddBuff(BuffID.Burning, 60);
+                    }
                     break;
 
                 case ProjectileID.DrManFlyFlask:

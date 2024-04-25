@@ -382,6 +382,12 @@ namespace FargowiltasSouls.Core.Globals
                         }
                     }
 
+                    if (jungle)
+                    {
+                        if (WorldSavingSystem.MasochistModeReal && normalSpawn)
+                            pool[NPCID.Parrot] = .025f;
+                    }
+
                     if (mushroom)
                     {
                         pool[NPCID.FungiBulb] = .02f;
@@ -419,10 +425,6 @@ namespace FargowiltasSouls.Core.Globals
 
                                 if (NPC.downedGolemBoss && (noBiome || dungeon))
                                     pool[NPCID.CultistArcherWhite] = .01f;
-
-                                if (jungle)
-                                    pool[NPCID.Parrot] = .05f;
-
                             }
                         }
                         else //night
@@ -742,6 +744,9 @@ namespace FargowiltasSouls.Core.Globals
                     {
                         if (normalSpawn && bossCanSpawn)
                             pool[NPCID.QueenBee] = .0001f;
+
+                        if (normalSpawn)
+                            pool[NPCID.Parrot] = .025f;
 
                         if (!surface)
                         {
