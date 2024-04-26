@@ -47,7 +47,7 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
                 }
             }
 
-            Projectile.frame = 2;
+            Projectile.frame = 5;
             Projectile.direction = Projectile.velocity.X < 0 ? -1 : 1;
             Projectile.rotation += Projectile.direction * .3f;
         }
