@@ -28,7 +28,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
             Projectile.aiStyle = -1;
             Projectile.hostile = true;
             Projectile.penetrate = -1;
-            Projectile.tileCollide = false;
+            Projectile.tileCollide = true;
             Projectile.ignoreWater = true;
             Projectile.scale = 1f;
             Projectile.light = 1;
