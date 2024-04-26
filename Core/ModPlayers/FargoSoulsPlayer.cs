@@ -619,7 +619,7 @@ namespace FargowiltasSouls.Core.ModPlayers
                     MythrilEffect.CalcMythrilAttackSpeed(this, item);
                 }
 
-                if (Player.HasEffect<WretchedPouchEffect>() && !MasochistSoul && AttackSpeed > 1f)
+                if (Player.HasBuff<WretchedHexBuff>() && !MasochistSoul && AttackSpeed > 1f)
                 {
                     float diff = AttackSpeed - 1f;
                     diff /= 2;

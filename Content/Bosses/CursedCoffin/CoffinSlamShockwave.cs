@@ -85,7 +85,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
         }
         public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers)
         {
-            modifiers.Null();
+            modifiers.SetMaxDamage(1);
         }
         public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
