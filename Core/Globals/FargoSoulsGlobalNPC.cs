@@ -1251,7 +1251,12 @@ namespace FargowiltasSouls.Core.Globals
 
             if (MoltenAmplify)
             {
-                modifiers.FinalDamage *= 1.25f;
+                float modifier = 1.2f;
+                if (modPlayer.ForceEffect<MoltenEnchant>())
+                {
+                    modifier = 1.3f;
+                }
+                modifiers.FinalDamage *= modifier;
             }
 
             if (PungentGazeTime > 0)

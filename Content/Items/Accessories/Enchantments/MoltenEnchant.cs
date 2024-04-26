@@ -33,7 +33,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
             .AddIngredient(ItemID.MoltenBreastplate)
             .AddIngredient(ItemID.MoltenGreaves)
             //ashwood ench
-            .AddIngredient(ItemID.Sunfury)
+            .AddIngredient(ItemID.MoltenFury)
             .AddIngredient(ItemID.DemonsEye)
 
             .AddTile(TileID.DemonAltar)
