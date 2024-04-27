@@ -179,8 +179,12 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                         {
                             if (FargoSoulsUtil.HostCheck)
                             {
-                                for (int i = 0; i < 8; i++)
+                                int max = WorldSavingSystem.MasochistModeReal ? 12 : 8;
+                                int flip = 1;
+                                for (int i = 0; i < max; i++)
                                 {
+                                    if (WorldSavingSystem.MasochistModeReal)
+                                        flip *= -1;
                                     Vector2 target = npc.Center;
                                     target.X += Math.Sign(npc.velocity.X) * 1000f * WorldEvilAttackCycleTimer / 240f; //gradually targets further and further
                                     target.X += Main.rand.NextFloat(-100, 100);
@@ -191,9 +195,10 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                                     Vector2 distance = target - npc.Center;
                                     distance.X /= time;
                                     distance.Y = distance.Y / time - 0.5f * gravity * time;
+                                    distance.Y *= flip;
 
                                     Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center + Vector2.UnitX * Math.Sign(npc.velocity.X) * 32f, distance,
-                                        ModContent.ProjectileType<GoldenShowerWOF>(), FargoSoulsUtil.ScaledProjectileDamage(npc.damage, 0.75f), 0f, Main.myPlayer, time);
+                                        ModContent.ProjectileType<GoldenShowerWOF>(), FargoSoulsUtil.ScaledProjectileDamage(npc.damage, 0.75f), 0f, Main.myPlayer, time, 0f, flip);
                                 }
                             }
                         }

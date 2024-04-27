@@ -1,21 +1,24 @@
+using FargowiltasSouls.Assets.ExtraTextures;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Luminance.Core.Graphics;
 using System;
 using Terraria;
 using Terraria.Audio;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Content.Projectiles.Masomode
 {
-    public class GoldenShowerWOF : ModProjectile
+    public class GoldenShowerWOF : ModProjectile, IPixelatedPrimitiveRenderer
     {
         public override string Texture => "Terraria/Images/Projectile_288";
 
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Golden Shower");
-            ProjectileID.Sets.TrailCacheLength[Projectile.type] = 20;
+            ProjectileID.Sets.TrailCacheLength[Projectile.type] = 15;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
         }
 
@@ -68,7 +71,7 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
 
             if (Projectile.localAI[0] == 0)
             {
-                Projectile.velocity.Y += 0.5f;
+                Projectile.velocity.Y += 0.5f * Projectile.ai[2];
                 Projectile.rotation = Projectile.velocity.ToRotation() + (float)Math.PI / 2f;
             }
         }
@@ -81,65 +84,39 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
 
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
-            //when hit a tile, linger there until most of the trail catches up with the head
-            if (Projectile.position != Projectile.oldPos[(int)(ProjectileID.Sets.TrailCacheLength[Projectile.type] * 0.75)])
-            {
-                Projectile.localAI[0] = 1;
-                Projectile.position += Projectile.velocity;
-                Projectile.velocity = Vector2.Zero;
-                return false;
-            }
+            Projectile.velocity = Vector2.Zero;
+            if (Projectile.timeLeft > 10)
+                Projectile.timeLeft = 10;
+            return false;
+        }
 
-            return base.OnTileCollide(oldVelocity);
+        public float WidthFunction(float completionRatio)
+        {
+            float baseWidth = Projectile.scale * Projectile.width * 1.3f;
+            return MathHelper.SmoothStep(baseWidth, 3.5f, completionRatio);
+        }
+
+        public static Color ColorFunction(float completionRatio)
+        {
+            return Color.Lerp(new(250, 250, 0), Color.Transparent, completionRatio) * 0.7f;
         }
 
         public override bool PreDraw(ref Color lightColor)
         {
-            Texture2D texture2D13 = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
-            int num156 = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value.Height / Main.projFrames[Projectile.type]; //ypos of lower right corner of sprite to draw
+            Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
+            int num156 = TextureAssets.Projectile[Projectile.type].Value.Height / Main.projFrames[Projectile.type]; //ypos of lower right corner of sprite to draw
             int y3 = num156 * Projectile.frame; //ypos of upper left corner of sprite to draw
-            Rectangle rectangle = new(0, y3, texture2D13.Width, num156);
+            Rectangle rectangle = new(0, y3, texture.Width, num156);
             Vector2 origin2 = rectangle.Size() / 2f;
-
-            Color color26 = lightColor;
-            color26 = Projectile.GetAlpha(color26);
-
-            for (float i = 0; i < ProjectileID.Sets.TrailCacheLength[Projectile.type]; i += 0.2f)
-            {
-                //don't draw if this pos overlaps the one before it
-                if (i >= 1 && Projectile.oldPos[(int)i] == Projectile.oldPos[(int)i - 1])
-                    continue;
-
-                Texture2D glow = ModContent.Request<Texture2D>("FargowiltasSouls/Content/Projectiles/BossWeapons/HentaiSpearSpinGlow", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-                Color color27 = Color.Lerp(new Color(255, 255, 0, 210), Color.Transparent, 0.4f);
-                color27 *= (float)(ProjectileID.Sets.TrailCacheLength[Projectile.type] - i) / ProjectileID.Sets.TrailCacheLength[Projectile.type];
-                float scale = Projectile.scale;
-                scale *= (float)(ProjectileID.Sets.TrailCacheLength[Projectile.type] - i) / ProjectileID.Sets.TrailCacheLength[Projectile.type];
-                int max0 = (int)i - 1;//Math.Max((int)i - 1, 0);
-                if (max0 < 0)
-                    continue;
-                Vector2 center = Vector2.Lerp(Projectile.oldPos[(int)i], Projectile.oldPos[max0], 1 - i % 1);
-                /*bool withinangle = Projectile.rotation > -Math.PI / 2 && Projectile.rotation < Math.PI / 2;
-                if (withinangle && player.direction == 1)
-                    smoothtrail *= -1;
-                else if (!withinangle && player.direction == -1)
-                    smoothtrail *= -1;*/
-
-                center += Projectile.Size / 2;
-
-                //Vector2 offset = (Projectile.Size / 4).RotatedBy(Projectile.oldRot[(int)i] - smoothtrail * (-Projectile.direction));
-                Main.EntitySpriteDraw(
-                    glow,
-                    center - Main.screenPosition + new Vector2(0, Projectile.gfxOffY),
-                    null,
-                    color27,
-                    Projectile.rotation,
-                    glow.Size() / 2,
-                    scale * 0.15f,
-                    SpriteEffects.None,
-                    0);
-            }
+            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), Color.White, Projectile.rotation, origin2, Projectile.scale, SpriteEffects.None, 0);
             return false;
+        }
+
+        public void RenderPixelatedPrimitives(SpriteBatch spriteBatch)
+        {
+            ManagedShader shader = ShaderManager.GetShader("FargowiltasSouls.BlobTrail");
+            FargoSoulsUtil.SetTexture1(FargosTextureRegistry.FadedStreak.Value);
+            PrimitiveRenderer.RenderTrail(Projectile.oldPos, new(WidthFunction, ColorFunction, _ => Projectile.Size * 0.5f, Pixelate: true, Shader: shader), 5);
         }
     }
 }
