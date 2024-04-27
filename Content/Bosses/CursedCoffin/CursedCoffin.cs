@@ -15,6 +15,7 @@ using FargowiltasSouls.Content.Buffs.Souls;
 using tModPorter;
 using Microsoft.CodeAnalysis;
 using FargowiltasSouls.Content.WorldGeneration;
+using System.Linq;
 
 namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 {
@@ -39,8 +40,16 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 
 		private int LastAttackChoice { get; set; }
 
-		//NPC.ai[] overrides
-		public ref float Timer => ref StateMachine.CurrentState.Timer;
+        //NPC.ai[] overrides
+        public float Timer
+        {
+            get => StateMachine.StateStack.Any() ? StateMachine.CurrentState.Time : 0;
+            set 
+            {
+                if (StateMachine.StateStack.Any())
+                    StateMachine.CurrentState.Time = (int)value;
+            }
+        }
         /// <summary>
         /// Setting this to a number except 0 immediately forces the SpiritGrabPunish state.
 		/// This happens when the Spirit grabs a player.
@@ -150,12 +159,12 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
         }
         public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers)
         {
-			if (!CoffinArena.Rectangle.Contains(Player.Center.ToTileCoordinates()))
+			if (StateMachine.StateStack.Any() && StateMachine.CurrentState.Identifier == BehaviorStates.YouCantEscape)
 				modifiers.Null();
         }
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
         {
-			if (StateMachine.CurrentState == null || StateMachine.CurrentState.ID != BehaviorStates.SlamWShockwave)
+			if (!StateMachine.StateStack.Any() || (StateMachine.CurrentState.Identifier != BehaviorStates.SlamWShockwave && StateMachine.CurrentState.Identifier != BehaviorStates.WavyShotSlam))
 				return false;
 			if (NPC.velocity.Y <= 0)
 				return false;
@@ -193,7 +202,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 			// 2. Write the state IDs as ints to the stack in the order they are on the stack. Also write the timers.
 			var stackArray = StateMachine.StateStack.ToArray();
 			for (int i = 0; i < StateMachine.StateStack.Count; i++)
-				writer.Write((int)stackArray[i].ID);
+				writer.Write((int)stackArray[i].Identifier);
 		}
 
 		public override void ReceiveExtraAI(BinaryReader reader)
@@ -267,7 +276,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 			if (!PhaseTwo)
 			{
 				float shakeFactor = 1;
-				if (StateMachine.CurrentState != null && StateMachine.CurrentState.ID == BehaviorStates.PhaseTransition)
+				if (StateMachine.StateStack.Any() && StateMachine.CurrentState.Identifier == BehaviorStates.PhaseTransition)
 					shakeFactor = 3 + 5 * (Timer / 60);
 				Texture2D glowTexture = ModContent.Request<Texture2D>(Texture + "_MaskGlow", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 				Color glowColor = GlowColor;

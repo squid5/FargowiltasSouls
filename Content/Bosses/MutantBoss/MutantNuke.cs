@@ -1,6 +1,5 @@
 using FargowiltasSouls.Content.Buffs.Boss;
 using FargowiltasSouls.Content.Buffs.Masomode;
-using FargowiltasSouls.Content.Projectiles;
 using FargowiltasSouls.Content.Projectiles.BossWeapons;
 using FargowiltasSouls.Core.Globals;
 using FargowiltasSouls.Core.Systems;
@@ -56,6 +55,15 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
             {
                 Projectile.Kill();
                 return;
+            }
+
+            if (WorldSavingSystem.MasochistModeReal && Main.getGoodWorld)
+            {
+                if (++Projectile.localAI[2] > MutantBoss.HyperMax + 1)
+                {
+                    Projectile.localAI[2] = 0;
+                    Projectile.AI();
+                }
             }
 
             Projectile.velocity.Y += Projectile.ai[0];

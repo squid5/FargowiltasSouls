@@ -10,13 +10,12 @@ using Terraria.DataStructures;
 using FargowiltasSouls.Common.Graphics.Particles;
 using FargowiltasSouls.Core.Systems;
 using FargowiltasSouls.Content.Items.Summons;
-using FargowiltasSouls.Common.StateMachines;
-using static FargowiltasSouls.Content.Bosses.BanishedBaron.BanishedBaron;
 using FargowiltasSouls.Content.WorldGeneration;
 using FargowiltasSouls.Content.Projectiles.Masomode;
 using Fargowiltas.Projectiles;
 using Luminance.Core.Graphics;
 using FargowiltasSouls.Content.Buffs.Masomode;
+using Luminance.Common.StateMachines;
 
 namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 {
@@ -94,16 +93,21 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 
 			// Pushaway collision (solid object)
 			// this is jank
-			Vector2 nextCenter = Main.LocalPlayer.Center + Main.LocalPlayer.velocity;
-			Rectangle nextFrameHitbox = new((int)(nextCenter.X - Main.LocalPlayer.Hitbox.Width / 2), (int)(nextCenter.Y - Main.LocalPlayer.Hitbox.Height / 2), Main.LocalPlayer.Hitbox.Width, Main.LocalPlayer.Hitbox.Height);
+			Player localPlayer = Main.LocalPlayer;
+			Vector2 nextCenter = localPlayer.Center + localPlayer.velocity;
+			Rectangle nextFrameHitbox = new((int)(nextCenter.X - localPlayer.Hitbox.Width / 2), (int)(nextCenter.Y - localPlayer.Hitbox.Height / 2), localPlayer.Hitbox.Width, localPlayer.Hitbox.Height);
 			if (nextFrameHitbox.Intersects(NPC.Hitbox))
 			{
 				if (!Main.LocalPlayer.Hitbox.Intersects(NPC.Hitbox))
 				{
+					Main.LocalPlayer.velocity.X /= 2;
+					Main.LocalPlayer.position.X -= Math.Sign(localPlayer.Center.X - NPC.Center.X) * 8;
+					/*
                     Main.LocalPlayer.position -= Main.LocalPlayer.velocity;
                     Main.LocalPlayer.velocity = Vector2.Zero;
+					*/
                 }
-				Main.LocalPlayer.velocity -= Main.LocalPlayer.DirectionTo(NPC.Center) * 0.5f;
+				Main.LocalPlayer.velocity -= Main.LocalPlayer.DirectionTo(NPC.Center);
                 /*
 				Vector2 dir = Main.LocalPlayer.DirectionTo(NPC.Center);
 				Vector2 vel = Main.LocalPlayer.velocity;
@@ -119,14 +123,15 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 			if (!Targeting())
 				return;
 			NPC.timeLeft = 60;
+            NPC.Opacity = 1;
 
 			// Refill the attacks if empty.
 			if ((StateMachine?.StateStack?.Count ?? 1) <= 0)
                 StateMachine.StateStack.Push(StateMachine.StateRegistry[BehaviorStates.RefillAttacks]);
 
             // Update the state machine.
-            StateMachine.ProcessBehavior();
-			StateMachine.ProcessTransitions();
+            StateMachine.PerformBehaviors();
+            StateMachine.PerformStateTransitionCheck();
 
 			// Ensure that there is a valid state timer to get.
 			if (StateMachine.StateStack.Count > 0)
@@ -136,7 +141,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 
 		#region States
 		// These might have 0 references, but it is automatically called due to having the attribute, do not remove!
-		[AutoloadAsBehavior<BehaviorStates>(BehaviorStates.Opening)]
+		[AutoloadAsBehavior<EntityAIState<BehaviorStates>, BehaviorStates>(BehaviorStates.Opening)]
 		public void Opening()
 		{
 			if (Timer >= 0)
@@ -176,7 +181,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 			}
 		}
 
-		[AutoloadAsBehavior<BehaviorStates>(BehaviorStates.PhaseTransition)]
+		[AutoloadAsBehavior<EntityAIState<BehaviorStates>, BehaviorStates>(BehaviorStates.PhaseTransition)]
 		public void PhaseTransition()
 		{
 			HoverSound();
@@ -190,7 +195,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 			SoundEngine.PlaySound(SpiritDroneSFX, NPC.Center);
 		}
 
-		[AutoloadAsBehavior<BehaviorStates>(BehaviorStates.StunPunish)]
+		[AutoloadAsBehavior<EntityAIState<BehaviorStates>, BehaviorStates>(BehaviorStates.StunPunish)]
 		public void StunPunish()
 		{
 			NPC.velocity *= 0.95f;
@@ -211,7 +216,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
                         foreach (Player player in stunned)
                         {
                             Vector2 dir = NPC.rotation.ToRotationVector2();
-                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, dir * 4, ModContent.ProjectileType<CoffinHand>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage, 0.1f), 1f, Main.myPlayer, NPC.whoAmI, 22, player.whoAmI);
+                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, dir * 4, ModContent.ProjectileType<CoffinHand>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage, 0.5f), 1f, Main.myPlayer, NPC.whoAmI, 22, player.whoAmI);
                         }
                     }
                 }
@@ -223,7 +228,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 					Frame--;
 			}
 		}
-        [AutoloadAsBehavior<BehaviorStates>(BehaviorStates.YouCantEscape)]
+        [AutoloadAsBehavior<EntityAIState<BehaviorStates>, BehaviorStates>(BehaviorStates.YouCantEscape)]
         public void YouCantEscape()
         {
             NPC.velocity *= 0.95f;
@@ -244,18 +249,18 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 						foreach (Player player in outsideArena)
 						{
                             Vector2 dir = NPC.rotation.ToRotationVector2();
-                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, dir * 4, ModContent.ProjectileType<CoffinHand>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage, 0.1f), 1f, Main.myPlayer, NPC.whoAmI, 44, player.whoAmI);
+                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, dir * 4, ModContent.ProjectileType<CoffinHand>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage, 0.5f), 1f, Main.myPlayer, NPC.whoAmI, 44, player.whoAmI);
                         }
                     }
                 }
             }
             else
             {
-                if (++NPC.frameCounter % 60 == 59)
+                if (++NPC.frameCounter % 30 == 29)
                     Frame--;
             }
         }
-        [AutoloadAsBehavior<BehaviorStates>(BehaviorStates.SpiritGrabPunish)]
+        [AutoloadAsBehavior<EntityAIState<BehaviorStates>, BehaviorStates>(BehaviorStates.SpiritGrabPunish)]
         public void SpiritGrabPunish()
         {
             ref float initialDir = ref AI2;
@@ -280,7 +285,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
                 NPC.velocity = (desiredPos - NPC.Center);
             }
         }
-        [AutoloadAsBehavior<BehaviorStates>(BehaviorStates.HoveringForSlam)]
+        [AutoloadAsBehavior<EntityAIState<BehaviorStates>, BehaviorStates>(BehaviorStates.HoveringForSlam)]
 		public void HoveringForSlam()
 		{
 			const float WaveAmpX = 200;
@@ -314,7 +319,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 			}
 		}
 
-		[AutoloadAsBehavior<BehaviorStates>(BehaviorStates.SlamWShockwave)]
+		[AutoloadAsBehavior<EntityAIState<BehaviorStates>, BehaviorStates>(BehaviorStates.SlamWShockwave)]
 		public void SlamWShockwave()
 		{
 			ref float Counter = ref AI2;
@@ -384,7 +389,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
                     NPC.velocity.X = 0;
         }
 
-		[AutoloadAsBehavior<BehaviorStates>(BehaviorStates.WavyShotCircle)]
+		[AutoloadAsBehavior<EntityAIState<BehaviorStates>, BehaviorStates>(BehaviorStates.WavyShotCircle)]
 		public void WavyShotCircle()
 		{
 			int TelegraphTime = WorldSavingSystem.MasochistModeReal ? 60 : 70;
@@ -440,7 +445,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 			}
 		}
 
-		[AutoloadAsBehavior<BehaviorStates>(BehaviorStates.WavyShotSlam)]
+		[AutoloadAsBehavior<EntityAIState<BehaviorStates>, BehaviorStates>(BehaviorStates.WavyShotSlam)]
 		public void WavyShotSlam()
 		{
 			NPC.noTileCollide = false;
@@ -456,8 +461,16 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 					const int ProjCount = 20;
                     for (int i = 0; i < ProjCount; i++)
                     {
-						Vector2 centerTop = CoffinArena.Center.ToWorldCoordinates() - Vector2.UnitY * CoffinArena.Height * 8f;
-						Vector2 projPos = centerTop + dir * Vector2.UnitX * (CoffinArena.Width * 8) * ((float)i / ProjCount);
+						Vector2 center = CoffinArena.Center.ToWorldCoordinates();
+						Vector2 projPos = center + dir * Vector2.UnitX * (CoffinArena.Width * 8) * ((float)i / ProjCount);
+						Point tile = projPos.ToTileCoordinates();
+						for (int safety = 0; safety < 100; safety++)
+						{
+							if (Main.tile[tile.X, tile.Y].HasUnactuatedTile && Main.tile[tile.X, tile.Y].TileType == TileID.SandstoneBrick)
+								break;
+							tile.Y -= 1;
+                        }
+						projPos = tile.ToWorldCoordinates();
 						projPos.X += Main.rand.NextFloat(-10, 10);
 						projPos.Y += Main.rand.NextFloat(-3, 4);
 
@@ -479,7 +492,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
             }
         }
 
-		[AutoloadAsBehavior<BehaviorStates>(BehaviorStates.GrabbyHands)]
+		[AutoloadAsBehavior<EntityAIState<BehaviorStates>, BehaviorStates>(BehaviorStates.GrabbyHands)]
 		public void GrabbyHands()
 		{
 			NPC.noTileCollide = true;
@@ -525,13 +538,13 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 				if (FargoSoulsUtil.HostCheck)
 				{
 					Vector2 dir = NPC.rotation.ToRotationVector2();
-					int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, dir * 4, ModContent.ProjectileType<CoffinHand>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage, 0.1f), 1f, Main.myPlayer, NPC.whoAmI, 1);
+					int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, dir * 4, ModContent.ProjectileType<CoffinHand>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage, 0.5f), 1f, Main.myPlayer, NPC.whoAmI, 1);
 					if (p.IsWithinBounds(Main.maxProjectiles))
 					{
 						Main.projectile[p].localAI[1] = 1;
 						Main.projectile[p].netUpdate = true;
 					}
-                    p = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, dir * 4, ModContent.ProjectileType<CoffinHand>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage, 0.1f), 1f, Main.myPlayer, NPC.whoAmI, 1);
+                    p = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, dir * 4, ModContent.ProjectileType<CoffinHand>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage, 0.5f), 1f, Main.myPlayer, NPC.whoAmI, 1);
                     if (p.IsWithinBounds(Main.maxProjectiles))
                     {
                         Main.projectile[p].localAI[1] = -1;
@@ -555,7 +568,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 			}
 		}
 
-		[AutoloadAsBehavior<BehaviorStates>(BehaviorStates.RandomStuff)]
+		[AutoloadAsBehavior<EntityAIState<BehaviorStates>, BehaviorStates>(BehaviorStates.RandomStuff)]
 		public void RandomStuff()
 		{
 			ref float RandomProj = ref AI3;
@@ -684,16 +697,35 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 		{
 			Player player = Main.player[NPC.target];
 			//Targeting
-			if (!player.active || player.dead || player.ghost || NPC.Distance(player.Center) > 2400)
+			if (!player.active || player.dead || player.ghost || NPC.Distance(player.Center) > CoffinArena.Width * 24)
 			{
 				NPC.TargetClosest(false);
 				player = Main.player[NPC.target];
-				if (!player.active || player.dead || player.ghost || NPC.Distance(player.Center) > 2400)
+				if (!player.active || player.dead || player.ghost || NPC.Distance(player.Center) > CoffinArena.Width * 24)
 				{
-					if (NPC.timeLeft > 60)
-						NPC.timeLeft = 60;
-					NPC.velocity.Y -= 0.4f;
-					return false;
+                    bool canDespawn = false;
+                    if (Main.projectile.Any(p => p.TypeAlive<CoffinPlayerSoul>() && p.Distance(NPC.Center) > NPC.width / 2))
+                    {
+                        if (++NPC.frameCounter % 6 == 5)
+                            if (Frame < Main.npcFrameCount[Type] - 1)
+                                Frame++;
+                    }
+                    else
+                    {
+                        if (++NPC.frameCounter % 6 == 5)
+                            if (Frame > 0)
+                                Frame--;
+                        canDespawn = true;
+                    }
+                    NPC.velocity *= 0.94f;
+                    if (NPC.timeLeft > 60)
+                        NPC.timeLeft = 60;
+                    if (NPC.Opacity > 0)
+                        NPC.Opacity -= 1 / 180f;
+                    else if (canDespawn)
+                        NPC.active = false;
+
+                    return false;
 				}
 			}
 			return true;

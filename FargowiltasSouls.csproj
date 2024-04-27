@@ -22,14 +22,13 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="Common\Graphics\Particles\ParticleTextures\BloomParticle.png" />
-    <None Remove="Content\Bosses\CursedCoffin\FallingSandstone.png" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="tModLoader.CodeAssist" Version="0.1.*" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Assets\ExtraTextures\Noise\" />
-    <Folder Include="Common\Graphics\Shaders\Compiler\" />
+    <Folder Include="Content\WorldGen\" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Fargowiltas">

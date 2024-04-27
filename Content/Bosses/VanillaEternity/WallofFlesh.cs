@@ -1,22 +1,24 @@
-using System.IO;
-using Terraria.ModLoader.IO;
+using FargowiltasSouls.Common.Graphics.Particles;
+using FargowiltasSouls.Common.Utilities;
+using FargowiltasSouls.Content.Buffs.Masomode;
+using FargowiltasSouls.Content.Projectiles;
 using FargowiltasSouls.Content.Projectiles.Deathrays;
 using FargowiltasSouls.Content.Projectiles.Masomode;
+using FargowiltasSouls.Core.Globals;
+using FargowiltasSouls.Core.NPCMatching;
+using FargowiltasSouls.Core.Systems;
+using Luminance.Core.Graphics;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.IO;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
+using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
-using FargowiltasSouls.Content.Projectiles;
-using FargowiltasSouls.Content.Buffs.Masomode;
-using FargowiltasSouls.Core.Systems;
-using FargowiltasSouls.Core.Globals;
-using FargowiltasSouls.Common.Utilities;
-using FargowiltasSouls.Core.NPCMatching;
-using FargowiltasSouls.Common.Graphics.Particles;
-using System.Drawing;
+using Terraria.ModLoader.IO;
 using Color = Microsoft.Xna.Framework.Color;
 using FargowiltasSouls.Content.Patreon.DanielTheRobot;
 using Microsoft.Xna.Framework.Graphics;
@@ -25,7 +27,7 @@ using Luminance.Core.Graphics;
 
 namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 {
-	public class WallofFlesh : EModeNPCBehaviour
+    public class WallofFlesh : EModeNPCBehaviour
     {
         public override NPCMatcher CreateMatcher() => new NPCMatcher().MatchType(NPCID.WallofFlesh);
 
@@ -214,7 +216,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                         npc.HasValidTarget && Main.player[npc.target].ZoneUnderworldHeight ? Main.player[npc.target].Center : npc.Center);
 
                     if (Main.LocalPlayer.active)
-                        Main.LocalPlayer.FargoSouls().Screenshake = 90;
+                        ScreenShakeSystem.StartShake(25, shakeStrengthDissipationIncrement: 25f / 90);
                 }
             }
 
@@ -272,7 +274,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                         npc.HasValidTarget && Main.player[npc.target].ZoneUnderworldHeight ? Main.player[npc.target].Center : npc.Center);
 
                     if (Main.LocalPlayer.active)
-                        Main.LocalPlayer.FargoSouls().Screenshake = 90;
+                        ScreenShakeSystem.StartShake(25, shakeStrengthDissipationIncrement: 25f / 90);
                 }
             }
 
@@ -302,7 +304,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                             npc.HasValidTarget && Main.player[npc.target].ZoneUnderworldHeight ? Main.player[npc.target].Center : npc.Center);
 
                         if (Main.LocalPlayer.active)
-                            Main.LocalPlayer.FargoSouls().Screenshake = 180;
+                            ScreenShakeSystem.StartShake(50, shakeStrengthDissipationIncrement: 50f / 180);
                     }
                 }
             }
@@ -479,7 +481,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                 {
                     TelegraphTimer = 0;
                 }
-                
+
                 const float TelegraphTime = 645;
 
                 float rot = npc.rotation + (npc.direction > 0 ? 0 : MathHelper.Pi);
@@ -495,7 +497,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                 //float alpha = (int)(255f * progress);
                 int frequency = 2 + (int)Math.Ceiling(progress * 6);
                 float coneHalfWidth = MathHelper.PiOver2 * 0.8f * progress;
-                float speed = 6 + (1-progress) * 6;
+                float speed = 6 + (1 - progress) * 6;
                 Vector2 vel = direction.RotatedByRandom(coneHalfWidth);
                 float offsetAmt = 25 + (30 * progress);
                 Vector2 offset = vel * Main.rand.NextFloat(offsetAmt, offsetAmt * 2);
@@ -660,7 +662,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                 HasTelegraphedNormalLasers = true;
                 TelegraphingLasers = true;
                 //if (FargoSoulsUtil.HostCheck)
-                    //Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, Vector2.Zero, ModContent.ProjectileType<GlowRing>(), 0, 0f, Main.myPlayer, npc.whoAmI, -22);
+                //Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, Vector2.Zero, ModContent.ProjectileType<GlowRing>(), 0, 0f, Main.myPlayer, npc.whoAmI, -22);
                 //Projectile.scale = 18f * progress;
 
             }

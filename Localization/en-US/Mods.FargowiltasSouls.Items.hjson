@@ -833,7 +833,7 @@ EarthForce: {
 		[i:FargowiltasSouls/CobaltEnchant] Grants an explosion jump and you explode on hit
 		[i:FargowiltasSouls/MythrilEnchant] Stop attacking to gradually increase attack speed for up to 5 seconds
 		[i:FargowiltasSouls/PalladiumEnchant] Grants Rapid Healing after striking an enemy and spawn life orbs based on healing
-		[i:FargowiltasSouls/OrichalcumEnchant] Attacks spawn flower petals and damaging debuffs deal 4x damage
+		[i:FargowiltasSouls/OrichalcumEnchant] Attacks spawn flower petals and damaging debuffs deal 3.5x damage
 		[i:FargowiltasSouls/AdamantiteEnchant] Every weapon shot will split into 3, 50% damage each, with higher spread the longer you fire
 		[i:FargowiltasSouls/TitaniumEnchant] Attacks generate titanium shards, reaching max grants Titanium Shield
 		'Gaia's blessing shines upon you'
@@ -3401,4 +3401,9 @@ RazorContainer: {
 		Spawns a razor blade that hovers around your cursor. Hit it with a melee attack to send it flying dealing extra damage and armor pen
 		'Some yellow fur is still stuck at the bottom' 
 		'''
+}
+
+CoffinRoominator: {
+	DisplayName: Coffin Roominator
+	Tooltip: ""
 }

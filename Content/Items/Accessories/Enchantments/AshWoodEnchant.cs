@@ -1,7 +1,5 @@
 ﻿using FargowiltasSouls.Content.Buffs.Masomode;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
-using FargowiltasSouls.Core.ModPlayers;
-using FargowiltasSouls.Core.Toggler;
 using FargowiltasSouls.Core.Toggler.Content;
 using Microsoft.Xna.Framework;
 using System;
@@ -11,7 +9,7 @@ using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
 {
-	public class AshWoodEnchant : BaseEnchant
+    public class AshWoodEnchant : BaseEnchant
     {
         public override void SetStaticDefaults()
         {
@@ -94,7 +92,8 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
                 if (burning)
                     fireballDamage = (int)(fireballDamage * 1.3f);
 
-                Projectile.NewProjectile(GetSource_EffectItem(player), player.Center, vel, ProjectileID.BallofFire, fireballDamage, 1, Main.myPlayer);
+                if (player.whoAmI == Main.myPlayer)
+                    Projectile.NewProjectile(GetSource_EffectItem(player), player.Center, vel, ProjectileID.BallofFire, fireballDamage, 1, Main.myPlayer);
             }
         }
     }

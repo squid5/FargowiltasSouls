@@ -6,9 +6,7 @@ using FargowiltasSouls.Core.Systems;
 using Luminance.Core.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
 using System;
-using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -159,7 +157,7 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
                 }
             }
         }
-        
+
         public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
             target.velocity.X = target.Center.X < Main.npc[(int)Projectile.ai[1]].Center.X ? -15f : 15f;

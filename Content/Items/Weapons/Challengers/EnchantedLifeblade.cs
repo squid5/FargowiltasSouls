@@ -7,7 +7,7 @@ using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Content.Items.Weapons.Challengers
 {
-	public class EnchantedLifeblade : SoulsItem
+    public class EnchantedLifeblade : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -40,7 +40,7 @@ namespace FargowiltasSouls.Content.Items.Weapons.Challengers
         }
         public override void AddRecipes()
         {
-            CreateRecipe().AddIngredient<LifelightBag>(2).AddTile(TileID.Solidifier).Register();
+            CreateRecipe().AddIngredient<LifelightBag>(2).AddTile(TileID.Solidifier).DisableDecraft().Register();
         }
     }
 }

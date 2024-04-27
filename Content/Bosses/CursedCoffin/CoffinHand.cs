@@ -73,8 +73,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
             Projectile.velocity = -Vector2.UnitY * 5;
             Projectile.damage = 0;
             CaughtPlayer = target.whoAmI;
-            //grab
-            modifiers.Null();
+            //modifiers.Null();
         }
         public override bool CanHitPlayer(Player target)
         {
@@ -115,7 +114,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
                 return;
             }
             CursedCoffin coffin = owner.As<CursedCoffin>();
-            Player target = Main.player[owner.target];
+            Entity target = Main.player[owner.target];
             if (State == 22 || State == 44)
             {
                 TargetPlayer = (int)Projectile.ai[2];
@@ -124,7 +123,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
             {
                 target = Main.player[TargetPlayer];
             }
-            if (!target.Alive())
+            if (target == null || !target.active)
                 return;
 
             switch (State) // current state
@@ -141,7 +140,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 
                         Projectile.rotation = Projectile.SafeDirectionTo(target.Center).ToRotation() + MathHelper.PiOver2;
 
-                        if (coffin.StateMachine.CurrentState == null || coffin.StateMachine.CurrentState.ID != CursedCoffin.BehaviorStates.GrabbyHands)
+                        if (!coffin.StateMachine.StateStack.Any() || coffin.StateMachine.CurrentState.Identifier != CursedCoffin.BehaviorStates.GrabbyHands)
                             Projectile.Kill();
                     }
                     break;  
@@ -192,7 +191,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
                         }
                         victim.buffImmune[ModContent.BuffType<StunnedBuff>()] = true; // cannot be stunned while grabbed, and removes stun
 
-                        if (Timer >= 60)
+                        if (Timer >= 60 && State != 66)
                         {
                             State = 101;
                             owner.netUpdate = true;
@@ -206,14 +205,18 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
                             int mashCap = coffin.MashTimer;
                             if (WorldSavingSystem.MasochistModeReal) // practically inescapable on maso
                                 mashCap += 666;
-                            if (victim.Alive() && (Projectile.Distance(victim.Center) < 160 || victim.whoAmI != Main.myPlayer) && victim.FargoSouls().MashCounter < mashCap)
+
+                            Vector2 arenaCenter = CoffinArena.Center.ToWorldCoordinates();
+                            bool releaseAtCenter = State == 66 && Projectile.Distance(arenaCenter) < 100;
+
+                            if (victim.Alive() && (Projectile.Distance(victim.Center) < 160 || victim.whoAmI != Main.myPlayer) && victim.FargoSouls().MashCounter < mashCap && !releaseAtCenter)
                             {
                                 victim.AddBuff(ModContent.BuffType<GrabbedBuff>(), 2);
                                 victim.Center = Projectile.Center;
                                 victim.fullRotation = Projectile.DirectionFrom(owner.Center).ToRotation() + MathHelper.PiOver2;
                                 victim.fullRotationOrigin = victim.Center - victim.position;
                                 if (State == 66)
-                                    Projectile.velocity = Vector2.Lerp(Projectile.velocity, Projectile.SafeDirectionTo(CoffinArena.Center.ToWorldCoordinates()) * 5, 0.15f);
+                                    Projectile.velocity = Vector2.Lerp(Projectile.velocity, Projectile.SafeDirectionTo(arenaCenter) * 15, 0.15f);
                                 else
                                     Projectile.velocity *= 0.96f;
                             }

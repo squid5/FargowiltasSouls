@@ -2,7 +2,22 @@
 global using FargowiltasSouls.Core.Toggler;
 global using Luminance.Common.Utilities;
 global using LumUtils = Luminance.Common.Utilities.Utilities;
+using FargowiltasSouls.Content.Bosses.VanillaEternity;
+using FargowiltasSouls.Content.Buffs.Boss;
+using FargowiltasSouls.Content.Buffs.Masomode;
+using FargowiltasSouls.Content.Buffs.Souls;
+using FargowiltasSouls.Content.Items.Accessories.Masomode;
+using FargowiltasSouls.Content.Items.Dyes;
+using FargowiltasSouls.Content.Items.Misc;
+using FargowiltasSouls.Content.NPCs.EternityModeNPCs;
+using FargowiltasSouls.Content.Patreon.Volknet;
 using FargowiltasSouls.Content.Sky;
+using FargowiltasSouls.Content.Tiles;
+using FargowiltasSouls.Content.UI;
+using FargowiltasSouls.Core.AccessoryEffectSystem;
+using FargowiltasSouls.Core.Globals;
+using FargowiltasSouls.Core.Systems;
+using Luminance.Core.ModCalls;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
@@ -19,25 +34,6 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.UI;
-using FargowiltasSouls.Content.Items.Dyes;
-using FargowiltasSouls.Content.Items.Misc;
-using FargowiltasSouls.Content.Items.Accessories.Masomode;
-using FargowiltasSouls.Content.Buffs.Souls;
-using FargowiltasSouls.Content.Buffs.Masomode;
-using FargowiltasSouls.Content.Buffs.Boss;
-using FargowiltasSouls.Content.Tiles;
-using FargowiltasSouls.Content.UI;
-using FargowiltasSouls.Core.Systems;
-using FargowiltasSouls.Content.Bosses.VanillaEternity;
-using FargowiltasSouls.Core.Globals;
-using FargowiltasSouls.Content.Bosses.AbomBoss;
-using FargowiltasSouls.Content.Bosses.DeviBoss;
-using FargowiltasSouls.Content.Bosses.MutantBoss;
-using FargowiltasSouls.Content.NPCs.EternityModeNPCs;
-using FargowiltasSouls.Content.Patreon.Volknet;
-using FargowiltasSouls.Core.AccessoryEffectSystem;
-using FargowiltasSouls.Content.Items.Accessories.Enchantments;
-using FargowiltasSouls.Content.Items.Accessories.Forces;
 
 
 namespace FargowiltasSouls
@@ -176,7 +172,7 @@ namespace FargowiltasSouls
             //On.Terraria.GameContent.ItemDropRules.DropBasedOnMasterMode.CanDrop += DropBasedOnMasterOrEMode_CanDrop;
             //On.Terraria.GameContent.ItemDropRules.DropBasedOnMasterMode.TryDroppingItem_DropAttemptInfo_ItemDropRuleResolveAction += DropBasedOnMasterOrEMode_TryDroppingItem_DropAttemptInfo_ItemDropRuleResolveAction;
 
-            
+
             On_Player.CheckSpawn_Internal += LifeRevitalizer_CheckSpawn_Internal;
             On_Player.AddBuff += AddBuff;
         }
@@ -196,7 +192,7 @@ namespace FargowiltasSouls
                 {
                     int newX = x + i;
                     int newY = y + j;
-                    
+
                     if (!WorldGen.InWorld(newX, newY))
                         return false;
 
@@ -208,7 +204,7 @@ namespace FargowiltasSouls
 
             return true;
         }
-        
+
         private void AddBuff(
             Terraria.On_Player.orig_AddBuff orig,
             Player self, int type, int timeToAdd, bool quiet, bool foodHack)
@@ -219,10 +215,10 @@ namespace FargowiltasSouls
                 && !Main.buffNoTimeDisplay[type] //dont affect hidden time debuffs
                 && !BuffID.Sets.NurseCannotRemoveDebuff[type] //only affect debuffs that nurse can cleanse
                 && (modPlayer.ParryDebuffImmuneTime > 0
-                    || modPlayer.BetsyDashing 
-                    || modPlayer.GoldShell 
-                    || modPlayer.ShellHide 
-                    || modPlayer.MonkDashing > 0 
+                    || modPlayer.BetsyDashing
+                    || modPlayer.GoldShell
+                    || modPlayer.ShellHide
+                    || modPlayer.MonkDashing > 0
                     || modPlayer.CobaltImmuneTimer > 0
                     || modPlayer.TitaniumDRBuff)
                 && DebuffIDs.Contains(type))
@@ -336,154 +332,7 @@ namespace FargowiltasSouls
             On_Player.AddBuff -= AddBuff;
         }
 
-        public override object Call(params object[] args)
-        {
-            try
-            {
-                string code = args[0].ToString();
-
-                switch (code)
-                {
-                    case "Emode":
-                    case "EMode":
-                    case "EternityMode":
-                        return WorldSavingSystem.EternityMode;
-
-                    case "EternityVanillaBossBehaviour":
-                        bool BehaviourWasOn = WorldSavingSystem.EternityVanillaBehaviour;
-                        bool? arg = args[1] as bool?;
-                        if (arg != null)
-                        {
-                            WorldSavingSystem.EternityVanillaBehaviour = (bool)arg;
-                        }
-                        return BehaviourWasOn;
-
-                    case "Masomode":
-                    case "MasoMode":
-                    case "MasochistMode":
-                    case "ForgottenMode":
-                    case "Forgor":
-                    case "ForgorMode":
-                    case "MasomodeReal":
-                    case "MasoModeReal":
-                    case "MasochistModeReal":
-                    case "RealMode":
-                    case "GetReal":
-                        return WorldSavingSystem.MasochistModeReal;
-
-                    case "DownedMutant":
-                        return WorldSavingSystem.DownedMutant;
-
-                    case "DownedAbom":
-                    case "DownedAbominationn":
-                        return WorldSavingSystem.DownedAbom;
-
-                    case "DownedChamp":
-                    case "DownedChampion": //arg is internal string name of champ
-                        return WorldSavingSystem.DownedBoss[(int)Enum.Parse<WorldSavingSystem.Downed>(args[1] as string, true)];
-
-                    case "DownedEri":
-                    case "DownedEridanus":
-                    case "DownedCosmos":
-                    case "DownedCosmosChamp":
-                    case "DownedCosmosChampion":
-                        return WorldSavingSystem.DownedBoss[(int)WorldSavingSystem.Downed.CosmosChampion];
-
-                    case "DownedDevi":
-                    case "DownedDeviantt":
-                        return WorldSavingSystem.DownedDevi;
-
-                    case "DownedFishronEX":
-                        return WorldSavingSystem.DownedFishronEX;
-
-                    case "PureHeart":
-                        return Main.LocalPlayer.FargoSouls().PureHeart;
-
-                    case "MutantAntibodies":
-                        return Main.LocalPlayer.FargoSouls().MutantAntibodies;
-
-                    case "SinisterIcon":
-                        return Main.LocalPlayer.HasEffect<SinisterIconEffect>();
-
-                    case "AbomAlive":
-                        return FargoSoulsUtil.BossIsAlive(ref EModeGlobalNPC.abomBoss, ModContent.NPCType<AbomBoss>());
-
-                    case "MutantAlive":
-                        return FargoSoulsUtil.BossIsAlive(ref EModeGlobalNPC.mutantBoss, ModContent.NPCType<MutantBoss>());
-
-                    case "DeviAlive":
-                    case "DeviBossAlive":
-                    case "DevianttAlive":
-                    case "DevianttBossAlive":
-                        return FargoSoulsUtil.BossIsAlive(ref EModeGlobalNPC.deviBoss, ModContent.NPCType<DeviBoss>());
-
-                    case "MutantPact":
-                    case "MutantsPact":
-                    case "MutantCreditCard":
-                    case "MutantsCreditCard":
-                        return Main.LocalPlayer.FargoSouls().MutantsCreditCard;
-
-                    case "MutantDiscountCard":
-                    case "MutantsDiscountCard":
-                        return Main.LocalPlayer.FargoSouls().MutantsDiscountCard;
-
-                    case "NekomiArmor":
-                    case "NekomiArmour":
-                        return Main.LocalPlayer.FargoSouls().NekomiSet;
-
-                    case "EridanusArmor":
-                    case "EridanusArmour":
-                        return Main.LocalPlayer.FargoSouls().EridanusSet;
-
-                    case "StyxArmor":
-                    case "StyxArmour":
-                        return Main.LocalPlayer.FargoSouls().StyxSet;
-
-                    case "MutantArmor":
-                    case "MutantArmour":
-                        return Main.LocalPlayer.FargoSouls().MutantSetBonusItem != null;
-
-                    case "GiftsReceived":
-                        return Main.LocalPlayer.FargoSouls().ReceivedMasoGift;
-
-                    case "GiveDevianttGifts":
-                        Main.LocalPlayer.FargoSouls().ReceivedMasoGift = true;
-                        if (Main.netMode == NetmodeID.SinglePlayer)
-                        {
-                            DropDevianttsGift(Main.LocalPlayer);
-                        }
-                        else if (Main.netMode == NetmodeID.MultiplayerClient)
-                        {
-                            var netMessage = GetPacket(); // Broadcast item request to server
-                            netMessage.Write((byte)PacketID.RequestDeviGift);
-                            netMessage.Write((byte)Main.LocalPlayer.whoAmI);
-                            netMessage.Send();
-                        }
-                        Main.npcChatText = Language.GetTextValue("Mods.Fargowiltas.NPCs.Deviantt.Chat.GiveGifts"); // mutant mod entry
-                        break;
-
-                    case "SummonCrit":
-                    case "SummonCritChance":
-                    case "GetSummonCrit":
-                    case "GetSummonCritChance":
-                    case "SummonerCrit":
-                    case "SummonerCritChance":
-                    case "GetSummonerCrit":
-                    case "GetSummonerCritChance":
-                    case "MinionCrit":
-                    case "MinionCritChance":
-                    case "GetMinionCrit":
-                    case "GetMinionCritChance":
-                        return (int)Main.LocalPlayer.ActualClassCrit(DamageClass.Summon);
-                }
-            }
-            catch (Exception e)
-            {
-                Logger.Error("Call Error: " + e.StackTrace + e.Message);
-            }
-
-            return base.Call(args);
-        }
+        public override object Call(params object[] args) => ModCallManager.ProcessAllModCalls(this, args); // Our mod calls can be found in ModCalls.cs.
 
         public static void DropDevianttsGift(Player player)
         {
@@ -792,7 +641,7 @@ namespace FargowiltasSouls
             else
                 return Color.Lerp(deviColor, mutantColor, (ColorTimer - 200) / 100);
         }
-        
+
         internal enum PacketID : byte
         {
             RequestGuttedCreeper,

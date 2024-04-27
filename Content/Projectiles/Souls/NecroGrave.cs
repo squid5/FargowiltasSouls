@@ -58,7 +58,7 @@ namespace FargowiltasSouls.Content.Projectiles.Souls
                 Projectile.height = 32 * (int)Projectile.scale;
 
 
-                if (Projectile.Distance(player.Center) < 300) 
+                if (Projectile.Distance(player.Center) < 300)
                 {
                     float speed = 1;
                     Projectile.velocity = Projectile.SafeDirectionTo(player.Center) * speed;
@@ -66,7 +66,7 @@ namespace FargowiltasSouls.Content.Projectiles.Souls
                 else
                 {
                     Projectile.velocity = Vector2.Zero;
-                } 
+                }
                 //worst possible fucking way to do this LETS FUCKING GOOOOOOOOOOOOOOOO
 
                 for (int i = 0; i < 4; i++) //smoke to make the floating convincing

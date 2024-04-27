@@ -1,23 +1,22 @@
-﻿using System;
-using System.IO;
-using Microsoft.Xna.Framework;
-using Terraria;
-using Terraria.ID;
-using Terraria.ModLoader;
-using System.Collections.Generic;
-using Terraria.DataStructures;
+﻿using FargowiltasSouls.Content.Buffs.Boss;
 using FargowiltasSouls.Content.Buffs.Masomode;
-using Terraria.GameContent.Bestiary;
-using Microsoft.Xna.Framework.Graphics;
-using Terraria.Graphics.Shaders;
 using FargowiltasSouls.Core.Systems;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using Terraria;
+using Terraria.Audio;
+using Terraria.DataStructures;
+using Terraria.Graphics.Shaders;
 using FargowiltasSouls.Content.Buffs;
 using FargowiltasSouls.Common.Graphics.Particles;
-using Terraria.Audio;
-using FargowiltasSouls.Content.Buffs.Boss;
 using Terraria.ModLoader.IO;
 using FargowiltasSouls.Content.WorldGeneration;
 using System.Linq;
+using Terraria.ModLoader;
+using Terraria.ID;
 
 namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 {
@@ -29,7 +28,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 
         #region Variables
 
-        
+
         private int Frame = 0;
 
         //NPC.ai[] overrides
@@ -55,7 +54,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
         {
             Main.npcFrameCount[NPC.type] = 9;
             NPCID.Sets.TrailCacheLength[NPC.type] = 20;
-            NPCID.Sets.TrailingMode[NPC.type] = 2;
+            NPCID.Sets.TrailingMode[NPC.type] = 3;
             NPCID.Sets.MPAllowedEnemies[Type] = true;
 
             NPCID.Sets.CantTakeLunchMoney[Type] = true;
@@ -91,7 +90,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
             NPC.Opacity = 0;
 
         }
-        
+
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
             NPC.lifeMax = (int)(NPC.lifeMax * balance);
@@ -192,7 +191,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
         }
 
         #endregion
-        readonly List<float> SlowChargeStates = new List<float>
+        readonly List<float> SlowChargeStates = new()
         {
             (float)CursedCoffin.BehaviorStates.PhaseTransition,
             (float)CursedCoffin.BehaviorStates.WavyShotCircle,
@@ -231,7 +230,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
                 NPC.Opacity = 1;
                 StartupFadein++;
             }
-                
+
             // share healthbar
             NPC.lifeMax = owner.lifeMax = Math.Min(NPC.lifeMax, owner.lifeMax);
             NPC.life = owner.life = Math.Min(NPC.life, owner.life);
@@ -275,12 +274,12 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
                 return;
             }
 
-            if (coffin.StateMachine.CurrentState == null)
+            if (!coffin.StateMachine.StateStack.Any())
                 return;
 
-            bool newState = (float)coffin.StateMachine.CurrentState.ID != State;
+            bool newState = (float)coffin.StateMachine.CurrentState.Identifier != State;
 
-            switch (coffin.StateMachine.CurrentState.ID)
+            switch (coffin.StateMachine.CurrentState.Identifier)
             {
                 case CursedCoffin.BehaviorStates.StunPunish:
                     if (newState)
@@ -315,7 +314,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
                     GrabbyHands(owner);
                     break;
                     */
-                case var _ when SlowChargeStates.Contains((float)coffin.StateMachine.CurrentState.ID):
+                case var _ when SlowChargeStates.Contains((float)coffin.StateMachine.CurrentState.Identifier):
                     if (!SlowChargeStates.Contains(State))
                     {
                         Timer = 0;
@@ -332,7 +331,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
                 default:
                     break;
             }
-            State = (float)coffin.StateMachine.CurrentState.ID;
+            State = (float)coffin.StateMachine.CurrentState.Identifier;
             if (RotateToVelocity)
                 NPC.rotation = NPC.velocity.ToRotation() + MathHelper.PiOver2;
         }
@@ -416,7 +415,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
                 static float CrossProduct(Vector2 v1, Vector2 v2) => (v1.X * v2.Y) - (v1.Y * v2.X); // Ordering by cross product gives the biggest undirected angle difference between two vectors
                 List<Vector2> corners = CoffinArena.TopArenaCorners(NPC);
                 CursedCoffin coffin = owner.As<CursedCoffin>();
-                if (coffin.StateMachine.CurrentState != null && coffin.StateMachine.CurrentState.ID == CursedCoffin.BehaviorStates.WavyShotSlam)
+                if (coffin.StateMachine.StateStack.Any() && coffin.StateMachine.CurrentState.Identifier == CursedCoffin.BehaviorStates.WavyShotSlam)
                     LockVector1 = corners.OrderByDescending(x => x.Distance(player.Center)).First();
                 else
                     LockVector1 = corners.OrderByDescending(x => Math.Abs(CrossProduct(NPC.DirectionTo(x), NPC.DirectionTo(player.Center)))).First();
@@ -531,7 +530,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
                     //Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, (NPC.rotation - MathHelper.PiOver2).ToRotationVector2() * 4, ModContent.ProjectileType<CoffinHand>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage, 0.1f), 1f, Main.myPlayer, owner.whoAmI, 1, -1);
                 }
             }
-            
+
         }
         void Movement(Vector2 pos, float accel = 0.03f, float maxSpeed = 20, float lowspeed = 5, float decel = 0.03f, float slowdown = 30)
         {
@@ -572,17 +571,25 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
             Color glowColor = CursedCoffin.GlowColor;
 
             int trailLength = NPCID.Sets.TrailCacheLength[NPC.type];
-            if (NPC.scale > 0.5f)
+            if (NPC.scale < 0.5f)
                 trailLength /= 2;
 
             for (int i = 0; i < trailLength; i++)
             {
                 Vector2 oldPos = NPC.oldPos[i];
 
-                DrawData oldGlow = new(bodytexture, oldPos + NPC.Size / 2f - screenPos + new Vector2(0, NPC.gfxOffY), NPC.frame, NPC.GetAlpha(glowColor * (0.5f / i)), NPC.rotation, NPC.Size / 2, NPC.scale, spriteEffects, 0);
+                DrawData oldGlow = new(bodytexture, oldPos + NPC.Size / 2f - screenPos + new Vector2(0, NPC.gfxOffY), NPC.frame, NPC.GetAlpha(glowColor * (0.8f / i)), NPC.oldRot[i], NPC.Size / 2, NPC.scale, spriteEffects, 0);
                 GameShaders.Misc["LCWingShader"].UseColor(Color.Blue).UseSecondaryColor(Color.Black);
                 GameShaders.Misc["LCWingShader"].Apply(oldGlow);
                 oldGlow.Draw(spriteBatch);
+            }
+            for (int j = 0; j < 12; j++)
+            {
+                float spinOffset = (Main.GameUpdateCount * 0.001f * j) % 12;
+                float magnitude = 1f + ((j % 5) * 2f * MathF.Sin(Main.GameUpdateCount * MathHelper.TwoPi / (10 + ((j - 6f) * 28f))));
+                Vector2 afterimageOffset = (MathHelper.TwoPi * (j + spinOffset) / 12f).ToRotationVector2() * magnitude * NPC.scale;
+
+                spriteBatch.Draw(bodytexture, drawPos + afterimageOffset, NPC.frame, NPC.GetAlpha(glowColor * NPC.Opacity), NPC.rotation, NPC.Size / 2, NPC.scale, spriteEffects, 0f);
             }
             /*
             for (int j = 0; j < 12; j++)

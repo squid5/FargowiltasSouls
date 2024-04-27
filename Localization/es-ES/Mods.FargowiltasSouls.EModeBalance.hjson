@@ -25,6 +25,7 @@
 // WhipSpeed: Does not benefit from melee speed bonuses
 // WhipStack: Whip buffs/debuffs can't stack
 // DefensePrefix: Adjusted prefix stats: reduced defense before Hardmode, +5 max life
+// DefensePrefix_HM: Adjusted prefix stats: +5 max life
 // ManaPots: Cannot be used during Mana Sickness, but 50% increased restoration
 // MinionStack: Damage of minions diminishes when summoning over 3 copies (effect caps at 12)
 // SummonMulticlass: Summon damage decreases when you attack using other classes (except in OOA)
@@ -33,7 +34,7 @@
 // SpearRework: Reworked spear swing animation
 // PalladiumPikeRework: Greatly increases life regeneration after striking an enemy
 // CobaltNaginataRework: Causes a small explosion on striking enemies
-// MythrilHalberdRework: After not attacking for 2 seconds, your next attack deals triple damage
+// MythrilHalberdRework: After not attacking for 2 seconds, your next attack deals 8x damage, scaling with attack speed
 // OrichalcumHalberdRework: Releases flower petals on swing
 // SuperStarCannon: Decreased maximum pierce to 7
 // WarmthPotionNerf: Halved damage reduction effect

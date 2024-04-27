@@ -1,14 +1,13 @@
-using Microsoft.Xna.Framework;
-using Terraria;
-using Terraria.ModLoader;
-using FargowiltasSouls.Content.Buffs;
-using Terraria.ID;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using FargowiltasSouls.Core.Toggler.Content;
+using Microsoft.Xna.Framework;
+using Terraria;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
 {
-	public class OrichalcumEnchant : BaseEnchant
+    public class OrichalcumEnchant : BaseEnchant
     {
         public override void SetStaticDefaults()
         {
@@ -22,7 +21,7 @@ Damaging debuffs deal 2.5x damage
         }
 
         public override Color nameColor => new(235, 50, 145);
-        
+
 
         public override void SetDefaults()
         {
@@ -66,7 +65,7 @@ Damaging debuffs deal 2.5x damage
 
             if (modPlayer.Player.ForceEffect<OrichalcumEffect>())
             {
-                multiplier = 4f;
+                multiplier = 3.5f;
             }
 
             npc.lifeRegen = (int)(npc.lifeRegen * multiplier);
