@@ -114,7 +114,8 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
 
         void TryTimeStop()
         {
-            if (Main.LocalPlayer.active && !Main.LocalPlayer.dead && !Main.LocalPlayer.ghost
+            if (Projectile.hostile && !Projectile.friendly 
+                && Main.LocalPlayer.active && !Main.LocalPlayer.dead && !Main.LocalPlayer.ghost
                 && FargoSoulsUtil.BossIsAlive(ref EModeGlobalNPC.mutantBoss, ModContent.NPCType<MutantBoss>()))
             {
                 //final spark spheres

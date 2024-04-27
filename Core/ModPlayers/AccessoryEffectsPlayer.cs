@@ -446,7 +446,7 @@ namespace FargowiltasSouls.Core.ModPlayers
 				{
 					SoundEngine.PlaySound(SoundID.Item119, Player.Center);
 
-					Player.AddBuff(ModContent.BuffType<BerserkerInstallBuff>(), LumUtils.SecondsToFrames(7.5f)); //7.5sec
+					Player.AddBuff(ModContent.BuffType<BerserkerInstallBuff>(), LumUtils.SecondsToFrames(8f));
 
 					for (int i = 0; i < 60; i++)
 					{

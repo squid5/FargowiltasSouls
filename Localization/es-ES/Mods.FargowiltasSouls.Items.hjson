@@ -992,7 +992,7 @@ AgitatingLens: {
 		While dashing or running quickly you will create a trail of demon scythes
 		Press the Debuff Install key while holding UP and DOWN to go berserk
 		When berserk, massively increased offenses, massively lowered defenses, and you cannot stop attacking or moving
-		Berserk state lasts for 7.5 seconds and you are stunned for 2.5 seconds afterwards
+		Berserk state lasts for 8 seconds and you are stunned for 2 seconds afterwards
 		'The irritable remnant of a defeated foe'
 		''' */
 }
