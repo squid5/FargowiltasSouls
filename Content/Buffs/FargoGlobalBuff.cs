@@ -124,7 +124,7 @@ namespace FargowiltasSouls.Content.Buffs
                                     for (int i = 0; i < Main.maxNPCs; i++)
                                     {
                                         NPC target = Main.npc[i];
-                                        if (target.active && !target.friendly && target.type != npc.type && Vector2.Distance(npc.Center, target.Center) < 250)
+                                        if (target.active && !target.friendly && Vector2.Distance(npc.Center, target.Center) < 250)
                                         {
                                             Vector2 velocity = Vector2.Normalize(target.Center - npc.Center) * 5;
                                             int p = Projectile.NewProjectile(player.GetSource_FromThis(), npc.Center, velocity, ProjectileID.ShadowFlame, 40 + FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 0, Main.myPlayer);
