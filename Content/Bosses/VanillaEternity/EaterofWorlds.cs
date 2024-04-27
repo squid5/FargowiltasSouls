@@ -69,6 +69,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             base.ModifyIncomingHit(npc, ref modifiers);
         }
 
+
         public override bool CheckDead(NPC npc)
         {
             if (WorldSavingSystem.SwarmActive)
@@ -101,6 +102,14 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
             if (EaterofWorldsHead.HaveSpawnDR > 0)
                 modifiers.FinalDamage /= projectile.numHits + 1;
+        }
+
+        public override void SafeOnHitByProjectile(NPC npc, Projectile projectile, NPC.HitInfo hit, int damageDone)
+        {
+            if (!FargoSoulsUtil.IsSummonDamage(projectile) && projectile.damage > 5)
+                projectile.damage = (int)Math.Min(projectile.damage - 1, projectile.damage * 0.8);
+
+            base.SafeOnHitByProjectile(npc, projectile, hit, damageDone);
         }
 
         public override void OnHitPlayer(NPC npc, Player target, Player.HurtInfo hurtInfo)
