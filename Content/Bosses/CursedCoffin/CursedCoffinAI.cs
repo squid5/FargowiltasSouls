@@ -48,7 +48,6 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 			YouCantEscape,
 
 			// For the state machine.
-			RefillAttacks,
 			Count
 		}
 
@@ -124,10 +123,6 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 				return;
 			NPC.timeLeft = 60;
             NPC.Opacity = 1;
-
-			// Refill the attacks if empty.
-			if ((StateMachine?.StateStack?.Count ?? 1) <= 0)
-                StateMachine.StateStack.Push(StateMachine.StateRegistry[BehaviorStates.RefillAttacks]);
 
             // Update the state machine.
             StateMachine.PerformBehaviors();

@@ -39,13 +39,13 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 				StateMachine.RegisterState(new((BehaviorStates)i));
 
 			StateMachine.OnStateTransition += OnStateTransition;
+            StateMachine.OnStackEmpty += OnStackEmpty;
 
             // Autoload the state behaviors.
             AutoloadAsBehavior<EntityAIState<BehaviorStates>, BehaviorStates>.FillStateMachineBehaviors<ModNPC>(StateMachine, this);
 
-			// Load the attack cycle resetter and the phase transition.
-			LoadTransition_ResetCycle();
-			LoadTransition_PhaseTwoTransition();
+            // Load the phase transition.
+            LoadTransition_PhaseTwoTransition();
 
 			// Register each attack transition.
 			#region Transition Registering
@@ -174,35 +174,32 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 			if (oldState != null && (P1Attacks.Contains(oldState.Identifier) || P2Attacks.Contains(oldState.Identifier)))
 				LastAttackChoice = (int)oldState.Identifier;
 		}
+        // This is ran when the stack runs out of attacks.
+        public void OnStackEmpty()
+        {
+            NPC.netUpdate = true;
 
-		public void LoadTransition_ResetCycle()
-		{
-			StateMachine.RegisterTransition(BehaviorStates.RefillAttacks, null, false, () => true, () =>
-			{
-				NPC.netUpdate = true;
+            if (!FargoSoulsUtil.HostCheck)
+                return;
 
-				if (!FargoSoulsUtil.HostCheck)
-					return;
+            StateMachine.StateStack.Clear();
 
-				StateMachine.StateStack.Clear();
+            // Get the correct attack list, and remove the last attack to avoid repeating it.
+            List<BehaviorStates> attackList = (PhaseTwo ? P2Attacks : P1Attacks).Where(attack => attack != (BehaviorStates)LastAttackChoice).ToList();
 
-				// Get the correct attack list, and remove the last attack to avoid repeating it.
-				List<BehaviorStates> attackList = (PhaseTwo ? P2Attacks : P1Attacks).Where(attack => attack != (BehaviorStates)LastAttackChoice).ToList();
+            // Fill a list of indices.
+            var indices = new List<int>();
+            for (int i = 0; i < attackList.Count; i++)
+                indices.Add(i);
 
-				// Fill a list of indices.
-				var indices = new List<int>();
-				for (int i = 0; i < attackList.Count; i++)
-					indices.Add(i);
-
-				// Randomly push the attack list using the indices list accessed with a random index.
-				for (int i = 0; i < attackList.Count; i++)
-				{
-					var currentIndex = indices[Main.rand.Next(0, indices.Count)];
-					StateMachine.StateStack.Push(StateMachine.StateRegistry[attackList[currentIndex]]);
-					indices.Remove(currentIndex);
-				}
-			});
-		}
+            // Randomly push the attack list using the indices list accessed with a random index.
+            for (int i = 0; i < attackList.Count; i++)
+            {
+                var currentIndex = indices[Main.rand.Next(0, indices.Count)];
+                StateMachine.StateStack.Push(StateMachine.StateRegistry[attackList[currentIndex]]);
+                indices.Remove(currentIndex);
+            }
+        }
 
 		public void LoadTransition_PhaseTwoTransition()
 		{
