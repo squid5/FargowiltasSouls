@@ -37,7 +37,7 @@ namespace FargowiltasSouls.Content.Patreon.Potato
         {
             Player player = Main.player[Projectile.owner];
 
-            if (!player.Alive() || !player.GetModPlayer<PatreonPlayer>().RazorContainer)
+            if (!player.Alive() || !player.GetModPlayer<PatreonPlayer>().RazorContainer  || Projectile.hostile) // if it was turned hostile by something
             {
                 Projectile.Kill();
             }
