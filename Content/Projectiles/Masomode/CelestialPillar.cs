@@ -195,7 +195,7 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
                           ModContent.ProjectileType<GlowLine>(), Projectile.damage / 3, 0f, Main.myPlayer, 7, Projectile.ai[0]);
                 }
 
-                if (WorldSavingSystem.MasochistModeReal)
+                if (Main.getGoodWorld)
                     FargoSoulsUtil.NewNPCEasy(Projectile.GetSource_FromThis(), Projectile.Center, NPCID.CultistDragonHead);
             }
         }
