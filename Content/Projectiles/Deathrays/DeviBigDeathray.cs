@@ -46,8 +46,8 @@ namespace FargowiltasSouls.Content.Projectiles.Deathrays
         public override void AI()
         {
             if (!Main.dedServ && Main.LocalPlayer.active)
-                if (ScreenShakeSystem.OverallShakeIntensity < 7)
-                    ScreenShakeSystem.SetUniversalRumble(7);
+                if (ScreenShakeSystem.OverallShakeIntensity < 6)
+                    ScreenShakeSystem.SetUniversalRumble(6);
 
             Vector2? vector78 = null;
             if (Projectile.velocity.HasNaNs() || Projectile.velocity == Vector2.Zero)
@@ -297,7 +297,7 @@ namespace FargowiltasSouls.Content.Projectiles.Deathrays
                 if (inBackground)
                     opacity = 0.5f;
                 ring.TrySetParameter("opacity", opacity);
-                PrimitiveRenderer.RenderTrail(ringDrawPoints, new(WidthFunction, ColorFunction, Pixelate: true, Shader: ring), 30);
+                PrimitiveRenderer.RenderTrail(ringDrawPoints, new(RingWidthFunction, RingColorFunction, Pixelate: true, Shader: ring), 30);
                 iterator++;
             }
         }

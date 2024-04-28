@@ -161,7 +161,7 @@ namespace FargowiltasSouls.Content.Bosses.BanishedBaron
             NPC.lavaImmune = true;
             NPC.noGravity = true;
             NPC.noTileCollide = true;
-            NPC.HitSound = SoundID.NPCHit4;
+            NPC.HitSound = new SoundStyle("FargowiltasSouls/Assets/Sounds/BaronHit") with { Variants = new int[3] { 1, 2, 3 }, PitchRange = (-0.7f, -0.5f), Volume = 0.5f };
             NPC.DeathSound = new SoundStyle("FargowiltasSouls/Assets/Sounds/BaronDeath");
             NPC.alpha = 255;
 

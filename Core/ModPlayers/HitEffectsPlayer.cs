@@ -548,7 +548,7 @@ namespace FargowiltasSouls.Core.ModPlayers
                         {
                             Player.KillMe(Terraria.DataStructures.PlayerDeathReason.ByCustomReason(Language.GetTextValue("Mods.FargowiltasSouls.DeathMessage.TwentyTwo", Player.name)), 22222222, 0);
                             Projectile.NewProjectile(Player.GetSource_Death(), Player.Center, Vector2.Zero, ModContent.ProjectileType<TwentyTwo>(), 0, 0f, Main.myPlayer);
-                            ScreenShakeSystem.StartShake(15, shakeStrengthDissipationIncrement: 15f / 120);
+                            ScreenShakeSystem.StartShake(10, shakeStrengthDissipationIncrement: 10f / 30);
                         }
                     }
                 }

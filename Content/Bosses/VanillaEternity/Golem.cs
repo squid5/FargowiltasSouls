@@ -274,7 +274,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                             if (npc.HasPlayerTarget)
                             {
                                 if (!Main.dedServ)
-                                    ScreenShakeSystem.StartShake(15, shakeStrengthDissipationIncrement: 15f / 20);
+                                    ScreenShakeSystem.StartShake(10, shakeStrengthDissipationIncrement: 10f / 20);
 
                                 if (FargoSoulsUtil.HostCheck)
                                     Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, Vector2.Zero, ProjectileID.DD2OgreSmash, 0, 0, Main.myPlayer);

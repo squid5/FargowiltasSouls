@@ -202,7 +202,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Terra
             MakeDust();
 
             if (!Main.dedServ)
-                ScreenShakeSystem.StartShake(15, shakeStrengthDissipationIncrement: 15f / 30);
+                ScreenShakeSystem.StartShake(10, shakeStrengthDissipationIncrement: 10f / 30);
 
             if (Projectile.alpha == 0 && FargoSoulsUtil.HostCheck)
             {

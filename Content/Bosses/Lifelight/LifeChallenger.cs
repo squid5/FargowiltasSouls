@@ -639,7 +639,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                 }
 
                 if (!Main.dedServ)
-                    ScreenShakeSystem.StartShake(15, shakeStrengthDissipationIncrement: 15f / 60);
+                    ScreenShakeSystem.StartShake(10, shakeStrengthDissipationIncrement: 10f / 60);
 
                 if (WorldSavingSystem.EternityMode && !WorldSavingSystem.DownedBoss[(int)WorldSavingSystem.Downed.Lifelight] && FargoSoulsUtil.HostCheck)
                     Item.NewItem(NPC.GetSource_Loot(), Main.player[NPC.target].Hitbox, ModContent.ItemType<FragilePixieLamp>());
@@ -985,8 +985,8 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                         //p.Position -= p.Velocity * 4; //implosion
                     }
                 }
-                const int MineAmount = 100;
-                if (AI_Timer <= 180 && AI_Timer > 180 - MineAmount)
+                int mineAmount = WorldSavingSystem.EternityMode ? 100 : 60;
+                if (AI_Timer <= 180 && AI_Timer > 180 - mineAmount)
                 {
                     //mine explosion
                     int bombwidth = 22;
@@ -995,10 +995,10 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                         int bombType = ModContent.ProjectileType<LifeTransitionBomb>();
                         //for (int i = 0; i < MineAmount; i++)
                         //{
-                        int i = (int)(AI_Timer - (180 - MineAmount));
+                        int i = (int)(AI_Timer - (180 - mineAmount));
                         Vector2 FindPos()
                         {
-                            float rotation = ((float)i / MineAmount) * MathHelper.TwoPi;
+                            float rotation = ((float)i / mineAmount) * MathHelper.TwoPi;
                             float distFrac = Main.rand.NextFloat(1);
                             float modifier = (float)Math.Sin(MathHelper.TwoPi * i / 8f) * 0.3f + 0.9f;
                             distFrac = (float)Math.Pow(distFrac, modifier);
@@ -1032,7 +1032,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                     SoundEngine.PlaySound(SoundID.Item92 with { Pitch = -0.5f }, NPC.Center);
 
                     if (!Main.dedServ)
-                        ScreenShakeSystem.StartShake(15, shakeStrengthDissipationIncrement: 15f / 60);
+                        ScreenShakeSystem.StartShake(10, shakeStrengthDissipationIncrement: 10f / 60);
 
                     if (FargoSoulsUtil.HostCheck)
                     {
@@ -1071,11 +1071,8 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                 int endTime = 950;
                 if (Main.getGoodWorld)
                     endTime += 4000; // lol
-
-                // WHY IS THIS SO HIGH.
-                //// Screenshake.
-                //if (LaserTimer > fadeintime)
-                //    player.FargoSouls().Screenshake = 2;
+                if (!WorldSavingSystem.EternityMode)
+                    endTime = 500;
 
                 if (AttackF1)
                 {
@@ -1111,7 +1108,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                     RotationDirection = 1;
                     NPC.netUpdate = true;
                 }
-                if (LaserTimer >= fadeintime)
+                if (LaserTimer >= fadeintime && LaserTimer < endTime)
                 {
                     if (rotspeed < 0.82f)
                     {
@@ -1128,46 +1125,52 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                 LaserTimer++;
                 if (LaserTimer == endTime)
                 {
-                    foreach (Projectile p in Main.projectile)
-                    {
-                        if (p.type == ModContent.ProjectileType<LifeBombExplosion>())
-                        {
-                            //make them fade
-                            p.ai[0] = Math.Max(p.ai[0], LifeBombExplosion.MaxTime - 30);
-                            p.netUpdate = true;
-                        }
-                        //kill deathray, just to be sure
-                        if (p.type == ModContent.ProjectileType<LifeChalDeathray>())
-                        {
-                            p.Kill();
-                        }
-                    }
-
-                    PyramidPhase = -1;
-                    PyramidTimer = 0;
-                    NPC.netUpdate = true;
-
-                    RuneFormation = Formations.Circle;
-                    RuneFormationTimer = 0;
-
+                    EndTransition();
                 }
                 if (LaserTimer > endTime && PyramidPhase == 0 && RuneFormationTimer >= FormationTime) //after shell crack animation and rune reformation
                 {
-                    P1state = 0;
-
-                    PhaseOne = false;
-                    HitPlayer = false;
-                    NPC.netUpdate = true;
-                    NPC.TargetClosest(true);
-                    AttackF1 = true;
-                    AI_Timer = 0f;
-                    NPC.ai[2] = 0f;
-                    NPC.ai[3] = 0f;
-                    NPC.ai[0] = 0f;
-                    StateReset();
+                    GoPhase2();
                 }
             }
+            void EndTransition()
+            {
+                foreach (Projectile p in Main.projectile)
+                {
+                    if (p.type == ModContent.ProjectileType<LifeBombExplosion>())
+                    {
+                        //make them fade
+                        p.ai[0] = Math.Max(p.ai[0], LifeBombExplosion.MaxTime - 30);
+                        p.netUpdate = true;
+                    }
+                    //kill deathray, just to be sure
+                    if (p.type == ModContent.ProjectileType<LifeChalDeathray>())
+                    {
+                        p.Kill();
+                    }
+                }
 
+                PyramidPhase = -1;
+                PyramidTimer = 0;
+                NPC.netUpdate = true;
+
+                RuneFormation = Formations.Circle;
+                RuneFormationTimer = 0;
+            }
+            void GoPhase2()
+            {
+                P1state = 0;
+
+                PhaseOne = false;
+                HitPlayer = false;
+                NPC.netUpdate = true;
+                NPC.TargetClosest(true);
+                AttackF1 = true;
+                AI_Timer = 0f;
+                NPC.ai[2] = 0f;
+                NPC.ai[3] = 0f;
+                NPC.ai[0] = 0f;
+                StateReset();
+            }
 
 
 
@@ -1515,8 +1518,9 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                 }
                 BurpTimer += 1f;
             }
+            int endTime = WorldSavingSystem.EternityMode ? 660 : 360;
 
-            if (AI_Timer > 300f && AI_Timer < 600f)
+            if (AI_Timer > 300f && AI_Timer < endTime - 60)
             {
                 if (BurpTimer > 15f)
                 {
@@ -1532,7 +1536,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                 BurpTimer -= 0.5f;
             }
 
-            if (AI_Timer >= 660f)
+            if (AI_Timer >= endTime)
             {
                 oldstate = state;
                 Flying = true;

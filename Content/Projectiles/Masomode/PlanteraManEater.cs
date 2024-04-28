@@ -65,7 +65,7 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
         }
 
         int arenaDistance = Main.rand.Next(980, 1050);
-        const int defaultDistance = 2000;
+        const int defaultDistance = 2600;
 
         public override void AI()
         {
@@ -109,40 +109,13 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
                     Vector2 distance = target - Projectile.Center;
                     float length = distance.Length();
                     distance /= 8f;
-                    Projectile.velocity = (Projectile.velocity * 9f + distance) / 10f;
-                    if (distance.LengthSquared() < 100 * 100)
-                        Projectile.velocity /= 2;
+                    Vector2 desiredVel = (Projectile.velocity * 9f + distance) / 10f;
+                    Projectile.velocity = Vector2.Lerp(Projectile.velocity, desiredVel, 0.2f);
+                    Projectile.velocity *= MathHelper.Lerp(0.7f, 1, MathHelper.Clamp(Projectile.Distance(player.Center), 0, defaultDistance - arenaDistance) / (defaultDistance - arenaDistance));
                 }
-                /*
-                else if (counter == attackTime)
-                {
-                    Projectile.velocity = -12f * Projectile.rotation.ToRotationVector2();
-                    SoundEngine.PlaySound(SoundID.Item92, Projectile.Center);
-                }
-                */
-                /*
-                else
-                {
-                    if (npc.HasPlayerTarget && Projectile.Distance(npc.Center) > npc.Distance(Main.player[npc.target].Center))
-                    {
-                        Tile tile = Framing.GetTileSafely(Projectile.Center);
-                        if (tile.HasUnactuatedTile && Main.tileSolid[tile.TileType] && !Main.tileSolidTop[tile.TileType])
-                        {
-                            for (int i = 0; i < 10; i++)
-                            {
-                                int d = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.ChlorophyteWeapon, -Projectile.velocity.X * 0.1f, -Projectile.velocity.Y * 0.1f, Scale: 2.5f);
-                                Main.dust[d].noGravity = true;
-                                Main.dust[d].velocity *= 4f;
-                            }
 
-                            Projectile.velocity = Vector2.Zero;
-                        }
-                    }
-                }
-                */
-
-                if (Projectile.velocity.Length() > 8)
-                    Projectile.velocity = Vector2.Normalize(Projectile.velocity) * 8;
+                //if (Projectile.velocity.Length() > 8)
+                    //Projectile.velocity = Vector2.Normalize(Projectile.velocity) * 8;
 
                 if (++Projectile.frameCounter > 3 * (Projectile.extraUpdates + 1))
                 {

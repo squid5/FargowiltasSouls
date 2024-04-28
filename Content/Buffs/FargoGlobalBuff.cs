@@ -117,22 +117,28 @@ namespace FargowiltasSouls.Content.Buffs
                             Player player = Main.player.FirstOrDefault(p => p.active && !p.dead && p.HasEffect<AncientShadowDarkness>());
                             if (player != null && player.active && !player.dead)
                             {
-                                for (int i = 0; i < Main.maxNPCs; i++)
+                                FargoSoulsPlayer modPlayer = player.FargoSouls();
+                                if (modPlayer.AncientShadowFlameCooldown <= 0)
                                 {
-                                    NPC target = Main.npc[i];
-                                    if (target.active && !target.friendly && Vector2.Distance(npc.Center, target.Center) < 250)
+                                    modPlayer.AncientShadowFlameCooldown = 30;
+                                    for (int i = 0; i < Main.maxNPCs; i++)
                                     {
-                                        Vector2 velocity = Vector2.Normalize(target.Center - npc.Center) * 5;
-                                        int p = Projectile.NewProjectile(player.GetSource_FromThis(), npc.Center, velocity, ProjectileID.ShadowFlame, 40 + FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 0, Main.myPlayer);
-                                        if (p.IsWithinBounds(Main.maxProjectiles))
+                                        NPC target = Main.npc[i];
+                                        if (target.active && !target.friendly && Vector2.Distance(npc.Center, target.Center) < 250)
                                         {
-                                            Main.projectile[p].friendly = true;
-                                            Main.projectile[p].hostile = false;
+                                            Vector2 velocity = Vector2.Normalize(target.Center - npc.Center) * 5;
+                                            int p = Projectile.NewProjectile(player.GetSource_FromThis(), npc.Center, velocity, ProjectileID.ShadowFlame, 40 + FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 0, Main.myPlayer);
+                                            if (p.IsWithinBounds(Main.maxProjectiles))
+                                            {
+                                                Main.projectile[p].friendly = true;
+                                                Main.projectile[p].hostile = false;
+                                            }
+                                            if (Main.rand.NextBool(3))
+                                                break;
                                         }
-                                        if (Main.rand.NextBool(3))
-                                            break;
                                     }
                                 }
+                                
                             }
                         }
 

@@ -283,8 +283,8 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     if (EnteredPhase3)
                     {
                         if (!Main.dedServ)
-                            if (ScreenShakeSystem.OverallShakeIntensity < 7)
-                                ScreenShakeSystem.SetUniversalRumble(7);
+                            if (ScreenShakeSystem.OverallShakeIntensity < 6)
+                                ScreenShakeSystem.SetUniversalRumble(6);
 
                         if (npc.ai[1] > 30) //roaring
                         {
@@ -465,6 +465,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             LoadNPCSprite(recolor, npc.type);
             LoadBossHeadSprite(recolor, 39);
             LoadGore(recolor, 1270);
+            LoadGore(recolor, 1271);
             LoadGore(recolor, 1272);
             LoadGore(recolor, 1273);
             LoadGore(recolor, 1274);

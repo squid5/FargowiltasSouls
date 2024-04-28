@@ -164,7 +164,7 @@ namespace FargowiltasSouls.Content.Projectiles.BossWeapons
                     Vector2 spawnPos = target.Center;
 
                     if (!Main.dedServ && Main.LocalPlayer.active)
-                        ScreenShakeSystem.StartShake(15, shakeStrengthDissipationIncrement: 15f / 30);
+                        ScreenShakeSystem.StartShake(10, shakeStrengthDissipationIncrement: 10f / 30);
 
                     if (!Main.dedServ)
                         SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/Thunder"), spawnPos);

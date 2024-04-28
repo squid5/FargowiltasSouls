@@ -351,7 +351,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Cosmos
                         NPC.ai[1] = 1;
 
                         if (!Main.dedServ && Main.LocalPlayer.active)
-                            ScreenShakeSystem.StartShake(15, shakeStrengthDissipationIncrement: 15f / 30);
+                            ScreenShakeSystem.StartShake(10, shakeStrengthDissipationIncrement: 10f / 30);
 
                         SoundEngine.PlaySound(SoundID.Roar, NPC.Center);
 
@@ -470,7 +470,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Cosmos
                         SoundEngine.PlaySound(SoundID.Item92, NPC.Center);
 
                         if (!Main.dedServ && Main.LocalPlayer.active)
-                            ScreenShakeSystem.StartShake(15, shakeStrengthDissipationIncrement: 15f / 30);
+                            ScreenShakeSystem.StartShake(10, shakeStrengthDissipationIncrement: 10f / 30);
 
                         //int type; //for dust
 
@@ -956,7 +956,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Cosmos
                                 if (WorldSavingSystem.EternityMode && NPC.localAI[2] != 0f) //emode p2, do chain blasts
                                 {
                                     if (!Main.dedServ && Main.LocalPlayer.active)
-                                        ScreenShakeSystem.StartShake(15, shakeStrengthDissipationIncrement: 15f / 30);
+                                        ScreenShakeSystem.StartShake(10, shakeStrengthDissipationIncrement: 10f / 30);
 
                                     if (FargoSoulsUtil.HostCheck) //chain explosions
                                     {

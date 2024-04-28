@@ -244,11 +244,11 @@ namespace FargowiltasSouls.Core.ModPlayers
             Player.manaRegenDelay = Math.Max(Player.manaRegenDelay, 30);
 
             SoundEngine.PlaySound(SoundID.Item28, Player.Center);
+            int damage = (int)(14 * Player.ActualClassDamage(DamageClass.Magic));
+            if (!Main.hardMode)
+                damage = 0;
 
-            Projectile.NewProjectile(Player.GetSource_Accessory(FrigidGemstoneItem),
-                Player.Center, 12f * Player.SafeDirectionTo(Main.MouseWorld), ProjectileID.IceBlock,
-                (int)(14 * Player.ActualClassDamage(DamageClass.Magic)), 2f,
-                Player.whoAmI, Player.tileTargetX, Player.tileTargetY);
+            Projectile.NewProjectile(Player.GetSource_Accessory(FrigidGemstoneItem), Player.Center, 12f * Player.SafeDirectionTo(Main.MouseWorld), ProjectileID.IceBlock, damage, 2f, Player.whoAmI, Player.tileTargetX, Player.tileTargetY);
         }
 
 
@@ -376,7 +376,7 @@ namespace FargowiltasSouls.Core.ModPlayers
                 MutantEyeCD = 3600;
 
                 if (!Main.dedServ && Main.LocalPlayer.active)
-                    ScreenShakeSystem.StartShake(15, shakeStrengthDissipationIncrement: 15f / 30);
+                    ScreenShakeSystem.StartShake(10, shakeStrengthDissipationIncrement: 10f / 30);
 
                 const int invulTime = 90;
                 Player.immune = true;
@@ -446,7 +446,7 @@ namespace FargowiltasSouls.Core.ModPlayers
 				{
 					SoundEngine.PlaySound(SoundID.Item119, Player.Center);
 
-					Player.AddBuff(ModContent.BuffType<BerserkerInstallBuff>(), LumUtils.SecondsToFrames(7.5f)); //7.5sec
+					Player.AddBuff(ModContent.BuffType<BerserkerInstallBuff>(), LumUtils.SecondsToFrames(8f));
 
 					for (int i = 0; i < 60; i++)
 					{
@@ -602,7 +602,7 @@ namespace FargowiltasSouls.Core.ModPlayers
                             if (Player.HasEffect<LihzahrdBoulders>())
                             {
                                 if (!Main.dedServ)
-                                    ScreenShakeSystem.StartShake(15, shakeStrengthDissipationIncrement: 15f / 60);
+                                    ScreenShakeSystem.StartShake(10, shakeStrengthDissipationIncrement: 10f / 30);
 
                                 if (Player.whoAmI == Main.myPlayer)
                                 {

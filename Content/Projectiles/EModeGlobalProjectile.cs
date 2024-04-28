@@ -206,6 +206,13 @@ namespace FargowiltasSouls.Content.Projectiles
                 case ProjectileID.SuperStar:
                     projectile.penetrate = 7;
                     break;
+                case ProjectileID.WeatherPainShot:
+                    projectile.idStaticNPCHitCooldown = 10;
+                    projectile.penetrate = 45;
+                    break;
+                case ProjectileID.HoundiusShootiusFireball:
+                    projectile.extraUpdates += 1;
+                    break;
                 default:
                     break;
             }
@@ -1031,8 +1038,8 @@ namespace FargowiltasSouls.Content.Projectiles
                             : Main.rand.NextFloat(4f, 6f);
 
                         if (!Main.dedServ && Main.LocalPlayer.active)
-                            if (ScreenShakeSystem.OverallShakeIntensity < 7)
-                                ScreenShakeSystem.SetUniversalRumble(7);
+                            if (ScreenShakeSystem.OverallShakeIntensity < 6)
+                                ScreenShakeSystem.SetUniversalRumble(6);
                     }
                     break;
 
@@ -1462,10 +1469,12 @@ namespace FargowiltasSouls.Content.Projectiles
                     break;
 
                 case ProjectileID.EyeLaser:
-                case ProjectileID.GoldenShowerHostile:
-                case ProjectileID.CursedFlameHostile:
                     if (sourceNPC != null && (sourceNPC.type == NPCID.WallofFlesh || sourceNPC.type == NPCID.WallofFleshEye))
+                    {
                         target.AddBuff(BuffID.OnFire, 300);
+                        if (WorldSavingSystem.MasochistModeReal)
+                            target.AddBuff(BuffID.Burning, 60);
+                    }
                     break;
 
                 case ProjectileID.DrManFlyFlask:

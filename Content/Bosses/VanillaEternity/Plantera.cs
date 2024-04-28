@@ -108,7 +108,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
         public override void SetDefaults(NPC npc)
         {
             base.SetDefaults(npc);
-            npc.lifeMax = (int)Math.Round(npc.lifeMax * 1.75f);
+            npc.lifeMax = (int)Math.Round(npc.lifeMax * 1.65f);
         }
 
         public override bool SafePreAI(NPC npc)
@@ -277,7 +277,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     Vector2 targetPos = Vector2.UnitX * targetX + Vector2.UnitY * targetY;
 
 
-                    if (playerToNPC.Y > -distY)
+                    if (playerToNPC.Y > 0)
                     {
                         Movement(targetPos, 0.3f, true);
                         if (timer > 50)
@@ -603,7 +603,13 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                         break;
                 }
                 #endregion
-
+                if (npc.Center.Y < player.Center.Y)
+                {
+                    float maxClimbSpeed = MathHelper.Lerp(-6f, -3f, Math.Clamp(player.Center.Y - npc.Center.Y, 0, 1000f) / 1000f);
+                    if (npc.velocity.Y < maxClimbSpeed) // Cap climbing velocity
+                        npc.velocity.Y = MathHelper.Lerp(npc.velocity.Y, maxClimbSpeed, 0.2f);
+                }
+                
                 timer++;
                 return false;
             }

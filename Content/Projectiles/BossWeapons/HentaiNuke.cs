@@ -78,7 +78,7 @@ namespace FargowiltasSouls.Content.Projectiles.BossWeapons
                 Projectile.position.Y -= 144 * Projectile.scale;
 
                 if (!Main.dedServ && Main.LocalPlayer.active)
-                    ScreenShakeSystem.StartShake(15, shakeStrengthDissipationIncrement: 15f / 30);
+                    ScreenShakeSystem.StartShake(10, shakeStrengthDissipationIncrement: 10f / 30);
 
                 if (!Main.dedServ)
                     SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/Thunder") { Volume = 0.8f, Pitch = 0.5f }, Projectile.Center);

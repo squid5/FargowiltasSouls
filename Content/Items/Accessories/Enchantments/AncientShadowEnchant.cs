@@ -67,6 +67,12 @@ Three Shadow Orbs will orbit around you
     {
         public override Header ToggleHeader => Header.GetHeader<ShadowHeader>();
         public override int ToggleItemType => ModContent.ItemType<AncientShadowEnchant>();
+        public override void PostUpdateMiscEffects(Player player)
+        {
+            FargoSoulsPlayer modPlayer = player.FargoSouls();
+            if (modPlayer.AncientShadowFlameCooldown > 0)
+                modPlayer.AncientShadowFlameCooldown--;
+        }
         public override void OnHitNPCEither(Player player, NPC target, NPC.HitInfo hitInfo, DamageClass damageClass, int baseDamage, Projectile projectile, Item item)
         {
             if (!player.FargoSouls().TerrariaSoul)

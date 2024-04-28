@@ -128,7 +128,7 @@ namespace FargowiltasSouls.Core.Globals
                 bool boss = npc.boss || npc.type == NPCID.EaterofWorldsHead || npc.type == NPCID.EaterofWorldsBody || npc.type == NPCID.EaterofWorldsTail;
                 if (npc.position.Y / 16 < Main.worldSurface * 0.35f && !boss) //enemy in space
                     npc.AddBuff(BuffID.Suffocation, 2, true);
-                else if (npc.position.Y / 16 > Main.maxTilesY - 200 && !boss) //enemy in hell
+                else if (npc.position.Y / 16 > Main.maxTilesY - 200 && !boss && !Main.remixWorld) //enemy in hell
                 {
                     //because of funny bug where town npcs fall forever in mp, including into hell
                     if (FargoSoulsUtil.HostCheck)
@@ -382,6 +382,12 @@ namespace FargowiltasSouls.Core.Globals
                         }
                     }
 
+                    if (jungle)
+                    {
+                        if (WorldSavingSystem.MasochistModeReal && normalSpawn)
+                            pool[NPCID.Parrot] = .025f;
+                    }
+
                     if (mushroom)
                     {
                         pool[NPCID.FungiBulb] = .02f;
@@ -419,10 +425,6 @@ namespace FargowiltasSouls.Core.Globals
 
                                 if (NPC.downedGolemBoss && (noBiome || dungeon))
                                     pool[NPCID.CultistArcherWhite] = .01f;
-
-                                if (jungle)
-                                    pool[NPCID.Parrot] = .05f;
-
                             }
                         }
                         else //night
@@ -742,6 +744,9 @@ namespace FargowiltasSouls.Core.Globals
                     {
                         if (normalSpawn && bossCanSpawn)
                             pool[NPCID.QueenBee] = .0001f;
+
+                        if (normalSpawn)
+                            pool[NPCID.Parrot] = .025f;
 
                         if (!surface)
                         {

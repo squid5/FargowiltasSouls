@@ -186,12 +186,24 @@ namespace FargowiltasSouls.Content.Items
                     balanceNumber = 1;
                     return EModeChange.Buff;
 
-                /*
-            case ItemID.PiercingStarlight:
-                balanceTextKeys = new string[] { "Damage" };
-                balanceNumber = 0.6f;
-                return EModeChange.Nerf;
-                */
+                case ItemID.LucyTheAxe:
+                    balanceTextKeys = new string[] { "Damage" };
+                    balanceNumber = 1.2f;
+                    return EModeChange.Buff;
+
+                case ItemID.PewMaticHorn:
+                    balanceTextKeys = new string[] { "Damage" };
+                    balanceNumber = 1.4f;
+                    return EModeChange.Buff;
+
+                case ItemID.WeatherPain:
+                    balanceTextKeys = new string[] { "WeatherPain" };
+                    return EModeChange.Buff;
+
+                case ItemID.HoundiusShootius:
+                    balanceTextKeys = new string[] { "Damage", "HoundiusShootius" };
+                    balanceNumber = 1.2f;
+                    return EModeChange.Buff;
 
                 case ItemID.PumpkinMoonMedallion:
                     balanceNumber = PumpkinMoonBosses.WAVELOCK;

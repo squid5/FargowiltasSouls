@@ -700,7 +700,9 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
                 if (IsSwipeLimb) //swipe AI
                 {
-                    if (!SwipeLimbAI())
+                    if (Main.getGoodWorld)
+                        useNormalAi = true;
+                    else if (!SwipeLimbAI())
                         return false;
                 }
                 else if (head.ai[1] == 1 || head.ai[1] == 2) //other limbs while prime spinning
