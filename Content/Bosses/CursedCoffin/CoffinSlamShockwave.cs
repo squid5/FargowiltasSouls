@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
@@ -30,6 +31,8 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
             Projectile.scale = 1f;
             Projectile.light = 1;
             Projectile.timeLeft = 60 * 3;
+
+            Projectile.hide = true;
         }
         public float ScaleX = 1;
         public override void AI()
@@ -83,6 +86,11 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
             }
             */
         }
+        public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
+        {
+            if (Projectile.hide)
+                behindNPCsAndTiles.Add(index);
+        }
         public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers)
         {
             modifiers.SetMaxDamage(1);
@@ -94,7 +102,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
         public override bool PreDraw(ref Color lightColor)
         {
             float rotation = Projectile.rotation;
-            Vector2 drawPos = Projectile.Center;
+            Vector2 drawPos = Projectile.Center + Vector2.UnitY * 10;
             Texture2D texture = TextureAssets.Projectile[Type].Value;
 
             Vector2 scale = Vector2.UnitX * ScaleX + Vector2.UnitY * Projectile.scale;
@@ -112,7 +120,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
                 Color oldColor = lightColor;
                 oldColor *= 0.5f;
                 oldColor *= (float)(ProjectileID.Sets.TrailCacheLength[Projectile.type] - i) / ProjectileID.Sets.TrailCacheLength[Projectile.type];
-                Vector2 oldPos = Projectile.oldPos[i] + Projectile.Size / 2;
+                Vector2 oldPos = Projectile.oldPos[i] + Projectile.Size / 2 + Vector2.UnitY * 10;
                 float oldRot = Projectile.oldRot[i];
                 Main.EntitySpriteDraw(texture, oldPos - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY), rectangle, Projectile.GetAlpha(oldColor),
                     oldRot, origin, scale, spriteEffects, 0);
