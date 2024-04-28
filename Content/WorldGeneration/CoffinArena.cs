@@ -1,16 +1,13 @@
-﻿using FargowiltasSouls.Core.Systems;
+﻿using FargowiltasSouls.Content.Tiles;
+using FargowiltasSouls.Core.Systems;
 using Microsoft.Xna.Framework;
 using StructureHelper;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.WorldBuilding;
 
 namespace FargowiltasSouls.Content.WorldGeneration
 {
@@ -74,9 +71,23 @@ namespace FargowiltasSouls.Content.WorldGeneration
         }
         public static void ExtendPyramid(Point pyramidTop, int yToExtendTo)
         {
-
+            for (int y = pyramidTop.Y; y <= yToExtendTo; y++)
+            {
+                int i = y - pyramidTop.Y;
+                int halfWidth = i + 1;
+                for (int x = pyramidTop.X - halfWidth - 2; x <= pyramidTop.X + halfWidth; x++)
+                {
+                    Tile tile = Main.tile[x, y];
+                    if (!TileIsPyramid(tile))
+                    {
+                        WorldGen.KillTile(x, y);
+                        WorldGen.KillWall(x, y);
+                        WorldGen.PlaceTile(x, y, TileID.SandstoneBrick, mute: true, forced: true);
+                    }
+                }
+            }
         }
-
+        public static int RandomSandstoneBrick() => (WorldGen.generatingWorld ? WorldGen.genRand.NextFloat() : Main.rand.NextFloat()) > 0.7f ? ModContent.TileType<CrackedSandstoneBricks>() : TileID.SandstoneBrick;
         public static void Place(Point arenaTopCenter)
         {
             string arenaPath = "Content/WorldGeneration/CoffinArena";
@@ -93,7 +104,7 @@ namespace FargowiltasSouls.Content.WorldGeneration
                     Point point = new(x, arenaTopCenter.Y + y);
                     WorldGen.KillTile(point.X, point.Y);
                     WorldGen.KillWall(point.X, point.Y);
-                    WorldGen.PlaceTile(point.X, point.Y, TileID.SandstoneBrick, mute: true, forced: true);
+                    WorldGen.PlaceTile(point.X, point.Y, RandomSandstoneBrick(), mute: true, forced: true);
                 }
             }
             WorldSavingSystem.CoffinArenaCenter = new(arenaTopCenter.X, arenaTopCenter.Y + Height / 2);

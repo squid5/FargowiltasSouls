@@ -8,6 +8,8 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria;
 using FargowiltasSouls.Content.WorldGeneration;
+using Microsoft.Xna.Framework;
+using FargowiltasSouls.Content.Tiles;
 
 namespace FargowiltasSouls.Content.Items.Consumables
 {
@@ -36,7 +38,10 @@ namespace FargowiltasSouls.Content.Items.Consumables
 
         public override bool? UseItem(Player player)
         {
-            CoffinArena.Place(Main.MouseWorld.ToTileCoordinates());
+            Point point = new((int)(Main.MouseWorld.X / 16), (int)(Main.MouseWorld.Y / 16));
+            WorldGen.KillTile(point.X, point.Y);
+            WorldGen.PlaceTile(point.X, point.Y, ModContent.TileType<CrackedSandstoneBricks>(), mute: true, forced: true);
+            //CoffinArena.Place(Main.MouseWorld.ToTileCoordinates());
             return true;
         }
     }

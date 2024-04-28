@@ -320,7 +320,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
                         Timer = 0;
                         AI3 = 0;
                     }
-                    SlowCharges(owner);
+                    SlowCharges(owner, coffin.StateMachine.CurrentState.Identifier);
                     break;
                 case CursedCoffin.BehaviorStates.PhaseTransition:
                     {
@@ -373,7 +373,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
                     {
                         if (i == 0)
                             continue;
-                        Vector2 vel = Vector2.UnitY.RotatedBy(i * MathF.Tau * (0.041f + Main.rand.NextFloat(0.02f))) * (6 + Math.Abs(i));
+                        Vector2 vel = Vector2.UnitY.RotatedBy(i * MathF.Tau * (0.041f + Main.rand.NextFloat(0.05f))) * (6 + Math.Abs(i));
                         Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Bottom + NPC.velocity, vel, ModContent.ProjectileType<CoffinDarkSouls>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage), 1f, Main.myPlayer, NPC.whoAmI, -0.135f);
                         // ghost projs, neg grav
                     }
@@ -389,7 +389,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
                 //Movement(player.Center + player.Center.SafeDirectionTo(NPC.Center) * 300, 0.1f, 10, 5, 0.08f, 20);
             }
         }
-        void SlowCharges(NPC owner)
+        void SlowCharges(NPC owner, CursedCoffin.BehaviorStates state)
         {
             
             
@@ -435,40 +435,44 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
             }
             else //if (Timer < 240) edit: no longer loops, just continues charging
             {
-                if (Timer > 110)
-                    NPC.noTileCollide = false;
                 SoundEngine.PlaySound(CursedCoffin.SpiritDroneSFX, NPC.Center);
 
-                if (Timer > 180 || (Timer > 110 && Collision.SolidTiles(NPC.position + NPC.velocity, NPC.width, NPC.height)))
+                if (state != CursedCoffin.BehaviorStates.RandomStuff) // Charges
                 {
-                    Timer = 0;
-                    return;
-                }
-                if (NPC.velocity.LengthSquared() < 10 * 10)
-                {
-                    NPC.velocity += Utils.SafeNormalize(NPC.velocity, Vector2.Zero) * 0.5f;
-                }
-                NPC.velocity = NPC.velocity.ClampLength(0, 10);
+                    if (Timer > 110)
+                        NPC.noTileCollide = false;
 
-                /*
-                Vector2 vectorToIdlePosition = player.Center - NPC.Center;
-                float speed = 6.5f;
-                if (!WorldSavingSystem.EternityMode)
-                    speed /= 2;
-                else if (!WorldSavingSystem.MasochistModeReal)
-                    speed /= 1.1f;
-                float inertia = 20f;
-                vectorToIdlePosition.Normalize();
-                vectorToIdlePosition *= speed;
-                NPC.velocity = (NPC.velocity * (inertia - 1f) + vectorToIdlePosition) / inertia;
-                if (NPC.velocity == Vector2.Zero)
-                {
-                    NPC.velocity.X = -0.15f;
-                    NPC.velocity.Y = -0.05f;
+                    if (Timer > 180 || (Timer > 110 && Collision.SolidTiles(NPC.position + NPC.velocity, NPC.width, NPC.height)))
+                    {
+                        Timer = 0;
+                        return;
+                    }
+                    if (NPC.velocity.LengthSquared() < 10 * 10)
+                    {
+                        NPC.velocity += Utils.SafeNormalize(NPC.velocity, Vector2.Zero) * 0.5f;
+                    }
+                    NPC.velocity = NPC.velocity.ClampLength(0, 10);
                 }
-                if (NPC.velocity.Length() > 6.5f)
-                    NPC.velocity *= 0.97f;
-                */
+                else // Slow crawling
+                {
+                    Vector2 vectorToIdlePosition = player.Center - NPC.Center;
+                    float speed = 6.5f;
+                    if (!WorldSavingSystem.EternityMode)
+                        speed /= 2;
+                    else if (!WorldSavingSystem.MasochistModeReal)
+                        speed /= 1.1f;
+                    float inertia = 20f;
+                    vectorToIdlePosition.Normalize();
+                    vectorToIdlePosition *= speed;
+                    NPC.velocity = (NPC.velocity * (inertia - 1f) + vectorToIdlePosition) / inertia;
+                    if (NPC.velocity == Vector2.Zero)
+                    {
+                        NPC.velocity.X = -0.15f;
+                        NPC.velocity.Y = -0.05f;
+                    }
+                    if (NPC.velocity.Length() > 6.5f)
+                        NPC.velocity *= 0.97f;
+                }
             }
             Timer++;
         }

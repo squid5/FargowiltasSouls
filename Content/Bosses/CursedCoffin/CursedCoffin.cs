@@ -133,6 +133,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
         }
         public override void ModifyHitByProjectile(Projectile projectile, ref NPC.HitModifiers modifiers)
         {
+            /*
             if (!PhaseTwo && projectile.Colliding(projectile.Hitbox, TopHitbox()) && Frame <= 1)
             {
                 NPC.HitSound = SoundID.NPCHit54;
@@ -142,10 +143,12 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
             {
                 NPC.HitSound = SoundID.NPCHit4;
             }
+            */
             base.ModifyHitByProjectile(projectile, ref modifiers);
         }
         public override void ModifyHitByItem(Player player, Item item, ref NPC.HitModifiers modifiers)
         {
+            /*
             if (!PhaseTwo && item.Hitbox.Intersects(TopHitbox()) && Frame <= 1)
             {
                 NPC.HitSound = SoundID.NPCHit54;
@@ -155,6 +158,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
             {
                 NPC.HitSound = SoundID.NPCHit4;
             }
+            */
             base.ModifyHitByItem(player, item, ref modifiers);
         }
         public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers)
@@ -166,7 +170,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
         {
 			if (!StateMachine.StateStack.Any() || (StateMachine.CurrentState.Identifier != BehaviorStates.SlamWShockwave && StateMachine.CurrentState.Identifier != BehaviorStates.WavyShotSlam))
 				return false;
-			if (NPC.velocity.Y <= 0)
+			if (StateMachine.CurrentState.Identifier == BehaviorStates.SlamWShockwave && NPC.velocity.Y <= 0)
 				return false;
             return base.CanHitPlayer(target, ref cooldownSlot);
         }

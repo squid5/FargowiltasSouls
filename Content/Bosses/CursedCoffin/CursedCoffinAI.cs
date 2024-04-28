@@ -261,7 +261,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
             ref float initialDir = ref AI2;
             ref float initialDist = ref AI3;
             HoverSound();
-            const int PrepTime = 60;
+            const int PrepTime = 50;
 
             if (++NPC.frameCounter % 10 == 9 && Frame > 0)
                 Frame--;
@@ -474,6 +474,16 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 						int fromWall = ProjCount - i;
                         Projectile.NewProjectile(NPC.GetSource_FromThis(), projPos, Vector2.Zero,
                                 ModContent.ProjectileType<FallingSandstone>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage), 0f, Main.myPlayer, leniencyTime + (int)(fromWall * 1.5f) + Main.rand.Next(60, 80));
+
+                    }
+
+                    if (FargoSoulsUtil.HostCheck && WorldSavingSystem.MasochistModeReal)
+                    {
+                        for (int i = -1; i <= 1; i += 2)
+                        {
+                            Vector2 vel = Vector2.UnitX * i * 3;
+                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Bottom - Vector2.UnitY * 50, vel, ModContent.ProjectileType<CoffinSlamShockwave>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage, 0.1f), 1f, Main.myPlayer);
+                        }
                     }
 
                     return;
@@ -633,7 +643,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 			else if (Timer < RandomStuffOpenTime + 310 && Timer >= RandomStuffOpenTime)
 			{
 				NPC.velocity.X *= 0.7f; // moves slower horizontally 
-				int shotTime = WorldSavingSystem.MasochistModeReal ? 20 : 25;
+				int shotTime = WorldSavingSystem.MasochistModeReal ? 16 : 20;
 				if (Timer % shotTime == 0)
 				{
 					RandomProj = Main.rand.Next(3) switch
@@ -657,7 +667,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 					{
 
 						Vector2 vel = dir;
-						vel *= Main.rand.NextFloat(0.9f, 1.3f);
+						vel *= Main.rand.NextFloat(0.7f, 1.3f);
 
                         Vector2 offsetDir = Vector2.Normalize(dir);
                         Vector2 posOffset = offsetDir.RotatedBy(MathF.PI / 2) * Main.rand.NextFloat(-NPC.height / 3, NPC.height / 3);

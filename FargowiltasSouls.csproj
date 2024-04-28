@@ -22,6 +22,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="Common\Graphics\Particles\ParticleTextures\BloomParticle.png" />
+    <None Remove="Content\Tiles\CrackedSandstoneBricks.png" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="tModLoader.CodeAssist" Version="0.1.*" />
