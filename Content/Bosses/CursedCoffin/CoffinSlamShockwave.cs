@@ -54,7 +54,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
                 float distance = Math.Abs(player.Center.X - Projectile.Center.X);
                 Projectile.light = distance < 500 ? (500 - distance) / 500 : 0;
             }
-
+            Vector2 oldPos = Projectile.position;
             // lock on block grid
             Projectile.position.Y = (MathF.Floor((Projectile.position.Y + Projectile.height) / 16) * 16) - Projectile.height;
 
@@ -79,6 +79,8 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 
             if (i >= maxIter - 1)
                 Projectile.Kill();
+
+            Projectile.position = Vector2.Lerp(oldPos, Projectile.position, 0.1f);
             /*
             for (int j = 0; j < 5; j++)
             {
