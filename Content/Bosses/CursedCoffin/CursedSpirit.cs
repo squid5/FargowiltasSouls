@@ -373,7 +373,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
                     {
                         if (i == 0)
                             continue;
-                        Vector2 vel = Vector2.UnitY.RotatedBy(i * MathF.Tau * (0.041f + Main.rand.NextFloat(0.05f))) * (6 + Math.Abs(i));
+                        Vector2 vel = Vector2.UnitY.RotatedBy(i * MathF.Tau * (0.041f + Main.rand.NextFloat(-0.03f, 0.02f))) * (6 + Math.Abs(i));
                         Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Bottom + NPC.velocity, vel, ModContent.ProjectileType<CoffinDarkSouls>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage), 1f, Main.myPlayer, NPC.whoAmI, -0.135f);
                         // ghost projs, neg grav
                     }
