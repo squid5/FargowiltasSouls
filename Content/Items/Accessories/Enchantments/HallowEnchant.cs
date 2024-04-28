@@ -60,8 +60,8 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
         public static void HealRepel(Player player)
         {
             SoundEngine.PlaySound(SoundID.Item72);
-            Particle p = new HallowEnchantBarrier(player.Center, Vector2.Zero, 1, 40);
-            //Projectile.NewProjectile(player.GetSource_EffectItem<HallowEffect>(), player.Center, Vector2.Zero, ModContent.ProjectileType<GlowRing>(), 0, 0f, Main.myPlayer, player.whoAmI, -25);
+            Particle p = new HallowEnchantBarrier(player.Center, Vector2.Zero, RepelRadius / 160f, 32);
+            p.Spawn();
 
             foreach (Projectile projectile in Main.projectile.Where(p => p.hostile && FargoSoulsUtil.CanDeleteProjectile(p) && p.Distance(player.Center) <= RepelRadius))
             {
