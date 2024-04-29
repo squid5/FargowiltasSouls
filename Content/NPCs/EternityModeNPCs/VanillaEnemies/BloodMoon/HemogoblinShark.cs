@@ -93,8 +93,8 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.BloodMoo
             Microsoft.Xna.Framework.Rectangle rectangle2 = new(0, 0, Main.maxTilesX, Main.maxTilesY);
             rectangle2.Inflate(-40, -40);
             rectangle1 = Rectangle.Intersect(rectangle1, rectangle2);
-            List<Point> pointList1 = new();
-            List<Point> pointList2 = new();
+            List<Point> pointList1 = [];
+            List<Point> pointList2 = [];
             for (int left = rectangle1.Left; left <= rectangle1.Right; ++left)
             {
                 for (int top = rectangle1.Top; top <= rectangle1.Bottom; ++top)

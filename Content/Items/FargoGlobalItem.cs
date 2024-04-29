@@ -120,8 +120,8 @@ namespace FargowiltasSouls.Content.Items
             return base.ConsumeItem(item, player);
         }
 
-        public static List<int> TungstenAlwaysAffects = new()
-        {
+        public static List<int> TungstenAlwaysAffects =
+        [
             ItemID.TerraBlade,
             ItemID.NightsEdge,
             ItemID.TrueNightsEdge,
@@ -131,7 +131,7 @@ namespace FargowiltasSouls.Content.Items
             ItemID.TheHorsemansBlade,
             ModContent.ItemType<TheBaronsTusk>(),
             ItemID.LucyTheAxe
-        };
+        ];
         public override void ModifyItemScale(Item item, Player player, ref float scale)
         {
             FargoSoulsPlayer modPlayer = player.FargoSouls();

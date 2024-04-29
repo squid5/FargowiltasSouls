@@ -116,7 +116,7 @@ namespace FargowiltasSouls.Common.Graphics.Drawers
 
                 // Append the player's wings to the draw cache.
                 PlayerDrawSet drawInfo = default;
-                drawInfo.BoringSetup(player, new List<DrawData>(), new List<int>(), new List<int>(), player.TopLeft + Vector2.UnitY * player.gfxOffY, 0f, player.fullRotation, player.fullRotationOrigin);
+                drawInfo.BoringSetup(player, [], [], [], player.TopLeft + Vector2.UnitY * player.gfxOffY, 0f, player.fullRotation, player.fullRotationOrigin);
                 DoNotDrawSpecialWings = false;
                 EternitySoulWingPlayerLayer.DrawWings(ref drawInfo);
                 DoNotDrawSpecialWings = true;

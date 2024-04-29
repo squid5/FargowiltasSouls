@@ -29,7 +29,7 @@ namespace FargowiltasSouls.Content.Patreon.Sam
             TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile, TileObjectData.newTile.Width, 0);
             TileObjectData.newTile.UsesCustomCanPlace = true;
             TileObjectData.newTile.LavaDeath = true;
-            TileObjectData.newTile.CoordinateHeights = new[] { 16, 16, 16 };
+            TileObjectData.newTile.CoordinateHeights = [16, 16, 16];
             TileObjectData.newTile.CoordinateWidth = 16;
             TileObjectData.newTile.CoordinatePadding = 2;
             TileObjectData.newAlternate.CopyFrom(TileObjectData.newTile);
@@ -44,7 +44,7 @@ namespace FargowiltasSouls.Content.Patreon.Sam
             // name.SetDefault("Squidward Door");
             AddMapEntry(new Color(200, 200, 200), name);
 
-            AdjTiles = new int[] { TileID.ClosedDoor };
+            AdjTiles = [TileID.ClosedDoor];
 
             TileID.Sets.OpenDoorID[Type] = ModContent.TileType<SquidwardDoorOpen>();
         }

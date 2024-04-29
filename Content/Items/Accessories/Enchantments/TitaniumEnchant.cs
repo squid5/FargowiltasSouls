@@ -134,7 +134,7 @@ This has a cooldown of 10 seconds during which you cannot gain shards
 
             if (modPlayer.TitaniumDRBuff && modPlayer.prevDyes == null)
             {
-                modPlayer.prevDyes = new List<int>();
+                modPlayer.prevDyes = [];
                 int reflectiveSilver = GameShaders.Armor.GetShaderIdFromItemId(ItemID.ReflectiveSilverDye);
 
                 for (int i = 0; i < player.dye.Length; i++)

@@ -89,8 +89,8 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
             return 1f + (modPlayer.ForceEffect<TungstenEnchant>() ? 2f : 1f);
         }
 
-        public static List<int> TungstenAlwaysAffectProjType = new()
-        {
+        public static List<int> TungstenAlwaysAffectProjType =
+        [
                 ProjectileID.MonkStaffT2,
                 ProjectileID.Arkhalis,
                 ProjectileID.Terragrim,
@@ -99,28 +99,26 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
                 ProjectileID.ShadowJoustingLance,
                 ModContent.ProjectileType<PrismaRegaliaProj>(),
                 ModContent.ProjectileType<BaronTuskShrapnel>(),
-        };
-        public static List<int> TungstenAlwaysAffectProjStyle = new()
-        {
+        ];
+        public static List<int> TungstenAlwaysAffectProjStyle =
+        [
             ProjAIStyleID.Spear,
             ProjAIStyleID.Yoyo,
             ProjAIStyleID.ShortSword,
             ProjAIStyleID.Flail
-        };
+        ];
         public static bool TungstenAlwaysAffectProj(Projectile projectile)
         {
             return ProjectileID.Sets.IsAWhip[projectile.type] ||
                 TungstenAlwaysAffectProjType.Contains(projectile.type) ||
                 TungstenAlwaysAffectProjStyle.Contains(projectile.aiStyle);
         }
-        public static List<int> TungstenNeverAffectProjType = new()
-        {
+        public static List<int> TungstenNeverAffectProjType =
+        [
             ModContent.ProjectileType<FishStickProjTornado>(),
             ModContent.ProjectileType<FishStickWhirlpool>()
-        };
-        public static List<int> TungstenNeverAffectProjStyle = new()
-        {
-        };
+        ];
+        public static List<int> TungstenNeverAffectProjStyle = [];
         public static bool TungstenNeverAffectsProj(Projectile projectile)
         {
             return TungstenNeverAffectProjType.Contains(projectile.type) ||

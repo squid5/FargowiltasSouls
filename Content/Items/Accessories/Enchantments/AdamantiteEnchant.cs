@@ -82,15 +82,15 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
                 modPlayer.AdamantiteSpread = adaCap;
         }
 
-        public static int[] AdamIgnoreItems = new int[]
-        {
+        public static int[] AdamIgnoreItems =
+        [
             ItemID.NightsEdge,
             ItemID.TrueNightsEdge,
             ItemID.Excalibur,
             ItemID.TrueExcalibur,
             ItemID.TerraBlade,
             ModContent.ItemType<DecrepitAirstrikeRemote>()
-        };
+        ];
 
         public static void AdamantiteSplit(Projectile projectile, FargoSoulsPlayer modPlayer, int splitDegreeAngle)
         {

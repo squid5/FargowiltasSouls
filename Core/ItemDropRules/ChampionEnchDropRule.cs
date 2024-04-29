@@ -13,7 +13,7 @@ namespace FargowiltasSouls.Core.ItemDropRules
         public ChampionEnchDropRule(int[] drops)
         {
             DropIds = drops;
-            ChainedRules = new List<IItemDropRuleChainAttempt>();
+            ChainedRules = [];
         }
 
         public bool CanDrop(DropAttemptInfo info) => true;

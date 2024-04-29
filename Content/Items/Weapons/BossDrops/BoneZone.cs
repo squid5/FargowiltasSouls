@@ -24,7 +24,7 @@ namespace FargowiltasSouls.Content.Items.Weapons.BossDrops
 
             Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
-        private static readonly int[] RiffVariants = new int[4] { 1, 2, 3, 4 };
+        private static readonly int[] RiffVariants = [1, 2, 3, 4];
         private static readonly SoundStyle badtothebone = new SoundStyle("FargowiltasSouls/Assets/Sounds/Boneriff/boneriff") with { Variants = RiffVariants, Volume = 0.15f };
         public override void SetDefaults()
         {

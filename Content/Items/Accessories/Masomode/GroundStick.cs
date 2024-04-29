@@ -55,8 +55,8 @@ Two friendly probes fight by your side and will supercharge with you
     {
         public override Header ToggleHeader => Header.GetHeader<DubiousHeader>();
         public override int ToggleItemType => ModContent.ItemType<GroundStick>();
-        private static readonly int[] ElectricAttacks = new int[]
-{
+        private static readonly int[] ElectricAttacks =
+[
             ProjectileID.DeathLaser,
             ProjectileID.EyeLaser,
             ProjectileID.PinkLaser,
@@ -69,7 +69,7 @@ Two friendly probes fight by your side and will supercharge with you
             ProjectileID.NebulaLaser,
             ProjectileID.VortexVortexLightning,
             ProjectileID.DD2LightningBugZap
-};
+];
         public override float ProjectileDamageDR(Player player, Projectile projectile, ref Player.HurtModifiers modifiers)
         {
             float dr = 0;

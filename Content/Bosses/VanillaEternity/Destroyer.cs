@@ -436,7 +436,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                 {
                     Vector2 targetPos = Main.player[npc.target].Center;
 
-                    List<int> segments = new();
+                    List<int> segments = [];
                     foreach (NPC n in Main.npc.Where(n => n.active && n.realLife == npc.whoAmI && n.Distance(targetPos) < 1600))
                         segments.Add(n.whoAmI);
 

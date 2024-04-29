@@ -95,15 +95,15 @@ namespace FargowiltasSouls.Content.Projectiles
         public bool noInteractionWithNPCImmunityFrames;
         private int tempIframe;
 
-        public static List<int> ShroomiteBlacklist = new()
-        {
+        public static List<int> ShroomiteBlacklist =
+        [
             ModContent.ProjectileType<MeteorFlame>(),
-        };
-        public static List<int> ShroomiteNerfList = new()
-        {
+        ];
+        public static List<int> ShroomiteNerfList =
+        [
             ModContent.ProjectileType<MechEyeProjectile>(),
             ModContent.ProjectileType<MechFlail>()
-        };
+        ];
 
         public override void SetStaticDefaults()
         {
@@ -393,7 +393,7 @@ namespace FargowiltasSouls.Content.Projectiles
             }
         }
 
-        public static int[] NoSplit => new int[] {
+        public static int[] NoSplit => [
             ProjectileID.SandnadoFriendly,
             ProjectileID.LastPrism,
             ProjectileID.LastPrismLaser,
@@ -407,7 +407,7 @@ namespace FargowiltasSouls.Content.Projectiles
             ProjectileID.PiercingStarlight,
             ProjectileID.Celeb2Weapon,
             ProjectileID.Xenopopper
-        };
+        ];
         public override bool PreAI(Projectile projectile)
         {
             bool retVal = true;
@@ -945,7 +945,7 @@ namespace FargowiltasSouls.Content.Projectiles
                 number--;
             }
 
-            List<Projectile> projList = new();
+            List<Projectile> projList = [];
             Projectile split;
             double spread = maxSpread / number;
 

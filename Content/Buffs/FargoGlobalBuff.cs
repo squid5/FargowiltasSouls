@@ -28,14 +28,14 @@ namespace FargowiltasSouls.Content.Buffs
             }
         }
 
-        public static int[] DebuffsToLetDecreaseNormally => new int[] {
+        public static int[] DebuffsToLetDecreaseNormally => [
             BuffID.Frozen,
             BuffID.Stoned,
             BuffID.Cursed,
             ModContent.BuffType<FusedBuff>(),
             ModContent.BuffType<TimeFrozenBuff>(),
             ModContent.BuffType<StunnedBuff>()
-        };
+        ];
 
         public override void Update(int type, Player player, ref int buffIndex)
         {

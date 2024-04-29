@@ -56,7 +56,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Souls
 
             if (Main.GameUpdateCount % 5 == 0 || EternitySoulSystem.TooltipLines == null)
             {
-                EternitySoulSystem.TooltipLines = new();
+                EternitySoulSystem.TooltipLines = [];
                 for (int i = 0; i < linesToShow; i++)
                 {
                     string line = Main.rand.NextFromCollection(EternitySoulSystem.Tooltips);
@@ -198,8 +198,8 @@ namespace FargowiltasSouls.Content.Items.Accessories.Souls
     }
     public class EternitySoulSystem : ModSystem
     {
-        public static List<string> Tooltips = new();
-        public static List<string> TooltipLines = new();
+        public static List<string> Tooltips = [];
+        public static List<string> TooltipLines = [];
         public override void OnLocalizationsLoaded() // rebuild on language changed
         {
             Tooltips.Clear();

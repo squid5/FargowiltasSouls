@@ -13,8 +13,9 @@ namespace FargowiltasSouls.Common
 {
     public abstract class EModeAccessorySlot : ModAccessorySlot
     {
-        int[] AllowedItemExceptions = new int[] //technically these are souls so should legally go in the slot that allows souls
-        {
+        int[] AllowedItemExceptions =
+        //technically these are souls so should legally go in the slot that allows souls
+        [
             ModContent.ItemType<ParadoxWolfSoul>(),
             ItemID.RareEnchantment,
             ItemID.SoulofLight,
@@ -23,7 +24,7 @@ namespace FargowiltasSouls.Common
             ItemID.SoulofFright,
             ItemID.SoulofSight,
             ItemID.SoulofMight,
-        };
+        ];
         public abstract int Loadout { get; }
         public override bool CanAcceptItem(Item checkItem, AccessorySlotType context)
         {

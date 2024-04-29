@@ -175,7 +175,7 @@ namespace FargowiltasSouls.Core.ModPlayers
 
         public int CritterAttackTimer;
 
-        public HashSet<int> ForceEffects = new();
+        public HashSet<int> ForceEffects = [];
 
         #endregion
 

@@ -75,26 +75,26 @@ namespace FargowiltasSouls //lets everything access it without using
 
         public static int HighestDamageTypeScaling(Player player, int dmg)
         {
-            List<float> types = new()
-            {
+            List<float> types =
+            [
                 player.ActualClassDamage(DamageClass.Melee),
                 player.ActualClassDamage(DamageClass.Ranged),
                 player.ActualClassDamage(DamageClass.Magic),
                 player.ActualClassDamage(DamageClass.Summon)
-            };
+            ];
 
             return (int)(types.Max() * dmg);
         }
 
         public static float HighestCritChance(Player player)
         {
-            List<float> types = new()
-            {
+            List<float> types =
+            [
                 player.ActualClassCrit(DamageClass.Melee),
                 player.ActualClassCrit(DamageClass.Ranged),
                 player.ActualClassCrit(DamageClass.Magic),
                 player.ActualClassCrit(DamageClass.Summon)
-            };
+            ];
 
             return types.Max();
         }

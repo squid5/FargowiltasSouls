@@ -102,7 +102,7 @@ namespace FargowiltasSouls.Core.Systems
 
             Player player = Main.LocalPlayer;
             Player.DashStartAction action = null;
-            object[] args = new object[] { dir, dashing, action };
+            object[] args = [dir, dashing, action];
             DashHandleMethod.Invoke(player, args);
             dir = (int)args[0];
             dashing = (bool)args[1];

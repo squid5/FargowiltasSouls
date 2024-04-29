@@ -34,12 +34,13 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEve
             MeteorRain,
 
         }
-        public override List<int> RandomAttacks => new() //these are randomly chosen attacks in p1
-        {
+        public override List<int> RandomAttacks =>
+        //these are randomly chosen attacks in p1
+        [
             (int)Attacks.PillarSlam,
             (int)Attacks.FireballVomit,
             (int)Attacks.MeteorRain
-        };
+        ];
         public override void ShieldsDownAI(NPC npc)
         {
             Player target = Main.player[npc.target];

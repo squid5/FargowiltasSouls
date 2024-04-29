@@ -82,7 +82,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
         }
         public static void CommandForbiddenStorm(Player Player)
         {
-            List<int> list = new();
+            List<int> list = [];
             for (int i = 0; i < Main.maxProjectiles; i++)
             {
                 Projectile projectile = Main.projectile[i];

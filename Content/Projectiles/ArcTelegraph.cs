@@ -108,8 +108,8 @@ namespace FargowiltasSouls.Content.Projectiles
             shader.Apply();
 
             VertexStrip vertexStrip = new();
-            List<Vector2> positions = new();
-            List<float> rotations = new();
+            List<Vector2> positions = [];
+            List<float> rotations = [];
             float initialRotation = Projectile.rotation - ArcAngle * 0.5f;
             for (float i = 0; i < 1; i += 0.005f)
             {

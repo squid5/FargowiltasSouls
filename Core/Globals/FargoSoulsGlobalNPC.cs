@@ -98,7 +98,7 @@ namespace FargowiltasSouls.Core.Globals
 
         //        public static bool Revengeance => CalamityMod.World.CalamityWorld.revenge;
 
-        static HashSet<int> RareNPCs = new();
+        static HashSet<int> RareNPCs = [];
 
         public override void Unload()
         {
@@ -974,12 +974,12 @@ namespace FargowiltasSouls.Core.Globals
         }
 
         private bool lootMultiplierCheck;
-        private static int[] IllegalLootMultiplierNPCs => new int[] {
+        private static int[] IllegalLootMultiplierNPCs => [
             NPCID.DD2Betsy,
             NPCID.EaterofWorldsBody,
             NPCID.EaterofWorldsHead,
             NPCID.EaterofWorldsTail
-        };
+        ];
 
         public override void OnKill(NPC npc)
         {

@@ -9,14 +9,14 @@ namespace FargowiltasSouls.Content.Items.Accessories.Forces
     {
         public override void SetStaticDefaults()
         {
-            Enchants[Type] = new int[]
-            {
+            Enchants[Type] =
+            [
                 ModContent.ItemType<PumpkinEnchant>(),
                 ModContent.ItemType<BeeEnchant>(),
                 ModContent.ItemType<SpiderEnchant>(),
                 ModContent.ItemType<TurtleEnchant>(),
                 ModContent.ItemType<BeetleEnchant>()
-            };
+            ];
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
         {

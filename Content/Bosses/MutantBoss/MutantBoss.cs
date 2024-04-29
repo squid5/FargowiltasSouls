@@ -71,8 +71,8 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
             NPCID.Sets.BossBestiaryPriority.Add(NPC.type);
             NPCID.Sets.MustAlwaysDraw[Type] = true;
 
-            NPC.AddDebuffImmunities(new List<int>
-            {
+            NPC.AddDebuffImmunities(
+            [
                 BuffID.Confused,
                 BuffID.Chilled,
                 BuffID.OnFire,
@@ -87,7 +87,7 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
                 ModContent.BuffType<TimeFrozenBuff>(),
                 ModContent.BuffType<LeadPoisonBuff>(),
 
-            });
+            ]);
 
         }
 
@@ -629,7 +629,7 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
         {
             if (WorldSavingSystem.MasochistModeReal && Main.rand.NextBool(3))
             {
-                int[] options = new int[] { 0, 1, 2, 4, 7, 9, 9 };
+                int[] options = [0, 1, 2, 4, 7, 9, 9];
                 AttackChoice = Main.rand.Next(options);
                 if (AttackChoice == sourceAI) //dont repeat attacks consecutively
                     AttackChoice = sourceAI == 9 ? 0 : 9;

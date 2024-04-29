@@ -31,11 +31,11 @@ namespace FargowiltasSouls.Core.ModPlayers
     {
         public ToggleBackend Toggler = new();
 
-        public Dictionary<AccessoryEffect, bool> TogglesToSync = new();
+        public Dictionary<AccessoryEffect, bool> TogglesToSync = [];
 
-        public List<AccessoryEffect> disabledToggles = new();
+        public List<AccessoryEffect> disabledToggles = [];
 
-        public List<BaseEnchant> EquippedEnchants = new();
+        public List<BaseEnchant> EquippedEnchants = [];
 
 
         public bool IsStandingStill;
@@ -54,7 +54,7 @@ namespace FargowiltasSouls.Core.ModPlayers
 
         public int The22Incident;
 
-        public Dictionary<int, bool> KnownBuffsToPurify = new();
+        public Dictionary<int, bool> KnownBuffsToPurify = [];
 
 
         public bool IsStillHoldingInSameDirectionAsMovement
@@ -121,7 +121,7 @@ namespace FargowiltasSouls.Core.ModPlayers
             }
             if (!ModLoader.TryGetMod("FargowiltasCrossmod", out Mod soulsDLC))
             {
-                List<string> supportedMods = new();
+                List<string> supportedMods = [];
                 if (ModLoader.TryGetMod("CalamityMod", out Mod calamity))
                 {
                     supportedMods.Add(calamity.DisplayName);
@@ -1004,10 +1004,10 @@ namespace FargowiltasSouls.Core.ModPlayers
                 Player.bodyFrame.Y = Player.bodyFrame.Height * 10;
                 if (shieldTimer > 0)
                 {
-                    List<int> shaders = new()
-                    {
+                    List<int> shaders =
+                    [
                         GameShaders.Armor.GetShaderIdFromItemId(ItemID.ReflectiveSilverDye)
-                    };
+                    ];
                     if (Player.HasEffect<DreadShellEffect>())
                         shaders.Add(GameShaders.Armor.GetShaderIdFromItemId(ItemID.BloodbathDye));
                     if (Player.HasEffect<PumpkingsCapeEffect>())
