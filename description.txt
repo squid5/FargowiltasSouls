@@ -26,6 +26,7 @@ NEW UPDATE - v1.6.10
 -Fixed timestopping yourself by using certain penetrator attacks during Masochist Mutant desperation
 -Fixed Deviantt's giant deathray rendering incorrectly
 -Fixed Eternity Advisor selling for more than it buys
+-Fixed Gutted Heart minions unintendedly dying in multiplayer
 
 Lifelight:
 -In non-Eternity Mode, the Crystal Congregation attack only congregates, doesn't send the crystals
