@@ -46,11 +46,11 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
                    ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[ModContent.NPCType<AbomBoss>()],
                    quickUnlock: true
                );
-            bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
+            bestiaryEntry.Info.AddRange([
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Sky,
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.NightTime,
                 new FlavorTextBestiaryInfoElement($"Mods.FargowiltasSouls.Bestiary.{Name}")
-            });
+            ]);
         }
 
         public override void SetDefaults()

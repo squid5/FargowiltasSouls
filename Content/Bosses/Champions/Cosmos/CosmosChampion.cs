@@ -71,10 +71,10 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Cosmos
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
-            bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
+            bestiaryEntry.Info.AddRange([
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Sky,
                 new FlavorTextBestiaryInfoElement($"Mods.FargowiltasSouls.Bestiary.{Name}")
-            });
+            ]);
         }
         public override Color? GetAlpha(Color drawColor)
         {

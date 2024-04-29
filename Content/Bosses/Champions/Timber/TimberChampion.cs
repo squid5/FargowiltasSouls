@@ -53,10 +53,10 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Timber
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
-            bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
+            bestiaryEntry.Info.AddRange([
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface,
                 new FlavorTextBestiaryInfoElement("Mods.FargowiltasSouls.Bestiary.TimberChampion")
-            });
+            ]);
         }
 
         public override void SetDefaults()

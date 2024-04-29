@@ -77,11 +77,11 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
-            bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
+            bestiaryEntry.Info.AddRange([
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.UndergroundDesert,
                 //BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.any,
                 new FlavorTextBestiaryInfoElement($"Mods.FargowiltasSouls.Bestiary.{Name}")
-            });
+            ]);
 
         }
         public const int BaseHP = 2222;

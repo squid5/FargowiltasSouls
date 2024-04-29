@@ -373,3 +373,5 @@ EMode: {
 	GelatinSubjects: Sujeitos Gelatinosos acordaram!
 	QueenBeeEnrage: "{$NPCName.QueenBee} se enfureceu fora da Selva Subterrânea!"
 }
+
+// RoyalSubjectVertical.DisplayName: Royal Subject Vertical

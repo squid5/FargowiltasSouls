@@ -27,10 +27,10 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs
                     ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[NPCID.BrainofCthulhu],
                     quickUnlock: true
                 );
-            bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
+            bestiaryEntry.Info.AddRange([
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.TheCrimson,
                 new FlavorTextBestiaryInfoElement("Mods.FargowiltasSouls.Bestiary.GuttedCreeper")
-            });
+            ]);
         }
 
         public override void SetDefaults()

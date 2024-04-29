@@ -201,11 +201,11 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
                 if (ForgorDeathrayTimer > 0 && --ForgorDeathrayTimer % 10 == 0 && npc.HasValidTarget && FargoSoulsUtil.HostCheck)
                 {
-                    Projectile.NewProjectile(npc.GetSource_FromThis(),
-                        Main.player[npc.target].Center - 2000 * Vector2.UnitY, Vector2.UnitY,
-                        ModContent.ProjectileType<WillDeathraySmall>(),
-                        (int)(npc.damage * .75), 0f, Main.myPlayer,
-                        Main.player[npc.target].Center.X, npc.whoAmI);
+                    int n = FargoSoulsUtil.NewNPCEasy(
+                        npc.GetSource_FromAI(), 
+                        Main.player[npc.target].Center - 2000 * Vector2.UnitY, 
+                        ModContent.NPCType<RoyalSubjectVertical>(),
+                        velocity: Vector2.UnitY * 20);
                 }
             }
 
