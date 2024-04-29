@@ -42,6 +42,8 @@ Eternity Mode changes:
 -Masochist FTW Skeletron Prime limbs use Vanilla AI instead
 -Masochist WoF eye lasers inflict Burning
 -Masochist WoF Ichor attack falls upwards aswell
+-Reduced WoF Ichor lag
+-Masochist Queen Bee deathrays exchanged for vertically dashing bees
 -Parrots can spawn in Underground Jungle in Hardmode (and Prehardmode in Masochist Mode, without loot)
 -Improved Mutant Sword/Devi Axe hitboxes, can no longer be clipped through
 -Enemies don't burn in the Underworld in the Don't Dig Up seed

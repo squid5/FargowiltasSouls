@@ -65,7 +65,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs
         public override void FindFrame(int frameHeight)
         {
             NPC.frameCounter++;
-            if (NPC.frameCounter > 4)
+            if (NPC.frameCounter > 3)
             {
                 NPC.frame.Y += frameHeight;
                 NPC.frameCounter = 0;
