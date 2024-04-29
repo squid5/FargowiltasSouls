@@ -201,11 +201,16 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
                 if (ForgorDeathrayTimer > 0 && --ForgorDeathrayTimer % 10 == 0 && npc.HasValidTarget && FargoSoulsUtil.HostCheck)
                 {
-                    int n = FargoSoulsUtil.NewNPCEasy(
-                        npc.GetSource_FromAI(), 
-                        Main.player[npc.target].Center - 2000 * Vector2.UnitY, 
+                    for (int i = 0; i < 8; i++)
+                    {
+                        Vector2 rand = Vector2.UnitX * Main.rand.NextFloat(-100, 100) - Vector2.UnitY * Main.rand.NextFloat(600f);
+                        Vector2 spawnPos = Main.player[npc.target].Center - 2000 * Vector2.UnitY + rand;
+                        int n = FargoSoulsUtil.NewNPCEasy(
+                        npc.GetSource_FromAI(),
+                        spawnPos,
                         ModContent.NPCType<RoyalSubjectVertical>(),
-                        velocity: Vector2.UnitY * 20);
+                        velocity: spawnPos.DirectionTo(Main.player[npc.target].Center) * 20);
+                    }
                 }
             }
 

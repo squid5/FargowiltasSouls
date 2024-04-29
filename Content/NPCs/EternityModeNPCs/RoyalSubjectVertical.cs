@@ -30,6 +30,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs
             AIType = 0;
             NPC.aiStyle = -1;
             NPC.timeLeft = 60 * 5;
+            NPC.npcSlots = 1f;
         }
 
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
@@ -44,6 +45,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs
             {
                 SoundEngine.PlaySound(SoundID.Zombie125, NPC.Center);
                 NPC.localAI[2] = 1;
+                NPC.direction = NPC.spriteDirection = Main.rand.NextBool() ? 1 : -1;
             }
             if (!FargoSoulsUtil.BossIsAlive(ref EModeGlobalNPC.beeBoss, NPCID.QueenBee)
                 && !NPC.AnyNPCs(NPCID.QueenBee))
@@ -72,6 +74,18 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs
             }
             if (NPC.frame.Y >= 3 * frameHeight)
                 NPC.frame.Y = 0;
+        }
+        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
+            bool recolor = SoulConfig.Instance.BossRecolors && WorldSavingSystem.EternityMode;
+            Texture2D texture = recolor ? ModContent.Request<Texture2D>(Texture + "22").Value : Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
+            Rectangle rectangle = NPC.frame;
+            Vector2 origin2 = rectangle.Size() / 2f;
+
+            SpriteEffects effects = NPC.spriteDirection < 1 ? SpriteEffects.None : SpriteEffects.FlipVertically;
+            Color color = NPC.GetAlpha(drawColor);
+            Main.EntitySpriteDraw(texture, NPC.Center - screenPos + new Vector2(0f, NPC.gfxOffY), rectangle, color, NPC.rotation, origin2, NPC.scale, effects, 0);
+            return false;
         }
     }
 }
