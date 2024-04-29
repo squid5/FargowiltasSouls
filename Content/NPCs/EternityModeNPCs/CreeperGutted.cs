@@ -67,9 +67,12 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs
             NPC.defense = NPC.defDefense;
 
             Player player = Main.player[(int)NPC.ai[0]];
-            if (!player.active || player.dead || !player.HasEffect<GuttedHeartMinions>())
+            if ((player.whoAmI != Main.myPlayer || !player.HasEffect<GuttedHeartMinions>()) && (!player.active || player.dead))
             {
+                int n = NPC.whoAmI;
                 NPC.SimpleStrikeNPC(NPC.lifeMax * 2, 0);
+                if (FargoSoulsUtil.HostCheck)
+                    NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n, 9999f);
                 return;
             }
 

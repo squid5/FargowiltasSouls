@@ -321,21 +321,24 @@ namespace FargowiltasSouls.Core.ModPlayers
 
                     if (projectile.TypeAlive<RazorBlade>() && hitbox.Distance(projectile.Center) < 100)
                     {
-                        Player player = Main.player[projectile.owner];
-
-                        Vector2 velocity = Vector2.Normalize((Main.MouseWorld - player.Center)) * 30;
-
-                        for (int j = 0; j < 3; j++)
+                        if (Player.whoAmI == projectile.owner)
                         {
-                            Vector2 pos = projectile.Center + Main.rand.NextVector2Circular(projectile.width / 2, projectile.height / 2);
-                            Particle p = new SparkParticle(pos, Vector2.Normalize(pos - projectile.Center) * Main.rand.NextFloat(2, 5), Color.Lerp(Color.Orange, Color.Red, Main.rand.NextFloat()), 0.2f, 20);
-                            p.Spawn();
+                            Vector2 velocity = Vector2.Normalize((Main.MouseWorld - Player.Center)) * 30;
+
+                            for (int j = 0; j < 3; j++)
+                            {
+                                Vector2 pos = projectile.Center + Main.rand.NextVector2Circular(projectile.width / 2, projectile.height / 2);
+                                Particle p = new SparkParticle(pos, Vector2.Normalize(pos - projectile.Center) * Main.rand.NextFloat(2, 5), Color.Lerp(Color.Orange, Color.Red, Main.rand.NextFloat()), 0.2f, 20);
+                                p.Spawn();
+                            }
+                            SoundEngine.PlaySound(RazorContainerTink with { Volume = 0.25f }, projectile.Center);
+                            projectile.velocity = velocity;
+                            projectile.ai[0] = 1;
+                            projectile.ai[1] = 0;
+                            projectile.ResetLocalNPCHitImmunity();
+                            projectile.netUpdate = true;
+                            NetMessage.SendData(MessageID.SyncProjectile, -1, -1, null, projectile.whoAmI);
                         }
-                        SoundEngine.PlaySound(RazorContainerTink with { Volume = 0.4f }, projectile.Center);
-                        projectile.velocity = velocity;
-                        projectile.ai[0] = 1;
-                        projectile.ai[1] = 0;
-                        projectile.ResetLocalNPCHitImmunity();
                     }
                 }
 

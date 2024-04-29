@@ -1,3 +1,44 @@
 NEW UPDATE - V {ModVersion}
--Fixed crashing issue with Soul of Eternity wings
--Disabled Lifelight reaction shotgun attack because of shader issues
+-Eternity world icon now uses the new Luminance icon tray
+-Resprited Eternity Deerclops
+-Resprited several accessories and items
+-New sprite for Hallow Enchant barrier effect
+-Decreased the intensity of most screenshakes
+-Ancient Seal doesn't spawn Dungeon Guardian
+-Nurse Heal during boss fight message is more clear that she cant heal because a boss is alive
+-New Banished Baron hit sounds
+
+-Molten Enchant: Decreased DoT damage, Damage bonus 25% -> 20%, Wizard damage bonus 25% -> 30%, Recipe includes Sunfury -> Molten Fury
+-Ancient Shadow Enchantment tentacles now have a global half second cooldown
+-Razor Container: Improved movement and visuals, new sound effect, rebalanced, network synced
+-Agitating Lens lens install duration 7.5s -> 8s, stun 2.5s -> 2s
+-Frigid Gemstone hotkey spell only deals damage in Hardmode
+-Lucy the Axe can now benefit from Tungsten Enchantment
+
+-Fixed timestopping yourself by using certain penetrator attacks during Masochist Mutant desperation
+-Fixed Deviantt's giant deathray rendering incorrectly
+-Fixed Eternity Advisor selling for more than it buys
+
+Lifelight:
+-In non-Eternity Mode, the Crystal Congregation attack only congregates, doesn't send the crystals
+-In non-Eternity Mode, phase transition only does 1 spin, less orbs
+
+Eternity Mode changes:
+-Plantera:
+--Max Health 175% -> 165%
+--Phase 3 vertical speed is now capped at 6 units per tick, while above the player
+--Improved behaviour and movement of p3 arena maneaters
+-Lunatic Cultist dragon from Pillars is now Zenith seed only
+-Eater of Worlds' body now reduces the damage of projectiles that hit it, like Eternity Destroyer
+-Masochist FTW Skeletron Prime limbs use Vanilla AI instead
+-Masochist WoF eye lasers inflict Burning
+-Masochist WoF Ichor attack falls upwards aswell
+-Parrots can spawn in Underground Jungle in Hardmode (and Prehardmode in Masochist Mode, without loot)
+-Improved Mutant Sword/Devi Axe hitboxes, can no longer be clipped through
+-Enemies don't burn in the Underworld in the Don't Dig Up seed
+-Lucy the Axe: +20% damage
+-Pewmatic Horn: +40% damage
+-Weather Pain: Increased hit frequency and pierce
+-Houndius Shootius: +20% damage and increased fireball velocity
+-Fixed Masochist FTW Fishron's stats scaling incorrectly
+-Fixed some Skeletron projectiles being unaffected by Eternity recolor in multiplayer
