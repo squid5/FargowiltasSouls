@@ -138,6 +138,6 @@ SoulConfig: {
 
 	PerformanceMode: {
 		Label: Performance Mode
-		Tooltip: "Disables the most performance-demanding visuals. Currently disables Mutant's eye attack trails."
+		Tooltip: Disables the most performance-demanding visuals. Currently disables Mutant's eye attack trails.
 	}
 }
