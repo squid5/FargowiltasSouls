@@ -39,7 +39,7 @@ namespace FargowiltasSouls.Content.Items.Misc
             Item.useTime = 30;
             Item.useStyle = ItemUseStyleID.HoldUp;
             Item.consumable = false;
-            Item.value = Item.buyPrice(0, 1);
+            Item.value = Item.buyPrice(0, 0, 1);
         }
 
         public override bool CanUseItem(Player player) => WorldSavingSystem.EternityMode;
