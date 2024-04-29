@@ -639,17 +639,18 @@ namespace FargowiltasSouls.Content.Items.Misc
             double summonDmg = Damage(DamageClass.Summon);
 
             string output = string.Empty;
-            int[] items;
-            if (meleeDmg > Utils.Max(rangedDmg, mageDmg, summonDmg))
-                items = melee;
-            else if (rangedDmg > Math.Max(mageDmg, summonDmg))
-                items = ranged;
-            else if (mageDmg > summonDmg)
-                items = magic;
-            else
-                items = summoner;
+            List<int> items = [];
+            double maxDmg = Utils.Max(meleeDmg, rangedDmg, mageDmg, summonDmg);
+            if (meleeDmg >= maxDmg)
+                items.AddRange(melee);
+            if (rangedDmg >= maxDmg)
+                items.AddRange(ranged);
+            if (mageDmg >= maxDmg)
+                items.AddRange(magic);
+            if (summonDmg >= maxDmg)
+                items.AddRange(summoner);
 
-            if (items == null)
+            if (items.Count <= 0)
                 return string.Empty;
 
             foreach (int item in items)

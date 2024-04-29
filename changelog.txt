@@ -15,6 +15,7 @@ NEW UPDATE - V {ModVersion}
 -Frigid Gemstone hotkey spell only deals damage in Hardmode
 -Lucy the Axe can now benefit from Tungsten Enchantment
 
+-If you have several classes with equal highest damage, the Eternity Advisor shows recommendations for all those classes
 -Fixed timestopping yourself by using certain penetrator attacks during Masochist Mutant desperation
 -Fixed Deviantt's giant deathray rendering incorrectly
 -Fixed Eternity Advisor selling for more than it buys
