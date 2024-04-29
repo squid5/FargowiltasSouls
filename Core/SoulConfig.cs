@@ -31,7 +31,7 @@ namespace FargowiltasSouls.Core
         [DefaultValue(false)]
         public bool BigTossMode;
 
-        [DefaultValue(true)]
+        [DefaultValue(false)]
         public bool PerformanceMode;
 
         [DefaultValue(true)]
