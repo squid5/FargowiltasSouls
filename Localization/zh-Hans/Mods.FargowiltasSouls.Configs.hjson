@@ -137,7 +137,7 @@ SoulConfig: {
 	}
 
 	PerformanceMode: {
-		// Label: Performance Mode
-		// Tooltip: Disables the most performance-demanding visuals. Currently disables Mutant's eye attack trails.
+		Label: 性能模式
+		Tooltip: 禁用高性能要求的视觉效果。目前会禁用突变体幻影眼的拖尾绘制
 	}
 }

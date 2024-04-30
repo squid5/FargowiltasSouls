@@ -413,4 +413,4 @@ EMode: {
 	QueenBeeEnrage: "{$NPCName.QueenBee}在地下丛林之外变得异常愤怒！"
 }
 
-// RoyalSubjectVertical.DisplayName: Royal Subject Vertical
+RoyalSubjectVertical.DisplayName: 皇家工蜂
