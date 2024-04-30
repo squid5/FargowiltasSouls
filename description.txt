@@ -22,6 +22,7 @@ NEW UPDATE - v1.6.10
 -Agitating Lens lens install duration 7.5s -> 8s, stun 2.5s -> 2s
 -Frigid Gemstone hotkey spell only deals damage in Hardmode
 -Lucy the Axe can now benefit from Tungsten Enchantment
+-Tweaked Eternity Advisor recommendations
 
 -If you have several classes with equal highest damage, the Eternity Advisor shows recommendations for all those classes
 -Fixed timestopping yourself by using certain penetrator attacks during Masochist Mutant desperation
@@ -52,6 +53,8 @@ Eternity Mode changes:
 -Pewmatic Horn: +40% damage
 -Weather Pain: Increased hit frequency and pierce
 -Houndius Shootius: +20% damage and increased fireball velocity
+-North Pole: +12% damage
+-Elf Melter: +10% damage
 -Fixed Masochist FTW Fishron's stats scaling incorrectly
 -Fixed some Skeletron projectiles being unaffected by Eternity recolor in multiplayer
 

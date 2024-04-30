@@ -263,6 +263,7 @@ namespace FargowiltasSouls.Content.Items.Misc
                     ModContent.ItemType<MythrilEnchant>(),
                     ModContent.ItemType<PalladiumEnchant>(),
                     ModContent.ItemType<PearlwoodEnchant>(),
+                    ModContent.ItemType<AdamantiteEnchant>(),
                     ModContent.ItemType<FrostEnchant>()
                 );
                 other += GetBuildText(ModContent.ItemType<WizardEnchant>());
@@ -285,6 +286,7 @@ namespace FargowiltasSouls.Content.Items.Misc
                     ModContent.ItemType<MythrilEnchant>(),
                     ModContent.ItemType<PalladiumEnchant>(),
                     ModContent.ItemType<PearlwoodEnchant>(),
+                    ModContent.ItemType<AdamantiteEnchant>(),
                     ModContent.ItemType<FrostEnchant>()
                 );
                 other += GetBuildText(ModContent.ItemType<WizardEnchant>());
@@ -307,6 +309,7 @@ namespace FargowiltasSouls.Content.Items.Misc
                     ModContent.ItemType<MythrilEnchant>(),
                     ModContent.ItemType<PalladiumEnchant>(),
                     ModContent.ItemType<PearlwoodEnchant>(),
+                    ModContent.ItemType<AdamantiteEnchant>(),
                     ModContent.ItemType<FrostEnchant>()
                 );
                 other += GetBuildText(ModContent.ItemType<WizardEnchant>());
@@ -329,6 +332,7 @@ namespace FargowiltasSouls.Content.Items.Misc
                     ModContent.ItemType<MythrilEnchant>(),
                     ModContent.ItemType<PalladiumEnchant>(),
                     ModContent.ItemType<PearlwoodEnchant>(),
+                    ModContent.ItemType<AdamantiteEnchant>(),
                     ModContent.ItemType<FrostEnchant>()
                 );
                 other += GetBuildText(ModContent.ItemType<WizardEnchant>());
@@ -351,6 +355,7 @@ namespace FargowiltasSouls.Content.Items.Misc
                     ModContent.ItemType<OrichalcumEnchant>(),
                     ModContent.ItemType<HallowEnchant>(),
                     ModContent.ItemType<MythrilEnchant>(),
+                    ModContent.ItemType<AdamantiteEnchant>(),
                     ModContent.ItemType<DubiousCircuitry>()
                 );
                 other += GetBuildText(ModContent.ItemType<WizardEnchant>());
@@ -374,6 +379,7 @@ namespace FargowiltasSouls.Content.Items.Misc
                     ModContent.ItemType<OrichalcumEnchant>(),
                     ModContent.ItemType<ApprenticeEnchant>(),
                     ModContent.ItemType<HallowEnchant>(),
+                    ModContent.ItemType<AdamantiteEnchant>(),
                     ModContent.ItemType<TitaniumEnchant>()
                 );
                 other += GetBuildText(ModContent.ItemType<WizardEnchant>());
@@ -395,6 +401,7 @@ namespace FargowiltasSouls.Content.Items.Misc
                     ModContent.ItemType<HallowEnchant>(),
                     ModContent.ItemType<AncientHallowEnchant>(),
                     ModContent.ItemType<ForbiddenEnchant>(),
+                    ModContent.ItemType<AdamantiteEnchant>(),
                     ModContent.ItemType<LumpOfFlesh>()
                 );
                 other += GetBuildText(ModContent.ItemType<WizardEnchant>());
@@ -432,6 +439,7 @@ namespace FargowiltasSouls.Content.Items.Misc
                     Main.rand.Next(new int[] { ModContent.ItemType<SupremeDeathbringerFairy>(), ModContent.ItemType<LihzahrdTreasureBox>(), ModContent.ItemType<BetsysHeart>(), ModContent.ItemType<MeteorEnchant>() })
                 ) + GetBuildTextRandom(
                     3,
+                    ModContent.ItemType<DubiousCircuitry>(),
                     ModContent.ItemType<ForbiddenEnchant>(),
                     ModContent.ItemType<DarkArtistEnchant>(),
                     ModContent.ItemType<LumpOfFlesh>(),
