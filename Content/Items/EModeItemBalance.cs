@@ -114,10 +114,21 @@ namespace FargowiltasSouls.Content.Items
                     balanceNumber = 1.3f;
                     return EModeChange.Buff;
 
+                case ItemID.NorthPole:
+                    balanceTextKeys = ["Damage"];
+                    balanceNumber = 1.12f;
+                    return EModeChange.Buff;
+
+                case ItemID.ElfMelter:
+                    balanceTextKeys = ["Damage"];
+                    balanceNumber = 1.1f;
+                    return EModeChange.Buff;
+
                 case ItemID.Razorpine:
                     balanceTextKeys = ["Damage"];
                     balanceNumber = 0.8f;
                     return EModeChange.Nerf;
+
                 case ItemID.BlizzardStaff:
                     balanceTextKeys = ["Damage", "Speed"];
                     balanceNumber = 0.7f;

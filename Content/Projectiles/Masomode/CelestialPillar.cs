@@ -1,5 +1,6 @@
 using FargowiltasSouls.Content.Buffs.Masomode;
 using FargowiltasSouls.Core.Systems;
+using Luminance.Core.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -165,6 +166,8 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
         public override void OnKill(int timeLeft)
         {
             SoundEngine.PlaySound(SoundID.Item92, Projectile.Center);
+            if (Main.LocalPlayer.active && !Main.dedServ)
+                ScreenShakeSystem.StartShake(10, shakeStrengthDissipationIncrement: 10f / 30);
             var type = (int)Projectile.ai[0] switch
             {
                 0 => 242,
