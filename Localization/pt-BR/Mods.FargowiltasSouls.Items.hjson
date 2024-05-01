@@ -3360,7 +3360,9 @@ RazorContainer: {
 	// DisplayName: Razor Container
 	/* Tooltip:
 		'''
-		Spawns a razor blade that hovers around your cursor. Hit it with a melee attack to send it flying dealing extra damage and armor pen
+		Spawns a razor blade that hovers around your cursor
+		Hit it with a sword to send it flying
+		While flying it always critically strikes and has increased armor penetration
 		'Some yellow fur is still stuck at the bottom' 
 		''' */
 }
