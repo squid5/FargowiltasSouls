@@ -16,6 +16,7 @@ using FargowiltasSouls.Content.Bosses.DeviBoss;
 using FargowiltasSouls.Content.Bosses.MutantBoss;
 using FargowiltasSouls.Core;
 using Luminance.Core.Graphics;
+using Terraria.Audio;
 
 namespace FargowiltasSouls.Content.Projectiles
 {
