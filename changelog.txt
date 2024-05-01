@@ -1,2 +1,2 @@
 NEW UPDATE - V {ModVersion}
--Fixed some Challenger weapons being shimmerable
+-Fixed Eternity Advisor bug
