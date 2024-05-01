@@ -56,8 +56,7 @@ namespace FargowiltasSouls.Content.Patreon.Duck
             Player player = Main.player[Projectile.owner];
 
             if (!Main.dedServ && Main.LocalPlayer.active)
-                if (ScreenShakeSystem.OverallShakeIntensity < 6)
-                    ScreenShakeSystem.SetUniversalRumble(6);
+                FargoSoulsUtil.ScreenshakeRumble(6);
 
             Projectile.velocity = Projectile.velocity.SafeNormalize(-Vector2.UnitY);
 

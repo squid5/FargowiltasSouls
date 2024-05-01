@@ -15,6 +15,7 @@ NEW UPDATE - v1.6.10
 -Ancient Seal doesn't spawn Dungeon Guardian
 -Nurse Heal during boss fight message is more clear that she cant heal because a boss is alive
 -New Banished Baron hit sounds
+-New Performance Mode config, that disables the trail on Mutant eyes
 
 -Molten Enchant: Decreased DoT damage, Damage bonus 25% -> 20%, Wizard damage bonus 25% -> 30%, Recipe includes Sunfury -> Molten Fury
 -Ancient Shadow Enchantment tentacles now have a global half second cooldown
@@ -37,7 +38,7 @@ Lifelight:
 Eternity Mode changes:
 -Plantera:
 --Max Health 175% -> 165%
---Phase 3 vertical speed is now capped at 6 units per tick, while above the player
+--Phase 3 vertical speed is now capped and much slower, while above the player
 --Improved behaviour and movement of p3 arena maneaters
 -Lunatic Cultist dragon from Pillars is now Zenith seed only
 -Eater of Worlds' body now reduces the damage of projectiles that hit it, like Eternity Destroyer

@@ -2441,8 +2441,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
 
             if (AI_Timer >= StartTime && ShotCount < 6) // screenshake
             {
-                if (ScreenShakeSystem.OverallShakeIntensity < 7)
-                    ScreenShakeSystem.SetUniversalRumble(7);
+                FargoSoulsUtil.ScreenshakeRumble(7);
             }
 
             if (AI_Timer == StartTime) //teleport and first shots

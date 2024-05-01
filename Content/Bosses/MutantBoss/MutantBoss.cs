@@ -1524,8 +1524,7 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
             if (NPC.ai[2] == 0)
             {
                 if (NPC.ai[1] < 60 && !Main.dedServ && Main.LocalPlayer.active)
-                    if (ScreenShakeSystem.OverallShakeIntensity < 6)
-                        ScreenShakeSystem.SetUniversalRumble(6);
+                    FargoSoulsUtil.ScreenshakeRumble(6);
             }
             else
             {
@@ -2530,8 +2529,7 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
             if (NPC.ai[1] > (WorldSavingSystem.MasochistModeReal ? 120 : 180))
             {
                 if (!Main.dedServ && Main.LocalPlayer.active)
-                    if (ScreenShakeSystem.OverallShakeIntensity < 6)
-                        ScreenShakeSystem.SetUniversalRumble(6);
+                    FargoSoulsUtil.ScreenshakeRumble(6);
 
                 if (FargoSoulsUtil.HostCheck)
                 {
@@ -3363,8 +3361,7 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
             }
 
             if (NPC.ai[1] < 60 && !Main.dedServ && Main.LocalPlayer.active)
-                if (ScreenShakeSystem.OverallShakeIntensity < 6)
-                    ScreenShakeSystem.SetUniversalRumble(6);
+                FargoSoulsUtil.ScreenshakeRumble(6);
 
             if (NPC.ai[1] == 360)
             {

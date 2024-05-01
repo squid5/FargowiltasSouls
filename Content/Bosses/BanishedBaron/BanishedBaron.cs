@@ -817,7 +817,7 @@ namespace FargowiltasSouls.Content.Bosses.BanishedBaron
             if (Timer < transTime)
             {
                 if (!Main.dedServ)
-                    ScreenShakeSystem.SetUniversalRumble(6);
+                    FargoSoulsUtil.ScreenshakeRumble(6);
                 if (Main.LocalPlayer.wet)
                 {
                     Main.LocalPlayer.velocity.Y -= 0.05f;
