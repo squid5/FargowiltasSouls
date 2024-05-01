@@ -129,7 +129,11 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Will
             }
             else
             {
-                Terraria.Audio.SoundEngine.PlaySound(SoundID.ForceRoarPitched, Projectile.Center + Vector2.UnitY * 2000);
+                Terraria.Audio.SoundEngine.PlaySound(SoundID.Zombie125 with { 
+                    MaxInstances = 0, 
+                    SoundLimitBehavior = Terraria.Audio.SoundLimitBehavior.ReplaceOldest,
+                    Volume = 1.5f
+                }, Projectile.Center + Vector2.UnitY * 2000);
             }
         }
 

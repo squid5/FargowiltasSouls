@@ -210,7 +210,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     for (int i = 0; i < 22; i++)
                     {
                         Vector2 rand = Vector2.UnitX * Main.rand.NextFloat(-100, 100) - Vector2.UnitY * 90 * i;
-                        Vector2 spawnPos = Main.player[npc.target].Center - 22 * 90 * Vector2.UnitY + rand;
+                        Vector2 spawnPos = Main.player[npc.target].Center - 22 * 60 * Vector2.UnitY + rand;
                         Vector2 speed = new Vector2(Main.rand.NextFloat(-0.1f, 0.1f), 22);
                         Projectile.NewProjectile(npc.GetSource_FromThis(), spawnPos, speed, ModContent.ProjectileType<RoyalSubjectProjectile>(),
                             FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 0f, Main.myPlayer);
