@@ -693,11 +693,11 @@
 // PlanteraTrapper.DisplayName: Plantera Trapper
 // PlanteraMushroomThing.DisplayName: Plantera Mushroom Thing
 // RainExplosion.DisplayName: Rain Explosion
-// CoffinSlamShockwave.DisplayName: Coffin Slam Shockwave
-// CoffinWaveShot.DisplayName: Coffin Wave Shot
-// CoffinDarkSouls.DisplayName: Coffin Dark Souls
-// CoffinHand.DisplayName: Coffin Hand
-// CoffinRandomStuff.DisplayName: Coffin Random Stuff
+// CoffinSlamShockwave.DisplayName: Slam Shockwave
+// CoffinWaveShot.DisplayName: Shadowflame Waveshot
+// CoffinDarkSouls.DisplayName: Dark Soul
+// CoffinHand.DisplayName: Cursed Coffin's Hand
+// CoffinRandomStuff.DisplayName: Cursed Artillery
 // FishStickWhirlpool.DisplayName: Fish Stick Whirlpool
 // BetsyHomingFireball.DisplayName: Betsy Homing Fireball
 // HellGuardian.DisplayName: Hell Guardian
@@ -716,7 +716,7 @@
 // HentaiSwordBlast.DisplayName: Hentai Sword Blast
 // HentaiSphereOkuu.DisplayName: Hentai Sphere Okuu
 // AbomRitualFTW.DisplayName: Abom Ritual F T W
-// RoyalSubjectProjectile.DisplayName: Royal Subject Projectile
 // FallingSandstone.DisplayName: Falling Sandstone
-// CoffinPlayerSoul.DisplayName: Coffin Player Soul
-// GildedSceptreProj.DisplayName: Gilded Sceptre Proj
+// CoffinPlayerSoul.DisplayName: Your Soul
+// GildedSceptreProj.DisplayName: Shadowflame Sceptre Shot
+// RoyalSubjectProjectile.DisplayName: Royal Subject Projectile

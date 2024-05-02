@@ -6,5 +6,5 @@ buildIgnore = *.csproj, *.user, obj\*, bin\*, .vs\*, .git\*, Folders to Port\*, 
 languageVersion = 6
 hideCode = false
 hideResources = false
-modReferences = Fargowiltas@3.2.1, Luminance@1.0.0
+modReferences = Fargowiltas@3.2.1, Luminance@1.0.3
 dllReferences = StructureHelper

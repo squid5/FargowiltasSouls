@@ -3433,5 +3433,9 @@ CoffinRoominator: {
 
 GildedSceptre: {
 	// DisplayName: Gilded Sceptre
-	// Tooltip: ""
+	/* Tooltip:
+		'''
+			Draw a circle to activate projectiles
+			Activated projectiles chase after the nearest enemy
+		''' */
 }
