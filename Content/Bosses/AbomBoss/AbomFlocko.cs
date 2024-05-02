@@ -10,7 +10,7 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
 {
     public class AbomFlocko : ModProjectile
     {
-        public override string Texture => "Terraria/Images/NPC_352";
+        public override string Texture => FargoSoulsUtil.VanillaTextureNPC(NPCID.Flocko);
 
         public override void SetStaticDefaults()
         {

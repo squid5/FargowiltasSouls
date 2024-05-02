@@ -20,18 +20,18 @@ namespace FargowiltasSouls.Content.Items.BossBags
             itemLoot.Add(ItemDropRule.Common(ItemID.WoodenCrate, 1, 5, 5));
             itemLoot.Add(ItemDropRule.Common(ItemID.HerbBag, 1, 5, 5));
             itemLoot.Add(ItemDropRule.Common(ItemID.Acorn, 1, 100, 100));
-            itemLoot.Add(ItemDropRule.OneFromOptions(1, new int[]
-            {
+            itemLoot.Add(ItemDropRule.OneFromOptions(1,
+            [
                 ItemID.Squirrel,
                 ItemID.SquirrelRed
-            }));
-            itemLoot.Add(ItemDropRule.OneFromOptions(1, new int[]
-            {
+            ]));
+            itemLoot.Add(ItemDropRule.OneFromOptions(1,
+            [
                 ModContent.ItemType<TreeSword>(),
                 ModContent.ItemType<MountedAcornGun>(),
                 ModContent.ItemType<SnowballStaff>(),
                 ModContent.ItemType<KamikazeSquirrelStaff>()
-            }));
+            ]));
         }
     }
 }

@@ -18,17 +18,17 @@ namespace FargowiltasSouls.Core.Globals
     public partial class EModeNPCLoot : GlobalNPC
     {
         #region NPC Lists
-        static List<int> EvilCritters = new()
-        {
+        static List<int> EvilCritters =
+        [
                 NPCID.CorruptBunny,
                 NPCID.CrimsonBunny,
                 NPCID.CorruptGoldfish,
                 NPCID.CrimsonGoldfish,
                 NPCID.CorruptPenguin,
                 NPCID.CrimsonPenguin
-            };
-        static List<int> Mimics = new()
-        {
+            ];
+        static List<int> Mimics =
+        [
                 NPCID.Mimic,
                 NPCID.PresentMimic,
                 NPCID.IceMimic,
@@ -36,9 +36,9 @@ namespace FargowiltasSouls.Core.Globals
                 NPCID.BigMimicCrimson,
                 NPCID.BigMimicHallow,
                 NPCID.BigMimicJungle
-            };
-        static List<int> HardmodeDesertEnemies = new()
-        {
+            ];
+        static List<int> HardmodeDesertEnemies =
+        [
                 NPCID.DesertBeast,
                 NPCID.DesertScorpionWalk,
                 NPCID.DesertScorpionWall,
@@ -49,9 +49,9 @@ namespace FargowiltasSouls.Core.Globals
                 NPCID.DesertGhoulCrimson,
                 NPCID.DesertGhoulHallow,
                 NPCID.DesertDjinn
-            };
-        static List<int> EarlyBirdEnemies = new()
-        {
+            ];
+        static List<int> EarlyBirdEnemies =
+        [
             NPCID.WyvernHead,
             NPCID.WyvernBody,
             NPCID.WyvernBody2,
@@ -74,9 +74,9 @@ namespace FargowiltasSouls.Core.Globals
             NPCID.ZombieMushroomHat,
             NPCID.IceGolem,
             NPCID.SandElemental
-        };
-        static List<int> Hornets = new()
-        {
+        ];
+        static List<int> Hornets =
+        [
             NPCID.Hornet,
             NPCID.HornetFatty,
             NPCID.HornetHoney,
@@ -98,9 +98,9 @@ namespace FargowiltasSouls.Core.Globals
             NPCID.LittleMossHornet,
             NPCID.MossHornet,
             NPCID.TinyMossHornet
-        };
-        static List<int> MushroomEnemies = new()
-        {
+        ];
+        static List<int> MushroomEnemies =
+        [
             NPCID.FungiBulb,
             NPCID.GiantFungiBulb,
             NPCID.AnomuraFungus,
@@ -110,7 +110,7 @@ namespace FargowiltasSouls.Core.Globals
             NPCID.ZombieMushroomHat,
             NPCID.SporeSkeleton,
             NPCID.FungoFish
-        };
+        ];
         #endregion
         public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
         {

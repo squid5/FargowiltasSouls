@@ -9,8 +9,8 @@ namespace FargowiltasSouls.Content.Items.Accessories.Forces
     {
         public override void SetStaticDefaults()
         {
-            Enchants[Type] = new int[]
-            {
+            Enchants[Type] =
+            [
                 ModContent.ItemType<NinjaEnchant>(),
                 ModContent.ItemType<AncientShadowEnchant>(),
                 ModContent.ItemType<CrystalAssassinEnchant>(),
@@ -18,7 +18,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Forces
                 ModContent.ItemType<ShinobiEnchant>(),
                 ModContent.ItemType<DarkArtistEnchant>(),
                 ModContent.ItemType<NecroEnchant>()
-            };
+            ];
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)

@@ -91,8 +91,7 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
                     if (FargoSoulsUtil.HostCheck)
                         Projectile.NewProjectile(Terraria.Entity.InheritSource(Projectile), spawnPos, vel, ModContent.ProjectileType<WOFChain>(), Projectile.damage, 0f, Main.myPlayer);
 
-                    if (ScreenShakeSystem.OverallShakeIntensity < 4)
-                        ScreenShakeSystem.SetUniversalRumble(4);
+                    FargoSoulsUtil.ScreenshakeRumble(4);
 
                     SoundEngine.PlaySound(SoundID.NPCDeath13 with { Volume = 0.5f }, Projectile.Center);
 

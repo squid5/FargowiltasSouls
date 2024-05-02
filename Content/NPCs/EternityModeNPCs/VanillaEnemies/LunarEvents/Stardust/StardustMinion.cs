@@ -28,10 +28,10 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEve
             ScissorContract,
             Curve
         }
-        public List<int> NoDamage = new List<int>
-        {
+        public List<int> NoDamage =
+        [
             (int)States.PrepareScissor
-        };
+        ];
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Crystal Slime");

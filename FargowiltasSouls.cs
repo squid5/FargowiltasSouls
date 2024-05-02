@@ -62,18 +62,18 @@ namespace FargowiltasSouls
 
         public UserInterface CustomResources;
 
-        internal static Dictionary<int, int> ModProjDict = new();
+        internal static Dictionary<int, int> ModProjDict = [];
 
         internal struct TextureBuffer
         {
-            public static readonly Dictionary<int, Asset<Texture2D>> NPC = new();
-            public static readonly Dictionary<int, Asset<Texture2D>> NPCHeadBoss = new();
-            public static readonly Dictionary<int, Asset<Texture2D>> Gore = new();
-            public static readonly Dictionary<int, Asset<Texture2D>> Golem = new();
-            public static readonly Dictionary<int, Asset<Texture2D>> Dest = new();
-            public static readonly Dictionary<int, Asset<Texture2D>> GlowMask = new();
-            public static readonly Dictionary<int, Asset<Texture2D>> Extra = new();
-            public static readonly Dictionary<int, Asset<Texture2D>> Projectile = new();
+            public static readonly Dictionary<int, Asset<Texture2D>> NPC = [];
+            public static readonly Dictionary<int, Asset<Texture2D>> NPCHeadBoss = [];
+            public static readonly Dictionary<int, Asset<Texture2D>> Gore = [];
+            public static readonly Dictionary<int, Asset<Texture2D>> Golem = [];
+            public static readonly Dictionary<int, Asset<Texture2D>> Dest = [];
+            public static readonly Dictionary<int, Asset<Texture2D>> GlowMask = [];
+            public static readonly Dictionary<int, Asset<Texture2D>> Extra = [];
+            public static readonly Dictionary<int, Asset<Texture2D>> Projectile = [];
             public static Asset<Texture2D> Ninja = null;
             public static Asset<Texture2D> Probe = null;
             public static Asset<Texture2D> BoneArm = null;
@@ -443,8 +443,8 @@ namespace FargowiltasSouls
                     //wikithis.Call(3, this, ModContent.Request<Texture2D>(pathToIcon));
                 }
 
-                DebuffIDs = new List<int>
-                {
+                DebuffIDs =
+                [
                     BuffID.Bleeding,
                     BuffID.OnFire,
                     BuffID.Rabies,
@@ -536,7 +536,7 @@ namespace FargowiltasSouls
                     ModContent.BuffType<AbomRebirthBuff>(),
 
                     ModContent.BuffType<TimeFrozenBuff>()
-                };
+                ];
                 BossChecklistCompatibility();
 
                 //Mod bossHealthBar = ModLoader.GetMod("FKBossHealthBar");

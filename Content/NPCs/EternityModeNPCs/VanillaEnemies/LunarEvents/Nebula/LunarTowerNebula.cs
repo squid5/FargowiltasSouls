@@ -33,12 +33,13 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEve
             MassiveNebulaArcanum
 
         }
-        public override List<int> RandomAttacks => new() //these are randomly chosen attacks in p1
-        {
+        public override List<int> RandomAttacks =>
+        //these are randomly chosen attacks in p1
+        [
             (int)Attacks.MirageDeathray,
             (int)Attacks.TeleportJumpscare,
             (int)Attacks.MassiveNebulaArcanum
-        };
+        ];
         public override void ShieldsDownAI(NPC npc)
         {
             Player target = Main.player[npc.target];

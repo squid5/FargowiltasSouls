@@ -16,7 +16,7 @@ namespace FargowiltasSouls.Core.ItemDropRules
         {
             RuleForEMode = ruleForEMode;
             RuleForDefault = ruleForDefault;
-            ChainedRules = new();
+            ChainedRules = [];
         }
 
         public bool CanDrop(DropAttemptInfo info) => WorldSavingSystem.EternityMode ? RuleForEMode.CanDrop(info) : RuleForDefault.CanDrop(info);

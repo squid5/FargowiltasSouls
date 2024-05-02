@@ -25,11 +25,11 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Shadow
                    ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[ModContent.NPCType<ShadowChampion>()],
                    quickUnlock: true
                );
-            bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
+            bestiaryEntry.Info.AddRange([
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.TheCorruption,
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.NightTime,
                 new FlavorTextBestiaryInfoElement($"Mods.FargowiltasSouls.Bestiary.{Name}")
-            });
+            ]);
         }
 
         public override void SetDefaults()

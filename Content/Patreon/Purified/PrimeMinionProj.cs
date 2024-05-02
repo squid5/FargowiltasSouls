@@ -43,13 +43,13 @@ namespace FargowiltasSouls.Content.Patreon.Purified
             // Projectile.alpha = 0;
 
             bool foundLimbs = false;
-            int[] limbs = new int[]
-            {
+            int[] limbs =
+            [
                 ModContent.ProjectileType<PrimeMinionCannon>(),
                 ModContent.ProjectileType<PrimeMinionLaserGun>(),
                 ModContent.ProjectileType<PrimeMinionSaw>(),
                 ModContent.ProjectileType<PrimeMinionVice>()
-            };
+            ];
             for (int i = 0; i < Main.projectile.Length; i++)
             {
                 if (Main.projectile[i].active && Main.projectile[i].owner == Projectile.owner && limbs.Contains(Main.projectile[i].type))

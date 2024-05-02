@@ -167,7 +167,6 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
         public override bool SafePreAI(NPC npc)
         {
             bool result = base.SafePreAI(npc);
-
             NPC.golemBoss = npc.whoAmI;
 
             if (WorldSavingSystem.SwarmActive)
@@ -516,7 +515,6 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
         public override bool SafePreAI(NPC npc)
         {
             bool result = base.SafePreAI(npc);
-
             if (WorldSavingSystem.SwarmActive)
                 return result;
 
@@ -633,7 +631,8 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
         public override bool SafePreAI(NPC npc)
         {
             bool result = base.SafePreAI(npc);
-
+            if (npc.damage < 165)
+                npc.damage = 165;
             if (WorldSavingSystem.SwarmActive)
                 return result;
 

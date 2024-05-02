@@ -50,8 +50,7 @@ namespace FargowiltasSouls.Content.Patreon.Volknet.Projectiles
             CastLights();
 
             if (!Main.dedServ)
-                if (ScreenShakeSystem.OverallShakeIntensity < 6)
-                    ScreenShakeSystem.SetUniversalRumble(6);
+                FargoSoulsUtil.ScreenshakeRumble(6);
 
             if (Projectile.ai[1] < LaserWidth / 2)       //20
             {

@@ -373,3 +373,5 @@ EMode: {
 	// GelatinSubjects: Gelatin Subjects have awoken!
 	// QueenBeeEnrage: "{$NPCName.QueenBee} has enraged outside the underground jungle!"
 }
+
+// RoyalSubjectVertical.DisplayName: Royal Subject Vertical

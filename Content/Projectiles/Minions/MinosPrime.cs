@@ -154,7 +154,7 @@ namespace FargowiltasSouls.Content.Projectiles.Minions
         public Color? GetColor(Player player)
         {
             ColorTimer++;
-            List<Color> colors = new();
+            List<Color> colors = [];
 
             FargoSoulsPlayer modPlayer = player.FargoSouls();
 

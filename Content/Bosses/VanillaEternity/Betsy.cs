@@ -297,8 +297,8 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             LoadProjectile(recolor, ProjectileID.DD2BetsyFlameBreath);
         }
 
-        private static readonly List<LocalizedText> MasoTexts = new()
-        {
+        private static readonly List<LocalizedText> MasoTexts =
+        [
             Language.GetText("Mods.FargowiltasSouls.NPCs.EMode.Betsy1"),
             Language.GetText("Mods.FargowiltasSouls.NPCs.EMode.Betsy2"),
             Language.GetText("Mods.FargowiltasSouls.NPCs.EMode.Betsy3"),
@@ -326,6 +326,6 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             Language.GetText("Mods.FargowiltasSouls.NPCs.EMode.Betsy25"),
             Language.GetText("Mods.FargowiltasSouls.NPCs.EMode.Betsy26"),
             Language.GetText("Mods.FargowiltasSouls.NPCs.EMode.Betsy27"),
-        };
+        ];
     }
 }

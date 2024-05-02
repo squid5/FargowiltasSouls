@@ -91,7 +91,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
                     cdLength = 150;
                 }
 
-                List<int> npcIndexes = new();
+                List<int> npcIndexes = [];
                 float closestDist = 500f;
                 NPC closestNPC;
 

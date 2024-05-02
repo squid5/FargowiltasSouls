@@ -42,7 +42,7 @@ namespace FargowiltasSouls.Content.Projectiles
         private bool preAICheckDone;
         private bool firstTickAICheckDone;
 
-        public static Dictionary<int, bool> IgnoreMinionNerf = new();
+        public static Dictionary<int, bool> IgnoreMinionNerf = [];
 
 
 
@@ -922,12 +922,13 @@ namespace FargowiltasSouls.Content.Projectiles
                                 float ai0 = Main.rand.Next(4);
 
                                 LunaticCultist cultistData = Main.npc[cult].GetGlobalNPC<LunaticCultist>();
-                                int[] weight = new int[4];
-                                weight[0] = cultistData.MagicDamageCounter;
-                                weight[1] = cultistData.MeleeDamageCounter;
-                                weight[2] = cultistData.RangedDamageCounter;
-                                weight[3] = cultistData.MinionDamageCounter;
-
+                                int[] weight =
+                                [
+                                    cultistData.MagicDamageCounter,
+                                    cultistData.MeleeDamageCounter,
+                                    cultistData.RangedDamageCounter,
+                                    cultistData.MinionDamageCounter,
+                                ];
                                 cultistData.MeleeDamageCounter = 0;
                                 cultistData.RangedDamageCounter = 0;
                                 cultistData.MagicDamageCounter = 0;
@@ -1038,8 +1039,7 @@ namespace FargowiltasSouls.Content.Projectiles
                             : Main.rand.NextFloat(4f, 6f);
 
                         if (!Main.dedServ && Main.LocalPlayer.active)
-                            if (ScreenShakeSystem.OverallShakeIntensity < 6)
-                                ScreenShakeSystem.SetUniversalRumble(6);
+                            FargoSoulsUtil.ScreenshakeRumble(6);
                     }
                     break;
 

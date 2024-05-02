@@ -16,13 +16,13 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEve
     public class VortexEnemies : EModeNPCBehaviour
     {
         public static int[] VortexEnemyIDs =
-        {
+        [
             NPCID.VortexLarva,
             NPCID.VortexHornet,
             NPCID.VortexHornetQueen,
             NPCID.VortexSoldier,
             NPCID.VortexRifleman
-        };
+        ];
         public override NPCMatcher CreateMatcher() => new NPCMatcher().MatchTypeRange(
             VortexEnemyIDs
         );

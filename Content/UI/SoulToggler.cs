@@ -60,7 +60,7 @@ namespace FargowiltasSouls.Content.UI
             Scrollbar.OverflowHidden = true;
             Scrollbar.OnScrollWheel += HotbarScrollFix;
 
-            ToggleList = new UIToggleList();
+            ToggleList = [];
             ToggleList.SetScrollbar(Scrollbar);
             ToggleList.OnScrollWheel += HotbarScrollFix;
 

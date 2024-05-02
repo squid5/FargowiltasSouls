@@ -69,17 +69,19 @@ namespace FargowiltasSouls.Content.Bosses.BanishedBaron
             DeathAnimation
         }
 
-        public static List<int> P1Attacks = new() //these are randomly chosen attacks in p1
-        {
+        public static List<int> P1Attacks =
+        //these are randomly chosen attacks in p1
+        [
             (int)StateEnum.P1BigNuke,
             (int)StateEnum.P1RocketStorm,
             (int)StateEnum.P1SurfaceMines,
             (int)StateEnum.P1FadeDash,
             (int)StateEnum.P1SineSwim,
             (int)StateEnum.P1Whirlpool
-        };
-        public static List<int> P2Attacks = new() //these are randomly chosen attacks in p2
-        {
+        ];
+        public static List<int> P2Attacks =
+        //these are randomly chosen attacks in p2
+        [
             (int)StateEnum.P2PredictiveDash,
             (int)StateEnum.P2CarpetBomb,
             (int)StateEnum.P2RocketStorm,
@@ -87,7 +89,7 @@ namespace FargowiltasSouls.Content.Bosses.BanishedBaron
             (int)StateEnum.P2MineFlurry,
             (int)StateEnum.P2Whirlpool,
             (int)StateEnum.P2LaserSweep
-        };
+        ];
 
         public bool Attacking = true;
         public bool HitPlayer = true;
@@ -103,7 +105,7 @@ namespace FargowiltasSouls.Content.Bosses.BanishedBaron
 
         public const int MaxWhirlpools = 40;
 
-        public List<int> availablestates = new(0);
+        public List<int> availablestates = [];
 
         public Vector2 LockVector1 = Vector2.Zero;
 
@@ -127,14 +129,14 @@ namespace FargowiltasSouls.Content.Bosses.BanishedBaron
 
             NPCID.Sets.BossBestiaryPriority.Add(NPC.type);
 
-            NPC.AddDebuffImmunities(new List<int>
-            {
+            NPC.AddDebuffImmunities(
+            [
                 BuffID.Confused,
                 BuffID.Chilled,
                 BuffID.Suffocation,
                 ModContent.BuffType<LethargicBuff>(),
                 ModContent.BuffType<ClippedWingsBuff>()
-            });
+            ]);
             NPCID.Sets.NPCBestiaryDrawOffset.Add(NPC.type, new NPCID.Sets.NPCBestiaryDrawModifiers()
             {
                 Rotation = MathHelper.Pi,
@@ -143,10 +145,10 @@ namespace FargowiltasSouls.Content.Bosses.BanishedBaron
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
-            bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
+            bestiaryEntry.Info.AddRange([
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Ocean,
                 new FlavorTextBestiaryInfoElement($"Mods.FargowiltasSouls.Bestiary.{Name}")
-            });
+            ]);
         }
         public override void SetDefaults()
         {
@@ -161,7 +163,7 @@ namespace FargowiltasSouls.Content.Bosses.BanishedBaron
             NPC.lavaImmune = true;
             NPC.noGravity = true;
             NPC.noTileCollide = true;
-            NPC.HitSound = new SoundStyle("FargowiltasSouls/Assets/Sounds/BaronHit") with { Variants = new int[3] { 1, 2, 3 }, PitchRange = (-0.7f, -0.5f), Volume = 0.5f };
+            NPC.HitSound = new SoundStyle("FargowiltasSouls/Assets/Sounds/BaronHit") with { Variants = [1, 2, 3], PitchRange = (-0.7f, -0.5f), Volume = 0.5f };
             NPC.DeathSound = new SoundStyle("FargowiltasSouls/Assets/Sounds/BaronDeath");
             NPC.alpha = 255;
 
@@ -824,7 +826,7 @@ namespace FargowiltasSouls.Content.Bosses.BanishedBaron
             if (Timer < transTime)
             {
                 if (!Main.dedServ)
-                    ScreenShakeSystem.SetUniversalRumble(6);
+                    FargoSoulsUtil.ScreenshakeRumble(6);
                 if (Main.LocalPlayer.wet)
                 {
                     Main.LocalPlayer.velocity.Y -= 0.05f;

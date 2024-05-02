@@ -19,7 +19,7 @@ namespace FargowiltasSouls.Core.Toggler
         public readonly static string ConfigPath = Path.Combine(Main.SavePath, "ModConfigs", "FargowiltasSouls_Toggles.json");
         public Preferences Config;
 
-        public Dictionary<AccessoryEffect, Toggle> Toggles = new();
+        public Dictionary<AccessoryEffect, Toggle> Toggles = [];
         //public Point TogglerPosition;
         public bool CanPlayMaso;
 
@@ -62,7 +62,7 @@ namespace FargowiltasSouls.Core.Toggler
                 var toggleUnpack = Config.Get<Dictionary<string, bool>>($"CustomPresetsOff{i + 1}", null);
                 if (toggleUnpack != null)
                 {
-                    List<AccessoryEffect> disabledEffects = new();
+                    List<AccessoryEffect> disabledEffects = [];
                     foreach (AccessoryEffect effect in ToggleLoader.LoadedToggles.Keys.ToList())
                     {
                         if (toggleUnpack.ContainsKey(effect.Name))

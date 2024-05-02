@@ -9,15 +9,15 @@ namespace FargowiltasSouls.Content.Items.Accessories.Forces
     {
         public override void SetStaticDefaults()
         {
-            Enchants[Type] = new int[]
-            {
+            Enchants[Type] =
+            [
                 ModContent.ItemType<CobaltEnchant>(),
                 ModContent.ItemType<PalladiumEnchant>(),
                 ModContent.ItemType<MythrilEnchant>(),
                 ModContent.ItemType<OrichalcumEnchant>(),
                 ModContent.ItemType<AdamantiteEnchant>(),
                 ModContent.ItemType<TitaniumEnchant>()
-            };
+            ];
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)

@@ -35,14 +35,15 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEve
             VortexShield
 
         }
-        public override List<int> RandomAttacks => new() //these are randomly chosen attacks in p1
-        {
+        public override List<int> RandomAttacks =>
+        //these are randomly chosen attacks in p1
+        [
             (int)Attacks.LightningBall,
             (int)Attacks.SkyLightning,
             (int)Attacks.LightningElderHu,
             (int)Attacks.VortexShield
 
-        };
+        ];
         public override void ShieldsDownAI(NPC npc)
         {
             Player target = Main.player[npc.target];

@@ -1014,7 +1014,7 @@ namespace FargowiltasSouls.Core.ModPlayers
                 {
                     SoundEngine.PlaySound(SoundID.Item27, Player.Center);
 
-                    List<int> dusts = new();
+                    List<int> dusts = [];
                     if (dreadEffect)
                         dusts.Add(DustID.LifeDrain);
                     if (pumpkingEffect)
@@ -1049,7 +1049,7 @@ namespace FargowiltasSouls.Core.ModPlayers
                 {
                     SoundEngine.PlaySound(SoundID.Item28, Player.Center); //make a sound for refresh
 
-                    List<int> dusts = new();
+                    List<int> dusts = [];
                     if (dreadEffect)
                         dusts.Add(DustID.LifeDrain);
                     if (pumpkingEffect)

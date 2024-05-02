@@ -11,3 +11,5 @@ agi lens buff, install is 8s duration 2s stun, was 7.5/2.5
 fixed timestopping yourself by using certain penetrator attacks during maso mutant desperation
 maso wof ichor also falls up
 reduced wof ichor lag
+
+maso qb deathray replacement is an actual swarm of bees

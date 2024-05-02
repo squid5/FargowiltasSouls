@@ -79,26 +79,26 @@ namespace FargowiltasSouls //lets everything access it without using
 
         public static int HighestDamageTypeScaling(Player player, int dmg)
         {
-            List<float> types = new()
-            {
+            List<float> types =
+            [
                 player.ActualClassDamage(DamageClass.Melee),
                 player.ActualClassDamage(DamageClass.Ranged),
                 player.ActualClassDamage(DamageClass.Magic),
                 player.ActualClassDamage(DamageClass.Summon)
-            };
+            ];
 
             return (int)(types.Max() * dmg);
         }
 
         public static float HighestCritChance(Player player)
         {
-            List<float> types = new()
-            {
+            List<float> types =
+            [
                 player.ActualClassCrit(DamageClass.Melee),
                 player.ActualClassCrit(DamageClass.Ranged),
                 player.ActualClassCrit(DamageClass.Magic),
                 player.ActualClassCrit(DamageClass.Summon)
-            };
+            ];
 
             return types.Max();
         }
@@ -666,6 +666,14 @@ namespace FargowiltasSouls //lets everything access it without using
 
         public static bool AprilFools => DateTime.Today.Month == 4 && DateTime.Today.Day <= 7;
         public static string TryAprilFoolsTexture => AprilFools ? "_April" : "";
+
+        public static void ScreenshakeRumble(float strength)
+        {
+            if (ScreenShakeSystem.OverallShakeIntensity < strength)
+            {
+                ScreenShakeSystem.SetUniversalRumble(strength, MathF.Tau, null, 0.2f);
+            }
+        }
 
 
         #region npcloot

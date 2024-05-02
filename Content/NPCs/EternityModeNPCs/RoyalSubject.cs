@@ -32,10 +32,10 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs
                       ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[NPCID.QueenBee],
                       quickUnlock: true
                   );
-            bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
+            bestiaryEntry.Info.AddRange([
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.UndergroundJungle,
                 new FlavorTextBestiaryInfoElement("Mods.FargowiltasSouls.Bestiary.RoyalSubject")
-            });
+            ]);
         }
 
         public override void SetDefaults()

@@ -40,12 +40,12 @@ namespace FargowiltasSouls.Content.Bosses.TrojanSquirrel
             NPCID.Sets.TrailCacheLength[Type] = 8;
             NPCID.Sets.TrailingMode[Type] = 3;
 
-            NPC.AddDebuffImmunities(new List<int>
-            {
+            NPC.AddDebuffImmunities(
+            [
                 BuffID.Confused,
                     ModContent.BuffType<LethargicBuff>(),
                     ModContent.BuffType<ClippedWingsBuff>()
-            });
+            ]);
         }
 
         public override void SetDefaults()
@@ -248,10 +248,10 @@ namespace FargowiltasSouls.Content.Bosses.TrojanSquirrel
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
-            bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
+            bestiaryEntry.Info.AddRange([
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface,
                 new FlavorTextBestiaryInfoElement($"Mods.FargowiltasSouls.Bestiary.{Name}")
-            });
+            ]);
         }
 
         public override void SetDefaults()
@@ -846,7 +846,7 @@ namespace FargowiltasSouls.Content.Bosses.TrojanSquirrel
             if (WorldSavingSystem.MasochistModeReal && Main.getGoodWorld && FargoSoulsUtil.HostCheck)
             {
                 int[] edibleTiles =
-                {
+                [
                     TileID.WoodBlock,
                     TileID.AshWood,
                     TileID.BorealWood,
@@ -865,7 +865,7 @@ namespace FargowiltasSouls.Content.Bosses.TrojanSquirrel
                     TileID.VanityTreeSakura,
                     TileID.VanityTreeYellowWillow,
                     TileID.LivingMahoganyLeaves
-                };
+                ];
                 for (float x = NPC.position.X; x < NPC.BottomRight.X; x += 16)
                 {
                     for (float y = NPC.position.Y; y < NPC.BottomRight.Y; y += 16)

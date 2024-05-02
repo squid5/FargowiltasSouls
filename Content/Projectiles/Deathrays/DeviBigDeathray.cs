@@ -20,13 +20,13 @@ namespace FargowiltasSouls.Content.Projectiles.Deathrays
     {
         public override string Texture => "FargowiltasSouls/Content/Projectiles/Deathrays/DeviDeathray";
 
-        public static List<Asset<Texture2D>> RingTextures => new()
-        {
+        public static List<Asset<Texture2D>> RingTextures =>
+        [
             FargosTextureRegistry.DeviRingTexture,
             FargosTextureRegistry.DeviRing2Texture,
             FargosTextureRegistry.DeviRing3Texture,
             FargosTextureRegistry.DeviRing4Texture,
-        };
+        ];
 
         public DeviBigDeathray() : base(180) { }
 
@@ -46,8 +46,7 @@ namespace FargowiltasSouls.Content.Projectiles.Deathrays
         public override void AI()
         {
             if (!Main.dedServ && Main.LocalPlayer.active)
-                if (ScreenShakeSystem.OverallShakeIntensity < 6)
-                    ScreenShakeSystem.SetUniversalRumble(6);
+                FargoSoulsUtil.ScreenshakeRumble(6);
 
             Vector2? vector78 = null;
             if (Projectile.velocity.HasNaNs() || Projectile.velocity == Vector2.Zero)
@@ -170,7 +169,7 @@ namespace FargowiltasSouls.Content.Projectiles.Deathrays
             return baseWidth * 0.7f;
         }
 
-        public static Color[] DeviColors => new Color[] { new(216, 108, 224, 100), new(232, 140, 240, 100), new(224, 16, 216, 100), new(240, 220, 240, 100) };
+        public static Color[] DeviColors => [new(216, 108, 224, 100), new(232, 140, 240, 100), new(224, 16, 216, 100), new(240, 220, 240, 100)];
         public static Color ColorFunction(float trailInterpolant)
         {
             float time = (float)(0.5 * (1 + Math.Sin(1.5f * Main.GlobalTimeWrappedHourly % 1)));

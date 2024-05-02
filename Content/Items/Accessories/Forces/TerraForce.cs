@@ -11,8 +11,8 @@ namespace FargowiltasSouls.Content.Items.Accessories.Forces
 
         public override void SetStaticDefaults()
         {
-            Enchants[Type] = new int[]
-            {
+            Enchants[Type] =
+            [
                 ModContent.ItemType<CopperEnchant>(),
                 ModContent.ItemType<TinEnchant>(),
                 ModContent.ItemType<IronEnchant>(),
@@ -20,7 +20,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Forces
                 ModContent.ItemType<SilverEnchant>(),
                 ModContent.ItemType<TungstenEnchant>(),
                 ModContent.ItemType<ObsidianEnchant>()
-            };
+            ];
         }
 
         public override void UpdateInventory(Player player)

@@ -25,14 +25,14 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs
             NPCID.Sets.CantTakeLunchMoney[Type] = true;
 
             this.ExcludeFromBestiary();
-            NPC.AddDebuffImmunities(new List<int>
-            {
+            NPC.AddDebuffImmunities(
+            [
                 BuffID.OnFire,
                 BuffID.Confused,
                 BuffID.Suffocation,
                 BuffID.CursedInferno,
                 BuffID.Burning,
-            });
+            ]);
         }
 
         public override void SetDefaults()

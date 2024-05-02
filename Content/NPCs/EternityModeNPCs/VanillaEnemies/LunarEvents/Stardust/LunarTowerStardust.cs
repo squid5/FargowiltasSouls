@@ -29,15 +29,15 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEve
         public override int MaxHP => 20000;
         public override int Damage => 0;
 
-        List<int> DragonParts = new()
-        {
+        List<int> DragonParts =
+        [
                     NPCID.CultistDragonHead,
                     NPCID.CultistDragonBody1,
                     NPCID.CultistDragonBody2,
                     NPCID.CultistDragonBody3,
                     NPCID.CultistDragonBody4,
                     NPCID.CultistDragonTail
-                };
+                ];
 
         private string DragonName => Language.GetTextValue("Mods.FargowiltasSouls.NPCs.StardustDragon.DisplayName");
 
@@ -58,13 +58,14 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEve
             CellCurves,
             CellScissor
         }
-        public override List<int> RandomAttacks => new() //these are randomly chosen attacks in p1
-        {
+        public override List<int> RandomAttacks =>
+        //these are randomly chosen attacks in p1
+        [
             (int)Attacks.CellExpandContract,
             (int)Attacks.CellRush,
             (int)Attacks.CellCurves,
             (int)Attacks.CellScissor
-        };
+        ];
         private bool gotBossBar = false;
         public const int CellAmount = 20;
         public float CellRotation = 0;

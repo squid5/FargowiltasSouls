@@ -2,7 +2,8 @@
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
-
+using System.IO;
+using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -12,6 +13,12 @@ namespace FargowiltasSouls.Content.Patreon.Potato
 {
     public class RazorBlade : ModProjectile
     {
+        private Vector2 mousePos;
+        private int syncTimer;
+
+        int MaxDistance = 100;
+        public bool Retreating => Projectile.ai[0] == 2 && MathF.Abs(Projectile.velocity.ToRotation() - Projectile.DirectionTo(Main.player[Projectile.owner].Center).ToRotation()) % MathF.Tau < MathF.PI;
+
         public override void SetDefaults()
         {
             Projectile.width = 28;
@@ -29,18 +36,32 @@ namespace FargowiltasSouls.Content.Patreon.Potato
             Projectile.localNPCHitCooldown = 25;
         }
 
-        int MaxDistance = 100;
 
-        public bool Retreating => Projectile.ai[0] == 2 && MathF.Abs(Projectile.velocity.ToRotation() - Projectile.DirectionTo(Main.player[Projectile.owner].Center).ToRotation()) % MathF.Tau < MathF.PI;
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            writer.Write(mousePos.X);
+            writer.Write(mousePos.Y);
+        }
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            Vector2 buffer;
+            buffer.X = reader.ReadSingle();
+            buffer.Y = reader.ReadSingle();
+            if (Projectile.owner != Main.myPlayer)
+            {
+                mousePos = buffer;
+            }
+        }
 
         public override void AI()
         {
             Player player = Main.player[Projectile.owner];
 
             if (!player.Alive() || !player.GetModPlayer<PatreonPlayer>().RazorContainer  || Projectile.hostile) // if it was turned hostile by something
-            {
                 Projectile.Kill();
-            }
+
+            if (Main.projectile.Any(p => p.TypeAlive(Type) && p.owner == Projectile.owner && p.whoAmI < Projectile.whoAmI)) // if this is a duplicate
+                Projectile.Kill();
 
             Projectile.timeLeft++;
             Projectile.rotation += 0.3f;
@@ -65,8 +86,19 @@ namespace FargowiltasSouls.Content.Patreon.Potato
                     if (Projectile.Distance(player.Center) > MaxDistance * 1.5f)
                         Projectile.ai[0] = 2;
 
-                    float distance = MathF.Min(MaxDistance, player.Distance(Main.MouseWorld));
-                    Vector2 angle = Vector2.Normalize(Main.MouseWorld - player.Center);
+                    if (player.whoAmI == Main.myPlayer)
+                    {
+                        mousePos = Main.MouseWorld;
+
+                        if (++syncTimer > 20)
+                        {
+                            syncTimer = 0;
+                            Projectile.netUpdate = true;
+                        }
+                    }
+
+                    float distance = MathF.Min(MaxDistance, player.Distance(mousePos));
+                    Vector2 angle = Vector2.Normalize(mousePos - player.Center);
                     Vector2 desiredPos = player.Center + (angle * distance);
                     Vector2 desiredVel = (desiredPos - Projectile.Center);
                     Projectile.velocity = Vector2.Lerp(Projectile.velocity, desiredVel, 0.08f);

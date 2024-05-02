@@ -16,7 +16,7 @@ namespace FargowiltasSouls.Core.AccessoryEffectSystem
         public bool[] EquippedEffects = Array.Empty<bool>();
         public Item[] EffectItems = Array.Empty<Item>();
 
-        private static readonly Dictionary<Expression<Func<AccessoryEffect, Delegate>>, List<AccessoryEffect>> Hooks = new();
+        private static readonly Dictionary<Expression<Func<AccessoryEffect, Delegate>>, List<AccessoryEffect>> Hooks = [];
 
         public bool Active(AccessoryEffect effect) => ActiveEffects[effect.Index];
         public bool Equipped(AccessoryEffect effect) => EquippedEffects[effect.Index];

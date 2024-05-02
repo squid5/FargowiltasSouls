@@ -16,8 +16,8 @@ namespace FargowiltasSouls.Content.Projectiles
 
         public int SwingDirection = 1;
 
-        public static List<int> ReworkedSpears = new()
-        {
+        public static List<int> ReworkedSpears =
+        [
                 ProjectileID.Spear,
                 ProjectileID.AdamantiteGlaive,
                 ProjectileID.CobaltNaginata,
@@ -29,7 +29,7 @@ namespace FargowiltasSouls.Content.Projectiles
                 ProjectileID.ObsidianSwordfish,
                 ProjectileID.Swordfish,
                 ProjectileID.ChlorophytePartisan
-            };
+            ];
         public override void PostAI(Projectile projectile)
         {
             if (WorldSavingSystem.EternityMode)

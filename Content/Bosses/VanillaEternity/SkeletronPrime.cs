@@ -275,7 +275,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     limbTimer++;
                     if (limbTimer == 60f) //first set of limb management
                     {
-                        int[] limbs = { NPCID.PrimeCannon, NPCID.PrimeLaser, NPCID.PrimeSaw, NPCID.PrimeVice };
+                        int[] limbs = [NPCID.PrimeCannon, NPCID.PrimeLaser, NPCID.PrimeSaw, NPCID.PrimeVice];
 
                         foreach (NPC l in Main.npc.Where(l => l.active && l.ai[1] == npc.whoAmI && limbs.Contains(l.type)))
                         {
@@ -310,7 +310,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                             int rangedArm = Main.rand.NextBool() ? NPCID.PrimeCannon : NPCID.PrimeLaser;
                             int meleeArm = Main.rand.NextBool() ? NPCID.PrimeSaw : NPCID.PrimeVice;
 
-                            int[] limbs = { NPCID.PrimeCannon, NPCID.PrimeLaser, NPCID.PrimeSaw, NPCID.PrimeVice };
+                            int[] limbs = [NPCID.PrimeCannon, NPCID.PrimeLaser, NPCID.PrimeSaw, NPCID.PrimeVice];
 
                             foreach (NPC l in Main.npc.Where(l => l.active && l.ai[1] == npc.whoAmI && limbs.Contains(l.type) && !l.GetGlobalNPC<PrimeLimb>().IsSwipeLimb))
                             {

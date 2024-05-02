@@ -19,7 +19,7 @@ namespace FargowiltasSouls.Core.Toggler
 
         public List<Toggle> Load()
         {
-            return new List<Toggle>();
+            return [];
             /*
             // All string (toggles) and int (header) fields
             FieldInfo[] fields = GetType().GetFields();

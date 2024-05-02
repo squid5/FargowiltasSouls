@@ -62,8 +62,8 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Cosmos
 
             NPCID.Sets.BossBestiaryPriority.Add(NPC.type);
 
-            NPC.AddDebuffImmunities(new List<int>
-            {
+            NPC.AddDebuffImmunities(
+            [
                 BuffID.Confused,
                 BuffID.Chilled,
                 BuffID.OnFire,
@@ -73,7 +73,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Cosmos
                 ModContent.BuffType<ClippedWingsBuff>(),
                 ModContent.BuffType<TimeFrozenBuff>(),
                 ModContent.BuffType<LightningRodBuff>()
-            });
+            ]);
 
             NPCID.Sets.NPCBestiaryDrawOffset.Add(NPC.type, new NPCID.Sets.NPCBestiaryDrawModifiers()
             {
@@ -87,10 +87,10 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Cosmos
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
-            bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
+            bestiaryEntry.Info.AddRange([
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Sky,
                 new FlavorTextBestiaryInfoElement($"Mods.FargowiltasSouls.Bestiary.{Name}")
-            });
+            ]);
         }
         public override Color? GetAlpha(Color drawColor)
         {

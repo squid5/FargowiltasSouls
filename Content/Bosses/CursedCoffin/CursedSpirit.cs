@@ -59,14 +59,14 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 
             NPCID.Sets.CantTakeLunchMoney[Type] = true;
             this.ExcludeFromBestiary();
-            NPC.AddDebuffImmunities(new List<int>
-            {
+            NPC.AddDebuffImmunities(
+            [
                 BuffID.Confused,
                 BuffID.Chilled,
                 BuffID.Suffocation,
                 ModContent.BuffType<LethargicBuff>(),
                 ModContent.BuffType<ClippedWingsBuff>()
-            });
+            ]);
         }
         public override void SetDefaults()
         {
@@ -191,14 +191,14 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
         }
 
         #endregion
-        readonly List<float> SlowChargeStates = new()
-        {
+        readonly List<float> SlowChargeStates =
+        [
             (float)CursedCoffin.BehaviorStates.PhaseTransition,
             (float)CursedCoffin.BehaviorStates.WavyShotCircle,
             (float)CursedCoffin.BehaviorStates.WavyShotSlam,
             (float)CursedCoffin.BehaviorStates.RandomStuff,
             (float)CursedCoffin.BehaviorStates.GrabbyHands
-        };
+        ];
         public override bool CheckActive() => false;
         public override void OnKill()
         {

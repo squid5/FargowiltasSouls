@@ -9,7 +9,7 @@ namespace FargowiltasSouls.Core.AccessoryEffectSystem
 {
     public static class AccessoryEffectLoader
     {
-        public static List<AccessoryEffect> AccessoryEffects = new();
+        public static List<AccessoryEffect> AccessoryEffects = [];
         internal static void Register(AccessoryEffect effect)
         {
             effect.Index = AccessoryEffects.Count;

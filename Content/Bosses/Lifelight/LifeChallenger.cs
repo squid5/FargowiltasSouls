@@ -74,7 +74,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
         int SansThreshold => WorldSavingSystem.MasochistModeReal && UseTrueOriginAI ? NPC.lifeMax / 10 : 0;
 
         // Visual
-        private List<Vector4> chunklist = new(0);
+        private List<Vector4> chunklist = [];
         public const float DefaultRuneDistance = 100;
         public float RuneDistance = DefaultRuneDistance;
         private bool DrawRunes = true;
@@ -130,7 +130,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
 
         //States
 
-        private readonly List<int> availablestates = new(0);
+        private readonly List<int> availablestates = [];
         public int state;
         private int oldstate = 999;
         private int statecount = 10;
@@ -186,22 +186,22 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
             };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(NPC.type, drawModifier);
 
-            NPC.AddDebuffImmunities(new List<int>
-            {
+            NPC.AddDebuffImmunities(
+            [
                 BuffID.Confused,
                     BuffID.Chilled,
                     BuffID.Suffocation,
                     ModContent.BuffType<LethargicBuff>(),
                     ModContent.BuffType<ClippedWingsBuff>()
-            });
+            ]);
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
-            bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
+            bestiaryEntry.Info.AddRange([
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.TheHallow,
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.DayTime,
                 new FlavorTextBestiaryInfoElement($"Mods.FargowiltasSouls.Bestiary.{Name}")
-            });
+            ]);
         }
         public override void SetDefaults()
         {
@@ -2443,8 +2443,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
 
             if (AI_Timer >= StartTime && ShotCount < 6) // screenshake
             {
-                if (ScreenShakeSystem.OverallShakeIntensity < 7)
-                    ScreenShakeSystem.SetUniversalRumble(7);
+                FargoSoulsUtil.ScreenshakeRumble(7);
             }
 
             if (AI_Timer == StartTime) //teleport and first shots
@@ -2825,7 +2824,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
             public float Scale;
             public float Rotation;
         }
-        List<Rune> PostdrawRunes = new();
+        List<Rune> PostdrawRunes = [];
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             const float ChunkRotationSpeed = MathHelper.TwoPi * (1f / 360);
@@ -2847,8 +2846,8 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
             {
                 DrawChunk(chunk, spriteBatch, drawColor);
             }
-            List<Rune> PredrawRunes = new();
-            PostdrawRunes = new();
+            List<Rune> PredrawRunes = [];
+            PostdrawRunes = [];
             if (Draw || NPC.IsABestiaryIconDummy)
             {
                 if (DrawRunes)
@@ -3277,7 +3276,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
 
             List<int> GetDoableStates() // gets the states doable at the current situation and refill availablestates if necessary
             {
-                HashSet<int> excludedStates = new();
+                HashSet<int> excludedStates = [];
                 // get distance
                 float distance = 4000;
                 if (NPC.target.IsWithinBounds(Main.maxPlayers) && Main.player[NPC.target] is Player player && player.Alive())

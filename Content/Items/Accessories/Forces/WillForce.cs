@@ -9,14 +9,14 @@ namespace FargowiltasSouls.Content.Items.Accessories.Forces
     {
         public override void SetStaticDefaults()
         {
-            Enchants[Type] = new int[]
-            {
+            Enchants[Type] =
+            [
                 ModContent.ItemType<GoldEnchant>(),
                 ModContent.ItemType<PlatinumEnchant>(),
                 ModContent.ItemType<GladiatorEnchant>(),
                 ModContent.ItemType<RedRidingEnchant>(),
                 ModContent.ItemType<ValhallaKnightEnchant>()
-            };
+            ];
         }
         public override void UpdateInventory(Player player)
         {

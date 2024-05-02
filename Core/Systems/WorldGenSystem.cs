@@ -10,8 +10,8 @@ namespace FargowiltasSouls.Core.Systems
     {
         public static bool TryPlacingStatue(int baseCheckX, int baseCheckY)
         {
-            List<int> legalBlocks = new()
-                {
+            List<int> legalBlocks =
+                [
                     TileID.Stone,
                     TileID.Grass,
                     TileID.Dirt,
@@ -23,7 +23,7 @@ namespace FargowiltasSouls.Core.Systems
                     TileID.Sand,
                     TileID.Ash,
                     TileID.AshGrass
-                };
+                ];
 
             bool canPlaceStatueHere = true;
             for (int i = 0; i < 3; i++) //check no obstructing blocks

@@ -11,12 +11,12 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEve
     public class NebulaEnemies : EModeNPCBehaviour
     {
         public static int[] NebulaEnemyIDs =
-        {
+        [
             NPCID.NebulaBeast,
             NPCID.NebulaHeadcrab,
             NPCID.NebulaBrain,
             NPCID.NebulaSoldier
-        };
+        ];
         public override NPCMatcher CreateMatcher() => new NPCMatcher().MatchTypeRange(
             NebulaEnemyIDs
         );

@@ -34,11 +34,11 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs
                    ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[NPCID.QueenSlimeBoss],
                    quickUnlock: true
                );
-            bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
+            bestiaryEntry.Info.AddRange([
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.TheHallow,
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.DayTime,
                 new FlavorTextBestiaryInfoElement($"Mods.FargowiltasSouls.Bestiary.{Name}")
-            });
+            ]);
         }
 
         public override void SetDefaults()

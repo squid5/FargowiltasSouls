@@ -20,12 +20,12 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs
             //DisplayName.AddTranslation((int)GameCulture.CultureName.Chinese, "爆炸泡泡");
             Main.npcFrameCount[NPC.type] = 2;
             NPCID.Sets.CantTakeLunchMoney[Type] = true;
-            NPC.AddDebuffImmunities(new List<int>
-            {
+            NPC.AddDebuffImmunities(
+            [
                 BuffID.Confused,
                 BuffID.OnFire,
                 BuffID.Suffocation
-            });
+            ]);
 
             this.ExcludeFromBestiary();
         }

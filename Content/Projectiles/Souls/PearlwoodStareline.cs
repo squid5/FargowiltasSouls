@@ -23,7 +23,7 @@ namespace FargowiltasSouls.Content.Projectiles.Souls
             FargoSoulsPlayer modPlayer = player.FargoSouls();
             if (player == null || !player.active || player.dead || !(modPlayer.PearlwoodStar && player.HasEffect<PearlwoodEffect>()))
                 return;
-            int[] pearlwoodItems = new int[] { ModContent.ItemType<PearlwoodEnchant>(), ModContent.ItemType<TimberForce>(), ModContent.ItemType<TerrariaSoul>() };
+            int[] pearlwoodItems = [ModContent.ItemType<PearlwoodEnchant>(), ModContent.ItemType<TimberForce>(), ModContent.ItemType<TerrariaSoul>()];
             if (source is EntitySource_ItemUse itemSource && pearlwoodItems.Contains(itemSource.Item.type))
             {
                 SoundEngine.PlaySound(SoundID.Item84, projectile.Center);

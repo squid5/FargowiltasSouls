@@ -110,20 +110,20 @@ namespace FargowiltasSouls.Core.ModPlayers
             }
         }
 
-        public static List<int> IronTiles = new()
-        {
+        public static List<int> IronTiles =
+        [
             TileID.Iron,
             TileID.IronBrick,
             TileID.Lead,
             TileID.LeadBrick,
             TileID.MetalBars
-        };
-        public static List<int> IronWalls = new()
-        {
+        ];
+        public static List<int> IronWalls =
+        [
             WallID.IronFence,
             WallID.WroughtIronFence,
             WallID.MetalFence,
-        };
+        ];
         public override void PreUpdate()
         {
             if (!WorldSavingSystem.EternityMode)

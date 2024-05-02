@@ -22,14 +22,17 @@ namespace FargowiltasSouls.Core
         [DefaultValue(true)]
         public bool ItemDisabledTooltip;
 
+        [DefaultValue(false)]
+        public bool ToggleSearchReset;
+
         [DefaultValue(true)]
         public bool DeviChatter;
 
         [DefaultValue(false)]
-        public bool ToggleSearchReset;
+        public bool BigTossMode;
 
         [DefaultValue(false)]
-        public bool BigTossMode;
+        public bool PerformanceMode;
 
         [DefaultValue(true)]
         public bool ForcedFilters;

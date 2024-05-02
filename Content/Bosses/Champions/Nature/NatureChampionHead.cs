@@ -24,8 +24,8 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Nature
 
             this.ExcludeFromBestiary();
 
-            NPC.AddDebuffImmunities(new List<int>
-            {
+            NPC.AddDebuffImmunities(
+            [
                 BuffID.Confused,
                 BuffID.Chilled,
                 BuffID.OnFire,
@@ -33,7 +33,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Nature
                 ModContent.BuffType<LethargicBuff>(),
                 ModContent.BuffType<ClippedWingsBuff>(),
                 ModContent.BuffType<LightningRodBuff>()
-            });
+            ]);
 
         }
 

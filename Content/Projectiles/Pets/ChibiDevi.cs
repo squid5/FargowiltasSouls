@@ -372,7 +372,7 @@ namespace FargowiltasSouls.Content.Projectiles.Pets
 
             Count
         };
-        private static int[] MaxThingsToSay => new int[] {
+        private static int[] MaxThingsToSay => [
             7, //Spawn
             7, //Respawn
             12, //Idle
@@ -384,7 +384,7 @@ namespace FargowiltasSouls.Content.Projectiles.Pets
             7, //KillBoss
             8, //BossSpawn
             1 //Count
-        };
+        ];
 
         public static int ShortCD => 600;
         public static int MediumCD => Main.rand.Next(3600, 7200);

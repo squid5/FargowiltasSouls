@@ -19,11 +19,6 @@
     <None Remove="Folders to Port\**" />
   </ItemGroup>
   <ItemGroup>
-    <None Remove="Common\Graphics\Particles\ParticleTextures\BloomParticle.png" />
-    <None Remove="Content\Items\Weapons\Challengers\GildedSceptre.png" />
-    <None Remove="Content\Tiles\CrackedSandstoneBricks.png" />
-  </ItemGroup>
-  <ItemGroup>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Assets\Atlases\" />

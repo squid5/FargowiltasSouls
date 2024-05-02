@@ -14,7 +14,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEve
     public class SolarEnemies : EModeNPCBehaviour
     {
         public static int[] SolarEnemyIDs =
-        {
+        [
             NPCID.SolarCrawltipedeHead,
             NPCID.SolarCrawltipedeBody,
             NPCID.SolarCrawltipedeTail,
@@ -27,7 +27,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEve
             NPCID.SolarFlare,
             NPCID.SolarGoop
 
-        };
+        ];
         public override NPCMatcher CreateMatcher() => new NPCMatcher().MatchTypeRange(
             SolarEnemyIDs
         );

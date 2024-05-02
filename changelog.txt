@@ -1,3 +1,2 @@
 NEW UPDATE - V {ModVersion}
--Fixed crashing issue with Soul of Eternity wings
--Disabled Lifelight reaction shotgun attack because of shader issues
+-Fixed Eternity Advisor bug
