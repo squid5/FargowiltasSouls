@@ -18,7 +18,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Banished Baron Scrap");
-            ProjectileID.Sets.TrailCacheLength[Type] = 10;
+            ProjectileID.Sets.TrailCacheLength[Type] = 8;
             ProjectileID.Sets.TrailingMode[Type] = 2;
         }
         public override void SetDefaults()
@@ -43,7 +43,6 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
                 Projectile.scale = MathHelper.Lerp(0, 1, Projectile.localAI[0] / 12);
             }
 
-            ProjectileID.Sets.TrailCacheLength[Type] = 8;
             float rotStr = Projectile.ai[0] == 0 ? 0.06f : 0.03f;
             float rot = MathHelper.PiOver2 * rotStr * MathF.Sin(MathF.Tau * (Projectile.ai[1] / 50f));
             Projectile.velocity = Projectile.velocity.RotatedBy(rot);
@@ -85,6 +84,16 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 
 
             return false;
+        }
+        public override void OnKill(int timeLeft)
+        {
+            for (int index1 = 0; index1 < 40; ++index1)
+            {
+                int index2 = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.ShadowbeamStaff, Main.rand.NextFloat(-3, 3), Main.rand.NextFloat(-3, 3));
+                Main.dust[index2].noGravity = true;
+                Dust dust1 = Main.dust[index2];
+                dust1.velocity *= 3f;
+            }
         }
         public float WidthFunction(float completionRatio)
         {

@@ -3428,3 +3428,8 @@ CoffinRoominator: {
 	// DisplayName: Coffin Roominator
 	// Tooltip: ""
 }
+
+GildedSceptre: {
+	// DisplayName: Gilded Sceptre
+	// Tooltip: ""
+}
