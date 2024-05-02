@@ -44,20 +44,17 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
             // Autoload the state behaviors.
             AutoloadAsBehavior<EntityAIState<BehaviorStates>, BehaviorStates>.FillStateMachineBehaviors<ModNPC>(StateMachine, this);
 
-            // Load the phase transition.
-            LoadTransition_PhaseTwoTransition();
-
 			// Register each attack transition.
 			#region Transition Registering
 			// A basic example of a transition that doesnt go to anything specific here, it requires the current state to be the opening one, and the timer to be -1 to occur.
 			StateMachine.RegisterTransition(BehaviorStates.Opening, null, false, () => Timer == -1);
 
 			// An example of a more complex transition, where it goes from the phase 2 transition to the slam shockwave if the condition is met, and also performs additional stuff on occuring.
-			StateMachine.RegisterTransition(BehaviorStates.PhaseTransition, BehaviorStates.SlamWShockwave, false, () => Timer >= 60, () =>
+			StateMachine.RegisterTransition(BehaviorStates.PhaseTransition, BehaviorStates.SlamWShockwave, false, () => Timer >= 40, () =>
 			{
 				SoundEngine.PlaySound(PhaseTransitionSFX, NPC.Center);
 				NPC.netUpdate = true;
-				if (FargoSoulsUtil.HostCheck && Main.expertMode)
+				if (FargoSoulsUtil.HostCheck)
 				{
 					Vector2 maskCenter = MaskCenter();
 					NPC.NewNPC(NPC.GetSource_FromAI(), (int)maskCenter.X, (int)maskCenter.Y, ModContent.NPCType<CursedSpirit>(), ai0: NPC.whoAmI);
@@ -91,17 +88,37 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
                 StateMachine.RegisterTransition(state, BehaviorStates.SpiritGrabPunish, false, () => ForceGrabPunish != 0, () => ForceGrabPunish = 0);
             }, BehaviorStates.StunPunish, BehaviorStates.PhaseTransition, BehaviorStates.YouCantEscape, BehaviorStates.SpiritGrabPunish);
 
-            StateMachine.RegisterTransition(BehaviorStates.StunPunish, null, false, () => Timer > 20 && Frame <= 0, () =>
-			{
-				NPC.frameCounter = 0;
-				Frame = 0;
-			});
-
-            StateMachine.RegisterTransition(BehaviorStates.YouCantEscape, null, false, () => Timer > 20 && Frame <= 0, () =>
+            StateMachine.RegisterTransition(BehaviorStates.WavyShotCircle, BehaviorStates.WavyShotSlam, false, () =>
             {
-                NPC.frameCounter = 0;
+                int telegraphTime = WorldSavingSystem.MasochistModeReal ? 60 : 70;
+                bool phase2InitialCondition = Timer > telegraphTime + (WorldSavingSystem.MasochistModeReal || AI3 < 1 ? 20 : 50);
+                bool phase2SecondaryCondition = AI3 < 1 && WorldSavingSystem.MasochistModeReal;
+                return phase2InitialCondition && !phase2SecondaryCondition;
+            },
+            () =>
+            {
                 Frame = 0;
+                NPC.velocity.X /= 2;
+                NPC.velocity.Y = -2;
             });
+
+            StateMachine.RegisterTransition(BehaviorStates.GrabbyHands, BehaviorStates.SlamWShockwave, false, () => Timer > 40 && Frame <= 0 && Timer > AI3 + 10, () =>
+            {
+                NPC.noTileCollide = true;
+                LockVector1 = Player.Top - Vector2.UnitY * 250;
+                NPC.velocity.Y = -4;
+                NPC.velocity.X /= 2;
+                if (NPC.velocity.X.NonZeroSign() != NPC.HorizontalDirectionTo(Player.Center))
+                    NPC.velocity.X = 0;
+            });
+
+            // Ghost spawn transition
+            StateMachine.ApplyToAllStatesExcept((state) =>
+            {
+                StateMachine.RegisterTransition(state, BehaviorStates.PhaseTransition, false, () => AttackCounter == 3 && !Main.npc.Any(p => p.TypeAlive<CursedSpirit>()));
+            }, BehaviorStates.PhaseTransition);
+
+            #region End-of-sequence attacks
 
             StateMachine.RegisterTransition(BehaviorStates.SpiritGrabPunish, BehaviorStates.SlamWShockwave, false, () => Timer > 50, () =>
             {
@@ -110,58 +127,49 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
                 NPC.velocity = Vector2.Zero;
                 NPC.velocity.Y = -2;
                 AI2 = 3; // only slam once
+                
             });
 
             StateMachine.RegisterTransition(BehaviorStates.HoveringForSlam, BehaviorStates.SlamWShockwave, false, () => Timer > 1 && Timer == AI3, () =>
-			{
-				NPC.velocity.Y = -5;
-				NPC.velocity.X /= 2;
-				LockVector1 = Player.Top - Vector2.UnitY * 250;
-				AI2 = 0;
-			});
-
-			StateMachine.RegisterTransition(BehaviorStates.SlamWShockwave, null, false, () => Timer == -1);
-
-			StateMachine.RegisterTransition(BehaviorStates.WavyShotCircle, BehaviorStates.WavyShotSlam, false, () =>
-			{
-				int telegraphTime = WorldSavingSystem.MasochistModeReal ? 60 : 70;
-				//bool phase1Condition = Timer == telegraphTime && (WorldSavingSystem.MasochistModeReal || !PhaseTwo);
-				bool phase2InitialCondition = Timer > telegraphTime + (WorldSavingSystem.MasochistModeReal || AI3 < 1 ? 20 : 50);
-				bool phase2SecondaryCondition = PhaseTwo && AI3 < 1 && WorldSavingSystem.MasochistModeReal;
-				return/* phase1Condition || */(phase2InitialCondition && !phase2SecondaryCondition);
-			}, 
-			() =>
-			{
-                Frame = 0;
+            {
+                NPC.velocity.Y = -5;
                 NPC.velocity.X /= 2;
-                NPC.velocity.Y = -2;
+                LockVector1 = Player.Top - Vector2.UnitY * 250;
+                AI2 = 0;
             });
 
-			StateMachine.RegisterTransition(BehaviorStates.WavyShotSlam, null, false, () => Timer == -1);
-
-			StateMachine.RegisterTransition(BehaviorStates.GrabbyHands, BehaviorStates.SlamWShockwave, false, () => Timer > 40 && Frame <= 0 && Timer > AI3 + 10, () =>
+            StateMachine.RegisterTransition(BehaviorStates.StunPunish, null, false, () => Timer > 20 && Frame <= 0, () =>
 			{
-				NPC.noTileCollide = true;
-				LockVector1 = Player.Top - Vector2.UnitY * 250;
-				NPC.velocity.Y = -4;
-                NPC.velocity.X /= 2;
-				if (NPC.velocity.X.NonZeroSign() != NPC.HorizontalDirectionTo(Player.Center))
-					NPC.velocity.X = 0;
-			});
+				NPC.frameCounter = 0;
+				Frame = 0;
+                IncrementAttackCounter();
+
+            });
+
+            StateMachine.RegisterTransition(BehaviorStates.YouCantEscape, null, false, () => Timer > 20 && Frame <= 0, () =>
+            {
+                NPC.frameCounter = 0;
+                Frame = 0;
+                IncrementAttackCounter();
+            });
+
+			StateMachine.RegisterTransition(BehaviorStates.SlamWShockwave, null, false, () => Timer == -1, IncrementAttackCounter);
+
+			StateMachine.RegisterTransition(BehaviorStates.WavyShotSlam, null, false, () => Timer == -1, IncrementAttackCounter);
 
 			StateMachine.RegisterTransition(BehaviorStates.RandomStuff, null, false, () => Timer > RandomStuffOpenTime + 310 && Frame <= 0, () =>
 			{
-				NPC.noTileCollide = true;
-				LockVector1 = Player.Top - Vector2.UnitY * 250;
-				NPC.velocity.Y = -4;
-                NPC.velocity.X /= 2;
 				NPC.velocity = Vector2.Zero;
 				NPC.rotation = 0;
 				NPC.frameCounter = 0;
 				Frame = 0;
-			});
-			#endregion
-		}
+                AttackCounter = 0;
+            });
+
+
+            #endregion
+            #endregion
+        }
 
 		// This is ran whenever a state transition occures and is very useful for resetting variables.
 		public void OnStateTransition(bool stateWasPopped, EntityAIState<BehaviorStates> oldState)
@@ -171,9 +179,10 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 			AI2 = 0;
 			AI3 = 0;
 
-			if (oldState != null && (P1Attacks.Contains(oldState.Identifier) || P2Attacks.Contains(oldState.Identifier)))
+			if (oldState != null && Attacks.Contains(oldState.Identifier))
 				LastAttackChoice = (int)oldState.Identifier;
-		}
+
+        }
         // This is ran when the stack runs out of attacks.
         public void OnStackEmpty()
         {
@@ -185,7 +194,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
             StateMachine.StateStack.Clear();
 
             // Get the correct attack list, and remove the last attack to avoid repeating it.
-            List<BehaviorStates> attackList = (PhaseTwo ? P2Attacks : P1Attacks).Where(attack => attack != (BehaviorStates)LastAttackChoice).ToList();
+            List<BehaviorStates> attackList = Attacks.Where(attack => attack != (BehaviorStates)LastAttackChoice).ToList();
 
             // Fill a list of indices.
             var indices = new List<int>();
@@ -201,22 +210,26 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
             }
         }
 
-		public void LoadTransition_PhaseTwoTransition()
-		{
-			// Example of a transition hijack, which is checked for any possible starting state when a transition occurs and will replace any normal transition
-			// if it returns anything other than the provided state.
-			StateMachine.AddTransitionStateHijack(originalState =>
-			{
-				// Transition to phase 2 if required.
-				if (!PhaseTwo && NPC.GetLifePercent() <= 0.8f)
-				{
-					// Clear the stack to ensure states do not linger.
-					StateMachine.StateStack.Clear();
-					return BehaviorStates.PhaseTransition;
-				}
-
-				return originalState;
-			});
-		}
+        public void IncrementAttackCounter()
+        {
+            // Normal mode doesn't do the spirit mechanic
+            if (Main.expertMode)
+                AttackCounter++;
+            if (AttackCounter > 6) // interrupted during random stuff attack, reset anyway
+            {
+                AttackCounter = 0;
+                return;
+            }
+            bool spawnSpirit = NPC.GetLifePercent() <= 0.33f || AttackCounter == 3; // Spawn spirit anyway on low health
+            if (spawnSpirit && !Main.npc.Any(p => p.TypeAlive<CursedSpirit>()))
+                StateMachine.StateStack.Push(StateMachine.StateRegistry[BehaviorStates.PhaseTransition]);
+            if (AttackCounter == 6)
+            {
+                if (WorldSavingSystem.EternityMode) // Special emode attack
+                    StateMachine.StateStack.Push(StateMachine.StateRegistry[BehaviorStates.RandomStuff]);
+                else
+                    AttackCounter = 0;
+            }
+        }
 	}
 }

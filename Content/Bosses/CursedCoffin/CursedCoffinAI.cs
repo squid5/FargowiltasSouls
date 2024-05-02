@@ -51,19 +51,12 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 			Count
 		}
 
-		private readonly List<BehaviorStates> P1Attacks = new List<BehaviorStates>
-		{
-			BehaviorStates.HoveringForSlam,
+		private readonly List<BehaviorStates> Attacks =
+        [
+            BehaviorStates.HoveringForSlam,
 			BehaviorStates.WavyShotCircle,
 			BehaviorStates.GrabbyHands
-		};
-		private readonly List<BehaviorStates> P2Attacks = new List<BehaviorStates>
-		{
-			BehaviorStates.HoveringForSlam,
-			BehaviorStates.WavyShotCircle,
-			BehaviorStates.GrabbyHands,
-			BehaviorStates.RandomStuff
-		};
+		];
 
 		public Player Player => Main.player[NPC.target];
 
@@ -85,7 +78,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 		{
 			//Defaults
 			NPC.defense = NPC.defDefense;
-			if (PhaseTwo)
+			if (Main.npc.Any(p => p.TypeAlive<CursedSpirit>()))
 				NPC.defense += 15;
 			NPC.rotation = 0;
 			NPC.noTileCollide = true;
@@ -181,9 +174,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 		{
 			HoverSound();
 
-			const int TransTime = 60;
-			if (Timer > TransTime - 5)
-				PhaseTwo = true;
+			const int TransTime = 40;
 			//NPC.velocity = -Vector2.UnitY * 5 * (1 - (Timer / (TransTime * 1.5f)));
 			NPC.velocity = (CoffinArena.Center.ToWorldCoordinates() - NPC.Center) * 0.05f;
             NPC.rotation = Main.rand.NextFloat(MathF.Tau * 0.06f * (Timer / TransTime));
@@ -297,7 +288,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 				float xOffset = Utils.Clamp(NPC.Center.X - Player.Center.X, -WaveAmpX, WaveAmpX);
 				XThetaOffset = MathF.Asin(xOffset / WaveAmpX);
 				RandomTimer = Main.rand.Next(160, 220);
-				if (!PhaseTwo)
+				if (!Main.npc.Any(p => p.TypeAlive<CursedSpirit>()))
 					RandomTimer -= 55;
 			}
 
@@ -429,9 +420,9 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 					}
 				}
 			}
-			else if (Timer > TelegraphTime + (WorldSavingSystem.MasochistModeReal || AI3 < 1 ? 20 : 50)) // + endlag
+			else if (Timer > TelegraphTime + 15) // + endlag
 			{
-				if (PhaseTwo && AI3 < 1 && WorldSavingSystem.MasochistModeReal)
+				if (AI3 < 1 && WorldSavingSystem.MasochistModeReal)
 				{
 					AI3 = 1;
 					Timer = 0;

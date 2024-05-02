@@ -243,6 +243,16 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
                 return;
             CursedCoffin coffin = owner.As<CursedCoffin>();
 
+            if (coffin.AttackCounter < 3 && !coffin.Enraged)
+            {
+                NPC.velocity = Vector2.Lerp(NPC.velocity, NPC.SafeDirectionTo(owner.Center) * Math.Min(Math.Max(20, owner.velocity.Length()), NPC.Distance(owner.Center)), 0.2f);
+                LerpOpacity(0.15f);
+                LerpScale(0.4f);
+                if (NPC.Distance(owner.Center) < NPC.width / 2)
+                    NPC.active = false;
+                return;
+            }
+
             if (BittenPlayer != -1)
             {
                 // being held
@@ -368,12 +378,14 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
                 SoundEngine.PlaySound(CursedCoffin.SoulShotSFX, NPC.Center);
                 if (FargoSoulsUtil.HostCheck)
                 {
-                    int cap = WorldSavingSystem.EternityMode ? WorldSavingSystem.MasochistModeReal ? 3 : 2 : 1;
+                    int cap = WorldSavingSystem.MasochistModeReal ? 3 : 2;
                     for (int i = -cap; i <= cap; i++)
                     {
                         if (i == 0)
                             continue;
-                        Vector2 vel = Vector2.UnitY.RotatedBy(i * MathF.Tau * (0.041f + Main.rand.NextFloat(-0.03f, 0.02f))) * (6 + Math.Abs(i));
+                        if (!WorldSavingSystem.EternityMode && (i == 1 || i == -1))
+                            continue;
+                        Vector2 vel = Vector2.UnitY.RotatedBy(i * MathF.Tau * (0.041f + Main.rand.NextFloat(-0.02f, 0.01f))) * (6 + Math.Abs(i));
                         Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Bottom + NPC.velocity, vel, ModContent.ProjectileType<CoffinDarkSouls>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage), 1f, Main.myPlayer, NPC.whoAmI, -0.135f);
                         // ghost projs, neg grav
                     }

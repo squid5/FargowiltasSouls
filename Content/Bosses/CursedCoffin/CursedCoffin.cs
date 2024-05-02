@@ -30,8 +30,6 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 		private bool Attacking = true;
 		private bool ExtraTrail = false;
 
-		public bool PhaseTwo;
-
 		public int MashTimer = 15;
 
 		private int Frame = 0;
@@ -43,10 +41,10 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
         //NPC.ai[] overrides
         public float Timer
         {
-            get => StateMachine.StateStack.Any() ? StateMachine.CurrentState.Time : 0;
+            get => StateMachine.StateStack.Count != 0 ? StateMachine.CurrentState.Time : 0;
             set 
             {
-                if (StateMachine.StateStack.Any())
+                if (StateMachine.StateStack.Count != 0)
                     StateMachine.CurrentState.Time = (int)value;
             }
         }
@@ -57,10 +55,21 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
         public ref float ForceGrabPunish => ref NPC.ai[1];
         public ref float AI2 => ref NPC.ai[2];
 		public ref float AI3 => ref NPC.ai[3];
+        /// <summary>
+        /// Increments every time an attack sequence ends.
+        /// Attacks 0-2 ghostless.
+        /// Attack 3 is spawning ghost.
+        /// Attack 4-5 accompanied by ghost. 
+        /// 6th attack is gem rain, then repeat cycle.
+        /// </summary>
+        public ref float AttackCounter => ref NPC.localAI[0];
+
+        public bool Enraged => WorldSavingSystem.MasochistModeReal || NPC.GetLifePercent() <= 0.33f;
 
 		public Vector2 MaskCenter() => NPC.Center - Vector2.UnitY * NPC.height * NPC.scale / 4;
 
-		public static readonly Color GlowColor = Color.Purple with { A = 0 };//new(224, 196, 252, 0);
+		private static readonly Color glowColor = Color.Purple with { A = 0 };//new(224, 196, 252, 0);
+        public static Color GlowColor => Main.npc.Any(n => n.TypeAlive<CursedCoffin>() && n.As<CursedCoffin>().Enraged) ? Color.Lerp(Color.Red, glowColor, 0.75f) : glowColor;
 
         #endregion
         #region Standard
@@ -131,44 +140,14 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
             }
             return base.ModifyCollisionData(victimHitbox, ref immunityCooldownSlot, ref damageMultiplier, ref npcHitbox);
         }
-        public override void ModifyHitByProjectile(Projectile projectile, ref NPC.HitModifiers modifiers)
-        {
-            /*
-            if (!PhaseTwo && projectile.Colliding(projectile.Hitbox, TopHitbox()) && Frame <= 1)
-            {
-                NPC.HitSound = SoundID.NPCHit54;
-                modifiers.FinalDamage *= 1.3f;
-            }
-            else
-            {
-                NPC.HitSound = SoundID.NPCHit4;
-            }
-            */
-            base.ModifyHitByProjectile(projectile, ref modifiers);
-        }
-        public override void ModifyHitByItem(Player player, Item item, ref NPC.HitModifiers modifiers)
-        {
-            /*
-            if (!PhaseTwo && item.Hitbox.Intersects(TopHitbox()) && Frame <= 1)
-            {
-                NPC.HitSound = SoundID.NPCHit54;
-                modifiers.FinalDamage *= 1.3f;
-            }
-            else
-            {
-                NPC.HitSound = SoundID.NPCHit4;
-            }
-            */
-            base.ModifyHitByItem(player, item, ref modifiers);
-        }
         public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers)
         {
-			if (StateMachine.StateStack.Any() && StateMachine.CurrentState.Identifier == BehaviorStates.YouCantEscape)
+			if (StateMachine.StateStack.Count != 0 && StateMachine.CurrentState.Identifier == BehaviorStates.YouCantEscape)
 				modifiers.Null();
         }
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
         {
-			if (!StateMachine.StateStack.Any() || (StateMachine.CurrentState.Identifier != BehaviorStates.SlamWShockwave && StateMachine.CurrentState.Identifier != BehaviorStates.WavyShotSlam))
+			if (StateMachine.StateStack.Count == 0 || (StateMachine.CurrentState.Identifier != BehaviorStates.SlamWShockwave && StateMachine.CurrentState.Identifier != BehaviorStates.WavyShotSlam))
 				return false;
 			if (StateMachine.CurrentState.Identifier == BehaviorStates.SlamWShockwave && NPC.velocity.Y <= 0)
 				return false;
@@ -197,7 +176,6 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
             writer.Write(NPC.localAI[1]);
             writer.Write(NPC.localAI[2]);
             writer.Write(NPC.localAI[3]);
-            writer.Write(PhaseTwo);
             writer.Write7BitEncodedInt(LastAttackChoice);
 
 			// 1. Write the number of states on the stack.
@@ -215,7 +193,6 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 			NPC.localAI[1] = reader.ReadSingle();
 			NPC.localAI[2] = reader.ReadSingle();
 			NPC.localAI[3] = reader.ReadSingle();
-			PhaseTwo = reader.ReadBoolean();
 			LastAttackChoice = reader.Read7BitEncodedInt();
 			Timer = reader.ReadSingle();
 
@@ -272,15 +249,14 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
                 Vector2 afterimageOffset = (MathHelper.TwoPi * (j + spinOffset) / 12f).ToRotationVector2() * magnitude * NPC.scale;
                 Color glowColor = GlowColor;
 
-
                 spriteBatch.Draw(bodytexture, drawPos + afterimageOffset, NPC.frame, glowColor, NPC.rotation, origin, NPC.scale, spriteEffects, 0f);
             }
             spriteBatch.Draw(bodytexture, drawPos, NPC.frame, drawColor, NPC.rotation, origin, NPC.scale, spriteEffects, 0f);
 
-			if (!PhaseTwo)
+			if (!Main.npc.Any(p => p.TypeAlive<CursedSpirit>()))
 			{
 				float shakeFactor = 1;
-				if (StateMachine.StateStack.Any() && StateMachine.CurrentState.Identifier == BehaviorStates.PhaseTransition)
+				if (StateMachine.StateStack.Count != 0 && StateMachine.CurrentState.Identifier == BehaviorStates.PhaseTransition)
 					shakeFactor = 3 + 5 * (Timer / 60);
 				Texture2D glowTexture = ModContent.Request<Texture2D>(Texture + "_MaskGlow", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 				Color glowColor = GlowColor;
