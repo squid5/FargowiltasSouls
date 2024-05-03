@@ -39,6 +39,9 @@ namespace FargowiltasSouls.Content.Buffs
 
         public override void Update(int type, Player player, ref int buffIndex)
         {
+            FargoSoulsPlayer modPlayer = player.FargoSouls();
+            EModePlayer emodePlayer = player.Eternity();
+
             switch (type)
             {
                 case BuffID.Slimed:
@@ -84,14 +87,17 @@ namespace FargowiltasSouls.Content.Buffs
                 default:
                     break;
             }
-
-            if (WorldSavingSystem.EternityMode && player.buffTime[buffIndex] > 5 && Main.debuff[type] && player.Eternity().ShorterDebuffsTimer <= 0
+            if ((WorldSavingSystem.EternityMode || modPlayer.UsingAnkh) && player.buffTime[buffIndex] > 5 && Main.debuff[type] && emodePlayer.ShorterDebuffsTimer <= 0
                 && !Main.buffNoTimeDisplay[type]
                 && type != BuffID.Tipsy && (!BuffID.Sets.NurseCannotRemoveDebuff[type] || type == BuffID.ManaSickness || type == BuffID.PotionSickness)
                 && !DebuffsToLetDecreaseNormally.Contains(type)
                 && !(type == BuffID.Confused && FargoSoulsUtil.BossIsAlive(ref EModeGlobalNPC.brainBoss, NPCID.BrainofCthulhu)))
             {
                 player.buffTime[buffIndex] -= 1;
+                if (modPlayer.UsingAnkh && player.itemTime % 2 == 1)
+                {
+                    player.buffTime[buffIndex] -= 1;
+                }
             }
 
             base.Update(type, player, ref buffIndex);

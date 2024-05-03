@@ -166,14 +166,14 @@ namespace FargowiltasSouls.Content.WorldGeneration
             Vector2 center = Center.ToWorldCoordinates();
             Vector2 xBound = Vector2.UnitX * ((Width * 8) - entityToPadBasedOn.width * 0.6f);
             Vector2 yBound = Vector2.UnitY * ((Height * 8) - entityToPadBasedOn.height * 0.6f);
-            return new List<Vector2>() { center - xBound - yBound, center - xBound + yBound, center + xBound - yBound, center + xBound + yBound };
+            return [center - xBound - yBound, center - xBound + yBound, center + xBound - yBound, center + xBound + yBound];
         }
         public static List<Vector2> TopArenaCorners(Entity entityToPadBasedOn)
         {
             Vector2 center = Center.ToWorldCoordinates();
             Vector2 xBound = Vector2.UnitX * ((Width * 8) - entityToPadBasedOn.width * 0.6f);
             Vector2 yBound = Vector2.UnitY * ((Height * 8) - entityToPadBasedOn.height * 0.6f);
-            return new List<Vector2>() { center - xBound - yBound, center + xBound - yBound };
+            return [center - xBound - yBound, center + xBound - yBound];
         }
     }
 }

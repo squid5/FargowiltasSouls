@@ -3418,3 +3418,8 @@ GildedSceptre: {
 			Activated projectiles chase after the nearest enemy
 		'''
 }
+
+AccursedAnkh: {
+	DisplayName: Accursed Ankh
+	Tooltip: While held out, increases life regeneration and debuff depletion, but decreases defense by 10
+}

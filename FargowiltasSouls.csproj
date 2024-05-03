@@ -19,6 +19,7 @@
     <None Remove="Folders to Port\**" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="Content\Items\Accessories\Expert\AccursedAnkh.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Assets\Atlases\" />

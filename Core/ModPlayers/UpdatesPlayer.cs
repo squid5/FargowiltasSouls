@@ -351,6 +351,11 @@ namespace FargowiltasSouls.Core.ModPlayers
                 NecromanticBrewRotation = 0f;
             }
         }
+        public override void UpdateLifeRegen()
+        {
+            if (UsingAnkh)
+                Player.lifeRegen += 3;
+        }
         public override void UpdateBadLifeRegen()
         {
             if (Player.electrified && Player.wet)
@@ -618,6 +623,11 @@ namespace FargowiltasSouls.Core.ModPlayers
                 Player.hideMisc[1] = HidePetToggle1;
 
                 WasAsocial = false;
+            }
+
+            if (UsingAnkh)
+            {
+                Player.statDefense -= 10;
             }
 
             if (Rotting)

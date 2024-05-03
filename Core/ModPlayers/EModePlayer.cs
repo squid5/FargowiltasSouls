@@ -37,6 +37,7 @@ namespace FargowiltasSouls.Core.ModPlayers
         public int ShorterDebuffsTimer;
         public const int MaxShorterDebuffsTimer = 60;
 
+
         public int MythrilHalberdTimer;
         public int CobaltHitCounter;
 
