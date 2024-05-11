@@ -16,3 +16,4 @@ maso qb deathray replacement is an actual swarm of bees
 fixed a wof divide by zero error
 wof growls when starts telegraphing world evil attack
 fixed multiplayer maso boss healing not actually working in multiplayer
+fixed deerclops ai breaking if you tp away then tp back before he despawns
