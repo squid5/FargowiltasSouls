@@ -6,6 +6,7 @@ using Luminance.Core.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ModLoader;
@@ -37,7 +38,13 @@ namespace FargowiltasSouls.Content.Projectiles
             Projectile.FargoSouls().DeletionImmuneRank = 2;
             Projectile.FargoSouls().CanSplit = false;
 
+            Projectile.hide = true;
             CooldownSlot = -1;
+        }
+
+        public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
+        {
+            behindProjectiles.Add(index);
         }
 
         public override void AI()
@@ -146,8 +153,8 @@ namespace FargowiltasSouls.Content.Projectiles
 
         public static Color ColorFunction(float trailInterpolant) =>
             Color.Lerp(
-                FargoSoulsUtil.AprilFools ? new Color(255, 0, 0, 100) : new(31, 187, 192, 100),
-                FargoSoulsUtil.AprilFools ? new Color(255, 191, 51, 100) : new(51, 255, 191, 100),
+                new(31, 187, 192, 100),
+                new(51, 255, 191, 100),
                 trailInterpolant);
 
         public override bool PreDraw(ref Color lightColor)
@@ -180,7 +187,7 @@ namespace FargowiltasSouls.Content.Projectiles
 
             Texture2D glowTexture = ModContent.Request<Texture2D>("FargowiltasSouls/Content/Projectiles/GlowRing").Value;
 
-            Vector2 glowDrawPosition = Projectile.Center - Projectile.velocity * (BeBrighter ? 90f : 180f);
+            Vector2 glowDrawPosition = Projectile.Center;
 
             Main.EntitySpriteDraw(glowTexture, glowDrawPosition - Main.screenPosition, null, brightColor, Projectile.rotation, glowTexture.Size() * 0.5f, Projectile.scale * 0.4f, SpriteEffects.None, 0);
             PrimitiveRenderer.RenderTrail(baseDrawPoints, new(WidthFunction, ColorFunction, Shader: shader), 60);
