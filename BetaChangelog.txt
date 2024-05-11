@@ -13,3 +13,4 @@ maso wof ichor also falls up
 reduced wof ichor lag
 
 maso qb deathray replacement is an actual swarm of bees
+fixed a wof divide by zero error 

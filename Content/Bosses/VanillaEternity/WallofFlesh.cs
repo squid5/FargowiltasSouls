@@ -497,6 +497,8 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                 Color color = new Color(255, 0, 255, 100) * ((1f - progress) / 4 + 0.75f);
                 //float alpha = (int)(255f * progress);
                 int frequency = 2 + (int)Math.Ceiling(progress * 6);
+                if (frequency <= 0)
+                    frequency = 1;
                 float coneHalfWidth = MathHelper.PiOver2 * 0.8f * progress;
                 float speed = 6 + (1 - progress) * 6;
                 Vector2 vel = direction.RotatedByRandom(coneHalfWidth);
