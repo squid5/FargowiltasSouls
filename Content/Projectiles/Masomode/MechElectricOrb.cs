@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -72,7 +73,7 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
             if (Projectile.soundDelay == 0)
             {
                 Projectile.soundDelay = 60 + 54;
-                SoundEngine.PlaySound(HumSound with { PitchVariance = 0.3f, Volume = 0.2f, MaxInstances = 0 }, Projectile.position);
+                SoundEngine.PlaySound(HumSound with { PitchVariance = 0.3f, Volume = 0.2f, MaxInstances = 20 }, Projectile.position);
             }
 
             if (++Projectile.frameCounter > 6)

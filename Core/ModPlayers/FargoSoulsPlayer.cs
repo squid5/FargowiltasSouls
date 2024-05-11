@@ -982,6 +982,12 @@ namespace FargowiltasSouls.Core.ModPlayers
             if (StatLifePrevious > 0 && Player.statLife > StatLifePrevious)
                 StatLifePrevious = Player.statLife;
 
+            if (!retVal)
+            {
+                if (!Main.dedServ)
+                    SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/Revive"), Player.Center);
+            }
+
             return retVal;
         }
 
