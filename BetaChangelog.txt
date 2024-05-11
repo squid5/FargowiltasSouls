@@ -15,3 +15,4 @@ reduced wof ichor lag
 maso qb deathray replacement is an actual swarm of bees
 fixed a wof divide by zero error
 wof growls when starts telegraphing world evil attack
+fixed multiplayer maso boss healing not actually working in multiplayer
