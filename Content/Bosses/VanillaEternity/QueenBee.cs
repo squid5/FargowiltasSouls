@@ -84,6 +84,12 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             if (WorldSavingSystem.SwarmActive)
                 return result;
 
+            if (npc.ai[0] == 2 && npc.HasValidTarget)
+            {
+                float lerp = Math.Min(++npc.ai[1] / 3000f, 1f);
+                npc.velocity = Vector2.Lerp(npc.velocity, npc.DirectionTo(Main.player[npc.target].Center) * npc.velocity.Length(), lerp);
+            }
+
 
             if (npc.HasPlayerTarget && npc.HasValidTarget && (!Main.player[npc.target].ZoneJungle
                 || Main.player[npc.target].position.Y < Main.worldSurface * 16))
