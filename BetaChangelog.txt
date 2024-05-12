@@ -32,3 +32,5 @@ updated sounds
 	all revives
 	fully charging nekomi/styx
 hopefully fixed sound engine completely breaking during destroyer light show
+
+changed magic dagger phm from x0.5 dmg to x0.66 dmg/spd
