@@ -34,3 +34,4 @@ updated sounds
 hopefully fixed sound engine completely breaking during destroyer light show
 
 changed magic dagger phm from x0.5 dmg to x0.66 dmg/spd
+fixed gaia set bonus secretly giving a sentry slot it shouldnt
