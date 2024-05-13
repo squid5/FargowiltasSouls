@@ -6,7 +6,7 @@ NEW UPDATE - V {ModVersion}
 -Fixed True Mutant armor revive ray not having updated visuals
 -Updated sounds
 -Changed Magic Dagger pre-hardmode nerf from x0.5 damage to x0.66 damage/speed
--Changed Star Cloak pre-hardmode nerf from x0.5 damage to x0.25 damage
+-Changed Star Cloak pre-hardmode nerf from x0.5 damage to x0.33 damage and fixed not working
 -Fixed Gaia set bonus secretly giving a sentry slot it shouldn't
 -Fixed sound engine completely breaking during Destroyer light show attack
 -Fixed Queen Bee AI breaking and doing nothing forever if you make her circle
