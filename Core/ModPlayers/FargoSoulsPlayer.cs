@@ -912,7 +912,7 @@ namespace FargowiltasSouls.Core.ModPlayers
                     }
                 }
 
-                if (Player.whoAmI == Main.myPlayer && retVal && !Player.HasBuff<FossilReviveCDBuff>())
+                if (Player.whoAmI == Main.myPlayer && retVal && Player.HasEffect<FossilEffect>() && !Player.HasBuff<FossilReviveCDBuff>())
                 {
                     FossilEffect.FossilRevive(Player);
                     retVal = false;
