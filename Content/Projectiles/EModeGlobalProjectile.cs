@@ -483,7 +483,7 @@ namespace FargowiltasSouls.Content.Projectiles
 
                     case ProjectileID.StarCloakStar:
                         if (!Main.hardMode)
-                            projectile.damage /= 2;
+                            projectile.damage /= 4;
                         break;
 
                     default:
