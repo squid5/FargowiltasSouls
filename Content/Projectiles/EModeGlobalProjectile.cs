@@ -481,11 +481,6 @@ namespace FargowiltasSouls.Content.Projectiles
                             break;
                         }
 
-                    case ProjectileID.StarCloakStar:
-                        if (!Main.hardMode)
-                            projectile.damage /= 2;
-                        break;
-
                     default:
                         break;
                 }
@@ -1218,6 +1213,11 @@ namespace FargowiltasSouls.Content.Projectiles
                     break;
                 case ProjectileID.PlatinumCoin:
                     modifiers.FinalDamage *= 0.275f;
+                    break;
+
+                case ProjectileID.StarCloakStar:
+                    if (!Main.hardMode)
+                        modifiers.FinalDamage *= 0.33f;
                     break;
             }
             //if (projectile.arrow) //change archery and quiver to additive damage

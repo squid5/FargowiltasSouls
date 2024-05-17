@@ -90,9 +90,18 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Cosmos
                 Projectile.localAI[0] = MathHelper.Lerp(Projectile.localAI[0], player.velocity.X * 30, 0.1f);
                 Projectile.position.X += Projectile.localAI[0];
 
+                if (Projectile.ai[1] % 15 == 0)
+                {
+                    if (!Main.dedServ)
+                        SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/ReticleBeep"), Projectile.Center);
+                }
+
                 if (Projectile.ai[1] == 45)
                 {
                     Projectile.netUpdate = true;
+
+                    if (!Main.dedServ)
+                        SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/ReticleLockOn"), Projectile.Center);
 
                     if (FargoSoulsUtil.HostCheck)
                         Projectile.NewProjectile(Terraria.Entity.InheritSource(Projectile), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<GlowRing>(), 0, 0f, Main.myPlayer, -1, -5);

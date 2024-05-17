@@ -614,16 +614,27 @@ namespace FargowiltasSouls.Core.ModPlayers
 
         public override void Kill(double damage, int hitDirection, bool pvp, PlayerDeathReason damageSource)
         {
-            if (WorldSavingSystem.MasochistModeReal)
+            if (WorldSavingSystem.MasochistModeReal && Player.whoAmI == Main.myPlayer)
             {
                 foreach (NPC npc in Main.npc.Where(npc => npc.active && (npc.boss || npc.type == NPCID.EaterofWorldsBody || npc.type == NPCID.EaterofWorldsHead || npc.type == NPCID.EaterofWorldsTail)))
                 {
                     int heal = npc.lifeMax / 10;
-                    npc.life += heal;
-                    if (npc.life > npc.lifeMax)
-                        npc.life = npc.lifeMax;
-                    npc.HealEffect(heal);
-                    npc.netUpdate = true;
+                    if (Main.netMode == NetmodeID.SinglePlayer)
+                    {
+                        npc.life += heal;
+                        if (npc.life > npc.lifeMax)
+                            npc.life = npc.lifeMax;
+                        npc.HealEffect(heal);
+                        npc.netUpdate = true;
+                    }
+                    else
+                    {
+                        var netMessage = Mod.GetPacket();
+                        netMessage.Write((byte)FargowiltasSouls.PacketID.HealNPC);
+                        netMessage.Write((byte)npc.whoAmI);
+                        netMessage.Write(heal);
+                        netMessage.Send();
+                    }
                 }
             }
 

@@ -32,6 +32,8 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
         public bool DroppedSummon;
 
+        public int ForceDespawnTimer;
+
 
         public override void SendExtraAI(NPC npc, BitWriter bitWriter, BinaryWriter binaryWriter)
         {
@@ -399,9 +401,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     break;
 
                 case 6: //trying to return home
-                    npc.TargetClosest();
-
-                    if (npc.ai[1] > 120 && (!npc.HasValidTarget || npc.Distance(Main.player[npc.target].Center) > 1600))
+                    if (++ForceDespawnTimer > 180)
                     {
                         if (FargoSoulsUtil.HostCheck) //force despawn
                         {

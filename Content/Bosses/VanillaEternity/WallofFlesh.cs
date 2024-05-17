@@ -39,6 +39,8 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
         public bool DroppedSummon;
 
+        public bool DidGrowl;
+
 
         public override void SendExtraAI(NPC npc, BitWriter bitWriter, BinaryWriter binaryWriter)
         {
@@ -119,12 +121,23 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                 {
                     WorldEvilAttackCycleTimer = 0;
                     UseCorruptAttack = !UseCorruptAttack;
+                    DidGrowl = false;
 
                     npc.netUpdate = true;
                     NetSync(npc);
                 }
                 else if (WorldEvilAttackCycleTimer > (InDesperationPhase ? 300 : 600 - 120)) //telegraph for special attacks
                 {
+                    if (!DidGrowl)
+                    {
+                        DidGrowl = true;
+                        if (!Main.dedServ)
+                        {
+                            SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/Monster119"),
+                                npc.HasValidTarget && Main.player[npc.target].ZoneUnderworldHeight ? Main.player[npc.target].Center : npc.Center);
+                        }
+                    }
+
                     for (int i = 0; i < 2; i++)
                     {
                         int type = !UseCorruptAttack ? 75 : 170; //corruption dust, then crimson dust
@@ -497,6 +510,8 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                 Color color = new Color(255, 0, 255, 100) * ((1f - progress) / 4 + 0.75f);
                 //float alpha = (int)(255f * progress);
                 int frequency = 2 + (int)Math.Ceiling(progress * 6);
+                if (frequency <= 0)
+                    frequency = 1;
                 float coneHalfWidth = MathHelper.PiOver2 * 0.8f * progress;
                 float speed = 6 + (1 - progress) * 6;
                 Vector2 vel = direction.RotatedByRandom(coneHalfWidth);

@@ -912,6 +912,12 @@ namespace FargowiltasSouls.Core.ModPlayers
                     }
                 }
 
+                if (Player.whoAmI == Main.myPlayer && retVal && Player.HasEffect<FossilEffect>() && !Player.HasBuff<FossilReviveCDBuff>())
+                {
+                    FossilEffect.FossilRevive(Player);
+                    retVal = false;
+                }
+
                 if (Player.whoAmI == Main.myPlayer && retVal && MutantSetBonusItem != null && Player.FindBuffIndex(ModContent.BuffType<MutantRebirthBuff>()) == -1)
                 {
                     TryCleanseDebuffs();
@@ -925,8 +931,6 @@ namespace FargowiltasSouls.Core.ModPlayers
                     Main.NewText(text, Color.LimeGreen);
                     Player.AddBuff(ModContent.BuffType<MutantRebirthBuff>(), LumUtils.SecondsToFrames(120f));
                     retVal = false;
-
-                    Projectile.NewProjectile(Player.GetSource_Accessory(MutantSetBonusItem), Player.Center, -Vector2.UnitY, ModContent.ProjectileType<GiantDeathray>(), (int)(7000 * Player.ActualClassDamage(DamageClass.Magic)), 10f, Player.whoAmI);
                 }
 
                 if (Player.whoAmI == Main.myPlayer && retVal && AbomWandItem != null && !AbominableWandRevived)
@@ -981,6 +985,15 @@ namespace FargowiltasSouls.Core.ModPlayers
 
             if (StatLifePrevious > 0 && Player.statLife > StatLifePrevious)
                 StatLifePrevious = Player.statLife;
+
+            if (!retVal)
+            {
+                if (!Main.dedServ)
+                    SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/Revive"), Player.Center);
+
+                if (Player.whoAmI == Main.myPlayer && MutantSetBonusItem != null)
+                    Projectile.NewProjectile(Player.GetSource_Accessory(MutantSetBonusItem), Player.Center, -Vector2.UnitY, ModContent.ProjectileType<GiantDeathray>(), (int)(7000 * Player.ActualClassDamage(DamageClass.Magic)), 10f, Player.whoAmI);
+            }
 
             return retVal;
         }
