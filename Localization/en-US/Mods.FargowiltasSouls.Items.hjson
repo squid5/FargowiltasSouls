@@ -1076,7 +1076,7 @@ ChaliceoftheMoon: {
 	Tooltip:
 		'''
 		[i:FargowiltasSouls/ChaliceoftheMoon] Grants immunity to Swarming, Atrophied, Jammed, Reverse Mana Flow, and Antisocial
-		Grants immunity to [i:FargowiltasSouls/MagicalBulb] Venom, Ivy Venom, [i:FargowiltasSouls/LihzahrdTreasureBox] Burning, Fused, Low Ground, [i:FargowiltasSouls/CelestialRune] and Marked for Death
+		Grants immunity to [i:FargowiltasSouls/MagicalBulb] Venom, Ivy Venom, [i:FargowiltasSouls/LihzahrdTreasureBox] Burning, Fused, Lihzahrd Curse, Low Ground, [i:FargowiltasSouls/CelestialRune] and Marked for Death
 		[i:FargowiltasSouls/MagicalBulb] Press the Magical Cleanse key to cure yourself of most debuffs
 		[i:FargowiltasSouls/MagicalBulb] Increases life regeneration based on how much light you receive
 		[i:FargowiltasSouls/LihzahrdTreasureBox] Double tap DOWN in the air to fastfall, creating an explosion on landing after falling a certain distance
@@ -1280,7 +1280,7 @@ LihzahrdTreasureBox: {
 	DisplayName: Lihzahrd Treasure Box
 	Tooltip:
 		'''
-		Grants immunity to Burning, Fused, and Low Ground
+		Grants immunity to Burning, Fused, Lihzahrd Curse and Low Ground
 		Double tap DOWN in the air to fastfall
 		Fastfall will create a fiery eruption on impact after falling a certain distance
 		'Too many booby traps to open'
