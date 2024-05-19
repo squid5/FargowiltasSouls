@@ -812,7 +812,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Cosmos
                                     int modifier = Math.Sign(NPC.Center.Y - player.Center.Y);
                                     Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + offset + 3000 * NPC.DirectionFrom(player.Center) * modifier,
                                         NPC.SafeDirectionTo(player.Center) * modifier,
-                                        ModContent.ProjectileType<CosmosDeathray>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage), 0f, Main.myPlayer);
+                                        ModContent.ProjectileType<CosmosDeathray>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage, 1.25f), 0f, Main.myPlayer);
                                 }
                             }
                             else
@@ -999,7 +999,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Cosmos
                             {
                                 int modifier = Math.Sign(NPC.Center.Y - player.Center.Y);
                                 Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + 3000 * NPC.DirectionFrom(player.Center) * modifier, NPC.SafeDirectionTo(player.Center) * modifier,
-                                    ModContent.ProjectileType<CosmosDeathray2>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage), 0f, Main.myPlayer);
+                                    ModContent.ProjectileType<CosmosDeathray2>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage, 1.25f), 0f, Main.myPlayer);
 
                                 const int max = 3;
                                 for (int i = -max; i <= max; i++)
@@ -1161,7 +1161,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Cosmos
                             {
                                 int modifier = Math.Sign(NPC.Center.Y - player.Center.Y);
                                 Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + 3000 * NPC.DirectionFrom(player.Center) * modifier, NPC.SafeDirectionTo(player.Center) * modifier,
-                                    ModContent.ProjectileType<CosmosDeathray2>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage), 0f, Main.myPlayer);
+                                    ModContent.ProjectileType<CosmosDeathray2>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage, 1.25f), 0f, Main.myPlayer);
                             }
                         }
                     }
@@ -1328,7 +1328,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Cosmos
 
                                         int modifier = Math.Sign(NPC.Center.Y - player.Center.Y);
                                         Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + offset + 3000 * NPC.DirectionFrom(player.Center) * modifier, NPC.SafeDirectionTo(player.Center) * modifier,
-                                            ModContent.ProjectileType<CosmosDeathray>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage), 0f, Main.myPlayer);
+                                            ModContent.ProjectileType<CosmosDeathray>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage, 1.25f), 0f, Main.myPlayer);
                                     }
                                 }
                                 else
@@ -1383,7 +1383,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Cosmos
                                 {
                                     int modifier = Math.Sign(NPC.Center.Y - player.Center.Y);
                                     Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + 3000 * NPC.DirectionFrom(player.Center) * modifier, NPC.SafeDirectionTo(player.Center) * modifier,
-                                        ModContent.ProjectileType<CosmosDeathray2>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage), 0f, Main.myPlayer);
+                                        ModContent.ProjectileType<CosmosDeathray2>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage, 1.25f), 0f, Main.myPlayer);
                                 }
                             }
                         }
