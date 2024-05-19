@@ -369,16 +369,22 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                 {
                     case 1: // crystal madness
                         {
+                            ref float shotTimer = ref npc.localAI[1];
+
                             if (timer < 60 * 6)
                                 WallHugMovement();
                             else
                                 WallHugMovement(true, 4, 0.1f, playerXAvoidWalls);
 
+                            float attackDuration = LumUtils.SecondsToFrames(9);
 
-
-                            const int shotTime = 17;
-                            if (timer % shotTime == shotTime - 1 && timer < 60 * 6)
+                            float startMult = WorldSavingSystem.MasochistModeReal ? 2 : 3;
+                            float progress = MathHelper.Clamp((timer * 2f) / attackDuration, 0, 1);
+                            int shotTime = (int)(17f * MathHelper.Lerp(startMult, 1f, progress));
+                            shotTimer++;
+                            if (shotTimer >= shotTime && timer < 60 * 6)
                             {
+                                shotTimer = 0;
                                 foreach (NPC leaf in Main.npc.Where(n => n.active && n.type == ModContent.NPCType<CrystalLeaf>() && n.ai[0] == npc.whoAmI && n.ai[1] == innerRingDistance))
                                 {
                                     SoundEngine.PlaySound(SoundID.Grass, leaf.Center);
@@ -407,9 +413,10 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                                     p.netUpdate = true;
                                 }
                             }
-                            if (timer >= 60 * 9f)
+                            if (timer >= attackDuration)
                             {
                                 timer = 0;
+                                shotTimer = 0;
                                 state = 2;
                                 npc.TargetClosest(false);
                             }
@@ -421,7 +428,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
                             const int vineSpawnTime = 100;
 
-                            if (timer >= vineSpawnTime || WorldSavingSystem.MasochistModeReal)
+                            if (timer >= vineSpawnTime + (WorldSavingSystem.MasochistModeReal ? -20 : 20))
                             {
                                 if (timer % 50 == 0)
                                 {
@@ -569,7 +576,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                                 }
                                 */
                                 int freq = WorldSavingSystem.MasochistModeReal ? 9 : 14;
-                                if (timer % freq == 0 && (timer > vineSpawnTime || WorldSavingSystem.MasochistModeReal))
+                                if (timer % freq == 0 && (timer > vineSpawnTime || WorldSavingSystem.MasochistModeReal) && timer < vineSpawnTime * 3.33f)
                                 {
                                     if (timer % (freq * 4) <= freq * 2)
                                     {
@@ -947,7 +954,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
         }
         public static float DR(NPC npc) =>
             npc.GetLifePercent() < 0.25f ? 0.4f // phase 3
-            : npc.GetLifePercent() < 0.5f ? 0.5f // phase 2
+            : npc.GetLifePercent() < 0.5f ? 0.4f // phase 2
             : 0; // phase 1
         public override void ModifyIncomingHit(NPC npc, ref NPC.HitModifiers modifiers)
         {
