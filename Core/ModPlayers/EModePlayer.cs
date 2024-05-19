@@ -611,7 +611,6 @@ namespace FargowiltasSouls.Core.ModPlayers
                 return;
             //ShadowDodgeNerf();
         }
-
         public override void ModifyHurt(ref Player.HurtModifiers modifiers)
         {
             ShorterDebuffsTimer = MaxShorterDebuffsTimer;
@@ -623,6 +622,14 @@ namespace FargowiltasSouls.Core.ModPlayers
             if (modifiers.DamageSource.SourceProjectileType == ProjectileID.Explosives)
                 Player.FargoSouls().AddBuffNoStack(ModContent.BuffType<StunnedBuff>(), 120);
 
+            if (Player.brainOfConfusionItem != null && !Player.brainOfConfusionItem.IsAir)
+            {
+                if (Main.rand.NextBool(2)) // 50% chance to not work
+                {
+                    Player.brainOfConfusionItem = null;
+                    Main.NewText("no dodge lol");
+                }
+            }
 
 
             base.ModifyHurt(ref modifiers);

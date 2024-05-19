@@ -47,10 +47,10 @@ namespace FargowiltasSouls.Content.Buffs
                         player.FargoSouls().Slimed = true;
                     break;
 
-                case BuffID.BrainOfConfusionBuff:
-                    if (WorldSavingSystem.EternityMode)
-                        player.AddBuff(ModContent.BuffType<BrainOfConfusionBuff>(), player.buffTime[buffIndex] * 2);
-                    break;
+                //case BuffID.BrainOfConfusionBuff:
+                    //if (WorldSavingSystem.EternityMode)
+                        //player.AddBuff(ModContent.BuffType<BrainOfConfusionBuff>(), player.buffTime[buffIndex] * 2);
+                    //break;
 
                 case BuffID.OnFire:
                     if (WorldSavingSystem.EternityMode && Main.raining && player.position.Y < Main.worldSurface * 16
