@@ -567,7 +567,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                                     if (FargoSoulsUtil.HostCheck)
                                     {
                                         int p = Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, attackAngle.ToRotationVector2().RotatedByRandom(MathHelper.PiOver4) * 24,
-                                            ModContent.ProjectileType<PlanteraTentacle>(), FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 0f, Main.myPlayer, npc.whoAmI, attackAngle);
+                                            ModContent.ProjectileType<PlanteraTentacle>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), 0f, Main.myPlayer, npc.whoAmI, attackAngle);
                                         if (p.IsWithinBounds(Main.maxProjectiles))
                                         {
                                             Main.projectile[p].extraUpdates += 1;
@@ -895,9 +895,9 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                 //        {
                 //            float offset = MathHelper.ToRadians(6) * i;
                 //            Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, Main.rand.NextVector2CircularEdge(24, 24),
-                //              ModContent.ProjectileType<PlanteraTentacle>(), FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 0f, Main.myPlayer, npc.whoAmI, angle + offset);
+                //              ModContent.ProjectileType<PlanteraTentacle>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), 0f, Main.myPlayer, npc.whoAmI, angle + offset);
                 //            Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, Main.rand.NextVector2CircularEdge(24, 24),
-                //                ModContent.ProjectileType<PlanteraTentacle>(), FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 0f, Main.myPlayer, npc.whoAmI, -angle + offset);
+                //                ModContent.ProjectileType<PlanteraTentacle>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), 0f, Main.myPlayer, npc.whoAmI, -angle + offset);
                 //        }
                 //    }
 

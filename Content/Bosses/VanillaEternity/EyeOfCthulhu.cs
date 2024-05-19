@@ -622,7 +622,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                             Vector2 speed = Vector2.UnitY;
                             for (int i = 0; i < 30; i++)
                             {
-                                Projectile.NewProjectile(npc.GetSource_FromThis(), spawnPos, speed, ModContent.ProjectileType<BloodScythe>(), FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 1f, Main.myPlayer);
+                                Projectile.NewProjectile(npc.GetSource_FromThis(), spawnPos, speed, ModContent.ProjectileType<BloodScythe>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), 1f, Main.myPlayer);
                                 spawnPos.X += 72 * direction;
                                 speed.Y += 0.15f;
                             }

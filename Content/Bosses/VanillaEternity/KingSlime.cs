@@ -346,7 +346,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     for (int i = 0; i < 15; i++)
                     {
                         Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, distance + Main.rand.NextVector2Square(-1f, 1f) * 2f,
-                            ModContent.ProjectileType<SlimeSpike>(), FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 0f, Main.myPlayer);
+                            ModContent.ProjectileType<SlimeSpike>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), 0f, Main.myPlayer);
                     }
                 }
 

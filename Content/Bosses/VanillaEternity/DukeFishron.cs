@@ -642,7 +642,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                                         for (int i = 0; i < max; i++)
                                         {
                                             Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, baseVel.RotatedBy(2 * Math.PI / max * i),
-                                                ModContent.ProjectileType<FishronBubble>(), FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage, 0.8f), 0f, Main.myPlayer, delay);
+                                                ModContent.ProjectileType<FishronBubble>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage, 0.8f), 0f, Main.myPlayer, delay);
                                         }
                                     }
                                 }

@@ -293,7 +293,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEve
                         int speed = Main.rand.Next(6, 8);
                         Vector2 pos = npc.Center - (0.65f * npc.height * Vector2.UnitY) + Vector2.UnitX * Main.rand.NextFloat(-npc.width / 3, npc.width / 3);
                         Vector2 vel = Vector2.Normalize(pos - npc.Center) * speed;
-                        Projectile.NewProjectile(npc.GetSource_FromThis(), pos, vel, ModContent.ProjectileType<PillarNebulaBlaze>(), FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 3f, Main.myPlayer, 0.03f, ai2: npc.whoAmI);
+                        Projectile.NewProjectile(npc.GetSource_FromThis(), pos, vel, ModContent.ProjectileType<PillarNebulaBlaze>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), 3f, Main.myPlayer, 0.03f, ai2: npc.whoAmI);
                     }
                     
                 }

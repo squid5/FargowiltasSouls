@@ -44,7 +44,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.Snow
                 if (npc.HasPlayerTarget && FargoSoulsUtil.HostCheck)
                 {
                     Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, new Vector2(6f, 0f).RotatedByRandom(2 * Math.PI),
-                        ModContent.ProjectileType<FrostfireballHostile>(), FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage, 0.8f), 0f, Main.myPlayer, npc.target, 30f);
+                        ModContent.ProjectileType<FrostfireballHostile>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage, 0.8f), 0f, Main.myPlayer, npc.target, 30f);
                 }
             } */
 

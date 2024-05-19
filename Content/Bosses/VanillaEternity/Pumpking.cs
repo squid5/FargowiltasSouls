@@ -64,7 +64,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     Player player = Main.player[t];
                     Vector2 distance = player.Center - npc.Center;
                     if (Math.Abs(distance.X) < npc.width && FargoSoulsUtil.HostCheck) //flame rain if player roughly below me
-                        Projectile.NewProjectile(npc.Center.X, npc.position.Y, Main.rand.Next(-3, 4), Main.rand.Next(-4, 0), Main.rand.Next(326, 329), FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage, 0.8f), 0f, Main.myPlayer);
+                        Projectile.NewProjectile(npc.Center.X, npc.position.Y, Main.rand.Next(-3, 4), Main.rand.Next(-4, 0), Main.rand.Next(326, 329), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage, 0.8f), 0f, Main.myPlayer);
                 }
             }*/
         }

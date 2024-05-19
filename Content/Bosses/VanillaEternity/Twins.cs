@@ -360,7 +360,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                 //        num1225 = 1f;
                 //    }
                 //    vector200 = vector200.RotatedBy(-num1225 * 1.04719755f, default(Vector2));
-                //    Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, vector200, ModContent.ProjectileType<PhantasmalDeathray>(), FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage, 4f / 2), 0f, Main.myPlayer, num1225 * 0.0104719755f, npc.whoAmI);
+                //    Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, vector200, ModContent.ProjectileType<PhantasmalDeathray>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage, 4f / 2), 0f, Main.myPlayer, num1225 * 0.0104719755f, npc.whoAmI);
                 //    npc.netUpdate = true;
                 //}
             }
