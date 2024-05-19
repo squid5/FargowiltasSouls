@@ -95,7 +95,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEve
                 HealCounter = 0;
                 if (!parent.HasValidTarget || parent.Distance(Main.player[parent.target].Center) > parentModNPC.AuraSize)
                 {
-                    const int heal = 5000;
+                    const int heal = 500;
                     NPC.life += heal;
                     if (NPC.life > NPC.lifeMax)
                         NPC.life = NPC.lifeMax;
