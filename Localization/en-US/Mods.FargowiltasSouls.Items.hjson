@@ -1675,8 +1675,7 @@ ColossusSoul: {
 	DisplayName: Colossus Soul
 	Tooltip:
 		'''
-		Increases HP by 100
-		15% damage reduction
+		10% damage reduction
 		Increases life regeneration by 5
 		Grants immunity to knockback, several debuffs, Shimmering, and fall damage
 		Enemies are more likely to target you
