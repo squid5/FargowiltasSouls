@@ -862,7 +862,7 @@ namespace FargowiltasSouls.Content.Projectiles
                                         }
                                     }
 
-                                    Projectile.NewProjectile(npc.GetSource_FromThis(), projectile.Center, Vector2.Zero, ModContent.ProjectileType<CultistRitual>(), FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 0f, Main.myPlayer, 0f, npc.whoAmI);
+                                    Projectile.NewProjectile(npc.GetSource_FromThis(), projectile.Center, Vector2.Zero, ModContent.ProjectileType<CultistRitual>(), FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 0f, Main.myPlayer, 0f, npc.whoAmI);
                                     const int max = 16;
                                     const float appearRadius = 1600f - 100f;
                                     for (int i = 0; i < max; i++)

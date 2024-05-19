@@ -359,7 +359,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                                     float rotation = MathHelper.Pi * (WorldSavingSystem.MasochistModeReal ? 1f : 0.8f) / time * -npc.direction;
 
                                     if (FargoSoulsUtil.HostCheck)
-                                        Projectile.NewProjectile(npc.GetSource_FromThis(), eye, Vector2.UnitY, ModContent.ProjectileType<DeerclopsDeathray>(), FargoSoulsUtil.ScaledProjectileDamage(npc.damage, 2f), 0f, Main.myPlayer, rotation, time);
+                                        Projectile.NewProjectile(npc.GetSource_FromThis(), eye, Vector2.UnitY, ModContent.ProjectileType<DeerclopsDeathray>(), FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage, 2f), 0f, Main.myPlayer, rotation, time);
                                 }
 
                                 npc.ai[1] += increment; //more endlag than normal

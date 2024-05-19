@@ -69,7 +69,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Cosmos
                         spawnPos.X += Main.rand.Next(-200, 201);
                         spawnPos.Y -= 700;
                         Vector2 vel = Main.rand.NextFloat(10, 15f) * Vector2.Normalize(Projectile.Center - spawnPos);
-                        Projectile.NewProjectile(Terraria.Entity.InheritSource(Projectile), spawnPos, vel, ModContent.ProjectileType<CosmosMeteor>(), FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 0f, Main.myPlayer, 0f, Main.rand.NextFloat(1f, 1.5f));
+                        Projectile.NewProjectile(Terraria.Entity.InheritSource(Projectile), spawnPos, vel, ModContent.ProjectileType<CosmosMeteor>(), FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 0f, Main.myPlayer, 0f, Main.rand.NextFloat(1f, 1.5f));
                     }
                 }
 
