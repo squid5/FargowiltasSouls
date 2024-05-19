@@ -159,7 +159,10 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Cosmos
                 }
             }
         }
-
+        public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers)
+        {
+            base.ModifyHitPlayer(target, ref modifiers);
+        }
         public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
             if (WorldSavingSystem.EternityMode)
