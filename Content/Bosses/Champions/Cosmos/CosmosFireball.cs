@@ -161,7 +161,10 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Cosmos
         }
         public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers)
         {
-            base.ModifyHitPlayer(target, ref modifiers);
+            if (NPC.AnyNPCs(ModContent.NPCType<CosmosChampion>()))
+            {
+                modifiers.ScalingArmorPenetration += 0.25f;
+            }
         }
         public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
