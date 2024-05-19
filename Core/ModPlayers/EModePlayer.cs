@@ -1,3 +1,5 @@
+using FargowiltasSouls.Content.Bosses.Champions.Cosmos;
+using FargowiltasSouls.Content.Buffs.Boss;
 using FargowiltasSouls.Content.Buffs.Masomode;
 using FargowiltasSouls.Content.Items;
 using FargowiltasSouls.Content.Items.Accessories.Enchantments;
@@ -452,6 +454,14 @@ namespace FargowiltasSouls.Core.ModPlayers
 
         }
 
+        public override void UpdateBadLifeRegen()
+        {
+            float regenReductionTime = LumUtils.SecondsToFrames(5);
+            
+            if (Player.lifeRegen > 0 && Player.lifeRegenTime < regenReductionTime)
+                Player.lifeRegen = (int)(Player.lifeRegen * Player.lifeRegenTime / regenReductionTime);
+        }
+
         public override void PostUpdateEquips()
         {
             if (!WorldSavingSystem.EternityMode)
@@ -580,6 +590,12 @@ namespace FargowiltasSouls.Core.ModPlayers
             {
                 modifiers.SourceDamage *= 1.15f; // warmth potion modifies source damage (pre defense) for some fucking reason
             }
+            /*
+            if (NPC.AnyNPCs(ModContent.NPCType<CosmosChampion>()))
+            {
+                Player.AddBuff(ModContent.BuffType<MoonFangBuff>(), LumUtils.SecondsToFrames(5));
+            }
+            */
         }
         public override void OnHitByNPC(NPC npc, Player.HurtInfo hurtInfo)
         {
