@@ -627,7 +627,6 @@ namespace FargowiltasSouls.Core.ModPlayers
                 if (Main.rand.NextBool(2)) // 50% chance to not work
                 {
                     Player.brainOfConfusionItem = null;
-                    Main.NewText("no dodge lol");
                 }
             }
 
