@@ -223,7 +223,6 @@ namespace FargowiltasSouls.Core.ModPlayers
             GoldShell = false;
             LavaWet = false;
 
-            WoodEnchantItem = null;
             WoodEnchantDiscount = false;
             fireNoDamage = false;
 

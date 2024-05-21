@@ -475,6 +475,9 @@ namespace FargowiltasSouls.Core.ModPlayers
             if (SpectreCD > 0)
                 SpectreCD--;
 
+            if (ChargeSoundDelay > 0)
+                ChargeSoundDelay--;
+
             if (RustRifleReloading && Player.HeldItem.type == ModContent.ItemType<NavalRustrifle>())
             {
                 RustRifleTimer++;
