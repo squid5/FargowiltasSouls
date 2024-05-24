@@ -577,7 +577,7 @@ namespace FargowiltasSouls.Core.ModPlayers
 
             if (Player.resistCold && npc.coldDamage) //warmth potion nerf
             {
-                modifiers.SourceDamage *= 1.3f; // warmth potion modifies source damage (pre defense) for some fucking reason
+                modifiers.SourceDamage *= 1f / 0.7f; // warmth potion modifies source damage (pre defense) for some fucking reason. anti-30% 
                 modifiers.FinalDamage *= 0.85f;
             }
         }
@@ -590,7 +590,7 @@ namespace FargowiltasSouls.Core.ModPlayers
 
             if (Player.resistCold && proj.coldDamage) //warmth potion nerf
             {
-                modifiers.SourceDamage *= 1.3f; // warmth potion modifies source damage (pre defense) for some fucking reason
+                modifiers.SourceDamage *= 1f / 0.7f; // warmth potion modifies source damage (pre defense) for some fucking reason. anti-30%
                 modifiers.FinalDamage *= 0.85f;
             }
             /*
