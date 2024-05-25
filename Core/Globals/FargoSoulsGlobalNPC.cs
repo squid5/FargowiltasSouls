@@ -738,15 +738,6 @@ namespace FargowiltasSouls.Core.Globals
                     damage = shownDamage;
                 }
             }
-            bool anyAshwood = modPlayer.fireNoDamage;
-            if (npc.onFire)
-            {
-                if (npc.townNPC && anyAshwood)
-                {
-                    npc.lifeRegen += 8;
-                    damage -= 1;
-                }
-            }
 
             //25 dps which is 1 more than  
             if (Sublimation)

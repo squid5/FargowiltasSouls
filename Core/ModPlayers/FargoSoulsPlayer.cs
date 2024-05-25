@@ -50,8 +50,6 @@ namespace FargowiltasSouls.Core.ModPlayers
 
         public int RockeaterDistance = EaterLauncher.BaseDistance;
 
-        public bool fireNoDamage = false;
-
         public int The22Incident;
 
         public Dictionary<int, bool> KnownBuffsToPurify = [];
@@ -224,7 +222,6 @@ namespace FargowiltasSouls.Core.ModPlayers
             LavaWet = false;
 
             WoodEnchantDiscount = false;
-            fireNoDamage = false;
 
             SnowVisual = false;
             ApprenticeEnchantActive = false;

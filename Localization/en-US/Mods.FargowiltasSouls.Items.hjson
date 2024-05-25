@@ -61,7 +61,6 @@ AshWoodEnchant: {
 	Tooltip:
 		'''
 		Fire debuffs don't damage you
-		Above effect works for town NPCs while equipped or in your inventory
 		While you're burning, attacks are accompanied by balls of fire
 		Grants immunity to Oiled
 		Reduces damage from touching lava
@@ -919,7 +918,7 @@ TerraForce: {
 		[i:FargowiltasSouls/SilverEnchant] Right Click to guard with your shield
 		[i:FargowiltasSouls/TungstenEnchant] Weapon size increased to 300% and projectile size every quarter second
 		[i:FargowiltasSouls/ObsidianEnchant] Grants immunity to lava
-		[i:FargowiltasSouls/AshWoodEnchant] Player and town NPC attacks are accompanied by fireballs
+		[i:FargowiltasSouls/AshWoodEnchant] Player attacks are accompanied by fireballs
 		'The land lends its strength'
 		'''
 }
