@@ -16,8 +16,8 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
         public abstract Color nameColor { get; }
         public string wizardEffect()
         {
-            string text = Language.GetTextValue($"Mods.{Mod}.WizardEffect.{Name.Replace("Enchantment", "").Replace("Enchant", "")}");
-            if (text.Contains($"Mods.{Mod}.WizardEffect") || text.Length <= 1) //if there's no localization entry or it's empty
+            string text = Language.GetTextValue($"Mods.{Mod.Name}.WizardEffect.{Name.Replace("Enchantment", "").Replace("Enchant", "")}");
+            if (text.Contains($"Mods.{Mod.Name}.WizardEffect") || text.Length <= 1) //if there's no localization entry or it's empty
             {
                 return Language.GetTextValue($"Mods.FargowiltasSouls.WizardEffect.NoUpgrade");
             }
