@@ -56,6 +56,7 @@ namespace FargowiltasSouls.Core.ModPlayers
 
         public bool Toggler_ExtraAttacksDisabled = false;
         public bool Toggler_MinionsDisabled = false;
+        public int ToggleRebuildCooldown = 0;
 
 
         public bool IsStillHoldingInSameDirectionAsMovement

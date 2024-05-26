@@ -178,12 +178,16 @@ namespace FargowiltasSouls.Content.UI
         public override void Update(GameTime gameTime)
         {
             if (Main.LocalPlayer.mouseInterface && (Main.mouseLeft || Main.mouseRight))
+            {
                 NeedsToggleListBuilding = true;
+            }
             base.Update(gameTime);
-            if (NeedsToggleListBuilding)
+            FargoSoulsPlayer modPlayer = Main.LocalPlayer.FargoSouls();
+            if (NeedsToggleListBuilding && modPlayer.ToggleRebuildCooldown <= 0)
             {
                 BuildList();
                 NeedsToggleListBuilding = false;
+                modPlayer.ToggleRebuildCooldown = 30;
             }
         }
 
