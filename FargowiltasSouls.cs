@@ -654,6 +654,7 @@ namespace FargowiltasSouls
             SyncFishronEXLife,
             SyncTogglesOnJoin,
             SyncOneToggle,
+            SyncDefaultToggles,
             SyncCanPlayMaso,
             SyncNanoCoreMode,
             //SpawnBossTryFromNPC
@@ -787,6 +788,14 @@ namespace FargowiltasSouls
                         {
                             Player player = Main.player[reader.ReadByte()];
                             player.SetToggleValue(AccessoryEffectLoader.EffectType(reader.ReadString()), reader.ReadBoolean());
+                        }
+                        break;
+                    case PacketID.SyncDefaultToggles:
+                        {
+                            Player player = Main.player[reader.ReadByte()];
+                            FargoSoulsPlayer modPlayer = player.FargoSouls();
+                            modPlayer.Toggler_ExtraAttacksDisabled = reader.ReadBoolean();
+                            modPlayer.Toggler_MinionsDisabled = reader.ReadBoolean();
                         }
                         break;
 

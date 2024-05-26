@@ -52,15 +52,17 @@ namespace FargowiltasSouls.Core.ModPlayers
 
         public int RockeaterDistance = EaterLauncher.BaseDistance;
 
-        public bool fireNoDamage = false;
-
         public int The22Incident;
 
         public bool SpawnedCoffinGhost = false;
 
         public Dictionary<int, bool> KnownBuffsToPurify = [];
 
+        public bool Toggler_ExtraAttacksDisabled = false;
+        public bool Toggler_MinionsDisabled = false;
+        public int ToggleRebuildCooldown = 0;
         public bool UsingAnkh => Player.HeldItem.type == ModContent.ItemType<AccursedAnkh>() && Player.ItemAnimationActive;
+
 
         public bool IsStillHoldingInSameDirectionAsMovement
             => (Player.velocity.X > 0 && Player.controlRight)
@@ -82,7 +84,8 @@ namespace FargowiltasSouls.Core.ModPlayers
             if (RabiesVaccine) playerData.Add("RabiesVaccine");
             if (DeerSinew) playerData.Add("DeerSinew");
             if (HasClickedWrench) playerData.Add("HasClickedWrench");
-
+            if (Toggler_ExtraAttacksDisabled) playerData.Add("Toggler_ExtraAttacksDisabled");
+            if (Toggler_MinionsDisabled) playerData.Add("Toggler_MinionsDisabled");
 
             tag.Add($"{Mod.Name}.{Player.name}.Data", playerData);
 
@@ -109,6 +112,8 @@ namespace FargowiltasSouls.Core.ModPlayers
             RabiesVaccine = playerData.Contains("RabiesVaccine");
             DeerSinew = playerData.Contains("DeerSinew");
             HasClickedWrench = playerData.Contains("HasClickedWrench");
+            Toggler_ExtraAttacksDisabled = playerData.Contains("Toggler_ExtraAttacksDisabled");
+            Toggler_MinionsDisabled = playerData.Contains("Toggler_MinionsDisabled");
 
             List<string> disabledToggleNames = tag.GetList<string>($"{Mod.Name}.{Player.name}.TogglesOff").ToList();
             disabledToggles = ToggleLoader.LoadedToggles.Keys.Where(x => disabledToggleNames.Contains(x.Name)).ToList();
@@ -230,7 +235,6 @@ namespace FargowiltasSouls.Core.ModPlayers
             LavaWet = false;
 
             WoodEnchantDiscount = false;
-            fireNoDamage = false;
 
             SnowVisual = false;
             ApprenticeEnchantActive = false;
@@ -1312,6 +1316,13 @@ namespace FargowiltasSouls.Core.ModPlayers
 
         public override void SyncPlayer(int toWho, int fromWho, bool newPlayer)
         {
+            ModPacket defaultPacket = Mod.GetPacket();
+            defaultPacket.Write((byte)FargowiltasSouls.PacketID.SyncDefaultToggles);
+            defaultPacket.Write((byte)Player.whoAmI);
+            defaultPacket.Write(Toggler_ExtraAttacksDisabled);
+            defaultPacket.Write(Toggler_MinionsDisabled);
+            defaultPacket.Send(toWho, fromWho);
+
             foreach (KeyValuePair<AccessoryEffect, bool> toggle in TogglesToSync)
             {
                 ModPacket packet = Mod.GetPacket();
