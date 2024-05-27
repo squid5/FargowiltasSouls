@@ -794,6 +794,7 @@ BoxofGizmos: {
 		'''
 		Works in your inventory
 		Stand still to expose nearby treasure and enemies
+		Enemies emit light at night
 		Grants autofire to non-weapon items
 		'''
 }
