@@ -150,8 +150,12 @@ namespace FargowiltasSouls.Core.ModPlayers
         {
             if (Berserked && !Player.CCed)
             {
-                Player.controlUseItem = true;
-                Player.releaseUseItem = true;
+                if (Player.HeldItem != null && Player.HeldItem.IsWeapon())
+                {
+                    Player.controlUseItem = true;
+                    Player.releaseUseItem = true;
+                }
+                
             }
 
             if (LowGround)
