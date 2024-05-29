@@ -1,4 +1,3 @@
-using FargowiltasSouls.Content.Projectiles;
 using FargowiltasSouls.Content.Projectiles.Deathrays;
 using FargowiltasSouls.Core.Systems;
 using Microsoft.Xna.Framework;
@@ -11,7 +10,7 @@ using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEvents.Nebula
 {
-	public class NebulaPillarProj : ModProjectile
+    public class NebulaPillarProj : ModProjectile
     {
         public override string Texture => "FargowiltasSouls/Content/Projectiles/Masomode/CelestialPillar";
 
@@ -84,7 +83,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEve
                 return;
             }
             //startup
-            
+
             if (Timer <= StartTime)
             {
                 if (Projectile.alpha > 105)
@@ -98,11 +97,11 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEve
                 }
                 float rotation = (Timer / 60f) * MathHelper.PiOver2 + (MathHelper.PiOver2 * num);
                 Vector2 pos = player.Center + rotation.ToRotationVector2() * Distance;
-                
+
                 Projectile.Center = pos;
                 if (Timer == 0)
                 {
-                    Projectile.rotation = pos.DirectionTo(player.Center).ToRotation();
+                    Projectile.rotation = pos.SafeDirectionTo(player.Center).ToRotation();
                 }
                 RotateTowards(player.Center, 6);
             }
@@ -187,10 +186,10 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEve
         }
         void RotateTowards(Vector2 target, float speed)
         {
-            Vector2 PV = Projectile.DirectionTo(target).RotatedBy(MathHelper.Pi); //offset because projectile funny
+            Vector2 PV = Projectile.SafeDirectionTo(target).RotatedBy(MathHelper.Pi); //offset because projectile funny
             Vector2 LV = Projectile.rotation.ToRotationVector2();
             float anglediff = (float)(Math.Atan2(PV.Y * LV.X - PV.X * LV.Y, LV.X * PV.X + LV.Y * PV.Y)); //real
-            //change rotation towards target
+                                                                                                         //change rotation towards target
             Projectile.rotation = Projectile.rotation.ToRotationVector2().RotatedBy(Math.Sign(anglediff) * Math.Min(Math.Abs(anglediff), speed * MathHelper.Pi / 180)).ToRotation();
         }
     }

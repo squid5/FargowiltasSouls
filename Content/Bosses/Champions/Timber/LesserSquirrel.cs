@@ -31,10 +31,10 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Timber
                    ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[ModContent.NPCType<TimberChampion>()],
                    quickUnlock: true
                );
-            bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
+            bestiaryEntry.Info.AddRange([
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface,
                 new FlavorTextBestiaryInfoElement($"Mods.FargowiltasSouls.Bestiary.{Name}")
-            });
+            ]);
         }
 
         public override void SetDefaults()
@@ -106,7 +106,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Timber
                     bool canAttack = true;
                     if (spawnedByP1)
                         canAttack = NPC.AnyNPCs(ModContent.NPCType<TimberChampion>());
-                    //Vector2 vel = 4f * NPC.DirectionTo(Main.player[p].Center);
+                    //Vector2 vel = 4f * NPC.SafeDirectionTo(Main.player[p].Center);
                     //int type = ModContent.ProjectileType<DeviLostSoul>();
                     //float ai0 = 0;
                     //float ai1 = 0;
@@ -120,7 +120,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Timber
                     if (canAttack)
                     {
                         Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, 6f * -Vector2.UnitY.RotatedByRandom(MathHelper.PiOver4),
-                            ProjectileID.HallowBossRainbowStreak, FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 0, Main.myPlayer, npc.target, Main.rand.NextFloat());
+                            ProjectileID.HallowBossRainbowStreak, FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), 0, Main.myPlayer, npc.target, Main.rand.NextFloat());
                     }
                 }
             }

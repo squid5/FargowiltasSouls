@@ -41,8 +41,8 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.Jungle
                 FireballCounter = -90;
                 if (npc.HasPlayerTarget && FargoSoulsUtil.HostCheck && Collision.CanHitLine(npc.Center, 0, 0, Main.player[npc.target].Center, 0, 0))
                 {
-                    Vector2 vel = npc.DirectionTo(Main.player[npc.target].Center) * 12f;
-                    Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, vel, ProjectileID.Fireball, FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 0f, Main.myPlayer);
+                    Vector2 vel = npc.SafeDirectionTo(Main.player[npc.target].Center) * 12f;
+                    Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, vel, ProjectileID.Fireball, FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 0f, Main.myPlayer);
                 }
             }
         }

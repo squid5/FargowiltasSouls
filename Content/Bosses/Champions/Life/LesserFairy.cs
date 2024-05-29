@@ -29,10 +29,10 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Life
                 ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[ModContent.NPCType<LifeChampion>()],
                 quickUnlock: true
             );
-            bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
+            bestiaryEntry.Info.AddRange([
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.TheHallow,
                 new FlavorTextBestiaryInfoElement($"Mods.FargowiltasSouls.Bestiary.{Name}")
-            });
+            ]);
         }
 
         public override void SetDefaults()
@@ -85,7 +85,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Life
 
                 if (NPC.Distance(Main.player[NPC.target].Center) < 300)
                 {
-                    NPC.velocity = NPC.DirectionTo(Main.player[NPC.target].Center) * NPC.velocity.Length();
+                    NPC.velocity = NPC.SafeDirectionTo(Main.player[NPC.target].Center) * NPC.velocity.Length();
                 }
             }
             else if (counter > 300)

@@ -1,19 +1,17 @@
 using FargowiltasSouls.Content.Items.Weapons.Challengers;
 using FargowiltasSouls.Content.Projectiles;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
-using FargowiltasSouls.Core.ModPlayers;
 using FargowiltasSouls.Core.Toggler.Content;
 
 using Microsoft.Xna.Framework;
 using System.Linq;
 using Terraria;
-using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
 {
-	public class AdamantiteEnchant : BaseEnchant
+    public class AdamantiteEnchant : BaseEnchant
     {
         public override void SetStaticDefaults()
         {
@@ -84,15 +82,15 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
                 modPlayer.AdamantiteSpread = adaCap;
         }
 
-        public static int[] AdamIgnoreItems = new int[]
-        {
+        public static int[] AdamIgnoreItems =
+        [
             ItemID.NightsEdge,
             ItemID.TrueNightsEdge,
             ItemID.Excalibur,
             ItemID.TrueExcalibur,
             ItemID.TerraBlade,
             ModContent.ItemType<DecrepitAirstrikeRemote>()
-        };
+        ];
 
         public static void AdamantiteSplit(Projectile projectile, FargoSoulsPlayer modPlayer, int splitDegreeAngle)
         {

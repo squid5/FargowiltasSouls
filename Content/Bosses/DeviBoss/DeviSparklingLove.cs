@@ -1,5 +1,6 @@
 ﻿using FargowiltasSouls.Content.Projectiles;
 using FargowiltasSouls.Core.Systems;
+using Luminance.Core.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -106,7 +107,7 @@ namespace FargowiltasSouls.Content.Bosses.DeviBoss
                     Projectile.NewProjectile(Terraria.Entity.InheritSource(Projectile), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<GlowRing>(), 0, 0f, Main.myPlayer, -1, -14);
 
                 if (!Main.dedServ && Main.LocalPlayer.active)
-                    Main.LocalPlayer.FargoSouls().Screenshake = 30;
+                    ScreenShakeSystem.StartShake(10, shakeStrengthDissipationIncrement: 10f / 30);
 
                 if (FargoSoulsUtil.HostCheck)
                 {
@@ -214,7 +215,7 @@ namespace FargowiltasSouls.Content.Bosses.DeviBoss
             Vector2 offset = Vector2.Zero;
             if (Projectile.timeLeft > 30)
             {
-                float amount = 4f * (1f-(Projectile.timeLeft / 180f));
+                float amount = 4f * (1f - (Projectile.timeLeft / 180f));
                 offset = Main.rand.NextVector2Circular(amount, amount);
             }
             Texture2D texture2D13 = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;

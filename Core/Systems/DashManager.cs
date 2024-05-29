@@ -1,19 +1,12 @@
 ﻿//this currently does not work: it still does the vanilla dash, i do not know how, i do not know how to fix it.
 
 
-using FargowiltasSouls.Content.Buffs.Souls;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Terraria.ModLoader;
-using Terraria;
-using System.Reflection;
 using FargowiltasSouls.Content.Items.Accessories.Enchantments;
-using FargowiltasSouls.Core.AccessoryEffectSystem;
 using FargowiltasSouls.Content.Items.Consumables;
-using FargowiltasSouls.Content.Items.Accessories.Forces;
+using FargowiltasSouls.Core.AccessoryEffectSystem;
+using System.Reflection;
+using Terraria;
+using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Core.Systems
 {
@@ -108,7 +101,7 @@ namespace FargowiltasSouls.Core.Systems
         public static MethodInfo DashHandleMethod { get; set; }
         public override void Load()
         {
-            DashHandleMethod = typeof(Player).GetMethod("DoCommonDashHandle", FargoSoulsUtil.UniversalBindingFlags);
+            DashHandleMethod = typeof(Player).GetMethod("DoCommonDashHandle", LumUtils.UniversalBindingFlags);
         }
         public static void HandleDash(out bool dashing, out int dir)
         {
@@ -119,7 +112,7 @@ namespace FargowiltasSouls.Core.Systems
 
             Player player = Main.LocalPlayer;
             Player.DashStartAction action = null;
-            object[] args = new object[] { dir, dashing, action };
+            object[] args = [dir, dashing, action];
             DashHandleMethod.Invoke(player, args);
             dir = (int)args[0];
             dashing = (bool)args[1];

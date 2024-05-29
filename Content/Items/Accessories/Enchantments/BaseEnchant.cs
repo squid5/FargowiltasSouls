@@ -1,4 +1,3 @@
-using FargowiltasSouls.Common.Utilities;
 using FargowiltasSouls.Content.Items.Accessories.Forces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -12,13 +11,13 @@ using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
 {
-	public abstract class BaseEnchant : SoulsItem
+    public abstract class BaseEnchant : SoulsItem
     {
         public abstract Color nameColor { get; }
         public string wizardEffect()
         {
-            string text = Language.GetTextValue($"Mods.FargowiltasSouls.WizardEffect.{Name.Replace("Enchantment", "").Replace("Enchant", "")}");
-            if (text.Contains("Mods.FargowiltasSouls.WizardEffect") || text.Length <= 1) //if there's no localization entry or it's empty
+            string text = Language.GetTextValue($"Mods.{Mod.Name}.WizardEffect.{Name.Replace("Enchantment", "").Replace("Enchant", "")}");
+            if (text.Contains($"Mods.{Mod.Name}.WizardEffect") || text.Length <= 1) //if there's no localization entry or it's empty
             {
                 return Language.GetTextValue($"Mods.FargowiltasSouls.WizardEffect.NoUpgrade");
             }
@@ -62,7 +61,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
                     }
                 }
             }
-            
+
         }
         /// <summary>
         /// IDs for enchants that craft into other enchants. Index is material, value is result. Default value is -1.
@@ -94,7 +93,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
                 {
                     Vector2 afterimageOffset = (MathHelper.TwoPi * j / 12f).ToRotationVector2() * 1f;
                     float modifier = 0.5f + ((float)Math.Sin(drawTimer / 30f) / 6);
-                    Color glowColor = Color.Lerp(Color.Blue with { A = 0 }, Color.Silver with { A = 0}, modifier) * 0.5f;
+                    Color glowColor = Color.Lerp(Color.Blue with { A = 0 }, Color.Silver with { A = 0 }, modifier) * 0.5f;
 
                     Texture2D texture = Terraria.GameContent.TextureAssets.Item[Item.type].Value;
                     Main.EntitySpriteDraw(texture, position + afterimageOffset, null, glowColor, 0, texture.Size() * 0.5f, Item.scale, SpriteEffects.None, 0f);

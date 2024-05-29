@@ -1,18 +1,17 @@
 ﻿using FargowiltasSouls.Content.Items.Accessories.Enchantments;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Content.Items.Accessories.Forces
 {
-	public class TimberForce : BaseForce
+    public class TimberForce : BaseForce
     {
 
         public override void SetStaticDefaults()
         {
-            Enchants[Type] = new int[]
-            {
+            Enchants[Type] =
+            [
                 ModContent.ItemType<WoodEnchant>(),
                 ModContent.ItemType<BorealWoodEnchant>(),
                 ModContent.ItemType<RichMahoganyEnchant>(),
@@ -20,7 +19,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Forces
                 ModContent.ItemType<ShadewoodEnchant>(),
                 ModContent.ItemType<PalmWoodEnchant>(),
                 ModContent.ItemType<PearlwoodEnchant>()
-            };
+            ];
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)

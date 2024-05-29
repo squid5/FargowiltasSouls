@@ -1,19 +1,19 @@
 using FargowiltasSouls.Content.Projectiles.Souls;
+using FargowiltasSouls.Core.AccessoryEffectSystem;
+using FargowiltasSouls.Core.Toggler.Content;
 using Microsoft.Xna.Framework;
+using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using FargowiltasSouls.Core.AccessoryEffectSystem;
-using FargowiltasSouls.Core.Toggler.Content;
-using System;
 
 namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
 {
-	public class PalladiumEnchant : BaseEnchant
+    public class PalladiumEnchant : BaseEnchant
     {
 
         public override Color nameColor => new(245, 172, 40);
-        
+
 
         public override void SetDefaults()
         {
@@ -50,9 +50,9 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
         {
             if (!player.onHitRegen)
             {
-                player.AddBuff(BuffID.RapidHealing, Math.Min((int)FargoSoulsUtil.SecondsToFrames(5), hitInfo.Damage / 3)); //heal time based on damage dealt, capped at 5sec
+                player.AddBuff(BuffID.RapidHealing, Math.Min(LumUtils.SecondsToFrames(5), hitInfo.Damage / 3)); //heal time based on damage dealt, capped at 5sec
             }
-        } 
+        }
     }
     public class PalladiumEffect : AccessoryEffect
     {

@@ -1,18 +1,18 @@
-using System.IO;
-using Terraria.ModLoader.IO;
+using FargowiltasSouls.Content.Buffs.Masomode;
 using FargowiltasSouls.Content.Projectiles.Masomode;
+using FargowiltasSouls.Core.Globals;
+using FargowiltasSouls.Core.NPCMatching;
 using Microsoft.Xna.Framework;
+using System.IO;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
-using FargowiltasSouls.Content.Buffs.Masomode;
-using FargowiltasSouls.Core.Globals;
-using FargowiltasSouls.Core.NPCMatching;
+using Terraria.ModLoader.IO;
 
 namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.Hallow
 {
-	public class RainbowSlime : EModeNPCBehaviour
+    public class RainbowSlime : EModeNPCBehaviour
     {
         public override NPCMatcher CreateMatcher() => new NPCMatcher().MatchType(NPCID.RainbowSlime);
 
@@ -84,7 +84,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.Hallow
                         for (int i = 0; i < max; i++)
                         {
                             Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, distance + spread * Main.rand.NextVector2Circular(-1f, 1f),
-                                ModContent.ProjectileType<RainbowSlimeSpike>(), FargoSoulsUtil.ScaledProjectileDamage(npc.damage, 4f / 8), 0f, Main.myPlayer, ai0);
+                                ModContent.ProjectileType<RainbowSlimeSpike>(), FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage, 4f / 8), 0f, Main.myPlayer, ai0);
                         }
                     }
                 }
@@ -140,7 +140,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.Hallow
             {
                 if (FargoSoulsUtil.HostCheck)
                 {
-                    int[] slimes = { NPCID.Crimslime, NPCID.Pinky, NPCID.Gastropod, NPCID.CorruptSlime };
+                    int[] slimes = [NPCID.Crimslime, NPCID.Pinky, NPCID.Gastropod, NPCID.CorruptSlime];
 
                     for (int i = 0; i < slimes.Length; i++)
                     {

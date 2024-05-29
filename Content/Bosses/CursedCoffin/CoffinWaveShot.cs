@@ -1,24 +1,18 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Terraria.ID;
-using Terraria;
-using Terraria.ModLoader;
+﻿using FargowiltasSouls.Assets.ExtraTextures;
 using FargowiltasSouls.Content.Buffs.Masomode;
 using FargowiltasSouls.Core.Systems;
-using FargowiltasSouls.Common.Graphics.Primitives;
-using FargowiltasSouls.Assets.ExtraTextures;
-using FargowiltasSouls.Common.Graphics.Shaders;
+using Luminance.Core.Graphics;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using System;
+using Terraria;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 {
-    public class CoffinWaveShot : ModProjectile, IPixelPrimitiveDrawer
+    public class CoffinWaveShot : ModProjectile, IPixelatedPrimitiveRenderer
     {
-        public PrimDrawer TrailDrawer { get; private set; } = null;
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Banished Baron Scrap");
@@ -103,11 +97,11 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
         }
 
 
-        public void DrawPixelPrimitives(SpriteBatch spriteBatch)
+        public void RenderPixelatedPrimitives(SpriteBatch spriteBatch)
         {
-            TrailDrawer ??= new PrimDrawer(WidthFunction, ColorFunction, ShaderManager.GetShaderIfExists("BlobTrail"));
+            ManagedShader shader = ShaderManager.GetShader("FargowiltasSouls.BlobTrail");
             FargoSoulsUtil.SetTexture1(FargosTextureRegistry.FadedStreak.Value);
-            TrailDrawer.DrawPixelPrims(Projectile.oldPos, Projectile.Size * 0.5f - Main.screenPosition, 44);
+            PrimitiveRenderer.RenderTrail(Projectile.oldPos, new(WidthFunction, ColorFunction, _ => Projectile.Size * 0.5f, Pixelate: true, Shader: shader), 44);
         }
     }
 }

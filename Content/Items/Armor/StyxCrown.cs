@@ -1,8 +1,5 @@
 ﻿using FargowiltasSouls.Content.Items.Materials;
 using FargowiltasSouls.Content.Projectiles;
-using FargowiltasSouls.Content.Projectiles.Masomode;
-using FargowiltasSouls.Content.Projectiles.Minions;
-using FargowiltasSouls.Core.ModPlayers;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
@@ -118,6 +115,11 @@ Increases max number of minions and sentries by 3"); */
                 if (player.whoAmI == Main.myPlayer && player.ownedProjectileCounts[scytheType] < MAX_SCYTHES)
                 {
                     Projectile.NewProjectile(player.GetSource_Accessory(item), player.Center, Vector2.Zero, scytheType, 0, 10f, player.whoAmI, player.ownedProjectileCounts[scytheType], -1f);
+                    if (++player.ownedProjectileCounts[scytheType] >= MAX_SCYTHES)
+                    {
+                        if (!Main.dedServ)
+                            SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/FullMeter"), player.Center);
+                    }
                 }
             }
 

@@ -56,7 +56,7 @@ namespace FargowiltasSouls.Content.Projectiles.BossWeapons
                     int index2 = Dust.NewDust(Projectile.position, (int)(Projectile.width * Projectile.scale), (int)(Projectile.height * Projectile.scale),
                         DustID.Shadowflame, Projectile.velocity.X, Projectile.velocity.Y, 0, default, 2f);
                     Main.dust[index2].noGravity = true;
-                    Main.dust[index2].velocity = Projectile.DirectionTo(Main.dust[index2].position);
+                    Main.dust[index2].velocity = Projectile.SafeDirectionTo(Main.dust[index2].position);
                     Main.dust[index2].velocity *= -5f;
                     Main.dust[index2].velocity += Projectile.velocity / 2f;
                     Main.dust[index2].noLight = true;

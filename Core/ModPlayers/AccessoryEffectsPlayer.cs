@@ -21,13 +21,14 @@ using FargowiltasSouls.Content.Buffs.Masomode;
 using FargowiltasSouls.Content.Projectiles.Deathrays;
 using FargowiltasSouls.Core.Globals;
 using FargowiltasSouls.Content.NPCs.EternityModeNPCs;
-using FargowiltasSouls.Common.Graphics.Shaders;
+
 using FargowiltasSouls.Core.Systems;
 using Fargowiltas.Common.Configs;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using FargowiltasSouls.Core.Toggler;
 using FargowiltasSouls.Content.Items.Accessories.Souls;
 using FargowiltasSouls.Content.Items.Accessories.Masomode;
+using Luminance.Core.Graphics;
 
 namespace FargowiltasSouls.Core.ModPlayers
 {
@@ -243,11 +244,11 @@ namespace FargowiltasSouls.Core.ModPlayers
             Player.manaRegenDelay = Math.Max(Player.manaRegenDelay, 30);
 
             SoundEngine.PlaySound(SoundID.Item28, Player.Center);
+            int damage = (int)(14 * Player.ActualClassDamage(DamageClass.Magic));
+            if (!Main.hardMode)
+                damage = 0;
 
-            Projectile.NewProjectile(Player.GetSource_Accessory(FrigidGemstoneItem),
-                Player.Center, 12f * Player.DirectionTo(Main.MouseWorld), ProjectileID.IceBlock,
-                (int)(14 * Player.ActualClassDamage(DamageClass.Magic)), 2f,
-                Player.whoAmI, Player.tileTargetX, Player.tileTargetY);
+            Projectile.NewProjectile(Player.GetSource_Accessory(FrigidGemstoneItem), Player.Center, 12f * Player.SafeDirectionTo(Main.MouseWorld), ProjectileID.IceBlock, damage, 2f, Player.whoAmI, Player.tileTargetX, Player.tileTargetY);
         }
 
 
@@ -255,7 +256,7 @@ namespace FargowiltasSouls.Core.ModPlayers
         {
             if (SpecialDashCD <= 0)
             {
-                SpecialDashCD = (int)FargoSoulsUtil.SecondsToFrames(5);
+                SpecialDashCD = LumUtils.SecondsToFrames(5);
 
                 if (Player.whoAmI == Main.myPlayer)
                 {
@@ -276,7 +277,7 @@ namespace FargowiltasSouls.Core.ModPlayers
 
                     if (BetsysHeartItem != null)
                     {
-                        Vector2 vel = Player.DirectionTo(Main.MouseWorld) * 25;
+                        Vector2 vel = Player.SafeDirectionTo(Main.MouseWorld) * 25;
                         Projectile.NewProjectile(Player.GetSource_Accessory(BetsysHeartItem), Player.Center, vel, ModContent.ProjectileType<Content.Projectiles.BetsyDash>(), (int)(100 * Player.ActualClassDamage(DamageClass.Melee)), 6f, Player.whoAmI);
 
                         Player.immune = true;
@@ -295,9 +296,9 @@ namespace FargowiltasSouls.Core.ModPlayers
                     }
                     else if (QueenStingerItem != null)
                     {
-                        SpecialDashCD += (int)FargoSoulsUtil.SecondsToFrames(1);
+                        SpecialDashCD += LumUtils.SecondsToFrames(1);
 
-                        Vector2 vel = Player.DirectionTo(Main.MouseWorld) * 20;
+                        Vector2 vel = Player.SafeDirectionTo(Main.MouseWorld) * 20;
                         Projectile.NewProjectile(Player.GetSource_Accessory(QueenStingerItem), Player.Center, vel, ModContent.ProjectileType<BeeDash>(), (int)(44 * Player.ActualClassDamage(DamageClass.Melee)), 6f, Player.whoAmI);
                     }
 
@@ -351,11 +352,11 @@ namespace FargowiltasSouls.Core.ModPlayers
                 {
                     if (Main.npc[i].active && !Main.npc[i].friendly && Main.npc[i].lifeMax > 5)
                     {
-                        Main.npc[i].AddBuff(ModContent.BuffType<MagicalCurseBuff>(), (int)FargoSoulsUtil.SecondsToFrames(cdInSec + 5));
+                        Main.npc[i].AddBuff(ModContent.BuffType<MagicalCurseBuff>(), LumUtils.SecondsToFrames(cdInSec + 5));
                     }
                 }    
 
-                Player.AddBuff(ModContent.BuffType<MagicalCleanseCDBuff>(), (int)FargoSoulsUtil.SecondsToFrames(cdInSec));
+                Player.AddBuff(ModContent.BuffType<MagicalCleanseCDBuff>(), LumUtils.SecondsToFrames(cdInSec));
 
                 SoundEngine.PlaySound(SoundID.Item4, Player.Center);
 
@@ -375,7 +376,7 @@ namespace FargowiltasSouls.Core.ModPlayers
                 MutantEyeCD = 3600;
 
                 if (!Main.dedServ && Main.LocalPlayer.active)
-                    Main.LocalPlayer.FargoSouls().Screenshake = 30;
+                    ScreenShakeSystem.StartShake(10, shakeStrengthDissipationIncrement: 10f / 30);
 
                 const int invulTime = 90;
                 Player.immune = true;
@@ -445,7 +446,7 @@ namespace FargowiltasSouls.Core.ModPlayers
 				{
 					SoundEngine.PlaySound(SoundID.Item119, Player.Center);
 
-					Player.AddBuff(ModContent.BuffType<BerserkerInstallBuff>(), (int)FargoSoulsUtil.SecondsToFrames(7.5f)); //7.5sec
+					Player.AddBuff(ModContent.BuffType<BerserkerInstallBuff>(), LumUtils.SecondsToFrames(8f));
 
 					for (int i = 0; i < 60; i++)
 					{
@@ -601,7 +602,7 @@ namespace FargowiltasSouls.Core.ModPlayers
                             if (Player.HasEffect<LihzahrdBoulders>())
                             {
                                 if (!Main.dedServ)
-                                    Main.LocalPlayer.FargoSouls().Screenshake = 60;
+                                    ScreenShakeSystem.StartShake(10, shakeStrengthDissipationIncrement: 10f / 30);
 
                                 if (Player.whoAmI == Main.myPlayer)
                                 {
@@ -1013,7 +1014,7 @@ namespace FargowiltasSouls.Core.ModPlayers
                 {
                     SoundEngine.PlaySound(SoundID.Item27, Player.Center);
 
-                    List<int> dusts = new();
+                    List<int> dusts = [];
                     if (dreadEffect)
                         dusts.Add(DustID.LifeDrain);
                     if (pumpkingEffect)
@@ -1048,7 +1049,7 @@ namespace FargowiltasSouls.Core.ModPlayers
                 {
                     SoundEngine.PlaySound(SoundID.Item28, Player.Center); //make a sound for refresh
 
-                    List<int> dusts = new();
+                    List<int> dusts = [];
                     if (dreadEffect)
                         dusts.Add(DustID.LifeDrain);
                     if (pumpkingEffect)

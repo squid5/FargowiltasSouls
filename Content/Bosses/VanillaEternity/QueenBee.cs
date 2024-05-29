@@ -1,26 +1,26 @@
-using System.IO;
-using Terraria.ModLoader.IO;
+using FargowiltasSouls.Common.Utilities;
+using FargowiltasSouls.Content.Bosses.Champions.Will;
+using FargowiltasSouls.Content.Buffs.Masomode;
+using FargowiltasSouls.Content.Items.Placables;
+using FargowiltasSouls.Content.NPCs.EternityModeNPCs;
+using FargowiltasSouls.Content.Projectiles;
 using FargowiltasSouls.Content.Projectiles.Masomode;
+using FargowiltasSouls.Core.Globals;
+using FargowiltasSouls.Core.NPCMatching;
+using FargowiltasSouls.Core.Systems;
 using Microsoft.Xna.Framework;
 using System;
+using System.IO;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
-using Terraria.ModLoader;
-using FargowiltasSouls.Content.Projectiles;
-using FargowiltasSouls.Content.Items.Placables;
-using FargowiltasSouls.Content.Buffs.Masomode;
-using FargowiltasSouls.Core.Systems;
-using FargowiltasSouls.Core.Globals;
-using FargowiltasSouls.Common.Utilities;
-using FargowiltasSouls.Core.NPCMatching;
-using FargowiltasSouls.Content.NPCs.EternityModeNPCs;
-using FargowiltasSouls.Content.Bosses.Champions.Will;
 using Terraria.Localization;
+using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
 
 namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 {
-	public class QueenBee : EModeNPCBehaviour
+    public class QueenBee : EModeNPCBehaviour
     {
         public override NPCMatcher CreateMatcher() => new NPCMatcher().MatchType(NPCID.QueenBee);
 
@@ -84,6 +84,12 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             if (WorldSavingSystem.SwarmActive)
                 return result;
 
+            if (npc.ai[0] == 2 && npc.HasValidTarget)
+            {
+                float lerp = Math.Min(++npc.ai[1] / 3000f, 1f);
+                npc.velocity = Vector2.Lerp(npc.velocity, npc.DirectionTo(Main.player[npc.target].Center) * npc.velocity.Length(), lerp);
+            }
+
 
             if (npc.HasPlayerTarget && npc.HasValidTarget && (!Main.player[npc.target].ZoneJungle
                 || Main.player[npc.target].position.Y < Main.worldSurface * 16))
@@ -97,7 +103,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                 {
                     float rotation = Main.rand.NextFloat(0.03f, 0.18f);
                     Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center + new Vector2(3 * npc.direction, 15), Main.rand.NextFloat(8f, 24f) * Main.rand.NextVector2Unit(),
-                        ModContent.ProjectileType<Bee>(), FargoSoulsUtil.ScaledProjectileDamage(npc.damage, 1.5f), 0f, Main.myPlayer, npc.target, Main.rand.NextBool() ? -rotation : rotation);
+                        ModContent.ProjectileType<Bee>(), FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage, 1.5f), 0f, Main.myPlayer, npc.target, Main.rand.NextBool() ? -rotation : rotation);
                 }
             }
             else
@@ -205,7 +211,16 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                         Main.player[npc.target].Center - 2000 * Vector2.UnitY, Vector2.UnitY,
                         ModContent.ProjectileType<WillDeathraySmall>(),
                         (int)(npc.damage * .75), 0f, Main.myPlayer,
-                        Main.player[npc.target].Center.X, npc.whoAmI);
+                        Main.player[npc.target].Center.X, npc.whoAmI, 1f);
+
+                    for (int i = 0; i < 22; i++)
+                    {
+                        Vector2 rand = Vector2.UnitX * Main.rand.NextFloat(-100, 100) - Vector2.UnitY * 90 * i;
+                        Vector2 spawnPos = Main.player[npc.target].Center - 22 * 90 * Vector2.UnitY + rand;
+                        Vector2 speed = new Vector2(Main.rand.NextFloat(-0.1f, 0.1f), 22);
+                        Projectile.NewProjectile(npc.GetSource_FromThis(), spawnPos, speed, ModContent.ProjectileType<RoyalSubjectProjectile>(),
+                            FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 0f, Main.myPlayer);
+                    }
                 }
             }
 
@@ -226,7 +241,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     if (FargoSoulsUtil.HostCheck)
                     {
                         Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, distance, ModContent.ProjectileType<Beehive>(),
-                            FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 0f, Main.myPlayer, time - 5);
+                            FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 0f, Main.myPlayer, time - 5);
                     }
                 }
 
@@ -280,7 +295,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                             for (int i = -1; i <= 1; i += 2)
                             {
                                 Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center + new Vector2(3 * npc.direction, 15), i * Main.rand.NextFloat(9f, 18f) * Vector2.UnitX.RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-45, 45))),
-                                    ModContent.ProjectileType<Bee>(), FargoSoulsUtil.ScaledProjectileDamage(npc.damage, WorldSavingSystem.MasochistModeReal ? 4f / 3 : 1), 0f, Main.myPlayer, npc.target, Main.rand.NextBool() ? -rotation : rotation);
+                                    ModContent.ProjectileType<Bee>(), FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage, WorldSavingSystem.MasochistModeReal ? 4f / 3 : 1), 0f, Main.myPlayer, npc.target, Main.rand.NextBool() ? -rotation : rotation);
                             }
                         }
                     }

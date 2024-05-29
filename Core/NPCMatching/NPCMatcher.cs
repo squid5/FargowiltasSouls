@@ -9,11 +9,11 @@ namespace FargowiltasSouls.Core.NPCMatching
 
         public NPCMatcher()
         {
-            Conditions = new List<INPCMatchCondition>
-            {
+            Conditions =
+            [
                 // So that empty matches match everything
                 new MatchEverythingCondition()
-            };
+            ];
         }
 
         public NPCMatcher MatchType(int type)

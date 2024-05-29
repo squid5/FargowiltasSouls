@@ -21,8 +21,8 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
             NPCID.Sets.CantTakeLunchMoney[Type] = true;
             NPCID.Sets.BossBestiaryPriority.Add(NPC.type);
 
-            NPC.AddDebuffImmunities(new List<int>
-            {
+            NPC.AddDebuffImmunities(
+            [
                 BuffID.Confused,
                     BuffID.Chilled,
                     BuffID.OnFire,
@@ -32,7 +32,7 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
                     ModContent.BuffType<MutantNibbleBuff>(),
                     ModContent.BuffType<OceanicMaulBuff>(),
                     ModContent.BuffType<LightningRodBuff>(),
-            });
+            ]);
 
             NPCID.Sets.NPCBestiaryDrawOffset.Add(NPC.type, new NPCID.Sets.NPCBestiaryDrawModifiers()
             {
@@ -46,11 +46,11 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
                    ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[ModContent.NPCType<AbomBoss>()],
                    quickUnlock: true
                );
-            bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
+            bestiaryEntry.Info.AddRange([
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Sky,
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.NightTime,
                 new FlavorTextBestiaryInfoElement($"Mods.FargowiltasSouls.Bestiary.{Name}")
-            });
+            ]);
         }
 
         public override void SetDefaults()
@@ -107,7 +107,7 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
                 if (NPC.ai[3] == 0) //store angle for attack
                 {
                     NPC.localAI[2] = NPC.Distance(Main.player[NPC.target].Center);
-                    NPC.ai[3] = NPC.DirectionTo(Main.player[NPC.target].Center).ToRotation();
+                    NPC.ai[3] = NPC.SafeDirectionTo(Main.player[NPC.target].Center).ToRotation();
 
                     if (NPC.whoAmI == NPC.FindFirstNPC(NPC.type) && FargoSoulsUtil.HostCheck) //reticle telegraph
                     {

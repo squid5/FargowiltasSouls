@@ -90,9 +90,9 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
                 float accel = 0.03f;
 
                 Vector2 target = new(Projectile.localAI[0], Projectile.localAI[1]);// + 150f * Vector2.UnitX.RotatedBy(cyanScytheAngleOffset);
-                target += 180 * Projectile.DirectionTo(target).RotatedBy(MathHelper.PiOver2);
+                target += 180 * Projectile.SafeDirectionTo(target).RotatedBy(MathHelper.PiOver2);
 
-                float angle = Projectile.DirectionTo(target).ToRotation();
+                float angle = Projectile.SafeDirectionTo(target).ToRotation();
 
                 int p = Projectile.NewProjectile(Terraria.Entity.InheritSource(Projectile), position, Vector2.Zero, ModContent.ProjectileType<MutantScythe1>(), Projectile.damage, 0, Main.myPlayer, accel, angle);
                 if (p != Main.maxProjectiles)
@@ -158,7 +158,7 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
                 if (Math.Abs(Projectile.velocity.Y) > 24)
                     Projectile.velocity.Y = 24 * Math.Sign(Projectile.velocity.Y);
 
-                Projectile.rotation = Projectile.DirectionTo(player.Center).ToRotation() - MathHelper.PiOver2;
+                Projectile.rotation = Projectile.SafeDirectionTo(player.Center).ToRotation() - MathHelper.PiOver2;
             }
             else if (Projectile.ai[1] == 120)
             {
@@ -178,7 +178,7 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
 
                     float accel = 0.025f;
                     Vector2 target = new(Projectile.localAI[0], Projectile.localAI[1]); //+ 150f * Vector2.UnitX.RotatedBy(goldScytheAngleOffset);
-                    float angle = Projectile.DirectionTo(target).ToRotation();
+                    float angle = Projectile.SafeDirectionTo(target).ToRotation();
                     int p = Projectile.NewProjectile(Terraria.Entity.InheritSource(Projectile), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<MutantScythe2>(), Projectile.damage, 0, Main.myPlayer, accel, angle);
                     if (p != Main.maxProjectiles)
                         Main.projectile[p].timeLeft = Projectile.timeLeft + 180 + 30;
@@ -197,7 +197,7 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
                     SpawnProjectile(Projectile.Center - Projectile.velocity / 2);
                 }*/
 
-                Projectile.velocity = dashSpeed * Projectile.DirectionTo(new Vector2(Projectile.localAI[0], Projectile.localAI[1])).RotatedBy(MathHelper.ToRadians(degreesOffset));
+                Projectile.velocity = dashSpeed * Projectile.SafeDirectionTo(new Vector2(Projectile.localAI[0], Projectile.localAI[1])).RotatedBy(MathHelper.ToRadians(degreesOffset));
                 Projectile.netUpdate = true;
                 SoundEngine.PlaySound(SoundID.ForceRoarPitched, Projectile.Center);
             }
@@ -256,7 +256,7 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
             }
 
             Vector2 goreSpeed = Projectile.localAI[0] != 0 && Projectile.localAI[1] != 0 ?
-                dashSpeed / 4f * Projectile.DirectionTo(new Vector2(Projectile.localAI[0], Projectile.localAI[1])).RotatedBy(MathHelper.ToRadians(degreesOffset)) : Vector2.Zero;
+                dashSpeed / 4f * Projectile.SafeDirectionTo(new Vector2(Projectile.localAI[0], Projectile.localAI[1])).RotatedBy(MathHelper.ToRadians(degreesOffset)) : Vector2.Zero;
             for (int i = 0; i < 2; i++)
             {
                 if (!Main.dedServ)

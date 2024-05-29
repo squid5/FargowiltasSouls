@@ -2,24 +2,23 @@
 using FargowiltasSouls.Content.Items.Materials;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Content.Items.Accessories.Forces
 {
-	public class CosmoForce : BaseForce
+    public class CosmoForce : BaseForce
     {
         public override void SetStaticDefaults()
         {
-            Enchants[Type] = new int[]
-            {
+            Enchants[Type] =
+            [
                 ModContent.ItemType<MeteorEnchant>(),
                 ModContent.ItemType<WizardEnchant>(),
                 ModContent.ItemType<SolarEnchant>(),
                 ModContent.ItemType<VortexEnchant>(),
                 ModContent.ItemType<NebulaEnchant>(),
                 ModContent.ItemType<StardustEnchant>()
-            };
+            ];
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)

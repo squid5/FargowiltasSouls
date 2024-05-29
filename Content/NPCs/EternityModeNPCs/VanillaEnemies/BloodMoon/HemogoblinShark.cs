@@ -1,14 +1,14 @@
-using System.IO;
-using Terraria.ModLoader.IO;
+using FargowiltasSouls.Content.Buffs.Masomode;
+using FargowiltasSouls.Content.Projectiles;
+using FargowiltasSouls.Core.Globals;
+using FargowiltasSouls.Core.NPCMatching;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
+using System.IO;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using FargowiltasSouls.Content.Projectiles;
-using FargowiltasSouls.Content.Buffs.Masomode;
-using FargowiltasSouls.Core.Globals;
-using FargowiltasSouls.Core.NPCMatching;
+using Terraria.ModLoader.IO;
 
 namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.BloodMoon
 {
@@ -59,7 +59,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.BloodMoo
                     {
                         Vector2 target = Main.player[npc.target].Center + Main.rand.NextVector2Circular(8, 8);
                         Vector2 spawnPos = FindSharpTearsSpot(Collision.CanHitLine(npc.Center, 0, 0, Main.player[npc.target].Center, 0, 0) ? npc.Center : Main.player[npc.target].Center, target).ToWorldCoordinates(Main.rand.Next(17), Main.rand.Next(17));
-                        Projectile.NewProjectile(npc.GetSource_FromThis(), spawnPos, 16f * Vector2.Normalize(target - spawnPos), ProjectileID.SharpTears, FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 0f, Main.myPlayer, 0f, Main.rand.NextFloat(0.5f, 1f));
+                        Projectile.NewProjectile(npc.GetSource_FromThis(), spawnPos, 16f * Vector2.Normalize(target - spawnPos), ProjectileID.SharpTears, FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 0f, Main.myPlayer, 0f, Main.rand.NextFloat(0.5f, 1f));
                     }
                 }
             }
@@ -93,8 +93,8 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.BloodMoo
             Microsoft.Xna.Framework.Rectangle rectangle2 = new(0, 0, Main.maxTilesX, Main.maxTilesY);
             rectangle2.Inflate(-40, -40);
             rectangle1 = Rectangle.Intersect(rectangle1, rectangle2);
-            List<Point> pointList1 = new();
-            List<Point> pointList2 = new();
+            List<Point> pointList1 = [];
+            List<Point> pointList2 = [];
             for (int left = rectangle1.Left; left <= rectangle1.Right; ++left)
             {
                 for (int top = rectangle1.Top; top <= rectangle1.Bottom; ++top)

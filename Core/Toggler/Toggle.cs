@@ -1,7 +1,6 @@
 ﻿using FargowiltasSouls.Core.AccessoryEffectSystem;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
-using Terraria.Localization;
 using Terraria.UI.Chat;
 
 namespace FargowiltasSouls.Core.Toggler
@@ -24,7 +23,7 @@ namespace FargowiltasSouls.Core.Toggler
             Effect = effect;
             Mod = mod;
 
-            ToggleBool = true;
+            ToggleBool = effect.DefaultToggle;
         }
 
         public override string ToString() => $"Mod: {Mod}, Category: {Category}, Effect: {Effect.Name}, Toggled: {ToggleBool}";

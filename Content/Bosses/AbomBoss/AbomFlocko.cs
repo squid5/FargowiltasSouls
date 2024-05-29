@@ -10,7 +10,7 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
 {
     public class AbomFlocko : ModProjectile
     {
-        public override string Texture => "Terraria/Images/NPC_352";
+        public override string Texture => FargoSoulsUtil.VanillaTextureNPC(NPCID.Flocko);
 
         public override void SetStaticDefaults()
         {
@@ -95,7 +95,7 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
                         SoundEngine.PlaySound(SoundID.Item120, Projectile.position);
                         if (FargoSoulsUtil.HostCheck)
                         {
-                            Vector2 vel = Projectile.DirectionTo(Main.player[npc.target].Center + new Vector2(Main.rand.Next(-200, 201), Main.rand.Next(-200, 201))) * 12f;
+                            Vector2 vel = Projectile.SafeDirectionTo(Main.player[npc.target].Center + new Vector2(Main.rand.Next(-200, 201), Main.rand.Next(-200, 201))) * 12f;
                             Projectile.NewProjectile(npc.GetSource_FromThis(), Projectile.Center, vel, ModContent.ProjectileType<AbomFrostWave>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
                         }
                     }

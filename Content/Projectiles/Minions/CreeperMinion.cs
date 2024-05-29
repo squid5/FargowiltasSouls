@@ -83,7 +83,7 @@ namespace FargowiltasSouls.Content.Projectiles.Minions
                 {
                     float movespeed = Math.Max(Projectile.Distance(Main.projectile[Brain].Center) / 40f, 10f);
 
-                    Projectile.velocity = Vector2.Lerp(Projectile.velocity, Projectile.DirectionTo(Main.projectile[Brain].Center) * movespeed, 0.04f);
+                    Projectile.velocity = Vector2.Lerp(Projectile.velocity, Projectile.SafeDirectionTo(Main.projectile[Brain].Center) * movespeed, 0.04f);
                     if (Projectile.Hitbox.Intersects(Main.projectile[Brain].Hitbox))
                     {
                         Projectile.ai[0] = 0;
@@ -93,7 +93,7 @@ namespace FargowiltasSouls.Content.Projectiles.Minions
                 {
                     float movespeed = Math.Max(Projectile.Distance(targetnpc.Center) / 40f, 14f);
 
-                    Projectile.velocity = Vector2.Lerp(Projectile.velocity, Projectile.DirectionTo(targetnpc.Center) * movespeed, 0.05f);
+                    Projectile.velocity = Vector2.Lerp(Projectile.velocity, Projectile.SafeDirectionTo(targetnpc.Center) * movespeed, 0.05f);
                 }
             }
         }

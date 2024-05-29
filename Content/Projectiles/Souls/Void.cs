@@ -73,7 +73,7 @@ namespace FargowiltasSouls.Content.Projectiles.Souls
                 if (p != -1)
                 {
                     Projectile.localAI[1] =
-                        Projectile.Center == Main.player[p].Center ? 0 : Projectile.DirectionTo(Main.player[p].Center).ToRotation();
+                        Projectile.Center == Main.player[p].Center ? 0 : Projectile.SafeDirectionTo(Main.player[p].Center).ToRotation();
                     Projectile.localAI[1] += (float)Math.PI * 2 / 3 / 2;
                 }
             }
@@ -134,7 +134,7 @@ namespace FargowiltasSouls.Content.Projectiles.Souls
 
                     for (int i = 0; i < Main.maxProjectiles; i++)
                     {
-                        
+
                         float distance = Projectile.Distance(Main.projectile[i].Center);
                         Projectile proj = Main.projectile[i];
                         if (!FargoSoulsUtil.CanDeleteProjectile(proj, 0) || distance > minDist || proj.type == Projectile.type || (proj.friendly && player.FargoSouls().VortexStealth))

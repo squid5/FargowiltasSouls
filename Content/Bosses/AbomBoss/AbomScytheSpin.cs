@@ -83,7 +83,7 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
                 int p = Player.FindClosest(Projectile.Center, 0, 0);
                 if (p != -1)
                 {
-                    Vector2 speed = /*15f * */ Projectile.DirectionTo(Main.player[p].Center);
+                    Vector2 speed = /*15f * */ Projectile.SafeDirectionTo(Main.player[p].Center);
                     Projectile.NewProjectile(Terraria.Entity.InheritSource(Projectile), Projectile.Center, speed, ModContent.ProjectileType<AbomSickle>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
                 }
             }

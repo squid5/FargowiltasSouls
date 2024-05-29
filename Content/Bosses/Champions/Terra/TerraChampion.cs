@@ -1,4 +1,11 @@
-﻿using FargowiltasSouls.Content.Projectiles;
+﻿using FargowiltasSouls.Content.Buffs.Masomode;
+using FargowiltasSouls.Content.Items.Accessories.Forces;
+using FargowiltasSouls.Content.Items.Pets;
+using FargowiltasSouls.Content.Items.Placables.Relics;
+using FargowiltasSouls.Content.Projectiles;
+using FargowiltasSouls.Core.Globals;
+using FargowiltasSouls.Core.ItemDropRules;
+using FargowiltasSouls.Core.Systems;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -10,13 +17,6 @@ using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
-using FargowiltasSouls.Content.Items.Pets;
-using FargowiltasSouls.Content.Items.Placables.Relics;
-using FargowiltasSouls.Content.Items.Accessories.Forces;
-using FargowiltasSouls.Content.Buffs.Masomode;
-using FargowiltasSouls.Core.ItemDropRules;
-using FargowiltasSouls.Core.Systems;
-using FargowiltasSouls.Core.Globals;
 
 namespace FargowiltasSouls.Content.Bosses.Champions.Terra
 {
@@ -50,10 +50,10 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Terra
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
-            bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
+            bestiaryEntry.Info.AddRange([
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Caverns,
                 new FlavorTextBestiaryInfoElement($"Mods.FargowiltasSouls.Bestiary.{Name}")
-            });
+            ]);
         }
 
         public override void SetDefaults()
@@ -192,7 +192,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Terra
                     if (NPC.Distance(targetPos) > 50)
                         Movement(targetPos, 0.16f, 32f);
 
-                    NPC.rotation = NPC.DirectionTo(player.Center).ToRotation();
+                    NPC.rotation = NPC.SafeDirectionTo(player.Center).ToRotation();
 
                     if (++NPC.localAI[0] > 50)
                     {
@@ -204,11 +204,11 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Terra
 
                             if (FargoSoulsUtil.HostCheck)
                             {
-                                Vector2 dir = NPC.DirectionTo(player.Center);
+                                Vector2 dir = NPC.SafeDirectionTo(player.Center);
                                 float ai1New = Main.rand.NextBool() ? 1 : -1; //randomize starting direction
                                 Vector2 vel = Vector2.Normalize(dir) * 22f;
                                 Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, vel, ModContent.ProjectileType<HostileLightning>(),
-                                    FargoSoulsUtil.ScaledProjectileDamage(NPC.damage), 0, Main.myPlayer, dir.ToRotation(), ai1New);
+                                    FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), 0, Main.myPlayer, dir.ToRotation(), ai1New);
                             }
                         }
                     }
@@ -219,7 +219,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Terra
 
                         if (FargoSoulsUtil.HostCheck) //shoot orb
                         {
-                            int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<TerraLightningOrb2>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage), 0f, Main.myPlayer, NPC.whoAmI);
+                            int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<TerraLightningOrb2>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), 0f, Main.myPlayer, NPC.whoAmI);
                             Main.projectile[p].localAI[0] += 1f + Main.rand.NextFloatDirection(); //random starting rotation
                             Main.projectile[p].localAI[1] = Main.rand.NextBool() ? 1 : -1;
                             Main.projectile[p].netUpdate = true;
@@ -266,7 +266,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Terra
                     }
                     else
                     {
-                        float rotationDifference = MathHelper.WrapAngle(NPC.velocity.ToRotation() - NPC.DirectionTo(player.Center).ToRotation());
+                        float rotationDifference = MathHelper.WrapAngle(NPC.velocity.ToRotation() - NPC.SafeDirectionTo(player.Center).ToRotation());
                         bool inFrontOfMe = Math.Abs(rotationDifference) < MathHelper.ToRadians(90 / 2);
 
                         bool proceed = NPC.localAI[0] > 300 && (NPC.localAI[0] > 360 || inFrontOfMe);
@@ -294,7 +294,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Terra
                         {
                             SoundEngine.PlaySound(SoundID.Roar, player.Center);
                             NPC.localAI[1] = 1;
-                            NPC.velocity = NPC.DirectionTo(player.Center) * 24;
+                            NPC.velocity = NPC.SafeDirectionTo(player.Center) * 24;
                         }
 
                         if (++NPC.localAI[2] > 2)
@@ -302,17 +302,17 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Terra
                             NPC.localAI[2] = 0;
                             if (FargoSoulsUtil.HostCheck)
                             {
-                                Vector2 vel = NPC.DirectionTo(player.Center) * 12;
-                                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, vel, ModContent.ProjectileType<TerraFireball>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage), 0f, Main.myPlayer);
+                                Vector2 vel = NPC.SafeDirectionTo(player.Center) * 12;
+                                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, vel, ModContent.ProjectileType<TerraFireball>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), 0f, Main.myPlayer);
 
                                 float offset = NPC.velocity.ToRotation() - vel.ToRotation();
 
                                 vel = Vector2.Normalize(NPC.velocity).RotatedBy(offset) * 12;
-                                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, vel, ModContent.ProjectileType<TerraFireball>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage), 0f, Main.myPlayer);
+                                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, vel, ModContent.ProjectileType<TerraFireball>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), 0f, Main.myPlayer);
                             }
                         }
 
-                        double angle = NPC.DirectionTo(player.Center).ToRotation() - NPC.velocity.ToRotation();
+                        double angle = NPC.SafeDirectionTo(player.Center).ToRotation() - NPC.velocity.ToRotation();
                         while (angle > Math.PI)
                             angle -= 2.0 * Math.PI;
                         while (angle < -Math.PI)
@@ -341,7 +341,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Terra
                     }
                     else //circle at distance to pull segments away
                     {
-                        NPC.velocity = NPC.DirectionTo(player.Center).RotatedBy(Math.PI / 2) * 36;
+                        NPC.velocity = NPC.SafeDirectionTo(player.Center).RotatedBy(Math.PI / 2) * 36;
                     }
 
                     if (++NPC.localAI[0] > 180)
@@ -360,7 +360,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Terra
 
                         if (NPC.localAI[0] == 0)
                         {
-                            NPC.localAI[1] = NPC.DirectionTo(player.Center).ToRotation();
+                            NPC.localAI[1] = NPC.SafeDirectionTo(player.Center).ToRotation();
                             SoundEngine.PlaySound(SoundID.Roar, player.Center);
                         }
 
@@ -390,7 +390,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Terra
                                     rotationOffset *= Math.Sign(-sinModifier);
                                     Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center,
                                         6f * Vector2.UnitX.RotatedBy(NPC.localAI[1] + rotationOffset),
-                                        ProjectileID.CultistBossFireBall, FargoSoulsUtil.ScaledProjectileDamage(NPC.damage), 0f, Main.myPlayer);
+                                        ProjectileID.CultistBossFireBall, FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), 0f, Main.myPlayer);
                                 }
 
                                 for (int i = -5; i <= 5; i++)
@@ -400,7 +400,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Terra
                                     Vector2 vel2 = Vector2.UnitX.RotatedBy(Math.PI / 4 * (Main.rand.NextDouble() - 0.5)) * 36f;
                                     float ai1New = Main.rand.NextBool() ? 1 : -1; //randomize starting direction
                                     Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, vel2.RotatedBy(NPC.localAI[1] + rotationOffset), ModContent.ProjectileType<HostileLightning>(),
-                                        FargoSoulsUtil.ScaledProjectileDamage(NPC.damage), 0, Main.myPlayer, NPC.localAI[1] + rotationOffset, ai1New);
+                                        FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), 0, Main.myPlayer, NPC.localAI[1] + rotationOffset, ai1New);
                                 }
                             }
                         }
@@ -412,7 +412,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Terra
                             NPC.localAI[1] = 0;
                             NPC.localAI[2] = 0;
                             NPC.localAI[3] = 0;
-                            NPC.velocity = NPC.DirectionTo(player.Center) * NPC.velocity.Length();
+                            NPC.velocity = NPC.SafeDirectionTo(player.Center) * NPC.velocity.Length();
                         }
                     }
                     break;
@@ -428,12 +428,12 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Terra
                     {
                         SoundEngine.PlaySound(SoundID.Roar, player.Center);
                         NPC.localAI[1] = 1;
-                        NPC.velocity = NPC.DirectionTo(player.Center) * 36;
+                        NPC.velocity = NPC.SafeDirectionTo(player.Center) * 36;
                     }
 
                     if (NPC.localAI[3] == 0)
                     {
-                        double angle = NPC.DirectionTo(player.Center).ToRotation() - NPC.velocity.ToRotation();
+                        double angle = NPC.SafeDirectionTo(player.Center).ToRotation() - NPC.velocity.ToRotation();
                         while (angle > Math.PI)
                             angle -= 2.0 * Math.PI;
                         while (angle < -Math.PI)
@@ -455,8 +455,8 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Terra
                             if (FargoSoulsUtil.HostCheck)
                             {
                                 Vector2 vel = 12f * Vector2.Normalize(NPC.velocity).RotatedBy(Math.PI / 2);
-                                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, vel, ModContent.ProjectileType<TerraFireball>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage), 0f, Main.myPlayer);
-                                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, -vel, ModContent.ProjectileType<TerraFireball>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage), 0f, Main.myPlayer);
+                                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, vel, ModContent.ProjectileType<TerraFireball>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), 0f, Main.myPlayer);
+                                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, -vel, ModContent.ProjectileType<TerraFireball>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), 0f, Main.myPlayer);
                             }
                         }
 
@@ -486,7 +486,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Terra
                         NPC.ai[1]++;
                         NPC.localAI[0] = 0;
                         NPC.localAI[1] = NPC.Distance(player.Center);
-                        NPC.velocity = 32f * NPC.DirectionTo(player.Center).RotatedBy(Math.PI / 2);
+                        NPC.velocity = 32f * NPC.SafeDirectionTo(player.Center).RotatedBy(Math.PI / 2);
                         SoundEngine.PlaySound(SoundID.Roar, player.Center);
                     }
                     NPC.rotation = NPC.velocity.ToRotation();
@@ -527,7 +527,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Terra
 
                         if (NPC.localAI[0] == 0 && FargoSoulsUtil.HostCheck) //shoot orb
                         {
-                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<TerraLightningOrb2>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage), 0f, Main.myPlayer, NPC.whoAmI);
+                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<TerraLightningOrb2>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), 0f, Main.myPlayer, NPC.whoAmI);
                         }
 
                         if (++NPC.localAI[0] > 420)
@@ -598,7 +598,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Terra
             }
 
             float comparisonSpeed = player.velocity.Length() * 1.5f;
-            float rotationDifference = MathHelper.WrapAngle(NPC.velocity.ToRotation() - NPC.DirectionTo(player.Center).ToRotation());
+            float rotationDifference = MathHelper.WrapAngle(NPC.velocity.ToRotation() - NPC.SafeDirectionTo(player.Center).ToRotation());
             bool inFrontOfMe = Math.Abs(rotationDifference) < MathHelper.ToRadians(90 / 2);
             if (maxSpeed < comparisonSpeed && inFrontOfMe) //player is moving faster than my top speed
             {

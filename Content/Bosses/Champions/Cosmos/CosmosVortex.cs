@@ -1,4 +1,4 @@
-﻿using FargowiltasSouls.Content.Projectiles;
+﻿using FargowiltasSouls.Content.Buffs.Masomode;
 using FargowiltasSouls.Core.Systems;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -51,6 +51,8 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Cosmos
                 {
                     float dragSpeed = Projectile.Distance(player.Center) / 60;
                     player.position += Projectile.DirectionFrom(player.Center) * dragSpeed;
+                    player.AddBuff(ModContent.BuffType<LowGroundBuff>(), 2);
+                    player.wingTime = 60;
                 }
             };
 
@@ -113,7 +115,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Cosmos
                 if (p != -1)
                 {
                     Projectile.localAI[1] =
-                        Projectile.Center == Main.player[p].Center ? 0 : Projectile.DirectionTo(Main.player[p].Center).ToRotation();
+                        Projectile.Center == Main.player[p].Center ? 0 : Projectile.SafeDirectionTo(Main.player[p].Center).ToRotation();
                     Projectile.localAI[1] += (float)Math.PI * 2 / 3 / 2;
                 }
             }

@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Terraria.ID;
-using Terraria;
-using Terraria.ModLoader;
+﻿using FargowiltasSouls.Core;
+using FargowiltasSouls.Core.Systems;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using FargowiltasSouls.Core.Systems;
-using FargowiltasSouls.Core;
+using System;
+using Terraria;
 using Terraria.Audio;
-using Microsoft.CodeAnalysis;
 using Terraria.GameContent;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Content.Projectiles.Masomode
 {
@@ -64,8 +59,8 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
                 if (++Projectile.frame >= Main.projFrames[Projectile.type])
                     Projectile.frame = 3;
             }
-            
-            
+
+
 
             const float speedModifier = 0.3f;
             int npcTarget = (int)Projectile.ai[1];
@@ -126,7 +121,7 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
                 if (Projectile.rotation < -PI)
                     Projectile.rotation += 2 * PI;
 
-                float targetRotation = Projectile.DirectionTo(targetCenter).ToRotation() - PI / 2;
+                float targetRotation = Projectile.SafeDirectionTo(targetCenter).ToRotation() - PI / 2;
                 if (targetRotation > PI)
                     targetRotation -= 2 * PI;
                 if (targetRotation < -PI)
@@ -186,7 +181,7 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
 
                 if (++FinalPhaseDashCD == 1)
                 {
-                    
+
 
                     if (!FinalPhaseDashHorizSpeedSet) //only set this on the first dash of each set
                     {
@@ -200,7 +195,7 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
                     //if (WorldSavingSystem.MasochistModeReal)
                     //    SpawnServants();
                     //if (FargoSoulsUtil.HostCheck)
-                        //FargoSoulsUtil.XWay(8, Projectile.GetSource_FromThis(), Projectile.Center, ModContent.ProjectileType<BloodScythe>(), 1f, FargoSoulsUtil.ScaledProjectileDamage(Projectile.damage), 0);
+                    //FargoSoulsUtil.XWay(8, Projectile.GetSource_FromThis(), Projectile.Center, ModContent.ProjectileType<BloodScythe>(), 1f, FargoSoulsUtil.ScaledProjectileDamage(Projectile.damage), 0);
 
                     Projectile.netUpdate = true;
                 }
@@ -245,7 +240,7 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
                 if (mustRest && Timer < restingTime + 90)
                 {
                     if (Timer == 91)
-                        Projectile.velocity = Projectile.DirectionTo(player.Center) * Projectile.velocity.Length() * 0.75f;
+                        Projectile.velocity = Projectile.SafeDirectionTo(player.Center) * Projectile.velocity.Length() * 0.75f;
 
                     Projectile.velocity.X *= 0.98f;
                     if (Math.Abs(Projectile.Center.X - player.Center.X) < 300)
@@ -303,7 +298,7 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
                 }
 
                 const float PI = (float)Math.PI;
-                float targetRotation = MathHelper.WrapAngle(Projectile.DirectionTo(player.Center).ToRotation() - PI / 2);
+                float targetRotation = MathHelper.WrapAngle(Projectile.SafeDirectionTo(player.Center).ToRotation() - PI / 2);
                 Projectile.rotation = MathHelper.WrapAngle(MathHelper.Lerp(Projectile.rotation, targetRotation, 0.07f));
 
                 if (alphaCounter > 0)

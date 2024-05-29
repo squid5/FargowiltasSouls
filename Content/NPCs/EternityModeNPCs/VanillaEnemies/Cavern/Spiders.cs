@@ -8,7 +8,7 @@ using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.Cavern
 {
-	public class Spiders : EModeNPCBehaviour
+    public class Spiders : EModeNPCBehaviour
     {
         public override NPCMatcher CreateMatcher() => new NPCMatcher().MatchTypeRange(
             NPCID.BloodCrawler,
@@ -41,7 +41,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.Cavern
                     Counter = 0;
                     if (npc.HasValidTarget && npc.Distance(Main.player[npc.target].Center) < 450 && Collision.CanHitLine(npc.Center, 0, 0, Main.player[npc.target].Center, 0, 0) && FargoSoulsUtil.HostCheck)
                     {
-                        Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, 14f * npc.DirectionTo(Main.player[npc.target].Center), ProjectileID.WebSpit, 9, 0f, Main.myPlayer);
+                        Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, 14f * npc.SafeDirectionTo(Main.player[npc.target].Center), ProjectileID.WebSpit, 9, 0f, Main.myPlayer);
                     }
                 }
             }

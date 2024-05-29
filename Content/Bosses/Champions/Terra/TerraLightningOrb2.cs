@@ -1,6 +1,7 @@
 using FargowiltasSouls.Content.Buffs.Masomode;
 using FargowiltasSouls.Content.Projectiles;
 using FargowiltasSouls.Core.Systems;
+using Luminance.Core.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -98,7 +99,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Terra
                 if (Projectile.alpha < 0)
                     Projectile.alpha = 0;
 
-                Projectile.velocity = 4f * Projectile.DirectionTo(Main.player[npc.target].Center);
+                Projectile.velocity = 4f * Projectile.SafeDirectionTo(Main.player[npc.target].Center);
 
                 if (++Projectile.ai[1] > 60) //grow
                 {
@@ -201,7 +202,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Terra
             MakeDust();
 
             if (!Main.dedServ)
-                Main.LocalPlayer.FargoSouls().Screenshake = 30;
+                ScreenShakeSystem.StartShake(10, shakeStrengthDissipationIncrement: 10f / 30);
 
             if (Projectile.alpha == 0 && FargoSoulsUtil.HostCheck)
             {

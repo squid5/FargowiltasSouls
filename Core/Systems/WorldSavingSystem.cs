@@ -91,7 +91,7 @@ namespace FargowiltasSouls.Core.Systems
 
         public static bool PlacedMutantStatue;
 
-        public static List<int> IronUsedList = new();
+        public static List<int> IronUsedList = [];
 
         public override void Unload() => DownedBoss = null;
 
@@ -133,7 +133,7 @@ namespace FargowiltasSouls.Core.Systems
         public override void SaveWorldData(TagCompound tag)
         {
 
-            List<string> downed = new();
+            List<string> downed = [];
             if (DownedBetsy)
                 downed.Add("betsy");
 
@@ -246,7 +246,7 @@ namespace FargowiltasSouls.Core.Systems
                             ModItem item = ModContent.Find<ModItem>(entry);
                             IronUsedList.Add(item.Type);
                         }
-                        
+
                     }
                 }
             }

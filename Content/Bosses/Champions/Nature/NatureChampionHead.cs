@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.IO;
 using Terraria;
 using Terraria.Audio;
-using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -23,13 +22,10 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Nature
             Main.npcFrameCount[NPC.type] = 4;
             NPCID.Sets.CantTakeLunchMoney[Type] = true;
 
-            NPCID.Sets.NPCBestiaryDrawOffset.Add(NPC.type, new NPCID.Sets.NPCBestiaryDrawModifiers()
-            {
-                Hide = true
-            });
+            this.ExcludeFromBestiary();
 
-            NPC.AddDebuffImmunities(new List<int>
-            {
+            NPC.AddDebuffImmunities(
+            [
                 BuffID.Confused,
                 BuffID.Chilled,
                 BuffID.OnFire,
@@ -37,7 +33,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Nature
                 ModContent.BuffType<LethargicBuff>(),
                 ModContent.BuffType<ClippedWingsBuff>(),
                 ModContent.BuffType<LightningRodBuff>()
-            });
+            ]);
 
         }
 
@@ -132,7 +128,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Nature
                             if (NPC.localAI[0] > 60 && FargoSoulsUtil.HostCheck)
                             {
                                 Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + Main.rand.NextVector2Circular(NPC.width / 2, NPC.height / 2),
-                                    Vector2.UnitY * Main.rand.NextFloat(-4f, 0), ProjectileID.GoldenShowerHostile, FargoSoulsUtil.ScaledProjectileDamage(NPC.damage), 0f, Main.myPlayer);
+                                    Vector2.UnitY * Main.rand.NextFloat(-4f, 0), ProjectileID.GoldenShowerHostile, FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), 0f, Main.myPlayer);
                             }
                         }
                     }
@@ -159,8 +155,8 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Nature
                             const int max = 12;
                             for (int i = 0; i < max; i++)
                             {
-                                Vector2 speed = 20f * NPC.DirectionTo(player.Center).RotatedBy(2 * Math.PI / max * i);
-                                Projectile.NewProjectile(npc.GetSource_FromThis(), NPC.Center, speed, ModContent.ProjectileType<NatureFireball>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage), 0f, Main.myPlayer);
+                                Vector2 speed = 20f * NPC.SafeDirectionTo(player.Center).RotatedBy(2 * Math.PI / max * i);
+                                Projectile.NewProjectile(npc.GetSource_FromThis(), NPC.Center, speed, ModContent.ProjectileType<NatureFireball>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), 0f, Main.myPlayer);
                             }
                         }
                     }*/
@@ -192,13 +188,13 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Nature
 
                         if (FargoSoulsUtil.HostCheck)
                         {
-                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<NatureExplosion>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage), 0f, Main.myPlayer);
+                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<NatureExplosion>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), 0f, Main.myPlayer);
 
                             const int max = 12;
                             for (int i = 0; i < max; i++)
                             {
-                                Vector2 speed = 24f * NPC.DirectionTo(player.Center).RotatedBy(2 * Math.PI / max * i);
-                                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, speed, ModContent.ProjectileType<NatureFireball>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage), 0f, Main.myPlayer);
+                                Vector2 speed = 24f * NPC.SafeDirectionTo(player.Center).RotatedBy(2 * Math.PI / max * i);
+                                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, speed, ModContent.ProjectileType<NatureFireball>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), 0f, Main.myPlayer);
                             }
                         }
                     }
@@ -227,12 +223,12 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Nature
                             float ai1New = Main.rand.Next(100);
                             Vector2 vel = Vector2.Normalize(dir.RotatedByRandom(Math.PI / 4)) * 6f;
                             Projectile.NewProjectile(npc.GetSource_FromThis(), NPC.Center, vel, ProjectileID.CultistBossLightningOrbArc,
-                                FargoSoulsUtil.ScaledProjectileDamage(NPC.damage), 0, Main.myPlayer, dir.ToRotation(), ai1New);*/
+                                FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), 0, Main.myPlayer, dir.ToRotation(), ai1New);*/
 
                             Vector2 speed = player.Center - NPC.Center;
                             speed.Y -= 300;
                             speed /= 40;
-                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, speed, ModContent.ProjectileType<NatureCloudMoving>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage), 0f, Main.myPlayer);
+                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, speed, ModContent.ProjectileType<NatureCloudMoving>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), 0f, Main.myPlayer);
                         }
                     }
 
@@ -277,7 +273,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Nature
                                 {
                                     Vector2 speed = Main.rand.NextFloat(1f, 3f) * Vector2.UnitX.RotatedBy(2 * Math.PI / max * (i + Main.rand.NextDouble()));
                                     Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, speed, ModContent.ProjectileType<NatureIcicle>(),
-                                        FargoSoulsUtil.ScaledProjectileDamage(NPC.damage), 0f, Main.myPlayer, 60 + Main.rand.Next(20), 1f);// NPC.localAI[1]);
+                                        FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), 0f, Main.myPlayer, 60 + Main.rand.Next(20), 1f);// NPC.localAI[1]);
                                 }
                             }
                         }
@@ -308,7 +304,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Nature
                             for (int i = 0; i < max; i++)
                             {
                                 Vector2 spawnPos = NPC.Center + new Vector2(distance, 0f).RotatedBy(rotation * i);
-                                Projectile.NewProjectile(NPC.GetSource_FromThis(), spawnPos, Vector2.Zero, ModContent.ProjectileType<NatureCrystalLeaf>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage), 0f, Main.myPlayer, NPC.whoAmI, rotation * i);
+                                Projectile.NewProjectile(NPC.GetSource_FromThis(), spawnPos, Vector2.Zero, ModContent.ProjectileType<NatureCrystalLeaf>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), 0f, Main.myPlayer, NPC.whoAmI, rotation * i);
                             }
                         }
                     }
@@ -347,7 +343,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Nature
                                 if (FargoSoulsUtil.HostCheck)
                                 {
                                     Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + Vector2.UnitY * 10, speed,
-                                        ModContent.ProjectileType<NatureBullet>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage), 0f, Main.myPlayer, delay);
+                                        ModContent.ProjectileType<NatureBullet>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), 0f, Main.myPlayer, delay);
                                 }
                             }
                         }
@@ -377,12 +373,12 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Nature
                         if (++NPC.ai[2] == 90)
                         {
                             NPC.netUpdate = true;
-                            NPC.localAI[1] = NPC.DirectionTo(body.Center - Vector2.UnitY * 300).ToRotation();
+                            NPC.localAI[1] = NPC.SafeDirectionTo(body.Center - Vector2.UnitY * 300).ToRotation();
 
                             if (FargoSoulsUtil.HostCheck)
                             {
                                 Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.UnitX.RotatedBy(NPC.localAI[1]),
-                                    ModContent.ProjectileType<NatureDeathraySmall>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage, 4f / 3), 0f, Main.myPlayer, 0f, NPC.whoAmI);
+                                    ModContent.ProjectileType<NatureDeathraySmall>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage, 4f / 3), 0f, Main.myPlayer, 0f, NPC.whoAmI);
                             }
                         }
                         else if (NPC.ai[2] == 150)
@@ -391,7 +387,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Nature
                             if (FargoSoulsUtil.HostCheck)
                             {
                                 Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.UnitX.RotatedBy(NPC.localAI[1]),
-                                    ModContent.ProjectileType<NatureDeathray>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage, 4f / 3), 0f, Main.myPlayer, ai0, NPC.whoAmI);
+                                    ModContent.ProjectileType<NatureDeathray>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage, 4f / 3), 0f, Main.myPlayer, ai0, NPC.whoAmI);
                             }
                         }
 
@@ -413,7 +409,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Nature
 
             if (NPC.Distance(body.Center) > 1400) //try to prevent going too far from body, will cause neck to disappear
             {
-                NPC.Center = body.Center + body.DirectionTo(NPC.Center) * 1400f;
+                NPC.Center = body.Center + body.SafeDirectionTo(NPC.Center) * 1400f;
             }
         }
 

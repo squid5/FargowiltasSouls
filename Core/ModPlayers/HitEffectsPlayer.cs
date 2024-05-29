@@ -23,6 +23,8 @@ using FargowiltasSouls.Content.Items.Accessories.Masomode;
 using FargowiltasSouls.Core.Systems;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using Terraria.Localization;
+using Luminance.Core.Graphics;
+using FargowiltasSouls.Content.Bosses.Champions.Cosmos;
 
 namespace FargowiltasSouls.Core.ModPlayers
 {
@@ -478,7 +480,7 @@ namespace FargowiltasSouls.Core.ModPlayers
             if (Player.HasBuff(ModContent.BuffType<TitaniumDRBuff>())
                 && !Player.HasBuff(ModContent.BuffType<TitaniumCDBuff>()))
             {
-                Player.AddBuff(ModContent.BuffType<TitaniumCDBuff>(), (int)FargoSoulsUtil.SecondsToFrames(10));
+                Player.AddBuff(ModContent.BuffType<TitaniumCDBuff>(), LumUtils.SecondsToFrames(10));
             }
 
             if (NekomiSet && NekomiHitCD <= 0)
@@ -492,7 +494,7 @@ namespace FargowiltasSouls.Core.ModPlayers
                 int heartsToConsume = NekomiMeter / meterPerHeart;
                 if (heartsToConsume > heartsLost)
                     heartsToConsume = heartsLost;
-                Player.AddBuff(BuffID.RapidHealing, (int)FargoSoulsUtil.SecondsToFrames(heartsToConsume) * 5 / heartsLost);
+                Player.AddBuff(BuffID.RapidHealing, LumUtils.SecondsToFrames(heartsToConsume) * 5 / heartsLost);
 
                 NekomiMeter -= meterLost;
                 if (NekomiMeter < 0)
@@ -539,7 +541,7 @@ namespace FargowiltasSouls.Core.ModPlayers
                 {
                     if (!Player.HasBuff(ModContent.BuffType<TimeFrozenBuff>()))
                     {
-                        The22Incident++;
+                        The22Incident += Main.getGoodWorld ? 2 : 1;
                         Rectangle rect = new Rectangle((int)Player.Center.X - 111, (int)Player.Center.Y, 222, 222);
                         for (int i = 0; i < The22Incident; i++)
                             CombatText.NewText(rect, Color.DarkOrange, The22Incident, true);
@@ -547,7 +549,7 @@ namespace FargowiltasSouls.Core.ModPlayers
                         {
                             Player.KillMe(Terraria.DataStructures.PlayerDeathReason.ByCustomReason(Language.GetTextValue("Mods.FargowiltasSouls.DeathMessage.TwentyTwo", Player.name)), 22222222, 0);
                             Projectile.NewProjectile(Player.GetSource_Death(), Player.Center, Vector2.Zero, ModContent.ProjectileType<TwentyTwo>(), 0, 0f, Main.myPlayer);
-                            Screenshake = 120;
+                            ScreenShakeSystem.StartShake(10, shakeStrengthDissipationIncrement: 10f / 30);
                         }
                     }
                 }

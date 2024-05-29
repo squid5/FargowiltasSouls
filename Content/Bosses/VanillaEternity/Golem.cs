@@ -20,6 +20,7 @@ using System.Drawing;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System.Collections.Generic;
+using Luminance.Core.Graphics;
 
 namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 {
@@ -166,7 +167,6 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
         public override bool SafePreAI(NPC npc)
         {
             bool result = base.SafePreAI(npc);
-
             NPC.golemBoss = npc.whoAmI;
 
             if (WorldSavingSystem.SwarmActive)
@@ -248,7 +248,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                                 int tilePosY = (int)spawnPos.Y / 16;// + 1;
 
                                 if (FargoSoulsUtil.HostCheck)
-                                    Projectile.NewProjectile(npc.GetSource_FromThis(), tilePosX * 16 + 8, tilePosY * 16 + 8, 0f, 0f, ModContent.ProjectileType<GolemGeyser2>(), FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 0f, Main.myPlayer, npc.whoAmI);
+                                    Projectile.NewProjectile(npc.GetSource_FromThis(), tilePosX * 16 + 8, tilePosY * 16 + 8, 0f, 0f, ModContent.ProjectileType<GolemGeyser2>(), FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 0f, Main.myPlayer, npc.whoAmI);
                             }
 
                             spawnPos = npc.Center;
@@ -258,7 +258,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                                 int tilePosY = (int)spawnPos.Y / 16;// + 1;
 
                                 if (FargoSoulsUtil.HostCheck)
-                                    Projectile.NewProjectile(npc.GetSource_FromThis(), tilePosX * 16 + 8, tilePosY * 16 + 8, 0f, 0f, ModContent.ProjectileType<GolemGeyser>(), FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 0f, Main.myPlayer, npc.whoAmI);
+                                    Projectile.NewProjectile(npc.GetSource_FromThis(), tilePosX * 16 + 8, tilePosY * 16 + 8, 0f, 0f, ModContent.ProjectileType<GolemGeyser>(), FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 0f, Main.myPlayer, npc.whoAmI);
                             }
                         }
                         else if (StompAttackCounter == 2) //empty jump
@@ -273,7 +273,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                             if (npc.HasPlayerTarget)
                             {
                                 if (!Main.dedServ)
-                                    Main.LocalPlayer.FargoSouls().Screenshake = 20;
+                                    ScreenShakeSystem.StartShake(10, shakeStrengthDissipationIncrement: 10f / 20);
 
                                 if (FargoSoulsUtil.HostCheck)
                                     Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, Vector2.Zero, ProjectileID.DD2OgreSmash, 0, 0, Main.myPlayer);
@@ -303,7 +303,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
                                     Vector2 spawn = new(tilePosX * 16 + 8, tilePosY * 16 + 8);
                                     if (FargoSoulsUtil.HostCheck)
-                                        Projectile.NewProjectile(npc.GetSource_FromThis(), spawn, Vector2.Zero, ModContent.ProjectileType<GolemBoulder>(), FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 0f, Main.myPlayer);
+                                        Projectile.NewProjectile(npc.GetSource_FromThis(), spawn, Vector2.Zero, ModContent.ProjectileType<GolemBoulder>(), FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 0f, Main.myPlayer);
                                 }
                             }
                         }
@@ -334,15 +334,15 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                                 if (npc.HasPlayerTarget && Main.player[npc.target].position.Y > tilePosY * 16)
                                 {
                                     Projectile.NewProjectile(npc.GetSource_FromThis(), tilePosX * 16 + 8, tilePosY * 16 + 8, 6.3f, 6.3f,
-                                        ProjectileID.FlamesTrap, FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 0f, Main.myPlayer);
+                                        ProjectileID.FlamesTrap, FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 0f, Main.myPlayer);
                                     Projectile.NewProjectile(npc.GetSource_FromThis(), tilePosX * 16 + 8, tilePosY * 16 + 8, -6.3f, 6.3f,
-                                        ProjectileID.FlamesTrap, FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 0f, Main.myPlayer);
+                                        ProjectileID.FlamesTrap, FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 0f, Main.myPlayer);
                                 }
 
-                                Projectile.NewProjectile(npc.GetSource_FromThis(), tilePosX * 16 + 8, tilePosY * 16 + 8, 0f, -8f, ProjectileID.GeyserTrap, FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 0f, Main.myPlayer);
+                                Projectile.NewProjectile(npc.GetSource_FromThis(), tilePosX * 16 + 8, tilePosY * 16 + 8, 0f, -8f, ProjectileID.GeyserTrap, FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 0f, Main.myPlayer);
 
-                                Projectile.NewProjectile(npc.GetSource_FromThis(), tilePosX * 16 + 8, tilePosY * 16 + 8 - 640, 0f, -8f, ProjectileID.GeyserTrap, FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 0f, Main.myPlayer);
-                                Projectile.NewProjectile(npc.GetSource_FromThis(), tilePosX * 16 + 8, tilePosY * 16 + 8 - 640, 0f, 8f, ProjectileID.GeyserTrap, FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 0f, Main.myPlayer);
+                                Projectile.NewProjectile(npc.GetSource_FromThis(), tilePosX * 16 + 8, tilePosY * 16 + 8 - 640, 0f, -8f, ProjectileID.GeyserTrap, FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 0f, Main.myPlayer);
+                                Projectile.NewProjectile(npc.GetSource_FromThis(), tilePosX * 16 + 8, tilePosY * 16 + 8 - 640, 0f, 8f, ProjectileID.GeyserTrap, FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 0f, Main.myPlayer);
                             }
                         }
                         if (npc.HasPlayerTarget)
@@ -362,7 +362,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
                                 Vector2 spawn = new(tilePosX * 16 + 8, tilePosY * 16 + 8);
                                 if (FargoSoulsUtil.HostCheck)
-                                    Projectile.NewProjectile(npc.GetSource_FromThis(), spawn, Vector2.Zero, ModContent.ProjectileType<GolemBoulder>(), FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 0f, Main.myPlayer);
+                                    Projectile.NewProjectile(npc.GetSource_FromThis(), spawn, Vector2.Zero, ModContent.ProjectileType<GolemBoulder>(), FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 0f, Main.myPlayer);
                             }
                         }
                     }
@@ -384,7 +384,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                         for (int i = 0; i < 8; i++)
                         {
                             Projectile.NewProjectile(npc.GetSource_FromThis(), npc.position.X + Main.rand.Next(npc.width), npc.position.Y + Main.rand.Next(npc.height),
-                                  Main.rand.NextFloat(-0.3f, 0.3f), Main.rand.NextFloat(-10, -6), ModContent.ProjectileType<GolemSpikyBall>(), FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 0f, Main.myPlayer);
+                                  Main.rand.NextFloat(-0.3f, 0.3f), Main.rand.NextFloat(-10, -6), ModContent.ProjectileType<GolemSpikyBall>(), FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 0f, Main.myPlayer);
                         }
                     }
                 }
@@ -394,7 +394,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     for (int i = 0; i < 16; i++)
                     {
                         Projectile.NewProjectile(npc.GetSource_FromThis(), npc.position.X + Main.rand.Next(npc.width), npc.position.Y + Main.rand.Next(npc.height),
-                              Main.rand.NextFloat(-1f, 1f), Main.rand.Next(-20, -9), ModContent.ProjectileType<GolemSpikyBall>(), FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 0f, Main.myPlayer);
+                              Main.rand.NextFloat(-1f, 1f), Main.rand.Next(-20, -9), ModContent.ProjectileType<GolemSpikyBall>(), FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 0f, Main.myPlayer);
                     }
                 }
             }
@@ -425,7 +425,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             //        for (int i = -max; i <= max; i++)
             //        {
             //            Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center.X, npc.Center.Y, distance.X + i, distance.Y,
-            //                ModContent.ProjectileType<GolemFireball>(), FargoSoulsUtil.ScaledProjectileDamage(npc.damage, 0.8f), 0f, Main.myPlayer, gravity, 0);
+            //                ModContent.ProjectileType<GolemFireball>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage, 0.8f), 0f, Main.myPlayer, gravity, 0);
             //        }
             //    }
             //}
@@ -515,7 +515,6 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
         public override bool SafePreAI(NPC npc)
         {
             bool result = base.SafePreAI(npc);
-
             if (WorldSavingSystem.SwarmActive)
                 return result;
 
@@ -543,7 +542,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                 if (!Golem.CheckTempleWalls(Main.player[npc.target].Center) || WorldSavingSystem.MasochistModeReal)
                 {
                     if (FargoSoulsUtil.HostCheck)
-                        Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, Vector2.Zero, ModContent.ProjectileType<MoonLordSunBlast>(), FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 0f, Main.myPlayer);
+                        Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, Vector2.Zero, ModContent.ProjectileType<MoonLordSunBlast>(), FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 0f, Main.myPlayer);
                 }
             }
             DoAttackOnFistImpact = npc.ai[0] != 0f;
@@ -632,7 +631,8 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
         public override bool SafePreAI(NPC npc)
         {
             bool result = base.SafePreAI(npc);
-
+            if (npc.damage < 165)
+                npc.damage = 165;
             if (WorldSavingSystem.SwarmActive)
                 return result;
 
@@ -653,7 +653,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     npc.position.Y += npc.velocity.Y * 0.25f;
 
                     if (!npc.noTileCollide && npc.HasValidTarget && Collision.SolidCollision(npc.position, npc.width, npc.height)) //unstick from walls
-                        npc.position += npc.DirectionTo(Main.player[npc.target].Center) * 4;
+                        npc.position += npc.SafeDirectionTo(Main.player[npc.target].Center) * 4;
 
                     //disable attacks when nearby
                     if (npc.HasValidTarget && npc.Distance(Main.player[npc.target].Center) < 350 && !WorldSavingSystem.MasochistModeReal)
@@ -750,7 +750,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                         {
                             if (DoDeathray)
                             {
-                                Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, Vector2.UnitY, ModContent.ProjectileType<GolemBeam>(), FargoSoulsUtil.ScaledProjectileDamage(npc.damage, 1.5f), 0f, Main.myPlayer, 0f, npc.whoAmI);
+                                Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, Vector2.UnitY, ModContent.ProjectileType<GolemBeam>(), FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage, 1.5f), 0f, Main.myPlayer, 0f, npc.whoAmI);
                             }
 
                             if (doSpikeBalls)
@@ -761,7 +761,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                                 for (int i = -max; i <= max; i++)
                                 {
                                     Vector2 vel = 6f * -Vector2.UnitY.RotatedBy(MathHelper.PiOver2 / max * (i + Main.rand.NextFloat(0.25f, 0.75f) * (Main.rand.NextBool() ? -1 : 1)));
-                                    int p = Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, vel, ModContent.ProjectileType<GolemSpikeBallBig>(), FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 0f, Main.myPlayer);
+                                    int p = Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, vel, ModContent.ProjectileType<GolemSpikeBallBig>(), FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 0f, Main.myPlayer);
                                     if (p != Main.maxProjectiles)
                                         Main.projectile[p].timeLeft -= Main.rand.Next(60);
                                 }
@@ -839,7 +839,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                             for (int i = -max; i <= max; i++)
                             {
                                 int p = Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, speed * Vector2.UnitY.RotatedBy(Math.PI / 2 / max * i),
-                                    ModContent.ProjectileType<EyeBeam2>(), FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 0f, Main.myPlayer);
+                                    ModContent.ProjectileType<EyeBeam2>(), FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 0f, Main.myPlayer);
                                 if (p != Main.maxProjectiles)
                                     Main.projectile[p].timeLeft = 1200;
                             }

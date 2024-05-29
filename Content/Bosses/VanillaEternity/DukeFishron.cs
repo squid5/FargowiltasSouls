@@ -1,26 +1,25 @@
-using System.IO;
-using Terraria.ModLoader.IO;
+using FargowiltasSouls.Common.Utilities;
+using FargowiltasSouls.Content.Buffs.Boss;
+using FargowiltasSouls.Content.Buffs.Masomode;
+using FargowiltasSouls.Content.NPCs.EternityModeNPCs;
 using FargowiltasSouls.Content.Projectiles.Masomode;
+using FargowiltasSouls.Core.Globals;
+using FargowiltasSouls.Core.NPCMatching;
+using FargowiltasSouls.Core.Systems;
 using Microsoft.Xna.Framework;
 using System;
+using System.IO;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
-using Terraria.ModLoader;
-using FargowiltasSouls.Content.Buffs.Masomode;
-using FargowiltasSouls.Content.Buffs.Boss;
-using FargowiltasSouls.Content.Projectiles;
-using FargowiltasSouls.Core.Systems;
-using FargowiltasSouls.Core.Globals;
-using FargowiltasSouls.Common.Utilities;
-using FargowiltasSouls.Content.NPCs.EternityModeNPCs;
-using FargowiltasSouls.Core.NPCMatching;
 using Terraria.Localization;
+using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
 
 namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 {
-	public class DukeFishron : EModeNPCBehaviour
+    public class DukeFishron : EModeNPCBehaviour
     {
         public override NPCMatcher CreateMatcher() => new NPCMatcher().MatchType(NPCID.DukeFishron);
 
@@ -187,8 +186,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                         if (!RemovedInvincibility)
                             npc.dontTakeDamage = false;
                         TakeNoDamageOnHit = false;
-                        if (IsEX)
-                            npc.ai[2]++;
+                        npc.ai[2]++;
                         break;
 
                     case 1: //p1 dash
@@ -203,7 +201,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
                                 FargoSoulsUtil.NewNPCEasy(npc.GetSource_FromThis(), npc.Center,
                                     IsEX ? ModContent.NPCType<DetonatingBubbleEX>() : NPCID.DetonatingBubble,
-                                    velocity: npc.DirectionTo(Main.player[npc.target].Center));
+                                    velocity: npc.SafeDirectionTo(Main.player[npc.target].Center));
                             }
                         }
                         break;
@@ -225,7 +223,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                                     velocity: Vector2.Normalize(Vector2.UnitY.RotatedBy(rotation * i)));
                             }
 
-                            SpawnRazorbladeRing(18, 10f, FargoSoulsUtil.ScaledProjectileDamage(npc.damage, 4f / 6), 1f);
+                            SpawnRazorbladeRing(18, 10f, FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage, 4f / 6), 1f);
                         }
                         break;
 
@@ -254,8 +252,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                         if (!RemovedInvincibility)
                             npc.dontTakeDamage = false;
                         TakeNoDamageOnHit = false;
-                        if (IsEX) 
-                            npc.ai[2]++;
+                        npc.ai[2]++;
                         break;
 
                     case 6: //p2 dash
@@ -291,8 +288,8 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                             Projectile.NewProjectile(npc.GetSource_FromThis(), spawnPos.X, spawnPos.Y, npc.direction * -2f, 8f, ProjectileID.SharknadoBolt, 0, 0f, Main.myPlayer);
                             Projectile.NewProjectile(npc.GetSource_FromThis(), spawnPos.X, spawnPos.Y, 0f, 2f, ProjectileID.SharknadoBolt, 0, 0f, Main.myPlayer);
 
-                            SpawnRazorbladeRing(12, 12.5f, FargoSoulsUtil.ScaledProjectileDamage(npc.damage, 4f / 6), 0.75f);
-                            SpawnRazorbladeRing(12, 10f, FargoSoulsUtil.ScaledProjectileDamage(npc.damage, 4f / 6), -2f);
+                            SpawnRazorbladeRing(12, 12.5f, FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage, 4f / 6), 0.75f);
+                            SpawnRazorbladeRing(12, 10f, FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage, 4f / 6), -2f);
                         }
                         break;
 
@@ -342,8 +339,8 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                         {
                             if (FargoSoulsUtil.HostCheck)
                             {
-                                SpawnRazorbladeRing(5, 9f, FargoSoulsUtil.ScaledProjectileDamage(npc.damage, 4f / 6), 1f, true);
-                                SpawnRazorbladeRing(5, 9f, FargoSoulsUtil.ScaledProjectileDamage(npc.damage, 4f / 6), -0.5f, true);
+                                SpawnRazorbladeRing(5, 9f, FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage, 4f / 6), 1f, true);
+                                SpawnRazorbladeRing(5, 9f, FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage, 4f / 6), -0.5f, true);
                             }
                         }
                         else if (npc.ai[2] == 16f)
@@ -425,7 +422,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                                     continue;
 
                                 Vector2 offset = random ? Vector2.UnitY * -450f * j : Vector2.UnitX * 600f * j;
-                                Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, Vector2.Zero, ModContent.ProjectileType<FishronFishron>(), FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 0f, Main.myPlayer, offset.X, offset.Y);
+                                Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, Vector2.Zero, ModContent.ProjectileType<FishronFishron>(), FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 0f, Main.myPlayer, offset.X, offset.Y);
                             }
                         }
                         break;
@@ -433,7 +430,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     case 3: //p1 drop nados
                         if (npc.ai[2] == 60f && FargoSoulsUtil.HostCheck)
                         {
-                            SpawnRazorbladeRing(12, 10f, FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 1f);
+                            SpawnRazorbladeRing(12, 10f, FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 1f);
                         }
                         break;
 
@@ -471,10 +468,10 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                                 if (WorldSavingSystem.MasochistModeReal)
                                 {
                                     Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, Vector2.Normalize(npc.velocity).RotatedBy(Math.PI / 2),
-                                        ModContent.ProjectileType<RazorbladeTyphoon2>(), FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 0f, Main.myPlayer, .03f);
+                                        ModContent.ProjectileType<RazorbladeTyphoon2>(), FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 0f, Main.myPlayer, .03f);
                                 }
                                 Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, 0.014035f * Vector2.Normalize(npc.velocity).RotatedBy(-Math.PI / 2),
-                                    ModContent.ProjectileType<RazorbladeTyphoon2>(), FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 0f, Main.myPlayer, .08f);
+                                    ModContent.ProjectileType<RazorbladeTyphoon2>(), FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 0f, Main.myPlayer, .08f);
 
                                 //if (/*Fargowiltas.Instance.MasomodeEXLoaded ||*/ WorldSavingSystem.MasochistModeReal) //lol
                                 //{
@@ -505,7 +502,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                                             continue;
                                         Vector2 offset = SpectralFishronRandom ? Vector2.UnitY.RotatedBy(MathHelper.PiOver2 / 3 / 3 * i) * -500f * j : Vector2.UnitX.RotatedBy(MathHelper.PiOver2 / 3 / 3 * i) * 500f * j;
                                         if (FargoSoulsUtil.HostCheck)
-                                            Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, Vector2.Zero, ModContent.ProjectileType<FishronFishron>(), FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 0f, Main.myPlayer, offset.X, offset.Y);
+                                            Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, Vector2.Zero, ModContent.ProjectileType<FishronFishron>(), FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 0f, Main.myPlayer, offset.X, offset.Y);
                                     }
                                 }
                             }
@@ -521,8 +518,8 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                                     spawnPos += npc.Center;
                                     Projectile.NewProjectile(npc.GetSource_FromThis(), spawnPos.X, spawnPos.Y, 0f, 8f, ProjectileID.SharknadoBolt, 0, 0f, Main.myPlayer);
 
-                                    SpawnRazorbladeRing(12, 12.5f, FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 0.75f);
-                                    SpawnRazorbladeRing(12, 10f, FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 2f * npc.direction);
+                                    SpawnRazorbladeRing(12, 12.5f, FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 0.75f);
+                                    SpawnRazorbladeRing(12, 10f, FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 2f * npc.direction);
                                 }
                             }
                         }
@@ -611,7 +608,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                                     {
                                         Vector2 offset = 450 * -Vector2.UnitY.RotatedBy(MathHelper.TwoPi / max * (P3TimerOffset / spectralFishronDelay + Main.rand.NextFloat(0.5f)));
                                         if (FargoSoulsUtil.HostCheck)
-                                            Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, Vector2.Zero, ModContent.ProjectileType<FishronFishron>(), FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 0f, Main.myPlayer, offset.X, offset.Y);
+                                            Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, Vector2.Zero, ModContent.ProjectileType<FishronFishron>(), FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 0f, Main.myPlayer, offset.X, offset.Y);
                                     }
                                 }
 
@@ -639,17 +636,17 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                                 if (FargoSoulsUtil.HostCheck)
                                 {
                                     const float delay = 15;
-                                    Vector2 baseVel = 100f / delay * npc.DirectionTo(Main.player[npc.target].Center);
+                                    Vector2 baseVel = 100f / delay * npc.SafeDirectionTo(Main.player[npc.target].Center);
 
-                                    const int max = 10;
-                                    for (int i = 0; i < max; i++)
-                                    {
-                                        Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, baseVel.RotatedBy(2 * Math.PI / max * i),
-                                            ModContent.ProjectileType<FishronBubble>(), FargoSoulsUtil.ScaledProjectileDamage(npc.damage, 0.8f), 0f, Main.myPlayer, delay);
+                                        const int max = 10;
+                                        for (int i = 0; i < max; i++)
+                                        {
+                                            Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, baseVel.RotatedBy(2 * Math.PI / max * i),
+                                                ModContent.ProjectileType<FishronBubble>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage, 0.8f), 0f, Main.myPlayer, delay);
+                                        }
                                     }
                                 }
-                            }
-                        }*/
+                            }*/
                         break;
 
                     case 11: //p3 dash
@@ -699,8 +696,8 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                                     float range = MathHelper.ToRadians(Main.rand.NextFloat(1f, 15f));
                                     for (int i = -1; i <= 1; i++)
                                     {
-                                        int p = Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, 8f * npc.DirectionTo(Main.player[npc.target].Center).RotatedBy(range * i),
-                                            ModContent.ProjectileType<FishronBubble>(), FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 0f, Main.myPlayer);
+                                        int p = Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, 8f * npc.SafeDirectionTo(Main.player[npc.target].Center).RotatedBy(range * i),
+                                            ModContent.ProjectileType<FishronBubble>(), FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 0f, Main.myPlayer);
                                         if (p != Main.maxProjectiles)
                                             Main.projectile[p].timeLeft = 90;
                                     }
@@ -708,7 +705,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                                     for (int i = -1; i <= 1; i += 2)
                                     {
                                         int p = Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, 8f * Vector2.Normalize(npc.velocity).RotatedBy(Math.PI / 2 * i),
-                                            ModContent.ProjectileType<FishronBubble>(), FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 0f, Main.myPlayer);
+                                            ModContent.ProjectileType<FishronBubble>(), FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 0f, Main.myPlayer);
                                         if (p != Main.maxProjectiles)
                                             Main.projectile[p].timeLeft = 90;
                                     }
@@ -738,7 +735,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                         GeneralTimer = 0;
                         if (npc.ai[2] == 15f)
                         {
-                            SpawnRazorbladeRing(6, 8f, FargoSoulsUtil.ScaledProjectileDamage(npc.damage), -0.75f);
+                            SpawnRazorbladeRing(6, 8f, FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), -0.75f);
                         }
                         else if (npc.ai[2] == 16f)
                         {
@@ -747,7 +744,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                             {
                                 Vector2 vel = npc.DirectionFrom(Main.player[npc.target].Center).RotatedBy(MathHelper.PiOver2 / max * j);
                                 if (FargoSoulsUtil.HostCheck)
-                                    Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, vel, ModContent.ProjectileType<FishronBubble>(), FargoSoulsUtil.ScaledProjectileDamage(npc.damage, 0.8f), 0f, Main.myPlayer);
+                                    Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, vel, ModContent.ProjectileType<FishronBubble>(), FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage, 0.8f), 0f, Main.myPlayer);
                             }
                         }
                         break;
@@ -805,7 +802,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
                     Vector2 spawn = new(tilePosX * 16 + 8, tilePosY * 16 + 8);
                     if (FargoSoulsUtil.HostCheck)
-                        Projectile.NewProjectile(npc.GetSource_FromThis(), spawn, Vector2.UnitX * -i * 6f, ProjectileID.Cthulunado, FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 0f, Main.myPlayer, 10, 25);
+                        Projectile.NewProjectile(npc.GetSource_FromThis(), spawn, Vector2.UnitX * -i * 6f, ProjectileID.Cthulunado, FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 0f, Main.myPlayer, 10, 25);
                 }
             }
 

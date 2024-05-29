@@ -73,7 +73,7 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
                 if (++Projectile.localAI[0] > attackDelay)
                 {
                     Projectile.ai[1] = 2f;
-                    Projectile.velocity = 18f * Projectile.DirectionTo(Main.player[npc.target].Center);
+                    Projectile.velocity = 18f * Projectile.SafeDirectionTo(Main.player[npc.target].Center);
                     Projectile.netUpdate = true;
 
                     Projectile.localAI[0] = Main.player[npc.target].Center.X;

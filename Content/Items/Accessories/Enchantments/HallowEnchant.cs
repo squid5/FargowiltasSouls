@@ -1,6 +1,8 @@
-﻿using FargowiltasSouls.Content.Projectiles;
+﻿using FargowiltasSouls.Common.Graphics.Particles;
+using FargowiltasSouls.Content.Projectiles;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using FargowiltasSouls.Core.Toggler.Content;
+using Luminance.Core.Graphics;
 using Microsoft.CodeAnalysis;
 using Microsoft.Xna.Framework;
 using System.Linq;
@@ -11,7 +13,7 @@ using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
 {
-	public class HallowEnchant : BaseEnchant
+    public class HallowEnchant : BaseEnchant
     {
         public override void SetStaticDefaults()
         {
@@ -19,7 +21,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
         }
 
         public override Color nameColor => new(150, 133, 100);
-        
+
 
         public override void SetDefaults()
         {
@@ -50,7 +52,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
     }
     public class HallowEffect : AccessoryEffect
     {
-        
+
         public override Header ToggleHeader => Header.GetHeader<SpiritHeader>();
         public override int ToggleItemType => ModContent.ItemType<HallowEnchant>();
 
@@ -58,7 +60,8 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
         public static void HealRepel(Player player)
         {
             SoundEngine.PlaySound(SoundID.Item72);
-            Projectile.NewProjectile(player.GetSource_EffectItem<HallowEffect>(), player.Center, Vector2.Zero, ModContent.ProjectileType<GlowRing>(), 0, 0f, Main.myPlayer, player.whoAmI, -25);
+            Particle p = new HallowEnchantBarrier(player.Center, Vector2.Zero, RepelRadius / 160f, 32);
+            p.Spawn();
 
             foreach (Projectile projectile in Main.projectile.Where(p => p.hostile && FargoSoulsUtil.CanDeleteProjectile(p) && p.Distance(player.Center) <= RepelRadius))
             {

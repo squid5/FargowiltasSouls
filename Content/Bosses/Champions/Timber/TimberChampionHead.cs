@@ -1,21 +1,21 @@
-﻿using FargowiltasSouls.Content.Projectiles;
+﻿using FargowiltasSouls.Content.Bosses.TrojanSquirrel;
+using FargowiltasSouls.Content.Buffs.Masomode;
+using FargowiltasSouls.Content.Items.Accessories.Forces;
+using FargowiltasSouls.Content.Items.Placables.Relics;
+using FargowiltasSouls.Content.Projectiles;
+using FargowiltasSouls.Core.Globals;
+using FargowiltasSouls.Core.ItemDropRules;
+using FargowiltasSouls.Core.Systems;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
-using FargowiltasSouls.Content.Items.Placables.Relics;
-using FargowiltasSouls.Content.Items.Accessories.Forces;
-using FargowiltasSouls.Content.Buffs.Masomode;
-using FargowiltasSouls.Core.ItemDropRules;
-using FargowiltasSouls.Core.Systems;
-using FargowiltasSouls.Content.Bosses.TrojanSquirrel;
-using FargowiltasSouls.Core.Globals;
-using System.Collections.Generic;
 
 namespace FargowiltasSouls.Content.Bosses.Champions.Timber
 {
@@ -29,20 +29,17 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Timber
             Main.npcFrameCount[NPC.type] = 3;
             NPCID.Sets.TrailCacheLength[NPC.type] = 8;
             NPCID.Sets.TrailingMode[NPC.type] = 1;
-            NPC.AddDebuffImmunities(new List<int>
-            {
+            NPC.AddDebuffImmunities(
+            [
                 BuffID.Confused,
                     BuffID.Chilled,
                     BuffID.OnFire,
                     BuffID.Suffocation,
                     ModContent.BuffType<LethargicBuff>(),
                     ModContent.BuffType<ClippedWingsBuff>()
-            });
+            ]);
 
-            NPCID.Sets.NPCBestiaryDrawOffset.Add(NPC.type, new NPCID.Sets.NPCBestiaryDrawModifiers()
-            {
-                Hide = true
-            });
+            this.ExcludeFromBestiary();
         }
 
         public override void SetDefaults()
@@ -147,7 +144,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Timber
 
                         if (FargoSoulsUtil.HostCheck)
                             Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, (player.Center - NPC.Center) / 120,
-                                ModContent.ProjectileType<TimberSquirrel>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage), 0f, Main.myPlayer, NPC.ai[3], NPC.whoAmI);
+                                ModContent.ProjectileType<TimberSquirrel>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), 0f, Main.myPlayer, NPC.ai[3], NPC.whoAmI);
                     }
 
                     if (NPC.ai[1] < 60)
@@ -211,7 +208,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Timber
                                 if (FargoSoulsUtil.HostCheck)
                                 {
                                     Projectile.NewProjectile(NPC.GetSource_FromThis(), spawnPos, speed, ModContent.ProjectileType<TimberLaser>(),
-                                        FargoSoulsUtil.ScaledProjectileDamage(NPC.damage), 0f, Main.myPlayer, NPC.whoAmI);
+                                        FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), 0f, Main.myPlayer, NPC.whoAmI);
                                 }
                             }
                         }
@@ -259,7 +256,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Timber
                                 for (int i = -max; i <= max; i++)
                                 {
                                     if (FargoSoulsUtil.HostCheck)
-                                        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, vel.RotatedBy(MathHelper.ToRadians(75) / max * i), ModContent.ProjectileType<TimberSnowball>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage), 0f, Main.myPlayer, 1f);
+                                        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, vel.RotatedBy(MathHelper.ToRadians(75) / max * i), ModContent.ProjectileType<TimberSnowball>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), 0f, Main.myPlayer, 1f);
                                 }
 
                                 feedbackFX = true;
@@ -295,7 +292,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Timber
                                 for (int i = 0; i < 20; i++)
                                 {
                                     Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, distance + Main.rand.NextVector2Square(-0.5f, 0.5f) * 3,
-                                        ModContent.ProjectileType<TimberAcorn>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage), 0f, Main.myPlayer);
+                                        ModContent.ProjectileType<TimberAcorn>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), 0f, Main.myPlayer);
                                 }
                             }
                         }
@@ -357,7 +354,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Timber
                                 Vector2 distance = spawnPos - NPC.Center;
                                 distance.X /= time;
                                 distance.Y = distance.Y / time - 0.5f * gravity * time;
-                                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, distance, ModContent.ProjectileType<TimberTreeAcorn>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage), 0f, Main.myPlayer, NPC.target);
+                                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, distance, ModContent.ProjectileType<TimberTreeAcorn>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), 0f, Main.myPlayer, NPC.target);
                             }
                         }
                     }
@@ -391,7 +388,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Timber
                             if (WorldSavingSystem.EternityMode)
                             {
                                 targetPos = player.Center + 150 * NPC.DirectionFrom(player.Center).RotatedBy(MathHelper.ToRadians(10));
-                                NPC.velocity = NPC.DirectionTo(targetPos) * NPC.velocity.Length();
+                                NPC.velocity = NPC.SafeDirectionTo(targetPos) * NPC.velocity.Length();
                                 Movement(targetPos, 0.25f, 24f);
                             }
                             else
@@ -408,12 +405,12 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Timber
 
                                 SoundEngine.PlaySound(SoundID.Item92, NPC.Center);
 
-                                Vector2 speed = 32f * NPC.DirectionTo(player.Center).RotatedByRandom(Math.PI / 2);
+                                Vector2 speed = 32f * NPC.SafeDirectionTo(player.Center).RotatedByRandom(Math.PI / 2);
                                 float ai1 = noMoreChainsTime + endlag - NPC.ai[1];
                                 if (FargoSoulsUtil.HostCheck)
                                 {
                                     Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, speed,
-                                        ModContent.ProjectileType<TimberHook2>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage), 0f, Main.myPlayer, NPC.whoAmI, ai1);
+                                        ModContent.ProjectileType<TimberHook2>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), 0f, Main.myPlayer, NPC.whoAmI, ai1);
                                 }
                             }
                         }
@@ -497,7 +494,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Timber
 
                                 if (FargoSoulsUtil.HostCheck)
                                 {
-                                    int damage = NPC.ai[1] > 120 ? FargoSoulsUtil.ScaledProjectileDamage(NPC.damage, 4f / 4) : 0;
+                                    int damage = NPC.ai[1] > 120 ? FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage, 4f / 4) : 0;
                                     for (int i = -2; i <= 2; i++)
                                     {
                                         Vector2 speed = new(5f * i, -20f);
@@ -632,7 +629,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Timber
             {
                 float ai1 = time + Main.rand.Next(-10, 11) - 1;
                 Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, distance,
-                    ModContent.ProjectileType<TrojanSquirrelProj>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage), 0f, Main.myPlayer, gravity, ai1);
+                    ModContent.ProjectileType<TrojanSquirrelProj>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), 0f, Main.myPlayer, gravity, ai1);
             }
         }
 

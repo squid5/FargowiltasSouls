@@ -5,7 +5,6 @@ using FargowiltasSouls.Content.Items.Placables.Relics;
 using FargowiltasSouls.Content.Items.Placables.Trophies;
 using FargowiltasSouls.Content.Items.Summons;
 using FargowiltasSouls.Content.Items.Weapons.Challengers;
-using FargowiltasSouls.Core.Globals;
 using FargowiltasSouls.Core.Systems;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -41,12 +40,12 @@ namespace FargowiltasSouls.Content.Bosses.TrojanSquirrel
             NPCID.Sets.TrailCacheLength[Type] = 8;
             NPCID.Sets.TrailingMode[Type] = 3;
 
-            NPC.AddDebuffImmunities(new List<int>
-            {
+            NPC.AddDebuffImmunities(
+            [
                 BuffID.Confused,
                     ModContent.BuffType<LethargicBuff>(),
                     ModContent.BuffType<ClippedWingsBuff>()
-            });
+            ]);
         }
 
         public override void SetDefaults()
@@ -62,6 +61,9 @@ namespace FargowiltasSouls.Content.Bosses.TrojanSquirrel
             NPC.knockBackResist = 0f;
             NPC.lavaImmune = true;
             NPC.aiStyle = -1;
+
+            if (Main.getGoodWorld)
+                NPC.scale += 1;
         }
 
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
@@ -111,10 +113,7 @@ namespace FargowiltasSouls.Content.Bosses.TrojanSquirrel
             NPCID.Sets.NoMultiplayerSmoothingByType[NPC.type] = true;
             NPCID.Sets.CantTakeLunchMoney[Type] = true;
 
-            NPCID.Sets.NPCBestiaryDrawOffset.Add(NPC.type, new NPCID.Sets.NPCBestiaryDrawModifiers()
-            {
-                Hide = true
-            });
+            this.ExcludeFromBestiary();
         }
 
         public override void SetDefaults()
@@ -210,13 +209,13 @@ namespace FargowiltasSouls.Content.Bosses.TrojanSquirrel
                 {
                     float oldrot = NPC.oldRot[i];
                     Vector2 oldCenter = body.oldPos[i] + body.Size / 2;
-                    DrawData oldGlow = new DrawData(texture2D13, oldCenter - screenPos + new Vector2(0f, NPC.gfxOffY - 53 * body.scale), new Microsoft.Xna.Framework.Rectangle?(rectangle), color26 * (0.5f / i), oldrot, origin2, NPC.scale, effects, 0);
+                    DrawData oldGlow = new(texture2D13, oldCenter - screenPos + new Vector2(0f, NPC.gfxOffY - 53 * body.scale), new Microsoft.Xna.Framework.Rectangle?(rectangle), color26 * (0.5f / i), oldrot, origin2, NPC.scale, effects, 0);
                     GameShaders.Misc["LCWingShader"].UseColor(Color.Blue).UseSecondaryColor(Color.Black);
                     GameShaders.Misc["LCWingShader"].Apply(oldGlow);
                     oldGlow.Draw(spriteBatch);
                 }
             }
-            
+
 
             Vector2 center = body.Center;
 
@@ -249,10 +248,10 @@ namespace FargowiltasSouls.Content.Bosses.TrojanSquirrel
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
-            bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
+            bestiaryEntry.Info.AddRange([
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface,
                 new FlavorTextBestiaryInfoElement($"Mods.FargowiltasSouls.Bestiary.{Name}")
-            });
+            ]);
         }
 
         public override void SetDefaults()
@@ -332,15 +331,15 @@ namespace FargowiltasSouls.Content.Bosses.TrojanSquirrel
             if (p.IsWithinBounds(Main.maxPlayers))
             {
                 Player player = Main.player[p];
-                if (player != null && player.active && !player.dead) 
-                { 
+                if (player != null && player.active && !player.dead)
+                {
                     if (NPC.Distance(player.Center) < 400)
                     {
                         NPC.Center = player.Center - Vector2.UnitX * 1000 * player.direction;
                     }
                 };
             }
-            
+
         }
 
         private void TileCollision(bool fallthrough = false, bool dropDown = false)
@@ -529,7 +528,7 @@ namespace FargowiltasSouls.Content.Bosses.TrojanSquirrel
                             if (WorldSavingSystem.EternityMode && head == null && NPC.localAI[0] % 3 == 0 && FargoSoulsUtil.HostCheck)
                             {
                                 int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Top.X, NPC.Top.Y, Main.rand.NextFloat(-5, 5), Main.rand.NextFloat(-3),
-                                    Main.rand.Next(326, 329), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage), 0f, Main.myPlayer);
+                                    Main.rand.Next(326, 329), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), 0f, Main.myPlayer);
                                 if (p != Main.maxProjectiles)
                                     Main.projectile[p].timeLeft = 90;
                             }
@@ -847,7 +846,7 @@ namespace FargowiltasSouls.Content.Bosses.TrojanSquirrel
             if (WorldSavingSystem.MasochistModeReal && Main.getGoodWorld && FargoSoulsUtil.HostCheck)
             {
                 int[] edibleTiles =
-                {
+                [
                     TileID.WoodBlock,
                     TileID.AshWood,
                     TileID.BorealWood,
@@ -866,7 +865,7 @@ namespace FargowiltasSouls.Content.Bosses.TrojanSquirrel
                     TileID.VanityTreeSakura,
                     TileID.VanityTreeYellowWillow,
                     TileID.LivingMahoganyLeaves
-                };
+                ];
                 for (float x = NPC.position.X; x < NPC.BottomRight.X; x += 16)
                 {
                     for (float y = NPC.position.Y; y < NPC.BottomRight.Y; y += 16)
@@ -879,7 +878,7 @@ namespace FargowiltasSouls.Content.Bosses.TrojanSquirrel
                             WorldGen.KillTile(xCoord, yCoord, noItem: true);
                             if (Main.netMode == NetmodeID.Server)
                                 NetMessage.SendTileSquare(-1, xCoord, yCoord, 1);
-                            
+
                             NPC.scale += 0.01f;
                             NPC.netUpdate = true;
                             if (head is NPC)
@@ -907,7 +906,7 @@ namespace FargowiltasSouls.Content.Bosses.TrojanSquirrel
                 int max = WorldSavingSystem.MasochistModeReal ? 4 : 2;
                 for (int i = -max; i <= max; i++)
                 {
-                    Projectile p = Projectile.NewProjectileDirect(NPC.GetSource_FromThis(), NPC.Bottom + new Vector2(offsetX * i, -offsetY), Vector2.Zero, ProjectileID.DD2ExplosiveTrapT3Explosion, FargoSoulsUtil.ScaledProjectileDamage(NPC.damage), 0, Main.myPlayer);
+                    Projectile p = Projectile.NewProjectileDirect(NPC.GetSource_FromThis(), NPC.Bottom + new Vector2(offsetX * i, -offsetY), Vector2.Zero, ProjectileID.DD2ExplosiveTrapT3Explosion, FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), 0, Main.myPlayer);
                     p.friendly = false;
                     p.hostile = true;
                 }
@@ -1033,7 +1032,7 @@ namespace FargowiltasSouls.Content.Bosses.TrojanSquirrel
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<TrojanSquirrelTrophy>(), 10));
 
             npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<TrojanSquirrelRelic>()));
-            
+
             LeadingConditionRule rule = new(new Conditions.NotExpert());
             rule.OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<TreeSword>(), ModContent.ItemType<MountedAcornGun>(), ModContent.ItemType<SnowballStaff>(), ModContent.ItemType<KamikazeSquirrelStaff>()));
             rule.OnSuccess(ItemDropRule.OneFromOptions(1,

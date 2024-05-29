@@ -1,5 +1,4 @@
 using FargowiltasSouls.Core.AccessoryEffectSystem;
-using FargowiltasSouls.Core.ModPlayers;
 using FargowiltasSouls.Core.Toggler.Content;
 using Microsoft.Xna.Framework;
 using Terraria;
@@ -8,11 +7,11 @@ using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
 {
-	public class MoltenEnchant : BaseEnchant
+    public class MoltenEnchant : BaseEnchant
     {
 
         public override Color nameColor => new(193, 43, 43);
-        
+
 
         public override void SetDefaults()
         {
@@ -34,7 +33,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
             .AddIngredient(ItemID.MoltenBreastplate)
             .AddIngredient(ItemID.MoltenGreaves)
             //ashwood ench
-            .AddIngredient(ItemID.Sunfury)
+            .AddIngredient(ItemID.MoltenFury)
             .AddIngredient(ItemID.DemonsEye)
 
             .AddTile(TileID.DemonAltar)
@@ -53,12 +52,12 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
                 Lighting.AddLight((int)(player.Center.X / 16f), (int)(player.Center.Y / 16f), 0.65f, 0.4f, 0.1f);
                 int buff = BuffID.OnFire;
                 float distance = 200f;
-                int baseDamage = 40;
+                int baseDamage = 20;
 
                 if (player.FargoSouls().ForceEffect<MoltenEnchant>())
                 {
                     distance *= 1.5f;
-                    baseDamage *= 2;
+                    baseDamage *= 4;
                 }
 
                 int damage = FargoSoulsUtil.HighestDamageTypeScaling(player, baseDamage);

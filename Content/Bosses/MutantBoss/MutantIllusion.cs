@@ -9,7 +9,7 @@ using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Content.Bosses.MutantBoss
 {
-	[AutoloadBossHead]
+    [AutoloadBossHead]
     public class MutantIllusion : ModNPC
     {
         public override string Texture => $"FargowiltasSouls/Content/Bosses/MutantBoss/MutantBoss{FargoSoulsUtil.TryAprilFoolsTexture}";
@@ -22,8 +22,8 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
             Main.npcFrameCount[NPC.type] = 4;
             NPCID.Sets.CantTakeLunchMoney[Type] = true;
 
-            NPC.AddDebuffImmunities(new List<int>
-            {
+            NPC.AddDebuffImmunities(
+            [
                 BuffID.Confused,
                 BuffID.Chilled,
                 BuffID.OnFire,
@@ -36,12 +36,9 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
                 ModContent.BuffType<SadismBuff>(),
                 ModContent.BuffType<GodEaterBuff>(),
                 ModContent.BuffType<TimeFrozenBuff>()
-            });
+            ]);
 
-            NPCID.Sets.NPCBestiaryDrawOffset.Add(NPC.type, new NPCID.Sets.NPCBestiaryDrawModifiers()
-            {
-                Hide = true
-            });
+            this.ExcludeFromBestiary();
         }
 
         public override void SetDefaults()

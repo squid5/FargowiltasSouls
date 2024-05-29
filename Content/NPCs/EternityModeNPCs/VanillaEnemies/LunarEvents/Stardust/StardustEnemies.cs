@@ -5,10 +5,10 @@ using Terraria.ID;
 
 namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEvents.Stardust
 {
-	public class StardustEnemies : EModeNPCBehaviour
+    public class StardustEnemies : EModeNPCBehaviour
     {
         public static int[] StardustEnemyIDs =
-        {
+        [
             NPCID.StardustCellBig,
             NPCID.StardustCellSmall,
             NPCID.StardustWormHead,
@@ -19,7 +19,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEve
             NPCID.StardustJellyfishBig,
             NPCID.StardustJellyfishSmall,
             NPCID.StardustSoldier
-        };
+        ];
         public override NPCMatcher CreateMatcher() => new NPCMatcher().MatchTypeRange(
             StardustEnemyIDs
         );

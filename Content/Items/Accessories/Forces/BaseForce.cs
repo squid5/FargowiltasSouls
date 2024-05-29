@@ -1,7 +1,4 @@
-using FargowiltasSouls.Content.Items.Accessories.Enchantments;
-using FargowiltasSouls.Core.AccessoryEffectSystem;
 using System.Collections.Generic;
-using System.Linq;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -16,7 +13,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Forces
         /// IDs for the Enchants contained of each Force type. <para/>
         /// Set in SetStaticDefaults.
         /// </summary>
-        public static Dictionary<int, int[]> Enchants = new();
+        public static Dictionary<int, int[]> Enchants = [];
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();

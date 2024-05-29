@@ -1,24 +1,24 @@
-using System.IO;
-using Terraria.ModLoader.IO;
+using FargowiltasSouls.Content.Buffs.Masomode;
+using FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.Corruption;
 using FargowiltasSouls.Content.Projectiles.Masomode;
+using FargowiltasSouls.Core.Globals;
+using FargowiltasSouls.Core.NPCMatching;
+using FargowiltasSouls.Core.Systems;
 using Microsoft.Xna.Framework;
 using System;
+using System.IO;
 using System.Linq;
 using Terraria;
 using Terraria.Audio;
-using Terraria.ID;
-using Terraria.ModLoader;
-using FargowiltasSouls.Content.Buffs.Masomode;
-using FargowiltasSouls.Core.Systems;
-using FargowiltasSouls.Core.Globals;
-using FargowiltasSouls.Core.NPCMatching;
-using FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.Corruption;
 using Terraria.DataStructures;
+using Terraria.ID;
 using Terraria.Localization;
+using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
 
 namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 {
-	public class EaterofWorlds : EModeNPCBehaviour
+    public class EaterofWorlds : EModeNPCBehaviour
     {
         public override NPCMatcher CreateMatcher() => new NPCMatcher().MatchTypeRange(NPCID.EaterofWorldsHead, NPCID.EaterofWorldsBody, NPCID.EaterofWorldsTail);
 
@@ -69,6 +69,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             base.ModifyIncomingHit(npc, ref modifiers);
         }
 
+
         public override bool CheckDead(NPC npc)
         {
             if (WorldSavingSystem.SwarmActive)
@@ -101,6 +102,14 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
             if (EaterofWorldsHead.HaveSpawnDR > 0)
                 modifiers.FinalDamage /= projectile.numHits + 1;
+        }
+
+        public override void SafeOnHitByProjectile(NPC npc, Projectile projectile, NPC.HitInfo hit, int damageDone)
+        {
+            if (!FargoSoulsUtil.IsSummonDamage(projectile) && projectile.damage > 5)
+                projectile.damage = (int)Math.Min(projectile.damage - 1, projectile.damage * 0.8);
+
+            base.SafeOnHitByProjectile(npc, projectile, hit, damageDone);
         }
 
         public override void OnHitPlayer(NPC npc, Player target, Player.HurtInfo hurtInfo)
@@ -249,7 +258,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
                                     Vector2 vel = (Main.player[npc.target].Center - Main.npc[i].Center) / 45;
                                     Projectile.NewProjectile(npc.GetSource_FromThis(), Main.npc[i].Center, vel,
-                                        ModContent.ProjectileType<CursedFireballHoming>(), FargoSoulsUtil.ScaledProjectileDamage(npc.damage, 0.8f), 0f, Main.myPlayer, npc.target, delay);
+                                        ModContent.ProjectileType<CursedFireballHoming>(), FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage, 0.8f), 0f, Main.myPlayer, npc.target, delay);
 
                                     delay += WorldSavingSystem.MasochistModeReal ? 4 : 10;
                                 }
@@ -261,7 +270,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     {
                         Vector2 vel = (Main.player[npc.target].Center - npc.Center) / 45;
                         Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, vel,
-                            ModContent.ProjectileType<CursedFireballHoming>(), FargoSoulsUtil.ScaledProjectileDamage(npc.damage, 0.8f), 0f, Main.myPlayer, npc.target, delay);
+                            ModContent.ProjectileType<CursedFireballHoming>(), FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage, 0.8f), 0f, Main.myPlayer, npc.target, delay);
                         delay += WorldSavingSystem.MasochistModeReal ? 4 : 8;
                     }
                 }
@@ -301,12 +310,16 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     if (WorldSavingSystem.MasochistModeReal && FargoSoulsUtil.HostCheck) //cursed flamethrower, roughly same direction as head
                     {
                         Vector2 velocity = new Vector2(5f, 0f).RotatedBy(npc.rotation - Math.PI / 2.0 + MathHelper.ToRadians(Main.rand.Next(-15, 16)));
-                        Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, velocity, ProjectileID.EyeFire, FargoSoulsUtil.ScaledProjectileDamage(npc.damage, 0.8f), 0f, Main.myPlayer);
+                        Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, velocity, ProjectileID.EyeFire, FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage, 0.8f), 0f, Main.myPlayer);
                     }
                 }
 
                 if (npc.whoAmI == firstEater)
                 {
+                    //faster countup in maso
+                    if (UTurnCountdownTimer < 700 - 900 - 6 && WorldSavingSystem.MasochistModeReal)
+                        UTurnCountdownTimer++;
+
                     if (UTurnCountdownTimer == 700 - 90) //roar telegraph
                         SoundEngine.PlaySound(SoundID.Roar, Main.player[npc.target].Center);
 
@@ -318,12 +331,23 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                             UTurn = true;
                             DoTheWave = !DoTheWave;
                             UTurnTotalSpacingDistance = NPC.CountNPCS(npc.type) / 2;
+                            if (WorldSavingSystem.MasochistModeReal)
+                                UTurnTotalSpacingDistance /= 2;
 
                             int headCounter = 0; //determine position of this head in the group
+                            bool actuallyDoTheThing = true;
                             for (int i = 0; i < Main.maxNPCs; i++) //synchronize
                             {
                                 if (Main.npc[i].active && Main.npc[i].type == npc.type)
                                 {
+                                    //in maso, only have every other head participate in group attacks
+                                    if (WorldSavingSystem.MasochistModeReal && i != npc.whoAmI)
+                                    {
+                                        actuallyDoTheThing = !actuallyDoTheThing;
+                                        if (!actuallyDoTheThing)
+                                            continue;
+                                    }
+
                                     Main.npc[i].GetGlobalNPC<EaterofWorldsHead>().UTurnAITimer = DoTheWave && UTurnTotalSpacingDistance != 0 ? headCounter * 90 / UTurnTotalSpacingDistance / 2 - 60 : 0;
                                     if (WorldSavingSystem.MasochistModeReal)
                                         Main.npc[i].GetGlobalNPC<EaterofWorldsHead>().UTurnAITimer += 60;
@@ -581,7 +605,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
         public override void OnKill(NPC npc)
         {
             base.OnKill(npc);
-            
+
             if (WorldSavingSystem.MasochistModeReal && FargoSoulsUtil.HostCheck)
             {
                 for (int i = 0; i < 8; i++)

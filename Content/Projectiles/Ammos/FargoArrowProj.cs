@@ -9,7 +9,7 @@ namespace FargowiltasSouls.Content.Projectiles.Ammos
 {
     public class FargoArrowProj : ModProjectile
     {
-        private readonly int[] dusts = new int[] { 130, 55, 133, 131, 132 };
+        private readonly int[] dusts = [130, 55, 133, 131, 132];
         private int currentDust = 0;
         private int timer = 0;
         private Vector2 velocity;
@@ -109,7 +109,7 @@ namespace FargowiltasSouls.Content.Projectiles.Ammos
                 NPC npc = Main.npc[num22];
                 float t = Projectile.Distance(npc.Center);
                 Vector2 value3 = -Vector2.UnitY * MathHelper.Lerp(npc.height * 0.1f, npc.height * 0.5f, Utils.GetLerpValue(0f, 300f, t, false));
-                Projectile.velocity = Projectile.DirectionTo(npc.Center + value3).SafeNormalize(-Vector2.UnitY) * Projectile.velocity.Length();
+                Projectile.velocity = Projectile.SafeDirectionTo(npc.Center + value3).SafeNormalize(-Vector2.UnitY) * Projectile.velocity.Length();
                 Projectile.netUpdate = true;
             }
 

@@ -1,20 +1,18 @@
 ﻿using FargowiltasSouls.Content.Items.Accessories.Enchantments;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
-using FargowiltasSouls.Core.ModPlayers;
 using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Content.Items.Accessories.Forces
 {
-	[AutoloadEquip(EquipType.Shield)]
+    [AutoloadEquip(EquipType.Shield)]
     public class TerraForce : BaseForce
     {
 
         public override void SetStaticDefaults()
         {
-            Enchants[Type] = new int[]
-            {
+            Enchants[Type] =
+            [
                 ModContent.ItemType<CopperEnchant>(),
                 ModContent.ItemType<TinEnchant>(),
                 ModContent.ItemType<IronEnchant>(),
@@ -22,7 +20,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Forces
                 ModContent.ItemType<SilverEnchant>(),
                 ModContent.ItemType<TungstenEnchant>(),
                 ModContent.ItemType<ObsidianEnchant>()
-            };
+            ];
         }
 
         public override void UpdateInventory(Player player)

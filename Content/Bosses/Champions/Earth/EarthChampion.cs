@@ -1,6 +1,13 @@
-﻿using Microsoft.Xna.Framework;
+﻿using FargowiltasSouls.Content.Buffs.Masomode;
+using FargowiltasSouls.Content.Items.Accessories.Forces;
+using FargowiltasSouls.Content.Items.Placables.Relics;
+using FargowiltasSouls.Core.Globals;
+using FargowiltasSouls.Core.ItemDropRules;
+using FargowiltasSouls.Core.Systems;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent.Bestiary;
@@ -15,6 +22,7 @@ using FargowiltasSouls.Core.Systems;
 using FargowiltasSouls.Core.Globals;
 using FargowiltasSouls.Content.Buffs.Souls;
 using System.Collections.Generic;
+using Luminance.Core.Graphics;
 
 namespace FargowiltasSouls.Content.Bosses.Champions.Earth
 {
@@ -31,15 +39,15 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Earth
             NPCID.Sets.MPAllowedEnemies[Type] = true;
             NPCID.Sets.BossBestiaryPriority.Add(NPC.type);
 
-            NPC.AddDebuffImmunities(new List<int>
-            {
+            NPC.AddDebuffImmunities(
+            [
                 BuffID.Confused,
                     BuffID.Chilled,
                     BuffID.OnFire,
                     BuffID.Suffocation,
                     ModContent.BuffType<LethargicBuff>(),
                     ModContent.BuffType<ClippedWingsBuff>()
-            });
+            ]);
 
             NPCID.Sets.NPCBestiaryDrawOffset.Add(NPC.type, new NPCID.Sets.NPCBestiaryDrawModifiers()
             {
@@ -54,10 +62,10 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Earth
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
-            bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
+            bestiaryEntry.Info.AddRange([
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.TheUnderworld,
                 new FlavorTextBestiaryInfoElement($"Mods.FargowiltasSouls.Bestiary.{Name}")
-            });
+            ]);
         }
 
         public override Color? GetAlpha(Color drawColor)
@@ -134,7 +142,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Earth
                     NPC.netUpdate = true;
 
                     if (!Main.dedServ && Main.LocalPlayer.active)
-                        Main.LocalPlayer.FargoSouls().Screenshake = 30;
+                        ScreenShakeSystem.StartShake(10, shakeStrengthDissipationIncrement: 10f / 30);
 
                     if (FargoSoulsUtil.HostCheck)
                     {
@@ -189,7 +197,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Earth
                             //Projectile.NewProjectile(npc.GetSource_FromThis(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<Projectiles.GlowRing>(), 0, 0f, Main.myPlayer, NPC.whoAmI, -3);
 
                             if (!Main.dedServ && Main.LocalPlayer.active)
-                                Main.LocalPlayer.FargoSouls().Screenshake = 30;
+                                ScreenShakeSystem.StartShake(10, shakeStrengthDissipationIncrement: 10f / 30);
 
                             if (FargoSoulsUtil.HostCheck)
                             {
@@ -317,8 +325,8 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Earth
                                 for (int i = -1; i <= 1; i++)
                                 {
                                     Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + Vector2.UnitY * 60,
-                                        (NPC.localAI[2] == 1 ? 12 : 8) * NPC.DirectionTo(player.Center).RotatedBy(MathHelper.ToRadians(8 * i)),
-                                        ProjectileID.Fireball, FargoSoulsUtil.ScaledProjectileDamage(NPC.damage), 0f, Main.myPlayer);
+                                        (NPC.localAI[2] == 1 ? 12 : 8) * NPC.SafeDirectionTo(player.Center).RotatedBy(MathHelper.ToRadians(8 * i)),
+                                        ProjectileID.Fireball, FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), 0f, Main.myPlayer);
                                 }
                             }
                         }

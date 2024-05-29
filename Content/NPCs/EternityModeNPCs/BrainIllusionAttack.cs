@@ -10,7 +10,7 @@ using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs
 {
-	public class BrainIllusionAttack : ModNPC
+    public class BrainIllusionAttack : ModNPC
     {
         public override string Texture => "Terraria/Images/NPC_266";
 
@@ -24,18 +24,15 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs
             NPCID.Sets.TrailingMode[NPC.type] = 1;
             NPCID.Sets.CantTakeLunchMoney[Type] = true;
 
-            NPCID.Sets.NPCBestiaryDrawOffset.Add(NPC.type, new NPCID.Sets.NPCBestiaryDrawModifiers()
-            {
-                Hide = true
-            });
-            NPC.AddDebuffImmunities(new List<int>
-            {
+            this.ExcludeFromBestiary();
+            NPC.AddDebuffImmunities(
+            [
                 BuffID.OnFire,
                 BuffID.Confused,
                 BuffID.Suffocation,
                 BuffID.CursedInferno,
                 BuffID.Burning,
-            });
+            ]);
         }
 
         public override void SetDefaults()
@@ -107,7 +104,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs
             else if (NPC.localAI[0] == attackDelay)
             {
                 NPC.Center = new Vector2(NPC.localAI[2], NPC.localAI[3]);
-                NPC.velocity = 18f * NPC.DirectionTo(Main.player[NPC.target].Center);
+                NPC.velocity = 18f * NPC.SafeDirectionTo(Main.player[NPC.target].Center);
                 NPC.ai[2] = Main.player[NPC.target].Center.X;
                 NPC.ai[3] = Main.player[NPC.target].Center.Y;
                 NPC.netUpdate = true;

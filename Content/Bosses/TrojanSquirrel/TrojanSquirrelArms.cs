@@ -57,7 +57,7 @@ namespace FargowiltasSouls.Content.Bosses.TrojanSquirrel
                         {
                             //dont attack unless player is in 90 degree cone in front of squrrl
                             float baseAngle = NPC.direction > 0 ? 0f : MathHelper.Pi;
-                            if (Math.Abs(MathHelper.WrapAngle(NPC.DirectionTo(Main.player[NPC.target].Center).ToRotation() - baseAngle)) > MathHelper.PiOver4)
+                            if (Math.Abs(MathHelper.WrapAngle(NPC.SafeDirectionTo(Main.player[NPC.target].Center).ToRotation() - baseAngle)) > MathHelper.PiOver4)
                             {
                                 NPC.ai[1] = stallPoint;
                             }
@@ -69,7 +69,7 @@ namespace FargowiltasSouls.Content.Bosses.TrojanSquirrel
                                     NPC.ai[2] = NPC.ai[2] == 0 ? 1 : 0;
                                 NPC.netUpdate = true;
 
-                                body.localAI[3] = Math.Sign(body.DirectionTo(Main.player[body.target].Center).X);
+                                body.localAI[3] = Math.Sign(body.SafeDirectionTo(Main.player[body.target].Center).X);
                                 body.netUpdate = true;
                             }
                         }
@@ -104,12 +104,12 @@ namespace FargowiltasSouls.Content.Bosses.TrojanSquirrel
                             Vector2 pos = GetShootPos();
 
                             float baseAngle = NPC.direction > 0 ? 0f : MathHelper.Pi;
-                            float angle = NPC.DirectionTo(Main.player[NPC.target].Center).ToRotation();
+                            float angle = NPC.SafeDirectionTo(Main.player[NPC.target].Center).ToRotation();
                             if (Math.Abs(MathHelper.WrapAngle(angle - baseAngle)) > MathHelper.PiOver2)
                                 angle = MathHelper.PiOver2 * Math.Sign(angle);
 
                             if (FargoSoulsUtil.HostCheck)
-                                Projectile.NewProjectile(NPC.GetSource_FromThis(), pos, 8f * angle.ToRotationVector2(), ModContent.ProjectileType<TrojanHook>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage), 0f, Main.myPlayer);
+                                Projectile.NewProjectile(NPC.GetSource_FromThis(), pos, 8f * angle.ToRotationVector2(), ModContent.ProjectileType<TrojanHook>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), 0f, Main.myPlayer);
                         }
 
                         if (NPC.ai[1] > 300 && FargoSoulsUtil.HostCheck && Main.LocalPlayer.ownedProjectileCounts[ModContent.ProjectileType<TrojanHook>()] <= 0)
@@ -176,9 +176,9 @@ namespace FargowiltasSouls.Content.Bosses.TrojanSquirrel
                                 distance.X /= time;
                                 distance.Y = distance.Y / time - 0.5f * gravity * time;
                                 if (FargoSoulsUtil.HostCheck)
-                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), pos, distance, ModContent.ProjectileType<TrojanSnowball>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage), 0f, Main.myPlayer, gravity);
+                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), pos, distance, ModContent.ProjectileType<TrojanSnowball>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), 0f, Main.myPlayer, gravity);
                             }
-                            NPC.ai[1] += NPC.ai[1] > end / 3 ? NPC.ai[1] > end * (2/3) ? 2 : 0 : 0;
+                            NPC.ai[1] += NPC.ai[1] > end / 3 ? NPC.ai[1] > end * (2 / 3) ? 2 : 0 : 0;
                         }
 
                         if (NPC.ai[1] > end)

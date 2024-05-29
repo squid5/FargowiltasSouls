@@ -1,19 +1,19 @@
-using System.IO;
-using Terraria.ModLoader.IO;
-using FargowiltasSouls.Content.Projectiles.Masomode;
-using Terraria;
-using Terraria.ID;
-using Terraria.ModLoader;
-using Microsoft.Xna.Framework;
-using Terraria.Audio;
-using System;
 using FargowiltasSouls.Content.Buffs.Masomode;
+using FargowiltasSouls.Content.Projectiles.Masomode;
 using FargowiltasSouls.Core.Globals;
 using FargowiltasSouls.Core.NPCMatching;
+using Microsoft.Xna.Framework;
+using System;
+using System.IO;
+using Terraria;
+using Terraria.Audio;
+using Terraria.ID;
+using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
 
 namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.Cavern
 {
-	public class Mimics : EModeNPCBehaviour
+    public class Mimics : EModeNPCBehaviour
     {
         public override NPCMatcher CreateMatcher() => new NPCMatcher().MatchTypeRange(
             NPCID.Mimic,
@@ -104,7 +104,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.Cavern
                     }
                     if (Timer == 120)
                     {
-                        npc.velocity = npc.DirectionTo(player.Center) * 20;
+                        npc.velocity = npc.SafeDirectionTo(player.Center) * 20;
                         SoundEngine.PlaySound(SoundID.DD2_SonicBoomBladeSlash, npc.Center);
                         npc.noGravity = true;
                         //npc.noTileCollide = true;
@@ -115,8 +115,8 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.Cavern
                         npc.noGravity = false;
                         //npc.noTileCollide = false;
                     }
-                    
-                    
+
+
                     if (Timer >= 160)
                     {
                         AttackTimer = 0;
@@ -132,7 +132,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.Cavern
                         float rot = MathHelper.ToRadians(Main.rand.NextFloat(-6, 6));
                         Vector2 DaggerPosition = npc.Center + new Vector2(Main.rand.Next(-10, 10), Main.rand.Next(-10, 10));
                         Vector2 DaggerVelocity = (Vector2.Normalize(player.Center - DaggerPosition) * DaggerSpeed).RotatedBy(rot);
-                        Projectile.NewProjectile(npc.GetSource_FromThis(), DaggerPosition, DaggerVelocity, ModContent.ProjectileType<MimicDagger>(), FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 1f, Main.myPlayer);
+                        Projectile.NewProjectile(npc.GetSource_FromThis(), DaggerPosition, DaggerVelocity, ModContent.ProjectileType<MimicDagger>(), FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 1f, Main.myPlayer);
                     }
                     if (Timer >= 100)
                     {
@@ -153,7 +153,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.Cavern
                             float randrot = MathHelper.ToRadians(1);
                             Vector2 StarPosition = npc.Center + new Vector2(-300 + Main.rand.Next(800), -1000);
                             Vector2 StarVelocity = (Vector2.Normalize(player.Center - StarPosition) * StarSpeed).RotatedBy(Main.rand.NextFloat(-randrot, randrot));
-                            int p = Projectile.NewProjectile(npc.GetSource_FromThis(), StarPosition, StarVelocity, ModContent.ProjectileType<MimicHallowStar>(), FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 1f, Main.myPlayer);
+                            int p = Projectile.NewProjectile(npc.GetSource_FromThis(), StarPosition, StarVelocity, ModContent.ProjectileType<MimicHallowStar>(), FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 1f, Main.myPlayer);
                             Main.projectile[p].friendly = false;
                             Main.projectile[p].hostile = true;
                             Main.projectile[p].tileCollide = false;
@@ -168,10 +168,10 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.Cavern
                 void Flight()
                 {
 
-                    //if (Math.Abs(npc.velocity.ToRotation() - npc.DirectionTo(player.Center).ToRotation()) > Math.PI) //if velociting in the wrong direction, change direction toward player
-                        //npc.velocity = npc.DirectionTo(player.Center);
+                    //if (Math.Abs(npc.velocity.ToRotation() - npc.SafeDirectionTo(player.Center).ToRotation()) > Math.PI) //if velociting in the wrong direction, change direction toward player
+                    //npc.velocity = npc.SafeDirectionTo(player.Center);
 
-                    //npc.velocity += npc.DirectionTo(player.Center) * 0.5f;
+                    //npc.velocity += npc.SafeDirectionTo(player.Center) * 0.5f;
                     FlyToward(player.Center);
                     npc.noTileCollide = true;
                     npc.noGravity = true;

@@ -1,5 +1,4 @@
 ﻿using FargowiltasSouls.Content.UI.Elements;
-using FargowiltasSouls.Core;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using FargowiltasSouls.Core.Toggler;
 using Microsoft.Xna.Framework;
@@ -13,15 +12,11 @@ using Terraria.GameInput;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.UI;
-using Terraria.UI.Chat;
-using XPT.Core.Audio.MP3Sharp.Decoding;
-using static System.Net.Mime.MediaTypeNames;
-using static Terraria.GameContent.UI.EmoteID;
 using Header = FargowiltasSouls.Core.Toggler.Header;
 
 namespace FargowiltasSouls.Content.UI
 {
-	public class SoulToggler : UIState
+    public class SoulToggler : UIState
     {
         public readonly static Regex RemoveItemTags = new(@"\[[^\[\]]*\]");
 
@@ -66,7 +61,7 @@ namespace FargowiltasSouls.Content.UI
             Scrollbar.OverflowHidden = true;
             Scrollbar.OnScrollWheel += HotbarScrollFix;
 
-            ToggleList = new UIToggleList();
+            ToggleList = [];
             ToggleList.SetScrollbar(Scrollbar);
             ToggleList.OnScrollWheel += HotbarScrollFix;
 
@@ -143,7 +138,7 @@ namespace FargowiltasSouls.Content.UI
             PresetPanel.Append(OnButton);
             PresetPanel.Append(SomeEffectsButton);
             PresetPanel.Append(MinimalButton);
-            
+
             const int xOffset = 74; //ensure this matches the Left.Set of preceding button
             for (int i = 0; i < ToggleBackend.CustomPresetCount; i++)
             {
@@ -155,7 +150,7 @@ namespace FargowiltasSouls.Content.UI
                 CustomButton[i].Top.Set(6, 0);
                 CustomButton[i].Left.Set(xOffset + 22 * slot, 0);
                 PresetPanel.Append(CustomButton[i]);
-                
+
                 if (slot == ToggleBackend.CustomPresetCount) //after last panel is loaded, load reload button
                 {
                     DisplayAllButton = new FargoUIDisplayAllButton(FargoUIManager.DisplayAllButtonTexture.Value,
@@ -166,7 +161,7 @@ namespace FargowiltasSouls.Content.UI
                     DisplayAllButton.Left.Set(xOffset + 22 * (slot + 1), 0);
                     PresetPanel.Append(DisplayAllButton);
                 }
-                
+
             }
 
             base.OnInitialize();
@@ -183,12 +178,16 @@ namespace FargowiltasSouls.Content.UI
         public override void Update(GameTime gameTime)
         {
             if (Main.LocalPlayer.mouseInterface && (Main.mouseLeft || Main.mouseRight))
+            {
                 NeedsToggleListBuilding = true;
+            }
             base.Update(gameTime);
-            if (NeedsToggleListBuilding)
+            FargoSoulsPlayer modPlayer = Main.LocalPlayer.FargoSouls();
+            if (NeedsToggleListBuilding && modPlayer.ToggleRebuildCooldown <= 0)
             {
                 BuildList();
                 NeedsToggleListBuilding = false;
+                modPlayer.ToggleRebuildCooldown = 30;
             }
         }
 
@@ -205,6 +204,20 @@ namespace FargowiltasSouls.Content.UI
             bool SearchMatches(string[] words) => words.Any(s => s.StartsWith(SearchBar.Input, StringComparison.OrdinalIgnoreCase));
 
             IEnumerable<Header> LoadedHeaders = ToggleLoader.LoadedHeaders;
+
+            bool hasMinions = false;
+            bool hasExtraAttacks = false;
+            for (int i = 0; i < AccessoryEffectLoader.AccessoryEffects.Count; i++)
+            {
+                if (effectPlayer.EquippedEffects[i] && AccessoryEffectLoader.AccessoryEffects[i].MinionEffect)
+                    hasMinions = true;
+                if (effectPlayer.EquippedEffects[i] && AccessoryEffectLoader.AccessoryEffects[i].ExtraAttackEffect)
+                    hasExtraAttacks = true;
+            }
+            if (hasMinions)
+                ToggleList.Add(new MinionsToggle());
+            if (hasExtraAttacks)
+                ToggleList.Add(new ExtraAttacksToggle());
 
             DisplayToggles(LoadedHeaders.OrderBy(h => h.Priority));
 
@@ -238,6 +251,7 @@ namespace FargowiltasSouls.Content.UI
             }
             if (ToggleList.Count == 0) // empty, no toggles
             {
+                ToggleList.Clear();
                 ToggleList.Add(new FargoUIHeader($"[i:{ModContent.ItemType<TogglerIconItem>()}] {Language.GetTextValue("Mods.FargowiltasSouls.UI.NoToggles")}", FargowiltasSouls.Instance.Name, ModContent.ItemType<TogglerIconItem>(), (BackWidth - 16, 20)));
             }
 

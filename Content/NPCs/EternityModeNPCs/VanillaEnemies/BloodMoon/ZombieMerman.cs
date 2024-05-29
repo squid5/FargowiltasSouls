@@ -1,17 +1,17 @@
-using System.IO;
-using Terraria.ModLoader.IO;
-using Microsoft.Xna.Framework;
-using Terraria;
-using Terraria.ID;
-using Terraria.ModLoader;
 using FargowiltasSouls.Content.Buffs.Masomode;
 using FargowiltasSouls.Core.Globals;
 using FargowiltasSouls.Core.NPCMatching;
+using Microsoft.Xna.Framework;
 using System;
+using System.IO;
+using Terraria;
+using Terraria.ID;
+using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
 
 namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.BloodMoon
 {
-	public class ZombieMerman : EModeNPCBehaviour
+    public class ZombieMerman : EModeNPCBehaviour
     {
         public override NPCMatcher CreateMatcher() => new NPCMatcher().MatchType(NPCID.ZombieMerman);
 
@@ -126,7 +126,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.BloodMoo
                         for (int i = 0; i <= 3; i++)
                         {
                             Vector2 vel = 16f * j * Vector2.UnitX.RotatedBy(MathHelper.PiOver4 / 3 * i * -j);
-                            Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, vel, ProjectileID.SharpTears, FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 0f, Main.myPlayer, 0f, Main.rand.NextFloat(0.5f, 1f));
+                            Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, vel, ProjectileID.SharpTears, FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 0f, Main.myPlayer, 0f, Main.rand.NextFloat(0.5f, 1f));
                         }
                     }
                 }

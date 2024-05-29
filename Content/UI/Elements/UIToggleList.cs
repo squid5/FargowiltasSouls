@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System.Linq;
+using System.Reflection;
 using Terraria.GameContent.UI.Elements;
 using Terraria.UI;
 
@@ -24,13 +25,13 @@ namespace FargowiltasSouls.Content.UI.Elements
         public override void Add(UIElement item)
         {
             _items.Add(item);
-            method_uiElementAppend.Invoke(field_innerList.GetValue(this), new object[] { item });
+            method_uiElementAppend.Invoke(field_innerList.GetValue(this), [item]);
             method_uiElementRecalcuate.Invoke(field_innerList.GetValue(this), null);
         }
 
         public override bool Remove(UIElement item)
         {
-            method_uiElementRemoveChild.Invoke(field_innerList.GetValue(this), new object[] { item });
+            method_uiElementRemoveChild.Invoke(field_innerList.GetValue(this), [item]);
             return _items.Remove(item);
         }
     }

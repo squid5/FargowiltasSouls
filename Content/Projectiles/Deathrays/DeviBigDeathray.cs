@@ -1,14 +1,14 @@
 ﻿using FargowiltasSouls.Assets.ExtraTextures;
-using FargowiltasSouls.Common.Graphics.Primitives;
-using FargowiltasSouls.Common.Graphics.Shaders;
+
+
 using FargowiltasSouls.Content.Bosses.DeviBoss;
 using FargowiltasSouls.Content.Buffs.Masomode;
+using Luminance.Core.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -16,21 +16,17 @@ using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Content.Projectiles.Deathrays
 {
-	public class DeviBigDeathray : BaseDeathray, IPixelPrimitiveDrawer
+    public class DeviBigDeathray : BaseDeathray, IPixelatedPrimitiveRenderer
     {
         public override string Texture => "FargowiltasSouls/Content/Projectiles/Deathrays/DeviDeathray";
 
-        public PrimDrawer LaserDrawer { get; private set; } = null;
-
-        public PrimDrawer RingDrawer { get; private set; } = null;
-
-        public static List<Asset<Texture2D>> RingTextures => new()
-        {
+        public static List<Asset<Texture2D>> RingTextures =>
+        [
             FargosTextureRegistry.DeviRingTexture,
             FargosTextureRegistry.DeviRing2Texture,
             FargosTextureRegistry.DeviRing3Texture,
             FargosTextureRegistry.DeviRing4Texture,
-        };
+        ];
 
         public DeviBigDeathray() : base(180) { }
 
@@ -50,7 +46,7 @@ namespace FargowiltasSouls.Content.Projectiles.Deathrays
         public override void AI()
         {
             if (!Main.dedServ && Main.LocalPlayer.active)
-                Main.LocalPlayer.FargoSouls().Screenshake = 2;
+                FargoSoulsUtil.ScreenshakeRumble(6);
 
             Vector2? vector78 = null;
             if (Projectile.velocity.HasNaNs() || Projectile.velocity == Vector2.Zero)
@@ -73,7 +69,8 @@ namespace FargowiltasSouls.Content.Projectiles.Deathrays
             }
             if (Projectile.localAI[0] == 0f)
             {
-                SoundEngine.PlaySound(SoundID.Zombie104, Projectile.Center);
+                if (!Main.dedServ)
+                    SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/DeviBigDeathray"), Projectile.Center);
             }
             float num801 = 17f;
             Projectile.localAI[0] += 1f;
@@ -113,7 +110,7 @@ namespace FargowiltasSouls.Content.Projectiles.Deathrays
             Vector2 vector79 = Projectile.Center + Projectile.velocity * (Projectile.localAI[1] - 14f);
             for (int num809 = 0; num809 < 2; num809 = num3 + 1)
             {
-                float num810 = Projectile.velocity.ToRotation() + (Main.rand.NextBool(2)? -1f : 1f) * 1.57079637f;
+                float num810 = Projectile.velocity.ToRotation() + (Main.rand.NextBool(2) ? -1f : 1f) * 1.57079637f;
                 float num811 = (float)Main.rand.NextDouble() * 2f + 2f;
                 Vector2 vector80 = new((float)Math.Cos((double)num810) * num811, (float)Math.Sin((double)num810) * num811);
                 int num812 = Dust.NewDust(vector79, 0, 0, DustID.CopperCoin, vector80.X, vector80.Y, 0, default, 1f);
@@ -173,7 +170,7 @@ namespace FargowiltasSouls.Content.Projectiles.Deathrays
             return baseWidth * 0.7f;
         }
 
-        public static Color[] DeviColors => new Color[] { new(216, 108, 224, 100), new(232, 140, 240, 100), new(224, 16, 216, 100), new(240, 220, 240, 100) };
+        public static Color[] DeviColors => [new(216, 108, 224, 100), new(232, 140, 240, 100), new(224, 16, 216, 100), new(240, 220, 240, 100)];
         public static Color ColorFunction(float trailInterpolant)
         {
             float time = (float)(0.5 * (1 + Math.Sin(1.5f * Main.GlobalTimeWrappedHourly % 1)));
@@ -185,7 +182,7 @@ namespace FargowiltasSouls.Content.Projectiles.Deathrays
 
         public override bool PreDraw(ref Color lightColor) => false;
 
-        public void DrawPixelPrimitives(SpriteBatch spriteBatch)
+        public void RenderPixelatedPrimitives(SpriteBatch spriteBatch)
         {
             // This should never happen, but just in case.
             if (Projectile.velocity == Vector2.Zero)
@@ -194,12 +191,8 @@ namespace FargowiltasSouls.Content.Projectiles.Deathrays
             if (Projectile.hide)
                 return;
 
-            Shader laser = ShaderManager.GetShaderIfExists("DeviTouhouDeathray");
-            Shader ring = ShaderManager.GetShaderIfExists("DeviRing");
-
-			// Initialize the drawers.
-			LaserDrawer ??= new PrimDrawer(WidthFunction, ColorFunction, laser);
-            RingDrawer ??= new PrimDrawer(RingWidthFunction, RingColorFunction, ring);
+            ManagedShader laser = ShaderManager.GetShader("FargowiltasSouls.DeviTouhouDeathray");
+            ManagedShader ring = ShaderManager.GetShader("FargowiltasSouls.DeviRing");
 
             // Get the laser end position.
             Vector2 laserEnd = Projectile.Center + Projectile.velocity.SafeNormalize(Vector2.UnitY) * drawDistance;
@@ -218,13 +211,13 @@ namespace FargowiltasSouls.Content.Projectiles.Deathrays
             #region MainLaser
 
             // Set shader parameters. This one takes two lots of fademaps and colors for two different overlayed textures.
-            laser.SetMainColor(new Color(255, 180, 243, 100) * 2);
+            laser.TrySetParameter("mainColor", new Color(255, 180, 243, 100) * 2);
             // GameShaders.Misc["FargoswiltasSouls:MutantDeathray"].UseImage1(); cannot be used due to only accepting vanilla paths.
             FargoSoulsUtil.SetTexture1(FargosTextureRegistry.DeviBackStreak.Value);
 
             // Secondary fademap
             FargoSoulsUtil.SetTexture2(FargosTextureRegistry.DeviInnerStreak.Value);
-            LaserDrawer.DrawPixelPrims(baseDrawPoints.ToList(), -Main.screenPosition, 50);
+            PrimitiveRenderer.RenderTrail(baseDrawPoints, new(WidthFunction, ColorFunction, Pixelate: true, Shader: laser), 50);
             #endregion
 
             // Draw the foreground rings.
@@ -246,7 +239,7 @@ namespace FargowiltasSouls.Content.Projectiles.Deathrays
             return color;
         }
 
-        private void DrawRings(Vector2[] baseDrawPoints, bool inBackground, Shader ring)
+        private void DrawRings(Vector2[] baseDrawPoints, bool inBackground, ManagedShader ring)
         {
             Vector2 velocity = Projectile.velocity.SafeNormalize(Vector2.UnitY);
             velocity = velocity.RotatedBy(MathHelper.PiOver2) * 1250;
@@ -293,18 +286,18 @@ namespace FargowiltasSouls.Content.Projectiles.Deathrays
                         ringDrawPoints[j] -= Projectile.velocity * offsetStrength * 75f;
                 }
 
-                ring.SetMainColor(new Color(216, 108, 224, 100));
+                ring.TrySetParameter("mainColor", new Color(216, 108, 224, 100));
                 FargoSoulsUtil.SetTexture1(RingTextures[iterator].Value);
-                ring.WrappedEffect.Parameters["stretchAmount"]?.SetValue(0.2f);
+                ring.TrySetParameter("stretchAmount", 0.2f);
 
                 float scrollSpeed = MathHelper.Lerp(1f, 1.3f, 1 - i / (baseDrawPoints.Length / 2 - 1));
-                ring.WrappedEffect.Parameters["scrollSpeed"]?.SetValue(scrollSpeed);
-                ring.WrappedEffect.Parameters["reverseDirection"]?.SetValue(inBackground);
+                ring.TrySetParameter("scrollSpeed", scrollSpeed);
+                ring.TrySetParameter("reverseDirection", inBackground);
                 float opacity = 1f;
                 if (inBackground)
                     opacity = 0.5f;
-                ring.SetOpacity(opacity);
-                RingDrawer.DrawPixelPrims(ringDrawPoints, -Main.screenPosition, 30);
+                ring.TrySetParameter("opacity", opacity);
+                PrimitiveRenderer.RenderTrail(ringDrawPoints, new(RingWidthFunction, RingColorFunction, Pixelate: true, Shader: ring), 30);
                 iterator++;
             }
         }

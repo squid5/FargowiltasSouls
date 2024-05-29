@@ -50,7 +50,7 @@ namespace FargowiltasSouls.Content.Projectiles.Minions
                 }
                 else
                 {
-                    Projectile.velocity = Projectile.DirectionTo(Main.npc[ai0].Center) * Projectile.velocity.Length(); //fuck it homing
+                    Projectile.velocity = Projectile.SafeDirectionTo(Main.npc[ai0].Center) * Projectile.velocity.Length(); //fuck it homing
                 }
             }
             else
@@ -98,8 +98,6 @@ namespace FargowiltasSouls.Content.Projectiles.Minions
                 Projectile.penetrate = -1;
                 Projectile.Damage();
             }
-
-            //if (!Main.dedServ && Main.LocalPlayer.active) Main.LocalPlayer.FargoSouls().Screenshake = 30;
 
             SoundEngine.PlaySound(SoundID.NPCDeath6, Projectile.Center);
             SoundEngine.PlaySound(SoundID.Item92, Projectile.Center);

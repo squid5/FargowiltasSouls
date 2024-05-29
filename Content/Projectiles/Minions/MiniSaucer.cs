@@ -134,7 +134,7 @@ namespace FargowiltasSouls.Content.Projectiles.Minions
                         Projectile.localAI[0] = 0f;
                         if (player.whoAmI == Main.myPlayer)
                         {
-                            Vector2 vel = Projectile.DirectionTo(Main.MouseWorld) * 16f;
+                            Vector2 vel = Projectile.SafeDirectionTo(Main.MouseWorld) * 16f;
                             SoundEngine.PlaySound(SoundID.Item12, Projectile.Center);
 
                             Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center + Projectile.velocity * 2.5f,

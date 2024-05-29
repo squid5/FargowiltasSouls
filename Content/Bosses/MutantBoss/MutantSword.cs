@@ -1,6 +1,5 @@
 ﻿using FargowiltasSouls.Content.Buffs.Boss;
 using FargowiltasSouls.Content.Buffs.Masomode;
-using FargowiltasSouls.Content.Projectiles;
 using FargowiltasSouls.Core.Systems;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -44,9 +43,17 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
             if (projHitbox.Intersects(targetHitbox))
                 return true;
 
+            //linger the hitbox so player doesn't phase through by flying towards it
             Rectangle trailHitbox = projHitbox;
             trailHitbox.X = (int)Projectile.oldPosition.X;
             trailHitbox.Y = (int)Projectile.oldPosition.Y;
+            if (trailHitbox.Intersects(targetHitbox))
+                return true;
+
+            //lerp so there's no gap
+            trailHitbox = projHitbox;
+            trailHitbox.X = (int)MathHelper.Lerp(Projectile.position.X, Projectile.oldPosition.X, 0.5f);
+            trailHitbox.Y = (int)MathHelper.Lerp(Projectile.position.Y, Projectile.oldPosition.Y, 0.5f);
             if (trailHitbox.Intersects(targetHitbox))
                 return true;
 
@@ -59,9 +66,9 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
             NPC npc = FargoSoulsUtil.NPCExists(Projectile.ai[0], ModContent.NPCType<MutantBoss>());
             if (npc != null)
             {
-                bool validSwordState = 
-                    (npc.ai[0] == 9 && !(npc.localAI[2] == 2 && npc.ai[1] > 20)) 
-                    || (npc.ai[0] == 45 && npc.ai[2] != 0) 
+                bool validSwordState =
+                    (npc.ai[0] == 9 && !(npc.localAI[2] == 2 && npc.ai[1] > 20))
+                    || (npc.ai[0] == 45 && npc.ai[2] != 0)
                     || (npc.ai[0] == 46 && npc.ai[1] <= 20);
                 if (!validSwordState && FargoSoulsUtil.HostCheck)
                 {

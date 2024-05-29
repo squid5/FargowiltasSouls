@@ -1,5 +1,20 @@
+using FargowiltasSouls.Content.Bosses.Champions.Shadow;
+using FargowiltasSouls.Content.Bosses.Champions.Timber;
+using FargowiltasSouls.Content.Bosses.DeviBoss;
+using FargowiltasSouls.Content.Bosses.TrojanSquirrel;
+using FargowiltasSouls.Content.Buffs.Masomode;
+using FargowiltasSouls.Content.Buffs.Souls;
+using FargowiltasSouls.Content.Items.Accessories.Enchantments;
+using FargowiltasSouls.Content.Items.Accessories.Masomode;
+using FargowiltasSouls.Content.Items.Accessories.Souls;
+using FargowiltasSouls.Content.Items.Armor;
+using FargowiltasSouls.Content.Items.Weapons.SwarmDrops;
 using FargowiltasSouls.Content.Projectiles.BossWeapons;
+using FargowiltasSouls.Content.Projectiles.Masomode;
 using FargowiltasSouls.Content.Projectiles.Souls;
+using FargowiltasSouls.Core.AccessoryEffectSystem;
+using FargowiltasSouls.Core.Globals;
+using FargowiltasSouls.Core.Systems;
 using Microsoft.CodeAnalysis;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -9,28 +24,13 @@ using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using FargowiltasSouls.Content.Items.Accessories.Enchantments;
-using FargowiltasSouls.Content.Items.Accessories.Masomode;
-using FargowiltasSouls.Content.Items.Accessories.Souls;
-using FargowiltasSouls.Content.Items.Weapons.SwarmDrops;
-using FargowiltasSouls.Content.Buffs.Souls;
-using FargowiltasSouls.Content.Buffs.Masomode;
-using FargowiltasSouls.Core.Systems;
-using FargowiltasSouls.Core.Globals;
-using FargowiltasSouls.Content.Bosses.Champions.Shadow;
-using FargowiltasSouls.Content.Bosses.DeviBoss;
-using FargowiltasSouls.Content.Bosses.TrojanSquirrel;
-using FargowiltasSouls.Content.Bosses.Champions.Timber;
-using Terraria.GameContent;
-using FargowiltasSouls.Core.AccessoryEffectSystem;
-using FargowiltasSouls.Content.Items.Armor;
-using FargowiltasSouls.Content.Projectiles.Masomode;
 
 namespace FargowiltasSouls.Content.Projectiles
 {
-	public class FargoSoulsGlobalProjectile : GlobalProjectile
+    public class FargoSoulsGlobalProjectile : GlobalProjectile
     {
         public override bool InstancePerEntity => true;
 
@@ -69,8 +69,8 @@ namespace FargowiltasSouls.Content.Projectiles
         public bool canUmbrellaReflect = true;
 
         public int HuntressProj = -1; // -1 = non weapon proj, doesnt matter if it hits
-        //1 = marked as weapon proj
-        //2 = has successfully hit an enemy
+                                      //1 = marked as weapon proj
+                                      //2 = has successfully hit an enemy
 
         public Func<Projectile, bool> GrazeCheck = projectile =>
             projectile.Distance(Main.LocalPlayer.Center) < Math.Min(projectile.width, projectile.height) / 2 + Player.defaultHeight + Main.LocalPlayer.FargoSouls().GrazeRadius
@@ -95,15 +95,15 @@ namespace FargowiltasSouls.Content.Projectiles
         public bool noInteractionWithNPCImmunityFrames;
         private int tempIframe;
 
-        public static List<int> ShroomiteBlacklist = new()
-        {
+        public static List<int> ShroomiteBlacklist =
+        [
             ModContent.ProjectileType<MeteorFlame>(),
-        };
-        public static List<int> ShroomiteNerfList = new()
-        {
+        ];
+        public static List<int> ShroomiteNerfList =
+        [
             ModContent.ProjectileType<MechEyeProjectile>(),
             ModContent.ProjectileType<MechFlail>()
-        };
+        ];
 
         public override void SetStaticDefaults()
         {
@@ -325,7 +325,7 @@ namespace FargowiltasSouls.Content.Projectiles
                 case ProjectileID.DesertDjinnCurse:
                     {
                         if (projectile.damage > 0 && source is EntitySource_Parent parent && parent.Entity is NPC npc && npc.active && npc.type == ModContent.NPCType<ShadowChampion>())
-                            projectile.damage = FargoSoulsUtil.ScaledProjectileDamage(npc.damage);
+                            projectile.damage = FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage);
                     }
                     break;
 
@@ -335,7 +335,7 @@ namespace FargowiltasSouls.Content.Projectiles
                         {
                             if (npc.type == ModContent.NPCType<DeviBoss>())
                             {
-                                projectile.damage = FargoSoulsUtil.ScaledProjectileDamage(npc.damage);
+                                projectile.damage = FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage);
                                 if (npc.ai[0] == 5)
                                     projectile.timeLeft = Math.Min(projectile.timeLeft, 360 + 90 - (int)npc.ai[1]);
                                 else
@@ -343,7 +343,7 @@ namespace FargowiltasSouls.Content.Projectiles
                             }
                             else if (npc.type == ModContent.NPCType<ShadowChampion>())
                             {
-                                projectile.damage = FargoSoulsUtil.ScaledProjectileDamage(npc.damage);
+                                projectile.damage = FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage);
                             }
                         }
                     }
@@ -383,7 +383,7 @@ namespace FargowiltasSouls.Content.Projectiles
                     AdamModifier = modPlayer.ForceEffect<AdamantiteEnchant>() ? 3 : 2;
 
                 }
-                
+
             }
 
             if (projectile.bobber && CanSplit && source is EntitySource_ItemUse)
@@ -393,7 +393,7 @@ namespace FargowiltasSouls.Content.Projectiles
             }
         }
 
-        public static int[] NoSplit => new int[] {
+        public static int[] NoSplit => [
             ProjectileID.SandnadoFriendly,
             ProjectileID.LastPrism,
             ProjectileID.LastPrismLaser,
@@ -407,7 +407,7 @@ namespace FargowiltasSouls.Content.Projectiles
             ProjectileID.PiercingStarlight,
             ProjectileID.Celeb2Weapon,
             ProjectileID.Xenopopper
-        };
+        ];
         public override bool PreAI(Projectile projectile)
         {
             bool retVal = true;
@@ -421,7 +421,7 @@ namespace FargowiltasSouls.Content.Projectiles
                 projectile.damage = player.GetWeaponDamage(player.HeldItem);
                 projectile.CritChance = player.GetWeaponCrit(player.HeldItem);
             }
-            
+
             if (spookyCD > 0)
             {
                 spookyCD--;
@@ -644,7 +644,7 @@ namespace FargowiltasSouls.Content.Projectiles
                 case ProjectileID.MonkStaffT2:
                 case ProjectileID.MonkStaffT3_Alt:
                     {
-                        
+
                         Vector2 vector = player.RotatedRelativePoint(player.MountedCenter);
                         projectile.direction = player.direction;
                         player.heldProj = projectile.whoAmI;
@@ -672,7 +672,7 @@ namespace FargowiltasSouls.Content.Projectiles
                                 float num = (float)player.itemAnimation / (float)player.itemAnimationMax;
                                 float num2 = 1f - num;
                                 float num3 = projectile.velocity.ToRotation();
-                                float num4 = projectile.velocity.Length() * projectile.scale; 
+                                float num4 = projectile.velocity.Length() * projectile.scale;
                                 float num5 = 22f * projectile.scale;
                                 Vector2 spinningpoint = new Vector2(1f, 0f).RotatedBy((float)Math.PI + num2 * ((float)Math.PI * 2f)) * new Vector2(num4, projectile.ai[0] * projectile.scale);
                                 projectile.position += spinningpoint.RotatedBy(num3) + new Vector2(num4 + num5, 0f).RotatedBy(num3);
@@ -682,14 +682,14 @@ namespace FargowiltasSouls.Content.Projectiles
                                 {
                                     projectile.rotation += (float)Math.PI;
                                 }
-                                vector2.DirectionTo(projectile.Center);
-                                Vector2 vector3 = vector2.DirectionTo(target);
+                                vector2.SafeDirectionTo(projectile.Center);
+                                Vector2 vector3 = vector2.SafeDirectionTo(target);
                                 Vector2 vector4 = projectile.velocity.SafeNormalize(Vector2.UnitY);
                                 float num6 = 2f;
                                 for (int i = 0; (float)i < num6; i++)
                                 {
                                     Dust dust = Dust.NewDustDirect(projectile.Center, 14, 14, DustID.GoldFlame, 0f, 0f, 110);
-                                    dust.velocity = vector2.DirectionTo(dust.position) * 2f;
+                                    dust.velocity = vector2.SafeDirectionTo(dust.position) * 2f;
                                     dust.position = projectile.Center + vector4.RotatedBy(num2 * ((float)Math.PI * 2f) * 2f + (float)i / num6 * ((float)Math.PI * 2f)) * 10f;
                                     dust.scale = 1f + 0.6f * Main.rand.NextFloat();
                                     dust.velocity += vector4 * 3f;
@@ -700,7 +700,7 @@ namespace FargowiltasSouls.Content.Projectiles
                                     if (Main.rand.NextBool(3))
                                     {
                                         Dust dust2 = Dust.NewDustDirect(projectile.Center, 20, 20, DustID.GoldFlame, 0f, 0f, 110);
-                                        dust2.velocity = vector2.DirectionTo(dust2.position) * 2f;
+                                        dust2.velocity = vector2.SafeDirectionTo(dust2.position) * 2f;
                                         dust2.position = projectile.Center + vector3 * -110f;
                                         dust2.scale = 0.45f + 0.4f * Main.rand.NextFloat();
                                         dust2.fadeIn = 0.7f + 0.4f * Main.rand.NextFloat();
@@ -854,7 +854,7 @@ namespace FargowiltasSouls.Content.Projectiles
                         int num = 3;
                         int num2 = 2;
                         Vector2 value = projectile.Center - projectile.rotation.ToRotationVector2() * num2;
-                        
+
                         float num3 = Main.rand.NextFloat();
                         float scale = Utils.GetLerpValue(0f, 0.3f, num3, clamped: true) * Utils.GetLerpValue(1f, 0.5f, num3, clamped: true);
                         Color color = projectile.GetAlpha(Lighting.GetColor(projectile.Center.ToTileCoordinates())) * scale;
@@ -874,7 +874,7 @@ namespace FargowiltasSouls.Content.Projectiles
                         }
 
                         Main.spriteBatch.Draw(value2, position, null, color, num6, origin, swordScaleModifier, spriteEffects, 0f);
-                        
+
 
                         for (int j = 0; j < num; j++)
                         {
@@ -923,7 +923,7 @@ namespace FargowiltasSouls.Content.Projectiles
                             FargoSoulsUtil.GenericProjectileDraw(projectile, lightColor, tex);
                             return false;
                         }
-                        
+
                     }
                     break;
                 default:
@@ -945,7 +945,7 @@ namespace FargowiltasSouls.Content.Projectiles
                 number--;
             }
 
-            List<Projectile> projList = new();
+            List<Projectile> projList = [];
             Projectile split;
             double spread = maxSpread / number;
 
@@ -1041,7 +1041,7 @@ namespace FargowiltasSouls.Content.Projectiles
                     //            const int totalUpdates = 2 + 1;
                     //            const int travelTime = TimeFreezeMoveDuration * totalUpdates;
 
-                    //            Vector2 spawnPos = projectile.Center + 16f * projectile.DirectionTo(Main.npc[target].Center);
+                    //            Vector2 spawnPos = projectile.Center + 16f * projectile.SafeDirectionTo(Main.npc[target].Center);
 
                     //            //adjust speed so it always lands just short of touching the enemy
                     //            Vector2 vel = Main.npc[target].Center - spawnPos;
@@ -1308,7 +1308,7 @@ namespace FargowiltasSouls.Content.Projectiles
             {
                 float maxDamageIncrease = modPlayer.ForceEffect<NinjaEnchant>() ? 0.3f : 0.2f;
                 modifiers.FinalDamage *= 1f + (maxDamageIncrease * Math.Min((projectile.extraUpdates + 1) * projectile.velocity.Length() / 40f, 1));
-                
+
             }
             /*
             int AccountForDefenseShred(int modifier)

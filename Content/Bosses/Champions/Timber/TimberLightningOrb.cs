@@ -1,14 +1,13 @@
 using FargowiltasSouls.Content.Buffs.Masomode;
+using FargowiltasSouls.Core.Systems;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.IO;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
-using Terraria.ModLoader;
 using Terraria.ID;
-using FargowiltasSouls.Core.Systems;
-using FargowiltasSouls.Content.Projectiles;
+using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Content.Bosses.Champions.Timber
 {
@@ -138,7 +137,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Timber
             float distance = npc.width / 2 + Projectile.width;
             if (Projectile.Distance(npc.Center) < distance)
             {
-                Vector2 target = Projectile.Center + Projectile.DirectionTo(npc.Center) * distance;
+                Vector2 target = Projectile.Center + Projectile.SafeDirectionTo(npc.Center) * distance;
                 npc.Center = Vector2.Lerp(npc.Center, target, 0.1f);
             }
         }

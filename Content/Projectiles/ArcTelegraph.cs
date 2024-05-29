@@ -1,29 +1,23 @@
-﻿using Terraria;
-using Terraria.ModLoader;
-using Terraria.ID;
+﻿using FargowiltasSouls.Content.Bosses.Lifelight;
+using Luminance.Core.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Terraria.Graphics;
-using System.Collections.Generic;
-using FargowiltasSouls.Content.Bosses.Lifelight;
-using Terraria.DataStructures;
-using System.IO;
 using System;
-using FargowiltasSouls.Common.Graphics.Shaders;
-using FargowiltasSouls.Common.Graphics.Primitives;
+using System.Collections.Generic;
+using System.IO;
+using Terraria;
+using Terraria.DataStructures;
+using Terraria.Graphics;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Content.Projectiles
 {
-	/// <summary>
-	/// ai0 determines the rotation, ai1 the cone width, ai2 the length
-	/// </summary>
-	public class ArcTelegraph : ModProjectile
+    /// <summary>
+    /// ai0 determines the rotation, ai1 the cone width, ai2 the length
+    /// </summary>
+    public class ArcTelegraph : ModProjectile
     {
-        public PrimDrawer TelegraphDrawer
-        {
-            get;
-            private set;
-        }
 
         public ref float Timer => ref Projectile.ai[0];
 
@@ -31,8 +25,8 @@ namespace FargowiltasSouls.Content.Projectiles
 
         public ref float Width => ref Projectile.ai[2];
 
-		// Can be anything.
-		public override string Texture => "Terraria/Images/Extra_" + ExtrasID.MartianProbeScanWave;
+        // Can be anything.
+        public override string Texture => "Terraria/Images/Extra_" + ExtrasID.MartianProbeScanWave;
 
         public override void SetStaticDefaults() => ProjectileID.Sets.DrawScreenCheckFluff[Projectile.type] = 10000;
 
@@ -68,7 +62,7 @@ namespace FargowiltasSouls.Content.Projectiles
                 float angleToMe = Projectile.velocity.ToRotation();
                 float angleToPlayer = (Main.player[parentNpc.target].Center - parentNpc.Center).ToRotation();
                 Projectile.localAI[1] = MathHelper.WrapAngle(angleToMe - angleToPlayer);
-            }                      
+            }
         }
 
         public override void AI()
@@ -79,8 +73,8 @@ namespace FargowiltasSouls.Content.Projectiles
                 Projectile.Center = parent.Center;
                 Vector2 offset = Main.player[parent.target].Center - parent.Center;
                 Projectile.rotation = offset.RotatedBy(Projectile.localAI[1]).ToRotation();
-            }                    
-            
+            }
+
             Timer++;
         }
 
@@ -107,15 +101,15 @@ namespace FargowiltasSouls.Content.Projectiles
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
 
-            Shader shader = ShaderManager.GetShaderIfExists("Vertex_ArcTelegraph");
+            ManagedShader shader = ShaderManager.GetShader("FargowiltasSouls.Vertex_ArcTelegraph");
 
             FargoSoulsUtil.SetTexture1(ModContent.Request<Texture2D>("Terraria/Images/Extra_193").Value);
-            shader.SetMainColor(Color.Lerp(Color.DeepSkyBlue, Color.SlateBlue, 0.7f));
-			shader.Apply();
+            shader.TrySetParameter("mainColor", Color.Lerp(Color.DeepSkyBlue, Color.SlateBlue, 0.7f));
+            shader.Apply();
 
             VertexStrip vertexStrip = new();
-            List<Vector2> positions = new();
-            List<float> rotations = new();
+            List<Vector2> positions = [];
+            List<float> rotations = [];
             float initialRotation = Projectile.rotation - ArcAngle * 0.5f;
             for (float i = 0; i < 1; i += 0.005f)
             {
@@ -126,7 +120,7 @@ namespace FargowiltasSouls.Content.Projectiles
             vertexStrip.PrepareStrip(positions.ToArray(), rotations.ToArray(), ColorFunction, WidthFunction, -Main.screenPosition, includeBacksides: true);
             vertexStrip.DrawTrail();
             Main.spriteBatch.ExitShaderRegion();
-            return false; 
+            return false;
         }
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
         {

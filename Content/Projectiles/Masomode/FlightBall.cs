@@ -1,11 +1,7 @@
-﻿using FargowiltasSouls.Content.Buffs.Masomode;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using System;
+﻿using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Content.Projectiles.Masomode
 {
@@ -53,7 +49,7 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
                     if (Main.player[p].Distance(Projectile.Center) < 16 * 5)
                     {
                         slowdown = false;
-                        Projectile.velocity = Projectile.DirectionTo(Main.player[p].Center) * 9f;
+                        Projectile.velocity = Projectile.SafeDirectionTo(Main.player[p].Center) * 9f;
                         Projectile.timeLeft++;
 
                         if (Projectile.Colliding(Projectile.Hitbox, Main.player[p].Hitbox))

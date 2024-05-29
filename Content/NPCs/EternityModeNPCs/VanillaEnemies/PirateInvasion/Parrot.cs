@@ -2,6 +2,7 @@
 using FargowiltasSouls.Core.NPCMatching;
 using FargowiltasSouls.Core.Systems;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
@@ -32,6 +33,19 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.PirateIn
             {
                 target.KillMe(PlayerDeathReason.ByCustomReason(Language.GetTextValue("Mods.FargowiltasSouls.DeathMessage.Parrots", target.name)), 999999, 0);
             }
+        }
+
+        public override bool CheckDead(NPC npc)
+        {
+            if (!Main.hardMode)
+            {
+                npc.active = false;
+                if (npc.DeathSound != null)
+                    SoundEngine.PlaySound(npc.DeathSound.Value, npc.Center);
+                return false;
+            }
+
+            return base.CheckDead(npc);
         }
     }
 }

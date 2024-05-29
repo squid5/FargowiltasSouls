@@ -11,7 +11,7 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
     public class MutantEyeHoming : MutantEye
     {
         public override string Texture => FargoSoulsUtil.AprilFools ?
-            "FargowiltasSouls/Content/Bosses/MutantBoss/MutantEye_April" : 
+            "FargowiltasSouls/Content/Bosses/MutantBoss/MutantEye_April" :
             "Terraria/Images/Projectile_452";
 
         public override void SetDefaults()
@@ -29,7 +29,7 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
             bool stopAttacking = false;
 
             NPC npc = FargoSoulsUtil.NPCExists(EModeGlobalNPC.mutantBoss, ModContent.NPCType<MutantBoss>());
-            int[] spearSpinAIs = new int[] { 4, 5, 6, 13, 14, 15, 21, 22, 23 };
+            int[] spearSpinAIs = [4, 5, 6, 13, 14, 15, 21, 22, 23];
             if ((npc == null || !spearSpinAIs.Contains((int)npc.ai[0]))
                 && !(WorldSavingSystem.MasochistModeReal && npc.ai[0] > 10)
                 && !Main.getGoodWorld)

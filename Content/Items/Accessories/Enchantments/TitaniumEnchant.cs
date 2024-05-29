@@ -1,18 +1,17 @@
-using Microsoft.Xna.Framework;
-using Terraria;
-using Terraria.ID;
-using Terraria.ModLoader;
-using System;
 using FargowiltasSouls.Content.Buffs.Souls;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
-using FargowiltasSouls.Core.ModPlayers;
 using FargowiltasSouls.Core.Toggler.Content;
+using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
+using Terraria;
 using Terraria.Graphics.Shaders;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
 {
-	public class TitaniumEnchant : BaseEnchant
+    public class TitaniumEnchant : BaseEnchant
     {
         public override void SetStaticDefaults()
         {
@@ -27,7 +26,7 @@ This has a cooldown of 10 seconds during which you cannot gain shards
         }
 
         public override Color nameColor => new(130, 140, 136);
-        
+
 
         public override void SetDefaults()
         {
@@ -135,7 +134,7 @@ This has a cooldown of 10 seconds during which you cannot gain shards
 
             if (modPlayer.TitaniumDRBuff && modPlayer.prevDyes == null)
             {
-                modPlayer.prevDyes = new List<int>();
+                modPlayer.prevDyes = [];
                 int reflectiveSilver = GameShaders.Armor.GetShaderIdFromItemId(ItemID.ReflectiveSilverDye);
 
                 for (int i = 0; i < player.dye.Length; i++)

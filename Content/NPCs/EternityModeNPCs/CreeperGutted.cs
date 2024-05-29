@@ -10,7 +10,7 @@ using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs
 {
-	public class CreeperGutted : ModNPC
+    public class CreeperGutted : ModNPC
     {
         public override void SetStaticDefaults()
         {
@@ -27,10 +27,10 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs
                     ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[NPCID.BrainofCthulhu],
                     quickUnlock: true
                 );
-            bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
+            bestiaryEntry.Info.AddRange([
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.TheCrimson,
                 new FlavorTextBestiaryInfoElement("Mods.FargowiltasSouls.Bestiary.GuttedCreeper")
-            });
+            ]);
         }
 
         public override void SetDefaults()
@@ -67,9 +67,12 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs
             NPC.defense = NPC.defDefense;
 
             Player player = Main.player[(int)NPC.ai[0]];
-            if (!player.active || player.dead || !player.HasEffect<GuttedHeartMinions>())
+            if ((player.whoAmI != Main.myPlayer || !player.HasEffect<GuttedHeartMinions>()) && (!player.active || player.dead))
             {
+                int n = NPC.whoAmI;
                 NPC.SimpleStrikeNPC(NPC.lifeMax * 2, 0);
+                if (FargoSoulsUtil.HostCheck)
+                    NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n, 9999f);
                 return;
             }
 
@@ -117,7 +120,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs
                 n.velocity.X += IdleAccel * (n.Center.X < NPC.Center.X ? -1 : 1);
                 n.velocity.Y += IdleAccel * (n.Center.Y < NPC.Center.Y ? -1 : 1);
             }
-            
+
         }
 
         public override void FindFrame(int frameHeight)

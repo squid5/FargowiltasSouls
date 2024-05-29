@@ -1,5 +1,4 @@
-﻿using FargowiltasSouls.Content.Projectiles;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using System;
 using System.Linq;
 using Terraria;
@@ -44,13 +43,13 @@ namespace FargowiltasSouls.Content.Patreon.Purified
             // Projectile.alpha = 0;
 
             bool foundLimbs = false;
-            int[] limbs = new int[]
-            {
+            int[] limbs =
+            [
                 ModContent.ProjectileType<PrimeMinionCannon>(),
                 ModContent.ProjectileType<PrimeMinionLaserGun>(),
                 ModContent.ProjectileType<PrimeMinionSaw>(),
                 ModContent.ProjectileType<PrimeMinionVice>()
-            };
+            ];
             for (int i = 0; i < Main.projectile.Length; i++)
             {
                 if (Main.projectile[i].active && Main.projectile[i].owner == Projectile.owner && limbs.Contains(Main.projectile[i].type))
@@ -132,7 +131,7 @@ namespace FargowiltasSouls.Content.Patreon.Purified
                     lerp *= 2f;
                 }
 
-                Projectile.velocity = Vector2.Lerp(Projectile.velocity, Projectile.DirectionTo(targetPos) * speed, lerp);
+                Projectile.velocity = Vector2.Lerp(Projectile.velocity, Projectile.SafeDirectionTo(targetPos) * speed, lerp);
             }
             else
             {
@@ -151,15 +150,15 @@ namespace FargowiltasSouls.Content.Patreon.Purified
             }
 
             //
-            //Projectile.velocity = Vector2.Lerp(Projectile.velocity, (Projectile.DirectionTo(mousePos) * 20), 0.05f);
+            //Projectile.velocity = Vector2.Lerp(Projectile.velocity, (Projectile.SafeDirectionTo(mousePos) * 20), 0.05f);
             //Projectile.alpha = (int)(Math.Cos(Projectile.ai[0] * MathHelper.TwoPi / 180) * 122.5 + 122.5);
-            // Main.NewText(Projectile.DirectionTo(Main.MouseWorld).ToString());
+            // Main.NewText(Projectile.SafeDirectionTo(Main.MouseWorld).ToString());
             /*Projectile.ai[0]++;
             if (Projectile.ai[0] == 180)
             {
 
                 Projectile.Center = Main.MouseWorld;
-                //Projectile.velocity = Projectile.DirectionTo(Main.MouseWorld) * 8;
+                //Projectile.velocity = Projectile.SafeDirectionTo(Main.MouseWorld) * 8;
                 Projectile.netUpdate = true;
                 Projectile.ai[0] = 0;
             }*/

@@ -2,24 +2,23 @@
 using FargowiltasSouls.Content.Items.Accessories.Enchantments;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Content.Items.Accessories.Forces
 {
-	public class SpiritForce : BaseForce
+    public class SpiritForce : BaseForce
     {
         public override void SetStaticDefaults()
         {
-            Enchants[Type] = new int[]
-            {
+            Enchants[Type] =
+            [
                 ModContent.ItemType<FossilEnchant>(),
                 ModContent.ItemType<ForbiddenEnchant>(),
                 ModContent.ItemType<HallowEnchant>(),
                 ModContent.ItemType<AncientHallowEnchant>(),
                 ModContent.ItemType<TikiEnchant>(),
                 ModContent.ItemType<SpectreEnchant>()
-            };
+            ];
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)

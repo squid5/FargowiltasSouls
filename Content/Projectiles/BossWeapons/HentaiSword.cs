@@ -1,5 +1,6 @@
 ﻿using FargowiltasSouls.Content.Buffs.Masomode;
 using FargowiltasSouls.Content.Projectiles.Masomode;
+using Luminance.Core.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -163,7 +164,7 @@ namespace FargowiltasSouls.Content.Projectiles.BossWeapons
                     Vector2 spawnPos = target.Center;
 
                     if (!Main.dedServ && Main.LocalPlayer.active)
-                        Main.LocalPlayer.FargoSouls().Screenshake = 30;
+                        ScreenShakeSystem.StartShake(10, shakeStrengthDissipationIncrement: 10f / 30);
 
                     if (!Main.dedServ)
                         SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/Thunder"), spawnPos);
@@ -174,11 +175,8 @@ namespace FargowiltasSouls.Content.Projectiles.BossWeapons
                     {
                         Vector2 angle = baseDirection.RotatedBy(MathHelper.TwoPi / max * i);
                         float ai1 = 30; //number of chains
-                        if (FargoSoulsUtil.HostCheck)
-                        {
-                            Projectile.NewProjectile(Projectile.GetSource_FromThis(), spawnPos + Main.rand.NextVector2Circular(Projectile.width, Projectile.height), Vector2.Zero, ModContent.ProjectileType<HentaiSwordBlast>(),
-                                Projectile.damage, Projectile.knockBack * 3, Projectile.owner, MathHelper.WrapAngle(angle.ToRotation()), ai1);
-                        }
+                        Projectile.NewProjectile(Projectile.GetSource_FromThis(), spawnPos + Main.rand.NextVector2Circular(Projectile.width, Projectile.height), Vector2.Zero, ModContent.ProjectileType<HentaiSwordBlast>(),
+                            Projectile.damage, Projectile.knockBack * 3, Projectile.owner, MathHelper.WrapAngle(angle.ToRotation()), ai1);
                     }
                 }
             }

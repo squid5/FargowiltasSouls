@@ -1,11 +1,11 @@
 ﻿using FargowiltasSouls.Content.Projectiles.Masomode;
+using FargowiltasSouls.Core.Globals;
+using FargowiltasSouls.Core.NPCMatching;
 using Microsoft.Xna.Framework;
 using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using FargowiltasSouls.Core.Globals;
-using FargowiltasSouls.Core.NPCMatching;
 
 namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies
 {
@@ -49,7 +49,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies
                     speed.Normalize();
                     speed *= 12f;
 
-                    Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, speed, ModContent.ProjectileType<CultistArrow>(), FargoSoulsUtil.ScaledProjectileDamage(npc.damage, 4f * 4 / 9), 0f, Main.myPlayer);
+                    Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, speed, ModContent.ProjectileType<CultistArrow>(), FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage, 4f * 4 / 9), 0f, Main.myPlayer);
                 }
             }
         }

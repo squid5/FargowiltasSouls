@@ -1,7 +1,6 @@
 ﻿using FargowiltasSouls.Content.Items.Accessories.Masomode;
 using FargowiltasSouls.Content.Projectiles.Minions;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
-using FargowiltasSouls.Core.Toggler.Content;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
@@ -45,7 +44,7 @@ namespace FargowiltasSouls.Content.Buffs.Minions
                         FargoSoulsUtil.NewSummonProjectile(player.GetSource_Buff(buffIndex), player.Center, Vector2.Zero, ModContent.ProjectileType<PungentEyeballMinion>(), damage, 0f, player.whoAmI);
                 }
 
-                
+
                 if (player.AddEffect<RainbowSlimeMinion>(item))
                 {
                     fargoPlayer.RainbowSlime = true;
@@ -79,7 +78,7 @@ namespace FargowiltasSouls.Content.Buffs.Minions
                     if (player.ownedProjectileCounts[ModContent.ProjectileType<MiniSaucer>()] < 1)
                         FargoSoulsUtil.NewSummonProjectile(player.GetSource_Buff(buffIndex), player.Center, Vector2.Zero, ModContent.ProjectileType<MiniSaucer>(), damage, 3f, player.whoAmI);
                 }
-
+                /*
                 if (player.AddEffect<CultistMinionEffect>(item))
                 {
                     fargoPlayer.LunarCultist = true;
@@ -87,7 +86,7 @@ namespace FargowiltasSouls.Content.Buffs.Minions
                     if (player.whoAmI == Main.myPlayer && player.ownedProjectileCounts[ModContent.ProjectileType<LunarCultist>()] < 1)
                         FargoSoulsUtil.NewSummonProjectile(player.GetSource_Buff(buffIndex), player.Center, Vector2.Zero, ModContent.ProjectileType<LunarCultist>(), damage, 2f, player.whoAmI, -1f);
                 }
-
+                */
                 if (player.AddEffect<MasoTrueEyeMinion>(item))
                 {
                     fargoPlayer.TrueEyes = true;

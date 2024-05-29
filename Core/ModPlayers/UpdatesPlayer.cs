@@ -1,9 +1,10 @@
-﻿using FargowiltasSouls.Content.Buffs.Masomode;
-using FargowiltasSouls.Content.Buffs.Souls;
+﻿using FargowiltasSouls.Content.Buffs.Boss;
+using FargowiltasSouls.Content.Buffs.Masomode;
 using FargowiltasSouls.Content.Items.Accessories.Enchantments;
 using FargowiltasSouls.Content.Items.Accessories.Expert;
 using FargowiltasSouls.Content.Items.Accessories.Masomode;
 using FargowiltasSouls.Content.Items.Armor;
+using FargowiltasSouls.Content.Items.Consumables;
 using FargowiltasSouls.Content.Items.Weapons.Challengers;
 using FargowiltasSouls.Content.Items.Weapons.SwarmDrops;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
@@ -11,22 +12,17 @@ using FargowiltasSouls.Core.Globals;
 using FargowiltasSouls.Core.Systems;
 using Microsoft.Xna.Framework;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
-using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.UI;
-using FargowiltasSouls.Content.Items.Consumables;
-using FargowiltasSouls.Content.UI;
-using Fargowiltas;
 
 namespace FargowiltasSouls.Core.ModPlayers
 {
-	public partial class FargoSoulsPlayer
+    public partial class FargoSoulsPlayer
     {
         public override void PreUpdate()
         {
@@ -121,7 +117,7 @@ namespace FargowiltasSouls.Core.ModPlayers
                     Player.velocity *= 0.5f;
 
                     //add hover back
-                   // Player.mount._data.usesHover = BaseSquireMountData.usesHover;
+                    // Player.mount._data.usesHover = BaseSquireMountData.usesHover;
                 }
             }
         }
@@ -154,8 +150,12 @@ namespace FargowiltasSouls.Core.ModPlayers
         {
             if (Berserked && !Player.CCed)
             {
-                Player.controlUseItem = true;
-                Player.releaseUseItem = true;
+                if (Player.HeldItem != null && Player.HeldItem.IsWeapon())
+                {
+                    Player.controlUseItem = true;
+                    Player.releaseUseItem = true;
+                }
+                
             }
 
             if (LowGround)
@@ -207,7 +207,7 @@ namespace FargowiltasSouls.Core.ModPlayers
             if (MutantAntibodies && Player.wet)
             {
                 Player.wingTime = Player.wingTimeMax;
-                Player.AddBuff(ModContent.BuffType<RefreshedBuff>(), (int)FargoSoulsUtil.SecondsToFrames(30f));
+                Player.AddBuff(ModContent.BuffType<RefreshedBuff>(), LumUtils.SecondsToFrames(30f));
             }
 
             if (StyxSet)
@@ -441,6 +441,9 @@ namespace FargowiltasSouls.Core.ModPlayers
 
         public override void PostUpdateMiscEffects()
         {
+            if (ToggleRebuildCooldown > 0)
+                ToggleRebuildCooldown--;
+
             //these are here so that emode minion nerf can properly detect the real set bonuses over in EModePlayer postupdateequips
             if (SquireEnchantActive)
                 Player.setSquireT2 = true;
@@ -478,6 +481,9 @@ namespace FargowiltasSouls.Core.ModPlayers
 
             if (SpectreCD > 0)
                 SpectreCD--;
+
+            if (ChargeSoundDelay > 0)
+                ChargeSoundDelay--;
 
             if (RustRifleReloading && Player.HeldItem.type == ModContent.ItemType<NavalRustrifle>())
             {

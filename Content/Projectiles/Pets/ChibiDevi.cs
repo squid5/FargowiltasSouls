@@ -1,4 +1,5 @@
 ﻿using FargowiltasSouls.Core;
+using FargowiltasSouls.Core.Globals;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -11,7 +12,6 @@ using Terraria.GameContent.UI;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
-using FargowiltasSouls.Core.Globals;
 
 namespace FargowiltasSouls.Content.Projectiles.Pets
 {
@@ -212,10 +212,10 @@ namespace FargowiltasSouls.Content.Projectiles.Pets
             Projectile.spriteDirection = Projectile.direction;
 
 
-            bool bossAlive = FargoSoulsUtil.AnyBossAlive();
+            bool bossAlive = LumUtils.AnyBosses();
             //only do idle talk when awake, not a boss fight, and not in danger
             if (TalkCDs[(int)TalkType.Idle] < 60 && (bossAlive || asleep || player.statLife < player.statLifeMax2 / 2))
-                TalkCDs[(int)TalkType.Idle] = Math.Max(TalkCDs[(int)TalkType.Idle], (int)FargoSoulsUtil.SecondsToFrames(12));
+                TalkCDs[(int)TalkType.Idle] = Math.Max(TalkCDs[(int)TalkType.Idle], LumUtils.SecondsToFrames(12));
 
             if (bossAlive)
             {
@@ -372,7 +372,7 @@ namespace FargowiltasSouls.Content.Projectiles.Pets
 
             Count
         };
-        private static int[] MaxThingsToSay => new int[] {
+        private static int[] MaxThingsToSay => [
             7, //Spawn
             7, //Respawn
             12, //Idle
@@ -384,7 +384,7 @@ namespace FargowiltasSouls.Content.Projectiles.Pets
             7, //KillBoss
             8, //BossSpawn
             1 //Count
-        };
+        ];
 
         public static int ShortCD => 600;
         public static int MediumCD => Main.rand.Next(3600, 7200);

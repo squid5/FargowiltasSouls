@@ -25,6 +25,7 @@ using FargowiltasSouls.Content.Bosses.Champions.Timber;
 using FargowiltasSouls.Content.Bosses.Champions.Will;
 using FargowiltasSouls.Content.Bosses.Champions.Spirit;
 using FargowiltasSouls.Core;
+using Luminance.Core.Graphics;
 
 namespace FargowiltasSouls.Content.Projectiles
 {
@@ -41,7 +42,7 @@ namespace FargowiltasSouls.Content.Projectiles
         private bool preAICheckDone;
         private bool firstTickAICheckDone;
 
-        public static Dictionary<int, bool> IgnoreMinionNerf = new();
+        public static Dictionary<int, bool> IgnoreMinionNerf = [];
 
 
 
@@ -204,6 +205,13 @@ namespace FargowiltasSouls.Content.Projectiles
                     break;
                 case ProjectileID.SuperStar:
                     projectile.penetrate = 7;
+                    break;
+                case ProjectileID.WeatherPainShot:
+                    projectile.idStaticNPCHitCooldown = 10;
+                    projectile.penetrate = 45;
+                    break;
+                case ProjectileID.HoundiusShootiusFireball:
+                    projectile.extraUpdates += 1;
                     break;
                 default:
                     break;
@@ -472,11 +480,6 @@ namespace FargowiltasSouls.Content.Projectiles
                             projectile.damage = (int)(projectile.damage * 1.5f);
                             break;
                         }
-
-                    case ProjectileID.StarCloakStar:
-                        if (!Main.hardMode)
-                            projectile.damage /= 2;
-                        break;
 
                     default:
                         break;
@@ -859,7 +862,7 @@ namespace FargowiltasSouls.Content.Projectiles
                                         }
                                     }
 
-                                    Projectile.NewProjectile(npc.GetSource_FromThis(), projectile.Center, Vector2.Zero, ModContent.ProjectileType<CultistRitual>(), FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 0f, Main.myPlayer, 0f, npc.whoAmI);
+                                    Projectile.NewProjectile(npc.GetSource_FromThis(), projectile.Center, Vector2.Zero, ModContent.ProjectileType<CultistRitual>(), FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 0f, Main.myPlayer, 0f, npc.whoAmI);
                                     const int max = 16;
                                     const float appearRadius = 1600f - 100f;
                                     for (int i = 0; i < max; i++)
@@ -914,12 +917,13 @@ namespace FargowiltasSouls.Content.Projectiles
                                 float ai0 = Main.rand.Next(4);
 
                                 LunaticCultist cultistData = Main.npc[cult].GetGlobalNPC<LunaticCultist>();
-                                int[] weight = new int[4];
-                                weight[0] = cultistData.MagicDamageCounter;
-                                weight[1] = cultistData.MeleeDamageCounter;
-                                weight[2] = cultistData.RangedDamageCounter;
-                                weight[3] = cultistData.MinionDamageCounter;
-
+                                int[] weight =
+                                [
+                                    cultistData.MagicDamageCounter,
+                                    cultistData.MeleeDamageCounter,
+                                    cultistData.RangedDamageCounter,
+                                    cultistData.MinionDamageCounter,
+                                ];
                                 cultistData.MeleeDamageCounter = 0;
                                 cultistData.RangedDamageCounter = 0;
                                 cultistData.MagicDamageCounter = 0;
@@ -1030,7 +1034,7 @@ namespace FargowiltasSouls.Content.Projectiles
                             : Main.rand.NextFloat(4f, 6f);
 
                         if (!Main.dedServ && Main.LocalPlayer.active)
-                            Main.LocalPlayer.FargoSouls().Screenshake = 2;
+                            FargoSoulsUtil.ScreenshakeRumble(6);
                     }
                     break;
 
@@ -1210,6 +1214,11 @@ namespace FargowiltasSouls.Content.Projectiles
                 case ProjectileID.PlatinumCoin:
                     modifiers.FinalDamage *= 0.275f;
                     break;
+
+                case ProjectileID.StarCloakStar:
+                    if (!Main.hardMode)
+                        modifiers.FinalDamage *= 0.33f;
+                    break;
             }
             //if (projectile.arrow) //change archery and quiver to additive damage
             //{
@@ -1292,7 +1301,7 @@ namespace FargowiltasSouls.Content.Projectiles
                     NPC plantera = FargoSoulsUtil.NPCExists(NPC.plantBoss, NPCID.Plantera);
                     if (plantera != null && FargoSoulsUtil.HostCheck)
                     {
-                        Vector2 vel = 200f / 25f * projectile.DirectionTo(plantera.Center);
+                        Vector2 vel = 200f / 25f * projectile.SafeDirectionTo(plantera.Center);
                         Projectile.NewProjectile(plantera.GetSource_FromThis(), projectile.Center - projectile.oldVelocity, vel, ModContent.ProjectileType<DicerPlantera>(), projectile.damage, projectile.knockBack, projectile.owner, 0, 0);
                     }
                     break;
@@ -1460,10 +1469,12 @@ namespace FargowiltasSouls.Content.Projectiles
                     break;
 
                 case ProjectileID.EyeLaser:
-                case ProjectileID.GoldenShowerHostile:
-                case ProjectileID.CursedFlameHostile:
                     if (sourceNPC != null && (sourceNPC.type == NPCID.WallofFlesh || sourceNPC.type == NPCID.WallofFleshEye))
+                    {
                         target.AddBuff(BuffID.OnFire, 300);
+                        if (WorldSavingSystem.MasochistModeReal)
+                            target.AddBuff(BuffID.Burning, 60);
+                    }
                     break;
 
                 case ProjectileID.DrManFlyFlask:

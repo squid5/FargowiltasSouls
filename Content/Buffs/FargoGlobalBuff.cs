@@ -1,4 +1,10 @@
-﻿using Microsoft.Xna.Framework;
+﻿using FargowiltasSouls.Content.Buffs.Masomode;
+using FargowiltasSouls.Content.Buffs.Souls;
+using FargowiltasSouls.Content.Items.Accessories.Enchantments;
+using FargowiltasSouls.Core.AccessoryEffectSystem;
+using FargowiltasSouls.Core.Globals;
+using FargowiltasSouls.Core.Systems;
+using Microsoft.Xna.Framework;
 using System;
 using System.Linq;
 using Terraria;
@@ -6,12 +12,6 @@ using Terraria.Audio;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
-using FargowiltasSouls.Content.Buffs.Souls;
-using FargowiltasSouls.Content.Buffs.Masomode;
-using FargowiltasSouls.Core.Systems;
-using FargowiltasSouls.Core.Globals;
-using FargowiltasSouls.Core.AccessoryEffectSystem;
-using FargowiltasSouls.Content.Items.Accessories.Enchantments;
 
 namespace FargowiltasSouls.Content.Buffs
 {
@@ -28,14 +28,14 @@ namespace FargowiltasSouls.Content.Buffs
             }
         }
 
-        public static int[] DebuffsToLetDecreaseNormally => new int[] {
+        public static int[] DebuffsToLetDecreaseNormally => [
             BuffID.Frozen,
             BuffID.Stoned,
             BuffID.Cursed,
             ModContent.BuffType<FusedBuff>(),
             ModContent.BuffType<TimeFrozenBuff>(),
             ModContent.BuffType<StunnedBuff>()
-        };
+        ];
 
         public override void Update(int type, Player player, ref int buffIndex)
         {
@@ -47,10 +47,10 @@ namespace FargowiltasSouls.Content.Buffs
                         player.FargoSouls().Slimed = true;
                     break;
 
-                case BuffID.BrainOfConfusionBuff:
-                    if (WorldSavingSystem.EternityMode)
-                        player.AddBuff(ModContent.BuffType<BrainOfConfusionBuff>(), player.buffTime[buffIndex] * 2);
-                    break;
+                //case BuffID.BrainOfConfusionBuff:
+                    //if (WorldSavingSystem.EternityMode)
+                        //player.AddBuff(ModContent.BuffType<BrainOfConfusionBuff>(), player.buffTime[buffIndex] * 2);
+                    //break;
 
                 case BuffID.OnFire:
                     if (WorldSavingSystem.EternityMode && Main.raining && player.position.Y < Main.worldSurface * 16
@@ -117,25 +117,31 @@ namespace FargowiltasSouls.Content.Buffs
                             Player player = Main.player.FirstOrDefault(p => p.active && !p.dead && p.HasEffect<AncientShadowDarkness>());
                             if (player != null && player.active && !player.dead)
                             {
-                                for (int i = 0; i < Main.maxNPCs; i++)
+                                FargoSoulsPlayer modPlayer = player.FargoSouls();
+                                if (modPlayer.AncientShadowFlameCooldown <= 0)
                                 {
-                                    NPC target = Main.npc[i];
-                                    if (target.active && !target.friendly && Vector2.Distance(npc.Center, target.Center) < 250)
+                                    modPlayer.AncientShadowFlameCooldown = 30;
+                                    for (int i = 0; i < Main.maxNPCs; i++)
                                     {
-                                        Vector2 velocity = Vector2.Normalize(target.Center - npc.Center) * 5;
-                                        int p = Projectile.NewProjectile(player.GetSource_FromThis(), npc.Center, velocity, ProjectileID.ShadowFlame, 40 + FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 0, Main.myPlayer);
-                                        if (p.IsWithinBounds(Main.maxProjectiles))
+                                        NPC target = Main.npc[i];
+                                        if (target.active && !target.friendly && Vector2.Distance(npc.Center, target.Center) < 250)
                                         {
-                                            Main.projectile[p].friendly = true;
-                                            Main.projectile[p].hostile = false;
+                                            Vector2 velocity = Vector2.Normalize(target.Center - npc.Center) * 5;
+                                            int p = Projectile.NewProjectile(player.GetSource_FromThis(), npc.Center, velocity, ProjectileID.ShadowFlame, 40 + FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 0, Main.myPlayer);
+                                            if (p.IsWithinBounds(Main.maxProjectiles))
+                                            {
+                                                Main.projectile[p].friendly = true;
+                                                Main.projectile[p].hostile = false;
+                                            }
+                                            if (Main.rand.NextBool(3))
+                                                break;
                                         }
-                                        if (Main.rand.NextBool(3))
-                                            break;
                                     }
                                 }
+                                
                             }
                         }
-                        
+
                     }
                     break;
 

@@ -1,14 +1,8 @@
-﻿using FargowiltasSouls.Common.Utilities;
-using FargowiltasSouls.Content.UI.Elements;
-using FargowiltasSouls.Core.AccessoryEffectSystem;
+﻿using FargowiltasSouls.Content.UI.Elements;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.Intrinsics.Arm;
 using Terraria;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -31,7 +25,7 @@ namespace FargowiltasSouls.Content.Items
         /// A list of articles that this item may begin with depending on localization. <br />
         /// Used for the prefix-article fix.
         /// </summary>
-        public virtual List<string> Articles => new() { "The" };
+        public virtual List<string> Articles => ["The"];
 
         /// <summary>
         /// Allows you to modify all the tooltips that display for this item. <br />

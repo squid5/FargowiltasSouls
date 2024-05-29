@@ -29,19 +29,19 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Nature
          * 4 = chloro
          * 5 = shroomite
          */
-        public int[] heads = { -1, -1, -1, -1, -1, -1 };
+        public int[] heads = [-1, -1, -1, -1, -1, -1];
         public int lastSet = 0;
-        public static readonly KeyValuePair<int, int>[] configurations = {
-            new KeyValuePair<int, int>(0, 1),
-            new KeyValuePair<int, int>(1, 3),
-            new KeyValuePair<int, int>(3, 5),
-            new KeyValuePair<int, int>(3, 4),
-            new KeyValuePair<int, int>(2, 4),
-            new KeyValuePair<int, int>(0, 5),
-            new KeyValuePair<int, int>(1, 2),
-            new KeyValuePair<int, int>(2, 5),
-            new KeyValuePair<int, int>(0, 4)
-        };
+        public static readonly KeyValuePair<int, int>[] configurations = [
+            new(0, 1),
+            new(1, 3),
+            new(3, 5),
+            new(3, 4),
+            new(2, 4),
+            new(0, 5),
+            new(1, 2),
+            new(2, 5),
+            new(0, 4)
+        ];
 
         public override void SetStaticDefaults()
         {
@@ -51,15 +51,15 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Nature
             NPCID.Sets.MPAllowedEnemies[Type] = true;
             NPCID.Sets.BossBestiaryPriority.Add(NPC.type);
 
-            NPC.AddDebuffImmunities(new List<int>
-            {
+            NPC.AddDebuffImmunities(
+            [
                 BuffID.Confused,
                 BuffID.Chilled,
                 BuffID.OnFire,
                 BuffID.Suffocation,
                 ModContent.BuffType<LethargicBuff>(),
                 ModContent.BuffType<ClippedWingsBuff>()
-            });
+            ]);
 
             NPCID.Sets.NPCBestiaryDrawOffset.Add(NPC.type, new NPCID.Sets.NPCBestiaryDrawModifiers()
             {
@@ -74,10 +74,10 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Nature
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
-            bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
+            bestiaryEntry.Info.AddRange([
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.UndergroundSnow,
                 new FlavorTextBestiaryInfoElement($"Mods.FargowiltasSouls.Bestiary.{Name}")
-            });
+            ]);
         }
 
         public override void SetDefaults()

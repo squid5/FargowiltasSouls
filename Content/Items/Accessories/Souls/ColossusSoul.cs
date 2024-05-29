@@ -1,11 +1,9 @@
 ﻿using Fargowiltas.Items.Tiles;
-using FargowiltasSouls.Content.Items.Accessories.Masomode;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using FargowiltasSouls.Core.Toggler.Content;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Content.Items.Accessories.Souls
 {
@@ -25,7 +23,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Souls
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            AddEffects(player, Item, 100, 0.15f, 5);
+            AddEffects(player, Item, 0, 0.1f, 5);
         }
         public static void AddEffects(Player player, Item item, int maxHP, float damageResist, int lifeRegen)
         {

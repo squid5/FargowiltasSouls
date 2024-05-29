@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Terraria.ID;
+﻿using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
-using Microsoft.Xna.Framework;
 
 namespace FargowiltasSouls.Content.Patreon.Potato
 {
@@ -35,7 +30,7 @@ namespace FargowiltasSouls.Content.Patreon.Potato
             //spawn a blade if none exist
             if (player.ownedProjectileCounts[ModContent.ProjectileType<RazorBlade>()] < 1)
             {
-                Projectile.NewProjectile(player.GetSource_Accessory(Item), player.Center, new Vector2(Main.rand.Next(-2, 2), -2), ModContent.ProjectileType<RazorBlade>(), 20, 2f, player.whoAmI);
+                Projectile.NewProjectile(player.GetSource_Accessory(Item), player.Center, new Vector2(Main.rand.Next(-2, 2), -2), ModContent.ProjectileType<RazorBlade>(), 15, 2f, player.whoAmI);
             }
         }
 

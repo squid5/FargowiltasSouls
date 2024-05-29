@@ -1,24 +1,23 @@
 ﻿using FargowiltasSouls.Content.Items.Accessories.Enchantments;
-using Terraria;
-using Terraria.ID;
-using Terraria.ModLoader;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
+using Terraria;
+using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Content.Items.Accessories.Forces
 {
-	public class EarthForce : BaseForce
+    public class EarthForce : BaseForce
     {
         public override void SetStaticDefaults()
         {
-            Enchants[Type] = new int[]
-            {
+            Enchants[Type] =
+            [
                 ModContent.ItemType<CobaltEnchant>(),
                 ModContent.ItemType<PalladiumEnchant>(),
                 ModContent.ItemType<MythrilEnchant>(),
                 ModContent.ItemType<OrichalcumEnchant>(),
                 ModContent.ItemType<AdamantiteEnchant>(),
                 ModContent.ItemType<TitaniumEnchant>()
-            };
+            ];
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)

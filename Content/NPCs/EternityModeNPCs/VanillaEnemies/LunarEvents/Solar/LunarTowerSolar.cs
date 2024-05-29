@@ -1,17 +1,17 @@
 ﻿using FargowiltasSouls.Content.Buffs.Masomode;
 using FargowiltasSouls.Core.NPCMatching;
+using FargowiltasSouls.Core.Systems;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria;
-using Microsoft.Xna.Framework;
-using Terraria.Audio;
-using FargowiltasSouls.Core.Systems;
 
 namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEvents.Solar
 {
-	public class LunarTowerSolar : LunarTowers
+    public class LunarTowerSolar : LunarTowers
     {
         public override int ShieldStrength
         {
@@ -32,14 +32,15 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEve
             PillarSlam,
             FireballVomit,
             MeteorRain,
-            
+
         }
-        public override List<int> RandomAttacks => new List<int>() //these are randomly chosen attacks in p1
-        {
+        public override List<int> RandomAttacks =>
+        //these are randomly chosen attacks in p1
+        [
             (int)Attacks.PillarSlam,
             (int)Attacks.FireballVomit,
             (int)Attacks.MeteorRain
-        };
+        ];
         public override void ShieldsDownAI(NPC npc)
         {
             Player target = Main.player[npc.target];
@@ -111,9 +112,9 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEve
                             float random = Main.rand.Next(-distance / 5, distance / 4);
                             Vector2 pos = OriginalLocation + Vector2.UnitX * (distance * x + random);
                             Vector2 vel = Vector2.UnitY * 16;
-                            Projectile.NewProjectile(npc.GetSource_FromThis(), pos, vel, ModContent.ProjectileType<PillarSpawner>(), FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 3f, Main.myPlayer, ai0: 1);
+                            Projectile.NewProjectile(npc.GetSource_FromThis(), pos, vel, ModContent.ProjectileType<PillarSpawner>(), FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 3f, Main.myPlayer, ai0: 1);
                         }
-                        
+
                     }
                     HitFloorEffect = true;
                 }
@@ -190,7 +191,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEve
                     }
                 }
             }
-            
+
             if (AttackTimer <= AttackDuration)
             {
                 Attack();
@@ -236,7 +237,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEve
                         const int height = 1000;
                         int offset = (int)(height * Math.Tan(angle));
                         Vector2 pos = player.Center + new Vector2(Main.rand.Next(-width - offset, width - offset), -height);
-                        Projectile.NewProjectile(npc.GetSource_FromThis(), pos, aim, ModContent.ProjectileType<SolarMeteor>(), FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 3f, Main.myPlayer, ai1: aim.X, ai2: aim.Y);
+                        Projectile.NewProjectile(npc.GetSource_FromThis(), pos, aim, ModContent.ProjectileType<SolarMeteor>(), FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 3f, Main.myPlayer, ai1: aim.X, ai2: aim.Y);
                     }
                 }
             }
@@ -274,11 +275,11 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEve
                         {
                             Main.npc[n].GivenName = "John Crawltipede";
                             Main.npc[n].life *= 6;
-                            
+
                         }
                     }
                 }
-                
+
             }
             if (AttackTimer > IdleTime)
             {

@@ -1,10 +1,12 @@
-﻿using FargowiltasSouls.Core.ItemDropRules.Conditions;
-using FargowiltasSouls.Content.Projectiles;
+﻿using FargowiltasSouls.Common.Graphics.Particles;
+using FargowiltasSouls.Core.ItemDropRules.Conditions;
+using Luminance.Core.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using Terraria;
 using Terraria.Audio;
 using Terraria.Chat;
@@ -15,16 +17,13 @@ using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
-using FargowiltasSouls.Core.Globals;
-using FargowiltasSouls.Common.Graphics.Particles;
-using System.Reflection;
 
 namespace FargowiltasSouls //lets everything access it without using
 {
-	public static partial class FargoSoulsUtil
+    public static partial class FargoSoulsUtil
     {
-
-        public static readonly BindingFlags UniversalBindingFlags = BindingFlags.Instance | BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public;
+        [Obsolete("Use Luminance's Utilities.UniversalBindingFlags instead.", error: false)]
+        public static readonly BindingFlags UniversalBindingFlags = LumUtils.UniversalBindingFlags;
 
         public static bool WorldIsExpertOrHarder() => Main.expertMode || (Main.GameModeInfo.IsJourneyMode && CreativePowerManager.Instance.GetPower<CreativePowers.DifficultySliderPower>().StrengthMultiplierToGiveNPCs >= 2);
 
@@ -76,26 +75,26 @@ namespace FargowiltasSouls //lets everything access it without using
 
         public static int HighestDamageTypeScaling(Player player, int dmg)
         {
-            List<float> types = new()
-            {
+            List<float> types =
+            [
                 player.ActualClassDamage(DamageClass.Melee),
                 player.ActualClassDamage(DamageClass.Ranged),
                 player.ActualClassDamage(DamageClass.Magic),
                 player.ActualClassDamage(DamageClass.Summon)
-            };
+            ];
 
             return (int)(types.Max() * dmg);
         }
 
         public static float HighestCritChance(Player player)
         {
-            List<float> types = new()
-            {
+            List<float> types =
+            [
                 player.ActualClassCrit(DamageClass.Melee),
                 player.ActualClassCrit(DamageClass.Ranged),
                 player.ActualClassCrit(DamageClass.Magic),
                 player.ActualClassCrit(DamageClass.Summon)
-            };
+            ];
 
             return types.Max();
         }
@@ -228,16 +227,6 @@ namespace FargowiltasSouls //lets everything access it without using
             }
         }
 
-        public static bool AnyBossAlive()
-        {
-            if (FargoSoulsGlobalNPC.boss == -1)
-                return false;
-            if (Main.npc[FargoSoulsGlobalNPC.boss].active && (Main.npc[FargoSoulsGlobalNPC.boss].boss || Main.npc[FargoSoulsGlobalNPC.boss].type == NPCID.EaterofWorldsHead))
-                return true;
-            FargoSoulsGlobalNPC.boss = -1;
-            return false;
-        }
-
         public static void ClearFriendlyProjectiles(int deletionRank = 0, int bossNpc = -1, bool clearSummonProjs = false)
         {
             ClearProjectiles(false, true, deletionRank, bossNpc, clearSummonProjs);
@@ -281,7 +270,7 @@ namespace FargowiltasSouls //lets everything access it without using
             {
                 if (player.inventory[i] == itemToReplace)
                 {
-                    Item newItem = new Item(itemIDtoReplaceWith, itemToReplace.stack, itemToReplace.prefix);
+                    Item newItem = new(itemIDtoReplaceWith, itemToReplace.stack, itemToReplace.prefix);
                     newItem.active = true;
                     newItem.favorited = itemToReplace.favorited;
                     player.inventory[i] = newItem;
@@ -450,7 +439,7 @@ namespace FargowiltasSouls //lets everything access it without using
                 ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(text), color);
             }
         }
-        
+
         public static void PrintText(string text, int r, int g, int b) => PrintText(text, new Color(r, g, b));
 
         public static Vector2 ClosestPointInHitbox(Rectangle hitboxOfTarget, Vector2 desiredLocation)
@@ -673,6 +662,14 @@ namespace FargowiltasSouls //lets everything access it without using
 
         public static bool AprilFools => DateTime.Today.Month == 4 && DateTime.Today.Day <= 7;
         public static string TryAprilFoolsTexture => AprilFools ? "_April" : "";
+
+        public static void ScreenshakeRumble(float strength)
+        {
+            if (ScreenShakeSystem.OverallShakeIntensity < strength)
+            {
+                ScreenShakeSystem.SetUniversalRumble(strength, MathF.Tau, null, 0.2f);
+            }
+        }
 
 
         #region npcloot
@@ -1083,8 +1080,8 @@ namespace FargowiltasSouls //lets everything access it without using
 
         #endregion
 
-		#region Easings
-		public static float SineInOut(float value) => (0f - (MathF.Cos((value * MathF.PI)) - 1f)) / 2f;
-		#endregion
-	}
+        #region Easings
+        public static float SineInOut(float value) => (0f - (MathF.Cos((value * MathF.PI)) - 1f)) / 2f;
+        #endregion
+    }
 }

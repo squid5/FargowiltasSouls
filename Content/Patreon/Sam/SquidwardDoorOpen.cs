@@ -10,7 +10,7 @@ using Terraria.ObjectData;
 
 namespace FargowiltasSouls.Content.Patreon.Sam
 {
-	public class SquidwardDoorOpen : ModTile
+    public class SquidwardDoorOpen : ModTile
     {
         public override void SetStaticDefaults()
         {
@@ -25,7 +25,7 @@ namespace FargowiltasSouls.Content.Patreon.Sam
             TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile, 1, 0);
             TileObjectData.newTile.UsesCustomCanPlace = true;
             TileObjectData.newTile.LavaDeath = true;
-            TileObjectData.newTile.CoordinateHeights = new[] { 16, 16, 16 };
+            TileObjectData.newTile.CoordinateHeights = [16, 16, 16];
             TileObjectData.newTile.CoordinateWidth = 16;
             TileObjectData.newTile.CoordinatePadding = 2;
             TileObjectData.newTile.StyleHorizontal = true;
@@ -64,7 +64,7 @@ namespace FargowiltasSouls.Content.Patreon.Sam
             // name.SetDefault("Squidward Door");
             AddMapEntry(new Color(200, 200, 200), name);
 
-            AdjTiles = new int[] { TileID.OpenDoor };
+            AdjTiles = [TileID.OpenDoor];
             TileID.Sets.CloseDoorID[Type] = ModContent.TileType<SquidwardDoorClosed>();
         }
 

@@ -1,26 +1,25 @@
-using System.IO;
-using Terraria.ModLoader.IO;
+using FargowiltasSouls.Common.Utilities;
+using FargowiltasSouls.Content.Buffs.Masomode;
+using FargowiltasSouls.Content.Projectiles;
 using FargowiltasSouls.Content.Projectiles.Masomode;
+using FargowiltasSouls.Core.Globals;
+using FargowiltasSouls.Core.NPCMatching;
+using FargowiltasSouls.Core.Systems;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent.Events;
 using Terraria.ID;
-using Terraria.ModLoader;
 using Terraria.Localization;
-using FargowiltasSouls.Content.Projectiles;
-using FargowiltasSouls.Content.Buffs.Masomode;
-using FargowiltasSouls.Core.Systems;
-using FargowiltasSouls.Core.Globals;
-using FargowiltasSouls.Common.Utilities;
-using FargowiltasSouls.Core.NPCMatching;
-using System.Linq;
+using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
 
 namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 {
-	public class Betsy : EModeNPCBehaviour
+    public class Betsy : EModeNPCBehaviour
     {
         public override NPCMatcher CreateMatcher() => new NPCMatcher().MatchType(NPCID.DD2Betsy);
 
@@ -78,8 +77,8 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                 EntranceTimer++;
                 npc.dontTakeDamage = true;
                 npc.TargetClosest(false);
-                npc.spriteDirection = Math.Sign(npc.DirectionTo(Main.player[npc.target].Center).X);
-                npc.rotation = npc.DirectionTo(Main.player[npc.target].Center).ToRotation();
+                npc.spriteDirection = Math.Sign(npc.SafeDirectionTo(Main.player[npc.target].Center).X);
+                npc.rotation = npc.SafeDirectionTo(Main.player[npc.target].Center).ToRotation();
                 if (npc.spriteDirection == -1)
                 {
                     npc.rotation += MathHelper.Pi;
@@ -194,7 +193,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                 if (FuryRingTimer == 0)
                 {
                     if (FargoSoulsUtil.HostCheck)
-                        Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, Vector2.Zero, ModContent.ProjectileType<GlowRingHollow>(), FargoSoulsUtil.ScaledProjectileDamage(npc.damage, 4f / 3), 0f, Main.myPlayer, 4);
+                        Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, Vector2.Zero, ModContent.ProjectileType<GlowRingHollow>(), FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage, 4f / 3), 0f, Main.myPlayer, 4);
 
                     if (WorldSavingSystem.MasochistModeReal)
                     {
@@ -211,8 +210,8 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                         float rotation = FuryRingShotRotationCounter;
                         if (WorldSavingSystem.MasochistModeReal && FuryRingTimer >= 30 && FuryRingTimer <= 60)
                             rotation += 1; //staggers each wave instead of lining them up behind each other
-                        Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, -Vector2.UnitY.RotatedBy(2 * Math.PI / 30 * rotation), ModContent.ProjectileType<BetsyFury>(), FargoSoulsUtil.ScaledProjectileDamage(npc.damage, 4f / 3), 0f, Main.myPlayer, npc.target);
-                        Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, -Vector2.UnitY.RotatedBy(2 * Math.PI / 30 * -rotation), ModContent.ProjectileType<BetsyFury>(), FargoSoulsUtil.ScaledProjectileDamage(npc.damage, 4f / 3), 0f, Main.myPlayer, npc.target);
+                        Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, -Vector2.UnitY.RotatedBy(2 * Math.PI / 30 * rotation), ModContent.ProjectileType<BetsyFury>(), FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage, 4f / 3), 0f, Main.myPlayer, npc.target);
+                        Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, -Vector2.UnitY.RotatedBy(2 * Math.PI / 30 * -rotation), ModContent.ProjectileType<BetsyFury>(), FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage, 4f / 3), 0f, Main.myPlayer, npc.target);
                     }
                     FuryRingShotRotationCounter++;
                 }
@@ -298,8 +297,8 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             LoadProjectile(recolor, ProjectileID.DD2BetsyFlameBreath);
         }
 
-        private static readonly List<LocalizedText> MasoTexts = new()
-        {
+        private static readonly List<LocalizedText> MasoTexts =
+        [
             Language.GetText("Mods.FargowiltasSouls.NPCs.EMode.Betsy1"),
             Language.GetText("Mods.FargowiltasSouls.NPCs.EMode.Betsy2"),
             Language.GetText("Mods.FargowiltasSouls.NPCs.EMode.Betsy3"),
@@ -327,6 +326,6 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             Language.GetText("Mods.FargowiltasSouls.NPCs.EMode.Betsy25"),
             Language.GetText("Mods.FargowiltasSouls.NPCs.EMode.Betsy26"),
             Language.GetText("Mods.FargowiltasSouls.NPCs.EMode.Betsy27"),
-        };
+        ];
     }
 }

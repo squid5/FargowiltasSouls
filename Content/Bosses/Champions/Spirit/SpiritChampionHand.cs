@@ -21,13 +21,10 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Spirit
             NPCID.Sets.TrailingMode[NPC.type] = 1;
             NPCID.Sets.CantTakeLunchMoney[Type] = true;
 
-            NPCID.Sets.NPCBestiaryDrawOffset.Add(NPC.type, new NPCID.Sets.NPCBestiaryDrawModifiers()
-            {
-                Hide = true
-            });
+            this.ExcludeFromBestiary();
 
-            NPC.AddDebuffImmunities(new List<int>
-            {
+            NPC.AddDebuffImmunities(
+            [
                 BuffID.Confused,
                     BuffID.Chilled,
                     BuffID.OnFire,
@@ -35,7 +32,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Spirit
                     ModContent.BuffType<LethargicBuff>(),
                     ModContent.BuffType<ClippedWingsBuff>(),
                     ModContent.BuffType<LightningRodBuff>()
-            });
+            ]);
         }
 
         public override void SetDefaults()
@@ -140,7 +137,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Spirit
                         }
                         else //wave around
                         {
-                            targetPos = head.Center + head.DirectionTo(NPC.Center) * head.Distance(player.Center);
+                            targetPos = head.Center + head.SafeDirectionTo(NPC.Center) * head.Distance(player.Center);
                         }
 
                         if (NPC.Distance(targetPos) > 50)
@@ -250,7 +247,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Spirit
                 NPC.rotation += (float)Math.PI;
 
             //dust tendrils connecting hands to base
-            Vector2 dustHead = head.Center + head.DirectionTo(NPC.Center) * 50;
+            Vector2 dustHead = head.Center + head.SafeDirectionTo(NPC.Center) * 50;
             Vector2 headOffset = NPC.Center - dustHead;
             for (int i = 0; i < headOffset.Length(); i += 16)
             {

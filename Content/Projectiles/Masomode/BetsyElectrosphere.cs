@@ -58,7 +58,7 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
             else
             {
                 if (Projectile.Distance(Main.player[p].Center) < 600)
-                    Projectile.velocity = 2f * Projectile.DirectionTo(Main.player[p].Center);
+                    Projectile.velocity = 2f * Projectile.SafeDirectionTo(Main.player[p].Center);
 
                 if (++timer > 60)
                 {

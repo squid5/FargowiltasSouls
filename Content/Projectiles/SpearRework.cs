@@ -1,13 +1,12 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using FargowiltasSouls.Core.Systems;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Collections.Generic;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using FargowiltasSouls.Core.Systems;
-using System.Collections.Generic;
 
 namespace FargowiltasSouls.Content.Projectiles
 {
@@ -17,8 +16,8 @@ namespace FargowiltasSouls.Content.Projectiles
 
         public int SwingDirection = 1;
 
-        public static List<int> ReworkedSpears = new()
-        {
+        public static List<int> ReworkedSpears =
+        [
                 ProjectileID.Spear,
                 ProjectileID.AdamantiteGlaive,
                 ProjectileID.CobaltNaginata,
@@ -30,7 +29,7 @@ namespace FargowiltasSouls.Content.Projectiles
                 ProjectileID.ObsidianSwordfish,
                 ProjectileID.Swordfish,
                 ProjectileID.ChlorophytePartisan
-            };
+            ];
         public override void PostAI(Projectile projectile)
         {
             if (WorldSavingSystem.EternityMode)
@@ -115,7 +114,7 @@ namespace FargowiltasSouls.Content.Projectiles
                     {
                         if (projectile.ai[1] == duration / 2 || projectile.ai[1] == duration / 2 + WaitTime && FargoSoulsUtil.HostCheck)
                         {
-                            Projectile.NewProjectile(projectile.GetSource_FromThis(), projectile.Center, Vector2.Normalize(projectile.velocity) * 5, ProjectileID.FlowerPetal, (int)(projectile.damage * 0.75f), projectile.knockBack / 2, Main.myPlayer);
+                            Projectile.NewProjectile(projectile.GetSource_FromThis(), projectile.Center, Vector2.Normalize(projectile.velocity) * 5, ProjectileID.FlowerPetal, projectile.damage / 2, projectile.knockBack / 2, Main.myPlayer);
                         }
                         break;
                     }

@@ -1,23 +1,22 @@
 ﻿using FargowiltasSouls.Content.Items.Accessories.Enchantments;
-using Terraria;
-using Terraria.ID;
-using Terraria.ModLoader;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
+using Terraria;
+using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Content.Items.Accessories.Forces
 {
-	public class LifeForce : BaseForce
+    public class LifeForce : BaseForce
     {
         public override void SetStaticDefaults()
         {
-            Enchants[Type] = new int[]
-            {
+            Enchants[Type] =
+            [
                 ModContent.ItemType<PumpkinEnchant>(),
                 ModContent.ItemType<BeeEnchant>(),
                 ModContent.ItemType<SpiderEnchant>(),
                 ModContent.ItemType<TurtleEnchant>(),
                 ModContent.ItemType<BeetleEnchant>()
-            };
+            ];
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
         {

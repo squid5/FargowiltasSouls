@@ -1,7 +1,7 @@
 using FargowiltasSouls.Content.Buffs.Masomode;
-using FargowiltasSouls.Content.Projectiles;
 using FargowiltasSouls.Core.Globals;
 using FargowiltasSouls.Core.Systems;
+using Luminance.Core.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -78,7 +78,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Will
             SoundEngine.PlaySound(SoundID.Item92, Projectile.Center);
 
             if (Main.LocalPlayer.active)
-                Main.LocalPlayer.FargoSouls().Screenshake = 30;
+                ScreenShakeSystem.StartShake(10, shakeStrengthDissipationIncrement: 10f / 30);
 
             if (FargoSoulsUtil.HostCheck)
             {

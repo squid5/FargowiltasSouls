@@ -20,7 +20,7 @@ namespace FargowiltasSouls.Content.Items.Weapons.SwarmDrops
             //DisplayName.AddTranslation((int)GameCulture.CultureName.Chinese, "地狱领域");
             //Tooltip.AddTranslation((int)GameCulture.CultureName.Chinese, "'屠戮众多的奖励...'");
         }
-        private static readonly int[] RiffVariants = new int[4] { 1, 2, 3, 4 };
+        private static readonly int[] RiffVariants = [1, 2, 3, 4];
         private static readonly SoundStyle badtothebone = new SoundStyle("FargowiltasSouls/Assets/Sounds/Boneriff/boneriff") with { Variants = RiffVariants, Volume = 0.2f, MaxInstances = 10, SoundLimitBehavior = SoundLimitBehavior.IgnoreNew };
         public override void SetDefaults()
         {

@@ -1,17 +1,17 @@
-﻿using FargowiltasSouls.Content.Projectiles.Masomode;
+﻿using FargowiltasSouls.Content.Buffs.Masomode;
+using FargowiltasSouls.Content.Projectiles.Masomode;
+using FargowiltasSouls.Core.Globals;
+using FargowiltasSouls.Core.NPCMatching;
 using Microsoft.Xna.Framework;
 using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
-using FargowiltasSouls.Content.Buffs.Masomode;
-using FargowiltasSouls.Core.Globals;
-using FargowiltasSouls.Core.NPCMatching;
 
 namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.BloodMoon
 {
-	public class Dreadnautilus : EModeNPCBehaviour
+    public class Dreadnautilus : EModeNPCBehaviour
     {
         public override NPCMatcher CreateMatcher() => new NPCMatcher().MatchType(NPCID.BloodNautilus);
 
@@ -52,7 +52,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.BloodMoo
                         if (npc.HasValidTarget)
                         {
                             float modifier = npc.Distance(Main.player[npc.target].Center) > 900 ? 0.3f : 0.1f;
-                            npc.velocity += modifier * npc.DirectionTo(Main.player[npc.target].Center);
+                            npc.velocity += modifier * npc.SafeDirectionTo(Main.player[npc.target].Center);
                         }
                         npc.position += npc.velocity;
                     }
@@ -73,14 +73,14 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.BloodMoo
                         if (npc.ai[1] % 2 == 0 && npc.Distance(FargoSoulsUtil.ClosestPointInHitbox(Main.player[npc.target], npc.Center)) > 30)
                         {
                             float rotation = npc.velocity.ToRotation();
-                            float diff = MathHelper.WrapAngle(rotation - npc.DirectionTo(Main.player[npc.target].Center).ToRotation());
+                            float diff = MathHelper.WrapAngle(rotation - npc.SafeDirectionTo(Main.player[npc.target].Center).ToRotation());
                             rotation += MathHelper.PiOver2 * System.Math.Sign(diff);
 
                             Vector2 vel = Vector2.UnitX.RotatedBy(rotation);
                             Vector2 spawnOffset = 100f * vel;
 
                             if (FargoSoulsUtil.HostCheck)
-                                Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center + spawnOffset, vel, ModContent.ProjectileType<BloodThornMissile>(), FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 0f, Main.myPlayer);
+                                Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center + spawnOffset, vel, ModContent.ProjectileType<BloodThornMissile>(), FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 0f, Main.myPlayer);
                         }
                     }
                     break;
@@ -119,9 +119,9 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.BloodMoo
 
                                     if (FargoSoulsUtil.HostCheck)
                                     {
-                                        Projectile.NewProjectile(npc.GetSource_FromThis(), spawnPos + vel * 50, 0.6f * vel, ModContent.ProjectileType<BloodThornMissile>(), FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 0f, Main.myPlayer);
+                                        Projectile.NewProjectile(npc.GetSource_FromThis(), spawnPos + vel * 50, 0.6f * vel, ModContent.ProjectileType<BloodThornMissile>(), FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 0f, Main.myPlayer);
 
-                                        Projectile.NewProjectile(npc.GetSource_FromThis(), spawnPos, 16f * vel.RotatedByRandom(MathHelper.ToRadians(10)), ProjectileID.SharpTears, FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 0f, Main.myPlayer, 0f, Main.rand.NextFloat(0.5f, 1f));
+                                        Projectile.NewProjectile(npc.GetSource_FromThis(), spawnPos, 16f * vel.RotatedByRandom(MathHelper.ToRadians(10)), ProjectileID.SharpTears, FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 0f, Main.myPlayer, 0f, Main.rand.NextFloat(0.5f, 1f));
                                     }
                                 }
                             }
@@ -165,7 +165,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.BloodMoo
                 {
                     n.position -= n.velocity;
                     n.position += npc.velocity / 2;
-                    n.position += n.DirectionTo(npc.Center) * n.velocity.Length() * 2f;
+                    n.position += n.SafeDirectionTo(npc.Center) * n.velocity.Length() * 2f;
                 }
             }
 

@@ -1,10 +1,5 @@
-﻿using FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.PirateInvasion;
-using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
+﻿using Microsoft.Xna.Framework;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -128,7 +123,7 @@ namespace FargowiltasSouls.Content.Bosses.Magmaw
 
             Vector2 idlePos = NPC.Center;
             if (NPC.Distance(player.Center) > idleMaxDistance)
-                idlePos = player.Center + player.DirectionTo(NPC.Center) * idleMaxDistance;
+                idlePos = player.Center + player.SafeDirectionTo(NPC.Center) * idleMaxDistance;
             if (IdleReposition)
                 idlePos = player.Center - Vector2.UnitY * 400;
             NPC.velocity = (idlePos - NPC.Center) * 0.05f;
@@ -139,13 +134,13 @@ namespace FargowiltasSouls.Content.Bosses.Magmaw
             Vector2 desiredPos = NPC.Center + offset;
             hand.Projectile.velocity = (desiredPos - hand.Projectile.Center) * 0.15f;
 
-            //Vector2 rotDir = Projectile.DirectionTo(Main.player[parent.target].Center);
+            //Vector2 rotDir = Projectile.SafeDirectionTo(Main.player[parent.target].Center);
             Vector2 rotDir = (Vector2.UnitX * hand.Side * 0.7f) - Vector2.UnitY;
             RotateTowards(rotDir, 0.15f);
         }
         public void SwordClap()
         {
-            
+
         }
         public void SwordClap_Hand(MagmawHand hand)
         {

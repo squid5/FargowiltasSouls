@@ -11,7 +11,7 @@ using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs
 {
-	public class GelatinSlime : ModNPC
+    public class GelatinSlime : ModNPC
     {
         public override string Texture => "Terraria/Images/NPC_658";
 
@@ -34,11 +34,11 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs
                    ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[NPCID.QueenSlimeBoss],
                    quickUnlock: true
                );
-            bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
+            bestiaryEntry.Info.AddRange([
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.TheHallow,
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.DayTime,
                 new FlavorTextBestiaryInfoElement($"Mods.FargowiltasSouls.Bestiary.{Name}")
-            });
+            ]);
         }
 
         public override void SetDefaults()
@@ -108,7 +108,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs
                                 NPC.Center,
                                 new Vector2(Main.rand.NextFloat(-0.5f, 0.5f), Main.rand.NextFloat(-maxSpeed, -4)),
                                 ProjectileID.QueenSlimeMinionBlueSpike,
-                                FargoSoulsUtil.ScaledProjectileDamage(NPC.damage, 1.5f),
+                                FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage, 1.5f),
                                 0f,
                                 Main.myPlayer);
                         }

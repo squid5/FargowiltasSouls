@@ -1,17 +1,17 @@
-using System.IO;
-using Terraria.ModLoader.IO;
+using FargowiltasSouls.Content.Buffs.Masomode;
 using FargowiltasSouls.Content.Projectiles.Masomode;
+using FargowiltasSouls.Core.Globals;
+using FargowiltasSouls.Core.NPCMatching;
 using Microsoft.Xna.Framework;
+using System.IO;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using FargowiltasSouls.Content.Buffs.Masomode;
-using FargowiltasSouls.Core.Globals;
-using FargowiltasSouls.Core.NPCMatching;
+using Terraria.ModLoader.IO;
 
 namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 {
-	public class Pumpking : EModeNPCBehaviour
+    public class Pumpking : EModeNPCBehaviour
     {
         public override NPCMatcher CreateMatcher() => new NPCMatcher().MatchType(NPCID.Pumpking);
 
@@ -47,10 +47,10 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
                         for (int i = 0; i < 20; i++)
                         {
-                            Vector2 vel = npc.DirectionTo(Main.player[npc.target].Center).RotatedBy(MathHelper.Pi / 6 * (Main.rand.NextDouble() - 0.5) + MathHelper.Pi / 2 * j);
+                            Vector2 vel = npc.SafeDirectionTo(Main.player[npc.target].Center).RotatedBy(MathHelper.Pi / 6 * (Main.rand.NextDouble() - 0.5) + MathHelper.Pi / 2 * j);
                             float ai0 = Main.rand.NextFloat(1.04f, 1.05f);
                             float ai1 = Main.rand.NextFloat(0.03f);
-                            Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, vel, ModContent.ProjectileType<PumpkingFlamingScythe>(), FargoSoulsUtil.ScaledProjectileDamage(npc.damage, 4f / 2), 0f, Main.myPlayer, ai0, ai1);
+                            Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, vel, ModContent.ProjectileType<PumpkingFlamingScythe>(), FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage, 4f / 2), 0f, Main.myPlayer, ai0, ai1);
                         }
                     }
                 }
@@ -64,7 +64,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     Player player = Main.player[t];
                     Vector2 distance = player.Center - npc.Center;
                     if (Math.Abs(distance.X) < npc.width && FargoSoulsUtil.HostCheck) //flame rain if player roughly below me
-                        Projectile.NewProjectile(npc.Center.X, npc.position.Y, Main.rand.Next(-3, 4), Main.rand.Next(-4, 0), Main.rand.Next(326, 329), FargoSoulsUtil.ScaledProjectileDamage(npc.damage, 0.8f), 0f, Main.myPlayer);
+                        Projectile.NewProjectile(npc.Center.X, npc.position.Y, Main.rand.Next(-3, 4), Main.rand.Next(-4, 0), Main.rand.Next(326, 329), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage, 0.8f), 0f, Main.myPlayer);
                 }
             }*/
         }

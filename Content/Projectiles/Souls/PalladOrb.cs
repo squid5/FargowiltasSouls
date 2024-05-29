@@ -41,7 +41,7 @@ namespace FargowiltasSouls.Content.Projectiles.Souls
             NPC npc = FargoSoulsUtil.NPCExists(Projectile.ai[0]);
             if (npc != null)
             {
-                Projectile.velocity = Projectile.DirectionTo(npc.Center) * Projectile.velocity.Length();
+                Projectile.velocity = Projectile.SafeDirectionTo(npc.Center) * Projectile.velocity.Length();
             }
             else
             {

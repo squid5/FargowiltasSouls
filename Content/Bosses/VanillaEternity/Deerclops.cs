@@ -14,6 +14,7 @@ using FargowiltasSouls.Core.Systems;
 using FargowiltasSouls.Core.Globals;
 using FargowiltasSouls.Common.Utilities;
 using FargowiltasSouls.Core.NPCMatching;
+using Luminance.Core.Graphics;
 
 namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 {
@@ -30,6 +31,8 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
         public bool DoLaserAttack;
 
         public bool DroppedSummon;
+
+        public int ForceDespawnTimer;
 
 
         public override void SendExtraAI(NPC npc, BitWriter bitWriter, BinaryWriter binaryWriter)
@@ -282,7 +285,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     if (EnteredPhase3)
                     {
                         if (!Main.dedServ)
-                            Main.LocalPlayer.FargoSouls().Screenshake = 2;
+                            FargoSoulsUtil.ScreenshakeRumble(6);
 
                         if (npc.ai[1] > 30) //roaring
                         {
@@ -356,7 +359,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                                     float rotation = MathHelper.Pi * (WorldSavingSystem.MasochistModeReal ? 1f : 0.8f) / time * -npc.direction;
 
                                     if (FargoSoulsUtil.HostCheck)
-                                        Projectile.NewProjectile(npc.GetSource_FromThis(), eye, Vector2.UnitY, ModContent.ProjectileType<DeerclopsDeathray>(), FargoSoulsUtil.ScaledProjectileDamage(npc.damage, 2f), 0f, Main.myPlayer, rotation, time);
+                                        Projectile.NewProjectile(npc.GetSource_FromThis(), eye, Vector2.UnitY, ModContent.ProjectileType<DeerclopsDeathray>(), FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage, 2f), 0f, Main.myPlayer, rotation, time);
                                 }
 
                                 npc.ai[1] += increment; //more endlag than normal
@@ -398,9 +401,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     break;
 
                 case 6: //trying to return home
-                    npc.TargetClosest();
-
-                    if (npc.ai[1] > 120 && (!npc.HasValidTarget || npc.Distance(Main.player[npc.target].Center) > 1600))
+                    if (++ForceDespawnTimer > 180)
                     {
                         if (FargoSoulsUtil.HostCheck) //force despawn
                         {
@@ -463,6 +464,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             LoadNPCSprite(recolor, npc.type);
             LoadBossHeadSprite(recolor, 39);
             LoadGore(recolor, 1270);
+            LoadGore(recolor, 1271);
             LoadGore(recolor, 1272);
             LoadGore(recolor, 1273);
             LoadGore(recolor, 1274);

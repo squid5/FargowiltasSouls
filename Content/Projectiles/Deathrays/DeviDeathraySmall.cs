@@ -1,18 +1,15 @@
 ﻿using FargowiltasSouls.Assets.ExtraTextures;
-using FargowiltasSouls.Common.Graphics.Primitives;
-using FargowiltasSouls.Common.Graphics.Shaders;
+using Luminance.Core.Graphics;
 using Microsoft.Xna.Framework;
 using System;
-using System.Linq;
 using Terraria;
 
 namespace FargowiltasSouls.Content.Projectiles.Deathrays
 {
-	public class DeviDeathraySmall : BaseDeathray
+    public class DeviDeathraySmall : BaseDeathray
     {
         public override string Texture => "FargowiltasSouls/Content/Projectiles/Deathrays/DeviDeathray";
 
-        public PrimDrawer LaserDrawer { get; private set; } = null;
 
         public DeviDeathraySmall() : base(60) { }
 
@@ -105,8 +102,7 @@ namespace FargowiltasSouls.Content.Projectiles.Deathrays
 
         public override bool PreDraw(ref Color lightColor)
         {
-            Shader shader = ShaderManager.GetShaderIfExists("GenericDeathray");
-			LaserDrawer ??= new PrimDrawer(WidthFunction, ColorFunction, shader);
+            ManagedShader shader = ShaderManager.GetShader("FargowiltasSouls.GenericDeathray");
 
             // Get the laser end position.
             Vector2 laserEnd = Projectile.Center + Projectile.velocity.SafeNormalize(Vector2.UnitY) * drawDistance;
@@ -117,14 +113,14 @@ namespace FargowiltasSouls.Content.Projectiles.Deathrays
             for (int i = 0; i < baseDrawPoints.Length; i++)
                 baseDrawPoints[i] = Vector2.Lerp(initialDrawPoint, laserEnd, i / (float)(baseDrawPoints.Length - 1f));
 
-			// Set shader parameters.
-			shader.SetMainColor(new Color(240, 220, 240, 100));
+            // Set shader parameters.
+            shader.TrySetParameter("mainColor", new Color(240, 220, 240, 100));
             FargoSoulsUtil.SetTexture1(FargosTextureRegistry.MutantStreak.Value);
-            shader.WrappedEffect.Parameters["stretchAmount"].SetValue(3);
-            shader.WrappedEffect.Parameters["scrollSpeed"].SetValue(1f);
-            shader.WrappedEffect.Parameters["uColorFadeScaler"].SetValue(0.8f);
+            shader.TrySetParameter("stretchAmount", 3);
+            shader.TrySetParameter("scrollSpeed", 1f);
+            shader.TrySetParameter("uColorFadeScaler", 0.8f);
 
-            LaserDrawer.DrawPrims(baseDrawPoints.ToList(), -Main.screenPosition, 10);
+            PrimitiveRenderer.RenderTrail(baseDrawPoints, new(WidthFunction, ColorFunction, Shader: shader), 10);
             return false;
         }
     }

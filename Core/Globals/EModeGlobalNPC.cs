@@ -1,11 +1,9 @@
 ﻿using FargowiltasSouls.Content.Bosses.MutantBoss;
 using FargowiltasSouls.Content.Buffs.Masomode;
-using FargowiltasSouls.Content.Items.Accessories.Enchantments;
 using FargowiltasSouls.Content.Items.Accessories.Masomode;
 using FargowiltasSouls.Content.Items.Placables;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using FargowiltasSouls.Core.ItemDropRules.Conditions;
-using FargowiltasSouls.Core.ModPlayers;
 using FargowiltasSouls.Core.Systems;
 using Microsoft.Xna.Framework;
 using System;
@@ -37,7 +35,7 @@ namespace FargowiltasSouls.Core.Globals
         public bool HasWhipDebuff;
 
         //public List<int> auraDebuffs = new List<int>();
-        #pragma warning disable CA2211
+#pragma warning disable CA2211
         public static int slimeBoss = -1;
         public static int eyeBoss = -1;
         public static int eaterBoss = -1;
@@ -66,7 +64,7 @@ namespace FargowiltasSouls.Core.Globals
 
         public static int eaterTimer;
         //public static int eaterResist;
-        #pragma warning restore CA2211
+#pragma warning restore CA2211
 
         public override void ResetEffects(NPC npc)
         {
@@ -86,7 +84,7 @@ namespace FargowiltasSouls.Core.Globals
             if (!WorldSavingSystem.EternityMode) return;
 
             npc.value = (int)(npc.value * 1.3);
-            if (!npc.boss && !npc.townNPC && !npc.CountsAsACritter && npc.life > 10 && !Main.masterMode && !FargoSoulsUtil.AnyBossAlive())
+            if (!npc.boss && !npc.townNPC && !npc.CountsAsACritter && npc.life > 10 && !Main.masterMode && !LumUtils.AnyBosses())
             {
                 npc.lifeMax = (int)Math.Round(npc.lifeMax * 1.1f);
             }
@@ -104,7 +102,7 @@ namespace FargowiltasSouls.Core.Globals
                 return base.PreAI(npc);
 
             //in pre-hm, enemies glow slightly at night
-            if (!Main.dayTime && !Main.hardMode && SoulConfig.Instance.PreBossNightGlow)
+            if (!Main.dayTime && !Main.hardMode && Main.player.Any(p => p.Alive() && p.FargoSouls().BoxofGizmos))
             {
                 int x = (int)npc.Center.X / 16;
                 int y = (int)npc.Center.Y / 16;
@@ -130,7 +128,7 @@ namespace FargowiltasSouls.Core.Globals
                 bool boss = npc.boss || npc.type == NPCID.EaterofWorldsHead || npc.type == NPCID.EaterofWorldsBody || npc.type == NPCID.EaterofWorldsTail;
                 if (npc.position.Y / 16 < Main.worldSurface * 0.35f && !boss) //enemy in space
                     npc.AddBuff(BuffID.Suffocation, 2, true);
-                else if (npc.position.Y / 16 > Main.maxTilesY - 200 && !boss) //enemy in hell
+                else if (npc.position.Y / 16 > Main.maxTilesY - 200 && !boss && !Main.remixWorld) //enemy in hell
                 {
                     //because of funny bug where town npcs fall forever in mp, including into hell
                     if (FargoSoulsUtil.HostCheck)
@@ -258,7 +256,7 @@ namespace FargowiltasSouls.Core.Globals
             bool noInvasion = FargowiltasSouls.NoInvasion(spawnInfo);
             bool normalSpawn = !spawnInfo.PlayerInTown && noInvasion && !oldOnesArmy && noEvent;
 
-            bool bossCanSpawn = WorldSavingSystem.MasochistModeReal && !spawnInfo.Player.HasEffect<SinisterIconEffect>() && !FargoSoulsUtil.AnyBossAlive();
+            bool bossCanSpawn = WorldSavingSystem.MasochistModeReal && !spawnInfo.Player.HasEffect<SinisterIconEffect>() && !LumUtils.AnyBosses();
 
             //MASOCHIST MODE
             if (WorldSavingSystem.EternityMode)
@@ -384,6 +382,12 @@ namespace FargowiltasSouls.Core.Globals
                         }
                     }
 
+                    if (jungle)
+                    {
+                        if (WorldSavingSystem.MasochistModeReal && normalSpawn)
+                            pool[NPCID.Parrot] = .025f;
+                    }
+
                     if (mushroom)
                     {
                         pool[NPCID.FungiBulb] = .02f;
@@ -421,10 +425,6 @@ namespace FargowiltasSouls.Core.Globals
 
                                 if (NPC.downedGolemBoss && (noBiome || dungeon))
                                     pool[NPCID.CultistArcherWhite] = .01f;
-
-                                if (jungle)
-                                    pool[NPCID.Parrot] = .05f;
-
                             }
                         }
                         else //night
@@ -432,7 +432,7 @@ namespace FargowiltasSouls.Core.Globals
                             if (Main.bloodMoon)
                             {
                                 pool[NPCID.ChatteringTeethBomb] = .1f;
-                                /*if (!sinisterIcon && !NPC.downedMechBoss2 && !FargoSoulsUtil.AnyBossAlive())
+                                /*if (!sinisterIcon && !NPC.downedMechBoss2 && !LumUtils.AnyBosses())
                                     pool[NPCID.EyeofCthulhu] = .004f;
 
                                 if (NPC.downedPlantBoss)
@@ -744,6 +744,9 @@ namespace FargowiltasSouls.Core.Globals
                     {
                         if (normalSpawn && bossCanSpawn)
                             pool[NPCID.QueenBee] = .0001f;
+
+                        if (normalSpawn)
+                            pool[NPCID.Parrot] = .025f;
 
                         if (!surface)
                         {
@@ -1179,7 +1182,7 @@ namespace FargowiltasSouls.Core.Globals
                                 CheckMasterDropRule(chain.RuleToChain);
                         }
                     }
-                    
+
 
                     if (dropRule is DropBasedOnMasterMode dropBasedOnMasterMode)
                     {
@@ -1281,7 +1284,7 @@ namespace FargowiltasSouls.Core.Globals
                 if (PaladinsShield)
                     modifiers.FinalDamage *= 0.5f;
 
-                if (WorldSavingSystem.MasochistModeReal && (npc.boss || FargoSoulsUtil.AnyBossAlive() && npc.Distance(Main.npc[FargoSoulsGlobalNPC.boss].Center) < 3000))
+                if (WorldSavingSystem.MasochistModeReal && (npc.boss || LumUtils.AnyBosses() && npc.Distance(Main.npc[FargoSoulsGlobalNPC.boss].Center) < 3000))
                     modifiers.FinalDamage *= 0.9f;
             }
 

@@ -2,24 +2,23 @@
 using FargowiltasSouls.Content.Items.Accessories.Enchantments;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Content.Items.Accessories.Forces
 {
-	public class NatureForce : BaseForce
+    public class NatureForce : BaseForce
     {
         public override void SetStaticDefaults()
         {
-            Enchants[Type] = new int[]
-            {
+            Enchants[Type] =
+            [
                 ModContent.ItemType<CrimsonEnchant>(),
                 ModContent.ItemType<MoltenEnchant>(),
                 ModContent.ItemType<RainEnchant>(),
                 ModContent.ItemType<FrostEnchant>(),
                 ModContent.ItemType<ChlorophyteEnchant>(),
                 ModContent.ItemType<ShroomiteEnchant>()
-            };
+            ];
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
