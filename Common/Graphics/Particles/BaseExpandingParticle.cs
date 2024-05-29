@@ -11,7 +11,7 @@ namespace FargowiltasSouls.Common.Graphics.Particles
 		public readonly Vector2 EndScale;
 
 		public readonly bool UseBloom;
-
+		
 		public override Texture2D MainTexture => CommonBloomTexture;
 
 		/// <summary>

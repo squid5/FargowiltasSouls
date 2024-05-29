@@ -147,6 +147,9 @@ namespace FargowiltasSouls.Core.ModPlayers
         public bool FirstStrike;
         public int SmokeBombCD;
 
+        public int ShadowDashTimer;
+        public int IFrameDashTimer;
+
         //public int RainCD;
 
         public int RedRidingArrowCD;
