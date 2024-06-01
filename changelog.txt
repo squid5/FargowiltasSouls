@@ -1,2 +1,39 @@
 NEW UPDATE - V {ModVersion}
--Fixed Fossil Enchant revive being able to trigger without having the item
+
+Eridanus: Deathray attacks +25% damage. Some attacks ignore 25% of defense.
+Eridanus: Gravity vortex gives you Low Ground and infinite flight during its existence
+Abominationns Presence defense reduction 20 -> 30, DR reduction 20 -> 25%
+
+-Colossus Soul: Damage reduction 15 -> 10%, Extra health 100 -> 0
+-Prisma Regalia base damage 160 -> 185
+-Ashwood Enchant: Removed NPC effect, no longer relevant
+-Removed Lunatic Cultist minion from Chalice of the Moon
+-Celestial Rune attacks base damage 50 -> 65
+-Enemies emitting light at night is now granted by Box of Gizmos, removed Eternity config for it
+
+-Added default toggles to disable all Attack Effects, and all Minions. These only display if you have any of the corresponding ones.
+-Added toggle for Wood Enchantment bestiary/banner completion effect
+-Rebuilding the toggle menu now has a 30 tick cooldown (fixes performance issues when the menu is open)
+-Added sound cooldown for Lightslinger charge sound
+-Firing Lightslinger while the special shot is ready now also fires indicating pink dust
+-Rewrote Magical Bulb damage over time tooltip
+-Resprited Barbarians Essence
+
+-Fixed Mechanical Boss orb sounds not playing correctly
+-Fixed outdated Necromantic Brew description
+-Fixed Lihzahrd Treasure Box and Chalice tooltips not stating immunity to Lihzahrd Curse
+
+Eternity Mode changes:
+-ALL life regeneration is decreased for a few seconds after getting hit. Reduction gradually degrades.
+-Berserked debuff now only makes weapons auto-use, not other items
+-Brain of Confusion: Reduced damage after hit -> Halved dodge chance
+-Warmth Potion: Now applies post-mitigation, giving 15% damage reduction.
+-Rain lightning deals more damage to enemies
+-Stardust Pillar minions now heal when the pillar heals, outside of combat
+
+Plantera:
+-Phase 2 DR 50% -> 40%
+-Phase 3:
+--First attack ramps up shot frequency throughout the attack (ramps up faster in Masochist Mode)
+--Second attack starts shooting chakrams a bit later
+--Added rest period to latter part of third attack, where she doesn't fire projectiles
