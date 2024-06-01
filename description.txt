@@ -11,6 +11,7 @@ NEW UPDATE: v1.6.10.5
 Eridanus: Deathray attacks +25% damage. Some attacks ignore 25% of defense.
 Eridanus: Gravity vortex gives you Low Ground and infinite flight during its existence
 Abominationns Presence defense reduction 20 -> 30, DR reduction 20 -> 25%
+Trojan Squirrel: Tweaked snowball attack timing and speed
 
 -Colossus Soul: Damage reduction 15 -> 10%, Extra health 100 -> 0
 -Prisma Regalia base damage 160 -> 185
@@ -24,6 +25,8 @@ Abominationns Presence defense reduction 20 -> 30, DR reduction 20 -> 25%
 -Rebuilding the toggle menu now has a 30 tick cooldown (fixes performance issues when the menu is open)
 -Added sound cooldown for Lightslinger charge sound
 -Firing Lightslinger while the special shot is ready now also fires indicating pink dust
+-Wizard Enchantment now works better with modded accessory slots
+-Wizard Enchantment tooltip now displays "Active" and "Inactive" for effects respectively
 -Rewrote Magical Bulb damage over time tooltip
 -Resprited Barbarians Essence
 
