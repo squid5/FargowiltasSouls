@@ -42,12 +42,22 @@ Eternity Mode changes:
 -Rain lightning deals more damage to enemies
 -Stardust Pillar minions now heal when the pillar heals, outside of combat
 
+King Slime:
+-Removed passive slime drops on landing
+-Slime globs on special jump and from sky are larger
+-Increased base jump X velocity
+-Special slimes don't deal damage for 1 second after spawning
+-Stops special jumping when sufficiently far past player, to avoid getting too far away for no reason
+
 Plantera:
--Phase 2 DR 50% -> 40%
+-Phase 2:
+--DR 50% -> 40%
+--Reduced outer ring projectile cout from 12 to 9 (unchanged in Masochist)
 -Phase 3:
 --First attack ramps up shot frequency throughout the attack (ramps up faster in Masochist Mode)
 --Second attack starts shooting chakrams a bit later
 --Added rest period to latter part of third attack, where she doesn't fire projectiles
+
 
 NEW UPDATE - v1.6.10.3
 -Fixed a WOF divide by zero error
