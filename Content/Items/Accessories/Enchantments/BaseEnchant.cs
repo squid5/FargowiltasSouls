@@ -50,13 +50,13 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
                 if (localSoulsPlayer.ForceEffect(Type))
                 {
                     if (wizardEffect().Length != 0)
-                        tooltips.Add(new TooltipLine(Mod, "wizard", $"[i:{ModContent.ItemType<WizardEnchant>()}] " + wizardEffect()));
+                        tooltips.Add(new TooltipLine(Mod, "wizard", $"{Language.GetTextValue($"Mods.FargowiltasSouls.WizardEffect.Active")} [i:{ModContent.ItemType<WizardEnchant>()}]: " + wizardEffect()));
                 }
                 else
                 {
                     if (wizardEffect().Length != 0)
                     {
-                        tooltips.Add(new TooltipLine(Mod, "wizard", $"[i:{ModContent.ItemType<WizardEnchant>()}] " + wizardEffect()));
+                        tooltips.Add(new TooltipLine(Mod, "wizard", $"{Language.GetTextValue($"Mods.FargowiltasSouls.WizardEffect.Inactive")} [i:{ModContent.ItemType<WizardEnchant>()}]: " + wizardEffect()));
                         tooltips[tooltips.Count - 1].OverrideColor = Color.Gray;
                     }
                 }
