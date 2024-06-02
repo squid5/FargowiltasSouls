@@ -66,5 +66,5 @@ Vortex: 无增强
 Wood: 怪物图鉴和旗帜解锁速度增加到5倍
 AshWood: 发射火球的冷却时间缩短
 NoUpgrade: 无增强
-// Active: Active
-// Inactive: Inactive
+Active: 已强化
+Inactive: 未强化
