@@ -46,8 +46,7 @@ namespace FargowiltasSouls.Content.Projectiles.Deathrays
         public override void AI()
         {
             if (!Main.dedServ && Main.LocalPlayer.active)
-                if (ScreenShakeSystem.OverallShakeIntensity < 6)
-                    ScreenShakeSystem.SetUniversalRumble(6);
+                FargoSoulsUtil.ScreenshakeRumble(6);
 
             Vector2? vector78 = null;
             if (Projectile.velocity.HasNaNs() || Projectile.velocity == Vector2.Zero)
@@ -70,7 +69,8 @@ namespace FargowiltasSouls.Content.Projectiles.Deathrays
             }
             if (Projectile.localAI[0] == 0f)
             {
-                SoundEngine.PlaySound(SoundID.Zombie104, Projectile.Center);
+                if (!Main.dedServ)
+                    SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/DeviBigDeathray"), Projectile.Center);
             }
             float num801 = 17f;
             Projectile.localAI[0] += 1f;

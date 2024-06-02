@@ -481,11 +481,6 @@ namespace FargowiltasSouls.Content.Projectiles
                             break;
                         }
 
-                    case ProjectileID.StarCloakStar:
-                        if (!Main.hardMode)
-                            projectile.damage /= 2;
-                        break;
-
                     default:
                         break;
                 }
@@ -867,7 +862,7 @@ namespace FargowiltasSouls.Content.Projectiles
                                         }
                                     }
 
-                                    Projectile.NewProjectile(npc.GetSource_FromThis(), projectile.Center, Vector2.Zero, ModContent.ProjectileType<CultistRitual>(), FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 0f, Main.myPlayer, 0f, npc.whoAmI);
+                                    Projectile.NewProjectile(npc.GetSource_FromThis(), projectile.Center, Vector2.Zero, ModContent.ProjectileType<CultistRitual>(), FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 0f, Main.myPlayer, 0f, npc.whoAmI);
                                     const int max = 16;
                                     const float appearRadius = 1600f - 100f;
                                     for (int i = 0; i < max; i++)
@@ -1039,8 +1034,7 @@ namespace FargowiltasSouls.Content.Projectiles
                             : Main.rand.NextFloat(4f, 6f);
 
                         if (!Main.dedServ && Main.LocalPlayer.active)
-                            if (ScreenShakeSystem.OverallShakeIntensity < 6)
-                                ScreenShakeSystem.SetUniversalRumble(6);
+                            FargoSoulsUtil.ScreenshakeRumble(6);
                     }
                     break;
 
@@ -1219,6 +1213,11 @@ namespace FargowiltasSouls.Content.Projectiles
                     break;
                 case ProjectileID.PlatinumCoin:
                     modifiers.FinalDamage *= 0.275f;
+                    break;
+
+                case ProjectileID.StarCloakStar:
+                    if (!Main.hardMode)
+                        modifiers.FinalDamage *= 0.33f;
                     break;
             }
             //if (projectile.arrow) //change archery and quiver to additive damage

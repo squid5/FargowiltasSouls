@@ -109,7 +109,7 @@ namespace FargowiltasSouls.Content.Bosses.TrojanSquirrel
                                 angle = MathHelper.PiOver2 * Math.Sign(angle);
 
                             if (FargoSoulsUtil.HostCheck)
-                                Projectile.NewProjectile(NPC.GetSource_FromThis(), pos, 8f * angle.ToRotationVector2(), ModContent.ProjectileType<TrojanHook>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage), 0f, Main.myPlayer);
+                                Projectile.NewProjectile(NPC.GetSource_FromThis(), pos, 8f * angle.ToRotationVector2(), ModContent.ProjectileType<TrojanHook>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), 0f, Main.myPlayer);
                         }
 
                         if (NPC.ai[1] > 300 && FargoSoulsUtil.HostCheck && Main.LocalPlayer.ownedProjectileCounts[ModContent.ProjectileType<TrojanHook>()] <= 0)
@@ -128,8 +128,8 @@ namespace FargowiltasSouls.Content.Bosses.TrojanSquirrel
                     {
                         NPC.ai[1]++;
 
-                        int start = 90;
-                        int end = 300;
+                        int start = 70;
+                        int end = 340;
                         if (WorldSavingSystem.EternityMode)
                         {
                             start -= 30;
@@ -176,9 +176,9 @@ namespace FargowiltasSouls.Content.Bosses.TrojanSquirrel
                                 distance.X /= time;
                                 distance.Y = distance.Y / time - 0.5f * gravity * time;
                                 if (FargoSoulsUtil.HostCheck)
-                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), pos, distance, ModContent.ProjectileType<TrojanSnowball>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage), 0f, Main.myPlayer, gravity);
+                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), pos, distance, ModContent.ProjectileType<TrojanSnowball>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), 0f, Main.myPlayer, gravity);
                             }
-                            NPC.ai[1] += NPC.ai[1] > end / 3 ? NPC.ai[1] > end * (2 / 3) ? 2 : 0 : 0;
+                            NPC.ai[1] += NPC.ai[1] > end / 3 ? NPC.ai[1] > end * (2 / 3) ? 3 : 1 : 0;
                         }
 
                         if (NPC.ai[1] > end)

@@ -1,4 +1,5 @@
-﻿using FargowiltasSouls.Content.Buffs.Masomode;
+﻿using FargowiltasSouls.Content.Buffs.Boss;
+using FargowiltasSouls.Content.Buffs.Masomode;
 using FargowiltasSouls.Content.Items.Accessories.Enchantments;
 using FargowiltasSouls.Content.Items.Accessories.Expert;
 using FargowiltasSouls.Content.Items.Accessories.Masomode;
@@ -149,8 +150,12 @@ namespace FargowiltasSouls.Core.ModPlayers
         {
             if (Berserked && !Player.CCed)
             {
-                Player.controlUseItem = true;
-                Player.releaseUseItem = true;
+                if (Player.HeldItem != null && Player.HeldItem.IsWeapon())
+                {
+                    Player.controlUseItem = true;
+                    Player.releaseUseItem = true;
+                }
+                
             }
 
             if (LowGround)
@@ -436,6 +441,9 @@ namespace FargowiltasSouls.Core.ModPlayers
 
         public override void PostUpdateMiscEffects()
         {
+            if (ToggleRebuildCooldown > 0)
+                ToggleRebuildCooldown--;
+
             //these are here so that emode minion nerf can properly detect the real set bonuses over in EModePlayer postupdateequips
             if (SquireEnchantActive)
                 Player.setSquireT2 = true;
@@ -473,6 +481,9 @@ namespace FargowiltasSouls.Core.ModPlayers
 
             if (SpectreCD > 0)
                 SpectreCD--;
+
+            if (ChargeSoundDelay > 0)
+                ChargeSoundDelay--;
 
             if (RustRifleReloading && Player.HeldItem.type == ModContent.ItemType<NavalRustrifle>())
             {

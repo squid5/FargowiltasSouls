@@ -657,9 +657,11 @@ namespace FargowiltasSouls
             SyncFishronEXLife,
             SyncTogglesOnJoin,
             SyncOneToggle,
+            SyncDefaultToggles,
             SyncCanPlayMaso,
-            SyncNanoCoreMode
+            SyncNanoCoreMode,
             //SpawnBossTryFromNPC
+            HealNPC
         }
 
         public override void HandlePacket(BinaryReader reader, int whoAmI)
@@ -791,6 +793,14 @@ namespace FargowiltasSouls
                             player.SetToggleValue(AccessoryEffectLoader.EffectType(reader.ReadString()), reader.ReadBoolean());
                         }
                         break;
+                    case PacketID.SyncDefaultToggles:
+                        {
+                            Player player = Main.player[reader.ReadByte()];
+                            FargoSoulsPlayer modPlayer = player.FargoSouls();
+                            modPlayer.Toggler_ExtraAttacksDisabled = reader.ReadBoolean();
+                            modPlayer.Toggler_MinionsDisabled = reader.ReadBoolean();
+                        }
+                        break;
 
                     case PacketID.SyncCanPlayMaso: //server acknowledges a CanPlayMaso player
                         if (Main.netMode == NetmodeID.Server)
@@ -815,6 +825,21 @@ namespace FargowiltasSouls
                     //        FargoSoulsUtil.SpawnBossTryFromNPC(p, originalType, bossType);
                     //    }
                     //    break;
+
+                    case PacketID.HealNPC:
+                        {
+                            NPC npc = FargoSoulsUtil.NPCExists(reader.ReadByte());
+                            int heal = reader.ReadInt32();
+                            if (npc != null)
+                            {
+                                npc.life += heal;
+                                if (npc.life > npc.lifeMax)
+                                    npc.life = npc.lifeMax;
+                                npc.HealEffect(heal);
+                                npc.netUpdate = true;
+                            }
+                        }
+                        break;
 
                     default:
                         break;

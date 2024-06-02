@@ -135,7 +135,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
                             for (int i = -1; i <= 1; i += 2)
                             {
                                 Vector2 vel = Vector2.UnitX * i * 3;
-                                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Bottom - Vector2.UnitY * 50, vel, ModContent.ProjectileType<CoffinSlamShockwave>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage, 0.1f), 1f, Main.myPlayer);
+                                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Bottom - Vector2.UnitY * 50, vel, ModContent.ProjectileType<CoffinSlamShockwave>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage, 0.1f), 1f, Main.myPlayer);
                             }
                         }
 
@@ -180,7 +180,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
                 if (FargoSoulsUtil.HostCheck)
                 {
                     Vector2 dir = NPC.rotation.ToRotationVector2();
-                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, dir * 4, ModContent.ProjectileType<CoffinHand>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage, 0.1f), 1f, Main.myPlayer, NPC.whoAmI, 22);
+                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, dir * 4, ModContent.ProjectileType<CoffinHand>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage, 0.1f), 1f, Main.myPlayer, NPC.whoAmI, 22);
                 }
             }
             else
@@ -277,7 +277,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
                         for (int i = -1; i <= 1; i += 2)
                         {
                             Vector2 vel = Vector2.UnitX * i * 3;
-                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Bottom - Vector2.UnitY * 50, vel, ModContent.ProjectileType<CoffinSlamShockwave>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage, 0.1f), 1f, Main.myPlayer);
+                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Bottom - Vector2.UnitY * 50, vel, ModContent.ProjectileType<CoffinSlamShockwave>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage, 0.1f), 1f, Main.myPlayer);
                         }
                     }
                     if (WorldSavingSystem.EternityMode && Counter < 2)
@@ -344,7 +344,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
                     {
                         float rot = baseRot + MathF.Tau * ((float)i / shots);
                         Vector2 vel = rot.ToRotationVector2() * 4;
-                        Projectile.NewProjectile(NPC.GetSource_FromThis(), maskCenter, vel, ModContent.ProjectileType<CoffinWaveShot>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage), 1f, Main.myPlayer);
+                        Projectile.NewProjectile(NPC.GetSource_FromThis(), maskCenter, vel, ModContent.ProjectileType<CoffinWaveShot>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), 1f, Main.myPlayer);
                     }
                 }
             }
@@ -400,7 +400,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
                     if (FargoSoulsUtil.HostCheck)
                     {
                         Vector2 maskCenter = MaskCenter();
-                        Projectile.NewProjectile(NPC.GetSource_FromThis(), maskCenter, maskCenter.SafeDirectionTo(Player.Center).RotatedBy(-MathHelper.Pi / 10) * 4, ModContent.ProjectileType<CoffinWaveShot>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage), 1f, Main.myPlayer, 1);
+                        Projectile.NewProjectile(NPC.GetSource_FromThis(), maskCenter, maskCenter.SafeDirectionTo(Player.Center).RotatedBy(-MathHelper.Pi / 10) * 4, ModContent.ProjectileType<CoffinWaveShot>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), 1f, Main.myPlayer, 1);
                     }
                 }
             }
@@ -449,10 +449,10 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
                 if (FargoSoulsUtil.HostCheck)
                 {
                     Vector2 dir = NPC.rotation.ToRotationVector2();
-                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, dir * 4, ModContent.ProjectileType<CoffinHand>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage, 0.1f), 1f, Main.myPlayer, NPC.whoAmI, 1, 1);
-                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, dir * 4, ModContent.ProjectileType<CoffinHand>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage, 0.1f), 1f, Main.myPlayer, NPC.whoAmI, 1, -1);
+                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, dir * 4, ModContent.ProjectileType<CoffinHand>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage, 0.1f), 1f, Main.myPlayer, NPC.whoAmI, 1, 1);
+                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, dir * 4, ModContent.ProjectileType<CoffinHand>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage, 0.1f), 1f, Main.myPlayer, NPC.whoAmI, 1, -1);
                     if (WorldSavingSystem.EternityMode)
-                        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, (NPC.rotation + MathHelper.PiOver2).ToRotationVector2() * 4, ModContent.ProjectileType<CoffinHand>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage, 0.5f), 1f, Main.myPlayer, NPC.whoAmI, 1, Main.rand.NextBool() ? 1.5f : -1.5f);
+                        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, (NPC.rotation + MathHelper.PiOver2).ToRotationVector2() * 4, ModContent.ProjectileType<CoffinHand>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage, 0.5f), 1f, Main.myPlayer, NPC.whoAmI, 1, Main.rand.NextBool() ? 1.5f : -1.5f);
                 }
             }
             else
@@ -540,7 +540,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
                         Vector2 offsetDir = Vector2.Normalize(dir);
                         Vector2 posOffset = offsetDir.RotatedBy(MathF.PI / 2) * Main.rand.NextFloat(-NPC.height / 3, NPC.height / 3);
 
-                        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + posOffset, vel, ModContent.ProjectileType<CoffinRandomStuff>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage), 1f, Main.myPlayer, RandomProj);
+                        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + posOffset, vel, ModContent.ProjectileType<CoffinRandomStuff>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), 1f, Main.myPlayer, RandomProj);
                     }
                 }
             }

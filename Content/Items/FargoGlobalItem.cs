@@ -163,7 +163,9 @@ namespace FargowiltasSouls.Content.Items
             FargoSoulsPlayer modPlayer = player.FargoSouls();
 
             if (modPlayer.Berserked)
+            {
                 return true;
+            }
             if (modPlayer.BoxofGizmos)
             {
                 if (item.DamageType == DamageClass.Default && item.damage <= 0)

@@ -27,8 +27,7 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
         public override void AI()
         {
             if (!Main.dedServ && Main.LocalPlayer.active)
-                if (ScreenShakeSystem.OverallShakeIntensity < 5)
-                    ScreenShakeSystem.SetUniversalRumble(5);
+                FargoSoulsUtil.ScreenshakeRumble(5);
 
             Vector2? vector78 = null;
             if (Projectile.velocity.HasNaNs() || Projectile.velocity == Vector2.Zero)
@@ -51,7 +50,7 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
             if (Projectile.localAI[0] == 0f)
             {
                 if (!Main.dedServ)
-                    SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/Zombie_104") { Volume = 0.5f }, Projectile.Center);
+                    SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/RetinazerDeathray"), Projectile.Center);
                 spawnPos = Projectile.Center;
             }
             else //vibrate beam
