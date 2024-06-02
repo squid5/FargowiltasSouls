@@ -736,6 +736,6 @@ PearlwoodStarBuff: {
 }
 
 MoonFangBuff: {
-	// DisplayName: Moon Fang
-	// Description: Cannot regenerate life
+	DisplayName: 月之毒牙
+	Description: 无法恢复生命
 }
