@@ -859,7 +859,7 @@ NatureForce: {
 		'''
 		[i:FargowiltasSouls/CrimsonEnchant] 受击后7秒内未再次受击则恢复损失的一半生命值，计算两次
 		[i:FargowiltasSouls/MoltenEnchant] 引燃你附近较大范围内的敌人
-		[i:FargowiltasSouls/MoltenEnchant] 狱火圈的伤害增加，所有敌怪在狱火圈内会额外受到25%伤害
+		[i:FargowiltasSouls/MoltenEnchant] 狱火圈的伤害增加，所有敌怪在狱火圈内会额外受到30%伤害
 		[i:FargowiltasSouls/RainEnchant] 召唤一把可反射上方弹幕的雨伞
 		[i:FargowiltasSouls/SnowEnchant] 你的周围会出现冰锥，攻击敌人会造成霜冻减益
 		[i:FargowiltasSouls/ChlorophyteEnchant] 召唤一圈叶绿水晶攻击附近的敌人
@@ -916,7 +916,7 @@ TerraForce: {
 		[i:FargowiltasSouls/IronEnchant] 物品的吸附范围扩大
 		[i:FargowiltasSouls/LeadEnchant] 受到的持续伤害降低60%
 		[i:FargowiltasSouls/SilverEnchant] 右键进行盾牌格挡
-		[i:FargowiltasSouls/TungstenEnchant] 每过0.25秒剑和弹幕的大小增加300%
+		[i:FargowiltasSouls/TungstenEnchant] 剑的大小增加200%，每过0.33秒弹幕的大小增加200%
 		[i:FargowiltasSouls/ObsidianEnchant] 使你免疫火块与熔岩
 		[i:FargowiltasSouls/AshWoodEnchant] 玩家与城镇NPC攻击时会附带火球
 		“大地赐予它力量”
@@ -1316,7 +1316,7 @@ MagicalBulb: {
 		'''
 		免疫毒液、常春藤毒素和蜂群减益
 		按下“魔法净化”键治愈你身上绝大多数的减益，此效果有一定的冷却时间
-		魔法净化还会使附近的敌人因减益受到的伤害随时间推移而增加
+		魔法净化还会使附近的敌人因减益受到的伤害翻倍
 		不攻击时，冷却速度更快
 		根据你受到的光照增加生命恢复速度
 		吸引一株传奇植物的幼株，其会在战斗中茁壮成长
@@ -1383,7 +1383,7 @@ NecromanticBrew: {
 		'''
 		免疫昏昏欲睡减益
 		增加50%冲刺速度
-		冲刺时只会受到25%接触伤害，并且会对攻击者反弹全部接触伤害
+		冲刺时获得额外15%伤害减免，并且会对攻击者反弹4倍接触伤害
 		召唤两个骷髅王手臂重击敌人
 		“这液体来自被你打败的敌人，能促进骨头生长”
 		'''
@@ -1451,7 +1451,7 @@ PureHeart: {
 		[i:FargowiltasSouls/PureHeart]免疫生物群落带来的减益
 		[i:FargowiltasSouls/PureHeart]增加10%最大生命值
 		免疫[i:FargowiltasSouls/DarkenedHeart]腐败和[i:FargowiltasSouls/GuttedHeart]嗜血减益
-		[i:FargowiltasSouls/DarkenedHeart]增加10%移动速度和转向速度
+		[i:FargowiltasSouls/DarkenedHeart]增加10%移动速度
 		[i:FargowiltasSouls/DarkenedHeart]每攻击几次，你就会产生几个追踪敌人的迷你噬魂者
 		[i:FargowiltasSouls/GuttedHeart]召唤阻挡伤害的飞眼怪，不移动时飞眼怪生成速度加快
 		[i:FargowiltasSouls/GuttedHeart]每10-15秒生成一个新的飞眼怪，最多同时存在5个
@@ -1546,7 +1546,7 @@ SlimyShield: {
 	Tooltip:
 		'''
 		免疫史莱姆减益
-		增加下落速度
+		增加50%最大下落速度
 		落地时召唤从天而降的凝胶球，掉落至光标位置
 		凝胶球造成史莱姆和浸油减益
 		“从被打败的敌人的内脏中撕裂而来”
@@ -1580,14 +1580,14 @@ SupremeDeathbringerFairy: {
 	Tooltip:
 		'''
 		免疫[i:FargowiltasSouls/SlimyShield]史莱姆、[i:FargowiltasSouls/AgitatingLens]狂暴、[i:FargowiltasSouls/NecromanticBrew]昏昏欲睡和[i:FargowiltasSouls/QueenStinger]感染减益
-		[i:FargowiltasSouls/SlimyShield]增加下落速度
+		[i:FargowiltasSouls/SlimyShield]增加50%最大下落速度
 		[i:FargowiltasSouls/SlimyShield]落地时召唤从天而降的凝胶球，掉落至光标位置
 		[i:FargowiltasSouls/AgitatingLens]冲刺或奔跑时会在身后留下一串鲜血镰刀
 		[i:FargowiltasSouls/AgitatingLens]按住“上”“下”的同时按下“减益负载”键进入狂暴状态
 		[i:FargowiltasSouls/QueenStinger]蜂蜜增益会增加5点护甲穿透，蜜蜂和较弱的黄蜂变得友好
 		[i:FargowiltasSouls/QueenStinger]按下“特殊冲刺”键后会进行短距离的快速蜜蜂冲刺
 		[i:FargowiltasSouls/NecromanticBrew]增加50%冲刺速度
-		[i:FargowiltasSouls/NecromanticBrew]冲刺时只会受到25%接触伤害，并且会对攻击者反弹全部接触伤害
+		[i:FargowiltasSouls/NecromanticBrew]冲刺时获得额外15%伤害减免，并且会对攻击者反弹4倍接触伤害
 		[i:FargowiltasSouls/NecromanticBrew]召唤两个骷髅王手臂重击敌人
 		“霸权难保”
 		'''
@@ -1986,7 +1986,7 @@ MutantBody: {
 		'''
 		增加70%伤害和30%暴击率
 		最大生命值和魔力值增加200
-		所受伤害减少50%
+		所受伤害减少30%
 		极大提升生命恢复速度
 		'''
 }
@@ -2046,7 +2046,7 @@ StyxCrown: {
 		'''
 		增加10%伤害
 		增加10%暴击率
-		增加3个召唤栏位、2个哨兵栏位
+		增加3个召唤栏位、1个哨兵栏位
 		'''
 }
 
