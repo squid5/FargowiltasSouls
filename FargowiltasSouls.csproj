@@ -1,4 +1,4 @@
-
+﻿
 <Project Sdk="Microsoft.NET.Sdk">
   <Import Project="..\tModLoader.targets" />
   <PropertyGroup>
@@ -15,6 +15,8 @@
     <None Remove="Folders to Port\**" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="Content\Projectiles\Souls\TimberBranch.png" />
+    <None Remove="Content\Projectiles\Souls\TimberBranchTip.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Assets\Atlases\" />

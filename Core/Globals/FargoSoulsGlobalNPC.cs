@@ -25,6 +25,7 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static FargowiltasSouls.Content.Items.Accessories.Forces.TimberForce;
 
 namespace FargowiltasSouls.Core.Globals
 {
@@ -46,6 +47,7 @@ namespace FargowiltasSouls.Core.Globals
         //        //debuffs
         public bool OriPoison;
         public bool SBleed;
+        public bool TimberBleed;
         //        public bool Shock;
         public bool Rotting;
         public bool LeadPoison;
@@ -111,6 +113,7 @@ namespace FargowiltasSouls.Core.Globals
             BrokenArmor = false;
             TimeFrozen = false;
             SBleed = false;
+            TimberBleed = false;
             //            Shock = false;
             Rotting = false;
             LeadPoison = false;
@@ -442,7 +445,7 @@ namespace FargowiltasSouls.Core.Globals
                 }
             }
 
-            if (SBleed)
+            if (SBleed || TimberBleed)
             {
                 if (Main.rand.Next(4) < 3)
                 {
@@ -875,6 +878,13 @@ namespace FargowiltasSouls.Core.Globals
                     damage = 20;
             }
 
+            if (TimberBleed)
+            {
+                npc.lifeRegen -= 1000;
+                if (damage < 100)
+                    damage = 100;
+            }
+
             if (Anticoagulation)
             {
                 if (npc.lifeRegen > 0)
@@ -1225,7 +1235,8 @@ namespace FargowiltasSouls.Core.Globals
             }
             if (CorruptedForce)
             {
-                modifiers.ArmorPenetration += 40;
+                int pen = player.HasEffect<TimberEffect>() ? 100 : 40;
+                modifiers.ArmorPenetration += pen;
             }
 
             if (OceanicMaul)

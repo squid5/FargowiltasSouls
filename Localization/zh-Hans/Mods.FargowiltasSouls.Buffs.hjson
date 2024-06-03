@@ -678,14 +678,14 @@ WretchedHexBuff: {
 	Description: 暗影焰触手伤害大幅提升，但速度和防御大幅下降
 }
 
-CorruptedBuff: {
-	DisplayName: 腐化之蚀
-	Description: Mods.FargowiltasSouls.Buffs.CorruptedBuff.Description
+WitheredBuff: {
+	// DisplayName: Withered
+	// Description: Mods.FargowiltasSouls.Buffs.WithereddBuff.Description
 }
 
-CorruptedBuffForce: {
-	DisplayName: 腐化之蚀
-	Description: Mods.FargowiltasSouls.Buffs.CorruptedBuffForce.Description
+WitheredWizardBuff: {
+	// DisplayName: Withered
+	// Description: Mods.FargowiltasSouls.Buffs.WitheredWizardBuff.Description
 }
 
 JungleMimicSummonBuff: {
@@ -738,4 +738,14 @@ PearlwoodStarBuff: {
 MoonFangBuff: {
 	DisplayName: 月之毒牙
 	Description: 无法恢复生命
+}
+
+WitheredForceBuff: {
+	// DisplayName: Withered Force Buff
+	// Description: Mods.FargowiltasSouls.Buffs.WitheredForceBuff.Description
+}
+
+TimberBleedBuff: {
+	// DisplayName: Timber Bleed Buff
+	// Description: Mods.FargowiltasSouls.Buffs.TimberBleedBuff.Description
 }
