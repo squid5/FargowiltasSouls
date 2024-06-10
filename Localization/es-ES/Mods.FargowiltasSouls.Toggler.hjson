@@ -8,6 +8,7 @@
 // ShadewoodEffect: Blood Geyser On Hit
 // PalmwoodEffect: Palmwood Sentry
 // PearlwoodEffect: Pearlwood Star
+// TimberEffect: Timber Branches
 // EarthHeader: "{$Mods.FargowiltasSouls.Items.EarthForce.DisplayName}"
 // AdamantiteEffect: Adamantite Projectile Splitting
 // CobaltEffect: Cobalt Hit Explosion
@@ -83,6 +84,7 @@
 // StardustMinionEffect: Stardust Guardian
 // VortexStealthEffect: Vortex Stealth
 // VortexVortexEffect: Vortex Voids
+// CosmosMoonEffect: Cosmic Moons
 // DeviEnergyHeader: Eternity Mode Accessories
 // DeerSinewEffect: Deer Sinew Dash
 // ZephyrJump: Fart Jump

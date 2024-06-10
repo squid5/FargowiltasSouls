@@ -52,6 +52,12 @@ namespace FargowiltasSouls.Core.ModPlayers
         public bool PetsActive;
 
         #region enchantments
+
+        // new forces
+        public int TimberBranchCD;
+        public int CosmosMoonTimer;
+
+
         //force of timber
         public bool MahoganyCanUseDR;
         public Vector2[] PearlwoodTrail = new Vector2[30]; //store a second of trail 
@@ -137,7 +143,6 @@ namespace FargowiltasSouls.Core.ModPlayers
         public int JungleCD;
         public int BeetleEnchantDefenseTimer;
         public int BorealCD;
-        public int TimberBranchCD;
         public bool CrystalEnchantActive = false;
 
         public int MonkDashing;

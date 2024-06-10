@@ -3365,3 +3365,31 @@ RazorContainer: {
 		'Some yellow fur is still stuck at the bottom' 
 		''' */
 }
+
+NebulaBooster: {
+	// DisplayName: Nebula Booster
+	// Tooltip: ""
+	// Activate: +{0} life regen
+	// Deactivate: -{0} life regen
+}
+
+SolarBooster: {
+	// DisplayName: Solar Booster
+	// Tooltip: ""
+	// Activate: +{0}% DR
+	// Deactivate: -{0}% DR
+}
+
+StardustBooster: {
+	// DisplayName: Stardust Booster
+	// Tooltip: ""
+	// Activate: +{0}% damage
+	// Deactivate: -{0}% damage
+}
+
+VortexBooster: {
+	// DisplayName: Vortex Booster
+	// Tooltip: ""
+	// Activate: +{0}% crit
+	// Deactivate: -{0}% crit
+}
