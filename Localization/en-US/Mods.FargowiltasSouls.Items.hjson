@@ -815,7 +815,7 @@ CosmoForce: {
 	Tooltip:
 		'''
 		[i:FargowiltasSouls/MeteorEnchant] [i:FargowiltasSouls/WizardEnchant] [i:FargowiltasSouls/SolarEnchant] [i:FargowiltasSouls/VortexEnchant] [i:FargowiltasSouls/NebulaEnchant] [i:FargowiltasSouls/StardustEnchant]
-		Attacking generates small moons that orbit around you 
+		Attacking generates up to 4 moons that orbit around you 
 		Stop attacking to launch them towards your cursor, exploding into Lunar Boosters
 		Picking up Lunar Boosters increases your damage, crit, life regen or damage reduction
 		Increases your movement speed and acceleration, and decreases your momentum

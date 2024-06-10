@@ -104,7 +104,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Cosmos
                     if (Main.myPlayer == player.whoAmI)
                     {
                         SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/ThrowShort"), Projectile.Center);
-                        Projectile.velocity = Projectile.DirectionTo(Main.MouseWorld) * 3;
+                        Projectile.velocity = Projectile.DirectionTo(Main.MouseWorld) * 2;
                         Projectile.netUpdate = true;
                         NetMessage.SendData(MessageID.SyncProjectile, -1, -1, null, Projectile.whoAmI);
                     }
@@ -114,11 +114,12 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Cosmos
             }
             else
             {
+                Projectile.extraUpdates = 1;
                 Projectile.Opacity = 1;
                 Projectile.scale = 0.2f;
                 Projectile.tileCollide = true;
-                Projectile.velocity *= 1.11f;
-                Projectile.velocity = Projectile.velocity.ClampLength(0, 40f);
+                Projectile.velocity *= 1.06f;
+                Projectile.velocity = Projectile.velocity.ClampLength(0, 20f);
             }
             
 

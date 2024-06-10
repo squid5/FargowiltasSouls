@@ -75,7 +75,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Forces
             {
                 modPlayer.CosmosMoonTimer += 2;
 
-                if (modPlayer.CosmosMoonTimer >= LumUtils.SecondsToFrames(3) && player.whoAmI == Main.myPlayer && player.ownedProjectileCounts[ModContent.ProjectileType<CosmosForceMoon>()] < 5)
+                if (modPlayer.CosmosMoonTimer >= LumUtils.SecondsToFrames(3) && player.whoAmI == Main.myPlayer && player.ownedProjectileCounts[ModContent.ProjectileType<CosmosForceMoon>()] < 4)
                 {
                     int moonDamage = 3200;
 
