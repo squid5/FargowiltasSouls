@@ -15,14 +15,6 @@
     <None Remove="Folders to Port\**" />
   </ItemGroup>
   <ItemGroup>
-    <None Remove="Content\Items\Misc\NebulaBooster.png" />
-    <None Remove="Content\Items\Misc\SolarBooster.png" />
-    <None Remove="Content\Items\Misc\StardustBooster.png" />
-    <None Remove="Content\Items\Misc\VortexBooster.png" />
-    <None Remove="Content\Projectiles\Souls\TimberBranch.png" />
-    <None Remove="Content\Projectiles\Souls\TimberBranchTip.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="Assets\Atlases\" />
     <Folder Include="Assets\ExtraTextures\Noise\" />
     <Folder Include="Content\WorldGen\" />
