@@ -148,7 +148,6 @@ MasoAbom: 幽灵憎恶
 MasoRing: 幻影球召唤物
 UniverseHeader: "{$Mods.FargowiltasSouls.Items.UniverseSoul.DisplayName}"
 MeleeSpeedEffect: 近战攻速加成
-MagmaStoneEffect: 岩浆石
 SniperScopeEffect: 狙击镜
 UniverseSpeedEffect: 寰宇之魂攻击速度加成
 WorldShaperHeader: "{$Mods.FargowiltasSouls.Items.WorldShaperSoul.DisplayName}"

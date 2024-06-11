@@ -815,7 +815,7 @@ CosmoForce: {
 	/* Tooltip:
 		'''
 		[i:FargowiltasSouls/MeteorEnchant] [i:FargowiltasSouls/WizardEnchant] [i:FargowiltasSouls/SolarEnchant] [i:FargowiltasSouls/VortexEnchant] [i:FargowiltasSouls/NebulaEnchant] [i:FargowiltasSouls/StardustEnchant]
-		Attacking generates small moons that orbit around you 
+		Attacking generates up to 4 moons that orbit around you 
 		Stop attacking to launch them towards your cursor, exploding into Lunar Boosters
 		Picking up Lunar Boosters increases your damage, crit, life regen or damage reduction
 		Increases your movement speed and acceleration, and decreases your momentum
@@ -908,15 +908,12 @@ TerraForce: {
 	// DisplayName: Terra Force
 	/* Tooltip:
 		'''
-		[i:FargowiltasSouls/CopperEnchant][i:FargowiltasSouls/ObsidianEnchant][i:FargowiltasSouls/LeadEnchant] Attacks spawn lightning, explosions, and inflict Lead Poisoning
-		[i:FargowiltasSouls/TinEnchant] Sets Tin crit chance to 10%, increasing up to double your original crit chance or 50%
-		[i:FargowiltasSouls/IronEnchant] 50% chance to not consume each item on first craft
-		[i:FargowiltasSouls/IronEnchant] You attract items from a larger range
-		[i:FargowiltasSouls/LeadEnchant] You take 60% less from damage over time
-		[i:FargowiltasSouls/SilverEnchant] Right Click to guard with your shield
-		[i:FargowiltasSouls/TungstenEnchant] Weapon size increased to 300% and projectile size every quarter second
-		[i:FargowiltasSouls/ObsidianEnchant] Grants immunity to lava
-		[i:FargowiltasSouls/AshWoodEnchant] Player attacks are accompanied by fireballs
+		[i:FargowiltasSouls/CopperEnchant] [i:FargowiltasSouls/TinEnchant] [i:FargowiltasSouls/IronEnchant] [i:FargowiltasSouls/LeadEnchant] [i:FargowiltasSouls/SilverEnchant] [i:FargowiltasSouls/TungstenEnchant] [i:FargowiltasSouls/ObsidianEnchant]    
+		Right Click to guard with your shield
+		Critical strikes sometimes fire a lightning bolt that explodes on hit and inflicts a stronger Lead Poisoning
+		Successful parries instantly fire a lightning bolt 
+		You take 60% less damage over time
+		50% chance to not consume each item on first craft and you attract items from a larger range (works in vanity and inventory)
 		'The land lends its strength'
 		''' */
 }

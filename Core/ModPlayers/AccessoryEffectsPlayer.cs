@@ -29,6 +29,7 @@ using FargowiltasSouls.Core.Toggler;
 using FargowiltasSouls.Content.Items.Accessories.Souls;
 using FargowiltasSouls.Content.Items.Accessories.Masomode;
 using Luminance.Core.Graphics;
+using FargowiltasSouls.Content.Items.Accessories.Forces;
 
 namespace FargowiltasSouls.Core.ModPlayers
 {
@@ -865,6 +866,17 @@ namespace FargowiltasSouls.Core.ModPlayers
                             Main.dust[d].velocity *= 9f;
                         }
                         */
+
+                        if (Player.HasEffect<TerraLightningEffect>())
+                        {
+                            TerraProcCD = 0;
+                            int targetID = FargoSoulsUtil.FindClosestHostileNPC(Player.Center, 1000, true, true);
+                            if (targetID.IsWithinBounds(Main.maxNPCs) && Main.npc[targetID] is NPC target && target.Alive())
+                            {
+                                TerraLightningEffect.LightningProc(Player, target);
+                            }
+                            
+                        }
                     }
                     int sheet = perfectParry ? 1 : 0; // which parry vfx sprite sheet to use
                     Projectile.NewProjectile(Player.GetSource_Misc(""), Player.Center, Vector2.Zero, ModContent.ProjectileType<IronParry>(), 0, 0f, Main.myPlayer, sheet);

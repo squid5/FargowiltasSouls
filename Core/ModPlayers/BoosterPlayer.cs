@@ -26,7 +26,7 @@ namespace FargowiltasSouls.Core.ModPlayers
             if (VortexTimer > 0)
             {
                 VortexTimer--;
-                Player.GetCritChance(DamageClass.Generic) += 0.2f;
+                Player.GetCritChance(DamageClass.Generic) += 35;
             }
                 
             if (NebulaTimer > 0)
@@ -36,16 +36,16 @@ namespace FargowiltasSouls.Core.ModPlayers
             if (StardustTimer > 0)
             {
                 StardustTimer--;
-                Player.GetDamage(DamageClass.Generic) += 0.2f;
+                Player.GetDamage(DamageClass.Generic) += 0.35f;
             }
             if (SolarTimer == 1)
                 CombatText.NewText(Player.Hitbox, Color.Yellow, Language.GetTextValue("Mods.FargowiltasSouls.Items.SolarBooster.Deactivate", 20), true);
             if (VortexTimer == 1)
-                CombatText.NewText(Player.Hitbox, Color.LightCyan, Language.GetTextValue("Mods.FargowiltasSouls.Items.VortexBooster.Deactivate", 20), true);
+                CombatText.NewText(Player.Hitbox, Color.LightCyan, Language.GetTextValue("Mods.FargowiltasSouls.Items.VortexBooster.Deactivate", 35), true);
             if (NebulaTimer == 1)
                 CombatText.NewText(Player.Hitbox, Color.Magenta, Language.GetTextValue("Mods.FargowiltasSouls.Items.NebulaBooster.Deactivate", 5), true);
             if (StardustTimer == 1)
-                CombatText.NewText(Player.Hitbox, Color.Cyan, Language.GetTextValue("Mods.FargowiltasSouls.Items.StardustBooster.Deactivate", 20), true);
+                CombatText.NewText(Player.Hitbox, Color.Cyan, Language.GetTextValue("Mods.FargowiltasSouls.Items.StardustBooster.Deactivate", 35), true);
         }
         public override void UpdateLifeRegen()
         {

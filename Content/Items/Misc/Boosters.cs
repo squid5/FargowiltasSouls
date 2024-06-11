@@ -37,7 +37,7 @@ namespace FargowiltasSouls.Content.Items.Misc
         public override void PickupEffect(BoosterPlayer boosterPlayer)
         {
             if (boosterPlayer.SolarTimer <= 0)
-                CombatText.NewText(boosterPlayer.Player.Hitbox, Color.Yellow, Language.GetTextValue("Mods.FargowiltasSouls.Items.SolarBooster.Activate", 20), true);
+                CombatText.NewText(boosterPlayer.Player.Hitbox, Color.Yellow, Language.GetTextValue("Mods.FargowiltasSouls.Items.SolarBooster.Activate", 25), true);
             boosterPlayer.SolarTimer = LunarDuration;
         }
     }
@@ -46,7 +46,7 @@ namespace FargowiltasSouls.Content.Items.Misc
         public override void PickupEffect(BoosterPlayer boosterPlayer)
         {
             if (boosterPlayer.VortexTimer <= 0)
-                CombatText.NewText(boosterPlayer.Player.Hitbox, Color.LightCyan, Language.GetTextValue("Mods.FargowiltasSouls.Items.VortexBooster.Activate", 20), true);
+                CombatText.NewText(boosterPlayer.Player.Hitbox, Color.LightCyan, Language.GetTextValue("Mods.FargowiltasSouls.Items.VortexBooster.Activate", 35), true);
             boosterPlayer.VortexTimer = LunarDuration;
         }
     }
@@ -64,7 +64,7 @@ namespace FargowiltasSouls.Content.Items.Misc
         public override void PickupEffect(BoosterPlayer boosterPlayer)
         {
             if (boosterPlayer.StardustTimer <= 0)
-                CombatText.NewText(boosterPlayer.Player.Hitbox, Color.Cyan, Language.GetTextValue("Mods.FargowiltasSouls.Items.StardustBooster.Activate", 20), true);
+                CombatText.NewText(boosterPlayer.Player.Hitbox, Color.Cyan, Language.GetTextValue("Mods.FargowiltasSouls.Items.StardustBooster.Activate", 35), true);
             boosterPlayer.StardustTimer = LunarDuration;
         }
     }

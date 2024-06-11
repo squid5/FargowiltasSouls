@@ -78,7 +78,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Forces
 
                 if (modPlayer.CosmosMoonTimer >= LumUtils.SecondsToFrames(3) && player.whoAmI == Main.myPlayer && player.ownedProjectileCounts[ModContent.ProjectileType<CosmosForceMoon>()] < 4)
                 {
-                    int moonDamage = 3200;
+                    int moonDamage = FargoSoulsUtil.HighestDamageTypeScaling(player, 3200);
 
                     Projectile.NewProjectileDirect(player.GetSource_EffectItem<CosmosMoonEffect>(), player.Center, Vector2.Zero, ModContent.ProjectileType<CosmosForceMoon>(), moonDamage, 1, player.whoAmI, MathHelper.Pi);
                     modPlayer.CosmosMoonTimer = 0;

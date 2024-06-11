@@ -148,7 +148,6 @@ MasoAbom: Abominationn Minion
 MasoRing: Phantasmal Ring Minion
 UniverseHeader: "{$Mods.FargowiltasSouls.Items.UniverseSoul.DisplayName}"
 MeleeSpeedEffect: Melee Speed
-MagmaStoneEffect: Magma Stone
 SniperScopeEffect: Sniper Scope
 UniverseSpeedEffect: Universe Attack Speed
 WorldShaperHeader: "{$Mods.FargowiltasSouls.Items.WorldShaperSoul.DisplayName}"

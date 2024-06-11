@@ -194,7 +194,6 @@ namespace FargowiltasSouls.Core.Toggler
 
             player.SetToggleValue<MasoRing>(false);
 
-            player.SetToggleValue<MagmaStoneEffect>(false);
             player.SetToggleValue<SniperScopeEffect>(false);
 
             player.SetToggleValue<BuilderEffect>(false);

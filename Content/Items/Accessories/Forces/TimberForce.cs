@@ -79,7 +79,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Forces
                         modPlayer.TimberBranchCD = 60 * 4;
 
                         Vector2 vel = Vector2.Normalize(Main.MouseWorld - player.Center) * 1f;
-                        int branchDamage = 5750;
+                        int branchDamage = FargoSoulsUtil.HighestDamageTypeScaling(player, 5750);
 
                         int depth = 5;
                         int p = Projectile.NewProjectile(player.GetSource_Accessory(item), player.Center, vel, ModContent.ProjectileType<TimberBranch>(), branchDamage, 1, Main.myPlayer, ai0: depth);
