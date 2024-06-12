@@ -98,7 +98,7 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
 
         public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
-            if (WorldSavingSystem.MasochistModeReal) //if (Fargowiltas.Instance.MasomodeEXLoaded)
+            if (WorldSavingSystem.MasochistModeReal && Main.getGoodWorld) //if (Fargowiltas.Instance.MasomodeEXLoaded)
             {
                 if (!target.tongued)
                     SoundEngine.PlaySound(SoundID.ForceRoarPitched, target.Center);
