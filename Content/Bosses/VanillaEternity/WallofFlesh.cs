@@ -72,7 +72,9 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
         {
             base.SetDefaults(npc);
 
-            npc.lifeMax = (int)Math.Round(npc.lifeMax * 2.2);
+            npc.lifeMax = (int)Math.Round(npc.lifeMax * 2f);
+            if (Main.masterMode) //master mode is already long enough
+                npc.lifeMax = (int)Math.Round(npc.lifeMax * 0.9f);
             npc.defense = 0;
             npc.HitSound = SoundID.NPCHit41;
         }
@@ -96,7 +98,6 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
             if (WorldSavingSystem.SwarmActive)
                 return result;
-
             if (!MadeEyeInvul && npc.ai[3] == 0f) //when spawned in, make one eye invul
             {
                 for (int i = 0; i < Main.maxNPCs; i++) //not in on-spawn because need vanilla ai to spawn eyes first
