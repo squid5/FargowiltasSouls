@@ -2,6 +2,7 @@ using Fargowiltas.NPCs;
 using FargowiltasSouls.Content.Buffs.Masomode;
 using FargowiltasSouls.Content.Buffs.Souls;
 using FargowiltasSouls.Content.Items.Accessories.Enchantments;
+using FargowiltasSouls.Content.Items.Accessories.Forces;
 using FargowiltasSouls.Content.Items.Accessories.Masomode;
 using FargowiltasSouls.Content.Items.Misc;
 using FargowiltasSouls.Content.Items.Summons;
@@ -705,7 +706,13 @@ namespace FargowiltasSouls.Core.Globals
                     dot *= 3;
                 }
 
+                bool terraEffect = Main.player.Any(p => p.Alive() && p.HasEffect<TerraLightningEffect>());
+                if (terraEffect)
+                    dot = 250;
+
                 npc.lifeRegen -= dot;
+                if (damage < (int)(dot / 10f))
+                    damage = (int)(dot / 10f);
             }
 
 
