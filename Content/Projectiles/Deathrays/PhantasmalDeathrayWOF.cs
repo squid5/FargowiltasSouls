@@ -143,7 +143,7 @@ namespace FargowiltasSouls.Content.Projectiles.Deathrays
         public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
             target.AddBuff(ModContent.BuffType<SmiteBuff>(), 60 * 30);
-            if (WorldSavingSystem.MasochistModeReal)
+            if (WorldSavingSystem.MasochistModeReal && Main.getGoodWorld)
                 target.AddBuff(ModContent.BuffType<UnstableBuff>(), 300);
         }
     }
