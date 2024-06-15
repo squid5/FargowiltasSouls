@@ -44,6 +44,8 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Cosmos
 
             Projectile.scale = 0f;
             Projectile.Opacity = 0f;
+
+            Projectile.FargoSouls().DeletionImmuneRank = 2;
         }
 
         ref float State => ref Projectile.ai[1];
