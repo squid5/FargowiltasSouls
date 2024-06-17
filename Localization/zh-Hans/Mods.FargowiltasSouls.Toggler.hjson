@@ -7,7 +7,8 @@ MahoganyEffect: 红木 钩爪加成
 EbonwoodEffect: 乌木 暗影焰光环
 ShadewoodEffect: 阴影木 鲜血喷溅
 PalmwoodEffect: 棕榈木 召唤物
-PearlwoodEffect: 珍珠木 星星
+// PearlwoodStarEffect: Pearlwood Stars
+// PearlwoodManaEffect: Pearlwood Mana Pickups
 // TimberEffect: Timber Branches
 EarthHeader: "{$Mods.FargowiltasSouls.Items.EarthForce.DisplayName}"
 AdamantiteEffect: 精金 弹幕分裂

@@ -138,7 +138,6 @@ namespace FargowiltasSouls.Core.Toggler
 
             player.SetToggleValue<BorealEffect>(false);
             player.SetToggleValue<ShadewoodEffect>(false);
-            player.SetToggleValue<PearlwoodEffect>(false);
 
             player.SetToggleValue<CobaltEffect>(false);
             player.SetToggleValue<AncientCobaltEffect>(false);

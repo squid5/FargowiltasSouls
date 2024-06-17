@@ -60,7 +60,16 @@ namespace FargowiltasSouls.Content.Items
             if (player.whoAmI == Main.myPlayer && player.HasEffect<GoldToPiggy>())
                 modPlayer.GoldEnchMoveCoins = true;
 
+            if (ItemID.Sets.IsAPickup[item.type])
+            {
+                OnRetrievePickup(player);
+            }
+
             return base.OnPickup(item, player);
+        }
+        public static void OnRetrievePickup(Player player)
+        {
+            PearlwoodEffect.OnPickup(player);
         }
 
         public override void PickAmmo(Item weapon, Item ammo, Player player, ref int type, ref float speed, ref StatModifier damage, ref float knockback)

@@ -442,9 +442,10 @@ PearlwoodEnchant: {
 	// DisplayName: Pearlwood Enchantment
 	/* Tooltip:
 		'''
-		Press the Debuff Install key to spawn a damaging star that chases you
-		While the star is active, your attacks can roll an extra chance to crit
-		'You can't outrun your own reflection'
+		Picking up any consumable pickup fires a star at a nearby enemy and empowers you
+		While empowered, your critical strikes reroll favorably
+		Your attacks occasionally spawn mana stars on-hit
+		'Too little, too late…'
 		''' */
 }
 

@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using FargowiltasSouls.Content.Items;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -43,6 +44,8 @@ namespace FargowiltasSouls.Content.Projectiles.Souls
                 {
                     Main.LocalPlayer.AddBuff(BuffID.Honey, 60 * 15);
                     BeeSwarm();
+
+                    FargoGlobalItem.OnRetrievePickup(Main.LocalPlayer);
 
                     Projectile.Kill();
                 }
