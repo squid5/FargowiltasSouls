@@ -34,6 +34,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Forces
             SetActive(player);
             WoodEnchant.WoodEffect(player, Item);
             player.AddEffect<MahoganyEffect>(Item);
+            player.AddEffect<PearlwoodEffect>(Item);
             player.AddEffect<TimberEffect>(Item);
         }
 
