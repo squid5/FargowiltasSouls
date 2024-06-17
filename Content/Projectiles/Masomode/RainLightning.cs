@@ -61,6 +61,8 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
         }
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
+            if (target.townNPC)
+                return;
             modifiers.SourceDamage *= 10;
         }
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
