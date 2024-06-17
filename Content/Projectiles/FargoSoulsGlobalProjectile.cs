@@ -602,7 +602,7 @@ namespace FargowiltasSouls.Content.Projectiles
                 if (counter >= 5)
                     projectile.velocity = Vector2.Zero;
 
-                int deathTimer = 15;
+                int deathTimer = 10;
 
                 if (projectile.hostile)
                     deathTimer = 60;

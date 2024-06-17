@@ -32,6 +32,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
             player.AddEffect<PearlwoodEffect>(Item);
             player.AddEffect<PearlwoodStarEffect>(Item);
             player.AddEffect<PearlwoodManaEffect>(Item);
+            player.AddEffect<PearlwoodRainbowEffect>(Item);
         }
         public override void AddRecipes()
         {
@@ -54,7 +55,21 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
         {
             FargoSoulsPlayer modPlayer = player.FargoSouls();
             if (modPlayer.PearlwoodCritDuration > 0)
+            {
                 modPlayer.PearlwoodCritDuration--;
+                if (player.HasEffect<PearlwoodRainbowEffect>())
+                {
+                    int p = Projectile.NewProjectile(player.GetSource_FromThis(), player.Center, player.velocity, ProjectileID.RainbowBack, 0, 1);
+                    if (p != Main.maxProjectiles)
+                    {
+                        Main.projectile[p].friendly = false;
+                        Main.projectile[p].hostile = false;
+                        Main.projectile[p].FargoSouls().Rainbow = true;
+                        Main.projectile[p].Opacity /= 4;
+                    }
+                }
+            }
+                
         }
         public override void OnHitNPCEither(Player player, NPC target, NPC.HitInfo hitInfo, DamageClass damageClass, int baseDamage, Projectile projectile, Item item)
         {
@@ -118,7 +133,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
             {
                 int starDamage = 100;
                 if (modPlayer.ForceEffect<PearlwoodEnchant>())
-                    starDamage = 250;
+                    starDamage = 175;
 
                 SoundEngine.PlaySound(SoundID.Item105 with { Pitch = -0.3f }, player.Center);
                 Vector2 vel = Vector2.Zero;
@@ -134,6 +149,11 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
         }
     }
     public class PearlwoodStarEffect : AccessoryEffect
+    {
+        public override Header ToggleHeader => Header.GetHeader<TimberHeader>();
+        public override int ToggleItemType => ModContent.ItemType<PearlwoodEnchant>();
+    }
+    public class PearlwoodRainbowEffect : AccessoryEffect
     {
         public override Header ToggleHeader => Header.GetHeader<TimberHeader>();
         public override int ToggleItemType => ModContent.ItemType<PearlwoodEnchant>();

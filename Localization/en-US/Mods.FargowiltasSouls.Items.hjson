@@ -443,7 +443,7 @@ PearlwoodEnchant: {
 	Tooltip:
 		'''
 		Retreiving any pickup fires a star at a nearby enemy and empowers you for 5 seconds
-		While empowered, your critical strikes reroll favorably
+		While empowered, your critical strikes reroll favorably and you have a harmless rainbow trail
 		Your attacks occasionally spawn mana stars on-hit
 		'Too little, too late…'
 		'''
