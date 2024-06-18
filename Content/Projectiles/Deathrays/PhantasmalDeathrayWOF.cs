@@ -138,6 +138,10 @@ namespace FargowiltasSouls.Content.Projectiles.Deathrays
                 Main.dust[d].noGravity = true;
                 Main.dust[d].velocity *= 3f;
             }
+            if (WorldSavingSystem.MasochistModeReal && Projectile.Colliding(Projectile.Hitbox, Main.LocalPlayer.Hitbox))
+            {
+                Main.LocalPlayer.velocity += Projectile.velocity.SafeNormalize(Vector2.Zero) * 1.2f;
+            }
         }
 
         public override void OnHitPlayer(Player target, Player.HurtInfo info)

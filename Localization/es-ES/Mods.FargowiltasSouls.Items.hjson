@@ -442,8 +442,8 @@ PearlwoodEnchant: {
 	// DisplayName: Pearlwood Enchantment
 	/* Tooltip:
 		'''
-		Picking up any consumable pickup fires a star at a nearby enemy and empowers you
-		While empowered, your critical strikes reroll favorably
+		Retreiving any pickup fires a star at a nearby enemy and empowers you for 5 seconds
+		While empowered, your critical strikes reroll favorably and you have a harmless rainbow trail
 		Your attacks occasionally spawn mana stars on-hit
 		'Too little, too late…'
 		''' */
@@ -928,6 +928,7 @@ TimberForce: {
 		The branches inflict Withering and Bleeding, reducing defense and dealing damage over time
 		Attacks slightly reduce the cooldown of the tree crown
 		All grappling hooks shoot, pull, and retract 2.5x as fast
+		Retreiving pickups empowers you, making your crits reroll favorably for 5 seconds
 		You gain a shop discount based on bestiary completion
 		'Extremely rigid'
 		''' */
