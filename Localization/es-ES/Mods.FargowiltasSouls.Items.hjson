@@ -794,6 +794,7 @@ BoxofGizmos: {
 		'''
 		Works in your inventory
 		Stand still to expose nearby treasure and enemies
+		Enemies emit light at night
 		Grants autofire to non-weapon items
 		''' */
 }
@@ -829,13 +830,20 @@ EarthForce: {
 	// DisplayName: Force of Earth
 	/* Tooltip:
 		'''
+		Not attacking charges up your weapons
+		While charge up, projectiles will split into three, weapons will fire faster,
+		And a percentage of your damage will be converted into damage over time.
+		While holding in charge, your life regeneration and damage reduction is increased.
+		'Gaia's blessing shines upon you'
+		''' */
+	/* SaveOldTooltip:
+		'''
 		[i:FargowiltasSouls/CobaltEnchant] Grants an explosion jump and you explode on hit
 		[i:FargowiltasSouls/MythrilEnchant] Stop attacking to gradually increase attack speed for up to 5 seconds
 		[i:FargowiltasSouls/PalladiumEnchant] Grants Rapid Healing after striking an enemy and spawn life orbs based on healing
 		[i:FargowiltasSouls/OrichalcumEnchant] Attacks spawn flower petals and damaging debuffs deal 3.5x damage
 		[i:FargowiltasSouls/AdamantiteEnchant] Every weapon shot will split into 3, 50% damage each, with higher spread the longer you fire
 		[i:FargowiltasSouls/TitaniumEnchant] Attacks generate titanium shards, reaching max grants Titanium Shield
-		'Gaia's blessing shines upon you'
 		''' */
 }
 
@@ -875,6 +883,13 @@ ShadowForce: {
 	// DisplayName: Shadow Force
 	/* Tooltip:
 		'''
+		Grants a shadow dash
+		Every 4 seconds, your next dash will envolope you in shade, making you invincible during the dash
+		Moving slowly increases your damage, up to 25% increased damage
+		'Dark, Darker, Yet Darker'
+		''' */
+	/* SavingOldTooltip:
+		'''
 		[i:FargowiltasSouls/ShadowEnchant] Four Shadow Orbs will orbit around you
 		[i:FargowiltasSouls/AncientShadowEnchant] Your attacks may inflict Darkness on enemies
 		[i:FargowiltasSouls/NecroEnchant] Slain enemies may drop a pile of bones
@@ -886,7 +901,6 @@ ShadowForce: {
 		[i:FargowiltasSouls/ShinobiEnchant] Dash into any walls, to teleport through them to the next opening
 		[i:FargowiltasSouls/ApprenticeEnchant] While attacking, fire your next 3 closest weapons' projectiles as support
 		[i:FargowiltasSouls/DarkArtistEnchant] Summons a Flameburst minion that will also fire when you attack
-		'Dark, Darker, Yet Darker'
 		''' */
 }
 
@@ -1080,7 +1094,7 @@ ChaliceoftheMoon: {
 		[i:FargowiltasSouls/MagicalBulb] Increases life regeneration based on how much light you receive
 		[i:FargowiltasSouls/LihzahrdTreasureBox] Double tap DOWN in the air to fastfall, creating an explosion on landing after falling a certain distance
 		[i:FargowiltasSouls/CelestialRune] You fire additional attacks depending on weapon type and erupt into Ancient Visions when injured
-		Summons a friendly [i:FargowiltasSouls/ChaliceoftheMoon] Cultist and [i:FargowiltasSouls/MagicalBulb] plant to fight at your side
+		[i:FargowiltasSouls/MagicalBulb] Summons a friendly plant to fight at your side
 		'Consume it'
 		''' */
 }
@@ -1791,7 +1805,7 @@ MasochistSoul: {
 		Improves your [i:FargowiltasSouls/SecurityWallet] reforges, [i:FargowiltasSouls/OrdinaryCarrot] night vision, [i:FargowiltasSouls/NymphsPerfume] respawn hp, [i:FargowiltasSouls/SandsofTime] and respawn time, as well as using [i:FargowiltasSouls/ConcentratedRainbowMatter] healing and [i:FargowiltasSouls/MysticSkull] mana potions as needed.
 		On hit, [i:FargowiltasSouls/SqueakyToy] have a chance to only take 1 damage, [i:FargowiltasSouls/CelestialRune] erupt into Ancient Visions, [i:FargowiltasSouls/NecromanticBrew] and reflect all damage while dashing
 		Your attacks [i:FargowiltasSouls/NymphsPerfume] produce hearts, [i:FargowiltasSouls/WretchedPouch] summon shadowflame tentacles, [i:FargowiltasSouls/DarkenedHeart] spawn mini eaters, [i:FargowiltasSouls/CelestialRune] fire additional attacks, and inflict a cocktail of Eternity Mode debuffs
-		Summons [i:FargowiltasSouls/NecromanticBrew] Skeletron arms, [i:FargowiltasSouls/GuttedHeart] creepers, [i:FargowiltasSouls/ConcentratedRainbowMatter] a rainbow slime, [i:FargowiltasSouls/GroundStick] two friendly probes, [i:FargowiltasSouls/SkullCharm] an eyeball minion, [i:FargowiltasSouls/SaucerControlConsole] a mini saucer, [i:FargowiltasSouls/MagicalBulb] a plant, [i:FargowiltasSouls/CelestialRune] a cultist, [i:FargowiltasSouls/GalacticGlobe] and True Eyes of Cthulhu by your side
+		Summons [i:FargowiltasSouls/NecromanticBrew] Skeletron arms, [i:FargowiltasSouls/GuttedHeart] creepers, [i:FargowiltasSouls/ConcentratedRainbowMatter] a rainbow slime, [i:FargowiltasSouls/GroundStick] two friendly probes, [i:FargowiltasSouls/SkullCharm] an eyeball minion, [i:FargowiltasSouls/SaucerControlConsole] a mini saucer, [i:FargowiltasSouls/MagicalBulb] a plant, [i:FargowiltasSouls/GalacticGlobe] and True Eyes of Cthulhu by your side
 		[i:FargowiltasSouls/SandsofTime] Use to teleport to your last death point
 		'Embrace mastery, embrace eternity'
 		''' */

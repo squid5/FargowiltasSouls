@@ -184,6 +184,8 @@ TrawlerJump: 捕鱼之魂跳跃
 TrawlerGel: 挥发明胶
 EternityHeader: "{$Mods.FargowiltasSouls.Items.EternitySoul.DisplayName}"
 EternityTin: 永恒之魂属性叠加
+// ShadowForceDashEffect: Shadow Dash
+// ShadowForceDamageEffect: Shadow Damage
 // the pets are no longer existing in game
 PetHeader: 宠物
 PetDinoConfig: 恐龙宝宝

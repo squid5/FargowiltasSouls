@@ -739,3 +739,8 @@ MoonFangBuff: {
 	DisplayName: Moon Fang
 	Description: Cannot regenerate life
 }
+
+EarthPoison: {
+	DisplayName: Earth Poison
+	Description: Mods.FargowiltasSouls.Buffs.EarthPoison.Description
+}

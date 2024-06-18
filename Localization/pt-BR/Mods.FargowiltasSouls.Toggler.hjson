@@ -184,6 +184,8 @@ MutantArmorHeader: Verdadeira Armadura do Mutant
 // TrawlerGel: Volatile Gelatin
 // EternityHeader: "{$Mods.FargowiltasSouls.Items.EternitySoul.DisplayName}"
 // EternityTin: Eternity Crit Effect Stacking
+// ShadowForceDashEffect: Shadow Dash
+// ShadowForceDamageEffect: Shadow Damage
 // the pets are no longer existing in game
 PetHeader: Animais de Estimação
 PetDinoConfig: Dinossauro de Estimação

@@ -2,6 +2,7 @@
 
 
 using FargowiltasSouls.Content.Items.Accessories.Enchantments;
+using FargowiltasSouls.Content.Items.Accessories.Forces;
 using FargowiltasSouls.Content.Items.Consumables;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using System.Reflection;
@@ -29,6 +30,7 @@ namespace FargowiltasSouls.Core.Systems
             // Vanilla dashes are processed before this method
             // Other mods depends on their ordering
 
+            
             if (player.HasEffect<JungleDashEffect>())
             {
                 JungleDashEffect.AddDash(player);
