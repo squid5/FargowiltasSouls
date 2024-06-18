@@ -57,7 +57,9 @@ namespace FargowiltasSouls.Core.ModPlayers
         public int TimberBranchCD;
         public int TerraProcCD;
         public int CosmosMoonTimer;
-
+        public bool LifeForceActive;
+        public int LifeBeetleDuration;
+        
 
         //force of timber
         public bool MahoganyCanUseDR;

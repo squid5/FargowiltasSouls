@@ -15,6 +15,9 @@
     <None Remove="Folders to Port\**" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="Content\Items\Accessories\Forces\LifeForce_Wings.png" />
+  </ItemGroup>
+  <ItemGroup>
     <Folder Include="Assets\Atlases\" />
     <Folder Include="Assets\ExtraTextures\Noise\" />
     <Folder Include="Content\WorldGen\" />

@@ -842,14 +842,12 @@ LifeForce: {
 	DisplayName: Force of Life
 	Tooltip:
 		'''
-		[i:FargowiltasSouls/PumpkinEnchant] You will grow pumpkins while moving
-		[i:FargowiltasSouls/CactusEnchant] Enemies may explode into needles on death
-		[i:FargowiltasSouls/BeeEnchant] Leave behind flowers while flying
-		[i:FargowiltasSouls/BeeEnchant] Effects of Hive Pack
-		[i:FargowiltasSouls/SpiderEnchant] Your minions and sentries can crit
-		[i:FargowiltasSouls/SpiderEnchant] Minion and sentry crits deal 1.5x damage, instead of 2x
-		[i:FargowiltasSouls/TurtleEnchant] When standing still and not attacking, you will enter your shell
-		[i:FargowiltasSouls/BeetleEnchant] Beetles aid both offense and defense
+		[i:FargowiltasSouls/PumpkinEnchant] [i:FargowiltasSouls/BeeEnchant] [i:FargowiltasSouls/SpiderEnchant] [i:FargowiltasSouls/TurtleEnchant] [i:FargowiltasSouls/BeetleEnchant]
+		Grants powerful wings
+		Leave behind powerful flowers while flying
+		The flowers heal you, spawn a burst of bees, grant you full Beetle Might and Honey, and refresh your flight time when touched
+		Your minions and sentries can crit for 1.5x damage
+		Effects of Hive Pack
 		'Rare is a living thing that dare disobey your will'
 		'''
 }

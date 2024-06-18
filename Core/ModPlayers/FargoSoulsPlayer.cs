@@ -223,6 +223,9 @@ namespace FargowiltasSouls.Core.ModPlayers
             //            #region enchantments 
             PetsActive = true;
             //CrimsonRegen = false;
+            if (!LifeForceActive)
+                LifeBeetleDuration = 0;
+            LifeForceActive = false;
             MinionCrits = false;
             FirstStrike = false;
             ShellHide = false;
@@ -1374,7 +1377,6 @@ namespace FargowiltasSouls.Core.ModPlayers
         }
         public bool ForceEffect(ModItem modItem)
         {
-            //This will probably be made less ugly in a future refactor update.
             bool CheckForces(int type)
             {
                 int force = BaseEnchant.Force[type];

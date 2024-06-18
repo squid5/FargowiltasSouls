@@ -447,6 +447,9 @@ namespace FargowiltasSouls.Core.ModPlayers
             if (CosmosMoonTimer > 0) // naturally degrades
                 CosmosMoonTimer--;
 
+            if (LifeBeetleDuration > 0)
+                LifeBeetleDuration--;
+
             //these are here so that emode minion nerf can properly detect the real set bonuses over in EModePlayer postupdateequips
             if (SquireEnchantActive)
                 Player.setSquireT2 = true;
