@@ -649,6 +649,7 @@ namespace FargowiltasSouls
         {
             RequestGuttedCreeper,
             RequestPerfumeHeart,
+            RequestPearlwoodStar,
             SyncCultistDamageCounterToServer,
             RequestCreeperHeal,
             RequestDeviGift,
@@ -660,7 +661,7 @@ namespace FargowiltasSouls
             SyncDefaultToggles,
             SyncCanPlayMaso,
             SyncNanoCoreMode,
-            //SpawnBossTryFromNPC
+            //SpawnBossTryFromNPC,
             HealNPC
         }
 
@@ -692,6 +693,15 @@ namespace FargowiltasSouls
                             int p = reader.ReadByte();
                             int n = reader.ReadByte();
                             Item.NewItem(Main.player[p].GetSource_OnHit(Main.npc[n]), Main.npc[n].Hitbox, ItemID.Heart);
+                        }
+                        break;
+
+                    case PacketID.RequestPearlwoodStar: //client to server
+                        if (Main.netMode == NetmodeID.Server)
+                        {
+                            int p = reader.ReadByte();
+                            int n = reader.ReadByte();
+                            Item.NewItem(Main.player[p].GetSource_OnHit(Main.npc[n]), Main.npc[n].Hitbox, ItemID.Star);
                         }
                         break;
 
