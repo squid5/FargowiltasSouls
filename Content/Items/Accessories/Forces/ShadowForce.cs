@@ -188,7 +188,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Forces
                     boom2.Spawn();
                 }
 
-                int proj = Projectile.NewProjectile(player.GetSource_EffectItem<ShadowForceDashEffect>(), player.Center, Vector2.Zero, ModContent.ProjectileType<ShadowDash>(), 2, 3, player.whoAmI);
+                int proj = Projectile.NewProjectile(player.GetSource_EffectItem<ShadowForceDashEffect>(), player.Center, Vector2.Zero, ModContent.ProjectileType<ShadowDash>(), 2000, 3, player.whoAmI);
                 if (Main.netMode == NetmodeID.MultiplayerClient)
                     NetMessage.SendData(MessageID.SyncProjectile, number: proj);
             }

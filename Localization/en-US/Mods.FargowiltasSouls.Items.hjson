@@ -829,7 +829,7 @@ EarthForce: {
 	Tooltip:
 		'''
 		Not attacking charges up your weapons
-		While charge up, projectiles will split into three, weapons will fire faster,
+		While charged up, projectiles will split into three, weapons will fire faster,
 		And you inflict Earth Poison, which does a percentage of your weapons damage
 		Enemies take 4x damage from debuffs
 		While holding in charge, your life regeneration and damage reduction is increased.
