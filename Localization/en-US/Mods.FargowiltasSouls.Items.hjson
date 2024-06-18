@@ -856,14 +856,11 @@ NatureForce: {
 	DisplayName: Force of Nature
 	Tooltip:
 		'''
-		[i:FargowiltasSouls/CrimsonEnchant] Heal back 50% of damage taken after not getting hit for 7 seconds, twice
-		[i:FargowiltasSouls/MoltenEnchant] Nearby enemies are ignited in a great radius
-		[i:FargowiltasSouls/RainEnchant] Spawns an umbrella that blocks projectiles from above
-		[i:FargowiltasSouls/FrostEnchant] Icicles will start to appear around you
-		[i:FargowiltasSouls/ChlorophyteEnchant] Summons a ring of leaf crystals to shoot at nearby enemies
-		[i:FargowiltasSouls/JungleEnchant] Grants a double spore jump and a dash
-		[i:FargowiltasSouls/ShroomiteEnchant] Not moving puts you in stealth
-		[i:FargowiltasSouls/ShroomiteEnchant] All attacks gain trails of mushrooms
+		[i:FargowiltasSouls/CrimsonEnchant] [i:FargowiltasSouls/MoltenEnchant] [i:FargowiltasSouls/RainEnchant] [i:FargowiltasSouls/FrostEnchant] [i:FargowiltasSouls/ChlorophyteEnchant] [i:FargowiltasSouls/ShroomiteEnchant] 
+		Heal back 50% of damage taken after not getting hit for 7 seconds, twice
+		Healing from any source fires nature beams at nearby enemies
+		+3% damage per 50 current life
+		Current damage bonus: +{0}%
 		'Tapped into every secret of the wilds'
 		'''
 }

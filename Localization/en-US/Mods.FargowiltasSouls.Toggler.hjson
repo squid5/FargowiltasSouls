@@ -59,6 +59,7 @@ JungleDashEffect: Jungle Dash
 MoltenEffect: Molten Inferno Buff
 ShroomiteStealthEffect: Shroomite Stealth
 ShroomiteShroomEffect: Shroomite Mushrooms
+NatureBeamEffect: Nature Heal Beams
 ShadowHeader: "{$Mods.FargowiltasSouls.Items.ShadowForce.DisplayName}"
 DarkArtistMinion: Flameburst Minion
 ApprenticeSupport: Apprentice Effect

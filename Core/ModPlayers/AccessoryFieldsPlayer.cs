@@ -59,6 +59,8 @@ namespace FargowiltasSouls.Core.ModPlayers
         public int CosmosMoonTimer;
         public bool LifeForceActive;
         public int LifeBeetleDuration;
+        public int NatureHealCounter;
+        public int NatureHealCD;
         
 
         //force of timber

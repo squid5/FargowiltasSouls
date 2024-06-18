@@ -59,6 +59,7 @@ JungleDashEffect: 丛林 冲刺
 MoltenEffect: 熔岩 狱火增益
 ShroomiteStealthEffect: 蘑菇 潜行
 ShroomiteShroomEffect: 蘑菇 蘑菇尾迹
+// NatureBeamEffect: Nature Heal Beams
 ShadowHeader: "{$Mods.FargowiltasSouls.Items.ShadowForce.DisplayName}"
 DarkArtistMinion: 暗黑艺术家 爆炸烈焰召唤物
 ApprenticeSupport: 学徒 相关效果

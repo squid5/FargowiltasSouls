@@ -695,6 +695,11 @@ JungleMimicSummonBuff: {
 
 GladiatorBuff: {
 	// DisplayName: Gladiator Strength
+	// Description: +5% damage reduction, +5% damage, knockback immunity, improved spear rain
+}
+
+GladiatorSpiritBuff: {
+	// DisplayName: Gladiator Strength
 	// Description: +15% damage reduction, +30% damage, knockback immunity, improved successive hit damage
 }
 
@@ -743,9 +748,4 @@ WitheredForceBuff: {
 TimberBleedBuff: {
 	// DisplayName: Timber Bleed Buff
 	// Description: Mods.FargowiltasSouls.Buffs.TimberBleedBuff.Description
-}
-
-GladiatorSpiritBuff: {
-	// DisplayName: Gladiator Spirit Buff
-	// Description: Mods.FargowiltasSouls.Buffs.GladiatorSpiritBuff.Description
 }

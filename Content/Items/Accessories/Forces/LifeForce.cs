@@ -20,7 +20,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Forces
                 ModContent.ItemType<TurtleEnchant>(),
                 ModContent.ItemType<BeetleEnchant>()
             ];
-            ArmorIDs.Wing.Sets.Stats[Item.wingSlot] = new Terraria.DataStructures.WingStats(500);
+            ArmorIDs.Wing.Sets.Stats[Item.wingSlot] = new Terraria.DataStructures.WingStats(1000);
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
