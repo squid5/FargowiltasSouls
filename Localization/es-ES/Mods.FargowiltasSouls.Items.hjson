@@ -936,15 +936,13 @@ WillForce: {
 	// DisplayName: Force of Will
 	/* Tooltip:
 		'''
-		[i:FargowiltasSouls/GoldEnchant] Press the Gold hotkey to be encased in a Golden Shell
-		[i:FargowiltasSouls/GoldEnchant] Automatically sends coins to your piggy bank when picked up
-		[i:FargowiltasSouls/PlatinumEnchant] 33% chance for enemies to drop 5x loot
-		[i:FargowiltasSouls/GladiatorEnchant] Double tap down to place a banner that buffs you while close
-		[i:FargowiltasSouls/GladiatorEnchant] Spears will rain down on struck enemies
-		[i:FargowiltasSouls/RedRidingEnchant] Successive attacks gain bonus damage 
-		[i:FargowiltasSouls/ValhallaKnightEnchant] Increases the effectiveness of healing sources by 25%
-		[i:FargowiltasSouls/ValhallaKnightEnchant] Improves mounts and stats while mounted, mounts have a dash
-		'A mind of unbreakable determination'
+		[i:FargowiltasSouls/GoldEnchant] [i:FargowiltasSouls/PlatinumEnchant] [i:FargowiltasSouls/GladiatorEnchant] [i:FargowiltasSouls/RedRidingEnchant] [i:FargowiltasSouls/ValhallaKnightEnchant]
+		You are followed by a gladiator spirit with a banner that empowers you while close
+		Successive attacks gain bonus damage, increased when empowered by the banner
+		Increases the effectiveness of healing sources by 25%
+		Improves mounts and stats while mounted, mounts have a dash
+		Automatically sends coins to your piggy bank when picked up
+		33% chance for enemies to drop 5x loot
 		''' */
 }
 

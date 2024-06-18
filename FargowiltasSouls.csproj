@@ -16,6 +16,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="Content\Items\Accessories\Forces\LifeForce_Wings.png" />
+    <None Remove="Content\Projectiles\Minions\GladiatorSpirit.png" />
+    <None Remove="Content\Projectiles\Minions\GladiatorStandard.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Assets\Atlases\" />

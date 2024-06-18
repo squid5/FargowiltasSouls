@@ -744,3 +744,8 @@ TimberBleedBuff: {
 	// DisplayName: Timber Bleed Buff
 	// Description: Mods.FargowiltasSouls.Buffs.TimberBleedBuff.Description
 }
+
+GladiatorSpiritBuff: {
+	// DisplayName: Gladiator Spirit Buff
+	// Description: Mods.FargowiltasSouls.Buffs.GladiatorSpiritBuff.Description
+}

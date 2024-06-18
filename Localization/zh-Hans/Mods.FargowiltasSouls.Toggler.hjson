@@ -29,6 +29,7 @@ TinEffect: 锡 暴击
 TungstenEffect: 钨 变大
 ObsidianProcEffect: 黑曜石 爆炸
 AshWoodFireballs: 灰烬木 火球
+// TerraLightningEffect: Terra Lightning
 WillHeader: "{$Mods.FargowiltasSouls.Items.WillForce.DisplayName}"
 GladiatorSpears: 角斗士 长矛雨
 GladiatorBanner: 角斗士 旗帜
@@ -39,6 +40,7 @@ RedRidingEffect: 红色骑术 箭雨
 ValhallaDash: 英灵殿骑士 坐骑冲刺
 SquireMountJump: 侍卫 坐骑跳跃高度
 SquireMountSpeed: 侍卫 坐骑速度
+// WillGladiatorEffect: Will Gladiator Spirit
 LifeHeader: "{$Mods.FargowiltasSouls.Items.LifeForce.DisplayName}"
 BeeEffect: 蜜蜂 花朵
 BeetleEffect: 甲虫 相关效果

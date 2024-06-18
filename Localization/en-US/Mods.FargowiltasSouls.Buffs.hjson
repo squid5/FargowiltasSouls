@@ -698,6 +698,11 @@ GladiatorBuff: {
 	Description: +5% damage reduction, +5% damage, knockback immunity, improved spear rain
 }
 
+GladiatorSpiritBuff: {
+	DisplayName: Gladiator Strength
+	Description: +15% damage reduction, +30% damage, knockback immunity, improved successive hit damage
+}
+
 ROBBuff: {
 	DisplayName: R.O.B
 	DescPatreon: The friend you've never left since Brawl
