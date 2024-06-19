@@ -145,7 +145,8 @@ namespace FargowiltasSouls.Content.Projectiles.Deathrays
         }
         public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers)
         {
-            modifiers.Knockback *= 0;
+            if (WorldSavingSystem.MasochistModeReal)
+                modifiers.Knockback *= 0;
         }
         public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
