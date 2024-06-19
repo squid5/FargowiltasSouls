@@ -45,8 +45,10 @@ namespace FargowiltasSouls.Core.AccessoryEffectSystem
                 }
             }
 
+            /*
             if (!effect.IgnoresMutantPresence && effect.HasToggle && modPlayer.MutantPresence)
                 return false;
+            */
 
             if (effect.HasToggle)
             {
