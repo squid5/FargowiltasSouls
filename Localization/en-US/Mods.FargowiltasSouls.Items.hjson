@@ -874,7 +874,7 @@ NatureForce: {
 }
 
 ShadowForce: {
-	DisplayName: Shadow Force
+	DisplayName: Force of Death
 	Tooltip:
 		'''
 		Grants a shadow dash
@@ -914,7 +914,7 @@ SpiritForce: {
 }
 
 TerraForce: {
-	DisplayName: Terra Force
+	DisplayName: Force of Terra
 	Tooltip:
 		'''
 		[i:FargowiltasSouls/CopperEnchant] [i:FargowiltasSouls/TinEnchant] [i:FargowiltasSouls/IronEnchant] [i:FargowiltasSouls/LeadEnchant] [i:FargowiltasSouls/SilverEnchant] [i:FargowiltasSouls/TungstenEnchant] [i:FargowiltasSouls/ObsidianEnchant]    
