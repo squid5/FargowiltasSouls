@@ -74,7 +74,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Forces
         public override int ToggleItemType => ModContent.ItemType<ShadowForce>();
         public override void PostUpdateEquips(Player player)
         {
-            player.GetDamage(DamageClass.Generic) += MathHelper.Lerp(0, 0.25f, 1 - MathHelper.Clamp(player.velocity.Length() / 7f, 0, 1));
+            player.GetDamage(DamageClass.Generic) += MathHelper.Lerp(0, 0.4f, 1 - MathHelper.Clamp(player.velocity.Length() / 7f, 0, 1));
 
             
             if (Main.rand.NextBool((int)MathHelper.Lerp(7, 20, MathHelper.Clamp(player.velocity.Length() / 7f, 0, 1))) && player.velocity.Length() <= 7){
@@ -188,7 +188,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Forces
                     boom2.Spawn();
                 }
 
-                int proj = Projectile.NewProjectile(player.GetSource_EffectItem<ShadowForceDashEffect>(), player.Center, Vector2.Zero, ModContent.ProjectileType<ShadowDash>(), 2000, 3, player.whoAmI);
+                int proj = Projectile.NewProjectile(player.GetSource_EffectItem<ShadowForceDashEffect>(), player.Center, Vector2.Zero, ModContent.ProjectileType<ShadowDash>(), 5000, 3, player.whoAmI);
                 if (Main.netMode == NetmodeID.MultiplayerClient)
                     NetMessage.SendData(MessageID.SyncProjectile, number: proj);
             }

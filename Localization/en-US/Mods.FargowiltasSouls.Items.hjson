@@ -829,10 +829,12 @@ EarthForce: {
 	Tooltip:
 		'''
 		Not attacking charges up your weapons
-		While charged up, projectiles will split into three, weapons will fire faster,
-		And you inflict Earth Poison, which does a percentage of your weapons damage
+		Increased life regeneration and damage reduction the more charge is stored
+		Attack to consume charge
+		While charged up, projectiles will split into three and weapons will fire faster
+		While charged up you also inflict Earth Poison, which does a percentage of your weapons damage
+
 		Enemies take 4x damage from debuffs
-		While holding in charge, your life regeneration and damage reduction is increased.
 		'Gaia's blessing shines upon you'
 		'''
 	SaveOldTooltip:
@@ -879,7 +881,8 @@ ShadowForce: {
 		'''
 		Grants a shadow dash
 		Every 4 seconds, your next dash will envolope you in shade, making you invincible during the dash
-		Moving slowly increases your damage, up to 25% increased damage
+		Dashing through an enemy with the shade dash damages them and inflicts Marked for Death
+		Moving slowly increases your damage, up to 40%
 		'Dark, Darker, Yet Darker'
 		'''
 	SavingOldTooltip:
