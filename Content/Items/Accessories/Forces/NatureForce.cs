@@ -37,7 +37,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Forces
 
             player.AddEffect<CrimsonEffect>(Item);
 
-            float bonus = 3f * player.statLife / 50;
+            float bonus = 4f * player.statLife / 50;
             bonus /= 100; // percent to fraction
             player.GetDamage(DamageClass.Generic) += bonus;
 
@@ -45,7 +45,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Forces
         }
         public override void SafeModifyTooltips(List<TooltipLine> tooltips)
         {
-            float bonus = 3f * Main.LocalPlayer.statLife / 50;
+            float bonus = 4f * Main.LocalPlayer.statLife / 50;
             int i = tooltips.FindIndex(line => line.Name == "Tooltip4");
             if (i != -1)
                 tooltips[i].Text = string.Format(tooltips[i].Text, bonus);
@@ -62,8 +62,8 @@ namespace FargowiltasSouls.Content.Items.Accessories.Forces
     }
     public class NatureBeamEffect : AccessoryEffect
     {
-        public override Header ToggleHeader => Header.GetHeader<WillHeader>();
-        public override int ToggleItemType => ModContent.ItemType<WillForce>();
+        public override Header ToggleHeader => Header.GetHeader<NatureHeader>();
+        public override int ToggleItemType => ModContent.ItemType<NatureForce>();
         public override bool ExtraAttackEffect => true;
         public override bool IgnoresMutantPresence => true;
         public override void PostUpdateEquips(Player player)

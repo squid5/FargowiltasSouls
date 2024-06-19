@@ -126,10 +126,14 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
                 }
             }
         }
-
+        public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers)
+        {
+            if (WorldSavingSystem.MasochistModeReal)
+                target.longInvince = true;
+        }
         public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
-            if (BittenPlayer == -1)
+            if (WorldSavingSystem.MasochistModeReal && BittenPlayer == -1)
             {
                 BittenPlayer = target.whoAmI;
                 Projectile.netUpdate = true;
