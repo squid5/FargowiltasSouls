@@ -143,7 +143,10 @@ namespace FargowiltasSouls.Content.Projectiles.Deathrays
                 Main.LocalPlayer.velocity += Projectile.velocity.SafeNormalize(Vector2.Zero) * 1.2f;
             }
         }
-
+        public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers)
+        {
+            modifiers.Knockback *= 0;
+        }
         public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
             target.AddBuff(ModContent.BuffType<SmiteBuff>(), 60 * 30);
