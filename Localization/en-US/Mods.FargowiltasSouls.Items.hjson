@@ -859,7 +859,7 @@ NatureForce: {
 		[i:FargowiltasSouls/CrimsonEnchant] [i:FargowiltasSouls/MoltenEnchant] [i:FargowiltasSouls/RainEnchant] [i:FargowiltasSouls/FrostEnchant] [i:FargowiltasSouls/ChlorophyteEnchant] [i:FargowiltasSouls/ShroomiteEnchant] 
 		Heal back 50% of damage taken after not getting hit for 7 seconds, twice
 		Healing from any source fires nature beams at nearby enemies
-		+3% damage per 50 current life
+		+4% damage per 50 current life
 		Current damage bonus: +{0}%
 		'Tapped into every secret of the wilds'
 		'''
