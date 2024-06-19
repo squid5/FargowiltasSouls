@@ -1,4 +1,5 @@
 ﻿using FargowiltasSouls.Content.Buffs.Souls;
+using FargowiltasSouls.Content.Items.Accessories.Forces;
 using FargowiltasSouls.Content.Projectiles.Souls;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using FargowiltasSouls.Core.Toggler.Content;
@@ -77,6 +78,7 @@ Collect the bones to heal for 20 HP each
         public static void FossilRevive(Player player)
         {
             FargoSoulsPlayer modPlayer = player.FargoSouls();
+            bool spiritForce = modPlayer.ForceEffects.Contains(ModContent.ItemType<SpiritForce>());
 
             void Revive(int healAmount, int reviveCooldown)
             {
