@@ -122,13 +122,13 @@ Collect the bones to heal for 20 HP each
 
             if (modPlayer.Eternity)
             {
-                Revive(player.statLifeMax2 / 2 > 200 ? player.statLifeMax2 / 2 : 200, 10800);
-                FargoSoulsUtil.XWay(30, player.GetSource_Misc("FossilEnchant"), player.Center, ModContent.ProjectileType<FossilBone>(), 15, 0, 0);
+                Revive(player.statLifeMax2 / 2 > 300 ? player.statLifeMax2 / 2 : 300, 10800);
+                //FargoSoulsUtil.XWay(30, player.GetSource_Misc("FossilEnchant"), player.Center, ModContent.ProjectileType<FossilBone>(), 15, 0, 0);
             }
             else if (modPlayer.TerrariaSoul)
             {
-                Revive(200, 14400);
-                FargoSoulsUtil.XWay(25, player.GetSource_Misc("FossilEnchant"), player.Center, ModContent.ProjectileType<FossilBone>(), 15, 0, 0);
+                Revive(300, 14400);
+                //FargoSoulsUtil.XWay(25, player.GetSource_Misc("FossilEnchant"), player.Center, ModContent.ProjectileType<FossilBone>(), 15, 0, 0);
             }
             else
             {
