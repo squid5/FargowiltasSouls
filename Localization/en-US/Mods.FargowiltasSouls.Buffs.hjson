@@ -749,3 +749,8 @@ TimberBleedBuff: {
 	DisplayName: Timber Bleed Buff
 	Description: Mods.FargowiltasSouls.Buffs.TimberBleedBuff.Description
 }
+
+EarthPoison: {
+	DisplayName: Earth Poison
+	Description: Mods.FargowiltasSouls.Buffs.EarthPoison.Description
+}

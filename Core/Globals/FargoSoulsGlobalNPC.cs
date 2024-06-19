@@ -47,6 +47,8 @@ namespace FargowiltasSouls.Core.Globals
         public bool FirstTick;
         //        //debuffs
         public bool OriPoison;
+        public bool EarthPoison;
+        public int EarthDoTValue; //value to base Earth Poison DoT on.
         public bool SBleed;
         public bool TimberBleed;
         //        public bool Shock;
@@ -72,6 +74,7 @@ namespace FargowiltasSouls.Core.Globals
         public bool GodEater;
         public bool Suffocation;
         public int SuffocationTimer;
+        public bool DeathMarked;
         //        public bool Villain;
         public bool FlamesoftheUniverse;
         public bool Lethargic;
@@ -124,6 +127,7 @@ namespace FargowiltasSouls.Core.Globals
             Corrupted = false;
             CorruptedForce = false;
             OriPoison = false;
+            EarthPoison = false;
             Infested = false;
             Electrified = false;
             CurseoftheMoon = false;
@@ -133,6 +137,7 @@ namespace FargowiltasSouls.Core.Globals
             GodEater = false;
             Suffocation = false;
             Sublimation = false;
+            DeathMarked = false;
             //            //SnowChilled = false;
             Chilled = false;
             Smite = false;
@@ -628,7 +633,12 @@ namespace FargowiltasSouls.Core.Globals
                     Main.dust[d].noGravity = true;
                 }
             }
-
+            if (DeathMarked)
+            {
+                drawColor.R = (byte)(drawColor.R * 0.7f);
+                drawColor.G = (byte)(drawColor.G * 0.6f);
+                drawColor.B = (byte)(drawColor.B * 0.7f);
+            }
 
         }
         public override void PostDraw(NPC npc, SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
@@ -772,6 +782,17 @@ namespace FargowiltasSouls.Core.Globals
                 if (damage < 4)
                     damage = 4;
             }
+            if (EarthPoison)
+            {
+                int EarthDamage = EarthDoTValue;
+
+                if (npc.lifeRegen > 0)
+                    npc.lifeRegen = 0;
+
+                npc.lifeRegen -= EarthDamage;
+                if (damage < EarthDamage / 8)
+                    damage = EarthDamage / 8;
+            }
 
             if (Infested)
             {
@@ -905,7 +926,16 @@ namespace FargowiltasSouls.Core.Globals
             {
                 OrichalcumEffect.OriDotModifier(npc, modPlayer, ref damage);
             }
-
+            if (modPlayer.Player.HasEffect<EarthForceEffect>() && npc.lifeRegen < 0)
+            {
+                npc.lifeRegen *= 4;
+                damage *= 4;
+                if (npc.daybreak)
+                {
+                    npc.lifeRegen /= 2;
+                    damage /= 2;
+                }
+            }
             if (MagicalCurse && npc.lifeRegen < 0)
             {
                 npc.lifeRegen *= 2;
@@ -1180,6 +1210,7 @@ namespace FargowiltasSouls.Core.Globals
         public override void OnHitByProjectile(NPC npc, Projectile projectile, NPC.HitInfo hit, int damageDone)
         {
             OnHitByEither(npc, Main.player[projectile.owner], damageDone);
+            
         }
 
         // TODO: damageDone or hitInfo.Damage ?
@@ -1194,6 +1225,7 @@ namespace FargowiltasSouls.Core.Globals
                     Projectile.NewProjectile(npc.GetSource_OnHurt(player), npc.Center, Main.rand.NextVector2Circular(speed, speed), type, 0, 0f, Main.myPlayer, 1f);
                 }
             }
+            
 
             if (damageDone > 0 && player.HasEffect<NecroEffect>() && npc.boss)
             {
@@ -1252,7 +1284,8 @@ namespace FargowiltasSouls.Core.Globals
                 modifiers.ArmorPenetration += 10;
             if (Rotting)
                 modifiers.ArmorPenetration += 10;
-
+            if (DeathMarked)
+                modifiers.FinalDamage *= 1.15f;
             if (Smite)
             {
                 modifiers.FinalDamage *= 1.2f;
