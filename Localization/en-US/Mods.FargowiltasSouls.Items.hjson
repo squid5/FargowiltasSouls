@@ -923,6 +923,7 @@ TerraForce: {
 		[i:FargowiltasSouls/CopperEnchant] [i:FargowiltasSouls/TinEnchant] [i:FargowiltasSouls/IronEnchant] [i:FargowiltasSouls/LeadEnchant] [i:FargowiltasSouls/SilverEnchant] [i:FargowiltasSouls/TungstenEnchant] [i:FargowiltasSouls/ObsidianEnchant]    
 		Right Click to guard with your shield
 		Critical strikes sometimes fire a lightning bolt that explodes on hit and inflicts a stronger Lead Poisoning
+		Lightning bolts are less frequent if you got hit recently
 		Successful parries instantly fire a lightning bolt 
 		You take 60% less damage over time
 		50% chance to not consume each item on first craft and you attract items from a larger range (works in vanity and inventory)
@@ -1817,6 +1818,7 @@ TerrariaSoul: {
 	Tooltip:
 		'''
 		Critical strikes occasionally fire moons that explode into Force Boosters on hit
+		Moons are less frequent if you got hit recently
 		If you reach zero HP you will revive with 300 HP and self-cleanse debuffs
 		Increases your movement speed and acceleration, and decreases your momentum
 		Bestiary and banner entries complete faster
@@ -3424,6 +3426,69 @@ StardustBooster: {
 VortexBooster: {
 	DisplayName: Vortex Booster
 	Tooltip: ""
-	Activate: +{0}% crit
-	Deactivate: -{0}% crit
+	Activate: +{0}% crit chance
+	Deactivate: -{0}% crit chance
+}
+
+CosmosBooster: {
+	DisplayName: Cosmos Booster
+	Tooltip: ""
+	Activate: +{0}% crit damage
+	Deactivate: -{0}% crit damage
+}
+
+DeathBooster: {
+	DisplayName: Death Booster
+	Tooltip: ""
+	Activate: +{0} armor pen
+	Deactivate: -{0} armor pen
+}
+
+EarthBooster: {
+	DisplayName: Earth Booster
+	Tooltip: ""
+	Activate: +{0}% DR
+	Deactivate: -{0}% DR
+}
+
+LifeBooster: {
+	DisplayName: Life Booster
+	Tooltip: ""
+	Activate: +{0} life regen
+	Deactivate: -{0} life regen
+}
+
+NatureBooster: {
+	DisplayName: Nature Booster
+	Tooltip: ""
+	Activate: +{0} defense
+	Deactivate: -{0} defense
+}
+
+SpiritBooster: {
+	DisplayName: Spirit Booster
+	Tooltip: ""
+	Activate: +{0} mana regen
+	Deactivate: -{0} mana regen
+}
+
+TerraBooster: {
+	DisplayName: Terra Booster
+	Tooltip: ""
+	Activate: +{0}% crit chance
+	Deactivate: -{0}% crit chance
+}
+
+TimberBooster: {
+	DisplayName: Timber Booster
+	Tooltip: ""
+	Activate: +{0}% damage
+	Deactivate: -{0}% damage
+}
+
+WillBooster: {
+	DisplayName: Will Booster
+	Tooltip: ""
+	Activate: +{0} flat damage
+	Deactivate: -{0} flat damage
 }

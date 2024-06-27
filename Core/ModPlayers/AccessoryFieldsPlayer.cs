@@ -61,7 +61,9 @@ namespace FargowiltasSouls.Core.ModPlayers
         public int LifeBeetleDuration;
         public int NatureHealCounter;
         public int NatureHealCD;
-        
+        public int TerrariaSoulProcCD;
+
+        public int TimeSinceHurt;
 
         //force of timber
         public bool MahoganyCanUseDR;
