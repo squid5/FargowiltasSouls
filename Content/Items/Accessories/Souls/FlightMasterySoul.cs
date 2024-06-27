@@ -42,9 +42,6 @@ namespace FargowiltasSouls.Content.Items.Accessories.Souls
                 else if (Player.velocity.Y < -0.1f)
                     Player.velocity.Y = -0.1f;
             }
-
-            //grav
-            player.AddEffect<MasoGravEffect>(item);
         }
         public override void AddRecipes()
         {
