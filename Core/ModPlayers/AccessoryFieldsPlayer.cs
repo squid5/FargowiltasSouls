@@ -55,6 +55,7 @@ namespace FargowiltasSouls.Core.ModPlayers
 
         // new forces
         public int TimberBranchCD;
+        public int TimberSwingCD;
         public int TerraProcCD;
         public int CosmosMoonTimer;
         public bool LifeForceActive;

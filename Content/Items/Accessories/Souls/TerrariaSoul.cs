@@ -26,6 +26,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Souls
             ModContent.ItemType<EarthForce>(),
             ModContent.ItemType<NatureForce>(),
             ModContent.ItemType<LifeForce>(),
+            ModContent.ItemType<ShadowForce>(),
             ModContent.ItemType<SpiritForce>(),
             ModContent.ItemType<WillForce>(),
             ModContent.ItemType<CosmoForce>()

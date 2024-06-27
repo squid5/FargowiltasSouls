@@ -908,7 +908,7 @@ SpiritForce: {
 		[i:FargowiltasSouls/FossilEnchant] [i:FargowiltasSouls/ForbiddenEnchant] [i:FargowiltasSouls/HallowEnchant] [i:FargowiltasSouls/AncientHallowEnchant] [i:FargowiltasSouls/TikiEnchant] [i:FargowiltasSouls/SpectreEnchant]
 		Double tap down to call an ancient tornado that scales with magic and summon damage
 		The tornado follows your mouse and releases damaging orbs
-		Any projectiles shot through your tornado gain 60% damage
+		Any projectiles shot through your tornado gain 30% damage
 		Healing potions restore more health but take effect over time
 		If you reach zero HP you will revive with 200 HP, self-cleanse debuffs, and spawn healing bones
 		Increased whip range, whip your summons to make them work harder

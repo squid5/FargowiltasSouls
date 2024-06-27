@@ -40,7 +40,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Cosmos
 
             Projectile.penetrate = 1;
             Projectile.usesLocalNPCImmunity = true;
-            Projectile.localNPCHitCooldown = 60;
+            Projectile.localNPCHitCooldown = -1;
 
             Projectile.scale = 0f;
             Projectile.Opacity = 0f;
