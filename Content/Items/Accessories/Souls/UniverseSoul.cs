@@ -75,8 +75,6 @@ namespace FargowiltasSouls.Content.Items.Accessories.Souls
 
             player.lifeRegen += 2;
 
-            player.AddEffect<SniperScopeEffect>(Item);
-
             player.manaFlower = true;
             player.manaMagnet = true;
             player.magicCuffs = true;

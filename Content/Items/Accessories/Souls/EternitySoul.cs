@@ -160,7 +160,6 @@ namespace FargowiltasSouls.Content.Items.Accessories.Souls
             player.yoyoGlove = true;
             player.yoyoString = true;
 
-            player.AddEffect<SniperScopeEffect>(Item);
             player.manaFlower = true;
             player.manaMagnet = true;
             player.magicCuffs = true;
