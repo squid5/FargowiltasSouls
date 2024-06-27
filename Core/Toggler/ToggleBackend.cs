@@ -260,7 +260,6 @@ namespace FargowiltasSouls.Core.Toggler
             player.SetToggleValue<MeteorMomentumEffect>(true);
             player.SetToggleValue<FlightMasteryInsignia>(true);
             player.SetToggleValue<FlightMasteryGravity>(true);
-            player.SetToggleValue<UniverseSpeedEffect>(true);
             player.SetToggleValue<PaladinShieldEffect>(true);
             player.SetToggleValue<ShimmerImmunityEffect>(true);
             player.SetToggleValue<MasoAeolusFrog>(true);
