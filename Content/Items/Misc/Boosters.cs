@@ -180,7 +180,7 @@ namespace FargowiltasSouls.Content.Items.Misc
         public override void PickupEffect(BoosterPlayer boosterPlayer)
         {
             if (boosterPlayer.CosmosTimer <= 0)
-                CombatText.NewText(boosterPlayer.Player.Hitbox, Color.Black, Language.GetTextValue("Mods.FargowiltasSouls.Items.CosmosBooster.Activate", 20), true);
+                CombatText.NewText(boosterPlayer.Player.Hitbox, Color.Black, Language.GetTextValue("Mods.FargowiltasSouls.Items.CosmosBooster.Activate", 10), true);
             boosterPlayer.CosmosTimer = TerrariaDuration;
         }
     }

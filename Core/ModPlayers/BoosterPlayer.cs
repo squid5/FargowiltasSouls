@@ -127,7 +127,7 @@ namespace FargowiltasSouls.Core.ModPlayers
             if (WillTimer == 1)
                 CombatText.NewText(Player.Hitbox, Color.Gold, Language.GetTextValue("Mods.FargowiltasSouls.Items.WillBooster.Deactivate", 25), true);
             if (CosmosTimer == 1)
-                CombatText.NewText(Player.Hitbox, Color.Black, Language.GetTextValue("Mods.FargowiltasSouls.Items.CosmosBooster.Deactivate", 20), true);
+                CombatText.NewText(Player.Hitbox, Color.Black, Language.GetTextValue("Mods.FargowiltasSouls.Items.CosmosBooster.Deactivate", 10), true);
         }
         public override void UpdateLifeRegen()
         {
@@ -141,7 +141,7 @@ namespace FargowiltasSouls.Core.ModPlayers
             if (WillTimer > 0)
                 modifiers.FinalDamage.Base += 25;
             if (CosmosTimer > 0)
-                modifiers.CritDamage += 0.2f;
+                modifiers.CritDamage += 0.1f;
             base.ModifyHitNPC(target, ref modifiers);
         }
     }
