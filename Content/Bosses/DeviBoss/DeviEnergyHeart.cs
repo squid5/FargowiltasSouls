@@ -28,7 +28,7 @@ namespace FargowiltasSouls.Content.Bosses.DeviBoss
             CooldownSlot = 1;
 
             Projectile.alpha = 150;
-            Projectile.timeLeft = 90;
+            Projectile.timeLeft = 80;
 
             Projectile.FargoSouls().DeletionImmuneRank = 1;
         }
@@ -56,6 +56,7 @@ namespace FargowiltasSouls.Content.Bosses.DeviBoss
             float speed = Projectile.velocity.Length();
             speed += Projectile.ai[1];
             Projectile.velocity = Vector2.Normalize(Projectile.velocity) * speed;
+            Main.NewText(Projectile.timeLeft);
         }
 
         public override void OnKill(int timeLeft)
