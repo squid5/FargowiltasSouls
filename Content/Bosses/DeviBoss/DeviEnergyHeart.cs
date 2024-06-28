@@ -56,7 +56,6 @@ namespace FargowiltasSouls.Content.Bosses.DeviBoss
             float speed = Projectile.velocity.Length();
             speed += Projectile.ai[1];
             Projectile.velocity = Vector2.Normalize(Projectile.velocity) * speed;
-            Main.NewText(Projectile.timeLeft);
         }
 
         public override void OnKill(int timeLeft)
