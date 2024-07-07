@@ -57,9 +57,9 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                     Projectile.frame = 0;
             }
 
-            if (ProjTimer > 30f)
+            if (ProjTimer > 15f)
             {
-                if (ProjTimer == 31f)
+                if (ProjTimer == 16f)
                     PlayerIndex = Player.FindClosest(Projectile.Center, 0, 0);
 
                 if (Main.player[(int)PlayerIndex].active && !Main.player[(int)PlayerIndex].dead)
