@@ -620,6 +620,8 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                 if (AI_Timer == 5)
                 {
                     SoundEngine.PlaySound(SoundID.Item29 with { Volume = 1.5f, Pitch = -0.5f }, NPC.Center);
+                    RuneFormation = Formations.Circle;
+                    RuneFormationTimer = 0;
                 }
                 if (AI_Timer < 60)
                 {
@@ -994,6 +996,23 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
             const int ExpandTime = 175;
             int AttackDuration = extendedAttack ? 5 : 390 + 80; //change this depending on phase
 
+            if (NPC.Distance(Player.Center) > 2000)
+                FlyingState(1.5f);
+            else
+                NPC.velocity *= 0.95f;
+
+            if (RuneFormation != Formations.Circle)
+            {
+                RuneFormation = Formations.Circle;
+                RuneFormationTimer = 0;
+            }
+
+            if (RuneFormationTimer < FormationTime)
+            {
+                AI_Timer--;
+                return;
+            }
+
             if (AttackF1)
             {
                 AttackF1 = false;
@@ -1035,10 +1054,6 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
 
             }
 
-            if (NPC.Distance(Player.Center) > 2000)
-                FlyingState(1.5f);
-            else
-                NPC.velocity *= 0.95f;
 
             if (AI_Timer < ExpandTime) //expand
             {
@@ -1150,7 +1165,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
 
             int startup = FormationTime + (WorldSavingSystem.MasochistModeReal ? 40 : WorldSavingSystem.EternityMode ? 50 : 60);
 
-            int explosionTime = 75;
+            int explosionTime = 60;
 
             if (AttackF1)
             {
@@ -1225,7 +1240,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
             */
             if (AI_Timer >= startup + explosionTime)
                 DrawRunes = true;
-            if (AI_Timer > startup + explosionTime + 20)
+            if (AI_Timer > startup + explosionTime + 10)
             {
                 if (RuneFormation != Formations.Circle)
                 {
@@ -1249,6 +1264,9 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
             {
                 AttackF1 = false;
                 NPC.netUpdate = true;
+
+                RuneFormation = Formations.Circle;
+                RuneFormationTimer = 0;
             }
 
             /*
@@ -1377,15 +1395,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
             float end = WorldSavingSystem.EternityMode ? 200f : 220f;
             if (AI_Timer >= end)
             {
-                if (RuneFormation != Formations.Circle)
-                {
-                    RuneFormation = Formations.Circle;
-                    RuneFormationTimer = 0;
-                }
-                else if (RuneFormationTimer >= FormationTime)
-                {
-                    StateReset();
-                }
+                StateReset();
             }
         }
 
@@ -1479,21 +1489,13 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                 NPC.velocity *= 0.96f;
                 Vector2 desiredPos = Player.Center + Player.DirectionTo(NPC.Center) * 250;
                 FlyingState(1f, false, desiredPos, orient: true);
-                if (RuneFormation != Formations.Circle)
-                {
-                    RuneFormation = Formations.Circle;
-                    RuneFormationTimer = 0;
-                }
-                else if (RuneFormationTimer >= FormationTime)
-                {
 
-                    NPC.velocity.X = 0f;
-                    NPC.velocity.Y = 0f;
-                    HitPlayer = false;
-                    Flying = true;
-                    Charging = false;
-                    StateReset();
-                }
+                NPC.velocity.X = 0f;
+                NPC.velocity.Y = 0f;
+                HitPlayer = false;
+                Flying = true;
+                Charging = false;
+                StateReset();
             }
         }
         public void PixieCharge()
@@ -1546,22 +1548,15 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                 NPC.velocity *= 0.97f;
                 Vector2 desiredPos = Player.Center + Player.DirectionTo(NPC.Center) * 250;
                 FlyingState(1f, false, desiredPos, orient: true);
-                if (RuneFormation != Formations.Circle)
+
+                foreach (Projectile p in Main.projectile.Where(p => p.Alive()))
                 {
-                    RuneFormation = Formations.Circle;
-                    RuneFormationTimer = 0;
+                    if (p.type == ModContent.ProjectileType<LifeHomingProj>())
+                        p.ai[2] = 1;
                 }
-                else if (RuneFormationTimer >= FormationTime)
-                {
-                    foreach (Projectile p in Main.projectile.Where(p => p.Alive()))
-                    {
-                        if (p.type == ModContent.ProjectileType<LifeHomingProj>())
-                            p.ai[2] = 1;
-                    }
-                    Flying = true;
-                    Charging = false;
-                    StateReset();
-                }
+                Flying = true;
+                Charging = false;
+                StateReset();
                 return;
             }
             GunRotation = NPC.rotation;
@@ -1743,7 +1738,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                 Charging = false;
                 
             }
-            if (AI_Timer >= StartTime + 150 + FormationTime + 25)
+            if (AI_Timer >= StartTime + 150 + FormationTime + 20)
             {
                 HitPlayer = false;
                 StateReset();
@@ -1853,6 +1848,9 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
 
                 AttackF1 = false;
                 NPC.netUpdate = true;
+
+                RuneFormation = Formations.Circle;
+                RuneFormationTimer = 0;
             }
 
             if (NPC.Distance(Player.Center) > 2000)
