@@ -635,10 +635,10 @@ namespace FargowiltasSouls.Core.ModPlayers
                 {
                     //modify attack speed so it rounds up
                     int useTimeRoundUp = (int)Math.Round(useTime / AttackSpeed, MidpointRounding.ToPositiveInfinity);
-                    Main.NewText($"pre {useTime / AttackSpeed}, target {useTimeRoundUp}");
+                    //Main.NewText($"pre {useTime / AttackSpeed}, target {useTimeRoundUp}");
                     while (useTime / AttackSpeed < useTimeRoundUp)
                         AttackSpeed -= .01f; //small increments to avoid skipping past any integers
-                    Main.NewText($"result {useTime / AttackSpeed}");
+                    //Main.NewText($"result {useTime / AttackSpeed}");
 
                     float newUseTime = useTime / AttackSpeed;
                     UseTimeDebt += newUseTime - originalUseTime; //track the sub-1 unit "debt" of shorter useTime
