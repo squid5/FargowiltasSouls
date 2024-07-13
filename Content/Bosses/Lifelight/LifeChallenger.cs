@@ -38,7 +38,11 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
     public class LifeChallenger : ModNPC, IPixelatedPrimitiveRenderer
     {
         #region Variables
-
+        public static readonly SoundStyle ScreechSound1 = new SoundStyle($"FargowiltasSouls/Assets/Sounds/LifelightScreech1") with { Volume = 1.5f};
+        public static readonly SoundStyle DashSound1 = new SoundStyle($"FargowiltasSouls/Assets/Sounds/LifelightDash") with { Volume = 1.5f };
+        public static readonly SoundStyle DashSound2 = new SoundStyle($"FargowiltasSouls/Assets/Sounds/LifelightPixieDash") with { Volume = 1.5f};
+        public static readonly SoundStyle RuneSound1 = new SoundStyle($"FargowiltasSouls/Assets/Sounds/LifelightRuneSound") with { Volume = 1.5f };
+        public static readonly SoundStyle TelegraphSound1 = new SoundStyle($"FargowiltasSouls/Assets/Sounds/LifelightShotPrep") with { Volume = 1.5f};
 
         const int DefaultHeight = 200;
         const int DefaultWidth = 200;
@@ -547,7 +551,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                 if (WorldSavingSystem.EternityMode && !WorldSavingSystem.DownedBoss[(int)WorldSavingSystem.Downed.Lifelight] && FargoSoulsUtil.HostCheck)
                     Item.NewItem(NPC.GetSource_Loot(), Main.player[NPC.target].Hitbox, ModContent.ItemType<FragilePixieLamp>());
 
-                SoundEngine.PlaySound(SoundID.ScaryScream, NPC.Center);
+                SoundEngine.PlaySound(ScreechSound1, NPC.Center);
                 SoundEngine.PlaySound(SoundID.Item62, NPC.Center);
 
                 for (int i = 0; i < 150; i++)
@@ -628,7 +632,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
 
                 if (AI_Timer == 5)
                 {
-                    SoundEngine.PlaySound(SoundID.Item29 with { Volume = 1.5f, Pitch = -0.5f }, NPC.Center);
+                    SoundEngine.PlaySound(ScreechSound1 with { Pitch = -0.5f }, NPC.Center);
                     RuneFormation = Formations.Circle;
                     RuneFormationTimer = 0;
                 }
@@ -772,12 +776,12 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
             if (!phaseTransition)
                 endTime = 110;
 
-            if (AI_Timer < 240 - FormationTime)
-                AI_Timer = 240 - FormationTime;
+            if (AI_Timer < 220 - FormationTime)
+                AI_Timer = 220 - FormationTime;
 
             if (AI_Timer < 280f)
             {
-                if (AI_Timer < 240f)
+                if (AI_Timer < 220f)
                 {
                     LockVector1 = NPC.DirectionTo(player.Center);
                     if (PyramidPhase == 0)
@@ -795,7 +799,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                     RuneFormation = Formations.Gun;
 
                 }
-                else if (AI_Timer == 240f)
+                else if (AI_Timer == 220f)
                 {
                     LockVector1 = NPC.DirectionTo(player.Center);
                     RotationDirection = Math.Sign(FargoSoulsUtil.RotationDifference(NPC.DirectionTo(player.Center + player.velocity), NPC.DirectionTo(player.Center)));
@@ -819,8 +823,8 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
             {
                 AttackF1 = false;
 
-                //SoundEngine.PlaySound(SoundID.Zombie104 with { Volume = 0.5f }, NPC.Center);
-                SoundEngine.PlaySound(SoundID.Zombie104 with { Volume = 0.5f }, NPC.Center);
+                string extra = !phaseTransition ? "Short" : "";
+                SoundEngine.PlaySound(new SoundStyle($"FargowiltasSouls/Assets/Sounds/LifelightDeathray{extra}") with { Volume = 3f}, NPC.Center);
                 if (FargoSoulsUtil.HostCheck)
                 {
                     Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, LockVector1,
@@ -1043,7 +1047,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
             {
                 AttackF1 = false;
                 NPC.netUpdate = true;
-                SoundEngine.PlaySound(SoundID.Item84, NPC.Center);
+                SoundEngine.PlaySound(RuneSound1, NPC.Center);
                 if (PyramidPhase == 0)
                 {
                     PyramidTimer = 0;
@@ -1139,7 +1143,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
 
             if (AI_Timer == ExpandTime + AttackDuration) //noise
             {
-                SoundEngine.PlaySound(SoundID.Item84, NPC.Center);
+                SoundEngine.PlaySound(RuneSound1, NPC.Center);
             }
             if (AI_Timer >= ExpandTime + AttackDuration) //retract
             {
@@ -1251,7 +1255,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
             }
             if (AI_Timer == startup) // put hitboxes and eventual explosion
             {
-                SoundEngine.PlaySound(SoundID.Item84, NPC.Center);
+                SoundEngine.PlaySound(RuneSound1, NPC.Center);
 
                 NPC.netUpdate = true;
                 for (int i = 0; i < RuneCount; i++)
@@ -1402,7 +1406,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                 //Rampup = 1;
                 RuneFormation = Formations.GunCloser;
                 RuneFormationTimer = 0;
-                SoundEngine.PlaySound(SoundID.Zombie100, NPC.Center);
+                SoundEngine.PlaySound(TelegraphSound1, NPC.Center);
                 GunRotation = NPC.SafeDirectionTo(Player.Center).ToRotation();
 
                 if (WorldSavingSystem.MasochistModeReal)
@@ -1475,7 +1479,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                 LockVector3 = NPC.Center;
                 AttackF1 = false;
                 NPC.netUpdate = true;
-                SoundEngine.PlaySound(SoundID.ScaryScream, NPC.Center);
+                SoundEngine.PlaySound(ScreechSound1, NPC.Center);
 
                 RuneFormationTimer = 0;
                 RuneFormation = Formations.Shield;
@@ -1511,7 +1515,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                 }
 
                 if (AI_Timer == StartTime + 1) // sfx
-                    SoundEngine.PlaySound(SoundID.ForceRoarPitched, NPC.Center);
+                    SoundEngine.PlaySound(DashSound1, NPC.Center);
                 
 
                 if (AI_Timer > StartTime * 0.5f) // movement
@@ -1623,7 +1627,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                 AttackF1 = false;
                 NPC.netUpdate = true;
                 RandomOffset = 0;
-                SoundEngine.PlaySound(SoundID.ScaryScream, NPC.Center);
+                SoundEngine.PlaySound(ScreechSound1, NPC.Center);
                 NPC.rotation = NPC.DirectionTo(Player.Center).ToRotation() + MathHelper.PiOver2;
                 LockVector3 = NPC.Center;
 
@@ -1712,7 +1716,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
 
             if (AI_Timer == StartTime) //charge
             {
-                SoundEngine.PlaySound(SoundID.ForceRoarPitched, NPC.Center);
+                SoundEngine.PlaySound(DashSound1, NPC.Center);
 
                 float initialSpeed = 10f;
                 NPC.velocity = atPlayer * initialSpeed;
@@ -1762,7 +1766,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                 NPC.netUpdate = true;
                 Flying = false;
 
-                SoundEngine.PlaySound(SoundID.ScaryScream, NPC.Center);
+                SoundEngine.PlaySound(ScreechSound1, NPC.Center);
 
                 RuneFormation = Formations.Shield;
                 RuneFormationTimer = 0;
@@ -1811,7 +1815,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
             GunRotation = NPC.rotation - MathHelper.PiOver2;
             if (AI_Timer == StartTime)
             {
-                SoundEngine.PlaySound(SoundID.ForceRoarPitched, NPC.Center);
+                SoundEngine.PlaySound(DashSound1, NPC.Center);
                 HitPlayer = true;
                 float chargeSpeed2 = 55f;
                 NPC.velocity.Y = chargeSpeed2;
@@ -1913,7 +1917,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                 NPC.netUpdate = true;
                 Flying = true;
 
-                SoundEngine.PlaySound(SoundID.ScaryScream, NPC.Center);
+                SoundEngine.PlaySound(ScreechSound1, NPC.Center);
 
                 RuneFormation = Formations.Spear;
                 RuneFormationTimer = 0;
@@ -1954,7 +1958,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
             else // rest of attack
             {
                 if (AI_Timer == StartTime)
-                    SoundEngine.PlaySound(SoundID.ForceRoarPitched, NPC.Center);
+                    SoundEngine.PlaySound(DashSound1, NPC.Center);
 
                 NPC.velocity *= 0.965f;
                 float rotationIncrement = WorldSavingSystem.EternityMode ? 0.005f : 0f;

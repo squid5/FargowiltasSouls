@@ -69,8 +69,8 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                 Projectile.width = Projectile.height = ExplosionSize;
                 Projectile.Center = Projectile.position;
                 SoundEngine.PlaySound(SoundID.Item14, Projectile.Center);
+                SoundEngine.PlaySound(LifeChallenger.RuneSound1 with { PitchRange = (-0.6f, -0.4f) }, Projectile.Center);
 
-                
                 for (int j = 0; j < 32; j++)
                 {
                     Vector2 offset = Main.rand.NextVector2Circular(Projectile.width / 2, Projectile.height / 2);
