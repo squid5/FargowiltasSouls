@@ -28,7 +28,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
             Projectile.scale = 1;
             Projectile.timeLeft = 6000;
         }
-        public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) //line collision, needed because of the speed they move at when creating the arena, to form a solid wall
+        public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) 
         {
             return LumUtils.CircularHitboxCollision(Projectile.Center, projHitbox.Width / 2, targetHitbox);
         }

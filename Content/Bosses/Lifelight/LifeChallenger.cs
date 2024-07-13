@@ -47,14 +47,14 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
         private bool Flying = false;
         private bool CustomRotation = false;
 
-        private bool HitPlayer = false;
+        public bool HitPlayer = false;
         private bool AttackF1;
         private int dustcounter;
 
         public Vector2 LockVector1 = new(0, 0);
-        private Vector2 LockVector2 = new(0, 0);
-        private Vector2 LockVector3 = new(0, 0);
-        private Vector2 AuraCenter = new(0, 0);
+        public Vector2 LockVector2 = new(0, 0);
+        public Vector2 LockVector3 = new(0, 0);
+        public Vector2 AuraCenter = new(0, 0);
 
         private double rotspeed = 0;
         public double rot = 0;
@@ -77,25 +77,18 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
 
 
         public int RuneFormation;
-        public int InternalRuneFormation;
+        public int OldRuneFormation;
         public int RuneFormationTimer;
+
         public const int FormationTime = 60;
         public float GunRotation = 0;
-        public bool Deathraying = false;   
-        public Vector2 GunCircleCenter(float lerp) => NPC.Center + GunRotation.ToRotationVector2() * DefaultRuneDistance * (CloserGun ? 0.15f : 0.9f) * lerp;
-        public bool CloserGun
-        {
-            get
-            {
-                return State == (float)States.ShotBarrage;
-            }
-        }
+        public Vector2 GunCircleCenter(float lerp) => NPC.Center + GunRotation.ToRotationVector2() * DefaultRuneDistance * (RuneFormation == Formations.GunCloser ? 0.15f : 0.9f) * lerp;
         public float FormationLerp
         {
             get
             {
                 float lerp = Math.Clamp((float)RuneFormationTimer / FormationTime, 0, 1);
-                return RuneFormation == Formations.Circle ? 1 - lerp : lerp;
+                return lerp;
             }
         }
 
@@ -106,6 +99,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
             public const int Gun = 2;
             public const int Scattered = 3;
             public const int Spear = 4;
+            public const int GunCloser = 5;
         }
 
         public Vector2[] CustomRunePositions = new Vector2[RuneCount];
@@ -164,7 +158,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
         {
             get
             {
-                List<States> attacks = 
+                List<States> attacks =
                     [
                     States.RuneExpand,
                     States.RuneScatter,
@@ -177,14 +171,22 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
         }
         public List<States> ChargeAttacks =>
         [
-            States.Charge,  
+            States.Charge,
             States.PixieCharge
         ];
-        public List<States> PlungeAttacks =>
-        [
-            States.Plunge,
-            States.RuneSpear,
-        ];
+        public List<States> PlungeAttacks
+        {
+            get
+            {
+                List<States> attacks =
+                    [
+                        States.RuneSpear,
+                    ];
+                if (!PhaseOne || WorldSavingSystem.MasochistModeReal)
+                    attacks.Add(States.Plunge);
+                return attacks;
+            }
+        }
         public List<States> StrongAttacks =>
         [
             States.CrystallineCongregation
@@ -317,6 +319,8 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
             Main.time = 27000; //noon
             Main.dayTime = true;
             Main.LocalPlayer.ZoneHallow = true;
+            Main.StopRain();
+            Main.cloudAlpha = 0;
 
             NPC.defense = NPC.defDefense;
             NPC.chaseable = true;
@@ -324,8 +328,9 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
             NPC.dontTakeDamage = false;
             Flying = false;
             CustomRotation = false;
-            Deathraying = false;
 
+            if (RuneFormationTimer >= FormationTime)
+                OldRuneFormation = RuneFormation;
             if (RuneFormationTimer <= FormationTime)
                 RuneFormationTimer++;
 
@@ -367,7 +372,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
             PyramidTimer++;
             //rotation
             BodyRotation += RPS * MathHelper.TwoPi / 60f; //first number is rotations/second
-            if (InternalRuneFormation == Formations.Gun) // faster
+            if (RuneFormation == Formations.Gun || OldRuneFormation == Formations.Gun) // faster
             {
                 BodyRotation += FormationLerp * 0.25f * MathHelper.TwoPi / 60f;
             }
@@ -506,7 +511,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                         NPC.rotation = 0f;
                     else
                         NPC.rotation = NPC.velocity.ToRotation() + MathHelper.Pi / 2;
-                    GunRotation = NPC.rotation;
+                    GunRotation = NPC.rotation - MathHelper.PiOver2;
                 }
                 else if (!Flying) //standard upright orientation
                 {
@@ -602,7 +607,6 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
             useDR = true;
             DoAura = true;
             NPC.velocity *= 0.95f;
-            Deathraying = true;
 
             NPC.ai[3] = 0; //no periodic nuke
 
@@ -616,6 +620,11 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                 {
                     RPS = 0.2f;
                 }
+
+                if (AI_Timer < 120)
+                    FlyingState();
+                else
+                    NPC.velocity *= 0.96f;
 
                 if (AI_Timer == 5)
                 {
@@ -753,11 +762,15 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
             Player player = Main.player[NPC.target];
             NPC.velocity *= 0.9f;
             HitPlayer = true;
-            Deathraying = true;
+            Flying = false;
+            Charging = false;
 
             //for a starting time, make it fade in, then make it spin faster and faster up to a max speed
             const int fadeintime = 10;
             int endTime = 60 * 3;
+
+            if (!phaseTransition)
+                endTime = 110;
 
             if (AI_Timer < 240 - FormationTime)
                 AI_Timer = 240 - FormationTime;
@@ -785,7 +798,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                 else if (AI_Timer == 240f)
                 {
                     LockVector1 = NPC.DirectionTo(player.Center);
-                    RotationDirection = Math.Sign(FargoSoulsUtil.RotationDifference(player.Center + player.velocity, player.Center));
+                    RotationDirection = Math.Sign(FargoSoulsUtil.RotationDifference(NPC.DirectionTo(player.Center + player.velocity), NPC.DirectionTo(player.Center)));
                     if (RotationDirection == 0)
                         RotationDirection = 1;
                     NPC.netUpdate = true;
@@ -827,6 +840,16 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                 NPC.netUpdate = true;
                 rotspeed = 0;
                 rot = 0;
+
+                if (!phaseTransition)
+                {
+                    if (WorldSavingSystem.MasochistModeReal)
+                    {
+                        SoundEngine.PlaySound(SoundID.Item91, NPC.Center);
+                        if (FargoSoulsUtil.HostCheck)
+                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.DirectionTo(player.Center).RotatedBy(MathF.PI * 0.75f * (Main.rand.NextBool() ? 1 : -1)) * 10f, ModContent.ProjectileType<LifeNuke>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), 3f, Main.myPlayer, 32f, 0);
+                    }
+                }
             }
             GunRotation = LockVector1.RotatedBy(rot).ToRotation();
             if (RotationDirection == 0)
@@ -836,10 +859,13 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
             }
             if (LaserTimer >= fadeintime && LaserTimer < endTime)
             {
-                float maxSpeed = 1.5f;
+                float maxSpeed = 1.3f;
                 if (rotspeed < maxSpeed)
                 {
-                    rotspeed += maxSpeed / 120;
+                    float increment = maxSpeed / 100f;
+                    if (!phaseTransition)
+                        increment = maxSpeed / 35f;
+                    rotspeed += increment;
                 }
                 else
                 {
@@ -875,8 +901,10 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                 RuneFormation = Formations.Circle;
                 RuneFormationTimer = 0;
             }
-            if (LaserTimer > endTime && PyramidPhase == 0 && RuneFormationTimer >= FormationTime) //after shell crack animation and rune reformation
+            if (LaserTimer > endTime)
             {
+                rotspeed = 0;
+                rot = 0;
                 if (phaseTransition)
                 {
                     GoPhase2();
@@ -981,8 +1009,6 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
         #region Attacks
         public void RuneExpand()
         {
-            bool extendedAttack = true;  // Whether the attack should use the extended version. Currently unused; was previously Phase 2 variant, but precision attacks now are identical in phase 1 and 2, and instead are followed by the deathray.
-            // actually it's extended if this is true and not the other way around
 
             ref float ExtraShots = ref NPC.ai[3];
             ref float RandomAngle = ref NPC.ai[2];
@@ -994,7 +1020,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
             NPC.localAI[2] = RuneCount;
 
             const int ExpandTime = 175;
-            int AttackDuration = extendedAttack ? 5 : 390 + 80; //change this depending on phase
+            int AttackDuration = 5; //change this depending on phase
 
             if (NPC.Distance(Player.Center) > 2000)
                 FlyingState(1.5f);
@@ -1034,23 +1060,25 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
 
                     if (FargoSoulsUtil.HostCheck)
                         Projectile.NewProjectile(NPC.GetSource_FromThis(), runePos, Vector2.Zero, ModContent.ProjectileType<LifeRuneHitbox>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), 3f, Main.myPlayer, NPC.whoAmI, i);
+
                 }
-                if (!extendedAttack)
+
+                if (WorldSavingSystem.MasochistModeReal)
                 {
-                    Flying = false;
-                    NPC.velocity = Vector2.Zero;
-                    //decrease size to size of triangle
-                    NPC.position = NPC.Center;
-                    NPC.Size = new Vector2(DefaultChunkDistance * 2, DefaultChunkDistance * 2);
-                    NPC.Center = NPC.position;
+                    SoundEngine.PlaySound(SoundID.Item91, NPC.Center);
+                    if (FargoSoulsUtil.HostCheck)
+                        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.DirectionTo(Player.Center).RotatedBy(MathF.PI * 0.4f * (Main.rand.NextBool() ? 1 : -1)) * 10f, ModContent.ProjectileType<LifeNuke>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), 3f, Main.myPlayer, 32f, 0);
                 }
-                else //PhaseOne
-                {
-                    //decrease size to size of triangle
-                    NPC.position = NPC.Center;
-                    NPC.Size = new Vector2(DefaultChunkDistance * 2, DefaultChunkDistance * 2);
-                    NPC.Center = NPC.position;
-                }
+                    
+                //decrease size to size of triangle
+                NPC.position = NPC.Center;
+                NPC.Size = new Vector2(DefaultChunkDistance * 2, DefaultChunkDistance * 2);
+                NPC.Center = NPC.position;
+
+                if (PhaseOne)
+                    LockVector1 = -Vector2.UnitY;
+                else
+                    LockVector1 = NPC.DirectionTo(Player.Center);
 
             }
 
@@ -1073,42 +1101,39 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                 }
                 RPS += 0.0005f;
             }
-
-            if (AI_Timer >= ExpandTime && !extendedAttack) //p2-3 shots during expansion
+            if (!PhaseOne) // p2 shots
             {
-                HitPlayer = true; //start dealing contact damage (anti-cheese)
-                int startShots = 24;
-                float ProjectileSpeed = 30f;
-                float knockBack2 = 3f;
-                int Shots = startShots + (int)ExtraShots;
-                float spread = MathHelper.TwoPi / ExtraShots;
-                if ((AI_Timer - ExpandTime) % 40 == 0f && ExtraShots < 9)
+                LockVector1 = LockVector1.RotateTowards(NPC.DirectionTo(Player.Center).ToRotation(), 0.02f);
+
+                Vector2 tipPos = NPC.Center + LockVector1.SafeNormalize(Vector2.UnitX) * 37;
+
+                if (AI_Timer >= ExpandTime - 120)
                 {
-                    LockVector1 = NPC.Center;
-                    LockVector2 = (NPC.SafeDirectionTo(Player.Center) * ProjectileSpeed).RotatedBy(MathHelper.Pi / 80 * (Main.rand.NextFloat() - 0.5f));
-                    RandomAngle = Main.rand.NextFloat(-spread / 2, spread / 2);
-                    if (FargoSoulsUtil.HostCheck) //telegraph
+                    if (AI_Timer % 5 == 0)
                     {
-                        for (int i = 0; (float)i < Shots; i++)
-                        {
-                            double rotationrad = MathHelper.TwoPi / Shots * i;
-                            Projectile.NewProjectile(NPC.GetSource_FromThis(), LockVector1, Vector2.Zero, ModContent.ProjectileType<BloomLine>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), 0f, Main.myPlayer, 0, LockVector2.RotatedBy(rotationrad).ToRotation());
-                        }
+                        float scale = 3f * (AI_Timer - (ExpandTime - 120f)) / 60f;
+                        if (AI_Timer > ExpandTime + AttackDuration + 30)
+                            scale = 3f * 1 - (AI_Timer - ExpandTime + AttackDuration + 30 / 60f);
+
+                        scale = MathHelper.Clamp(scale, 0, 3);
+
+                        Particle p = new ExpandingBloomParticle(tipPos, NPC.velocity, Color.Cyan, Vector2.One * scale, Vector2.One * scale, 10);
+                        p.Spawn();
                     }
-                    NPC.netUpdate = true;
                 }
-                if ((AI_Timer - ExpandTime) % 40 == 39 && ExtraShots < 9)
+
+                if (AI_Timer >= ExpandTime - 60 && AI_Timer <= ExpandTime + AttackDuration + 30)
                 {
-                    SoundEngine.PlaySound(SoundID.Item12, NPC.Center);
-                    if (FargoSoulsUtil.HostCheck) //shoot
+                    if (AI_Timer % 12 == 0)
                     {
-                        for (int i = 0; (float)i < Shots; i++)
+                        SoundEngine.PlaySound(SoundID.Item12, NPC.Center);
+                        if (FargoSoulsUtil.HostCheck)
                         {
-                            double rotationrad = MathHelper.TwoPi / Shots * i;
-                            Projectile.NewProjectile(NPC.GetSource_FromThis(), LockVector1, LockVector2.RotatedBy(rotationrad), ModContent.ProjectileType<LifeWave>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), knockBack2, Main.myPlayer);
+                            float ProjectileSpeed = 12f;
+                            Vector2 vel = LockVector1.SafeNormalize(Vector2.UnitX) * ProjectileSpeed;
+                            Projectile.NewProjectile(NPC.GetSource_FromThis(), tipPos, vel, ModContent.ProjectileType<LifeWave>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage), 3f, Main.myPlayer);
                         }
                     }
-                    ExtraShots += 1f;
                 }
             }
 
@@ -1207,6 +1232,12 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                     CustomRunePositions[i] = Player.Center + offset;
                 }
 
+                if (WorldSavingSystem.MasochistModeReal)
+                {
+                    SoundEngine.PlaySound(SoundID.Item91, NPC.Center);
+                    if (FargoSoulsUtil.HostCheck)
+                        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.DirectionTo(Player.Center).RotatedBy(MathF.PI * 0.4f * (Main.rand.NextBool() ? 1 : -1)) * 10f, ModContent.ProjectileType<LifeNuke>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), 3f, Main.myPlayer, 32f, 0);
+                }
             }
 
             FlyingState(0.2f);
@@ -1242,6 +1273,11 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                 DrawRunes = true;
             if (AI_Timer > startup + explosionTime + 10)
             {
+                if (!PhaseOne)
+                {
+                    GoToDeathray();
+                    return;
+                }
                 if (RuneFormation != Formations.Circle)
                 {
                     RuneFormation = Formations.Circle;
@@ -1328,16 +1364,23 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                 if (FargoSoulsUtil.HostCheck)
                     Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, -offset1, ModContent.ProjectileType<JevilScar>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), 3f, Main.myPlayer, 0f, NPC.whoAmI);
             }
-            if (AI_Timer > 480 + 100)
+            float extraTime = PhaseOne || !WorldSavingSystem.EternityMode ? 100 : -20;
+            if (AI_Timer > 480 + extraTime)
             {
                 foreach (Projectile p in Main.projectile)
                 {
                     if (p.type == ModContent.ProjectileType<JevilScar>())
                     {
-                        p.ai[0] = 1200;
+                        float extra = PhaseOne || !WorldSavingSystem.EternityMode ? 0 : 100;
+                        p.ai[0] = 1200 - extra;
                     }
                 }
                 Flying = true;
+                if (!PhaseOne)
+                {
+                    GoToDeathray();
+                    return;
+                }
                 StateReset();
             }
         }
@@ -1357,10 +1400,17 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                 NPC.netUpdate = true;
                 ShotTimer = 0;
                 //Rampup = 1;
-                RuneFormation = Formations.Gun;
+                RuneFormation = Formations.GunCloser;
                 RuneFormationTimer = 0;
                 SoundEngine.PlaySound(SoundID.Zombie100, NPC.Center);
                 GunRotation = NPC.SafeDirectionTo(Player.Center).ToRotation();
+
+                if (WorldSavingSystem.MasochistModeReal)
+                {
+                    SoundEngine.PlaySound(SoundID.Item91, NPC.Center);
+                    if (FargoSoulsUtil.HostCheck)
+                        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.DirectionTo(Player.Center).RotatedBy(MathF.PI * 0.4f * (Main.rand.NextBool() ? 1 : -1)) * 10f, ModContent.ProjectileType<LifeNuke>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), 3f, Main.myPlayer, 32f, 0);
+                }
             }
             GunRotation = GunRotation.ToRotationVector2().RotateTowards(NPC.SafeDirectionTo(Player.Center).ToRotation(), 0.1f).ToRotation();
 
@@ -1393,16 +1443,29 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                 }
             }
             float end = WorldSavingSystem.EternityMode ? 200f : 220f;
+
+            if (AI_Timer >= end - 30)
+            {
+                if (!PhaseOne)
+                {
+                    GoToDeathray();
+                    return;
+                }
+            }
             if (AI_Timer >= end)
             {
+
                 StateReset();
             }
         }
 
-        public void Charge(bool Variant = false)
+        public void Charge()
         {
             ref float SwordSide = ref NPC.ai[3];
             ref float AttackCount = ref NPC.ai[2];
+
+            ref float TeleportX = ref NPC.localAI[0];
+            ref float TeleportY = ref NPC.localAI[1];
 
             Player Player = Main.player[NPC.target];
             int StartTime = (WorldSavingSystem.MasochistModeReal ? 60 : WorldSavingSystem.EternityMode ? 70 : 90);
@@ -1417,7 +1480,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                 RuneFormationTimer = 0;
                 RuneFormation = Formations.Shield;
 
-                NPC.rotation = NPC.DirectionTo(Player.Center).ToRotation();
+                NPC.rotation = NPC.DirectionTo(Player.Center).ToRotation() + MathHelper.PiOver2;
                 SwordSide = Main.rand.NextBool() ? 1 : -1;
             }
             Flying = false;
@@ -1425,7 +1488,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
             HitPlayer = true;
             AuraCenter = LockVector3; //lock arena in place during charges
 
-            float chargecount = PhaseOne ? 3f : 3f;
+            float chargecount = PhaseOne ? 3f : 4f;
 
             float chargeSpeed = 22f;
             Vector2 chargeatPlayer = NPC.SafeDirectionTo(Player.Center) * chargeSpeed;
@@ -1436,7 +1499,6 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                 FlyingState(1f, false, desiredPos, orient: false);
                 NPC.rotation = MathHelper.Lerp(NPC.rotation, NPC.DirectionTo(Player.Center).ToRotation() + MathHelper.PiOver2, AI_Timer / StartTime);
             }
-
 
 
             if (AttackCount < chargecount)
@@ -1467,6 +1529,52 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                     NPC.velocity.ClampLength(0, 35);
                 }
 
+                // p2 tp and double charge
+                if (!PhaseOne && AttackCount == 2f)
+                {
+                    float tpTelegraph = 40;
+                    float leeway = 5;
+                    float timeOffset = tpTelegraph + leeway;
+
+                    float endTime = StartTime * 2;
+
+                    if (AI_Timer >= endTime - timeOffset && AI_Timer <= endTime - timeOffset + 20)
+                    {
+                        Vector2 TpPos = Player.Center + Player.velocity.SafeNormalize(Vector2.UnitX) * 500;
+
+                        TeleportX = TpPos.X; //exposing so proj can access
+                        TeleportY = TpPos.Y;
+                        if (AI_Timer == endTime - timeOffset)
+                        {
+
+                            NPC.netUpdate = true;
+
+                            SoundEngine.PlaySound(SoundID.Item91, NPC.Center);
+                            if (FargoSoulsUtil.HostCheck)
+                            {
+                                Projectile.NewProjectile(NPC.GetSource_FromThis(), TpPos, Vector2.Zero, ModContent.ProjectileType<LifeTpTelegraph>(), 0, 0f, Main.myPlayer, -tpTelegraph, NPC.whoAmI);
+                                if (WorldSavingSystem.EternityMode)
+                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.DirectionTo(Player.Center).RotatedBy(MathF.PI * 0.2f * (Main.rand.NextBool() ? 1 : -1)) * 10f, ModContent.ProjectileType<LifeNuke>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), 3f, Main.myPlayer, 32f, 0);
+                            }
+                                
+                        }
+                    }
+
+                    if (AI_Timer == endTime - leeway)
+                    {
+                        NPC.Center = new(TeleportX, TeleportY);
+                        for (int i = 0; i < NPC.oldPos.Length; i++)
+                            NPC.oldPos[i] = NPC.Center;
+                        NPC.velocity = NPC.DirectionTo(Player.Center) * 0.1f;
+                        SoundEngine.PlaySound(SoundID.Item8, NPC.Center);
+                        NPC.netUpdate = true;
+
+                        AI_Timer = StartTime * 0.5f;
+                        AttackCount++;
+                        return;
+                    }
+                }
+
                 if (AI_Timer == StartTime * 2) // reset
                 {
                     NPC.netUpdate = true;
@@ -1482,7 +1590,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                     AttackCount += 1f;
                 }
             }
-            GunRotation = NPC.rotation;
+            GunRotation = NPC.rotation - MathHelper.PiOver2;
             
             if (AttackCount >= chargecount)
             {
@@ -1500,8 +1608,11 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
         }
         public void PixieCharge()
         {
-            ref float ChargeTimer = ref NPC.ai[2];
+            ref float ChargeCounter = ref NPC.ai[2];
             ref float RandomOffset = ref NPC.ai[3];
+
+            ref float TeleportX = ref NPC.localAI[0];
+            ref float TeleportY = ref NPC.localAI[1];
 
             Player Player = Main.player[NPC.target];
             int StartTime = (WorldSavingSystem.MasochistModeReal ? 80 : WorldSavingSystem.EternityMode ? 90 : 100);
@@ -1521,16 +1632,13 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
             }
             AuraCenter = LockVector3;
             Flying = false;
-            if (AI_Timer <= 10)
-            {
-                NPC.velocity = Vector2.Lerp(NPC.velocity, NPC.SafeDirectionTo(Player.Center) * 0.1f, 0.3f);
-            }
 
             if (AI_Timer < StartTime)
             {
                 Vector2 desiredPos = Player.Center + Player.DirectionTo(NPC.Center) * 550;
                 FlyingState(1f, false, desiredPos, orient: false);
                 NPC.rotation = MathHelper.Lerp(NPC.rotation, NPC.DirectionTo(Player.Center).ToRotation() + MathHelper.PiOver2, AI_Timer / StartTime);
+                Charging = false;
             }
             else
             {
@@ -1542,6 +1650,45 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                 NPC.netUpdate = true;
             }
             const int ChargeCD = 60 + 8; // compensation for accel changes
+
+
+            // p2 tp and double charge
+            if (!PhaseOne && ChargeCounter == 0)
+            {
+                float tpTelegraph = 40;
+                float leeway = 5;
+                float timeOffset = tpTelegraph + leeway;
+
+                if (AI_Timer >= StartTime + ChargeCD - timeOffset && AI_Timer <= StartTime + ChargeCD - timeOffset + 20)
+                {
+                    Vector2 TpPos = Player.Center + Player.velocity.SafeNormalize(Vector2.UnitX) * 500;
+
+                    TeleportX = TpPos.X; //exposing so proj can access
+                    TeleportY = TpPos.Y;
+                    if (AI_Timer == StartTime + ChargeCD - timeOffset)
+                    {
+                        NPC.netUpdate = true;
+
+                        if (FargoSoulsUtil.HostCheck)
+                            Projectile.NewProjectile(NPC.GetSource_FromThis(), TpPos, Vector2.Zero, ModContent.ProjectileType<LifeTpTelegraph>(), 0, 0f, Main.myPlayer, -tpTelegraph, NPC.whoAmI);
+                    }
+                }
+
+                if (AI_Timer == StartTime + ChargeCD - leeway)
+                {
+                    NPC.Center = new(TeleportX, TeleportY);
+
+                    for (int i = 0; i < NPC.oldPos.Length; i++)
+                        NPC.oldPos[i] = NPC.Center;
+                    NPC.velocity = NPC.DirectionTo(Player.Center) * 0.1f;
+                    SoundEngine.PlaySound(SoundID.Item8, NPC.Center);
+                    NPC.netUpdate = true;
+
+                    AI_Timer = StartTime * 0.5f;
+                    ChargeCounter++;
+                    return;
+                }
+            }
 
             if (AI_Timer >= StartTime + ChargeCD)
             {
@@ -1559,7 +1706,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                 StateReset();
                 return;
             }
-            GunRotation = NPC.rotation;
+            GunRotation = NPC.rotation - MathHelper.PiOver2;
 
             Vector2 atPlayer = NPC.SafeDirectionTo(Player.Center);
 
@@ -1606,13 +1753,14 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
 
             Player Player = Main.player[NPC.target];
             int StartTime = (WorldSavingSystem.MasochistModeReal ? 60 : WorldSavingSystem.EternityMode ? 70 : 80);
+            float tpTelegraph = 40;
 
             if (AttackF1)
             {
                 LockVector3 = NPC.Center;
                 AttackF1 = false;
                 NPC.netUpdate = true;
-                Flying = true;
+                Flying = false;
 
                 SoundEngine.PlaySound(SoundID.ScaryScream, NPC.Center);
 
@@ -1630,10 +1778,10 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
             {
                 LockVector2 = new Vector2(Player.Center.X, Player.Center.Y - 400f);
             }
-            if (AI_Timer == 5 && FargoSoulsUtil.HostCheck)
+            if (AI_Timer == StartTime - 15 - tpTelegraph && FargoSoulsUtil.HostCheck)
             {
 
-                Projectile.NewProjectile(NPC.GetSource_FromThis(), TpPos, Vector2.Zero, ModContent.ProjectileType<LifeTpTelegraph>(), 0, 0f, Main.myPlayer, -40, NPC.whoAmI);
+                Projectile.NewProjectile(NPC.GetSource_FromThis(), TpPos, Vector2.Zero, ModContent.ProjectileType<LifeTpTelegraph>(), 0, 0f, Main.myPlayer, -tpTelegraph, NPC.whoAmI);
                 /*
                 if (WorldSavingSystem.MasochistModeReal)
                 {
@@ -1645,6 +1793,9 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                 }
                 */
             }
+            if (AI_Timer < StartTime - 15 && PlungeCount <= 0)
+                NPC.velocity *= 0.95f;
+
             if (AI_Timer == StartTime - 15)
             {
                 Flying = false;
@@ -1657,7 +1808,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                 SoundEngine.PlaySound(SoundID.Item8, NPC.Center);
                 NPC.netUpdate = true;
             }
-            GunRotation = NPC.rotation;
+            GunRotation = NPC.rotation - MathHelper.PiOver2;
             if (AI_Timer == StartTime)
             {
                 SoundEngine.PlaySound(SoundID.ForceRoarPitched, NPC.Center);
@@ -1697,8 +1848,8 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                 {
                     double rotationrad3 = MathHelper.ToRadians(-90 + k * 12);
                     Vector2 shootoffset3 = shootdown2.RotatedBy(rotationrad3);
-                    if (!WorldSavingSystem.MasochistModeReal)
-                        shootoffset3.X *= 2f;
+                    shootoffset3.X *= 2f;
+
                     Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, shootoffset3, ModContent.ProjectileType<LifeNeggravProj>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), knockBack4, Main.myPlayer);
                 }
             }
@@ -1711,25 +1862,27 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                 {
                     double rotationrad2 = MathHelper.ToRadians(-90 + j * 10);
                     Vector2 shootoffset2 = shootdown.RotatedBy(rotationrad2);
-                    if (!WorldSavingSystem.MasochistModeReal)
-                        shootoffset2.X *= 2f;
+                    shootoffset2.X *= 2f;
                     Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, shootoffset2, ModContent.ProjectileType<LifeNeggravProj>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), knockBack3, Main.myPlayer);
                 }
             }
-            if (AI_Timer == StartTime + 50 && PlungeCount < 1f && !PhaseOne)
+            if (AI_Timer == StartTime + 50 && PlungeCount < 1f && WorldSavingSystem.MasochistModeReal && !PhaseOne)
             {
                 AI_Timer = 0f;
                 PlungeCount += 1f;
                 NPC.netUpdate = true;
             }
-            if (AI_Timer == StartTime + 150 - 10 && (PlungeCount >= 1 || PhaseOne))
+            float neutralTime = 110;
+            if (AI_Timer == StartTime + neutralTime)
             {
                 RuneFormation = Formations.Circle;
                 RuneFormationTimer = 0;
                 NPC.netUpdate = true;
             }
-            if (AI_Timer > StartTime + 145) // fly back up
+            if (AI_Timer > StartTime + neutralTime) // fly back up
             {
+
+
                 Vector2 desiredPos = Player.Center + Player.DirectionTo(NPC.Center) * 200;
                 FlyingState(1.5f, false, desiredPos, orient: true);
 
@@ -1738,7 +1891,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                 Charging = false;
                 
             }
-            if (AI_Timer >= StartTime + 150 + FormationTime + 20)
+            if (AI_Timer >= StartTime + neutralTime + FormationTime)
             {
                 HitPlayer = false;
                 StateReset();
@@ -1749,8 +1902,9 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
         {
             Player player = Main.player[NPC.target];
 
-            int StartTime = 90;
-            int AttackTime = 100;
+            int StartTime = WorldSavingSystem.MasochistModeReal ? 75 : 90;
+            float stabTime = 60;
+            float AttackTime = stabTime + 40;
 
             if (AttackF1)
             {
@@ -1765,6 +1919,13 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                 RuneFormationTimer = 0;
 
                 GunRotation = NPC.DirectionTo(player.Center).ToRotation();
+
+                if (WorldSavingSystem.MasochistModeReal)
+                {
+                    SoundEngine.PlaySound(SoundID.Item91, NPC.Center);
+                    if (FargoSoulsUtil.HostCheck)
+                        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.DirectionTo(player.Center).RotatedBy(MathF.PI * 0.4f * (Main.rand.NextBool() ? 1 : -1)) * 10f, ModContent.ProjectileType<LifeNuke>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), 3f, Main.myPlayer, 32f, 0);
+                }
             }
             AuraCenter = LockVector3;
 
@@ -1773,7 +1934,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                 HitPlayer = false;
                 float directionToPlayer = NPC.HorizontalDirectionTo(player.Center);
 
-                Vector2 desiredPos = player.Center - Vector2.UnitY * 200 - Vector2.UnitX * directionToPlayer * 300;
+                Vector2 desiredPos = player.Center - Vector2.UnitY * 250 - Vector2.UnitX * directionToPlayer * 280;
                 FlyingState(1.5f, false, desiredPos, orient: true);
 
                 GunRotation = MathHelper.Lerp(GunRotation, NPC.DirectionTo(player.Center).ToRotation() + MathHelper.PiOver2, 0.4f);
@@ -1783,24 +1944,28 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
 
                 //triangulation to find spear direction
                 LockVector2 = (NPC.Center + LockVector1).DirectionTo(player.Center);
-                Dust.NewDust(NPC.Center + LockVector1, 0, 0, DustID.Torch);
+
+                if (AI_Timer == StartTime - 60)
+                {
+                    if (FargoSoulsUtil.HostCheck)
+                        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<LifeRunespearHitbox>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), 0f, Main.myPlayer, NPC.whoAmI, AttackTime + 60);
+                }
             }
             else // rest of attack
             {
-                HitPlayer = true;
-                
+                if (AI_Timer == StartTime)
+                    SoundEngine.PlaySound(SoundID.ForceRoarPitched, NPC.Center);
 
                 NPC.velocity *= 0.965f;
                 float rotationIncrement = WorldSavingSystem.EternityMode ? 0.005f : 0f;
                 NPC.velocity = NPC.velocity.RotateTowards(NPC.DirectionTo(player.Center).ToRotation(), rotationIncrement);
                 GunRotation = GunRotation.ToRotationVector2().RotateTowards(NPC.DirectionTo(player.Center).ToRotation() + MathHelper.PiOver2, rotationIncrement).ToRotation();
 
-                float stabTime = 60;
                 float attackTimer = AI_Timer - StartTime;
 
                 if (attackTimer < stabTime)
                 {
-
+                    HitPlayer = true;
                     float stabModifier = 1f - (attackTimer / stabTime);
                     stabModifier = MathF.Sqrt(stabModifier);
 
@@ -1808,10 +1973,10 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
 
                     LockVector1 += LockVector2 * 2f * stabModifier;
                 }
-
+                else
+                    HitPlayer = false;
             }   
-            if (AI_Timer == StartTime)
-                SoundEngine.PlaySound(SoundID.ForceRoarPitched, NPC.Center);
+                
             Flying = false;
 
             // little stab charge
@@ -1820,6 +1985,19 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
             {
                 float progress = (float)(AI_Timer - StartTime) / lerpTime;
                 NPC.velocity = Vector2.Lerp(NPC.velocity, NPC.DirectionTo(player.Center) * 22, progress);
+            }
+
+            
+            // p2 explosion
+            if (!PhaseOne)
+            {
+                float explosionTime = 55;
+                if (AI_Timer == StartTime + AttackTime - explosionTime - 15)
+                {
+                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + LockVector1 + LockVector2 * (LifeRunespearHitbox.Length + 30), Vector2.Zero, ModContent.ProjectileType<LifeRunespearExplosion>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), 0f, Main.myPlayer, -explosionTime, NPC.whoAmI);
+                }
+                if (AI_Timer > StartTime + AttackTime - explosionTime - 5)
+                    FlyingState(0.3f, false, player.Center - (LockVector1 + LockVector2 * (LifeRunespearHitbox.Length + 30)));
             }
 
             // reset
@@ -1993,6 +2171,9 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
             Vector2 ellipseDim = NPC.Size;
             Vector2 ellipseCenter = NPC.position + 0.5f * new Vector2(NPC.width, NPC.height);
 
+            if (PyramidPhase == 1)
+                ellipseDim /= 2;
+
             float x = 0f; //ellipse center
             float y = 0f; //ellipse center
             if (boxPos.X > ellipseCenter.X)
@@ -2110,8 +2291,6 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
 
                         Vector2 circlePos = drawCenter + drawRot.ToRotationVector2() * RuneDistance;
 
-                        if (RuneFormation != Formations.Circle || RuneFormationTimer >= 60)
-                            InternalRuneFormation = RuneFormation;
 
                         float runeRotation = drawRot + MathHelper.PiOver2;
                         Vector2 drawPos;
@@ -2119,72 +2298,79 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                         float runeLerp = (drawRot % MathF.Tau) / MathF.Tau;
                         float z = 0;
 
-                        switch (InternalRuneFormation)
+                        Vector2 GetFormationPosition(int formation)
                         {
-                            case Formations.Shield:
-                                {
-                                    float rotationForward = (GunRotation - MathF.PI / 2);
-                                    Vector2 spearPoint = drawCenter + rotationForward.ToRotationVector2() * DefaultRuneDistance * 1.2f;
-                                    float spearRuneLerp = runeLerp - 0.5f;
-                                    Vector2 spearOffset = Vector2.Zero;
-                                    const float SpearAngle = MathF.PI * 0.13f;
-                                    float spearLength = NPC.width * 1.2f;
-                                    z = Math.Abs(spearRuneLerp);
-                                    spearOffset = -(GunRotation - MathHelper.PiOver2 - (SpearAngle * MathHelper.Lerp(1f, 3f, MathF.Pow(Math.Abs(spearRuneLerp), 1.5f)) * Math.Sign(spearRuneLerp))).ToRotationVector2() * spearLength * Math.Abs(spearRuneLerp);
-                                    Vector2 spearPos = spearPoint + spearOffset;
-                                    drawPos = Vector2.SmoothStep(circlePos, spearPos, FormationLerp);
-                                }
-                                break;
-                            case Formations.Gun:
-                                {
-                                    float gunRot = drawRot;
-                                    Vector2 circleCenter = drawCenter + GunCircleCenter(1) - NPC.Center; // remove duplicate NPC.Center
-                                    float circleRadius = 90;
-                                    if (CloserGun)
-                                        circleRadius += 40;
-                                    float deformMult = MathF.Pow(Math.Abs(gunRot.ToRotationVector2().X), 1);
-                                    circleRadius *= MathHelper.Lerp(1, 0.6f, deformMult); // circle deformation
-                                    Vector2 runeCircleOffset = (GunRotation + gunRot).ToRotationVector2() * circleRadius;
-                                    Vector2 gunPos = circleCenter + runeCircleOffset;
-                                    drawPos = Vector2.SmoothStep(circlePos, gunPos, FormationLerp);
-
-                                    float rot = (gunRot + MathF.PI / 2) % MathF.Tau;
-                                    float scaleMult = (rot.ToRotationVector2().Y + 1) / 2;
-                                    runeScale *= MathHelper.Lerp(1.3f, 0.7f, scaleMult);
-                                    z = scaleMult;
-                                }
-                                break;
-                            case Formations.Scattered:
-                                {
-                                    drawPos = Vector2.SmoothStep(circlePos, CustomRunePositions[i] - screenPos, FormationLerp);
-                                    runeRotation = MathHelper.SmoothStep(runeRotation, 0, FormationLerp);
-                                }
-                                break;
-                            case Formations.Spear:
-                                {
-                                    Vector2 spearHilt = drawCenter + LockVector1;
-                                    Vector2 spearDirection = LockVector2;
-
-                                    float totalLength = 260;
-                                    float spearRunes = RuneCount;// - 2;
-                                    Vector2 spearPos = spearHilt + spearDirection * (totalLength / spearRunes) * i;
-                                    /*
-                                    if (i < 2)
+                            switch (formation)
+                            {
+                                case Formations.Shield:
                                     {
-                                        float dir = i == 0 ? 1 : -1;
-                                        spearPos = spearHilt + spearDirection * (totalLength / spearRunes) * (spearRunes + 0.2f) + spearDirection.RotatedBy(MathHelper.PiOver2 * dir) * 14;
-                                    }
-                                    */
+                                        float rotation = GunRotation;
 
-                                    drawPos = Vector2.SmoothStep(circlePos, spearPos, FormationLerp);
-                                }
-                                break;
-                            default:
-                                {
-                                    drawPos = circlePos;
-                                }
-                                break;
-                        };
+                                        float rotationForward = rotation;
+                                        Vector2 spearPoint = drawCenter + rotationForward.ToRotationVector2() * DefaultRuneDistance * 1.2f;
+                                        float spearRuneLerp = runeLerp - 0.5f;
+                                        Vector2 spearOffset = Vector2.Zero;
+                                        const float SpearAngle = MathF.PI * 0.13f;
+                                        float spearLength = NPC.width * 1.2f;
+                                        z = Math.Abs(spearRuneLerp);
+                                        spearOffset = -(rotation - (SpearAngle * MathHelper.Lerp(1f, 3f, MathF.Pow(Math.Abs(spearRuneLerp), 1.5f)) * Math.Sign(spearRuneLerp))).ToRotationVector2() * spearLength * Math.Abs(spearRuneLerp);
+                                        Vector2 spearPos = spearPoint + spearOffset;
+
+                                        return spearPos;
+                                    }
+                                case Formations.Gun:
+                                case Formations.GunCloser:
+                                    {
+                                        float gunRot = drawRot;
+                                        Vector2 circleCenter = drawCenter + GunCircleCenter(1) - NPC.Center; // remove duplicate NPC.Center
+                                        float circleRadius = 90;
+                                        if (formation == Formations.GunCloser)
+                                            circleRadius += 40;
+                                        float deformMult = MathF.Pow(Math.Abs(gunRot.ToRotationVector2().X), 1);
+                                        circleRadius *= MathHelper.Lerp(1, 0.6f, deformMult); // circle deformation
+                                        Vector2 runeCircleOffset = (GunRotation + gunRot).ToRotationVector2() * circleRadius;
+                                        Vector2 gunPos = circleCenter + runeCircleOffset;
+
+                                        float rot = (gunRot + MathF.PI / 2) % MathF.Tau;
+                                        float scaleMult = (rot.ToRotationVector2().Y + 1) / 2;
+                                        runeScale *= MathHelper.Lerp(1.3f, 0.7f, scaleMult);
+                                        z = scaleMult;
+
+                                        return gunPos;
+                                    }
+                                case Formations.Scattered:
+                                    {
+                                        runeRotation = MathHelper.SmoothStep(runeRotation, 0, FormationLerp);
+                                        return CustomRunePositions[i] - screenPos;
+                                    }
+                                case Formations.Spear:
+                                    {
+                                        Vector2 spearHilt = drawCenter + LockVector1;
+                                        Vector2 spearDirection = LockVector2;
+
+                                        float totalLength = LifeRunespearHitbox.Length;
+                                        float spearRunes = RuneCount;// - 2;
+                                        Vector2 spearPos = spearHilt + spearDirection * (totalLength / spearRunes) * i;
+                                        /*
+                                        if (i < 2)
+                                        {
+                                            float dir = i == 0 ? 1 : -1;
+                                            spearPos = spearHilt + spearDirection * (totalLength / spearRunes) * (spearRunes + 0.2f) + spearDirection.RotatedBy(MathHelper.PiOver2 * dir) * 14;
+                                        }
+                                        */
+
+                                        return spearPos;
+                                    }
+                                default:
+                                    {
+                                        return circlePos;
+                                    }
+                            };
+                        }
+                        Vector2 previousPos = GetFormationPosition(OldRuneFormation);
+                        Vector2 newPos = GetFormationPosition(RuneFormation);
+                        drawPos = Vector2.SmoothStep(previousPos, newPos, FormationLerp);
+
                         if (z <= 0)
                         {
                             PredrawRunes.Add(new(new Vector3(drawPos.X, drawPos.Y, z), i, runeScale, runeRotation));
@@ -2213,7 +2399,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                     const int AuraRuneCount = 48;
                     for (int i = 0; i < AuraRuneCount; i++)
                     {
-                        float rotation = InternalRuneFormation == Formations.Gun ? BodyRotation / MathHelper.Lerp(1, 3, FormationLerp) : BodyRotation;
+                        float rotation = (RuneFormation == Formations.Gun || OldRuneFormation == Formations.Gun) ? BodyRotation / MathHelper.Lerp(1, 3, FormationLerp) : BodyRotation;
                         float drawRot = (float)(rotation + Math.PI * 2 / AuraRuneCount * i);
                         Texture2D RuneTexture = ModContent.Request<Texture2D>(PartsPath + $"Rune{(i % RuneCount) + 1}", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
                         Vector2 drawPos = AuraCenter + drawRot.ToRotationVector2() * (1100 + RuneDistance) - screenPos;
@@ -2254,7 +2440,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                     Vector2 wingLOrigin = new(wingLtexture.Width / 2, wingLtexture.Height / 2 / Main.npcFrameCount[NPC.type]);
 
                     float distance = ChunkDistance;
-                    if (InternalRuneFormation == Formations.Shield)
+                    if (RuneFormation == Formations.Shield || OldRuneFormation == Formations.Shield)
                         distance /= MathHelper.Lerp(1, 1.5f, MathHelper.Clamp((float)RuneFormationTimer / FormationTime, 0, 1));
 
                     for (int i = -1; i < 2; i += 2)
@@ -2311,11 +2497,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
             }
             if (PyramidPhase != 0) //draw pyramid
             {
-                float pyramidRot = 0;
-                if (Deathraying) //transition
-                {
-                    pyramidRot = LockVector1.RotatedBy(rot + MathHelper.PiOver2).ToRotation();
-                }
+                float pyramidRot = LockVector1.RotatedBy(rot + MathHelper.PiOver2).ToRotation();
                 if (PyramidPhase == 1 && PyramidTimer > PyramidAnimationTime)
                 {
                     Texture2D pyramid = ModContent.Request<Texture2D>(PartsPath + "PyramidFull", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
@@ -2416,7 +2598,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
             color.A = alpha;
             Vector2 drawCenter = NPC.Center - Main.screenPosition;
             float distance = ChunkDistance;
-            if (RuneFormation == Formations.Shield)
+            if (RuneFormation == Formations.Shield || OldRuneFormation == Formations.Shield)
                 distance /= MathHelper.Lerp(1, 1.5f, MathHelper.Clamp((float)RuneFormationTimer / FormationTime, 0, 1));
             Vector2 chunkOffset = pos.X * Vector2.UnitX * distance + pos.Y * Vector2.UnitY * distance;
             Vector2 drawPos = drawCenter + chunkOffset;
@@ -2446,7 +2628,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
         public PixelationPrimitiveLayer LayerToRenderTo => PixelationPrimitiveLayer.BeforeNPCs;
         public void RenderPixelatedPrimitives(SpriteBatch spriteBatch)
         {
-            if (InternalRuneFormation != Formations.Shield)
+            if (RuneFormation != Formations.Shield)
                 return;
             ManagedShader shader = ShaderManager.GetShader("FargowiltasSouls.BlobTrail");
             FargoSoulsUtil.SetTexture1(FargosTextureRegistry.FadedStreak.Value);
@@ -2488,25 +2670,45 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
         #endregion
         #region Help Methods
 
-        public void StateReset()
+        public void ResetVariables()
         {
-            NPC.TargetClosest(true);
-            NPC.netUpdate = true;
-            ChooseState();
             AI_Timer = 0f;
             NPC.ai[2] = 0f;
             NPC.ai[3] = 0f;
             NPC.ai[0] = 0f;
+            NPC.localAI[0] = 0;
             NPC.localAI[1] = 0;
+            NPC.localAI[2] = 0;
             AttackF1 = true;
+            NPC.netUpdate = true;
         }
+        public void StateReset()
+        {
+            NPC.TargetClosest(true);
+            
+            ChooseState();
+            ResetVariables();
+
+        }
+        public void GoToDeathray()
+        {
+            if (!WorldSavingSystem.EternityMode)
+            {
+                StateReset();
+                return;
+            }
+            NPC.TargetClosest(true);
+            ResetVariables();
+            State = (int)States.Deathray;
+        }
+
 
         public void ChooseState() //it's done this way so it cycles between attacks in a random order: for increased variety
         {
             NPC.netUpdate = true;
 
             AttackCount++;
-            int max = PhaseOne ? 4 : 5;
+            int max = (!PhaseOne && WorldSavingSystem.EternityMode) ? 5 : 4;
             if (AttackCount > max)
                 AttackCount = 1;
 
