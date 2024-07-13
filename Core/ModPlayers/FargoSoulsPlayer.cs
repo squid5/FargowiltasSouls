@@ -643,7 +643,7 @@ namespace FargowiltasSouls.Core.ModPlayers
                     float newUseTime = useTime / AttackSpeed;
                     UseTimeDebt += newUseTime - originalUseTime; //track the sub-1 unit "debt" of shorter useTime
                 }
-                Main.NewText($"oldASpd: {originalAttackSpeed}, newASpd: {AttackSpeed}, oldUT: {originalUseTime}, newUT: {(useTime / AttackSpeed)}, debt: {UseTimeDebt}");
+                //Main.NewText($"oldASpd: {originalAttackSpeed}, newASpd: {AttackSpeed}, oldUT: {originalUseTime}, newUT: {(useTime / AttackSpeed)}, debt: {UseTimeDebt}");
 
                 //checks so weapons dont break
                 while (useTime / AttackSpeed < 1)
