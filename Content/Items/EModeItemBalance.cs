@@ -307,7 +307,7 @@ namespace FargowiltasSouls.Content.Items
 
                 case ItemID.AdamantiteGlaive:
                 case ItemID.TitaniumTrident:
-                    balanceNumber = 1.15f;
+                    balanceNumber = 1.25f;
                     balanceTextKeys = ["Damage", "SpearRework"];
                     return EModeChange.Buff;
 

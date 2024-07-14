@@ -475,12 +475,6 @@ namespace FargowiltasSouls.Content.Projectiles
                         }
                         break;
 
-                    case var _ when SpearRework.ReworkedSpears.Contains(projectile.type):
-                        {
-                            projectile.damage = (int)(projectile.damage * 1.5f);
-                            break;
-                        }
-
                     default:
                         break;
                 }
@@ -1200,6 +1194,9 @@ namespace FargowiltasSouls.Content.Projectiles
         {
             if (!WorldSavingSystem.EternityMode)
                 return;
+            if (SpearRework.ReworkedSpears.Contains(projectile.type))
+                modifiers.SourceDamage *= 1.5f;
+
             switch (projectile.type)
             {
                 case ProjectileID.CopperCoin:
