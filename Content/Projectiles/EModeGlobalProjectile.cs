@@ -1219,6 +1219,10 @@ namespace FargowiltasSouls.Content.Projectiles
                     if (!Main.hardMode)
                         modifiers.FinalDamage *= 0.33f;
                     break;
+
+                case ProjectileID.OrichalcumHalberd:
+                    modifiers.FinalDamage *= SpearRework.OrichalcumDoTDamageModifier(target.lifeRegen);
+                    break;
             }
             //if (projectile.arrow) //change archery and quiver to additive damage
             //{
