@@ -776,12 +776,14 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
             if (!phaseTransition)
                 endTime = 110;
 
-            if (AI_Timer < 220 - FormationTime)
-                AI_Timer = 220 - FormationTime;
+            float start = phaseTransition ? 240 : 220;
+
+            if (AI_Timer < start - FormationTime)
+                AI_Timer = start - FormationTime;
 
             if (AI_Timer < 280f)
             {
-                if (AI_Timer < 220f)
+                if (AI_Timer < start)
                 {
                     LockVector1 = NPC.DirectionTo(player.Center);
                     if (PyramidPhase == 0)
@@ -799,7 +801,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                     RuneFormation = Formations.Gun;
 
                 }
-                else if (AI_Timer == 220f)
+                else if (AI_Timer == start)
                 {
                     LockVector1 = NPC.DirectionTo(player.Center);
                     RotationDirection = Math.Sign(FargoSoulsUtil.RotationDifference(NPC.DirectionTo(player.Center + player.velocity), NPC.DirectionTo(player.Center)));
