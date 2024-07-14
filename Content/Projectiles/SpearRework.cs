@@ -126,7 +126,6 @@ namespace FargowiltasSouls.Content.Projectiles
                 return 1f;
             float result = 1f - lifeRegen * 0.001f;
             result = MathHelper.Clamp(result, 1f, 2f);
-            Main.NewText(result);
             return result;
         }
     }

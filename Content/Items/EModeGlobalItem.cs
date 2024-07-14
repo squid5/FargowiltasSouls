@@ -202,7 +202,6 @@ namespace FargowiltasSouls.Content.Items
             {
                 case ItemID.OrichalcumSword:
                     modifiers.FinalDamage *= SpearRework.OrichalcumDoTDamageModifier(target.lifeRegen);
-                    Main.NewText(target.lifeRegen);
                     break;
                 default:
                     break;
