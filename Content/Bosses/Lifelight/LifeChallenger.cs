@@ -1533,7 +1533,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                 if (AI_Timer == StartTime + 1) // sfx
                 {
                     SoundEngine.PlaySound(DashSound1, NPC.Center);
-                    bool earlyTeleport = WorldSavingSystem.EternityMode && Main.rand.NextBool(3);
+                    bool earlyTeleport = WorldSavingSystem.MasochistModeReal && Main.rand.NextBool(3);
                     if (!PhaseOne && HasTeleported == 0 && (AttackCount == 2 || earlyTeleport))
                         HasTeleported = 1; // prepare for teleport during next charge
                     NPC.netUpdate = true;
