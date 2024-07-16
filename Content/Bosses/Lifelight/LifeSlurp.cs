@@ -49,6 +49,11 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
         public override bool? CanDamage() => Projectile.alpha <= 0;
         public override void AI()
         {
+            if (Projectile.ai[0] > 30 && !First && !lifelight.TypeAlive<LifeChallenger>())
+            {
+                Projectile.Kill();
+                return;
+            }
             if (Projectile.ai[0] == 0)
             {
                 Projectile.rotation = Main.rand.Next(100);
@@ -75,10 +80,14 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                 if (First)
                 {
                     lifelight = Main.npc[(int)Projectile.ai[1]];
+                    if (!lifelight.TypeAlive<LifeChallenger>())
+                    {
+                        Projectile.Kill();
+                        return;
+                    }
                     Projectile.ai[1] = 0;
                     First = false;
                 }
-                Player Player = Main.player[lifelight.target];
                 Vector2 vectorToIdlePosition = Projectile.Center;
                 float speed = 8f;
                 float inertia = 5f;
@@ -89,7 +98,11 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                 }
                 if (Projectile.ai[1] > 90f)
                 {
-                    vectorToIdlePosition = Player.Center - Projectile.Center;
+                    if (lifelight.HasPlayerTarget)
+                    {
+                        Player Player = Main.player[lifelight.target];
+                        vectorToIdlePosition = Player.Center - Projectile.Center;
+                    }
                     speed = 12f;
                     homingonPlayer = true;
                     home = false;

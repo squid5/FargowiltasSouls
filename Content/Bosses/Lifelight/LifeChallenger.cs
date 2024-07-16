@@ -2161,6 +2161,13 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
             }
             return false;
         }
+        public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers)
+        {
+            if (WorldSavingSystem.EternityMode)
+            {
+                target.AddBuff(ModContent.BuffType<SmiteBuff>(), 60 * 6);
+            }
+        }
         public override bool CanHitNPC(NPC target)
         {
             if (HitPlayer)
