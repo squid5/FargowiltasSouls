@@ -62,14 +62,6 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
             }
             Projectile.rotation += 0.2f * RotDirect;
 
-            if (Main.rand.NextBool(6))
-            {
-                int index2 = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.PurpleCrystalShard,
-                    Projectile.velocity.X * 0.2f, Projectile.velocity.Y * 0.2f, 100, new Color(), 2.5f);
-                Main.dust[index2].noGravity = true;
-                Main.dust[index2].velocity.X *= 0.5f;
-                Main.dust[index2].velocity.Y *= 0.5f;
-            }
 
             if (Projectile.alpha > 0)
             {

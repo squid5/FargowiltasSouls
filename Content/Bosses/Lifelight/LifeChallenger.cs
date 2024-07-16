@@ -772,6 +772,10 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
             //for a starting time, make it fade in, then make it spin faster and faster up to a max speed
             const int fadeintime = 10;
             int endTime = 60 * 3;
+            if (WorldSavingSystem.EternityMode)
+                endTime += 60;
+            if (WorldSavingSystem.MasochistModeReal)
+                endTime += 30;
 
             if (!phaseTransition)
                 endTime = 110;
@@ -814,7 +818,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                 else
                 {
                     Vector2 lockon = NPC.DirectionTo(player.Center).RotatedBy(-RotationDirection * MathF.PI * 0.15f);
-                    LockVector1 = Vector2.Lerp(LockVector1, lockon, 0.1f);
+                    LockVector1 = Vector2.Lerp(LockVector1, lockon, 0.2f);
                 }
                 GunRotation = LockVector1.RotatedBy(rot).ToRotation();
                 return;
@@ -1194,7 +1198,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
         {
             Player Player = Main.player[NPC.target];
 
-            int startup = FormationTime + (WorldSavingSystem.MasochistModeReal ? 40 : WorldSavingSystem.EternityMode ? 50 : 60);
+            int startup = FormationTime + (WorldSavingSystem.MasochistModeReal ? 40 : WorldSavingSystem.EternityMode ? 40 : 50);
 
             int explosionTime = 60;
 
@@ -1238,7 +1242,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                     CustomRunePositions[i] = Player.Center + offset;
                 }
 
-                if (WorldSavingSystem.MasochistModeReal)
+                if ((WorldSavingSystem.EternityMode && !PhaseOne) || WorldSavingSystem.MasochistModeReal)
                 {
                     SoundEngine.PlaySound(SoundID.Item91, NPC.Center);
                     if (FargoSoulsUtil.HostCheck)
@@ -1369,6 +1373,12 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                 Vector2 offset1 = (NPC.SafeDirectionTo(Player.Center) * 14f).RotatedBy(MathHelper.PiOver2 * randSide + randRot);
                 if (FargoSoulsUtil.HostCheck)
                     Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, -offset1, ModContent.ProjectileType<JevilScar>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), 3f, Main.myPlayer, 0f, NPC.whoAmI);
+
+                if (WorldSavingSystem.EternityMode && !PhaseOne && AI_Timer >= 70 * 4) // chance to interrupt in emode
+                {
+                    if (Main.rand.NextBool(3))
+                        AI_Timer = 481;
+                }
             }
             float extraTime = PhaseOne || !WorldSavingSystem.EternityMode ? 100 : -20;
             if (AI_Timer > 480 + extraTime)
@@ -1377,7 +1387,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                 {
                     if (p.type == ModContent.ProjectileType<JevilScar>())
                     {
-                        float extra = PhaseOne || !WorldSavingSystem.EternityMode ? 0 : 100;
+                        float extra = PhaseOne || !WorldSavingSystem.EternityMode ? 0 : 50;
                         p.ai[0] = 1200 - extra;
                     }
                 }
@@ -1411,7 +1421,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                 SoundEngine.PlaySound(TelegraphSound1, NPC.Center);
                 GunRotation = NPC.SafeDirectionTo(Player.Center).ToRotation();
 
-                if (WorldSavingSystem.MasochistModeReal)
+                if ((WorldSavingSystem.EternityMode && !PhaseOne) || WorldSavingSystem.MasochistModeReal)
                 {
                     SoundEngine.PlaySound(SoundID.Item91, NPC.Center);
                     if (FargoSoulsUtil.HostCheck)
@@ -1472,6 +1482,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
 
             ref float TeleportX = ref NPC.localAI[0];
             ref float TeleportY = ref NPC.localAI[1];
+            ref float HasTeleported = ref NPC.localAI[2];
 
             Player Player = Main.player[NPC.target];
             int StartTime = (WorldSavingSystem.MasochistModeReal ? 60 : WorldSavingSystem.EternityMode ? 70 : 90);
@@ -1488,6 +1499,9 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
 
                 NPC.rotation = NPC.DirectionTo(Player.Center).ToRotation() + MathHelper.PiOver2;
                 SwordSide = Main.rand.NextBool() ? 1 : -1;
+                HasTeleported = 0;
+
+                AI_Timer = -20;
             }
             Flying = false;
             
@@ -1517,7 +1531,14 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                 }
 
                 if (AI_Timer == StartTime + 1) // sfx
+                {
                     SoundEngine.PlaySound(DashSound1, NPC.Center);
+                    bool earlyTeleport = WorldSavingSystem.EternityMode && Main.rand.NextBool(3);
+                    if (!PhaseOne && HasTeleported == 0 && (AttackCount == 2 || earlyTeleport))
+                        HasTeleported = 1; // prepare for teleport during next charge
+                    NPC.netUpdate = true;
+                }
+                    
                 
 
                 if (AI_Timer > StartTime * 0.5f) // movement
@@ -1536,8 +1557,9 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                 }
 
                 // p2 tp and double charge
-                if (!PhaseOne && AttackCount == 2f)
+                if (!PhaseOne && HasTeleported == 1)
                 {
+
                     float tpTelegraph = 40;
                     float leeway = 5;
                     float timeOffset = tpTelegraph + leeway;
@@ -1577,6 +1599,8 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
 
                         AI_Timer = StartTime * 0.5f;
                         AttackCount++;
+
+                        HasTeleported = 2; // can't do it again
                         return;
                     }
                 }
@@ -1819,7 +1843,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
             {
                 SoundEngine.PlaySound(DashSound1, NPC.Center);
                 HitPlayer = true;
-                float chargeSpeed2 = 55f;
+                float chargeSpeed2 = 50f;
                 NPC.velocity.Y = chargeSpeed2;
                 NPC.netUpdate = true;
                 //below wall
@@ -1878,7 +1902,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                 PlungeCount += 1f;
                 NPC.netUpdate = true;
             }
-            float neutralTime = 110;
+            float neutralTime = 100;
             if (AI_Timer == StartTime + neutralTime)
             {
                 RuneFormation = Formations.Circle;
@@ -1887,17 +1911,15 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
             }
             if (AI_Timer > StartTime + neutralTime) // fly back up
             {
-
-
-                Vector2 desiredPos = Player.Center + Player.DirectionTo(NPC.Center) * 200;
-                FlyingState(1.5f, false, desiredPos, orient: true);
+                //Vector2 desiredPos = Player.Center + Player.DirectionTo(NPC.Center) * 200;
+                FlyingState(2f, false, orient: true);
 
                 HitPlayer = false;
                 Flying = true;
                 Charging = false;
                 
             }
-            if (AI_Timer >= StartTime + neutralTime + FormationTime)
+            if (AI_Timer >= StartTime + neutralTime + FormationTime + 10)
             {
                 HitPlayer = false;
                 StateReset();
@@ -1908,7 +1930,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
         {
             Player player = Main.player[NPC.target];
 
-            int StartTime = WorldSavingSystem.MasochistModeReal ? 75 : 90;
+            int StartTime = WorldSavingSystem.MasochistModeReal ? 90 : 90;
             float stabTime = 60;
             float AttackTime = stabTime + 40;
 
@@ -2002,8 +2024,8 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                 {
                     Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + LockVector1 + LockVector2 * (LifeRunespearHitbox.Length + 30), Vector2.Zero, ModContent.ProjectileType<LifeRunespearExplosion>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), 0f, Main.myPlayer, -explosionTime, NPC.whoAmI);
                 }
-                if (AI_Timer > StartTime + AttackTime - explosionTime - 5)
-                    FlyingState(0.3f, false, player.Center - (LockVector1 + LockVector2 * (LifeRunespearHitbox.Length + 30)));
+                //if (WorldSavingSystem.EternityMode && AI_Timer > StartTime + AttackTime - explosionTime - 5)
+                    //FlyingState(0.1f, false, player.Center - (LockVector1 + LockVector2 * (LifeRunespearHitbox.Length + 30)));
             }
 
             // reset
@@ -2047,9 +2069,9 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
             DoAura = true;
 
             float knockBack = 3f;
-            double rad = AI_Timer * 5.721237 * (MathHelper.Pi / 180.0);
+            float rad = AI_Timer * 5.721237f * (MathHelper.Pi / 180.0f);
 
-            double dustdist = 1200;
+            float dustdist = 1200;
             if (!WorldSavingSystem.MasochistModeReal)
             {
                 float distanceToPlayer = NPC.Distance(Player.Center);
@@ -2057,10 +2079,10 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                 dustdist = Math.Max(dustdist, distanceToPlayer); //take higher of these values
                 dustdist = Math.Min(dustdist, 2400); //capped at this value
             }
-
-            int DustX = (int)NPC.Center.X - (int)(Math.Cos(rad) * dustdist);
-            int DustY = (int)NPC.Center.Y - (int)(Math.Sin(rad) * dustdist);
-            Vector2 DustV = new(DustX, DustY);
+            Vector2 offset = dustdist * rad.ToRotationVector2();
+            if (WorldSavingSystem.MasochistModeReal)
+                offset = offset.RotatedByRandom(MathHelper.TwoPi * 0.01f);
+            Vector2 DustV = NPC.Center + offset;
             if (SlurpTimer >= 2f && AI_Timer <= 300f)
             {
                 if (FargoSoulsUtil.HostCheck)
@@ -2097,9 +2119,9 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                 }
                 BurpTimer += 1f;
             }
-            int endTime = WorldSavingSystem.EternityMode ? 660 : 360;
+            int endTime = WorldSavingSystem.EternityMode ? 600 : 360;
 
-            if (AI_Timer > 300f && AI_Timer < endTime - 60)
+            if (AI_Timer > 300f && AI_Timer < endTime)
             {
                 if (BurpTimer > 15f)
                 {

@@ -27,23 +27,36 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
             Projectile.penetrate = 1;
             Projectile.tileCollide = false;
             Projectile.ignoreWater = true;
-            Projectile.scale = 1.5f;
             Projectile.timeLeft = 80;
+
+            Projectile.scale = 1f;
+            Projectile.Opacity = 0.5f;
         }
 
         public override bool? CanDamage() => false; // WorldSavingSystem.MasochistModeReal;
 
         public override void AI()
         {
+
+            if (Projectile.timeLeft < 20)
+            {
+                float interpolant = 1f - (Projectile.timeLeft / 20f);
+                Projectile.position -= Projectile.velocity * interpolant;
+                Projectile.scale = MathHelper.Lerp(Projectile.scale, 3f, 0.1f);
+                Projectile.Opacity = MathHelper.Lerp(Projectile.Opacity, 1f, 0.1f);
+            }
+                
             Projectile.rotation += Projectile.velocity.Length() * 0.075f * Math.Sign(Projectile.velocity.X);
             Projectile.alpha = (int)(150 * Math.Sin(++Projectile.localAI[0] / 3));
 
+            /*
             for (int i = 0; i < 4; i++)
             {
                 int d = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.PinkTorch, Scale: 3f);
                 Main.dust[d].noGravity = true;
                 Main.dust[d].velocity *= 0.5f;
             }
+            */
         }
         public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
@@ -111,6 +124,10 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
         }
         public override bool PreDraw(ref Color lightColor)
         {
+            Main.spriteBatch.End();
+            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
+
+
             Texture2D texture2D13 = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
             int num156 = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value.Height / Main.projFrames[Projectile.type]; //ypos of lower right corner of sprite to draw
             int y3 = num156 * Projectile.frame; //ypos of upper left corner of sprite to draw
@@ -127,11 +144,21 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                 float num165 = Projectile.oldRot[i];
                 Main.EntitySpriteDraw(texture2D13, value4 + Projectile.Size / 2f - Main.screenPosition + new Vector2(0, Projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color27, num165, origin2, Projectile.scale, effects, 0);
             }
-
-            Main.EntitySpriteDraw(texture2D13, Projectile.Center - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), Projectile.GetAlpha(lightColor), Projectile.rotation, origin2, Projectile.scale, effects, 0);
+            Vector2 offset = Vector2.Zero;
+            Color drawColor = Projectile.GetAlpha(lightColor);
+            if (Projectile.timeLeft < 20)
+            {
+                float interpolant = 1f - (Projectile.timeLeft / 20f);
+                offset = Main.rand.NextVector2Circular(10, 10) * interpolant;
+                //drawColor = Color.Lerp(drawColor, Color.White, interpolant);
+            }
+                
+            Main.EntitySpriteDraw(texture2D13, Projectile.Center + offset - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), drawColor, Projectile.rotation, origin2, Projectile.scale, effects, 0);
+            Main.spriteBatch.End();
+            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.ZoomMatrix);
             return false;
         }
 
-        public override Color? GetAlpha(Color lightColor) => new Color(255, 255, 255, 100) * Projectile.Opacity;
+        public override Color? GetAlpha(Color lightColor) => lightColor * Projectile.Opacity;
     }
 }
