@@ -10,12 +10,10 @@ namespace FargowiltasSouls.Content.Projectiles.Minions
 {
     public class BigBrainIllusion : ModProjectile
     {
-        public override string Texture => "FargowiltasSouls/Content/Projectiles/Minions/BigBrainProj";
-
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Big Brain");
-            Main.projFrames[Projectile.type] = 12;
+            Main.projFrames[Projectile.type] = 4;
             ProjectileID.Sets.MinionShot[Projectile.type] = true;
             ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 10;
@@ -26,8 +24,8 @@ namespace FargowiltasSouls.Content.Projectiles.Minions
 
         public override void SetDefaults()
         {
-            Projectile.width = 80;
-            Projectile.height = 80;
+            Projectile.width = 112;
+            Projectile.height = 416;
             Projectile.friendly = true;
             Projectile.DamageType = DamageClass.Summon;
             Projectile.penetrate = -1;
@@ -54,10 +52,10 @@ namespace FargowiltasSouls.Content.Projectiles.Minions
             }
 
             Projectile.frameCounter++;
-            if (Projectile.frameCounter >= 5)
+            if (Projectile.frameCounter >= 4)
             {
                 Projectile.frameCounter = 0;
-                Projectile.frame = (Projectile.frame + 1) % 12;
+                Projectile.frame = (Projectile.frame + 1) % 4;
             }
 
             Projectile.alpha = 255 - (int)(Math.Cos(++Projectile.localAI[0] * MathHelper.Pi / 2 / maxTime) * 200);
