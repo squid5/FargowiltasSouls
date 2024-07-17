@@ -25,7 +25,7 @@ namespace FargowiltasSouls.Content.Projectiles.Minions
         public override void SetDefaults()
         {
             Projectile.width = 112;
-            Projectile.height = 416;
+            Projectile.height = 104;
             Projectile.netImportant = true;
             Projectile.friendly = true;
             Projectile.minionSlots = 1f;

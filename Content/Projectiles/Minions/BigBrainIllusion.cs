@@ -25,7 +25,7 @@ namespace FargowiltasSouls.Content.Projectiles.Minions
         public override void SetDefaults()
         {
             Projectile.width = 112;
-            Projectile.height = 416;
+            Projectile.height = 104;
             Projectile.friendly = true;
             Projectile.DamageType = DamageClass.Summon;
             Projectile.penetrate = -1;
@@ -52,7 +52,7 @@ namespace FargowiltasSouls.Content.Projectiles.Minions
             }
 
             Projectile.frameCounter++;
-            if (Projectile.frameCounter >= 4)
+            if (Projectile.frameCounter >= 5)
             {
                 Projectile.frameCounter = 0;
                 Projectile.frame = (Projectile.frame + 1) % 4;
