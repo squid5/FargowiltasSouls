@@ -32,7 +32,16 @@ namespace FargowiltasSouls.Content.Items.Weapons.Challengers
             }
             return false;
         }
-        
+
+        public override void HoldItem(Player player)
+        {
+            FargoSoulsPlayer modPlayer = player.FargoSouls();
+            if (modPlayer.EgyptianFlailCD <= 0 && Main.rand.NextBool(3))
+            {
+                Dust.NewDust(player.Center, 2, 2, DustID.Shadowflame);
+            }
+        }
+
         public override bool MeleePrefix()
         {
             return true;
