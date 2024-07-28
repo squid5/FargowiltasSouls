@@ -1,5 +1,5 @@
 TrojanSquirrelMountBuff: {
-	DisplayName: Троянская Белка 
+	DisplayName: Троянская Белка
 	Description: Вы катаетесь верхом на меха-белке
 }
 
@@ -15,12 +15,12 @@ BabyAbomBuff: {
 
 BabySilhouetteBuff: {
 	DisplayName: Малыш Силуэт
-	Description: Не увидит свет, пока не вырастет 
+	Description: Не увидит свет, пока не вырастет
 }
 
 BiteSizeBaronBuff: {
 	DisplayName: Крохотный Барон
-	Description: EX форма не идёт в комплекте 
+	Description: EX форма не идёт в комплекте
 }
 
 ChibiDeviBuff: {
@@ -50,7 +50,7 @@ MonkBuff: {
 
 ObsidianLavaWetBuff: {
 	DisplayName: Мокрая Лава
-	Description: С вас капает лава 
+	Description: С вас капает лава
 }
 
 TitaniumDRBuff: {
@@ -169,12 +169,12 @@ AbomCooldownBuff: {
 }
 
 AbomRebirthBuff: {
-	DisplayName: Мерзкое Перерождение 
+	DisplayName: Мерзкое Перерождение
 	Description: Вы не можете умереть, пока не получите урон
 }
 
 AnticoagulationBuff: {
-	DisplayName: Антикоагуляция 
+	DisplayName: Антикоагуляция
 	Description: Вы теряете здоровье, при получении урона проливаете кровь, которую враги могут выпить, чтобы стать сильнее
 }
 
@@ -189,7 +189,7 @@ AtrophiedBuff: {
 }
 
 BerserkedBuff: {
-	DisplayName: Свирепый 
+	DisplayName: Свирепый
 	Description: Увеличена атака, снижена защита, и вы не можете себя контролировать
 }
 
@@ -229,7 +229,7 @@ DefenselessBuff: {
 }
 
 FlamesoftheUniverseBuff: {
-	DisplayName: Пламя Вселенной 
+	DisplayName: Пламя Вселенной
 	Description: Сами небеса судят вас
 }
 
@@ -245,7 +245,7 @@ FlippedHallowBuff: {
 
 FusedBuff: {
 	DisplayName: Фитиль
-	Description: "Сейчас вылетит бомба!"
+	Description: Сейчас вылетит бомба!
 }
 
 GodEaterBuff: {
@@ -264,7 +264,7 @@ HexedBuff: {
 }
 
 HolyPriceBuff: {
-	DisplayName: Святая Цена 
+	DisplayName: Святая Цена
 	Description: Скорость атаки снижена на 30%
 }
 
@@ -274,7 +274,7 @@ HypothermiaBuff: {
 }
 
 InfestedBuff: {
-	DisplayName: Заражённый 
+	DisplayName: Заражённый
 	Description: Станет только хуже
 }
 
@@ -327,7 +327,7 @@ LovestruckBuff: {
 
 LowGroundBuff: {
 	DisplayName: Заземлённый
-	Description: Нет крюка, не можете стоять на платформах или жидкостях 
+	Description: Нет крюка, не можете стоять на платформах или жидкостях
 }
 
 MarkedforDeathBuff: {
@@ -337,7 +337,7 @@ MarkedforDeathBuff: {
 
 MidasBuff: {
 	DisplayName: Мидас
-	Description: Вы роняете деньги при получении урона 
+	Description: Вы роняете деньги при получении урона
 }
 
 MutantNibbleBuff: {
@@ -474,7 +474,7 @@ CrystalSkullBuff: {
 }
 
 EaterMinionBuff: {
-	DisplayName: Пожиратель Миров 
+	DisplayName: Пожиратель Миров
 	Description: Миниатюрный Пожиратель Миров сражается за вас
 }
 
@@ -539,8 +539,8 @@ MutantRebirthBuff: {
 }
 
 BabyLifelightBuff: {
-	DisplayName: Жизнесветомец 
-	Description: Узри, это - свет ангела 
+	DisplayName: Жизнесветомец
+	Description: Узри, это - свет ангела
 }
 
 BrokenShellBuff: {
@@ -549,7 +549,7 @@ BrokenShellBuff: {
 }
 
 CrimsonRegenBuff: {
-	DisplayName: Багряное Исцеление 
+	DisplayName: Багряное Исцеление
 	Description: Ваша жизненная сила накапливается
 }
 
@@ -559,7 +559,7 @@ FirstStrikeBuff: {
 }
 
 FossilReviveCDBuff: {
-	DisplayName: Возрождён 
+	DisplayName: Возрождён
 	Description: Вы не можете возродиться снова
 }
 
@@ -569,7 +569,7 @@ FrozenBuff: {
 }
 
 GoldenStasisBuff: {
-	DisplayName: Золотой Застой 
+	DisplayName: Золотой Застой
 	Description: Вы не получаете урона, но не можете двигаться
 }
 
@@ -584,7 +584,7 @@ HallowCooldownBuff: {
 }
 
 HuntressBleedBuff: {
-	DisplayName: Кровотечение Охотницы 
+	DisplayName: Кровотечение Охотницы
 	Description: Mods.FargowiltasSouls.BuffDescription.HuntressBleedBuff
 }
 
@@ -624,7 +624,7 @@ SolarFlareBuff: {
 }
 
 SuperBleedBuff: {
-	DisplayName: Кровавый Гейзер 
+	DisplayName: Кровавый Гейзер
 	Description: Mods.FargowiltasSouls.BuffDescription.SuperBleedBuff
 }
 
@@ -669,7 +669,7 @@ TribalCharmClickBuff: {
 }
 
 TwinsInstallBuff: {
-	DisplayName: Установка Близнецов 
+	DisplayName: Установка Близнецов
 	Description: Эффекты Проклятия Ада и Ихора
 }
 
@@ -717,7 +717,7 @@ RainCDBuff: {
 
 SublimationBuff: {
 	Description: Mods.FargowiltasSouls.Buffs.SublimationBuff.Description
-	DisplayName: Бафф Сублимации 
+	DisplayName: Бафф Сублимации
 }
 
 CoffinTossBuff: {

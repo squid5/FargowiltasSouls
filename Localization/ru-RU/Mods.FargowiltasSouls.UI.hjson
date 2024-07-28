@@ -8,7 +8,7 @@ TurnAllTogglesOn: Включить все эффекты
 SomeEffectsPreset: Пресет с частичными эффектами
 MinimalEffectsPreset: Пресет с минимальными эффектами
 CustomPreset: Настраиваемый пресет {0} (ПКМ для сохранения)
-// Reload button is currently removed (sad)
+// Reload button is currently removed
 ReloadToggles: Перезагрузка включённых эффектов (ПКМ для сброса)
 NoToggles: Не экипирован ни один аксессуар с переключаемыми эффектами!
 DisplayAll: Показать все

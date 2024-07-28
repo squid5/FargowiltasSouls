@@ -1074,7 +1074,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                 {
                     float runeRot = (float)(BodyRotation + Math.PI * 2 / RuneCount * i);
                     Vector2 runePos = NPC.Center + runeRot.ToRotationVector2() * RuneDistance;
-                    DrawRunes = false;
+                    //DrawRunes = false;
                     NPC.netUpdate = true;
 
                     if (FargoSoulsUtil.HostCheck)
@@ -2960,7 +2960,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                     State = (int)Main.rand.NextFromCollection(doableStates);
                     LastAttack[i] = State;
 
-                    State = (int)States.RuneScatter;
+                    //State = (int)States.RuneScatter;
                 }
             }
         }

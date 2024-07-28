@@ -15,7 +15,7 @@ SoulConfig: {
 		Label: Описания о Выключенных Эффектах
 		Tooltip: Если включена, у предметов с любыми эффектами, выключенными в Переключателе Эффектов, в описании появится строчка, говорящая об этом.
 	}
-	
+
 	DeviChatter: {
 		Label: Чиби Деви может говорить
 		Tooltip: ""
@@ -134,5 +134,10 @@ SoulConfig: {
 	PatreonROB: {
 		Label: "[i:FargowiltasSouls/ROBGyro] [c/ffffff:{$Mods.FargowiltasSouls.Items.ROBGyro.DisplayName}]"
 		Tooltip: ""
+	}
+
+	PerformanceMode: {
+		// Label: Performance Mode
+		// Tooltip: Disables the most performance-demanding visuals. Currently disables Mutant's eye attack trails.
 	}
 }

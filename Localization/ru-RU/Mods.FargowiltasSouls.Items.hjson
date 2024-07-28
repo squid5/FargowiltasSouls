@@ -839,6 +839,15 @@ EarthForce: {
 		Враги получают в 4 раза больше урона от дебаффов
 		'Благословение Гайи озаряет вас'
 		'''
+	/* SaveOldTooltip:
+		'''
+		[i:FargowiltasSouls/CobaltEnchant] Grants an explosion jump and you explode on hit
+		[i:FargowiltasSouls/MythrilEnchant] Stop attacking to gradually increase attack speed for up to 5 seconds
+		[i:FargowiltasSouls/PalladiumEnchant] Grants Rapid Healing after striking an enemy and spawn life orbs based on healing
+		[i:FargowiltasSouls/OrichalcumEnchant] Attacks spawn flower petals and damaging debuffs deal 3.5x damage
+		[i:FargowiltasSouls/AdamantiteEnchant] Every weapon shot will split into 3, 50% damage each, with higher spread the longer you fire
+		[i:FargowiltasSouls/TitaniumEnchant] Attacks generate titanium shards, reaching max grants Titanium Shield
+		''' */
 }
 
 LifeForce: {
@@ -879,6 +888,20 @@ ShadowForce: {
 		Двигайтесь медленно, чтобы увеличить ваш урон, вплоть до 40% прибавки
 		'Темнее, Темнее, Ещё Темнее'
 		'''
+	/* SavingOldTooltip:
+		'''
+		[i:FargowiltasSouls/ShadowEnchant] Four Shadow Orbs will orbit around you
+		[i:FargowiltasSouls/AncientShadowEnchant] Your attacks may inflict Darkness on enemies
+		[i:FargowiltasSouls/NecroEnchant] Slain enemies may drop a pile of bones
+		[i:FargowiltasSouls/NinjaEnchant] Increases projectile damage based on projectile speed
+		[i:FargowiltasSouls/NinjaEnchant] Increases projectile speed while moving slowly
+		[i:FargowiltasSouls/CrystalAssassinEnchant] Throw a smoke bomb to teleport to it and gain the First Strike Buff
+		[i:FargowiltasSouls/SpookyEnchant] All of your minions gain an extra scythe attack
+		[i:FargowiltasSouls/MonkEnchant] Don't attack to gain a single use monk dash
+		[i:FargowiltasSouls/ShinobiEnchant] Dash into any walls, to teleport through them to the next opening
+		[i:FargowiltasSouls/ApprenticeEnchant] While attacking, fire your next 3 closest weapons' projectiles as support
+		[i:FargowiltasSouls/DarkArtistEnchant] Summons a Flameburst minion that will also fire when you attack
+		''' */
 }
 
 SpiritForce: {
@@ -1812,7 +1835,7 @@ TerrariaSoul: {
 }
 
 TrawlerSoul: {
-	DisplayName: Душа Траулера 
+	DisplayName: Душа Траулера
 	Tooltip:
 		'''
 		Существенно улучшает мастерство рыбалки
@@ -1980,7 +2003,7 @@ MutantPants: {
 }
 
 NekomiHood: {
-	DisplayName: Капюшон Некоми 
+	DisplayName: Капюшон Некоми
 	Tooltip:
 		'''
 		Увеличивает урон на 7%
@@ -1989,7 +2012,7 @@ NekomiHood: {
 }
 
 NekomiHoodie: {
-	DisplayName: Толстовка Некоми 
+	DisplayName: Толстовка Некоми
 	Tooltip:
 		'''
 		Немного увеличивает регенерацию здоровья
@@ -1998,7 +2021,7 @@ NekomiHoodie: {
 }
 
 StyxChestplate: {
-	DisplayName: Нагрудник Стикс 
+	DisplayName: Нагрудник Стикс
 	Tooltip:
 		'''
 		Увеличивает урон на 15%
@@ -2009,7 +2032,7 @@ StyxChestplate: {
 }
 
 StyxCrown: {
-	DisplayName: Корона Стикс 
+	DisplayName: Корона Стикс
 	Tooltip:
 		'''
 		Увеличивает урон на 10%
@@ -2019,7 +2042,7 @@ StyxCrown: {
 }
 
 StyxLeggings: {
-	DisplayName: Поножи Стикс 
+	DisplayName: Поножи Стикс
 	Tooltip:
 		'''
 		Увеличивает урон на 10%
@@ -2054,7 +2077,7 @@ TrojanSquirrelBag: {
 }
 
 DeerSinew: {
-	DisplayName: Сухожилие Оленя 
+	DisplayName: Сухожилие Оленя
 	Tooltip:
 		'''
 		Позволяет совершать рывок без предназначенных для этого аксессуаров
@@ -2197,7 +2220,7 @@ TopHatSquirrelCaught: {
 }
 
 UniversalCollapse: {
-	DisplayName: Вселенный Коллапс 
+	DisplayName: Вселенный Коллапс
 	Tooltip: Уничтожает Вселенную
 }
 
@@ -2254,7 +2277,7 @@ ChibiHat: {
 		Idle4: Когда-нибудь пытался копать Взрывными Сюрикенами? Хе хе...
 		Idle5: Мы должны захватить мир. Шучу! Почти.
 		Idle6: Хочу посмотреть, как ты убиваешь больше существ!
-		Idle7: Всё ещё кажется странным называться освещающим питомцем... 
+		Idle7: Всё ещё кажется странным называться освещающим питомцем...
 		Idle8: Нечем заняться? Убей что-нибудь!
 		Idle9: Готова поспорить, что есть упрощающий жизнь трюк, который мы могли бы попробовать.
 		Idle10: Не против, если я поиграюсь с этими твоими переключателями аксессуаров?
@@ -2777,7 +2800,7 @@ Blender: {
 }
 
 DestroyerGun2: {
-	DisplayName: Пушка Изничтожения 
+	DisplayName: Пушка Изничтожения
 	Tooltip:
 		'''
 		Становится длиннее и быстрее при наличии до 5 пустых слотов для прислужников
@@ -2940,7 +2963,7 @@ MasochistReal: {
 
 MedallionoftheFallenKing: {
 	DisplayName: Медальон Падшего Короля
-	Tooltip: Призывает Прислужника Короля Слизней, усиливающегося в соответствии с уроном прислужников 
+	Tooltip: Призывает Прислужника Короля Слизней, усиливающегося в соответствии с уроном прислужников
 }
 
 ComputationOrb: {
@@ -2964,7 +2987,7 @@ StaffOfUnleashedOcean: {
 }
 
 DeviousAestheticus: {
-	DisplayName: Коварный Эстетикус 
+	DisplayName: Коварный Эстетикус
 	Tooltip:
 		'''
 		Разброс выстрелов увеличивается при наличии пустых слотов для прислужников, вплоть до 6 слотов
@@ -3206,7 +3229,7 @@ MechLure: {
 }
 
 TheBaronsTusk: {
-	DisplayName: Клык Барона 
+	DisplayName: Клык Барона
 	Tooltip:
 		'''
 		Взмахи разбрасывают летающую шрапнель, которая может застревать во врагах
@@ -3340,6 +3363,7 @@ PrimeSoul: {
 	Tooltip: ""
 }
 
+// Dummy Item
 OncomingMutantItem: {
 	DisplayName: Oncoming Mutant Icon
 	Tooltip: Exists solely to be displayed in the Toggler UI when you have Mutant Presence
@@ -3380,4 +3404,95 @@ RazorContainer: {
 		В полёте, лезвие всегда наносит критический урон и имеет повышенное пробивание брони
 		'Всё ещё есть немного жёлтого меха, застрявшего на дне' 
 		'''
+}
+
+NebulaBooster: {
+	// DisplayName: Nebula Booster
+	// Tooltip: ""
+	// Activate: +{0} life regen
+	// Deactivate: -{0} life regen
+}
+
+SolarBooster: {
+	// DisplayName: Solar Booster
+	// Tooltip: ""
+	// Activate: +{0}% DR
+	// Deactivate: -{0}% DR
+}
+
+StardustBooster: {
+	// DisplayName: Stardust Booster
+	// Tooltip: ""
+	// Activate: +{0}% damage
+	// Deactivate: -{0}% damage
+}
+
+VortexBooster: {
+	// DisplayName: Vortex Booster
+	// Tooltip: ""
+	// Activate: +{0}% crit chance
+	// Deactivate: -{0}% crit chance
+}
+
+CosmosBooster: {
+	// DisplayName: Cosmos Booster
+	// Tooltip: ""
+	// Activate: +{0}% crit damage
+	// Deactivate: -{0}% crit damage
+}
+
+DeathBooster: {
+	// DisplayName: Death Booster
+	// Tooltip: ""
+	// Activate: +{0} armor pen
+	// Deactivate: -{0} armor pen
+}
+
+EarthBooster: {
+	// DisplayName: Earth Booster
+	// Tooltip: ""
+	// Activate: +{0}% DR
+	// Deactivate: -{0}% DR
+}
+
+LifeBooster: {
+	// DisplayName: Life Booster
+	// Tooltip: ""
+	// Activate: +{0} life regen
+	// Deactivate: -{0} life regen
+}
+
+NatureBooster: {
+	// DisplayName: Nature Booster
+	// Tooltip: ""
+	// Activate: +{0} defense
+	// Deactivate: -{0} defense
+}
+
+SpiritBooster: {
+	// DisplayName: Spirit Booster
+	// Tooltip: ""
+	// Activate: +{0} mana regen
+	// Deactivate: -{0} mana regen
+}
+
+TerraBooster: {
+	// DisplayName: Terra Booster
+	// Tooltip: ""
+	// Activate: +{0}% crit chance
+	// Deactivate: -{0}% crit chance
+}
+
+TimberBooster: {
+	// DisplayName: Timber Booster
+	// Tooltip: ""
+	// Activate: +{0}% damage
+	// Deactivate: -{0}% damage
+}
+
+WillBooster: {
+	// DisplayName: Will Booster
+	// Tooltip: ""
+	// Activate: +{0} flat damage
+	// Deactivate: -{0} flat damage
 }

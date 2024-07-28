@@ -33,7 +33,7 @@ BlenderProj3.DisplayName: Блендер
 BlenderSpray.DisplayName: Распыление Блендера
 BlenderYoyoProj.DisplayName: Блендер
 Bonez.DisplayName: Козте
-DarkStarFriendly.DisplayName: Тёмная Звезда
+// MechElectricOrbFriendly.DisplayName: Electric Orb
 Dash.DisplayName: Рывок
 Dash2.DisplayName: Рывок2
 DicerMine.DisplayName: Мина Измельчителя
@@ -276,10 +276,10 @@ CultistFireball.DisplayName: Огненный Шар
 CultistRitual.DisplayName: Ритуал Культиста
 CultistVortex.DisplayName: Вихрь
 CursedFlamethrower.DisplayName: Глазной Огонь
-DarkStar.DisplayName: Тёмная Звезда
-DarkStarDestroyer.DisplayName: Тёмная Звезда
-DarkStarHoming.DisplayName: Тёмная Звезда
-DarkStarTwins.DisplayName: Тёмная Звезда
+// MechElectricOrb.DisplayName: Electric Orb
+// MechElectricOrbDestroyer.DisplayName: Electric Orb
+// MechElectricOrbHoming.DisplayName: Electric Orb
+// MechElectricOrbTwins.DisplayName: Electric Orb
 DeathSkull.DisplayName: Череп Смерти
 DeerclopsHand.DisplayName: Теневая Рука
 DestroyerLaser.DisplayName: Лазер Смерти
@@ -401,8 +401,8 @@ NekomiDevi.DisplayName: Девиантт
 NekomiRitual.DisplayName: Ритуал Некоми
 OpticFlame.DisplayName: Глазной Огонь
 OpticLaser.DisplayName: Лазер Смерти
-OpticРетиназер.DisplayName: Ретиназер
-OpticСпазматизм.DisplayName: Спазматизм
+// OpticRetinazer.DisplayName: Retinazer
+// OpticSpazmatism.DisplayName: Spazmatism
 PalmTreeSentry.DisplayName: Пальма
 PhantasmalBoltTrueEye.DisplayName: Призрачный Снаряд
 PhantasmalDeathrayPungent.DisplayName: Святой Луч Смерти
@@ -459,7 +459,7 @@ MutantNuke.DisplayName: Ядерыбная Ракета
 MutantPillar.DisplayName: Небесная Башня
 MutantReticle.DisplayName: Прицел Мутанта
 MutantReticle2.DisplayName: Прицел Мутанта
-MutantRetirang.DisplayName: Ретиранг   
+MutantRetirang.DisplayName: Ретиранг
 MutantRitual.DisplayName: Печать Мутанта
 MutantRitual2.DisplayName: Печать Мутанта
 MutantRitual3.DisplayName: Печать Мутанта
@@ -638,7 +638,7 @@ LightslingerShot.DisplayName: Выстрел Света
 SpiritArrow.DisplayName: Стрела Духа
 SpiritArrowFlame.DisplayName: Пламя Духа
 CirnoBomb.DisplayName: Чирно Бомба
-РетиназерDeathray.DisplayName: Блестящий Луч Смерти
+// RetinazerDeathray.DisplayName: Blazing Deathray
 MimicDagger.DisplayName: Магический Кинжал
 MimicHallowStar.DisplayName: Святая Звезда
 MimicTitanGlove.DisplayName: Перчатка Титана
@@ -721,10 +721,11 @@ TimberBranch.DisplayName: Ветвь Леса
 CosmosForceMoon.DisplayName: Луна Артефакта Космоса
 GladiatorSpirit.DisplayName: Дух Гладиатора
 ShadowDash.DisplayName: Теневой Рывок
-SpiritTornado.DisplayName: Торнадо Душ 
+SpiritTornado.DisplayName: Торнадо Душ
 TerrariaSoulMoon.DisplayName: Луны Души Террарии
 DeviDevilScythe.DisplayName: Дьявольская Коса Деви
 LifeHomingProjSmall.DisplayName: Маленький Бла Бла
 LifeRuneExplosion.DisplayName: Life Rune Explosion
 LifeRunespearHitbox.DisplayName: Life Runespear Hitbox
 LifeRunespearExplosion.DisplayName: Life Runespear Explosion
+// LifeRuneRetractHitbox.DisplayName: Life Rune Retract Hitbox
