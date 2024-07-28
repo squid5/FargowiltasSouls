@@ -1,0 +1,197 @@
+DisableAllAttackEffects: Отключить Все Эффекты с Доп. Атаками
+DisableAllMinionEffects: Отключить Все Эффекты с Прислужниками
+TimberHeader: "{$Mods.FargowiltasSouls.Items.TimberForce.DisplayName}"
+WoodCompletionEffect: Ускоренное Заполнение Дерева
+BorealEffect: Снежки Заснеженной Дерева
+MahoganyEffect: Скорость Крюков Красной Дерева
+EbonwoodEffect: Аура Порчи Чёрной Дерева
+ShadewoodEffect: Кровавые Гейзеры При Ударе
+PalmwoodEffect: Часовой-Пальма
+PearlwoodStarEffect: Звёзды Жемчужного Дерева
+PearlwoodManaEffect: Звёзды Маны Жемчужного Дерева
+PearlwoodRainbowEffect: Радужный Хвост Жемчужного Дерева
+TimberEffect: Ветви Леса
+EarthHeader: "{$Mods.FargowiltasSouls.Items.EarthForce.DisplayName}"
+AdamantiteEffect: Разделение Снарядов Адамантита
+CobaltEffect: Взрыв При Уроне Кобальта
+AncientCobaltEffect: Взрывной Прыжок Древнего Кобальта
+MythrilEffect: Скорость Оружий Мифрила
+OrichalcumEffect: Лепестки Орихалка
+PalladiumHealing: Лечение Палладия
+PalladiumEffect: Палладиевые Сферы
+TitaniumEffect: Осколки Титана
+EarthForceEffect: Заряд Оружия Земли
+TerraHeader: "{$Mods.FargowiltasSouls.Items.TerraForce.DisplayName}"
+CopperEffect: Молния Меди
+IronEffect: Магнит Железа
+LeadPoisonEffect: Свинцовое Отравление
+SilverEffect: Парирование Серебра
+TinEffect: Криты Олова
+TungstenEffect: Эффект Вольфрама
+ObsidianProcEffect: Взрыв Обсидиана
+AshWoodFireballs: Шары Огня Ясеня
+TerraLightningEffect:  Молния Терры
+WillHeader: "{$Mods.FargowiltasSouls.Items.WillForce.DisplayName}"
+GladiatorSpears: Копья Гладиатора
+GladiatorBanner: Знамя Гладиатора
+GoldEffect: Счастливая Монета Золота
+GoldToPiggy: Золото в Свинью-копилку
+HuntressEffect: Способность Охотница
+RedRidingEffect: Дождь Стрел Красного Наездника
+ValhallaDash: Наездный Рывок Вальгаллы
+SquireMountJump: Наездный Прыжок Оруженосца
+SquireMountSpeed: Скорость Наездных Питомцев Оруженосца
+WillGladiatorEffect: Дух Гладиатора Воли
+LifeHeader: "{$Mods.FargowiltasSouls.Items.LifeForce.DisplayName}"
+BeeEffect: Цветы Пчелы
+BeetleEffect: Жуки
+CactusEffect: Иглы Кактуса
+PumpkinEffect: Растущие Тыквы
+SpiderEffect: Криты Паука
+TurtleEffect: Бафф Черепашьего Панциря
+NatureHeader: "{$Mods.FargowiltasSouls.Items.NatureForce.DisplayName}"
+ChloroMinion: Кристальный Лист Хлорофита
+CrimsonEffect: Лечение Багрянца
+RainUmbrellaEffect: Зонт Дождя
+RainInnerTubeEffect: Воздушная Камера
+SnowEffect: Замораживающие Снежки
+JungleJump: Прыжок и Споры Джунглей
+JungleDashEffect: Рывок Джунглей
+MoltenEffect: Бафф Литого Инферно
+ShroomiteStealthEffect: Невидимость Грибов
+ShroomiteShroomEffect: Грибы Грибов
+NatureBeamEffect: Лечебные Лучи Природы
+ShadowHeader: "{$Mods.FargowiltasSouls.Items.ShadowForce.DisplayName}"
+DarkArtistMinion: Огнемётный Миньон
+ApprenticeSupport: Эффект Ученика
+NecroEffect: Могилы Некро
+ShadowBalls: Сферы Тени
+AncientShadowDarkness: Тьма Древней Тени
+MonkDashEffect: Рывок Монаха
+ShinobiDashEffect: Рывок Монаха Улучшение Шиноби
+ShinobiThroughWalls: Шиноби Через Стены
+SpookyEffect: Косы Жути
+NinjaEffect: Скорость Ниндзя
+CrystalAssassinDash: Рывок Хрустального Убийцы
+ShadowForceDashEffect: Рывок Тени
+ShadowForceDamageEffect: Урон Рывка Тени
+SpiritHeader: "{$Mods.FargowiltasSouls.Items.SpiritForce.DisplayName}"
+FossilBones: Ископаемые Кости При Ударе
+HallowEffect: Лечебные Зелья Освящения
+AncientHallowMinion: Клинок Древнего Освящения
+SpectreEffect: Сферы Спектра
+ForbiddenEffect: Запретный Шторм
+TikiEffect: Миньоны Тики
+SpiritTornadoEffect: Торнадо Духа
+CosmoHeader: "{$Mods.FargowiltasSouls.Items.CosmoForce.DisplayName}"
+MeteorMomentumEffect: Скорость Метеора
+MeteorEffect: Метеоритный Дождь
+MeteorTrailEffect: След из Искр Метеора
+NebulaEffect: Усилители Туманности
+SolarEffect: Щит и Рывок Солнечной Вспышки
+SolarFlareEffect: Дебафф Солнечная Вспышка
+StardustMinionEffect: Защитник Звёздной Пыли
+VortexStealthEffect: Невидимость Вихря
+VortexVortexEffect: Пустоты Вихря
+CosmosMoonEffect: Луны Космоса
+DeviEnergyHeader: Аксессуары Режима Вечность
+DeerSinewEffect: Рывок Сухожилия Оленя
+ZephyrJump: Пердёжный Прыжок
+MasoAeolusFlower: Цветочные Сапоги
+MasoAeolusFrog: Лягушачий Прыжок
+SinisterIconEffect: Скорость Появления Врагов Зловещей Иконы
+SinisterIconDropsEffect: Выпадающие Предметы Зловещей Иконы
+MasoGraze: Грэйз
+MasoGrazeRing: Визуал Радиуса Грэйза
+DevianttHearts: Самонаводящиеся Сердца Во Время Атаки
+AbomWandCrit: Поддержка Призрачного Выродкка
+SupremeFairyHeader: "{$Mods.FargowiltasSouls.Items.SupremeDeathbringerFairy.DisplayName}"
+SlimyShieldEffect: Слизневые Шары
+SlimeFallEffect: Увеличенная Скорость Падения
+AgitatingLensEffect: Косы При Рывках
+AgitatingLensInstall: Установка Свирепости
+SkeleMinionEffect: Прислужники Руки Скелетрона
+NecroBrewSpin: Крутящийся Рывок Скелетрона
+BionomicHeader: "{$Mods.FargowiltasSouls.Items.BionomicCluster.DisplayName}"
+TimsConcoctionEffect: Смесь Тима
+MasoCarrotEffect: Обзор Морковки
+RainbowSlimeMinion: Прислужник Радужный Слизень
+RainbowHealEffect: Автом. Использование Лечебных Зелий
+NymphPerfumeEffect: Атаки Создают Сердца
+SqueakEffect: Игрушка-Пищалка При Уроне
+WretchedPouchEffect: Установка Проклятья Несчастья
+ClippedEffect: Дебафф Оборванные Крылья
+WyvernBalls: Светлые Сферы Полёта
+TribalCharmClickBonus: Бонус Клика Амулета Племени
+StabilizedGravity: Стабилизированная Гравитация
+DubiousHeader: "{$Mods.FargowiltasSouls.Items.DubiousCircuitry.DisplayName}"
+FusedLensInstall: Установка Близнецов
+GroundStickDR: Подзарядка При Уроне
+ProbeMinionEffect: Прислужник Дрон
+PureHeartHeader: "{$Mods.FargowiltasSouls.Items.PureHeart.DisplayName}"
+DarkenedHeartEaters: Маленькие Пожиратели
+GuttedHeartMinions: Щит из Ползунов
+GelicWingSpikes: Гелеподобные Шипы
+GelicWingJump: Гелеподобный Прыжок
+LumpofFleshHeader: "{$Mods.FargowiltasSouls.Items.LumpOfFlesh.DisplayName}"
+PungentEyeballCursor: Курсор Едкого Глазного Яблока
+PungentMinion: Прислужник Кусок Плоти
+DeerclawpsDive: Пикирование Циклешненя
+DeerclawpsEffect: След из Шипов При Рывке Циклешненя 
+DreadShellEffect: Парирование Панциря Ужаса
+ChaliceHeader: "{$Mods.FargowiltasSouls.Items.ChaliceoftheMoon.DisplayName}"
+CultistMinionEffect: Прислужник Культист
+PlantMinionEffect: Прислужник Плантера
+LihzahrdGroundPound: Быстрое Падение Ящщеров
+LihzahrdBoulders: Валуны и Гейзеры Топота
+CelestialRuneAttacks: Поддержка Небесной Руны
+HeartHeader: "{$Mods.FargowiltasSouls.Items.HeartoftheMasochist.DisplayName}"
+PrecisionSealHurtbox: Уменьшенный Размер Хёртбокса
+PumpkingsCapeEffect: Парирование Плаща Тыквенного Короля
+IceQueenGraze: Грэйз
+UfoMinionEffect: Прислужник Тарелка
+MasoGravEffect: Контроль Гравитации
+MasoTrueEyeMinion: Прислужники Истинные Глаза
+MutantArmorHeader: Истинная Броня Мутанта
+MasoAbom: Прислужник Выродокк
+MasoRing: Прислужник Фантазматическое Кольцо
+UniverseHeader: "{$Mods.FargowiltasSouls.Items.UniverseSoul.DisplayName}"
+MeleeSpeedEffect: Ближняя Скорость
+SniperScopeEffect: Снайперский Прицел
+UniverseSpeedEffect: Скорость Атаки Вселенной
+WorldShaperHeader: "{$Mods.FargowiltasSouls.Items.WorldShaperSoul.DisplayName}"
+MiningHunt: Бафф Охотника
+MiningDanger: Бафф Чувства Опасности
+MiningSpelunk: Бафф Шахтёра
+MiningShine: Бафф Света
+BuilderEffect: Режим Строителя
+ColossusHeader: "{$Mods.FargowiltasSouls.Items.ColossusSoul.DisplayName}"
+DefenseStarEffect: Звёзды При Уроне
+DefenseBrainEffect: Мозги Запутанности
+DefenseBeeEffect: Пчёлы При Уроне
+FleshKnuckleEffect: Агро Кастета из Плоти
+PaladinShieldEffect: Щит Паладина
+FrozenTurtleEffect: Ледяной Черепаший Панцирь
+ShimmerImmunityEffect: Иммунитет к Симмеру
+FlightMasteryHeader: "{$Mods.FargowiltasSouls.Items.FlightMasterySoul.DisplayName}"
+FlightMasteryInsignia: Ускорение Парящей Эмблемы
+FlightMasteryGravity: Усиленная Гравитация
+SupersonicHeader: "{$Mods.FargowiltasSouls.Items.SupersonicSoul.DisplayName}"
+RunSpeed: Увеличенная Базовая Скорость Бега
+NoMomentum: Нет Инерции
+SupersonicTabi: Рывок Таби
+SupersonicClimbing: Альпинистский Набор Тигра
+SupersonicSpeedEffect: Увеличение Скорости
+SupersonicJumps: Прыжки
+SupersonicRocketBoots: Реактивные Сапоги
+SupersonicCarpet: Ковёр-самолёт
+CthulhuShield: Щит Ктулху
+BlackBelt: Чёрный Пояс
+SupersonicPanic: Паника При Уроне
+TrawlerHeader: "{$Mods.FargowiltasSouls.Items.TrawlerSoul.DisplayName}"
+TrawlerSporeSac: Споровый Мешок
+TrawlerJump: Прыжок
+TrawlerGel: Нестабильный Желатин
+EternityHeader: "{$Mods.FargowiltasSouls.Items.EternitySoul.DisplayName}"
+EternityTin: Эффект Накладывающихся Критов Вечности
+TerrariaMoonEffect: Луны Террарии
