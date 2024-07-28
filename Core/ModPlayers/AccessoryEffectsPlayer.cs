@@ -482,30 +482,6 @@ namespace FargowiltasSouls.Core.ModPlayers
                     }
                 }
             }
-
-            if (Player.HasEffect<WretchedPouchEffect>())
-            {
-                int buffType = ModContent.BuffType<WretchedHexBuff>();
-                if (Player.HasBuff(buffType))
-                {
-                    Player.ClearBuff(buffType);
-                }
-                else
-                {
-                    SoundEngine.PlaySound(SoundID.Item119, Player.Center);
-
-                    Player.AddBuff(buffType, 2);
-
-                    int max = 60;
-                    for (int i = 0; i < max; i++)
-                    {
-                        float scale = 3f;
-                        int index2 = Dust.NewDust(Player.position, Player.width, Player.height, DustID.Shadowflame, 0f, 0f, 0, new Color(), scale);
-                        Main.dust[index2].noGravity = true;
-                        Main.dust[index2].velocity *= scale * 3;
-                    }
-                }
-            }
         }
 
         public void AmmoCycleKey()
