@@ -2,6 +2,7 @@ using FargowiltasSouls.Content.Items.BossBags;
 using FargowiltasSouls.Content.Projectiles.ChallengerItems;
 using Microsoft.Xna.Framework;
 using System;
+using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -72,9 +73,10 @@ namespace FargowiltasSouls.Content.Items.Weapons.Challengers
             lastLMouse = Main.mouseLeft;
             base.HoldItem(player);
         }
+        public bool AllowUse(Player player) => Main.projectile.Where(p => p.TypeAlive(Item.shoot) && p.owner == player.whoAmI && p.As<CrystallineCongregationProj>().home).Count() < 30;
         public override bool CanUseItem(Player player)
         {
-            if (player.ownedProjectileCounts[Item.shoot] >= 30)
+            if (!AllowUse(player))
             {
                 Item.useTime = 30;
                 Item.useAnimation = 30;
@@ -95,7 +97,7 @@ namespace FargowiltasSouls.Content.Items.Weapons.Challengers
         }
         public override bool CanShoot(Player player) //different from CanUseItem because here you hold weapon out, and use mana
         {
-            return player.ownedProjectileCounts[Item.shoot] < 30 && base.CanShoot(player);
+            return AllowUse(player) && base.CanShoot(player);
         }
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
