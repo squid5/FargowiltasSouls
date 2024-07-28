@@ -4,8 +4,11 @@ using FargowiltasSouls.Core.Systems;
 using Luminance.Core.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
+using System;
 using Terraria;
 using Terraria.Audio;
+using Terraria.Graphics;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -30,7 +33,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
         }
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) 
         {
-            return LumUtils.CircularHitboxCollision(Projectile.Center, projHitbox.Width / 2, targetHitbox);
+            return Projectile.Distance(FargoSoulsUtil.ClosestPointInHitbox(targetHitbox, Projectile.Center)) < projHitbox.Width / 2;
         }
         private Color GetColor()
         {
@@ -52,7 +55,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
             }
         }
         public int Timer = 0;
-        public const int ExplosionSize = 150;
+        public const int ExplosionSize = 200;
         public override void AI()
         {
 
@@ -98,21 +101,71 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
             if (WorldSavingSystem.EternityMode)
                 target.AddBuff(ModContent.BuffType<Buffs.Masomode.SmiteBuff>(), 60 * 6);
         }
-        public override bool PreDraw(ref Color lightColor)
-        {
-            if (Timer < Projectile.ai[2])
-            {
-                //draw glow ring
-                Color RingColor = GetColor() * Projectile.Opacity * 0.5f;
-                Texture2D ringTexture = ModContent.Request<Texture2D>("FargowiltasSouls/Content/Projectiles/GlowRing", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-                float RingScale = Projectile.scale * 2 * ExplosionSize / ringTexture.Height;
-                Rectangle ringrect = new(0, 0, ringTexture.Width, ringTexture.Height);
-                Vector2 ringorigin = ringrect.Size() / 2f;
-                Main.EntitySpriteDraw(ringTexture, Projectile.Center - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY), new Rectangle?(ringrect), RingColor, Projectile.rotation, ringorigin, RingScale, SpriteEffects.None, 0);
+        
 
-            }
-            return false;
+        public float WidthFunction(float progress) => Projectile.scale * 2 * ExplosionSize;
+
+        public Color ColorFunction(float progress)
+        {
+            return GetColor() * MathF.Sqrt(Projectile.Opacity) * 0.75f;
         }
 
+        public static Matrix GetWorldViewProjectionMatrix()
+        {
+            Matrix view = Matrix.CreateLookAt(Vector3.Zero, Vector3.UnitZ, Vector3.Up) * Matrix.CreateTranslation(Main.graphics.GraphicsDevice.Viewport.Width / 2, Main.graphics.GraphicsDevice.Viewport.Height / -2, 0) * Matrix.CreateRotationZ(MathHelper.Pi) * Matrix.CreateScale(Main.GameViewMatrix.Zoom.X, Main.GameViewMatrix.Zoom.Y, 1f);
+            Matrix projection = Matrix.CreateOrthographic(Main.graphics.GraphicsDevice.Viewport.Width, Main.graphics.GraphicsDevice.Viewport.Height, 0, 1000);
+            return view * projection;
+        }
+        public override bool PreDraw(ref Color lightColor)
+        {
+
+            if (Timer >= Projectile.ai[2])
+                return false;
+
+            
+            //draw glow ring
+            Color RingColor = ColorFunction(1);
+            Texture2D ringTexture = ModContent.Request<Texture2D>("FargowiltasSouls/Content/Projectiles/GlowRing", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            float RingScale = Projectile.scale * (1f / 0.7f) * ExplosionSize / ringTexture.Height;
+            Rectangle ringrect = new(0, 0, ringTexture.Width, ringTexture.Height);
+            Vector2 ringorigin = ringrect.Size() / 2f;
+            Main.EntitySpriteDraw(ringTexture, Projectile.Center - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY), new Rectangle?(ringrect), RingColor, Projectile.rotation, ringorigin, RingScale, SpriteEffects.None, 0);
+
+            RingColor = Color.White * MathF.Sqrt(Projectile.Opacity) * 0.25f;
+            ringTexture = ModContent.Request<Texture2D>("FargowiltasSouls/Content/Projectiles/GlowRingHollow", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            RingScale = Projectile.scale * 1f * ExplosionSize / ringTexture.Height;
+            ringrect = new(0, 0, ringTexture.Width, ringTexture.Height);
+            ringorigin = ringrect.Size() / 2f;
+            Main.EntitySpriteDraw(ringTexture, Projectile.Center - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY), new Rectangle?(ringrect), RingColor, Projectile.rotation, ringorigin, RingScale, SpriteEffects.None, 0);
+            return false;
+            
+            /*
+            Main.spriteBatch.End();
+            Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
+
+            ManagedShader shader = ShaderManager.GetShader("FargowiltasSouls.Vertex_CircleTelegraph");
+
+            FargoSoulsUtil.SetTexture1(ModContent.Request<Texture2D>("Terraria/Images/Extra_193").Value);
+            Color color = GetColor();
+            shader.TrySetParameter("mainColor", color);
+            shader.TrySetParameter("uWorldViewProjection", GetWorldViewProjectionMatrix());
+            shader.Apply();
+
+            VertexStrip vertexStrip = new();
+            List<Vector2> positions = [];
+            List<float> rotations = [];
+            float initialRotation = Projectile.rotation - MathHelper.Pi * 0.5f;
+            for (float i = 0; i < 1; i += 0.005f)
+            {
+                float rotation = initialRotation + MathHelper.TwoPi * i;
+                positions.Add(rotation.ToRotationVector2() * Projectile.scale * 2 * ExplosionSize + Projectile.Center);
+                rotations.Add(rotation + MathHelper.PiOver2);
+            }
+            vertexStrip.PrepareStrip(positions.ToArray(), rotations.ToArray(), ColorFunction, WidthFunction, -Main.screenPosition, includeBacksides: true);
+            vertexStrip.DrawTrail();
+            Main.spriteBatch.ExitShaderRegion();
+            return false;
+            */
+        }
     }
 }
