@@ -32,7 +32,7 @@ namespace FargowiltasSouls.Content.Items.Weapons.SwarmDrops
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.noMelee = true;
             Item.knockBack = 6f;
-            Item.UseSound = SoundID.Item62;
+            Item.UseSound = SoundID.Item62 with { Volume = 0.4f };
             Item.useAmmo = AmmoID.Rocket;
             Item.value = Item.sellPrice(0, 10);
             Item.rare = ItemRarityID.Purple;
@@ -67,7 +67,7 @@ namespace FargowiltasSouls.Content.Items.Weapons.SwarmDrops
             {
                 Item.useAnimation = 24;
                 Item.useTime = 24;
-                Item.UseSound = SoundID.Item62;
+                Item.UseSound = SoundID.Item62 with { Volume = 0.4f };
             }
             return base.CanUseItem(player);
         }
