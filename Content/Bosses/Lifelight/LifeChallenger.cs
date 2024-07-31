@@ -2336,14 +2336,6 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
             }
         }
 
-        public override void UpdateLifeRegen(ref int damage)
-        {
-            if (NPC.lifeRegen < 0)
-            {
-                NPC.lifeRegen /= 2;
-            }
-        }
-
         #region Hitbox
         public override bool CanHitPlayer(Player target, ref int CooldownSlot)
         {
