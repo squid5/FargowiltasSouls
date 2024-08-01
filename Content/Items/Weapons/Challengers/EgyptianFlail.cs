@@ -4,7 +4,6 @@ using Terraria;
 using Terraria.DataStructures;
 using Microsoft.Xna.Framework;
 using FargowiltasSouls.Content.Projectiles.ChallengerItems;
-using FargowiltasSouls.Content.Buffs;
 
 namespace FargowiltasSouls.Content.Items.Weapons.Challengers
 {

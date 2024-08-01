@@ -3437,6 +3437,16 @@ AccursedAnkh: {
 	// Tooltip: While held out, increases life regeneration and debuff depletion, but decreases defense by 10
 }
 
+SisypheanFist: {
+	// DisplayName: Sisyphean Fist
+	/* Tooltip:
+		'''
+		Grabs a huge boulder from the earth
+		Release the button to hurl it towards your cursor
+		You must be on solid ground to pick up a boulder
+		''' */
+}
+
 EgyptianFlail: {
 	// DisplayName: Nekhakha
 	/* Tooltip:
@@ -3444,4 +3454,9 @@ EgyptianFlail: {
 		Your summons will focus struck enemies
 		Occasionally causes shadowflame explosions
 		''' */
+}
+
+SpiritLongbow: {
+	// DisplayName: Spirit Longbow
+	// Tooltip: ""
 }

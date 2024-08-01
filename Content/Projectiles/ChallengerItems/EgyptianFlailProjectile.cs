@@ -8,8 +8,6 @@ using Terraria.ModLoader;
 using System.Linq;
 using Terraria.Audio;
 using FargowiltasSouls.Content.Projectiles.Masomode;
-using FargowiltasSouls.Core.ModPlayers;
-using System;
 
 namespace FargowiltasSouls.Content.Projectiles.ChallengerItems
 {
