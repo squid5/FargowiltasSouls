@@ -3443,7 +3443,7 @@ EgyptianFlail: {
 
 SpiritLongbow: {
 	DisplayName: Spirit Longbow
-	Tooltip: 
+	Tooltip:
 		'''
 		Converts arrows to Spirit Arrows that release spirit energy behind them
 		Hold button to charge shots for more damage and higher speed

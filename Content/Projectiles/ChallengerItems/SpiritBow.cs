@@ -44,6 +44,8 @@ namespace FargowiltasSouls.Content.Projectiles.ChallengerItems
                 Projectile.rotation = rot + MathHelper.Pi;
                 
                 Projectile.direction = Main.MouseWorld.DirectionTo(player.Center).X < 0 ? 1 : -1;
+                Projectile.spriteDirection = Projectile.direction;
+
                 player.ChangeDir(Projectile.direction);
                 player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.ThreeQuarters, rot - MathHelper.PiOver2);
 
@@ -79,9 +81,10 @@ namespace FargowiltasSouls.Content.Projectiles.ChallengerItems
         {
             Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
             Vector2 drawPos = Projectile.Center - Main.screenPosition;
-            float rot = Projectile.rotation;
+            float rot = Projectile.rotation + MathHelper.Pi;
             Rectangle frame = new(0, Projectile.height * (int)charge, texture.Width, Projectile.height);
-            SpriteEffects flip = Projectile.direction == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+            int direction = Main.player[Projectile.owner].direction;
+            SpriteEffects flip = direction == 1 ? SpriteEffects.None : SpriteEffects.FlipVertically;
             Main.EntitySpriteDraw(texture, drawPos, frame, lightColor, rot, new Vector2(frame.Width / 2, frame.Height / 2), Projectile.scale, flip);
             return false;
         }
