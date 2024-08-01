@@ -22,7 +22,7 @@ namespace FargowiltasSouls.Content.Items.Weapons.Challengers
 
         public override void SetDefaults()
         {
-            Item.damage = 15;
+            Item.damage = 20;
             Item.DamageType = DamageClass.Ranged;
             Item.width = 66;
             Item.height = 30;
@@ -31,7 +31,7 @@ namespace FargowiltasSouls.Content.Items.Weapons.Challengers
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.knockBack = 0.5f;
             Item.value = Item.sellPrice(0, 1, 0);
-            Item.rare = ItemRarityID.Orange;
+            Item.rare = ItemRarityID.Blue;
             Item.UseSound = null;
             Item.channel = true;
             Item.noUseGraphic = true;
@@ -42,11 +42,6 @@ namespace FargowiltasSouls.Content.Items.Weapons.Challengers
         }
 
         private float Charge = 1;
-
-        public override bool CanConsumeAmmo(Item ammo, Player player)
-        {
-            return player.ownedProjectileCounts[Item.shoot] < 1 && base.CanConsumeAmmo(ammo, player);
-        }
         
         public override void HoldItem(Player player)
         {
