@@ -1,12 +1,5 @@
 ﻿using FargowiltasSouls.Content.Projectiles.ChallengerItems;
-using Luminance.Core.Graphics;
-using Microsoft.Xna.Framework;
-using System;
-using System.Linq;
 using Terraria;
-using Terraria.Audio;
-using Terraria.DataStructures;
-using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -65,6 +58,11 @@ namespace FargowiltasSouls.Content.Items.Weapons.Challengers
             {
                 return tileType == TileID.Platforms || tileType == TileID.PlanterBox;
             }
+        }
+
+        public override void AddRecipes()
+        {
+            //CreateRecipe().AddIngredient<CursedCoffinBag>(2).AddTile(TileID.Solidifier).DisableDecraft().Register();
         }
     }
 }

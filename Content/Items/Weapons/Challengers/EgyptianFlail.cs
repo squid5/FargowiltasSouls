@@ -4,7 +4,6 @@ using Terraria;
 using Terraria.DataStructures;
 using Microsoft.Xna.Framework;
 using FargowiltasSouls.Content.Projectiles.ChallengerItems;
-using FargowiltasSouls.Content.Buffs;
 
 namespace FargowiltasSouls.Content.Items.Weapons.Challengers
 {
@@ -45,6 +44,11 @@ namespace FargowiltasSouls.Content.Items.Weapons.Challengers
         public override bool MeleePrefix()
         {
             return true;
+        }
+
+        public override void AddRecipes()
+        {
+            //CreateRecipe().AddIngredient<CursedCoffinBag>(2).AddTile(TileID.Solidifier).DisableDecraft().Register();
         }
     }
 }

@@ -34,6 +34,8 @@ namespace FargowiltasSouls.Content.Projectiles.ChallengerItems
         }
         public override void AI()
         {
+            float lightFade = (255f - Projectile.alpha) / 255f;
+            Lighting.AddLight(Projectile.Center, lightFade * 0.7f * Color.Plum.R / 255f, lightFade * 0.7f * Color.Plum.G / 255f, lightFade * 0.7f * Color.Plum.B / 255f);
             if (++Projectile.frameCounter >= 4)
             {
                 Projectile.frameCounter = 0;
@@ -55,8 +57,8 @@ namespace FargowiltasSouls.Content.Projectiles.ChallengerItems
                     {
                         Vector2 vectorToIdlePosition = Main.npc[(int)Projectile.ai[1]].Center - Projectile.Center;
                         float num = vectorToIdlePosition.Length();
-                        float speed = 12f;
-                        float inertia = 8f;
+                        float speed = 2.5f;
+                        float inertia = 12f;
                         float deadzone = 2f;
                         if (num > deadzone)
                         {
