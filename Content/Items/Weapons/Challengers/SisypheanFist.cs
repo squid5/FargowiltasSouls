@@ -59,5 +59,10 @@ namespace FargowiltasSouls.Content.Items.Weapons.Challengers
                 return tileType == TileID.Platforms || tileType == TileID.PlanterBox;
             }
         }
+
+        public override void AddRecipes()
+        {
+            //CreateRecipe().AddIngredient<CursedCoffinBag>(2).AddTile(TileID.Solidifier).DisableDecraft().Register();
+        }
     }
 }

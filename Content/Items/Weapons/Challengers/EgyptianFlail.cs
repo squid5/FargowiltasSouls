@@ -45,5 +45,10 @@ namespace FargowiltasSouls.Content.Items.Weapons.Challengers
         {
             return true;
         }
+
+        public override void AddRecipes()
+        {
+            //CreateRecipe().AddIngredient<CursedCoffinBag>(2).AddTile(TileID.Solidifier).DisableDecraft().Register();
+        }
     }
 }
