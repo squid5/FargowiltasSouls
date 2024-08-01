@@ -43,6 +43,10 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs
         {
             NPC.CloneDefaults(NPCID.QueenSlimeMinionPurple);
 
+            //because they will double dip on expert/master scaling otherwise
+            NPC.lifeMax = 110;
+            NPC.damage = 50;
+
             NPC.aiStyle = -1;
             NPC.knockBackResist = 0;
             NPC.timeLeft = 60 * 60;
@@ -92,8 +96,8 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs
                 Player player = Main.player[NPC.target];
                 Vector2 vectorToIdlePosition = player.Center - NPC.Center;
                 float num = vectorToIdlePosition.Length();
-                float speed = 20f;
-                float inertia = 30f;
+                float speed = 18f;
+                float inertia = 45f;
                 float deadzone = 150f;
                 if (num > deadzone && StopHoming == 0)
                 {

@@ -40,6 +40,10 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs
         {
             NPC.CloneDefaults(NPCID.QueenSlimeMinionPink);
 
+            //because they will double dip on expert/master scaling otherwise
+            NPC.lifeMax = 160;
+            NPC.damage = 50;
+
             NPC.aiStyle = -1;
             NPC.knockBackResist = 0;
             NPC.timeLeft = 60 * 60;
