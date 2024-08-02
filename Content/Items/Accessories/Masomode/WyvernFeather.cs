@@ -56,7 +56,6 @@ namespace FargowiltasSouls.Content.Items.Accessories.Masomode
         public override void PostUpdateMiscEffects(Player player)
         {
             player.gravity = Math.Max(player.gravity, Player.defaultGravity);
-            player.ignoreWater = true;
         }
     }
     public class ClippedEffect : AccessoryEffect
