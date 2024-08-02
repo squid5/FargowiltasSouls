@@ -52,10 +52,11 @@ namespace FargowiltasSouls.Content.Items.Accessories.Masomode
     {
         public override Header ToggleHeader => Header.GetHeader<BionomicHeader>();
         public override int ToggleItemType => ModContent.ItemType<WyvernFeather>();
-        
+
         public override void PostUpdateMiscEffects(Player player)
         {
             player.gravity = Math.Max(player.gravity, Player.defaultGravity);
+            player.ignoreWater = true;
         }
     }
     public class ClippedEffect : AccessoryEffect
