@@ -80,7 +80,7 @@ namespace FargowiltasSouls.Content.Projectiles.ChallengerItems
 
             SoundEngine.PlaySound(SoundID.Item103, target.Center);
 
-            int dam = 50;
+            int dam = Projectile.damage * 3;
 
             void ShootTentacle(Vector2 baseVel, float variance, int aiMin, int aiMax)
             {

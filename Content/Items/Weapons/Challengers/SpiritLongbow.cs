@@ -30,7 +30,7 @@ namespace FargowiltasSouls.Content.Items.Weapons.Challengers
             Item.useAnimation = 5;
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.knockBack = 0.5f;
-            Item.value = Item.sellPrice(0, 1, 0);
+            Item.value = Item.sellPrice(0, 2);
             Item.rare = ItemRarityID.Blue;
             Item.UseSound = null;
             Item.channel = true;

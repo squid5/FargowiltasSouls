@@ -26,6 +26,7 @@ namespace FargowiltasSouls.Content.Items.Weapons.Challengers
             Item.autoReuse = true;
             Item.noUseGraphic = true;
             Item.knockBack = 10f;
+            Item.value = Item.sellPrice(0, 2);
         }
 
         public override void HoldItem(Player player)

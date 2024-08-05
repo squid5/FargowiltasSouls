@@ -36,7 +36,7 @@ namespace FargowiltasSouls.Content.Items.Weapons.Challengers
             Item.channel = true;
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.knockBack = 1f;
-            Item.value = Item.sellPrice(0, 10);
+            Item.value = Item.sellPrice(0, 2);
             Item.rare = ItemRarityID.Blue;
             Item.UseSound = CursedCoffin.ShotSFX;
             Item.autoReuse = true;
