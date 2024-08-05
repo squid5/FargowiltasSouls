@@ -33,7 +33,6 @@ namespace FargowiltasSouls.Content.Items.Accessories.Expert
             Item.channel = true;
             Item.useStyle = ItemUseStyleID.HoldUp;
             Item.consumable = false;
-            Item.value = Item.buyPrice(0, 0, 1);
 
             Item.UseSound = CursedCoffin.SpiritDroneSFX;
             Item.value = Item.sellPrice(0, 4);
