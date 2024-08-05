@@ -36,6 +36,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Expert
             Item.value = Item.buyPrice(0, 0, 1);
 
             Item.UseSound = CursedCoffin.SpiritDroneSFX;
+            Item.value = Item.sellPrice(0, 4);
         }
         public override void UseStyle(Player player, Rectangle heldItemFrame)
         {
