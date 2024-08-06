@@ -1,4 +1,5 @@
 using Terraria;
+using Terraria.ID;
 
 namespace FargowiltasSouls.Content.Projectiles.BossWeapons
 {
@@ -11,27 +12,27 @@ namespace FargowiltasSouls.Content.Projectiles.BossWeapons
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Projectile.penetrate = 2;
+            Projectile.penetrate = -1;
         }
 
         public override void AI()
         {
-            base.AI();
+            int dust = Dust.NewDust(Projectile.Center, Projectile.width, Projectile.height, DustID.BlueTorch, Projectile.velocity.X * 0.2f,
+                Projectile.velocity.Y * 0.2f, 100, default, 2f);
+            Main.dust[dust].noGravity = true;
+        }
 
-            if (bounce == 0)
+        public override void OnKill(int timeleft)
+        {
+            for (int i = 0; i < 20; i++)
             {
-                bounce = Projectile.timeLeft - Main.rand.Next(150);
-            }
-
-            if (Projectile.timeLeft == bounce)
-            {
-                bounce = 0;
-
-                if (Projectile.owner == Main.myPlayer)
-                {
-                    Projectile.velocity = Projectile.SafeDirectionTo(Main.MouseWorld) * Projectile.velocity.Length();
-                    Projectile.netUpdate = true;
-                }
+                int num469 = Dust.NewDust(Projectile.Center, Projectile.width, Projectile.height, DustID.BlueTorch, -Projectile.velocity.X * 0.2f,
+                    -Projectile.velocity.Y * 0.2f, 100, default, 2f);
+                Main.dust[num469].noGravity = true;
+                Main.dust[num469].velocity *= 2f;
+                num469 = Dust.NewDust(Projectile.Center, Projectile.width, Projectile.height, DustID.BlueTorch, -Projectile.velocity.X * 0.2f,
+                    -Projectile.velocity.Y * 0.2f, 100);
+                Main.dust[num469].velocity *= 2f;
             }
         }
 
