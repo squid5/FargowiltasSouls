@@ -1,4 +1,6 @@
 ﻿using FargowiltasSouls.Content.Projectiles.BossWeapons;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -15,10 +17,7 @@ namespace FargowiltasSouls.Content.Items.Weapons.SwarmDrops
             // Tooltip.SetDefault("'The reward for slaughtering many...'");
             //DisplayName.AddTranslation((int)GameCulture.CultureName.Chinese, "暗星炮");
             //Tooltip.AddTranslation((int)GameCulture.CultureName.Chinese, "'由一个被击败的敌人的武器改装而来..'");
-            Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(3, 7));
-            ItemID.Sets.AnimatesAsSoul[Item.type] = true;
         }
-        public override int NumFrames => 7;
         public override void SetDefaults()
         {
             Item.CloneDefaults(ItemID.LaserRifle);
