@@ -2,6 +2,7 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using System;
 
 namespace FargowiltasSouls.Content.Items.Weapons.Challengers
 {
@@ -33,7 +34,7 @@ namespace FargowiltasSouls.Content.Items.Weapons.Challengers
         {
             if (LastMouse && !Main.mouseLeft && delay == 0 && CanUseItem(player))
             {
-                delay = 60;
+                delay = (int)MathF.Ceiling(45f / player.FargoSouls().AttackSpeed);
             }
             if (delay > 0)
             {
