@@ -1,24 +1,23 @@
-﻿using FargowiltasSouls.Content.Projectiles;
-using FargowiltasSouls.Content.Projectiles.BossWeapons;
+﻿using FargowiltasSouls.Content.Projectiles.BossWeapons;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Graphics;
+using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
+using rail;
+using Terraria.Audio;
+using System;
 
 namespace FargowiltasSouls.Content.Items.Weapons.BossDrops
 {
     public class SlimeKingsSlasher : SoulsItem
     {
-        private int numSpikes = 3;
-
         public override void SetStaticDefaults()
         {
             Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
-            // DisplayName.SetDefault("Slime King's Slasher");
-            // Tooltip.SetDefault("'Torn from the insides of a defeated foe..'");
-            //DisplayName.AddTranslation((int)GameCulture.CultureName.Chinese, "史莱姆王的屠戮者");
-            //Tooltip.AddTranslation((int)GameCulture.CultureName.Chinese, "'撕裂敌人内部而得来的..'");
         }
 
         public override void SetDefaults()
@@ -35,36 +34,28 @@ namespace FargowiltasSouls.Content.Items.Weapons.BossDrops
             Item.rare = ItemRarityID.Green;
             Item.UseSound = SoundID.Item1;
             Item.autoReuse = true;
-            Item.shoot = ModContent.ProjectileType<SlimeSpikeFriendly>();
-            Item.shootSpeed = 12f;
+            Item.scale = 1.5f;
         }
-
-        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        // I tried to recreate the slash using predraw but i wasn't able to figure out how to get it to draw properly
+        public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
         {
-            int p = Projectile.NewProjectile(player.GetSource_ItemUse(source.Item), player.Center, velocity, type, damage, knockback, player.whoAmI);
+            Texture2D slash = ModContent.Request<Texture2D>("FargowiltasSouls/Content/Items/Weapons/BossDrops/SlimeKingsSlasherSlash", AssetRequestMode.ImmediateLoad).Value;
+            Vector2 slashloc;
+            float slashrotation;
+            slashloc = new Vector2(30, 110);
+            slashrotation = 180;
+            //float origin;
 
-            float spread = MathHelper.Pi / 8;
-
-            if (numSpikes == 5)
-            {
-                spread = MathHelper.Pi / 5;
-            }
-
-            FargoSoulsGlobalProjectile.SplitProj(Main.projectile[p], numSpikes, spread, 1, true);
-
-            numSpikes += 2;
-
-            if (numSpikes > 5)
-            {
-                numSpikes = 3;
-            }
-
+           
+            //Main.spriteBatch.Draw(slash,  default, lightColor, slashrotation, Item.Center, 0.75f, SpriteEffects.None, 0);
             return false;
         }
 
         public override void OnHitNPC(Player player, NPC target, NPC.HitInfo hit, int damageDone)
         {
             target.AddBuff(BuffID.Slimed, 120);
+            SoundEngine.PlaySound(SoundID.Item17);
+            Projectile.NewProjectile(player.GetSource_FromThis(),target.Center, Vector2.Zero, ModContent.ProjectileType<Slimesplosion>(), damageDone, 1f, Item.whoAmI, 1, 1, 1);
         }
     }
 }
