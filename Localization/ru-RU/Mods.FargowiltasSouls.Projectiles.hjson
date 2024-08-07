@@ -280,6 +280,7 @@ CursedFlamethrower.DisplayName: Глазной Огонь
 // MechElectricOrbDestroyer.DisplayName: Electric Orb
 // MechElectricOrbHoming.DisplayName: Electric Orb
 // MechElectricOrbTwins.DisplayName: Electric Orb
+// MechElectricOrbSpaz.DisplayName: Electric Orb
 DeathSkull.DisplayName: Череп Смерти
 DeerclopsHand.DisplayName: Теневая Рука
 DestroyerLaser.DisplayName: Лазер Смерти
@@ -729,3 +730,4 @@ LifeRuneExplosion.DisplayName: Life Rune Explosion
 LifeRunespearHitbox.DisplayName: Life Runespear Hitbox
 LifeRunespearExplosion.DisplayName: Life Runespear Explosion
 // LifeRuneRetractHitbox.DisplayName: Life Rune Retract Hitbox
+// Slimesplosion.DisplayName: Slimesplosion

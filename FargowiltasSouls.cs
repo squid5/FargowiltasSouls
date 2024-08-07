@@ -87,6 +87,7 @@ namespace FargowiltasSouls
             public static Asset<Texture2D> Chain26 = null;
             public static Asset<Texture2D> Chain27 = null;
             public static Asset<Texture2D> Wof = null;
+            public static Asset<Texture2D> EyeLaser = null;
         }
 
         public override void Load()

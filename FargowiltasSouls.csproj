@@ -16,6 +16,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="Assets\AutoloadedEffects\Shaders\Vertex_CircleTelegraph.fx" />
+    <None Remove="Assets\ExtraTextures\Resprites\Eye_Laser.png" />
     <None Remove="Content\Bosses\Lifelight\LifeRunespearHitbox.png" />
     <None Remove="Content\Items\Accessories\Forces\LifeForce_Wings.png" />
     <None Remove="Content\Items\Misc\CosmosBooster.png" />

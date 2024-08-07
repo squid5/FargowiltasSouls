@@ -280,6 +280,7 @@ MechElectricOrb.DisplayName: 闪电球
 MechElectricOrbDestroyer.DisplayName: 闪电球
 MechElectricOrbHoming.DisplayName: 闪电球
 MechElectricOrbTwins.DisplayName: 闪电球
+MechElectricOrbSpaz.DisplayName: 闪电球
 DeathSkull.DisplayName: 死亡标记头骨
 DeerclopsHand.DisplayName: 暗影之手
 DestroyerLaser.DisplayName: 死亡激光
@@ -729,3 +730,4 @@ AbomRitualFTW.DisplayName: 憎恶结界FTW
 // LifeRunespearHitbox.DisplayName: Life Runespear Hitbox
 // LifeRunespearExplosion.DisplayName: Life Runespear Explosion
 // LifeRuneRetractHitbox.DisplayName: Life Rune Retract Hitbox
+// Slimesplosion.DisplayName: Slimesplosion
