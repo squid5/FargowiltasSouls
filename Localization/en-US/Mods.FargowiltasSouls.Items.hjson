@@ -2629,7 +2629,11 @@ RockSlide: {
 
 SlimeKingsSlasher: {
 	DisplayName: Slime King's Slasher
-	Tooltip: "'Torn from the insides of a defeated foe..'"
+	Tooltip: 
+	'''
+	Deals 20% increased damage to enemies on fire
+	'Torn from the insides of a defeated foe..'
+	'''
 }
 
 TheSmallSting: {
