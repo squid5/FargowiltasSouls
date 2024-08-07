@@ -1472,7 +1472,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Cosmos
                         NPC.localAI[0] = Main.rand.NextFloat(2 * (float)Math.PI);
 
                         if (!Main.dedServ)
-                            SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/ZaWarudo"), player.Center);
+                            SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/Accessories/ZaWarudo"), player.Center);
 
                         //if (FargoSoulsUtil.HostCheck) Projectile.NewProjectile(npc.GetSource_FromThis(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<GlowRing>(), 0, 0f, Main.myPlayer, NPC.whoAmI, -18);
 

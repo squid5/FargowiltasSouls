@@ -85,7 +85,7 @@ Bonus ends after attacking for 3 seconds and rebuilds over 5 seconds
                 modPlayer.MythrilTimer++;
                 if (modPlayer.MythrilTimer == modPlayer.MythrilMaxTime - 1 && player.whoAmI == Main.myPlayer)
                 {
-                    SoundEngine.PlaySound(new SoundStyle($"{nameof(FargowiltasSouls)}/Assets/Sounds/ChargeSound"), player.Center);
+                    SoundEngine.PlaySound(new SoundStyle($"{nameof(FargowiltasSouls)}/Assets/Sounds/Accessories/ChargeSound"), player.Center);
                 }
             }
 

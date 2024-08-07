@@ -92,7 +92,7 @@ namespace FargowiltasSouls.Content.Items.Weapons.Challengers
                     if (soulsPlayer.ChargeSoundDelay <= 0)
                     {
                         soulsPlayer.ChargeSoundDelay = 120;
-                        SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/ChargeSound"), player.Center);
+                        SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/Accessories/ChargeSound"), player.Center);
                     }
                     Vector2 direction = player.itemRotation.ToRotationVector2() * player.direction;
                     Vector2 perpDirection = direction.RotatedBy(MathHelper.PiOver2) * player.direction;

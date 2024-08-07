@@ -114,7 +114,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
                     if (JumpTimer >= SpecialJumpTime && !SpecialJumping && (CertainAttackCooldown <= 0 || WorldSavingSystem.MasochistModeReal))
                     {
-                        SoundEngine.PlaySound(SoundID.Item21 with { Pitch = -1, Volume = 1.5f }, npc.Center);
+                        SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/VanillaEternity/KingSlime/KSCharge"), npc.Center);
                         Particle p = new ExpandingBloomParticle(npc.Center, Vector2.Zero, Color.Blue, Vector2.One, Vector2.One * 60, 40, true, Color.Transparent);
                         SpecialJumping = true;
                         CertainAttackCooldown = 240;
@@ -194,7 +194,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                         //funny highschool physics math
                         float jumpTime = Math.Abs(2 * npc.velocity.Y / npc.gravity);
                         npc.velocity.X = (desiredDestination.X - npc.Center.X) / jumpTime;
-
+                        SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/VanillaEternity/KingSlime/KSJump"), npc.Center);
                     }
                     else
                     {

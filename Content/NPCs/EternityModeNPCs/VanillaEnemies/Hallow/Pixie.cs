@@ -47,7 +47,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.Hallow
             if (Counter >= 60)
             {
                 if (!Main.dedServ)
-                    SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/Navi") { Pitch = 0.5f }, npc.Center);
+                    SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/VanillaEternity/Navi") { Pitch = 0.5f }, npc.Center);
                 Counter = 0;
             }
             EModeGlobalNPC.Aura(npc, 100, ModContent.BuffType<SqueakyToyBuff>());

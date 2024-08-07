@@ -37,7 +37,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEve
         {
 
         }
-        private static readonly SoundStyle LightningSound = new("FargowiltasSouls/Assets/Sounds/LightningStrike");
+        private static readonly SoundStyle LightningSound = new("FargowiltasSouls/Assets/Sounds/VanillaEternity/Pillars/LightningStrike");
         public override void OnKill(int timeLeft)
         {
             if (Projectile.ai[0] == 13) //if its the top one
