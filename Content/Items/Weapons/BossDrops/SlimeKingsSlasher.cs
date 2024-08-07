@@ -23,12 +23,12 @@ namespace FargowiltasSouls.Content.Items.Weapons.BossDrops
 
         public override void SetDefaults()
         {
-            Item.damage = 15;
+            Item.damage = 12;
             Item.DamageType = DamageClass.Melee;
             Item.width = 40;
             Item.height = 44;
-            Item.useTime = 25;
-            Item.useAnimation = 25;
+            Item.useTime = 23;
+            Item.useAnimation = 23;
             Item.useStyle = ItemUseStyleID.Swing;
             Item.knockBack = 6;
             Item.value = 10000;
@@ -75,7 +75,10 @@ namespace FargowiltasSouls.Content.Items.Weapons.BossDrops
         public override void ModifyHitNPC(Player player, NPC target, ref NPC.HitModifiers modifiers)
         {
             if (target.onFire || target.onFire2 || target.onFire3)
+            {
                 modifiers.FinalDamage *= 1.2f;
+            }
+                
         }
         public static float MomentumProgress(float x)
         {
