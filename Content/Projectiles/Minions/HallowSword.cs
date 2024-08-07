@@ -246,7 +246,7 @@ namespace FargowiltasSouls.Content.Projectiles.Minions
 
             foreach (Projectile p in Main.projectile.Where(p => p.active && p.hostile && p.damage > 0 && FargoSoulsUtil.CanDeleteProjectile(p) && p.damage <= damageCap && sword.Colliding(sword.Hitbox, p.Hitbox)))
             {
-                SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/parrynmuse"), p.Center);
+                SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/Accessories/parrynmuse"), p.Center);
                 Reflected = true;
                 p.hostile = false;
                 p.friendly = true;

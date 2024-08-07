@@ -331,7 +331,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEve
             }
         }
 
-        private readonly SoundStyle NukeBeep = new("FargowiltasSouls/Assets/Sounds/NukeBeep");
+        private readonly SoundStyle NukeBeep = new("FargowiltasSouls/Assets/Sounds/Challengers/Baron/NukeBeep");
         private void SpawnLightning(NPC parent, Vector2 position)
         {
 

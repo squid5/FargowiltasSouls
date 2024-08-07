@@ -13,7 +13,7 @@ namespace FargowiltasSouls.Content.Projectiles.ChallengerItems
         public override string Texture => "FargowiltasSouls/Content/Projectiles/Masomode/TargetingReticle";
 
         const int maxTime = 60 * 3;
-        private SoundStyle Beep = new("FargowiltasSouls/Assets/Sounds/NukeBeep");
+        private SoundStyle Beep = new("FargowiltasSouls/Assets/Sounds/Challengers/Baron/NukeBeep");
         public override void SetDefaults()
         {
             Projectile.width = 80;

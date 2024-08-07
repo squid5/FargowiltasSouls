@@ -1017,7 +1017,7 @@ namespace FargowiltasSouls.Core.ModPlayers
             if (!retVal)
             {
                 if (!Main.dedServ)
-                    SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/Revive"), Player.Center);
+                    SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/Accessories/Revive"), Player.Center);
 
                 if (Player.whoAmI == Main.myPlayer && MutantSetBonusItem != null)
                     Projectile.NewProjectile(Player.GetSource_Accessory(MutantSetBonusItem), Player.Center, -Vector2.UnitY, ModContent.ProjectileType<GiantDeathray>(), (int)(7000 * Player.ActualClassDamage(DamageClass.Magic)), 10f, Player.whoAmI);

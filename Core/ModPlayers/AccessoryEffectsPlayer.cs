@@ -53,7 +53,7 @@ namespace FargowiltasSouls.Core.ModPlayers
                 goldHP = Player.statLife;
 
                 if (!Main.dedServ)
-                    SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/Zhonyas"), Player.Center);
+                    SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/Accessories/GoldEncase"), Player.Center);
             }
             //cancel it early
             else

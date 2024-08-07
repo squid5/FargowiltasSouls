@@ -39,11 +39,11 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
     public class LifeChallenger : ModNPC, IPixelatedPrimitiveRenderer
     {
         #region Variables
-        public static readonly SoundStyle ScreechSound1 = new SoundStyle($"FargowiltasSouls/Assets/Sounds/LifelightScreech1") with { Volume = 1.5f};
-        public static readonly SoundStyle DashSound1 = new SoundStyle($"FargowiltasSouls/Assets/Sounds/LifelightDash") with { Volume = 1.5f };
-        public static readonly SoundStyle DashSound2 = new SoundStyle($"FargowiltasSouls/Assets/Sounds/LifelightPixieDash") with { Volume = 1.5f};
-        public static readonly SoundStyle RuneSound1 = new SoundStyle($"FargowiltasSouls/Assets/Sounds/LifelightRuneSound") with { Volume = 1.5f };
-        public static readonly SoundStyle TelegraphSound1 = new SoundStyle($"FargowiltasSouls/Assets/Sounds/LifelightShotPrep") with { Volume = 1.5f};
+        public static readonly SoundStyle ScreechSound1 = new SoundStyle($"FargowiltasSouls/Assets/Sounds/Challengers/Lifelight/LifelightScreech1") with { Volume = 1.5f};
+        public static readonly SoundStyle DashSound1 = new SoundStyle($"FargowiltasSouls/Assets/Sounds/Challengers/Lifelight/LifelightDash") with { Volume = 1.5f };
+        public static readonly SoundStyle DashSound2 = new SoundStyle($"FargowiltasSouls/Assets/Sounds/Challengers/Lifelight/LifelightPixieDash") with { Volume = 1.5f};
+        public static readonly SoundStyle RuneSound1 = new SoundStyle($"FargowiltasSouls/Assets/Sounds/Challengers/Lifelight/LifelightRuneSound") with { Volume = 1.5f };
+        public static readonly SoundStyle TelegraphSound1 = new SoundStyle($"FargowiltasSouls/Assets/Sounds/Challengers/Lifelight/LifelightShotPrep") with { Volume = 1.5f};
 
         const int DefaultHeight = 200;
         const int DefaultWidth = 200;
@@ -849,7 +849,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                 AttackF1 = false;
 
                 string extra = !phaseTransition ? "Short" : "";
-                SoundEngine.PlaySound(new SoundStyle($"FargowiltasSouls/Assets/Sounds/LifelightDeathray{extra}") with { Volume = 3f}, NPC.Center);
+                SoundEngine.PlaySound(new SoundStyle($"FargowiltasSouls/Assets/Sounds/Challengers/Lifelight/LifelightDeathray{extra}") with { Volume = 3f}, NPC.Center);
                 if (FargoSoulsUtil.HostCheck)
                 {
                     Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, LockVector1,

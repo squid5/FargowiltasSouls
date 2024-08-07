@@ -99,8 +99,8 @@ namespace FargowiltasSouls.Content.Projectiles.BossWeapons
             {
                 if (!Main.dedServ)
                 {
-                    SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/DeviBigDeathray") with { Volume = 1.5f }, Projectile.Center);
-                    SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/FinalSpark") with { Volume = 1.5f }, Projectile.Center);
+                    SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/Siblings/Deviantt/DeviBigDeathray") with { Volume = 1.5f }, Projectile.Center);
+                    SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/Siblings/Mutant/FinalSpark") with { Volume = 1.5f }, Projectile.Center);
                 }
             }
             float num801 = 10f;

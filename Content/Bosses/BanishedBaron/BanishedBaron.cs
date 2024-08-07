@@ -35,8 +35,8 @@ namespace FargowiltasSouls.Content.Bosses.BanishedBaron
     {
         Player player => Main.player[NPC.target];
 
-        public static readonly SoundStyle BaronRoar = new("FargowiltasSouls/Assets/Sounds/BaronRoar");
-        public static readonly SoundStyle BaronYell = new("FargowiltasSouls/Assets/Sounds/BaronYell");
+        public static readonly SoundStyle BaronRoar = new("FargowiltasSouls/Assets/Sounds/Challengers/Baron/BaronRoar");
+        public static readonly SoundStyle BaronYell = new("FargowiltasSouls/Assets/Sounds/Challengers/Baron/BaronYell");
 
         #region Variables
         public enum StateEnum //ALL states
@@ -154,8 +154,8 @@ namespace FargowiltasSouls.Content.Bosses.BanishedBaron
             NPC.lavaImmune = true;
             NPC.noGravity = true;
             NPC.noTileCollide = true;
-            NPC.HitSound = new SoundStyle("FargowiltasSouls/Assets/Sounds/BaronHit") with { Variants = [1, 2, 3], PitchRange = (-0.7f, -0.5f), Volume = 0.5f };
-            NPC.DeathSound = new SoundStyle("FargowiltasSouls/Assets/Sounds/BaronDeath");
+            NPC.HitSound = new SoundStyle("FargowiltasSouls/Assets/Sounds/Challengers/Baron/BaronHit") with { Variants = [1, 2, 3], PitchRange = (-0.7f, -0.5f), Volume = 0.5f };
+            NPC.DeathSound = new SoundStyle("FargowiltasSouls/Assets/Sounds/Challengers/Baron/BaronDeath");
             NPC.alpha = 255;
 
             Music = ModLoader.TryGetMod("FargowiltasMusic", out Mod musicMod) ? MusicLoader.GetMusicSlot(musicMod, "Assets/Music/Baron") : MusicID.DukeFishron;
@@ -784,7 +784,7 @@ namespace FargowiltasSouls.Content.Bosses.BanishedBaron
 
             if (Timer == 1)
             {
-                SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/BaronHit"), NPC.Center);
+                SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/Challengers/Baron/BaronHit"), NPC.Center);
 
                 HitPlayer = false;
                 LockVector1 = Vector2.UnitX * Math.Sign(player.Center.X - NPC.Center.X); //register for rotation animation
@@ -2104,7 +2104,7 @@ namespace FargowiltasSouls.Content.Bosses.BanishedBaron
                 NPC.velocity *= 0.8f;
                 if (Timer == PositioningTime)
                 {
-                    SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/LaserTelegraph") with { Volume = 1.25f }, NPC.Center);
+                    SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/Challengers/Baron/BaronLaserTelegraph") with { Volume = 1.25f }, NPC.Center);
                     AI3 = Main.rand.NextBool() ? 1 : -1; //sign for rotation
                     LockVector1 = (player.Center - NPC.Center).RotatedBy(AI3 * MaxRot);
                     if (FargoSoulsUtil.HostCheck)
@@ -2139,7 +2139,7 @@ namespace FargowiltasSouls.Content.Bosses.BanishedBaron
 
                     AI4 = FargoSoulsUtil.RotationDifference(NPC.rotation.ToRotationVector2(), (player.Center - NPC.Center)); //cache rotation direction towards player
 
-                    SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/LaserSound_Slow") with { Pitch = -0.2f }, NPC.Center);
+                    SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/Challengers/Baron/BaronLaserSound_Slow") with { Pitch = -0.2f }, NPC.Center);
                     if (FargoSoulsUtil.HostCheck)
                     {
                         Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.rotation.ToRotationVector2(), ModContent.ProjectileType<BaronDeathray>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), 0f, Main.myPlayer, ai0: NPC.whoAmI, ai2: AttackTime);

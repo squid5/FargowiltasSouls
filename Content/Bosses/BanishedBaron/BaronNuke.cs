@@ -20,7 +20,7 @@ namespace FargowiltasSouls.Content.Bosses.BanishedBaron
 
         private readonly int ExplosionDiameter = WorldSavingSystem.MasochistModeReal ? 500 : 500;
 
-        public static readonly SoundStyle Beep = new("FargowiltasSouls/Assets/Sounds/NukeBeep");
+        public static readonly SoundStyle Beep = new("FargowiltasSouls/Assets/Sounds/Challengers/Baron/NukeBeep");
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Banished Baron's Spicy Beeping Nuclear Torpedo of Death and Destruction");
