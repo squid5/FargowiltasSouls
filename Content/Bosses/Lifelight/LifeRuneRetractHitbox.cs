@@ -36,10 +36,14 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
             Projectile.timeLeft = 6000;
         }
         public override bool? CanDamage() => Timer > 15 ? base.CanDamage() : false;
-        public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) //line collision, needed because of the speed they move at when creating the arena, to form a solid wall
+        public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) //line collision, needed because of the speed they move at
         {
             float collisionPoint = 0f;
             if (Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center, Projectile.oldPos[1], Projectile.width, ref collisionPoint))
+            {
+                return true;
+            }
+            if (Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.oldPos[1], Projectile.oldPos[2], Projectile.width, ref collisionPoint))
             {
                 return true;
             }

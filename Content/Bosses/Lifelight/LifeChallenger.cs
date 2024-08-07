@@ -823,6 +823,16 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                     NPC.netUpdate = true;
                     if (FargoSoulsUtil.HostCheck)
                         Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<BloomLine>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), 0f, Main.myPlayer, -1, NPC.whoAmI);
+
+                    if (!phaseTransition)
+                    {
+                        if (WorldSavingSystem.MasochistModeReal)
+                        {
+                            SoundEngine.PlaySound(SoundID.Item91, NPC.Center);
+                            if (FargoSoulsUtil.HostCheck)
+                                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.DirectionTo(player.Center).RotatedBy(MathF.PI * 0.75f * (Main.rand.NextBool() ? 1 : -1)) * 10f, ModContent.ProjectileType<LifeNuke>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), 3f, Main.myPlayer, 32f, 0);
+                        }
+                    }
                 }
                 else
                 {
@@ -859,16 +869,6 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                 NPC.netUpdate = true;
                 rotspeed = 0;
                 rot = 0;
-
-                if (!phaseTransition)
-                {
-                    if (WorldSavingSystem.MasochistModeReal)
-                    {
-                        SoundEngine.PlaySound(SoundID.Item91, NPC.Center);
-                        if (FargoSoulsUtil.HostCheck)
-                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.DirectionTo(player.Center).RotatedBy(MathF.PI * 0.75f * (Main.rand.NextBool() ? 1 : -1)) * 10f, ModContent.ProjectileType<LifeNuke>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), 3f, Main.myPlayer, 32f, 0);
-                    }
-                }
             }
             GunRotation = LockVector1.RotatedBy(rot).ToRotation();
             if (RotationDirection == 0)
@@ -1373,7 +1373,8 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
             }
             */
 
-            FlyingState(0.7f);
+            Vector2 desiredPos = Player.Center + Player.DirectionTo(NPC.Center) * 320;
+            FlyingState(0.55f, false, desiredPos);
 
             //new homing swords:
 
@@ -2952,7 +2953,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                     State = (int)Main.rand.NextFromCollection(doableStates);
                     LastAttack[i] = State;
 
-                    //State = (int)States.RuneScatter;
+                    //State = (int)States.RuneSpear;
                 }
             }
         }
