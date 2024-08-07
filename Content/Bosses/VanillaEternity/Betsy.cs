@@ -153,12 +153,12 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
                         case 10:
                             if (!Main.dedServ)
-                                SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/Navi"), Main.player[npc.target].Center);
+                                SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/VanillaEternity/Navi"), Main.player[npc.target].Center);
                             break;
 
                         case 11:
                             if (!Main.dedServ)
-                                SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/ZaWarudo") { Volume = 1.5f }, Main.player[npc.target].Center);
+                                SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/Accessories/ZaWarudo") { Volume = 1.5f }, Main.player[npc.target].Center);
                             break;
 
                         default:

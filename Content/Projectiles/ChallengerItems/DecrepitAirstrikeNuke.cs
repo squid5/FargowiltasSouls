@@ -17,7 +17,7 @@ namespace FargowiltasSouls.Content.Projectiles.ChallengerItems
         public static readonly int ExplosionDiameter = 450;
         public override string Texture => "FargowiltasSouls/Content/Bosses/BanishedBaron/BaronNuke";
 
-        private SoundStyle Beep = new("FargowiltasSouls/Assets/Sounds/NukeBeep");
+        private SoundStyle Beep = new("FargowiltasSouls/Assets/Sounds/Challengers/Baron/NukeBeep");
         public override void SetStaticDefaults()
         {
             Main.projFrames[Type] = 4;

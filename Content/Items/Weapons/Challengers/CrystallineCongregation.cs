@@ -57,7 +57,7 @@ namespace FargowiltasSouls.Content.Items.Weapons.Challengers
             {
                 if (player.whoAmI == Main.myPlayer)
                 {
-                    SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/ChargeSound"), player.Center);
+                    SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/Accessories/ChargeSound"), player.Center);
                 }
                 //dust
                 double spread = 2 * Math.PI / 36;

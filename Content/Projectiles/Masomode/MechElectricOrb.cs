@@ -18,8 +18,8 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
 {
     public class MechElectricOrb : ModProjectile
     {
-        public static readonly SoundStyle ShotSound = new("FargowiltasSouls/Assets/Sounds/ElectricOrbShot") { PitchVariance = 0.3f, Volume = 7f };
-        public static readonly SoundStyle HumSound = new("FargowiltasSouls/Assets/Sounds/ElectricOrbHum");
+        public static readonly SoundStyle ShotSound = new("FargowiltasSouls/Assets/Sounds/VanillaEternity/Mechs/ElectricOrbShot") { PitchVariance = 0.3f, Volume = 7f };
+        public static readonly SoundStyle HumSound = new("FargowiltasSouls/Assets/Sounds/VanillaEternity/Mechs/ElectricOrbHum");
         public const int Red = 0;
         public const int Blue = 1;
         public const int Yellow = 2;

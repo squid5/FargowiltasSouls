@@ -150,7 +150,7 @@ Increases max number of minions by 2"); */
 
             if (!Main.dedServ)
             {
-                SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/Graze") { Volume = 0.5f }, Main.LocalPlayer.Center);
+                SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/Accessories/Graze") { Volume = 0.5f }, Main.LocalPlayer.Center);
             }
         }
 

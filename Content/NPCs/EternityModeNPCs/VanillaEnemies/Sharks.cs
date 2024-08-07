@@ -157,7 +157,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies
 
                 if (!Main.dedServ && Main.rand.NextBool(1000))
                 {
-                    SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/a"), npc.Center);
+                    SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/VanillaEternity/a"), npc.Center);
 
                     CombatText.NewText(npc.Hitbox, Color.Blue, "a", true);
 

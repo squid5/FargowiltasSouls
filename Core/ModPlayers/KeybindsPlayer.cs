@@ -78,7 +78,7 @@ namespace FargowiltasSouls.Core.ModPlayers
                     FreezeTime = true;
                     freezeLength = StardustEffect.TIMESTOP_DURATION;
 
-                    SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/ZaWarudo"), Player.Center);
+                    SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/Accessories/ZaWarudo"), Player.Center);
                 }
                 /*else if (Player.HasEffect<SnowEffect>() && !Player.HasBuff(ModContent.BuffType<SnowstormCDBuff>())
                     && !Player.HasBuff(ModContent.BuffType<MutantPresenceBuff>()))

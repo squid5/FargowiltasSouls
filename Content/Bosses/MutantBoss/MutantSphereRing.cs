@@ -123,7 +123,7 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
                     && Projectile.Colliding(Projectile.Hitbox, Main.LocalPlayer.FargoSouls().GetPrecisionHurtbox()))
                 {
                     if (!Main.LocalPlayer.HasBuff(ModContent.BuffType<TimeFrozenBuff>()))
-                        SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/ZaWarudo"), Main.LocalPlayer.Center);
+                        SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/Accessories/ZaWarudo"), Main.LocalPlayer.Center);
                     Main.LocalPlayer.AddBuff(ModContent.BuffType<TimeFrozenBuff>(), 300);
                 }
             }

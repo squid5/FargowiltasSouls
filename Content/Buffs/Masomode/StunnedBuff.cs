@@ -32,7 +32,7 @@ namespace FargowiltasSouls.Content.Buffs.Masomode
             player.FargoSouls().NoUsingItems = 2;
 
             if (player.whoAmI == Main.myPlayer && player.buffTime[buffIndex] % 60 == 55)
-                SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/DizzyBird"));
+                SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/Debuffs/DizzyBird"));
         }
 
         public override void Update(NPC npc, ref int buffIndex)
