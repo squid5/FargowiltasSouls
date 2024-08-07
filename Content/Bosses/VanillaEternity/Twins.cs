@@ -274,7 +274,8 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             }
             else
             {
-                npc.localAI[1] -= 1f;
+                if (npc.ai[1] != 0)
+                    npc.localAI[1] -= 1f;
                 if (npc.localAI[1] >= (npc.ai[1] == 0 ? 170 : 50)) //hijacking vanilla laser code
                 {
                     npc.localAI[1] = 0;
