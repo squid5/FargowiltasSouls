@@ -47,7 +47,7 @@ namespace FargowiltasSouls.Core.ModPlayers
 
         public bool RazorContainer;
 
-        public static readonly SoundStyle RazorContainerTink = new("FargowiltasSouls/Assets/Sounds/RazorTink")  { PitchVariance = 0.25f };
+        public static readonly SoundStyle RazorContainerTink = new("FargowiltasSouls/Assets/Sounds/Accessories/RazorTink")  { PitchVariance = 0.25f };
 
         public override void SaveData(TagCompound tag)
         {

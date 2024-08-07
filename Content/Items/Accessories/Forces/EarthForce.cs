@@ -98,7 +98,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Forces
             {
                 float pitch = 0;
                 if (player.HasEffect<MythrilEffect>()) pitch = -0.2f;
-                SoundEngine.PlaySound(new SoundStyle($"{nameof(FargowiltasSouls)}/Assets/Sounds/ChargeSound") with { Pitch = pitch}, player.Center);
+                SoundEngine.PlaySound(new SoundStyle($"{nameof(FargowiltasSouls)}/Assets/Sounds/Accessories/ChargeSound") with { Pitch = pitch}, player.Center);
                 for (int i = 0; i < 5; i++)
                 {
                     Vector2 position = player.Center + new Vector2(0, Main.rand.NextFloat(20, 40)).RotatedByRandom(MathHelper.TwoPi);

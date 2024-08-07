@@ -26,8 +26,9 @@ namespace FargowiltasSouls.Content.Items.Weapons.BossDrops
             Item.DamageType = DamageClass.Melee;
             Item.width = 40;
             Item.height = 44;
-            Item.useTime = 25;
-            Item.useAnimation = 25;
+            Item.useTime = 10;
+            Item.useAnimation = 20;
+            Item.reuseDelay = 30;
             Item.useStyle = ItemUseStyleID.Swing;
             Item.knockBack = 6;
             Item.value = 10000;
@@ -36,21 +37,12 @@ namespace FargowiltasSouls.Content.Items.Weapons.BossDrops
             Item.autoReuse = true;
             Item.scale = 1.5f;
         }
-        // I tried to recreate the slash using predraw but i wasn't able to figure out how to get it to draw properly
-        public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
+        public override bool? UseItem(Player player)
         {
-            Texture2D slash = ModContent.Request<Texture2D>("FargowiltasSouls/Content/Items/Weapons/BossDrops/SlimeKingsSlasherSlash", AssetRequestMode.ImmediateLoad).Value;
-            Vector2 slashloc;
-            float slashrotation;
-            slashloc = new Vector2(30, 110);
-            slashrotation = 180;
-            //float origin;
-
-           
-            //Main.spriteBatch.Draw(slash,  default, lightColor, slashrotation, Item.Center, 0.75f, SpriteEffects.None, 0);
-            return false;
+            if (player.itemTime == 0)
+                SoundEngine.PlaySound(SoundID.Item1, player.Center);
+            return base.UseItem(player);
         }
-
         public override void OnHitNPC(Player player, NPC target, NPC.HitInfo hit, int damageDone)
         {
             target.AddBuff(BuffID.Slimed, 120);

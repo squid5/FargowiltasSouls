@@ -148,7 +148,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
                         case 9:
                             if (!Main.dedServ)
-                                SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/Railgun"), Main.player[npc.target].Center);
+                                SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/Weapons/Railgun"), Main.player[npc.target].Center);
                             break;
 
                         case 10:
