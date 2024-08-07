@@ -42,11 +42,11 @@ namespace FargowiltasSouls.Content.Projectiles.BossWeapons
             Projectile.localNPCHitCooldown = -1;
             Projectile.FargoSouls().DeletionImmuneRank = 2;
 
-            Projectile.scale = 1f;
+            Projectile.scale = Main.rand.NextFloat(.75f, 1.25f);
         }
         public override void OnSpawn(IEntitySource source)
         {
-            Projectile.rotation = Main.rand.NextFloat(MathHelper.TwoPi);
+            Projectile.rotation = Main.rand.NextFloat(0f, 360f);
         }
         public override void AI()
         {
