@@ -49,7 +49,7 @@ namespace FargowiltasSouls.Content.Projectiles.Deathrays
             if (Projectile.localAI[0] == 0f)
             {
                 if (!Main.dedServ)
-                    SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/VanillaEternity/Twins/RetinazerDeathray") with { Volume = 1.5f }, Projectile.Center);
+                    SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/VanillaEternity/Mechs/RetinazerDeathray") with { Volume = 1.5f }, Projectile.Center);
             }
             float maxScale = 1f;
             if (WorldSavingSystem.MasochistModeReal)

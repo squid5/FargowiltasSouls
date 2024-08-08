@@ -88,7 +88,7 @@ namespace FargowiltasSouls.Content.Items.Weapons.BossDrops
         {
             target.AddBuff(BuffID.Slimed, 120);
             SoundEngine.PlaySound(SoundID.Item17);
-            Projectile.NewProjectile(player.GetSource_FromThis(),target.Center, Vector2.Zero, ModContent.ProjectileType<Slimesplosion>(), damageDone, 1f, Item.whoAmI, 1, 1, 1);
+            Projectile.NewProjectile(player.GetSource_FromThis(),target.Center, Vector2.Zero, ModContent.ProjectileType<Slimesplosion>(), 0, 1f, Item.whoAmI, 1, 1, 1);
         }
     }
 }
