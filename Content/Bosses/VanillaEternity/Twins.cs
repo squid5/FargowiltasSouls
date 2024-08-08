@@ -375,7 +375,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                 }
                 if (npc.ai[0] < 4f) //going to phase 3
                 {
-                    if (npc.life <= npc.lifeMax / 2 || spazmatism.life <= spazmatism.lifeMax / 2)
+                    if (npc.life <= npc.lifeMax / 2 || (spazmatism != null && spazmatism.life <= spazmatism.lifeMax / 2))
                     {
                         //npc.ai[0] = 4f;
                         npc.ai[0] = 604f; //initiate spin immediately
@@ -975,7 +975,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
                 if (npc.ai[0] < 4f)
                 {
-                    if (npc.life <= npc.lifeMax / 2 || retinazer.life <= retinazer.lifeMax / 2) //going to phase 3
+                    if (npc.life <= npc.lifeMax / 2 || (retinazer != null && retinazer.life <= retinazer.lifeMax / 2)) //going to phase 3
                     {
                         npc.ai[0] = 4f;
                         npc.netUpdate = true;
@@ -1052,12 +1052,14 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                             if (FlameWheelCount == 0) //i can't be bothered to figure out the formula for this rn
                             {
                                 FlameWheelCount = 2;
-                                if (modifier < 0.5f / 4 * 3)
+                                if (modifier < 0.4f)
                                     FlameWheelCount = 3;
-                                if (modifier < 0.5f / 4 * 2)
+                                if (modifier < 0.25f)
                                     FlameWheelCount = 4;
-                                if (modifier < 0.5f / 4 * 1 || WorldSavingSystem.MasochistModeReal)
+                                if (modifier < 0.1f)
                                     FlameWheelCount = 5;
+                                if (WorldSavingSystem.MasochistModeReal && FlameWheelCount < 5)
+                                    FlameWheelCount++;
 
                                 ProjectileTimer = 0;
                             }
