@@ -123,12 +123,12 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
                         case 4:
                             if (!Main.dedServ)
-                                SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/Monster94"), Main.player[npc.target].Center);
+                                SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/VanillaEternity/WallofFlesh/WoFScreech"), Main.player[npc.target].Center);
                             break;
 
                         case 5:
                             if (!Main.dedServ)
-                                SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/Monster5") { Volume = 1.5f }, Main.player[npc.target].Center);
+                                SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/VanillaEternity/WallofFlesh/WoFGrowl") { Volume = 1.5f }, Main.player[npc.target].Center);
                             break;
 
                         case 6:
