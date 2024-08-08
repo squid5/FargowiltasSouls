@@ -36,7 +36,6 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
         public bool Resist;
         public int RespawnTimer;
 
-
         public override void SendExtraAI(NPC npc, BitWriter bitWriter, BinaryWriter binaryWriter)
         {
             binaryWriter.Write7BitEncodedInt(LaserSide);
@@ -111,7 +110,6 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     npc.netUpdate = true;
                 }
             }
-            
 
             if (npc.life <= npc.lifeMax / 2 || npc.dontTakeDamage)
             {
@@ -170,48 +168,48 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                 {
                     case 0: //normal laser state
                         {
-
                             // movement
-                            float num420 = 0.22f;
-                            int num421 = 1;
+                            float accel = 0.22f;
+                            int side = 1;
                             if (npc.position.X + (float)(npc.width / 2) < player.position.X + (float)player.width)
                             {
-                                num421 = -1;
+                                side = -1;
                             }
 
-                            Vector2 vector43 = new Vector2(npc.position.X + (float)npc.width * 0.5f, npc.position.Y + (float)npc.height * 0.5f);
-                            float num422 = player.position.X + (float)(player.width / 2) + (float)(num421 * 300) - vector43.X;
-                            float num423 = player.position.Y + (float)(player.height / 2) - 300f - vector43.Y;
-                            if (npc.velocity.X < num422)
+                            // up position, default retinazer
+                            float desiredX = player.position.X + (float)(player.width / 2) + (float)(side * 300) - npc.Center.X;
+                            float desiredY = player.position.Y + (float)(player.height / 2) - 300f - npc.Center.Y;
+                                
+                            if (npc.velocity.X < desiredX)
                             {
-                                npc.velocity.X += num420;
-                                if (npc.velocity.X < 0f && num422 > 0f)
+                                npc.velocity.X += accel;
+                                if (npc.velocity.X < 0f && desiredX > 0f)
                                 {
-                                    npc.velocity.X += num420 * 2;
+                                    npc.velocity.X += accel * 2;
                                 }
                             }
-                            else if (npc.velocity.X > num422)
+                            else if (npc.velocity.X > desiredX)
                             {
-                                npc.velocity.X -= num420;
-                                if (npc.velocity.X > 0f && num422 < 0f)
+                                npc.velocity.X -= accel;
+                                if (npc.velocity.X > 0f && desiredX < 0f)
                                 {
-                                    npc.velocity.X -= num420 * 2;
+                                    npc.velocity.X -= accel * 2;
                                 }
                             }
-                            if (npc.velocity.Y < num423)
+                            if (npc.velocity.Y < desiredY)
                             {
-                                npc.velocity.Y += num420;
-                                if (npc.velocity.Y < 0f && num423 > 0f)
+                                npc.velocity.Y += accel;
+                                if (npc.velocity.Y < 0f && desiredY > 0f)
                                 {
-                                    npc.velocity.Y += num420 * 2;
+                                    npc.velocity.Y += accel * 2;
                                 }
                             }
-                            else if (npc.velocity.Y > num423)
+                            else if (npc.velocity.Y > desiredY)
                             {
-                                npc.velocity.Y -= num420;
-                                if (npc.velocity.Y > 0f && num423 < 0f)
+                                npc.velocity.Y -= accel;
+                                if (npc.velocity.Y > 0f && desiredY < 0f)
                                 {
-                                    npc.velocity.Y -= num420 * 2;
+                                    npc.velocity.Y -= accel * 2;
                                 }
                             }
 
@@ -242,9 +240,12 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                                     Vector2 vel = new(targetX, targetY);
                                     shootPos.X += targetX * 15f;
                                     shootPos.Y += targetY * 15f;
-                                    for (int i = -1; i <= 1; i++)
+                                    int spread = 1;
+                                    if (npc.ai[2] % (delay * 2) >= delay) // every other shot is 1, every other is 2 (3 in maso)
+                                        spread = 0;
+                                    for (int i = -spread; i <= spread; i++)
                                     {
-                                        if (i == 0 && !WorldSavingSystem.MasochistModeReal)
+                                        if (spread != 0 && i == 0 && !WorldSavingSystem.MasochistModeReal)
                                             continue;
                                         float offset = i;
                                         offset *= (int)npc.HorizontalDirectionTo(player.Center);
@@ -265,7 +266,9 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     case 2: // mid dash
                         {
                             if (npc.ai[2] == 1f)
+                            {
                                 npc.velocity += npc.velocity.SafeNormalize(Vector2.UnitX) * npc.ai[3] * 3f;
+                            }
                             npc.velocity = npc.velocity.RotateTowards(npc.DirectionTo(player.Center).ToRotation(), 0.02f);
                         }
                         break;
@@ -1081,6 +1084,50 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                 {
                     case 0: //normal fireball state
                         {
+                            // movement
+                            float accel = 0.18f;
+                            int side = 1;
+                            if (npc.position.X + (float)(npc.width / 2) < player.position.X + (float)player.width)
+                            {
+                                side = -1;
+                            }
+
+                            // side position, default spazmatism
+                            float desiredX = player.Center.X + side * 400 - npc.Center.X;
+                            float desiredY = player.Center.Y - npc.Center.Y;
+
+                            if (npc.velocity.X < desiredX)
+                            {
+                                npc.velocity.X += accel;
+                                if (npc.velocity.X < 0f && desiredX > 0f)
+                                {
+                                    npc.velocity.X += accel * 2;
+                                }
+                            }
+                            else if (npc.velocity.X > desiredX)
+                            {
+                                npc.velocity.X -= accel;
+                                if (npc.velocity.X > 0f && desiredX < 0f)
+                                {
+                                    npc.velocity.X -= accel * 2;
+                                }
+                            }
+                            if (npc.velocity.Y < desiredY)
+                            {
+                                npc.velocity.Y += accel;
+                                if (npc.velocity.Y < 0f && desiredY > 0f)
+                                {
+                                    npc.velocity.Y += accel * 2;
+                                }
+                            }
+                            else if (npc.velocity.Y > desiredY)
+                            {
+                                npc.velocity.Y -= accel;
+                                if (npc.velocity.Y > 0f && desiredY < 0f)
+                                {
+                                    npc.velocity.Y -= accel * 2;
+                                }
+                            }
 
                             // reworked p1 fireballs
                             float delay = 58f;
@@ -1124,6 +1171,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             }
             else
             {
+                FargoSoulsUtil.PrintAI(npc);
                 if (npc.ai[1] == 0f) // not dashing
                 {
                     if (retinazer != null && (retinazer.ai[0] < 4f || retinazer.GetGlobalNPC<Retinazer>().DeathrayState == 0
@@ -1156,6 +1204,17 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                         if (!TryWatchHarmlessly(npc))
                             return false;
                     }
+                    if (npc.ai[2] == 0)
+                    {
+                        npc.velocity *= 1f;
+                    }
+                    if (npc.HasValidTarget)
+                    {
+                        Vector2 toTarget = npc.DirectionTo(Main.player[npc.target].Center);
+                        npc.velocity += toTarget * 0.25f;
+                        npc.velocity = npc.velocity.RotateTowards(toTarget.ToRotation(), 0.01f);
+                    }
+                    npc.ai[2] -= 0.5f;
                     if (npc.ai[2] > 50)
                     {
                         npc.ai[2] -= modifier;
