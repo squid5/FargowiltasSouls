@@ -8,7 +8,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.PumpkinM
 {
     public class Splinterling : EModeNPCBehaviour
     {
-        public override NPCMatcher CreateMatcher() => new NPCMatcher().MatchType(NPCID.Hellhound);
+        public override NPCMatcher CreateMatcher() => new NPCMatcher().MatchType(NPCID.Splinterling);
 
         public int Counter;
 

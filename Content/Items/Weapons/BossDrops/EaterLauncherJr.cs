@@ -33,7 +33,7 @@ namespace FargowiltasSouls.Content.Items.Weapons.BossDrops
             Item.noMelee = true;
             Item.knockBack = 6f;
             Item.UseSound = SoundID.Item95;
-            Item.value = Item.sellPrice(0, 10);
+            Item.value = Item.sellPrice(0, 2);
             Item.rare = ItemRarityID.Blue;
             Item.autoReuse = true;
             Item.shoot = ModContent.ProjectileType<EaterRocketJr>();

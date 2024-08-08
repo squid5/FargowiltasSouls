@@ -2,6 +2,7 @@
 using FargowiltasSouls.Content.Items.Accessories.Enchantments;
 using FargowiltasSouls.Content.Items.Accessories.Essences;
 using FargowiltasSouls.Content.Items.Accessories.Expert;
+using FargowiltasSouls.Content.Items.Accessories.Forces;
 using FargowiltasSouls.Content.Projectiles.Souls;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using Microsoft.Xna.Framework;
@@ -50,7 +51,7 @@ namespace FargowiltasSouls.Content.UI.Elements
             }
 
             bool disabledByMinos = (Effect.MinionEffect || Effect.ExtraAttackEffect) && modPlayer.PrimeSoulActive;
-            bool disabledByPresence = modPlayer.MutantPresence && !Effect.IgnoresMutantPresence;
+            bool disabledByPresence = modPlayer.MutantPresence && (Effect.MutantsPresenceAffects || Effect.MinionEffect);
             bool disabledByGlobalToggle = (Effect.MinionEffect && modPlayer.Toggler_MinionsDisabled) || (Effect.ExtraAttackEffect && modPlayer.Toggler_ExtraAttacksDisabled);
             bool toggled = Main.LocalPlayer.GetToggleValue(Effect, true);
 
@@ -77,6 +78,8 @@ namespace FargowiltasSouls.Content.UI.Elements
                         color = enchant.nameColor;
                     else if (item.ModItem is BaseEssence essence)
                         color = essence.nameColor;
+                    else if (item.ModItem is BaseForce force)
+                        color = Color.BlueViolet;
                 }
 
             }

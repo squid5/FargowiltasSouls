@@ -305,7 +305,6 @@ MeteorEnchant: {
 	// DisplayName: Meteor Enchantment
 	/* Tooltip:
 		'''
-		Moving creates a fire trail
 		Increases your movement speed and acceleration, and decreases your momentum
 		A meteor fall initiates every few seconds while attacking
 		'Drop a draco on 'em'
@@ -820,6 +819,15 @@ EarthForce: {
 		[i:5540] Ataques geram fragmentos de titânio, atingir o máximo concede Escudo de Titânio
 		'A bênção de Gaia brilha sobre você'
 		'''
+	/* SaveOldTooltip:
+		'''
+		[i:FargowiltasSouls/CobaltEnchant] Grants an explosion jump and you explode on hit
+		[i:FargowiltasSouls/MythrilEnchant] Stop attacking to gradually increase attack speed for up to 5 seconds
+		[i:FargowiltasSouls/PalladiumEnchant] Grants Rapid Healing after striking an enemy and spawn life orbs based on healing
+		[i:FargowiltasSouls/OrichalcumEnchant] Attacks spawn flower petals and damaging debuffs deal 3.5x damage
+		[i:FargowiltasSouls/AdamantiteEnchant] Every weapon shot will split into 3, 50% damage each, with higher spread the longer you fire
+		[i:FargowiltasSouls/TitaniumEnchant] Attacks generate titanium shards, reaching max grants Titanium Shield
+		''' */
 }
 
 LifeForce: {
@@ -871,6 +879,20 @@ ShadowForce: {
 		[i:5496] Invoca um lacaio de Chamas Explosivas que viajará para o seu mouse depois de carregar
 		'Escuro, Mais Escuro, Ainda Mais Escuro'
 		'''
+	/* SavingOldTooltip:
+		'''
+		[i:FargowiltasSouls/ShadowEnchant] Four Shadow Orbs will orbit around you
+		[i:FargowiltasSouls/AncientShadowEnchant] Your attacks may inflict Darkness on enemies
+		[i:FargowiltasSouls/NecroEnchant] Slain enemies may drop a pile of bones
+		[i:FargowiltasSouls/NinjaEnchant] Increases projectile damage based on projectile speed
+		[i:FargowiltasSouls/NinjaEnchant] Increases projectile speed while moving slowly
+		[i:FargowiltasSouls/CrystalAssassinEnchant] Throw a smoke bomb to teleport to it and gain the First Strike Buff
+		[i:FargowiltasSouls/SpookyEnchant] All of your minions gain an extra scythe attack
+		[i:FargowiltasSouls/MonkEnchant] Don't attack to gain a single use monk dash
+		[i:FargowiltasSouls/ShinobiEnchant] Dash into any walls, to teleport through them to the next opening
+		[i:FargowiltasSouls/ApprenticeEnchant] While attacking, fire your next 3 closest weapons' projectiles as support
+		[i:FargowiltasSouls/DarkArtistEnchant] Summons a Flameburst minion that will also fire when you attack
+		''' */
 }
 
 SpiritForce: {
@@ -1023,8 +1045,8 @@ BionomicClusterInactive: {
 		[i:FargowiltasSouls/WyvernFeather] Your attacks can inflict Clipped Wings [i:FargowiltasSouls/NymphsPerfume] and produce hearts
 		[i:FargowiltasSouls/WyvernFeather] You periodically shed light orbs, touch them to refresh your flight time
 		[i:FargowiltasSouls/SqueakyToy] Attacks have a chance to squeak and deal 1 damage to you
-		[i:FargowiltasSouls/WretchedPouch] Press the Debuff Install key to gain Wretched Hex
-		[i:FargowiltasSouls/WretchedPouch] Wretched Hex grants massively increased damage and shadowflame, but less move and defenses and attack speed bonuses while attacking
+		[i:FargowiltasSouls/WretchedPouch] While attacking, builds up shadowflame charge but reduces damage reduction by 10%
+		[i:FargowiltasSouls/WretchedPouch] Stop attacking to consume shadowflame charge, releasing a burst of shadowflame tentacles that deal magic damage
 		[i:FargowiltasSouls/ConcentratedRainbowMatter] Summons a friendly rainbow slime
 		[i:FargowiltasSouls/TimsConcoction] Certain enemies will drop potions when defeated
 		[i:FargowiltasSouls/TribalCharm] When attacking by manually clicking, increases non-summon damage by 30%
@@ -3364,4 +3386,95 @@ RazorContainer: {
 		While flying it always critically strikes and has increased armor penetration
 		'Some yellow fur is still stuck at the bottom' 
 		''' */
+}
+
+NebulaBooster: {
+	// DisplayName: Nebula Booster
+	// Tooltip: ""
+	// Activate: +{0} life regen
+	// Deactivate: -{0} life regen
+}
+
+SolarBooster: {
+	// DisplayName: Solar Booster
+	// Tooltip: ""
+	// Activate: +{0}% DR
+	// Deactivate: -{0}% DR
+}
+
+StardustBooster: {
+	// DisplayName: Stardust Booster
+	// Tooltip: ""
+	// Activate: +{0}% damage
+	// Deactivate: -{0}% damage
+}
+
+VortexBooster: {
+	// DisplayName: Vortex Booster
+	// Tooltip: ""
+	// Activate: +{0}% crit chance
+	// Deactivate: -{0}% crit chance
+}
+
+CosmosBooster: {
+	// DisplayName: Cosmos Booster
+	// Tooltip: ""
+	// Activate: +{0}% crit damage
+	// Deactivate: -{0}% crit damage
+}
+
+DeathBooster: {
+	// DisplayName: Death Booster
+	// Tooltip: ""
+	// Activate: +{0} armor pen
+	// Deactivate: -{0} armor pen
+}
+
+EarthBooster: {
+	// DisplayName: Earth Booster
+	// Tooltip: ""
+	// Activate: +{0}% DR
+	// Deactivate: -{0}% DR
+}
+
+LifeBooster: {
+	// DisplayName: Life Booster
+	// Tooltip: ""
+	// Activate: +{0} life regen
+	// Deactivate: -{0} life regen
+}
+
+NatureBooster: {
+	// DisplayName: Nature Booster
+	// Tooltip: ""
+	// Activate: +{0} defense
+	// Deactivate: -{0} defense
+}
+
+SpiritBooster: {
+	// DisplayName: Spirit Booster
+	// Tooltip: ""
+	// Activate: +{0} mana regen
+	// Deactivate: -{0} mana regen
+}
+
+TerraBooster: {
+	// DisplayName: Terra Booster
+	// Tooltip: ""
+	// Activate: +{0}% crit chance
+	// Deactivate: -{0}% crit chance
+}
+
+TimberBooster: {
+	// DisplayName: Timber Booster
+	// Tooltip: ""
+	// Activate: +{0}% damage
+	// Deactivate: -{0}% damage
+}
+
+WillBooster: {
+	// DisplayName: Will Booster
+	// Tooltip: ""
+	// Activate: +{0} flat damage
+	// Deactivate: -{0} flat damage
 }

@@ -82,7 +82,7 @@ Your attacks periodically summon life-draining hearts
 
             if (!Main.dedServ)
             {
-                SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/Graze") { Volume = 0.5f }, Main.LocalPlayer.Center);
+                SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/Accessories/Graze") { Volume = 0.5f }, Main.LocalPlayer.Center);
             }
 
             Vector2 baseVel = Vector2.UnitX.RotatedByRandom(2 * Math.PI);
@@ -110,6 +110,6 @@ Your attacks periodically summon life-draining hearts
     {
         public override Header ToggleHeader => Header.GetHeader<DeviEnergyHeader>();
         public override int ToggleItemType => ModContent.ItemType<SparklingAdoration>();
-        public override bool IgnoresMutantPresence => true;
+        
     }
 }

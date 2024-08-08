@@ -52,10 +52,17 @@ namespace FargowiltasSouls.Content.Items.Accessories.Masomode
     {
         public override Header ToggleHeader => Header.GetHeader<BionomicHeader>();
         public override int ToggleItemType => ModContent.ItemType<WyvernFeather>();
-        public override bool IgnoresMutantPresence => true;
+
         public override void PostUpdateMiscEffects(Player player)
         {
             player.gravity = Math.Max(player.gravity, Player.defaultGravity);
+
+            if (!player.ignoreWater && Collision.WetCollision(player.position, player.width, player.height) && !player.shimmerWet && !player.trident && !player.merman)
+            {
+                player.ignoreWater = true; // allow full movement then restrict the horizontal
+                float speedLoss = player.honeyWet ? 0.75f : 0.5f; // 25% speed in honey, 50% otherwise
+                player.position.X -= speedLoss * player.velocity.X; // simulate slower horizontal movement
+            }
         }
     }
     public class ClippedEffect : AccessoryEffect

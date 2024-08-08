@@ -1,9 +1,12 @@
-﻿using FargowiltasSouls.Content.Buffs;
+﻿using FargowiltasSouls.Content.Bosses.Champions.Cosmos;
+using FargowiltasSouls.Content.Buffs;
 using FargowiltasSouls.Content.Buffs.Masomode;
+using FargowiltasSouls.Content.Items.Accessories.Forces;
 using FargowiltasSouls.Content.Projectiles.Masomode;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using FargowiltasSouls.Core.Toggler.Content;
 using Microsoft.Xna.Framework;
+using System;
 using System.Linq;
 using Terraria;
 using Terraria.Audio;
@@ -56,49 +59,49 @@ Attack speed bonuses are half as effective
         public override Header ToggleHeader => Header.GetHeader<BionomicHeader>();
         public override int ToggleItemType => ModContent.ItemType<WretchedPouch>();
         public override bool ExtraAttackEffect => true;
-        public override bool IgnoresMutantPresence => true;
+        
         public override void PostUpdateEquips(Player player)
         {
-            Player Player = player;
+            const int MaxChargeTime = 60 * 8;
+
             FargoSoulsPlayer modPlayer = player.FargoSouls();
-
-            if (!Player.controlUseItem && !Player.controlUseTile && modPlayer.WeaponUseTimer <= 6) //remove extra 6 added to the timer, makes it a lot less awkward
-                return;
-
-            if (Player.HeldItem.IsAir || Player.HeldItem.damage <= 0 || Player.HeldItem.pick > 0 || Player.HeldItem.axe > 0 || Player.HeldItem.hammer > 0)
-                return;
-
-            if (!Player.HasBuff(ModContent.BuffType<WretchedHexBuff>()))
-                return;
-
-            int d = Dust.NewDust(Player.position, Player.width, Player.height, DustID.Shadowflame, Player.velocity.X * 0.4f, Player.velocity.Y * 0.4f, 0, new Color(), 3f);
-            Main.dust[d].noGravity = true;
-            Main.dust[d].velocity *= 5f;
-
-            Player.GetDamage(DamageClass.Generic) += 1.20f;
-            Player.endurance -= 0.20f;
-            Player.velocity *= 0.875f;
-
-            if (--modPlayer.WretchedPouchCD <= 0)
+            if (player.HeldItem != null && player.HeldItem.damage > 0 && player.controlUseItem) // build up charges
             {
-                modPlayer.WretchedPouchCD = 25;
+                modPlayer.WretchedPouchCD += 1;
+                if (!modPlayer.MasochistSoul)
+                    player.endurance -= 0.1f;
 
-                if (Player.whoAmI == Main.myPlayer)
+                float charge = modPlayer.WretchedPouchCD / (float)MaxChargeTime;
+                charge = MathHelper.Clamp(charge, 0, 1);
+                int freq = 30 - (int)MathF.Round(29 * charge);
+                if (Main.GameUpdateCount % freq == 0)
                 {
-                    Vector2 vel = Main.rand.NextVector2Unit();
+                    int d = Dust.NewDust(player.position, player.width, player.height, DustID.Shadowflame, player.velocity.X * 0.4f, player.velocity.Y * 0.4f, 0, new Color(), 3f);
+                    Main.dust[d].noGravity = true;
+                    Main.dust[d].velocity *= 5f;
+                }
+            }
+            else
+            {
+                // maximum charge: 8 seconds
+                float charge = modPlayer.WretchedPouchCD / (float)MaxChargeTime;
+                if (charge < 0.2f)
+                    return;
+                charge = MathHelper.Clamp(charge, 0, 1);
+                modPlayer.WretchedPouchCD = 0;
 
-                    NPC target = Main.npc.FirstOrDefault(n => n.active && n.Distance(Player.Center) < 360 && n.CanBeChasedBy() && Collision.CanHit(Player.position, Player.width, Player.height, n.position, n.width, n.height));
-                    if (target != null)
-                        vel = Player.SafeDirectionTo(target.Center);
+                if (player.whoAmI == Main.myPlayer)
+                {
+                    Vector2 vel = player.Center.DirectionTo(Main.MouseWorld);
 
-                    vel *= 8f;
+                    vel *= 11f;
 
-                    SoundEngine.PlaySound(SoundID.Item103, Player.Center);
+                    SoundEngine.PlaySound(SoundID.Item103, player.Center);
 
-                    int dam = 40;
+                    int dam = 50 + (int)(50 * charge * 6);
                     if (modPlayer.MasochistSoul)
-                        dam *= 3;
-                    dam = (int)(dam * Player.ActualClassDamage(DamageClass.Magic));
+                        dam *= 10;
+                    dam = (int)(dam * player.ActualClassDamage(DamageClass.Magic));
 
                     void ShootTentacle(Vector2 baseVel, float variance, int aiMin, int aiMax)
                     {
@@ -109,19 +112,14 @@ Attack speed bonuses are half as effective
                         float ai1 = Main.rand.Next(aiMin, aiMax) * (1f / 1000f);
                         if (Main.rand.NextBool())
                             ai1 *= -1f;
-                        Projectile.NewProjectile(GetSource_EffectItem(Player), Player.Center, speed, ModContent.ProjectileType<ShadowflameTentacle>(), dam, 4f, Player.whoAmI, ai0, ai1);
+                        int p = Projectile.NewProjectile(GetSource_EffectItem(player), player.Center, speed, ModContent.ProjectileType<ShadowflameTentacle>(), dam, 4f, player.whoAmI, ai0, ai1);
                     };
 
-                    int max = target == null ? 3 : 6;
-                    float rotationOffset = MathHelper.TwoPi / max;
-                    if (target != null)
-                    {
-                        for (int i = 0; i < max / 2; i++) //shoot right at them
-                            ShootTentacle(vel, rotationOffset, 60, 90);
-                    }
+                    int max = (int)(charge * 16);
                     for (int i = 0; i < max; i++) //shoot everywhere
-                        ShootTentacle(vel.RotatedBy(rotationOffset * i), rotationOffset, 30, 50);
+                        ShootTentacle(vel, 1f, 30, 50);
                 }
+
             }
         }
     }

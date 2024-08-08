@@ -11,7 +11,7 @@ namespace FargowiltasSouls.Content.Projectiles.Minions
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Brain Proj");
-            Main.projFrames[Projectile.type] = 11;
+            Main.projFrames[Projectile.type] = 4;
             ProjectileID.Sets.MinionSacrificable[Projectile.type] = true;
             //ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;
             ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;
@@ -44,7 +44,7 @@ namespace FargowiltasSouls.Content.Projectiles.Minions
             if (Projectile.frameCounter >= 8)
             {
                 Projectile.frameCounter = 0;
-                Projectile.frame = (Projectile.frame + 1) % 11;
+                Projectile.frame = (Projectile.frame + 1) % 4;
             }
 
             Projectile.velocity = Vector2.Lerp(Projectile.velocity, Projectile.SafeDirectionTo(player.Center), 0.05f);

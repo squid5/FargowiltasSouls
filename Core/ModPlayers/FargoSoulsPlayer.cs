@@ -41,6 +41,7 @@ namespace FargowiltasSouls.Core.ModPlayers
 
         public bool IsStandingStill;
         public float AttackSpeed;
+        public float UseTimeDebt;
         public float WingTimeModifier = 1f;
 
         public bool FreeEaterSummon = true;
@@ -223,6 +224,9 @@ namespace FargowiltasSouls.Core.ModPlayers
             //            #region enchantments 
             PetsActive = true;
             //CrimsonRegen = false;
+            if (!LifeForceActive)
+                LifeBeetleDuration = 0;
+            LifeForceActive = false;
             MinionCrits = false;
             FirstStrike = false;
             ShellHide = false;
@@ -237,7 +241,6 @@ namespace FargowiltasSouls.Core.ModPlayers
             CrystalEnchantActive = false;
             IronRecipes = false;
             ChlorophyteEnchantActive = false;
-            PearlwoodStar = false;
 
             if (!MonkEnchantActive)
                 Player.ClearBuff(ModContent.BuffType<MonkBuff>());
@@ -621,15 +624,26 @@ namespace FargowiltasSouls.Core.ModPlayers
                     AttackSpeed -= diff;
                 }
 
-                //modify attack speed so it rounds up
-                //int useTimeRoundUp = (int)Math.Round(useTime / AttackSpeed, MidpointRounding.ToPositiveInfinity);
-                //if (useTimeRoundUp < useTime) //sanity check
-                //{
-                //    while (useTime / AttackSpeed < useTimeRoundUp)
-                //    {
-                //        AttackSpeed -= .01f; //small increments to avoid skipping past any integers
-                //    }
-                //}
+                float originalAttackSpeed = AttackSpeed;
+                float originalUseTime = useTime / AttackSpeed;
+                if (UseTimeDebt > 1f)
+                {
+                    //when accummulated enough debt, pay it off. use time will round down this tick.
+                    UseTimeDebt -= 1f;
+                }
+                else //normally, force use time to round up
+                {
+                    //modify attack speed so it rounds up
+                    int useTimeRoundUp = (int)Math.Round(useTime / AttackSpeed, MidpointRounding.ToPositiveInfinity);
+                    //Main.NewText($"pre {useTime / AttackSpeed}, target {useTimeRoundUp}");
+                    while (useTime / AttackSpeed < useTimeRoundUp)
+                        AttackSpeed -= .01f; //small increments to avoid skipping past any integers
+                    //Main.NewText($"result {useTime / AttackSpeed}");
+
+                    float newUseTime = useTime / AttackSpeed;
+                    UseTimeDebt += newUseTime - originalUseTime; //track the sub-1 unit "debt" of shorter useTime
+                }
+                //Main.NewText($"oldASpd: {originalAttackSpeed}, newASpd: {AttackSpeed}, oldUT: {originalUseTime}, newUT: {(useTime / AttackSpeed)}, debt: {UseTimeDebt}");
 
                 //checks so weapons dont break
                 while (useTime / AttackSpeed < 1)
@@ -649,6 +663,7 @@ namespace FargowiltasSouls.Core.ModPlayers
             return AttackSpeed;
         }
 
+        
         public override void DrawEffects(PlayerDrawSet drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright)
         {
             //            if (squireReduceIframes && (SquireEnchant || ValhallaEnchant))
@@ -1002,7 +1017,7 @@ namespace FargowiltasSouls.Core.ModPlayers
             if (!retVal)
             {
                 if (!Main.dedServ)
-                    SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/Revive"), Player.Center);
+                    SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/Accessories/Revive"), Player.Center);
 
                 if (Player.whoAmI == Main.myPlayer && MutantSetBonusItem != null)
                     Projectile.NewProjectile(Player.GetSource_Accessory(MutantSetBonusItem), Player.Center, -Vector2.UnitY, ModContent.ProjectileType<GiantDeathray>(), (int)(7000 * Player.ActualClassDamage(DamageClass.Magic)), 10f, Player.whoAmI);
@@ -1375,7 +1390,6 @@ namespace FargowiltasSouls.Core.ModPlayers
         }
         public bool ForceEffect(ModItem modItem)
         {
-            //This will probably be made less ugly in a future refactor update.
             bool CheckForces(int type)
             {
                 int force = BaseEnchant.Force[type];

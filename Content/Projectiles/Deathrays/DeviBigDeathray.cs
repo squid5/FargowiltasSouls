@@ -70,7 +70,7 @@ namespace FargowiltasSouls.Content.Projectiles.Deathrays
             if (Projectile.localAI[0] == 0f)
             {
                 if (!Main.dedServ)
-                    SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/DeviBigDeathray"), Projectile.Center);
+                    SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/Siblings/Deviantt/DeviBigDeathray"), Projectile.Center);
             }
             float num801 = 17f;
             Projectile.localAI[0] += 1f;

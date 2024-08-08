@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -17,7 +18,13 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
 {
     public class LifeChalDeathray : BaseDeathray, IPixelatedPrimitiveRenderer
     {
-        PixelationPrimitiveLayer LayerToRenderTo => PixelationPrimitiveLayer.AfterProjectiles;
+        public static readonly SoundStyle ScreechSound1 = new SoundStyle($"FargowiltasSouls/Assets/Sounds/Challengers/Lifelight/LifelightScreech1") with { Volume = 1.5f };
+        public static readonly SoundStyle DashSound1 = new SoundStyle($"FargowiltasSouls/Assets/Sounds/Challengers/Lifelight/LifelightDash") with { Volume = 1.5f };
+        public static readonly SoundStyle DashSound2 = new SoundStyle($"FargowiltasSouls/Assets/Sounds/Challengers/Lifelight/LifelightPixieDash") with { Volume = 1.5f };
+        public static readonly SoundStyle RuneSound1 = new SoundStyle($"FargowiltasSouls/Assets/Sounds/Challengers/Lifelight/LifelightRuneSound") with { Volume = 1.5f };
+        public static readonly SoundStyle TelegraphSound1 = new SoundStyle($"FargowiltasSouls/Assets/Sounds/Challengers/Lifelight/LifelightShotPrep") with { Volume = 1.5f };
+
+        public PixelationPrimitiveLayer LayerToRenderTo => PixelationPrimitiveLayer.AfterProjectiles;
 
         public override string Texture => "FargowiltasSouls/Content/Projectiles/Deathrays/AbomDeathray";
 
@@ -51,8 +58,8 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
             else
             {
                 Projectile.Center = npc.Center;
-                LifeChallenger lifelight = ((LifeChallenger)npc.ModNPC);
-                Projectile.rotation = lifelight.LockVector1.RotatedBy(lifelight.rot).ToRotation();
+                LifeChallenger lifelight = npc.As<LifeChallenger>();
+                Projectile.rotation = lifelight.GunRotation;
                 Projectile.velocity = Projectile.rotation.ToRotationVector2();
                 maxTime = Projectile.ai[2];
             }
@@ -128,7 +135,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
             if (WorldSavingSystem.EternityMode)
             {
                 target.AddBuff(ModContent.BuffType<PurifiedBuff>(), 300);
-                target.AddBuff(ModContent.BuffType<SmiteBuff>(), 60 * 3);
+                target.AddBuff(ModContent.BuffType<SmiteBuff>(), 60 * 6);
             }
         }
 

@@ -67,7 +67,7 @@ namespace FargowiltasSouls.Content.Buffs.Souls
                     filter.Activate();
 
                 if (player.buffTime[buffIndex] == 90)
-                    SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/ZaWarudoResume"), player.Center);
+                    SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/Accessories/ZaWarudoResume"), player.Center);
 
                 if (SoulConfig.Instance.ForcedFilters && Main.WaveQuality == 0)
                     Main.WaveQuality = 1;

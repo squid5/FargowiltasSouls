@@ -243,7 +243,6 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Cosmos
             NPC.dontTakeDamage = false;
 
             bool IsDeviantt(int n) => Main.npc[n].active && !Main.npc[n].dontTakeDamage && (Main.npc[n].type == ModContent.NPCType<Deviantt>() || Main.npc[n].type == ModContent.NPCType<DeviBoss.DeviBoss>());
-
             switch ((int)Animation)
             {
                 case -4: //hit children
@@ -783,8 +782,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Cosmos
                 case 1: //deathray punches, p2 only
                     targetPos = player.Center;
                     targetPos.X += 300 * (NPC.Center.X < targetPos.X ? -1 : 1);
-                    if (NPC.Distance(targetPos) > 50)
-                        Movement(targetPos, 0.8f, 32f);
+                    Movement(targetPos, 1.2f, 32f);
 
                     if (NPC.ai[1] == 1)
                         SoundEngine.PlaySound(SoundID.Roar, NPC.Center);
@@ -976,7 +974,6 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Cosmos
                 case 5: //meteor punch
                     if (NPC.ai[1] == 1)
                         SoundEngine.PlaySound(SoundID.Roar, NPC.Center);
-
                     if (++NPC.ai[2] <= 75)
                     {
                         targetPos = player.Center;
@@ -1300,8 +1297,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Cosmos
                     {
                         targetPos = player.Center;
                         targetPos.X += 300 * (NPC.Center.X < targetPos.X ? -1 : 1);
-                        if (NPC.Distance(targetPos) > 50)
-                            Movement(targetPos, 0.8f, 32f);
+                        Movement(targetPos, 1.2f, 32f);
 
                         if (NPC.ai[1] == 1)
                             SoundEngine.PlaySound(SoundID.Roar, NPC.Center);
@@ -1476,7 +1472,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Cosmos
                         NPC.localAI[0] = Main.rand.NextFloat(2 * (float)Math.PI);
 
                         if (!Main.dedServ)
-                            SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/ZaWarudo"), player.Center);
+                            SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/Accessories/ZaWarudo"), player.Center);
 
                         //if (FargoSoulsUtil.HostCheck) Projectile.NewProjectile(npc.GetSource_FromThis(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<GlowRing>(), 0, 0f, Main.myPlayer, NPC.whoAmI, -18);
 
@@ -1614,30 +1610,33 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Cosmos
 
         private void Movement(Vector2 targetPos, float speedModifier, float cap = 12f, bool fastY = false)
         {
+            if (NPC.Distance(targetPos) < NPC.Size.Length())
+                speedModifier /= 3f;
             if (NPC.Center.X < targetPos.X)
             {
                 NPC.velocity.X += speedModifier;
                 if (NPC.velocity.X < 0)
-                    NPC.velocity.X += speedModifier * 2;
+                    NPC.velocity.X += speedModifier * 6;
             }
             else
             {
                 NPC.velocity.X -= speedModifier;
                 if (NPC.velocity.X > 0)
-                    NPC.velocity.X -= speedModifier * 2;
+                    NPC.velocity.X -= speedModifier * 6;
             }
             if (NPC.Center.Y < targetPos.Y)
             {
                 NPC.velocity.Y += fastY ? speedModifier * 2 : speedModifier;
                 if (NPC.velocity.Y < 0)
-                    NPC.velocity.Y += speedModifier * 2;
+                    NPC.velocity.Y += speedModifier * 6;
             }
             else
             {
                 NPC.velocity.Y -= fastY ? speedModifier * 2 : speedModifier;
                 if (NPC.velocity.Y > 0)
-                    NPC.velocity.Y -= speedModifier * 2;
+                    NPC.velocity.Y -= speedModifier * 6;
             }
+
             float dist = NPC.Distance(targetPos);
             if (dist == 0)
                 dist = 0.1f;

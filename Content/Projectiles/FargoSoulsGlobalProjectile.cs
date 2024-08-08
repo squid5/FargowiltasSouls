@@ -5,6 +5,7 @@ using FargowiltasSouls.Content.Bosses.TrojanSquirrel;
 using FargowiltasSouls.Content.Buffs.Masomode;
 using FargowiltasSouls.Content.Buffs.Souls;
 using FargowiltasSouls.Content.Items.Accessories.Enchantments;
+using FargowiltasSouls.Content.Items.Accessories.Forces;
 using FargowiltasSouls.Content.Items.Accessories.Masomode;
 using FargowiltasSouls.Content.Items.Accessories.Souls;
 using FargowiltasSouls.Content.Items.Armor;
@@ -367,6 +368,29 @@ namespace FargowiltasSouls.Content.Projectiles
             {
                 HuntressProj = 1;
             }
+
+            if (player.HasEffect<EarthForceEffect>() && !player.HasEffect<AdamantiteEffect>()
+                && FargoSoulsUtil.OnSpawnEnchCanAffectProjectile(projectile, false)
+                && CanSplit && Array.IndexOf(NoSplit, projectile.type) <= -1
+                && projectile.aiStyle != ProjAIStyleID.Spear)
+            {
+                if (projectile.owner == Main.myPlayer && modPlayer.EarthTimer > 100
+                    && !(AdamantiteEffect.AdamIgnoreItems.Contains(modPlayer.Player.HeldItem.type) || modPlayer.Player.heldProj == projectile.whoAmI)
+                    && (FargoSoulsUtil.IsProjSourceItemUseReal(projectile, source)
+                    || source is EntitySource_Parent parent && parent.Entity is Projectile sourceProj && (sourceProj.aiStyle == ProjAIStyleID.Spear || sourceProj.minion || sourceProj.sentry || ProjectileID.Sets.IsAWhip[sourceProj.type] && !ProjectileID.Sets.IsAWhip[projectile.type]))){
+                    EarthForceEffect.EarthSplit(projectile, Main.LocalPlayer);
+                    AdamModifier = 3;
+                }
+            }
+            //reduce iframes so that the accessory actually increases dps for real
+            if (player.HasEffect<EarthForceEffect>())
+            {
+                if (projectile.usesIDStaticNPCImmunity && AdamModifier == 3)
+                {
+                    projectile.idStaticNPCHitCooldown = (int)(projectile.idStaticNPCHitCooldown * 0.3333f);
+                }
+            }
+            
             if (player.HasEffect<AdamantiteEffect>()
                 && FargoSoulsUtil.OnSpawnEnchCanAffectProjectile(projectile, false)
                 && CanSplit && Array.IndexOf(NoSplit, projectile.type) <= -1
@@ -602,7 +626,7 @@ namespace FargowiltasSouls.Content.Projectiles
                 if (counter >= 5)
                     projectile.velocity = Vector2.Zero;
 
-                int deathTimer = 15;
+                int deathTimer = 10;
 
                 if (projectile.hostile)
                     deathTimer = 60;

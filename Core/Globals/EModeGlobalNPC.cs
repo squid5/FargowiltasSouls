@@ -385,7 +385,7 @@ namespace FargowiltasSouls.Core.Globals
                     if (jungle)
                     {
                         if (WorldSavingSystem.MasochistModeReal && normalSpawn)
-                            pool[NPCID.Parrot] = .025f;
+                            pool[NPCID.Parrot] = .01f;
                     }
 
                     if (mushroom)
@@ -746,7 +746,7 @@ namespace FargowiltasSouls.Core.Globals
                             pool[NPCID.QueenBee] = .0001f;
 
                         if (normalSpawn)
-                            pool[NPCID.Parrot] = .025f;
+                            pool[NPCID.Parrot] = .01f;
 
                         if (!surface)
                         {

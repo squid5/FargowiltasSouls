@@ -24,13 +24,13 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
         public const int RandomStuffOpenTime = 60;
 
 
-        public static readonly SoundStyle PhaseTransitionSFX = new("FargowiltasSouls/Assets/Sounds/CoffinPhaseTransition");
-        public static readonly SoundStyle SlamSFX = new("FargowiltasSouls/Assets/Sounds/CoffinSlam") { PitchVariance = 0.3f };
-        public static readonly SoundStyle SpiritDroneSFX = new("FargowiltasSouls/Assets/Sounds/CoffinSpiritDrone") { MaxInstances = 1, SoundLimitBehavior = SoundLimitBehavior.IgnoreNew, Volume = 0.2f };
-        public static readonly SoundStyle BigShotSFX = new("FargowiltasSouls/Assets/Sounds/CoffinBigShot") { Volume = 0.6f, PitchVariance = 0.3f };
-        public static readonly SoundStyle ShotSFX = new("FargowiltasSouls/Assets/Sounds/CoffinShot") { Volume = 0.3f, PitchVariance = 0.3f };
-        public static readonly SoundStyle SoulShotSFX = new("FargowiltasSouls/Assets/Sounds/CoffinSoulShot") { Volume = 0.3f, PitchVariance = 0.3f };
-        public static readonly SoundStyle HandChargeSFX = new("FargowiltasSouls/Assets/Sounds/CoffinHandCharge");
+        public static readonly SoundStyle PhaseTransitionSFX = new("FargowiltasSouls/Assets/Sounds/Challenger/Coffin/CoffinPhaseTransition");
+        public static readonly SoundStyle SlamSFX = new("FargowiltasSouls/Assets/Sounds/Challenger/Coffin/CoffinSlam") { PitchVariance = 0.3f };
+        public static readonly SoundStyle SpiritDroneSFX = new("FargowiltasSouls/Assets/Sounds/Challenger/Coffin/CoffinSpiritDrone") { MaxInstances = 1, SoundLimitBehavior = SoundLimitBehavior.IgnoreNew, Volume = 0.2f };
+        public static readonly SoundStyle BigShotSFX = new("FargowiltasSouls/Assets/Sounds/Challenger/Coffin/CoffinBigShot") { Volume = 0.6f, PitchVariance = 0.3f };
+        public static readonly SoundStyle ShotSFX = new("FargowiltasSouls/Assets/Sounds/Challenger/Coffin/CoffinShot") { Volume = 0.3f, PitchVariance = 0.3f };
+        public static readonly SoundStyle SoulShotSFX = new("FargowiltasSouls/Assets/Sounds/Challenger/Coffin/CoffinSoulShot") { Volume = 0.3f, PitchVariance = 0.3f };
+        public static readonly SoundStyle HandChargeSFX = new("FargowiltasSouls/Assets/Sounds/Challenger/Coffin/CoffinHandCharge");
 
         public enum BehaviorStates
         {

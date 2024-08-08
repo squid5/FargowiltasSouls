@@ -1,0 +1,143 @@
+SoulConfig: {
+	DisplayName: Конфигурация мода Souls
+
+	Headers: {
+		Maso: Режим Вечность
+		Patreon: "[i:FargowiltasSouls/RoombaPet] [c/ffffff:Предметы Патреона]"
+	}
+
+	HideTogglerWhenInventoryIsClosed: {
+		Label: Показывать Переключатель Эффектов только когда инвентарь открыт
+		Tooltip: Если включена, Переключатель Эффектов автоматически закрывается вместе с инвентарём.
+	}
+
+	ItemDisabledTooltip: {
+		Label: Описания о Выключенных Эффектах
+		Tooltip: Если включена, у предметов с любыми эффектами, выключенными в Переключателе Эффектов, в описании появится строчка, говорящая об этом.
+	}
+
+	DeviChatter: {
+		Label: Чиби Деви может говорить
+		Tooltip: ""
+	}
+
+	ToggleSearchReset: {
+		Label: Меню Эффектов Аксессуаров выключает строку поиска при закрытии
+		Tooltip: ""
+	}
+
+	BigTossMode: {
+		Label: Режим Большого Броска
+		Tooltip: ""
+	}
+
+	ForcedFilters: {
+		Label: Включать настройку Качества волн (игнорирует настройки игры)
+		Tooltip: Необходимо для корректной работы некоторых визуальных эффектов.
+	}
+
+	BossRecolors: {
+		Label: Боссы используют другие спрайты
+		Tooltip: ""
+	}
+
+	PrecisionSealIsHold: {
+		Label: Кнопка Печати Точности удерживается
+		Tooltip: Если выключена, режим точности будет переключаться по нажатию кнопки.
+	}
+
+	PreBossNightGlow: {
+		Label: Существа светятся до убийства босса
+		Tooltip: В режиме Вечность, существа светятся ночью, если ещё не был убит какой-либо босс.
+	}
+
+	OncomingMutantX: {
+		Label: Позиция иконки режима Вечность в инвентаре по X
+		Tooltip: ""
+	}
+
+	OncomingMutantY: {
+		Label: Позиция иконки режима Вечность в инвентаре по Y
+		Tooltip: ""
+	}
+
+	PatreonRoomba: {
+		Label: "[i:FargowiltasSouls/RoombaPet] [c/ffffff:{$Mods.FargowiltasSouls.Items.RoombaPet.DisplayName}]"
+		Tooltip: ""
+	}
+
+	PatreonOrb: {
+		Label: "[i:FargowiltasSouls/ComputationOrb] [c/ffffff:{$Mods.FargowiltasSouls.Items.ComputationOrb.DisplayName}]"
+		Tooltip: ""
+	}
+
+	PatreonFishingRod: {
+		Label: "[i:FargowiltasSouls/MissDrakovisFishingPole] [c/ffffff:{$Mods.FargowiltasSouls.Items.MissDrakovisFishingPole.DisplayName}]"
+		Tooltip: ""
+	}
+
+	PatreonDoor: {
+		Label: "[i:FargowiltasSouls/SquidwardDoor] [c/ffffff:{$Mods.FargowiltasSouls.Items.SquidwardDoor.DisplayName}]"
+		Tooltip: ""
+	}
+
+	PatreonWolf: {
+		Label: "[i:FargowiltasSouls/ParadoxWolfSoul] [c/ffffff:{$Mods.FargowiltasSouls.Items.ParadoxWolfSoul.DisplayName}]"
+		Tooltip: ""
+	}
+
+	PatreonDove: {
+		Label: "[i:FargowiltasSouls/FigBranch] [c/ffffff:{$Mods.FargowiltasSouls.Items.FigBranch.DisplayName}]"
+		Tooltip: ""
+	}
+
+	PatreonKingSlime: {
+		Label: "[i:FargowiltasSouls/MedallionoftheFallenKing] [c/ffffff:{$Mods.FargowiltasSouls.Items.MedallionoftheFallenKing.DisplayName}]"
+		Tooltip: ""
+	}
+
+	PatreonFishron: {
+		Label: "[i:FargowiltasSouls/StaffOfUnleashedOcean] [c/ffffff:{$Mods.FargowiltasSouls.Items.StaffOfUnleashedOcean.DisplayName}]"
+		Tooltip: ""
+	}
+
+	PatreonPlant: {
+		Label: "[i:FargowiltasSouls/PiranhaPlantVoodooDoll] [c/ffffff:{$Mods.FargowiltasSouls.Items.PiranhaPlantVoodooDoll.DisplayName}]"
+		Tooltip: ""
+	}
+
+	PatreonDevious: {
+		Label: "[i:FargowiltasSouls/DeviousAestheticus] [c/ffffff:{$Mods.FargowiltasSouls.Items.DeviousAestheticus.DisplayName}]"
+		Tooltip: ""
+	}
+
+	PatreonVortex: {
+		Label: "[i:FargowiltasSouls/VortexMagnetRitual] [c/ffffff:{$Mods.FargowiltasSouls.Items.VortexMagnetRitual.DisplayName}]"
+		Tooltip: ""
+	}
+
+	PatreonPrime: {
+		Label: "[i:FargowiltasSouls/PrimeStaff] [c/ffffff:{$Mods.FargowiltasSouls.Items.PrimeStaff.DisplayName}]"
+		Tooltip: ""
+	}
+
+	PatreonCrimetroid: {
+		Label: "[i:FargowiltasSouls/CrimetroidEgg] [c/ffffff:{$Mods.FargowiltasSouls.Items.CrimetroidEgg.DisplayName}]"
+		Tooltip: ""
+	}
+
+	PatreonNanoCore: {
+		Label: "[i:FargowiltasSouls/NanoCore] [c/ffffff:{$Mods.FargowiltasSouls.Items.NanoCore.DisplayName}]"
+		Tooltip: ""
+	}
+
+	PatreonROB: {
+		Label: "[i:FargowiltasSouls/ROBGyro] [c/ffffff:{$Mods.FargowiltasSouls.Items.ROBGyro.DisplayName}]"
+		Tooltip: ""
+	}
+
+	PerformanceMode: {
+		// Label: Performance Mode
+		// Tooltip: Disables the most performance-demanding visuals. Currently disables Mutant's eye attack trails.
+	}
+}

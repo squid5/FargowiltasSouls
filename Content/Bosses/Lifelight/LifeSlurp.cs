@@ -46,9 +46,14 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
             Projectile.light = 0.5f;
             Projectile.scale = 1f;
         }
-        public override bool? CanDamage() => Projectile.alpha <= 0;
+        public override bool? CanDamage() => Projectile.alpha <= 100 ? base.CanDamage() : false;
         public override void AI()
         {
+            if (Projectile.ai[0] > 30 && !First && !lifelight.TypeAlive<LifeChallenger>())
+            {
+                Projectile.Kill();
+                return;
+            }
             if (Projectile.ai[0] == 0)
             {
                 Projectile.rotation = Main.rand.Next(100);
@@ -57,14 +62,6 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
             }
             Projectile.rotation += 0.2f * RotDirect;
 
-            if (Main.rand.NextBool(6))
-            {
-                int index2 = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.PurpleCrystalShard,
-                    Projectile.velocity.X * 0.2f, Projectile.velocity.Y * 0.2f, 100, new Color(), 2.5f);
-                Main.dust[index2].noGravity = true;
-                Main.dust[index2].velocity.X *= 0.5f;
-                Main.dust[index2].velocity.Y *= 0.5f;
-            }
 
             if (Projectile.alpha > 0)
             {
@@ -75,10 +72,14 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                 if (First)
                 {
                     lifelight = Main.npc[(int)Projectile.ai[1]];
+                    if (!lifelight.TypeAlive<LifeChallenger>())
+                    {
+                        Projectile.Kill();
+                        return;
+                    }
                     Projectile.ai[1] = 0;
                     First = false;
                 }
-                Player Player = Main.player[lifelight.target];
                 Vector2 vectorToIdlePosition = Projectile.Center;
                 float speed = 8f;
                 float inertia = 5f;
@@ -89,7 +90,11 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                 }
                 if (Projectile.ai[1] > 90f)
                 {
-                    vectorToIdlePosition = Player.Center - Projectile.Center;
+                    if (lifelight.HasPlayerTarget)
+                    {
+                        Player Player = Main.player[lifelight.target];
+                        vectorToIdlePosition = Player.Center - Projectile.Center;
+                    }
                     speed = 12f;
                     homingonPlayer = true;
                     home = false;

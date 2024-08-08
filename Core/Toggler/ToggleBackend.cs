@@ -138,7 +138,6 @@ namespace FargowiltasSouls.Core.Toggler
 
             player.SetToggleValue<BorealEffect>(false);
             player.SetToggleValue<ShadewoodEffect>(false);
-            player.SetToggleValue<PearlwoodEffect>(false);
 
             player.SetToggleValue<CobaltEffect>(false);
             player.SetToggleValue<AncientCobaltEffect>(false);
@@ -193,9 +192,6 @@ namespace FargowiltasSouls.Core.Toggler
             player.SetToggleValue<MasoAbom>(false);
 
             player.SetToggleValue<MasoRing>(false);
-
-            player.SetToggleValue<MagmaStoneEffect>(false);
-            player.SetToggleValue<SniperScopeEffect>(false);
 
             player.SetToggleValue<BuilderEffect>(false);
 
@@ -262,7 +258,6 @@ namespace FargowiltasSouls.Core.Toggler
             player.SetToggleValue<MeteorMomentumEffect>(true);
             player.SetToggleValue<FlightMasteryInsignia>(true);
             player.SetToggleValue<FlightMasteryGravity>(true);
-            player.SetToggleValue<UniverseSpeedEffect>(true);
             player.SetToggleValue<PaladinShieldEffect>(true);
             player.SetToggleValue<ShimmerImmunityEffect>(true);
             player.SetToggleValue<MasoAeolusFrog>(true);

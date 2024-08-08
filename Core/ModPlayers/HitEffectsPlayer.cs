@@ -477,6 +477,8 @@ namespace FargowiltasSouls.Core.ModPlayers
 
             MahoganyCanUseDR = false;
 
+            TimeSinceHurt = 0;
+
             if (Player.HasBuff(ModContent.BuffType<TitaniumDRBuff>())
                 && !Player.HasBuff(ModContent.BuffType<TitaniumCDBuff>()))
             {
@@ -494,7 +496,7 @@ namespace FargowiltasSouls.Core.ModPlayers
                 int heartsToConsume = NekomiMeter / meterPerHeart;
                 if (heartsToConsume > heartsLost)
                     heartsToConsume = heartsLost;
-                Player.AddBuff(BuffID.RapidHealing, LumUtils.SecondsToFrames(heartsToConsume) * 5 / heartsLost);
+                Player.AddBuff(BuffID.RapidHealing, LumUtils.SecondsToFrames(heartsToConsume) * 4 / heartsLost);
 
                 NekomiMeter -= meterLost;
                 if (NekomiMeter < 0)

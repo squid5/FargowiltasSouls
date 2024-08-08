@@ -72,7 +72,9 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
         {
             base.SetDefaults(npc);
 
-            npc.lifeMax = (int)Math.Round(npc.lifeMax * 2.2);
+            npc.lifeMax = (int)Math.Round(npc.lifeMax * 2f);
+            if (Main.masterMode) //master mode is already long enough
+                npc.lifeMax = (int)Math.Round(npc.lifeMax * 0.9f);
             npc.defense = 0;
             npc.HitSound = SoundID.NPCHit41;
         }
@@ -96,7 +98,6 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
             if (WorldSavingSystem.SwarmActive)
                 return result;
-
             if (!MadeEyeInvul && npc.ai[3] == 0f) //when spawned in, make one eye invul
             {
                 for (int i = 0; i < Main.maxNPCs; i++) //not in on-spawn because need vanilla ai to spawn eyes first
@@ -133,7 +134,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                         DidGrowl = true;
                         if (!Main.dedServ)
                         {
-                            SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/Monster119"),
+                            SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/VanillaEternity/WallofFlesh/WoFSuck"),
                                 npc.HasValidTarget && Main.player[npc.target].ZoneUnderworldHeight ? Main.player[npc.target].Center : npc.Center);
                         }
                     }
@@ -226,7 +227,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
                 if (!Main.dedServ)
                 {
-                    SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/Monster94"),
+                    SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/VanillaEternity/WallofFlesh/WoFScreech"),
                         npc.HasValidTarget && Main.player[npc.target].ZoneUnderworldHeight ? Main.player[npc.target].Center : npc.Center);
 
                     if (Main.LocalPlayer.active)
@@ -240,7 +241,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                 {
                     //ChainBarrageTimer -= 0.5f; //increment faster
 
-                    if (WorldEvilAttackCycleTimer % 2 == 1) //always make sure its even in here
+                    if (WorldEvilAttackCycleTimer % 4 == 1) //always make sure its even in here
                         WorldEvilAttackCycleTimer--;
                 }
 
@@ -284,7 +285,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
                 if (!Main.dedServ)
                 {
-                    SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/Monster94"),
+                    SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/VanillaEternity/WallofFlesh/WoFScreech"),
                         npc.HasValidTarget && Main.player[npc.target].ZoneUnderworldHeight ? Main.player[npc.target].Center : npc.Center);
 
                     if (Main.LocalPlayer.active)
@@ -314,7 +315,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
                     if (!Main.dedServ)
                     {
-                        SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/Monster5") { Volume = 1.5f },
+                        SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/VanillaEternity/WallofFlesh/WoFGrowl") { Volume = 1.5f },
                             npc.HasValidTarget && Main.player[npc.target].ZoneUnderworldHeight ? Main.player[npc.target].Center : npc.Center);
 
                         if (Main.LocalPlayer.active)
@@ -323,7 +324,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                 }
             }
 
-            float maxSpeed = WorldSavingSystem.MasochistModeReal ? 4.5f : 3.5f; //don't let wof move faster than this normally
+            float maxSpeed = WorldSavingSystem.MasochistModeReal ? 4f : 3.5f; //don't let wof move faster than this normally
             if (!Main.getGoodWorld)
             {
                 if (npc.HasPlayerTarget && (Main.player[npc.target].dead || Vector2.Distance(npc.Center, Main.player[npc.target].Center) > 3000))
@@ -505,24 +506,31 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                 if (TelegraphTimer < npc.localAI[1])
                     TelegraphTimer = (int)npc.localAI[1];
 
-                float progress = (float)Math.Cos(Math.PI / 2f / TelegraphTime * TelegraphTimer);
+                
+                const float TelegraphFraction = 0.2f; // time fraction that actual telegraph lasts for
 
-                Color color = new Color(255, 0, 255, 100) * ((1f - progress) / 4 + 0.75f);
-                //float alpha = (int)(255f * progress);
-                int frequency = 2 + (int)Math.Ceiling(progress * 6);
-                if (frequency <= 0)
-                    frequency = 1;
-                float coneHalfWidth = MathHelper.PiOver2 * 0.8f * progress;
-                float speed = 6 + (1 - progress) * 6;
-                Vector2 vel = direction.RotatedByRandom(coneHalfWidth);
-                float offsetAmt = 25 + (30 * progress);
-                Vector2 offset = vel * Main.rand.NextFloat(offsetAmt, offsetAmt * 2);
-                vel *= Main.rand.NextFloat(speed, speed + 4);
+                float totalProgress = (float)Math.Cos(Math.PI / 2f / TelegraphTime * TelegraphTimer);
 
-                if (TelegraphTimer % frequency == 0)
+                if (totalProgress < TelegraphFraction)
                 {
-                    Particle p = new SparkParticle(eyeCenter + offset, vel, color, Main.rand.NextFloat(1.25f, 2f), 20);
-                    p.Spawn();
+                    float progress = totalProgress / (2 * TelegraphFraction);
+                    Color color = new Color(255, 0, 255, 100) * ((1f - progress) / 4 + 0.75f);
+                    //float alpha = (int)(255f * progress);
+                    int frequency = 2 + (int)Math.Ceiling(progress * 6);
+                    if (frequency <= 0)
+                        frequency = 1;
+                    float coneHalfWidth = MathHelper.PiOver2 * 0.8f * progress;
+                    float speed = 6 + (1 - progress) * 6;
+                    Vector2 vel = direction.RotatedByRandom(coneHalfWidth);
+                    float offsetAmt = 25 + (30 * progress);
+                    Vector2 offset = vel * Main.rand.NextFloat(offsetAmt, offsetAmt * 2);
+                    vel *= Main.rand.NextFloat(speed, speed + 4);
+
+                    if (TelegraphTimer % frequency == 0)
+                    {
+                        Particle p = new SparkParticle(eyeCenter + offset, vel, color, Main.rand.NextFloat(1.25f, 2f), 20);
+                        p.Spawn();
+                    }
                 }
 
                 if (--TelegraphTimer <= 0)
