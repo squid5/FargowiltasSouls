@@ -283,7 +283,6 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             {
                 if (npc.ai[1] != 0)
                     npc.localAI[1] -= 1f;
-                FargoSoulsUtil.PrintAI(npc);
                 if (npc.localAI[1] >= (npc.ai[1] == 0 ? 170 : 50)) //hijacking vanilla laser code
                 {
                     npc.localAI[1] = 0;
@@ -998,7 +997,6 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                 Resist = true;
 
             NPC retinazer = FargoSoulsUtil.NPCExists(EModeGlobalNPC.retiBoss, NPCID.Retinazer);
-            //FargoSoulsUtil.PrintAI(npc);
 
             if (WorldSavingSystem.MasochistModeReal && retinazer == null && npc.HasValidTarget && ++RespawnTimer > 600)
             {
