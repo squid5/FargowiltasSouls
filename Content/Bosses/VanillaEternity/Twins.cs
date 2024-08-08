@@ -217,10 +217,14 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                             float delay = 55f; //LaserSide == 0 ? 50f : 20f;
                             if (npc.ai[3] >= delay)
                             {
+                                LaserSide++;
+                                if (LaserSide > 1)
+                                    LaserSide = 0;
                                 npc.ai[3] = 0f;
                                 Vector2 shootPos = new Vector2(npc.position.X + (float)npc.width * 0.5f, npc.position.Y + (float)npc.height * 0.5f);
                                 float targetX = player.Center.X - shootPos.X;
                                 float targetY = player.Center.Y - shootPos.Y;
+                                npc.netUpdate = true;
                                 if (FargoSoulsUtil.HostCheck)
                                 {
                                     float num429 = 10.5f;
@@ -241,7 +245,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                                     shootPos.X += targetX * 15f;
                                     shootPos.Y += targetY * 15f;
                                     int spread = 1;
-                                    if (npc.ai[2] % (delay * 2) >= delay) // every other shot is 1, every other is 2 (3 in maso)
+                                    if (LaserSide == 1) // every other shot is 1, every other is 2 (3 in maso)
                                         spread = 0;
                                     for (int i = -spread; i <= spread; i++)
                                     {
@@ -279,23 +283,27 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             {
                 if (npc.ai[1] != 0)
                     npc.localAI[1] -= 1f;
+                FargoSoulsUtil.PrintAI(npc);
                 if (npc.localAI[1] >= (npc.ai[1] == 0 ? 170 : 50)) //hijacking vanilla laser code
                 {
                     npc.localAI[1] = 0;
                     Vector2 vel = npc.SafeDirectionTo(Main.player[npc.target].Center);
                     Vector2 shotVel = vel;
-                    int spread = 0;
-                    int type = ModContent.ProjectileType<MechElectricOrbTwins>();
-                    if (npc.ai[1] == 0)
+                    shotVel *= 20;
+                    int spread = 1;
+                    int type = ModContent.ProjectileType<MechElectricOrb>();
+                    bool middle = true;
+                    float spreadAngle = 0.4f;
+                    if (npc.ai[1] != 0)
                     {
-                        spread = 1;
-                        shotVel *= 20;
-                        type = ModContent.ProjectileType<MechElectricOrb>();
+                        spread = 0;
                     }
                         
                     for (int i = -spread; i <= spread; i++)
                     {
-                        Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center + (npc.width - 24) * vel, shotVel.RotatedBy(MathHelper.PiOver2 * 0.4f * i), type, FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 0f, Main.myPlayer, npc.target, ai2: MechElectricOrb.Yellow);
+                        if (i == 0 && spread != 0 && !middle)
+                            continue;
+                        Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center + (npc.width - 24) * vel, shotVel.RotatedBy(MathHelper.PiOver2 * spreadAngle * i), type, FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 0f, Main.myPlayer, npc.target, ai2: MechElectricOrb.Yellow);
                     }
                     
                 }
@@ -890,9 +898,9 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
         public override Color? GetAlpha(NPC npc, Color drawColor)
         {
-            if (npc.ai[0] < 4 || DeathrayState == 0f || DeathrayState == 3f)
+            //if (npc.ai[0] < 4 || DeathrayState == 0f || DeathrayState == 3f)
                 return base.GetAlpha(npc, drawColor);
-            return new Color(255, drawColor.G / 2, drawColor.B / 2);
+           // return new Color(255, drawColor.G / 2, drawColor.B / 2);
         }
 
         public override bool CheckDead(NPC npc)
@@ -1171,7 +1179,6 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             }
             else
             {
-                FargoSoulsUtil.PrintAI(npc);
                 if (npc.ai[1] == 0f) // not dashing
                 {
                     if (retinazer != null && (retinazer.ai[0] < 4f || retinazer.GetGlobalNPC<Retinazer>().DeathrayState == 0
@@ -1187,7 +1194,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                         return false;
                     }
                 }
-                else //dashing
+                else if (npc.ai[0] > 2) //dashing
                 {
                     if (FlameWheelSpreadTimer > 0) //cooldown before attacking again
                     {
@@ -1212,7 +1219,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     {
                         Vector2 toTarget = npc.DirectionTo(Main.player[npc.target].Center);
                         npc.velocity += toTarget * 0.25f;
-                        npc.velocity = npc.velocity.RotateTowards(toTarget.ToRotation(), 0.01f);
+                        npc.velocity = npc.velocity.RotateTowards(toTarget.ToRotation(), 0.007f);
                     }
                     npc.ai[2] -= 0.5f;
                     if (npc.ai[2] > 50)
@@ -1230,7 +1237,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                             ProjectileTimer = 0;
                             if (FargoSoulsUtil.HostCheck)
                             {
-                                float speed = extension * 0.8f;
+                                float speed = extension * 0.55f;
                                 float rotationVariance = 9f * extension * 0.75f;
                                 Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, speed * npc.velocity.RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-rotationVariance, rotationVariance))), ProjectileID.EyeFire, FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 0f, Main.myPlayer);
                             }
@@ -1743,9 +1750,9 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
         public override Color? GetAlpha(NPC npc, Color drawColor)
         {
-            if (npc.ai[0] < 4 || npc.ai[1] != 0f)
+            //if (npc.ai[0] < 4 || npc.ai[1] != 0f)
                 return base.GetAlpha(npc, drawColor);
-            return new Color(drawColor.R / 2, 255, drawColor.B / 2);
+            //return new Color(drawColor.R / 2, 255, drawColor.B / 2);
         }
 
         public override bool CheckDead(NPC npc)
