@@ -1054,10 +1054,8 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                                 FlameWheelCount = 2;
                                 if (modifier < 0.4f)
                                     FlameWheelCount = 3;
-                                if (modifier < 0.25f)
+                                if (modifier < 0.2f)
                                     FlameWheelCount = 4;
-                                if (modifier < 0.1f)
-                                    FlameWheelCount = 5;
                                 if (WorldSavingSystem.MasochistModeReal && FlameWheelCount < 5)
                                     FlameWheelCount++;
 
