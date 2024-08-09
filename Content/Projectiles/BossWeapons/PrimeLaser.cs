@@ -27,6 +27,7 @@ namespace FargowiltasSouls.Content.Projectiles.BossWeapons
             Projectile.penetrate = 1;
             Projectile.DamageType = DamageClass.Magic;
             Projectile.ignoreWater = true;
+            Projectile.FargoSouls().CanSplit = false;
         }
 
         public override void AI() //basically everything below is gross decompiled vanilla code im sorry
