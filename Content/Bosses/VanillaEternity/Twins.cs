@@ -180,8 +180,8 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                             }
 
                             // up position, default retinazer
-                            float desiredX = player.position.X + (float)(player.width / 2) + (float)(side * 300) - npc.Center.X;
-                            float desiredY = player.position.Y + (float)(player.height / 2) - 300f - npc.Center.Y;
+                            float desiredX = player.position.X + (float)(player.width / 2) + (float)(side * 350) - npc.Center.X;
+                            float desiredY = player.position.Y + (float)(player.height / 2) - 350f - npc.Center.Y;
                                 
                             if (npc.velocity.X < desiredX)
                             {
@@ -252,7 +252,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                                         spread = 0;
                                     for (int i = -spread; i <= spread; i++)
                                     {
-                                        if (spread != 0 && i == 0 && !WorldSavingSystem.MasochistModeReal)
+                                        if (spread != 0 && i == 0) // && !WorldSavingSystem.MasochistModeReal)
                                             continue;
                                         float offset = i;
                                         offset *= (int)npc.HorizontalDirectionTo(player.Center);
@@ -275,7 +275,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                         {
                             if (npc.ai[2] == 1f)
                             {
-                                npc.velocity += npc.velocity.SafeNormalize(Vector2.UnitX) * npc.ai[3] * 3f;
+                                npc.velocity += npc.velocity.SafeNormalize(Vector2.UnitX) * npc.ai[3] * 2.25f;
                             }
                             npc.velocity = npc.velocity.RotateTowards(npc.DirectionTo(player.Center).ToRotation(), 0.02f);
                         }
@@ -297,7 +297,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     int type = ModContent.ProjectileType<MechElectricOrb>();
                     bool middle = true;
                     float spreadAngle = 0.4f;
-                    if (npc.ai[1] != 0)
+                    if (npc.ai[1] != 0 || !WorldSavingSystem.MasochistModeReal)
                     {
                         spread = 0;
                     }
@@ -334,7 +334,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
                         Vector2 vector45 = npc.Center;
                         float num440 = player.Center.X - npc.Center.X;
-                        float num441 = player.Center.Y - npc.Center.Y - 400f;
+                        float num441 = player.Center.Y - npc.Center.Y - 450f;
                         float num442 = (float)Math.Sqrt(num440 * num440 + num441 * num441);
                         num442 = num438 / num442;
                         num440 *= num442;
@@ -857,6 +857,8 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
                             // reworked p1 fireballs
                             float delay = 58f;
+                            if (WorldSavingSystem.MasochistModeReal)
+                                npc.ai[3] += 0.25f;
                             if (npc.ai[3] >= delay)
                             {
                                 npc.ai[3] = 0f;
@@ -900,7 +902,13 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     case 2: // mid dash
                         {
                             if (npc.ai[2] == 1f)
-                                npc.velocity += npc.velocity.SafeNormalize(Vector2.UnitX) * npc.ai[3] * 3f;
+                            {
+                                float speedModifier = npc.ai[3];
+                                if (speedModifier > 6)
+                                    speedModifier = 6;
+                                npc.velocity += npc.velocity.SafeNormalize(Vector2.UnitX) * speedModifier * 3f;
+                            }
+                                
                         }
                         break;
                 }
@@ -953,6 +961,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     if (npc.ai[2] > 50)
                     {
                         npc.ai[2] -= modifier;
+                        npc.ai[2] -= 0.15f;
                     }
                     else
                     {
