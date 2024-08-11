@@ -7,8 +7,6 @@ namespace FargowiltasSouls.Content.Buffs.Minions
 {
     public class CrystalSkullBuff : ModBuff
     {
-        public override string Texture => "FargowiltasSouls/Content/Buffs/PlaceholderBuff";
-
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Crystal Skull");
