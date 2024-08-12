@@ -22,7 +22,7 @@ namespace FargowiltasSouls.Content.Projectiles.Minions
         {
             Projectile.netImportant = true;
             Projectile.width = 34;
-            Projectile.height = 38;
+            Projectile.height = 15; // is only this short to properly align the shadowflames
             Projectile.timeLeft *= 5;
             Projectile.aiStyle = -1;
             Projectile.friendly = true;
@@ -109,7 +109,7 @@ namespace FargowiltasSouls.Content.Projectiles.Minions
                        
                     {
                         Projectile.NewProjectile(
-                            Projectile.GetSource_FromThis(), Projectile.Center,
+                            Projectile.GetSource_FromThis(), Projectile.Bottom,
                             12f * Projectile.SafeDirectionTo(Main.MouseWorld).RotatedByRandom(MathHelper.ToRadians(4)),
                             ModContent.ProjectileType<ShadowflamesFriendly>(), Projectile.damage, Projectile.knockBack,
                             Projectile.owner);

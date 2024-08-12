@@ -1170,14 +1170,14 @@ FrigidGemstone: {
 }
 
 FrigidGemstoneInactive: {
-	// DisplayName: Frigid Gemstone (Inactive)
+	// DisplayName: Frigid Grasp (Inactive)
 	/* Tooltip:
 		'''
 		Currently inactive, Right click to activate
 		Grants immunity to Frostburn and Chilled
 		Press the Frigid Spell key to cast Ice Rod
 		Your ice blocks inflict Frostburn
-		'A shard of ancient magical ice'
+		'A torn off limb composed of ancient ice'
 		''' */
 }
 
