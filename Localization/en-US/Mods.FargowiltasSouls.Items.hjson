@@ -1170,7 +1170,7 @@ FrigidGemstone: {
 		Grants immunity to Frostburn and Chilled
 		Press the Frigid Spell key to cast Ice Rod
 		Your ice blocks inflict Frostburn
-		'A limb of ancient magical ice'
+		'A torn off limb composed of ancient ice'
 		'''
 }
 
@@ -1182,7 +1182,7 @@ FrigidGemstoneInactive: {
 		Grants immunity to Frostburn and Chilled
 		Press the Frigid Spell key to cast Ice Rod
 		Your ice blocks inflict Frostburn
-		'A shard of ancient magical ice'
+		'A torn off limb composed of ancient ice'
 		'''
 }
 
@@ -1538,7 +1538,7 @@ SkullCharm: {
 		Increases damage dealt by 15% and damage taken by 10%
 		Enemies are less likely to target you
 		The crystal skull charges energy to attack as you attack
-		'No longer in the zone'
+		'Part of a collective consciousness'
 		'''
 }
 

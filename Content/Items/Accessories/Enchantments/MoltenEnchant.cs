@@ -56,7 +56,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
 
                 if (player.FargoSouls().ForceEffect<MoltenEnchant>())
                 {
-                    distance *= 1.5f;
+                    distance *= 1.2f;
                     baseDamage *= 2;
                 }
 
