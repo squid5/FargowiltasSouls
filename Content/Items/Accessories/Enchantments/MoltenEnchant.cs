@@ -57,7 +57,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
                 if (player.FargoSouls().ForceEffect<MoltenEnchant>())
                 {
                     distance *= 1.5f;
-                    baseDamage *= 4;
+                    baseDamage *= 2;
                 }
 
                 int damage = FargoSoulsUtil.HighestDamageTypeScaling(player, baseDamage);

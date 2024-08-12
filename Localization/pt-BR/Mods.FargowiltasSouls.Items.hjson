@@ -1170,7 +1170,7 @@ FrigidGemstone: {
 }
 
 FrigidGemstoneInactive: {
-	// DisplayName: Frigid Gemstone (Inactive)
+	// DisplayName: Frigid Grasp (Inactive)
 	/* Tooltip:
 		'''
 		Currently inactive, Right click to activate

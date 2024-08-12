@@ -1162,7 +1162,7 @@ EurusSock: {
 }
 
 FrigidGemstone: {
-	DisplayName: Frigid Gemstone
+	DisplayName: Frigid Grasp
 	Tooltip:
 		'''
 		Works in your inventory
@@ -1170,12 +1170,12 @@ FrigidGemstone: {
 		Grants immunity to Frostburn and Chilled
 		Press the Frigid Spell key to cast Ice Rod
 		Your ice blocks inflict Frostburn
-		'A shard of ancient magical ice'
+		'A limb of ancient magical ice'
 		'''
 }
 
 FrigidGemstoneInactive: {
-	DisplayName: Frigid Gemstone (Inactive)
+	DisplayName: Frigid Grasp (Inactive)
 	Tooltip:
 		'''
 		Currently inactive, Right click to activate
@@ -1531,7 +1531,7 @@ SinisterIcon: {
 }
 
 SkullCharm: {
-	DisplayName: Skull Charm
+	DisplayName: Crystal Skull
 	Tooltip:
 		'''
 		Grants immunity to Dazed
