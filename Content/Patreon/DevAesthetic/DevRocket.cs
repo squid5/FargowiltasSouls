@@ -29,8 +29,8 @@ namespace FargowiltasSouls.Content.Patreon.DevAesthetic
             Projectile.penetrate = 2;
 
             Projectile.timeLeft = 75 * (Projectile.extraUpdates + 1);
-            Projectile.usesIDStaticNPCImmunity = true;
-            Projectile.idStaticNPCHitCooldown = 15;
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = 10;
             Projectile.FargoSouls().noInteractionWithNPCImmunityFrames = true;
         }
 
