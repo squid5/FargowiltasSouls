@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using FargowiltasSouls.Content.Buffs.Masomode;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.Audio;
@@ -100,7 +101,7 @@ namespace FargowiltasSouls.Content.Projectiles.BossWeapons
                 {
                     target.SimpleStrikeNPC(Projectile.damage / 2, 0, noPlayerInteraction: true, crit: false);
                     // target.StrikeNPC(damage / 2, 0, 0, true); //normal damage but looks like a crit ech
-                    target.AddBuff(BuffID.Poisoned, 600);
+                    target.AddBuff(ModContent.BuffType<InfestedBuff>(), 300);
                     DustRing(p, 16);
                     p.Kill();
                     SoundEngine.PlaySound(SoundID.Item27 with { Pitch = -0.4f }, Projectile.Center);

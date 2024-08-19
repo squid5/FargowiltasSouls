@@ -11,19 +11,18 @@ namespace FargowiltasSouls.Content.Projectiles.Minions
 {
     public class CrystalSkull : ModProjectile
     {
-        public override string Texture => "Terraria/Images/NPC_289";
 
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Crystal Skull");
-            Main.projFrames[Projectile.type] = 6;
+            Main.projFrames[Projectile.type] = 2;
         }
 
         public override void SetDefaults()
         {
             Projectile.netImportant = true;
-            Projectile.width = 50;
-            Projectile.height = 50;
+            Projectile.width = 34;
+            Projectile.height = 15; // is only this short to properly align the shadowflames
             Projectile.timeLeft *= 5;
             Projectile.aiStyle = -1;
             Projectile.friendly = true;
@@ -33,7 +32,7 @@ namespace FargowiltasSouls.Content.Projectiles.Minions
             Projectile.tileCollide = false;
             Projectile.ignoreWater = true;
             Projectile.hide = true;
-            Projectile.scale = 0.5f;
+            Projectile.scale = 1f;
         }
 
         public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
@@ -96,20 +95,21 @@ namespace FargowiltasSouls.Content.Projectiles.Minions
             Projectile.rotation = Projectile.rotation.AngleLerp(
                 (new Vector2(Projectile.ai[0], Projectile.ai[1]) - Projectile.Center).ToRotation(), rotationModifier);
 
-            Projectile.frame = 1;
+            Projectile.frame = 0;
 
             if (Projectile.localAI[0] < 0) //attacking
             {
                 Projectile.localAI[0]++;
-                Projectile.frame = 4;
+                Projectile.frame = 1;
 
                 if (Projectile.localAI[0] % 5 == 0)
                 {
                     SoundEngine.PlaySound(SoundID.NPCDeath52, Projectile.Center);
                     if (Projectile.owner == Main.myPlayer)
+                       
                     {
                         Projectile.NewProjectile(
-                            Projectile.GetSource_FromThis(), Projectile.Center,
+                            Projectile.GetSource_FromThis(), Projectile.Bottom,
                             12f * Projectile.SafeDirectionTo(Main.MouseWorld).RotatedByRandom(MathHelper.ToRadians(4)),
                             ModContent.ProjectileType<ShadowflamesFriendly>(), Projectile.damage, Projectile.knockBack,
                             Projectile.owner);

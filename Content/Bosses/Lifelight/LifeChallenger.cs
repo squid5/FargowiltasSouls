@@ -207,7 +207,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Lifelight");
-            Main.npcFrameCount[NPC.type] = 8;
+            Main.npcFrameCount[NPC.type] = 6;
             NPCID.Sets.TrailCacheLength[NPC.type] = 40;
             NPCID.Sets.TrailingMode[NPC.type] = 1;
             NPCID.Sets.MPAllowedEnemies[Type] = true;
@@ -2727,7 +2727,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                     }
                     float expansion = progress;
                     byte alpha = (byte)(255 * (1 - progress));
-                    offsets[0] = new Vector2(0, -15) * expansion + new Vector2(0, -30); //top
+                    offsets[0] = new Vector2(0, -15) * expansion + new Vector2(0, -20); //top
                     offsets[1] = new Vector2(-12.5f, 3) * expansion + new Vector2(-25, 10); //left
                     offsets[2] = new Vector2(12.5f, 3) * expansion + new Vector2(25, 10); //right
                     offsets[3] = new Vector2(0, 10) * expansion + new Vector2(0, 20);  //bottom
