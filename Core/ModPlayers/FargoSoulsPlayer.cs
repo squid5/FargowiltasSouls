@@ -1,8 +1,10 @@
+using FargowiltasSouls.Content.Bosses.CursedCoffin;
 using FargowiltasSouls.Content.Buffs;
 using FargowiltasSouls.Content.Buffs.Boss;
 using FargowiltasSouls.Content.Buffs.Masomode;
 using FargowiltasSouls.Content.Buffs.Souls;
 using FargowiltasSouls.Content.Items.Accessories.Enchantments;
+using FargowiltasSouls.Content.Items.Accessories.Expert;
 using FargowiltasSouls.Content.Items.Accessories.Forces;
 using FargowiltasSouls.Content.Items.Accessories.Masomode;
 using FargowiltasSouls.Content.Items.Accessories.Souls;
@@ -54,11 +56,14 @@ namespace FargowiltasSouls.Core.ModPlayers
 
         public int The22Incident;
 
+        public bool SpawnedCoffinGhost = false;
+
         public Dictionary<int, bool> KnownBuffsToPurify = [];
 
         public bool Toggler_ExtraAttacksDisabled = false;
         public bool Toggler_MinionsDisabled = false;
         public int ToggleRebuildCooldown = 0;
+        public bool UsingAnkh => Player.HeldItem.type == ModContent.ItemType<AccursedAnkh>() && Player.ItemAnimationActive;
 
 
         public bool IsStillHoldingInSameDirectionAsMovement
@@ -176,7 +181,6 @@ namespace FargowiltasSouls.Core.ModPlayers
             }
 
         }
-
         public override void ResetEffects()
         {
             HasDash = false;
@@ -191,6 +195,8 @@ namespace FargowiltasSouls.Core.ModPlayers
 
             WingTimeModifier = 1f;
 
+            if (Player.Alive())
+                SpawnedCoffinGhost = false;
 
             QueenStingerItem = null;
             EridanusSet = false;
@@ -444,6 +450,14 @@ namespace FargowiltasSouls.Core.ModPlayers
             if (NymphsPerfumeRespawn)
                 NymphsPerfumeRestoreLife = 6;
         }
+        public override void ModifyScreenPosition()
+        {
+            Projectile ghost = Main.projectile.FirstOrDefault(p => p.TypeAlive<CoffinPlayerSoul>() && p.owner == Player.whoAmI);
+            if (ghost != null && ghost.Alive())
+            {
+                Main.screenPosition = ghost.Center - (new Vector2(Main.screenWidth, Main.screenHeight) / 2);
+            }
+        }
         public override void UpdateDead()
         {
             bool wasSandsOfTime = SandsofTime;
@@ -453,6 +467,12 @@ namespace FargowiltasSouls.Core.ModPlayers
 
             SandsofTime = wasSandsOfTime;
             NymphsPerfumeRespawn = wasNymphsPerfumeRespawn;
+
+            if (!SpawnedCoffinGhost && NPC.AnyNPCs(ModContent.NPCType<CursedCoffin>()))
+            {
+                SpawnedCoffinGhost = true;
+                Projectile.NewProjectile(Player.GetSource_FromThis(), Player.Center, Vector2.Zero, ModContent.ProjectileType<CoffinPlayerSoul>(), 0, 0, Player.whoAmI);
+            }
 
             if (SandsofTime && !LumUtils.AnyBosses() && Player.respawnTimer > 10)
                 Player.respawnTimer -= Eternity ? 6 : 1;
@@ -617,7 +637,7 @@ namespace FargowiltasSouls.Core.ModPlayers
                     MythrilEffect.CalcMythrilAttackSpeed(this, item);
                 }
 
-                if (Player.HasEffect<WretchedPouchEffect>() && !MasochistSoul && AttackSpeed > 1f)
+                if (Player.HasBuff<WretchedHexBuff>() && !MasochistSoul && AttackSpeed > 1f)
                 {
                     float diff = AttackSpeed - 1f;
                     diff /= 2;

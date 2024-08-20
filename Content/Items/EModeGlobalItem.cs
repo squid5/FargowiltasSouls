@@ -3,6 +3,7 @@ using FargowiltasSouls.Content.Projectiles;
 using FargowiltasSouls.Content.Projectiles.Souls;
 using FargowiltasSouls.Core.Systems;
 using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
@@ -16,6 +17,29 @@ namespace FargowiltasSouls.Content.Items
 {
     public class EModeGlobalItem : GlobalItem
     {
+        public override void Load()
+        {
+            On_Player.GrantPrefixBenefits += EModePrefixChanges;
+        }
+
+        public override void Unload()
+        {
+            On_Player.GrantPrefixBenefits -= EModePrefixChanges;
+        }
+        private static void EModePrefixChanges(On_Player.orig_GrantPrefixBenefits orig, Player self, Item item)
+        {
+            orig(self, item);
+            if (!WorldSavingSystem.EternityMode)
+                return;
+            if (item.prefix >= PrefixID.Hard && item.prefix <= PrefixID.Warding)
+            {
+                if (!Main.hardMode)
+                {
+                    self.statDefense -= 1;
+                }
+                self.statLifeMax2 += 5;
+            }
+        }
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
         {
             base.ModifyTooltips(item, tooltips);
@@ -59,14 +83,6 @@ namespace FargowiltasSouls.Content.Items
             if (!WorldSavingSystem.EternityMode)
             {
                 return;
-            }
-            if (item.prefix >= PrefixID.Hard && item.prefix <= PrefixID.Warding)
-            {
-                if (!Main.hardMode)
-                {
-                    player.statDefense -= 1;
-                }
-                player.statLifeMax2 += 5;
             }
             if (item.type == ItemID.JungleRose)
             {

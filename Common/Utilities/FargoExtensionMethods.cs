@@ -89,7 +89,6 @@ namespace FargowiltasSouls //lets everything access it without using
 
         public static void Null(ref this Player.HurtInfo hurtInfo)
         {
-            // hurtInfo.Damage = 0;
             object unboxedHurtInfo = hurtInfo;
             _damageFieldHurtInfo.SetValue(unboxedHurtInfo, 0);
             hurtInfo = (Player.HurtInfo)unboxedHurtInfo;
@@ -131,7 +130,7 @@ namespace FargowiltasSouls //lets everything access it without using
                 return false;
             return player.FargoSouls().ForceEffect(item.ModItem);
         }
-
+            
         public static bool Alive(this Player player) => player != null && player.active && !player.dead && !player.ghost;
         public static bool Alive(this Projectile projectile) => projectile != null && projectile.active;
         public static bool Alive(this NPC npc) => npc != null && npc.active;

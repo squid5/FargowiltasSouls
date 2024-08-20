@@ -32,6 +32,8 @@ using Terraria.ModLoader;
 using static FargowiltasSouls.Content.Bosses.Magmaw.Magmaw;
 using static FargowiltasSouls.Core.Systems.DashManager;
 
+using Luminance.Core.Graphics;
+
 namespace FargowiltasSouls.Content.Bosses.Lifelight
 {
 

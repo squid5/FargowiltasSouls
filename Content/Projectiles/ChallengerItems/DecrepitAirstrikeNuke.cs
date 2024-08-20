@@ -84,7 +84,7 @@ namespace FargowiltasSouls.Content.Projectiles.ChallengerItems
             }
             Vector2 target = TargetX * Vector2.UnitX + TargetY * Vector2.UnitY;
             Projectile.rotation = (-Projectile.SafeDirectionTo(target)).ToRotation();
-
+            
             if (Projectile.timeLeft <= 3)
             {
                 Projectile.width = ExplosionDiameter;

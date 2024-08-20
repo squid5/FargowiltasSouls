@@ -27,6 +27,15 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using Color = Microsoft.Xna.Framework.Color;
 using Rectangle = Microsoft.Xna.Framework.Rectangle;
+using FargowiltasSouls.Core.Systems;
+using FargowiltasSouls.Content.Projectiles.Deathrays;
+using FargowiltasSouls.Content.Items.Summons;
+using FargowiltasSouls.Content.Items.Placables.Trophies;
+using FargowiltasSouls.Common.Graphics.Particles;
+using FargowiltasSouls.Content.Items.Placables.Relics;
+using Terraria.Localization;
+using System.Reflection;
+using Luminance.Core.Graphics;
 
 namespace FargowiltasSouls.Content.Bosses.BanishedBaron
 {

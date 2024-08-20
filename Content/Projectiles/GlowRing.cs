@@ -10,6 +10,11 @@ using Terraria;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
+using FargowiltasSouls.Content.Bosses.VanillaEternity;
+using FargowiltasSouls.Content.NPCs.EternityModeNPCs;
+using FargowiltasSouls.Content.Items.Accessories.Enchantments;
+using FargowiltasSouls.Common.Graphics.Particles;
+using Luminance.Core.Graphics;
 
 namespace FargowiltasSouls.Content.Projectiles
 {
