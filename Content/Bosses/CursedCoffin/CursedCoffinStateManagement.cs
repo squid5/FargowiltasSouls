@@ -156,7 +156,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
                 IncrementAttackCounter();
             });
 
-			StateMachine.RegisterTransition(BehaviorStates.SlamWShockwave, null, false, () => Timer == -1, IncrementAttackCounter);
+			StateMachine.RegisterTransition(BehaviorStates.SlamWShockwave, null, false, () => !Enraged && Timer == -1, IncrementAttackCounter);
 
 			StateMachine.RegisterTransition(BehaviorStates.WavyShotSlam, null, false, () => Timer == -1, IncrementAttackCounter);
 

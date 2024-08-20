@@ -65,7 +65,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
         /// </summary>
         public ref float AttackCounter => ref NPC.localAI[0];
 
-        public bool Enraged => NPC.GetLifePercent() <= 0.2f && WorldSavingSystem.EternityMode;
+        public bool Enraged => false; // NPC.GetLifePercent() <= 0.2f && WorldSavingSystem.EternityMode; // disabled because it occasionally threw stack overflow errors. fix that if readding this
 
 		public Vector2 MaskCenter() => NPC.Center - Vector2.UnitY * NPC.height * NPC.scale / 4;
 
