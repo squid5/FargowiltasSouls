@@ -458,10 +458,11 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
                     SoundEngine.PlaySound(SlamSFX, NPC.Center);
                     Timer = -180;
 					int dir = Math.Sign(Player.Center.X - CoffinArena.Center.ToWorldCoordinates().X);
-					const int ProjCount = 20;
-                    for (int i = 0; i < ProjCount; i++)
+                    int leniencyTime = WorldSavingSystem.MasochistModeReal ? -30 : WorldSavingSystem.EternityMode ? -10 : Main.expertMode ? 10 : 20;
+                    Vector2 center = CoffinArena.Center.ToWorldCoordinates();
+                    const int ProjCount = 20;
+                    for (int i = -1; i < ProjCount; i++)
                     {
-						Vector2 center = CoffinArena.Center.ToWorldCoordinates();
 						Vector2 projPos = center + dir * Vector2.UnitX * (CoffinArena.Width * 8) * ((float)i / ProjCount);
 						Point tile = projPos.ToTileCoordinates();
 						for (int safety = 0; safety < 100; safety++)
@@ -474,9 +475,15 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 						projPos.X += Main.rand.NextFloat(-10, 10);
 						projPos.Y += Main.rand.NextFloat(-3, 4);
 
-						int leniencyTime = WorldSavingSystem.MasochistModeReal ? -30 : WorldSavingSystem.EternityMode ? -10 : Main.expertMode ? 10 : 20;
+                        int fromWall = ProjCount - i;
 
-						int fromWall = ProjCount - i;
+                        if (i == -1) // anti-cheese rock
+                        {
+                            projPos.X = CoffinArena.Center.X + dir * (CoffinArena.Width * 8f - 24f);
+                            fromWall = 0;
+                        }
+
+						
                         Projectile.NewProjectile(NPC.GetSource_FromThis(), projPos, Vector2.Zero,
                                 ModContent.ProjectileType<FallingSandstone>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage), 0f, Main.myPlayer, leniencyTime + (int)(fromWall * 1.5f) + Main.rand.Next(60, 80));
 
