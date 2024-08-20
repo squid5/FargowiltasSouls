@@ -343,7 +343,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                         break;
                     case 1: // dash frame
                         {
-                            float prepTime = 70;
+                            float prepTime = WorldSavingSystem.MasochistModeReal ? 70 : 90;
 
                             if (ai_StateTimer == 0)
                             {
@@ -359,7 +359,8 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                             }
 
                             // lock on to spot next to player
-                            Vector2 desiredPos = player.Center + LockedRotation.ToRotationVector2() * 350f;
+                            float distance = WorldSavingSystem.MasochistModeReal ? 350f : 450f;
+                            Vector2 desiredPos = player.Center + LockedRotation.ToRotationVector2() * distance;
                             float desiredX = desiredPos.X - npc.Center.X;
                             float desiredY = desiredPos.Y - npc.Center.Y;
 
@@ -368,7 +369,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                             TwinManageRotation(npc);
                             if (ai_StateTimer < prepTime - 30 && npc.Distance(desiredPos) > 300)
                                 ai_StateTimer--;
-                            if (ai_StateTimer == prepTime - 25)
+                            if (ai_StateTimer == prepTime - (WorldSavingSystem.MasochistModeReal ? 25 : 35))
                             {
                                 if (FargoSoulsUtil.HostCheck)
                                 {
