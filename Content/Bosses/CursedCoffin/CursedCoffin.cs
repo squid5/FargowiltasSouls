@@ -27,7 +27,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 
         #region Variables
 
-        private bool PhaseTwo = false;
+        private int Phase = 1;
 		private bool Attacking = true;
 		private bool ExtraTrail = false;
 
@@ -65,7 +65,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
         /// </summary>
         public ref float AttackCounter => ref NPC.localAI[0];
 
-        public bool Enraged => NPC.GetLifePercent() <= 0.2f;
+        public bool Enraged => NPC.GetLifePercent() <= 0.2f && WorldSavingSystem.EternityMode;
 
 		public Vector2 MaskCenter() => NPC.Center - Vector2.UnitY * NPC.height * NPC.scale / 4;
 
@@ -173,15 +173,16 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
         }
         public override void SendExtraAI(BinaryWriter writer)
         {
-            writer.Write(PhaseTwo);
             writer.Write(NPC.localAI[0]);
             writer.Write(NPC.localAI[1]);
             writer.Write(NPC.localAI[2]);
             writer.Write(NPC.localAI[3]);
             writer.Write7BitEncodedInt(LastAttackChoice);
+            writer.Write7BitEncodedInt(Phase);
+            writer.Write(Timer);
 
-			// 1. Write the number of states on the stack.
-			writer.Write(StateMachine.StateStack.Count);
+            // 1. Write the number of states on the stack.
+            writer.Write(StateMachine.StateStack.Count);
 
 			// 2. Write the state IDs as ints to the stack in the order they are on the stack. Also write the timers.
 			var stackArray = StateMachine.StateStack.ToArray();
@@ -191,12 +192,12 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 
 		public override void ReceiveExtraAI(BinaryReader reader)
 		{
-            PhaseTwo = reader.ReadBoolean();
 			NPC.localAI[0] = reader.ReadSingle();
 			NPC.localAI[1] = reader.ReadSingle();
 			NPC.localAI[2] = reader.ReadSingle();
 			NPC.localAI[3] = reader.ReadSingle();
 			LastAttackChoice = reader.Read7BitEncodedInt();
+            Phase = reader.Read7BitEncodedInt();
 			Timer = reader.ReadSingle();
 
 			// 1. Read the number of states that should be added to the stack and were written.

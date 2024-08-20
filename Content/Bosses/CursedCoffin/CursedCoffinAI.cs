@@ -180,12 +180,15 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 			NPC.velocity = (CoffinArena.Center.ToWorldCoordinates() - NPC.Center) * 0.05f;
             NPC.rotation = Main.rand.NextFloat(MathF.Tau * 0.06f * (Timer / TransTime));
 			SoundEngine.PlaySound(SpiritDroneSFX, NPC.Center);
-            PhaseTwo = true;
+            if (Phase < 2)
+                Phase = 2;
 		}
 
 		[AutoloadAsBehavior<EntityAIState<BehaviorStates>, BehaviorStates>(BehaviorStates.StunPunish)]
 		public void StunPunish()
 		{
+            if (Phase >= 3)
+                Phase = 2;
 			NPC.velocity *= 0.95f;
 			if (Timer < 20)
 			{
@@ -219,6 +222,8 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
         [AutoloadAsBehavior<EntityAIState<BehaviorStates>, BehaviorStates>(BehaviorStates.YouCantEscape)]
         public void YouCantEscape()
         {
+            if (Phase >= 3)
+                Phase = 2;
             NPC.velocity *= 0.95f;
             if (Timer < 20)
             {
@@ -251,6 +256,8 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
         [AutoloadAsBehavior<EntityAIState<BehaviorStates>, BehaviorStates>(BehaviorStates.SpiritGrabPunish)]
         public void SpiritGrabPunish()
         {
+            if (Phase >= 3)
+                Phase = 2;
             ref float initialDir = ref AI2;
             ref float initialDist = ref AI3;
             HoverSound();
@@ -284,6 +291,9 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 			ref float RandomTimer = ref AI3;
 
 			HoverSound();
+
+            if (Enraged && Phase < 3)
+                Phase = 3;
 
 			if (Timer == 1)
 			{
@@ -344,7 +354,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 							Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Bottom - Vector2.UnitY * 50, vel, ModContent.ProjectileType<CoffinSlamShockwave>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage, 0.1f), 1f, Main.myPlayer);
 						}
 					}
-					if (WorldSavingSystem.EternityMode && Counter < 2)
+					if (WorldSavingSystem.EternityMode && (Counter < 2 || Enraged))
 					{
 						Counter = 2;
 						Timer = 0;
@@ -437,6 +447,8 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 		public void WavyShotSlam()
 		{
 			NPC.noTileCollide = false;
+            if (Timer == 20)
+                NPC.velocity.Y += 13f;
 			if (Timer >= 0)
 			{
                 if (NPC.velocity.Y == 0) // hit ground
@@ -637,6 +649,8 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 			{
 				NPC.velocity.X *= 0.7f; // moves slower horizontally 
 				int shotTime = WorldSavingSystem.MasochistModeReal ? 16 : 20;
+                if (Phase < 2) // shoot more in phase 1
+                    shotTime -= 4;
 				if (Timer % shotTime == 0)
 				{
 					RandomProj = Main.rand.Next(3) switch
@@ -660,7 +674,8 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 					{
 
 						Vector2 vel = dir;
-						vel *= Main.rand.NextFloat(0.7f, 1.3f);
+						vel *= Main.rand.NextFloat(0.75f, 1.25f);
+                        dir = dir.RotatedByRandom(MathHelper.PiOver2 * 0.025f);
 
                         Vector2 offsetDir = Vector2.Normalize(dir);
                         Vector2 posOffset = offsetDir.RotatedBy(MathF.PI / 2) * Main.rand.NextFloat(-NPC.height / 3, NPC.height / 3);

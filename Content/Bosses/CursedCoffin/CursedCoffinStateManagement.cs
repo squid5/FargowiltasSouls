@@ -102,7 +102,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
             {
                 Frame = 0;
                 NPC.velocity.X /= 2;
-                NPC.velocity.Y = -2;
+                NPC.velocity.Y = -6;
             });
 
             StateMachine.RegisterTransition(BehaviorStates.GrabbyHands, BehaviorStates.SlamWShockwave, false, () => Timer > 40 && Frame <= 0 && Timer > AI3 + 10, () =>
@@ -218,9 +218,15 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
             // if it returns anything other than the provided state.
             StateMachine.AddTransitionStateHijack(originalState =>
             {
+                if (Phase < 3 && Enraged)
+                {
+                    StateMachine.StateStack.Clear();
+                    return BehaviorStates.HoveringForSlam;
+                }
+                // Phase 2: ghost
                 float threshold = WorldSavingSystem.MasochistModeReal ? 0.75f : WorldSavingSystem.EternityMode ? 0.6f : 0.5f;
                 // Transition to phase 2 if required.
-                if (!PhaseTwo && NPC.GetLifePercent() <= threshold)
+                if (Phase < 2 && NPC.GetLifePercent() <= threshold)
                 {
                     // Clear the stack to ensure states do not linger.
                     StateMachine.StateStack.Clear();
