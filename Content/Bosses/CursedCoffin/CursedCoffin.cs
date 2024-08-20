@@ -23,10 +23,11 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
     public partial class CursedCoffin : ModNPC
     {
         public const bool Enabled = true;
-        public override bool IsLoadingEnabled(Mod mod) => Enabled; 
+        public override bool IsLoadingEnabled(Mod mod) => Enabled;
 
-		#region Variables
+        #region Variables
 
+        private bool PhaseTwo = false;
 		private bool Attacking = true;
 		private bool ExtraTrail = false;
 
@@ -64,7 +65,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
         /// </summary>
         public ref float AttackCounter => ref NPC.localAI[0];
 
-        public bool Enraged => WorldSavingSystem.MasochistModeReal || NPC.GetLifePercent() <= 0.33f;
+        public bool Enraged => NPC.GetLifePercent() <= 0.2f;
 
 		public Vector2 MaskCenter() => NPC.Center - Vector2.UnitY * NPC.height * NPC.scale / 4;
 
@@ -172,6 +173,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
         }
         public override void SendExtraAI(BinaryWriter writer)
         {
+            writer.Write(PhaseTwo);
             writer.Write(NPC.localAI[0]);
             writer.Write(NPC.localAI[1]);
             writer.Write(NPC.localAI[2]);
@@ -189,6 +191,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 
 		public override void ReceiveExtraAI(BinaryReader reader)
 		{
+            PhaseTwo = reader.ReadBoolean();
 			NPC.localAI[0] = reader.ReadSingle();
 			NPC.localAI[1] = reader.ReadSingle();
 			NPC.localAI[2] = reader.ReadSingle();

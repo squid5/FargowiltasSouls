@@ -25,13 +25,13 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 		public const int RandomStuffOpenTime = 60;
 
 
-		public static readonly SoundStyle PhaseTransitionSFX = new("FargowiltasSouls/Assets/Sounds/CoffinPhaseTransition");
-		public static readonly SoundStyle SlamSFX = new("FargowiltasSouls/Assets/Sounds/CoffinSlam") { PitchVariance = 0.3f };
-		public static readonly SoundStyle SpiritDroneSFX = new("FargowiltasSouls/Assets/Sounds/CoffinSpiritDrone") { MaxInstances = 1, SoundLimitBehavior = SoundLimitBehavior.IgnoreNew, Volume = 0.2f };
-		public static readonly SoundStyle BigShotSFX = new("FargowiltasSouls/Assets/Sounds/CoffinBigShot") { Volume = 0.6f, PitchVariance = 0.3f };
-		public static readonly SoundStyle ShotSFX = new("FargowiltasSouls/Assets/Sounds/CoffinShot") { Volume = 0.3f, PitchVariance = 0.3f };
-		public static readonly SoundStyle SoulShotSFX = new("FargowiltasSouls/Assets/Sounds/CoffinSoulShot") { Volume = 0.3f, PitchVariance = 0.3f };
-		public static readonly SoundStyle HandChargeSFX = new("FargowiltasSouls/Assets/Sounds/CoffinHandCharge");
+		public static readonly SoundStyle PhaseTransitionSFX = new("FargowiltasSouls/Assets/Sounds/Challengers/Coffin/CoffinPhaseTransition");
+		public static readonly SoundStyle SlamSFX = new("FargowiltasSouls/Assets/Sounds/Challengers/Coffin/CoffinSlam") { PitchVariance = 0.3f };
+		public static readonly SoundStyle SpiritDroneSFX = new("FargowiltasSouls/Assets/Sounds/Challengers/Coffin/CoffinSpiritDrone") { MaxInstances = 1, SoundLimitBehavior = SoundLimitBehavior.IgnoreNew, Volume = 0.2f };
+		public static readonly SoundStyle BigShotSFX = new("FargowiltasSouls/Assets/Sounds/Challengers/Coffin/CoffinBigShot") { Volume = 0.6f, PitchVariance = 0.3f };
+		public static readonly SoundStyle ShotSFX = new("FargowiltasSouls/Assets/Sounds/Challengers/Coffin/CoffinShot") { Volume = 0.3f, PitchVariance = 0.3f };
+		public static readonly SoundStyle SoulShotSFX = new("FargowiltasSouls/Assets/Sounds/Challengers/Coffin/CoffinSoulShot") { Volume = 0.3f, PitchVariance = 0.3f };
+		public static readonly SoundStyle HandChargeSFX = new("FargowiltasSouls/Assets/Sounds/Challengers/Coffin/CoffinHandCharge");
 
 		public enum BehaviorStates
 		{
@@ -55,7 +55,8 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
         [
             BehaviorStates.HoveringForSlam,
 			BehaviorStates.WavyShotCircle,
-			BehaviorStates.GrabbyHands
+			BehaviorStates.GrabbyHands,
+            BehaviorStates.RandomStuff
 		];
 
 		public Player Player => Main.player[NPC.target];
@@ -179,6 +180,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 			NPC.velocity = (CoffinArena.Center.ToWorldCoordinates() - NPC.Center) * 0.05f;
             NPC.rotation = Main.rand.NextFloat(MathF.Tau * 0.06f * (Timer / TransTime));
 			SoundEngine.PlaySound(SpiritDroneSFX, NPC.Center);
+            PhaseTwo = true;
 		}
 
 		[AutoloadAsBehavior<EntityAIState<BehaviorStates>, BehaviorStates>(BehaviorStates.StunPunish)]

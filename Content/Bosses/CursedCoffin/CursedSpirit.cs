@@ -243,6 +243,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
                 return;
             CursedCoffin coffin = owner.As<CursedCoffin>();
 
+            /*
             if (coffin.AttackCounter < 3 && !coffin.Enraged)
             {
                 NPC.velocity = Vector2.Lerp(NPC.velocity, NPC.SafeDirectionTo(owner.Center) * Math.Min(Math.Max(20, owner.velocity.Length()), NPC.Distance(owner.Center)), 0.2f);
@@ -252,6 +253,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
                     NPC.active = false;
                 return;
             }
+            */
 
             if (BittenPlayer != -1)
             {

@@ -44,10 +44,13 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
             // Autoload the state behaviors.
             AutoloadAsBehavior<EntityAIState<BehaviorStates>, BehaviorStates>.FillStateMachineBehaviors<ModNPC>(StateMachine, this);
 
-			// Register each attack transition.
-			#region Transition Registering
-			// A basic example of a transition that doesnt go to anything specific here, it requires the current state to be the opening one, and the timer to be -1 to occur.
-			StateMachine.RegisterTransition(BehaviorStates.Opening, null, false, () => Timer == -1);
+            // Load the phase transition.
+            LoadTransition_PhaseTwoTransition();
+
+            // Register each attack transition.
+            #region Transition Registering
+            // A basic example of a transition that doesnt go to anything specific here, it requires the current state to be the opening one, and the timer to be -1 to occur.
+            StateMachine.RegisterTransition(BehaviorStates.Opening, null, false, () => Timer == -1);
 
 			// An example of a more complex transition, where it goes from the phase 2 transition to the slam shockwave if the condition is met, and also performs additional stuff on occuring.
 			StateMachine.RegisterTransition(BehaviorStates.PhaseTransition, BehaviorStates.SlamWShockwave, false, () => Timer >= 40, () =>
@@ -209,21 +212,35 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
                 indices.Remove(currentIndex);
             }
         }
+        public void LoadTransition_PhaseTwoTransition()
+        {
+            // Example of a transition hijack, which is checked for any possible starting state when a transition occurs and will replace any normal transition
+            // if it returns anything other than the provided state.
+            StateMachine.AddTransitionStateHijack(originalState =>
+            {
+                float threshold = WorldSavingSystem.MasochistModeReal ? 0.75f : WorldSavingSystem.EternityMode ? 0.6f : 0.5f;
+                // Transition to phase 2 if required.
+                if (!PhaseTwo && NPC.GetLifePercent() <= threshold)
+                {
+                    // Clear the stack to ensure states do not linger.
+                    StateMachine.StateStack.Clear();
+                    return BehaviorStates.PhaseTransition;
+                }
 
+                return originalState;
+            });
+        }
         public void IncrementAttackCounter()
         {
             /*
-            // Normal mode doesn't do the spirit mechanic
-            if (Main.expertMode)
+            // Normal mode doesn't do the mechanic
+            if (Main.expertMode && PhaseTwo)
                 AttackCounter++;
             if (AttackCounter > 6) // interrupted during random stuff attack, reset anyway
             {
                 AttackCounter = 0;
                 return;
             }
-            bool spawnSpirit = NPC.GetLifePercent() <= 0.33f || AttackCounter == 3; // Spawn spirit anyway on low health
-            if (spawnSpirit && !Main.npc.Any(p => p.TypeAlive<CursedSpirit>()))
-                StateMachine.StateStack.Push(StateMachine.StateRegistry[BehaviorStates.PhaseTransition]);
             if (AttackCounter == 6)
             {
                 if (WorldSavingSystem.EternityMode) // Special emode attack

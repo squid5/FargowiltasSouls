@@ -754,3 +754,13 @@ EarthPoison: {
 	DisplayName: Earth Poison
 	Description: Mods.FargowiltasSouls.Buffs.EarthPoison.Description
 }
+
+WitheredBuff: {
+	DisplayName: Withered Buff
+	Description: Mods.FargowiltasSouls.Buffs.WitheredBuff.Description
+}
+
+WitheredWizardBuff: {
+	DisplayName: Withered Wizard Buff
+	Description: Mods.FargowiltasSouls.Buffs.WitheredWizardBuff.Description
+}
