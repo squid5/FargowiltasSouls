@@ -1067,7 +1067,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
         {
             return WorldSavingSystem.SwarmActive
                 || !FargoSoulsUtil.BossIsAlive(ref EModeGlobalNPC.destroyBoss, NPCID.TheDestroyer)
-                || WorldSavingSystem.MasochistModeReal;
+                || (WorldSavingSystem.MasochistModeReal && Main.getGoodWorld);
         }
 
         public override void OnFirstTick(NPC npc)
@@ -1095,7 +1095,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     npc.localAI[0] = -30;
             }
 
-            if (WorldSavingSystem.MasochistModeReal) //use vanilla movement unless shooting laser
+            if (WorldSavingSystem.MasochistModeReal && Main.getGoodWorld) //use vanilla movement unless shooting laser
             {
                 if (!ShootLaser)
                     return result;
