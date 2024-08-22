@@ -3539,3 +3539,8 @@ SpiritLongbow: {
 		Hold button to charge shots for more damage and higher speed
 		'''
 }
+
+CursedCoffinBag: {
+	DisplayName: Treasure Bag (Cursed Coffin)
+	Tooltip: ""
+}
