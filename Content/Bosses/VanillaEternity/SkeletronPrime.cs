@@ -242,7 +242,8 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                 }
 
                 //spawn 4 more limbs
-                if (!FullySpawnedLimbs && (npc.life < npc.lifeMax * 0.6 || WorldSavingSystem.MasochistModeReal) && npc.ai[1] == 0f && npc.ai[3] >= 0f) // cannot go p3 while spinning
+                float threshold = WorldSavingSystem.MasochistModeReal ? 0.8f : 0.6f;
+                if (!FullySpawnedLimbs && npc.life < npc.lifeMax * threshold && npc.ai[1] == 0f && npc.ai[3] >= 0f) // cannot go p3 while spinning
                 {
                     if (limbTimer == 0)
                     {
@@ -314,7 +315,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
                             foreach (NPC l in Main.npc.Where(l => l.active && l.ai[1] == npc.whoAmI && limbs.Contains(l.type) && !l.GetGlobalNPC<PrimeLimb>().IsSwipeLimb))
                             {
-                                l.GetGlobalNPC<PrimeLimb>().RangedAttackMode = npc.type == rangedArm || npc.type == meleeArm;
+                                l.GetGlobalNPC<PrimeLimb>().RangedAttackMode = !(npc.type == rangedArm || npc.type == meleeArm);
 
                                 int heal = l.lifeMax;
                                 l.life = Math.Min(l.life + l.lifeMax / 2, l.lifeMax);
@@ -360,7 +361,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             // it's also kept for structural reasons, and since phase 1 still exists in masomode
             if (npc.ai[0] != 2f) //go phase 2 instantly
             {
-                float threshold = WorldSavingSystem.MasochistModeReal ? 0.8f : 1f;  //instant in emode, 80% in maso
+                float threshold = 1f; //instant
                 if (npc.life <= npc.lifeMax * threshold /*.8*/)
                 {
                     npc.ai[0] = 2f;
