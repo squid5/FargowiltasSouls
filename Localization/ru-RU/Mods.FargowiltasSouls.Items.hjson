@@ -839,16 +839,6 @@ EarthForce: {
 		Враги получают в 4 раза больше урона от дебаффов
 		'Благословение Гайи озаряет вас'
 		'''
-	/* SaveOldTooltip:
-		'''
-		[i:FargowiltasSouls/CobaltEnchant] Grants an explosion jump and you explode on hit
-		[i:FargowiltasSouls/MythrilEnchant] Stop attacking to gradually increase attack speed for up to 5 seconds
-		[i:FargowiltasSouls/PalladiumEnchant] Grants Rapid Healing after striking an enemy and spawn life orbs based on healing
-		[i:FargowiltasSouls/OrichalcumEnchant] Attacks spawn flower petals and damaging debuffs deal 3.5x damage
-		[i:FargowiltasSouls/AdamantiteEnchant] Every weapon shot will split into 3, 50% damage each, with higher spread the longer you fire
-		[i:FargowiltasSouls/TitaniumEnchant] Attacks generate titanium shards, reaching max grants Titanium Shield
-		'Gaia's blessing shines upon you'
-		''' */
 }
 
 LifeForce: {
@@ -863,16 +853,6 @@ LifeForce: {
 		Эффекты Рюкзака-улья
 		'Живое существо, неподвластное вашей воле, это редкость'
 		'''
-		[i:FargowiltasSouls/PumpkinEnchant] You will grow pumpkins while moving
-		[i:FargowiltasSouls/CactusEnchant] Enemies may explode into needles on death
-		[i:FargowiltasSouls/BeeEnchant] Leave behind flowers while flying
-		[i:FargowiltasSouls/BeeEnchant] Effects of Hive Pack
-		[i:FargowiltasSouls/SpiderEnchant] Your minions and sentries can crit
-		[i:FargowiltasSouls/SpiderEnchant] Minion and sentry crits deal 1.5x damage, instead of 2x
-		[i:FargowiltasSouls/TurtleEnchant] When standing still and not attacking, you will enter your shell
-		[i:FargowiltasSouls/BeetleEnchant] Beetles aid both offense and defense
-		'Rare is a living thing that dare disobey your will'
-		''' */
 }
 
 NatureForce: {
