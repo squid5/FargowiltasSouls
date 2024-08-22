@@ -8,6 +8,8 @@ using Terraria.ModLoader;
 using System.Linq;
 using Terraria.Audio;
 using FargowiltasSouls.Content.Projectiles.Masomode;
+using FargowiltasSouls.Core.ModPlayers;
+using FargowiltasSouls.Content.Items.Weapons.Challengers;
 
 namespace FargowiltasSouls.Content.Projectiles.ChallengerItems
 {
@@ -46,13 +48,21 @@ namespace FargowiltasSouls.Content.Projectiles.ChallengerItems
                 pos += diff;
             }
         }
+        public override void PostAI()
+        {
 
+        }
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             if (Projectile.ai[1] <= 0)
             {
                 WhipExplosion(target);
                 Projectile.ai[1] = 1;
+                Player player = Main.player[Projectile.owner];
+                if (player.Alive() && player.FargoSouls() is FargoSoulsPlayer modPlayer && modPlayer.EgyptianFlailCD <= 0)
+                {
+                    modPlayer.EgyptianFlailCD = EgyptianFlail.maxCooldown;
+                }
             }
         }
 

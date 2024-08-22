@@ -11,24 +11,21 @@ namespace FargowiltasSouls.Content.Items.Weapons.Challengers
     {
         public override void SetDefaults()
         {
-            Item.DefaultToWhip(ModContent.ProjectileType<EgyptianFlailProjectile>(), 19, 2, 4);
+            Item.DefaultToWhip(ModContent.ProjectileType<EgyptianFlailProjectile>(), 19, 2, 4, 40);
             Item.rare = ItemRarityID.Blue;
             Item.value = Item.sellPrice(0, 2);
         }
 
-        public int maxCooldown = 60 * 7;
+        public static int maxCooldown = 60 * 4;
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             FargoSoulsPlayer modPlayer = player.FargoSouls();
-            if (Main.myPlayer == player.whoAmI) {
-                for (float i = -3.6f; i <= 3.6f; i += 3.6f)
+            if (Main.myPlayer == player.whoAmI) 
+            {
+                for (float i = -10f; i <= 10f; i += 10f)
                 {
                     Projectile.NewProjectile(source, player.Center, velocity, ModContent.ProjectileType<EgyptianFlailProjectile>(), 16, 2, player.whoAmI, i, modPlayer.EgyptianFlailCD);
                 }
-            }
-            if (modPlayer.EgyptianFlailCD <= 0)
-            {
-                modPlayer.EgyptianFlailCD = maxCooldown;
             }
             return false;
         }
