@@ -306,13 +306,13 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
             rule.OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<SisypheanFist>(), ModContent.ItemType<SpiritLongbow>(), ModContent.ItemType<GildedSceptre>(), ModContent.ItemType<EgyptianFlail>()));
             rule.OnSuccess(ItemDropRule.Common(ItemID.OasisCrate, 1, 1, 5)); //oasis crate
             // gems
-            rule.OnSuccess(ItemDropRule.Common(ItemID.Amethyst, 3, 1, 4));
-            rule.OnSuccess(ItemDropRule.Common(ItemID.Topaz, 4, 1, 4));
-            rule.OnSuccess(ItemDropRule.Common(ItemID.Sapphire, 5, 1, 3));
-            rule.OnSuccess(ItemDropRule.Common(ItemID.Emerald, 7, 1, 2));
-            rule.OnSuccess(ItemDropRule.Common(ItemID.Ruby, 8, 1, 2));
-            rule.OnSuccess(ItemDropRule.Common(ItemID.Amber, 3, 1, 6));
-            rule.OnSuccess(ItemDropRule.Common(ItemID.Diamond, 10, 1, 1));
+            rule.OnSuccess(ItemDropRule.Common(ItemID.Amethyst, 3, 2, 4));
+            rule.OnSuccess(ItemDropRule.Common(ItemID.Topaz, 4, 2, 4));
+            rule.OnSuccess(ItemDropRule.Common(ItemID.Sapphire, 4, 2, 3));
+            rule.OnSuccess(ItemDropRule.Common(ItemID.Emerald, 5, 1, 3));
+            rule.OnSuccess(ItemDropRule.Common(ItemID.Ruby, 5, 1, 2));
+            rule.OnSuccess(ItemDropRule.Common(ItemID.Amber, 3, 2, 6));
+            rule.OnSuccess(ItemDropRule.Common(ItemID.Diamond, 7, 1, 1));
 
             npcLoot.Add(rule);
         }

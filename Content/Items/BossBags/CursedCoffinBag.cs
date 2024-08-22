@@ -2,6 +2,7 @@
 using FargowiltasSouls.Content.Bosses.Lifelight;
 using FargowiltasSouls.Content.Items.Accessories.Expert;
 using FargowiltasSouls.Content.Items.Weapons.Challengers;
+using System.Data;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -20,13 +21,13 @@ namespace FargowiltasSouls.Content.Items.BossBags
             itemLoot.Add(ItemDropRule.Common(ItemID.OasisCrate, 1, 1, 5)); //oasis crate
 
             // gems
-            itemLoot.Add(ItemDropRule.Common(ItemID.Amethyst, 3, 1, 4));
-            itemLoot.Add(ItemDropRule.Common(ItemID.Topaz, 4, 1, 4));
-            itemLoot.Add(ItemDropRule.Common(ItemID.Sapphire, 5, 1, 3));
-            itemLoot.Add(ItemDropRule.Common(ItemID.Emerald, 7, 1, 2));
-            itemLoot.Add(ItemDropRule.Common(ItemID.Ruby, 8, 1, 2));
-            itemLoot.Add(ItemDropRule.Common(ItemID.Amber, 3, 1, 6));
-            itemLoot.Add(ItemDropRule.Common(ItemID.Diamond, 10, 1, 1));
+            itemLoot.Add(ItemDropRule.Common(ItemID.Amethyst, 3, 2, 4));
+            itemLoot.Add(ItemDropRule.Common(ItemID.Topaz, 4, 2, 4));
+            itemLoot.Add(ItemDropRule.Common(ItemID.Sapphire, 4, 2, 3));
+            itemLoot.Add(ItemDropRule.Common(ItemID.Emerald, 5, 1, 3));
+            itemLoot.Add(ItemDropRule.Common(ItemID.Ruby, 5, 1, 2));
+            itemLoot.Add(ItemDropRule.Common(ItemID.Amber, 3, 2, 6));
+            itemLoot.Add(ItemDropRule.Common(ItemID.Diamond, 7, 1, 1));
         }
     }
 }
