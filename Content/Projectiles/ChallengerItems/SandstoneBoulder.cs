@@ -85,7 +85,12 @@ namespace FargowiltasSouls.Content.Projectiles.ChallengerItems
                 
             }
         }
-
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+        {
+            float bonus = 0.2f * Projectile.velocity.Length() / 20f;
+            bonus = MathHelper.Clamp(bonus, 0, 0.2f);
+            modifiers.SourceDamage *= 1 + bonus;
+        }
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
             if (bounceCount++ < 2 && oldVelocity.Y > 0 && Math.Abs(Projectile.velocity.Y - oldVelocity.Y) > float.Epsilon) // if hitting ground, bounce, up to twice

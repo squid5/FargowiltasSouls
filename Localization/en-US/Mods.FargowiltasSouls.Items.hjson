@@ -3518,6 +3518,7 @@ SisypheanFist: {
 		'''
 		While grounded, grab a huge boulder from the earth
 		Release the button to hurl it towards your cursor
+		Boulder damage scales with its speed
 		'''
 }
 
