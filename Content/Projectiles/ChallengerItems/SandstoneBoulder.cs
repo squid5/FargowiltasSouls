@@ -52,6 +52,7 @@ namespace FargowiltasSouls.Content.Projectiles.ChallengerItems
                 if (timer <= 30)
                 {
                     rot = player.direction * (MathHelper.Pi - (timer * MathHelper.Pi / 30f));
+                    FargoSoulsUtil.ScreenshakeRumble(1.5f);
                 }
                 Vector2 holdOffset = new Vector2(0f, -25f).RotatedBy(rot);
                 player.itemRotation = rot + MathHelper.Pi;
