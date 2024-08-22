@@ -721,6 +721,10 @@ AbomRitualFTW.DisplayName: 憎恶结界FTW
 // CoffinPlayerSoul.DisplayName: Your Soul
 // GildedSceptreProj.DisplayName: Shadowflame Sceptre Shot
 // RoyalSubjectProjectile.DisplayName: Royal Subject Projectile
+// SandstoneBoulder.DisplayName: Sandstone Boulder
+// SandstoneShrapnel.DisplayName: Sandstone Shrapnel
+// EgyptianFlailProjectile.DisplayName: Egyptian Flail Projectile
+// SpiritBow.DisplayName: Spirit Bow
 // TimberBranch.DisplayName: Timber Branch
 // CosmosForceMoon.DisplayName: Cosmos Force Moon
 // GladiatorSpirit.DisplayName: Gladiator Spirit
@@ -735,7 +739,3 @@ AbomRitualFTW.DisplayName: 憎恶结界FTW
 // LifeRuneRetractHitbox.DisplayName: Life Rune Retract Hitbox
 // Slimesplosion.DisplayName: Slimesplosion
 // TwinsEyeFlash.DisplayName: Twins Eye Flash
-// SandstoneBoulder.DisplayName: Sandstone Boulder
-// SandstoneShrapnel.DisplayName: Sandstone Shrapnel
-// EgyptianFlailProjectile.DisplayName: Egyptian Flail Projectile
-// SpiritBow.DisplayName: Spirit Bow

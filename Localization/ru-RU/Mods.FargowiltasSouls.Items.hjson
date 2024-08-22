@@ -839,6 +839,15 @@ EarthForce: {
 		Враги получают в 4 раза больше урона от дебаффов
 		'Благословение Гайи озаряет вас'
 		'''
+	/* SaveOldTooltip:
+		'''
+		[i:FargowiltasSouls/CobaltEnchant] Grants an explosion jump and you explode on hit
+		[i:FargowiltasSouls/MythrilEnchant] Stop attacking to gradually increase attack speed for up to 5 seconds
+		[i:FargowiltasSouls/PalladiumEnchant] Grants Rapid Healing after striking an enemy and spawn life orbs based on healing
+		[i:FargowiltasSouls/OrichalcumEnchant] Attacks spawn flower petals and damaging debuffs deal 3.5x damage
+		[i:FargowiltasSouls/AdamantiteEnchant] Every weapon shot will split into 3, 50% damage each, with higher spread the longer you fire
+		[i:FargowiltasSouls/TitaniumEnchant] Attacks generate titanium shards, reaching max grants Titanium Shield
+		''' */
 }
 
 LifeForce: {
@@ -892,7 +901,6 @@ ShadowForce: {
 		[i:FargowiltasSouls/ShinobiEnchant] Dash into any walls, to teleport through them to the next opening
 		[i:FargowiltasSouls/ApprenticeEnchant] While attacking, fire your next 3 closest weapons' projectiles as support
 		[i:FargowiltasSouls/DarkArtistEnchant] Summons a Flameburst minion that will also fire when you attack
-		'Dark, Darker, Yet Darker'
 		''' */
 }
 
@@ -2948,18 +2956,9 @@ MasochistReal: {
 		ЛКМ: Переключает возможность сессии играть в Мазо
 		ПКМ: Переключает возможность мира играть в Мазо
 		'''
-	WorldState: 
-	'''
-	мир в настоящее время мазо: 
-	'''
-	VarWorld: 
-	'''
-	мир: 
-	'''
-	VarMod: 
-	'''
-	мод: 
-	'''
+	WorldState: "мир в настоящее время мазо: "
+	VarWorld: "мир: "
+	VarMod: "мод: "
 }
 
 MedallionoftheFallenKing: {

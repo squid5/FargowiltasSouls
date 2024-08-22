@@ -32,9 +32,9 @@ namespace FargowiltasSouls.Content.Items.Weapons.Challengers
 
         public override void HoldItem(Player player)
         {
-            if (LastMouse && !Main.mouseLeft && delay == 0 && CanUseItem(player))
+            if (LastMouse && !Main.mouseLeft && delay == 0)
             {
-                delay = (int)MathF.Ceiling(45f / player.FargoSouls().AttackSpeed);
+                delay = (int)MathF.Ceiling(85f / player.FargoSouls().AttackSpeed);
             }
             if (delay > 0)
             {

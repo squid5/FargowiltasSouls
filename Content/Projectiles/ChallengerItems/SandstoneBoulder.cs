@@ -35,46 +35,40 @@ namespace FargowiltasSouls.Content.Projectiles.ChallengerItems
             Player player = Main.player[Projectile.owner];
             if (!launched)
             {
-                if (player.channel && !player.CCed && !player.noItems) // While holding
+                timer++;
+                if (timer >= 30 && !player.channel && !player.CCed && !player.noItems)
                 {
-                    if (timer++ <= 30)
-                    {
-                        rot = player.direction * (MathHelper.Pi - (timer * MathHelper.Pi / 30f));
-                    }
-                    Vector2 holdOffset = new Vector2(0f, -25f).RotatedBy(rot);
-                    player.itemRotation = rot + MathHelper.Pi;
-
-                    player.heldProj = Projectile.whoAmI;
-                    player.SetDummyItemTime(2);
-                    Projectile.Center = player.Center + holdOffset;
-
-                    player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.ThreeQuarters, rot + MathHelper.Pi);
-                    player.SetCompositeArmBack(true, Player.CompositeArmStretchAmount.Quarter, rot + MathHelper.Pi);
-                    Projectile.direction = Main.MouseWorld.DirectionTo(player.Center).X < 0 ? 1 : -1;
-                    player.ChangeDir(Projectile.direction);
-                    Projectile.spriteDirection = Projectile.direction;
-
-                    Projectile.timeLeft++;
-                    Projectile.friendly = false;
+                    float angle = Projectile.Center.AngleTo(Main.MouseWorld);
+                    Projectile.velocity = new Vector2(17f, 0f).RotatedBy(angle);
+                    Projectile.velocity += player.velocity / 1.25f;
+                    launched = true;
+                    Projectile.hide = false;
+                    Projectile.tileCollide = true;
+                    Projectile.friendly = true;
+                    timer = 0;
+                    SoundEngine.PlaySound(SoundID.Item1 with { Pitch = -0.8f }, Projectile.Center);
+                    return;
                 }
-                else // On release
+                if (timer <= 30)
                 {
-                    if (timer++ >= 10)
-                    {
-                        float angle = Projectile.Center.AngleTo(Main.MouseWorld);
-                        Projectile.velocity = new Vector2(20f, 0f).RotatedBy(angle);
-                        launched = true;
-                        Projectile.hide = false;
-                        Projectile.tileCollide = true;
-                        Projectile.friendly = true;
-                        timer = 0;
-                        SoundEngine.PlaySound(SoundID.Item1 with { Pitch = -0.8f }, Projectile.Center);
-                    }
-                    else
-                    { 
-                        Projectile.Kill(); // Kill if released during animation
-                    }
+                    rot = player.direction * (MathHelper.Pi - (timer * MathHelper.Pi / 30f));
                 }
+                Vector2 holdOffset = new Vector2(0f, -25f).RotatedBy(rot);
+                player.itemRotation = rot + MathHelper.Pi;
+
+                player.heldProj = Projectile.whoAmI;
+                player.SetDummyItemTime(2);
+                Projectile.Center = player.Center + holdOffset;
+
+                player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.ThreeQuarters, rot + MathHelper.Pi);
+                player.SetCompositeArmBack(true, Player.CompositeArmStretchAmount.Quarter, rot + MathHelper.Pi);
+                Projectile.direction = Main.MouseWorld.DirectionTo(player.Center).X < 0 ? 1 : -1;
+                player.ChangeDir(Projectile.direction);
+                Projectile.spriteDirection = Projectile.direction;
+
+                Projectile.timeLeft++;
+                Projectile.friendly = false;
+
             }
             else
             {
@@ -87,31 +81,21 @@ namespace FargowiltasSouls.Content.Projectiles.ChallengerItems
                 }
                 Projectile.velocity.Y += 0.75f;
                 Projectile.rotation += 0.2f;
+                
             }
         }
 
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
-            if (bounceCount++ >= 10)
+            if (bounceCount++ < 2 && oldVelocity.Y > 0 && Math.Abs(Projectile.velocity.Y - oldVelocity.Y) > float.Epsilon) // if hitting ground, bounce, up to twice
             {
-                Projectile.Kill();
-            }
-            else {
-
                 Collision.HitTiles(Projectile.position, Projectile.velocity, Projectile.width, Projectile.height);
                 SoundEngine.PlaySound(SoundID.Dig, Projectile.position);
-
-                if (Math.Abs(Projectile.velocity.Y - oldVelocity.Y) > float.Epsilon)
-                {
-                    Projectile.velocity.Y = -oldVelocity.Y * 0.9f;
-                }
-
-                if (Math.Abs(Projectile.velocity.X - oldVelocity.X) > float.Epsilon)
-                {
-                    Projectile.velocity.X = -oldVelocity.X * 0.9f;
-                }
+                Projectile.velocity.Y = -oldVelocity.Y * 0.6f;
+                return false;
             }
-            return false;
+            Projectile.Kill();
+            return true;
         }
 
         public override void OnKill(int timeLeft)
@@ -128,7 +112,7 @@ namespace FargowiltasSouls.Content.Projectiles.ChallengerItems
                 float direction = Main.rand.NextFloatDirection();
                 if (Main.myPlayer == Projectile.owner) {
                     Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, new Vector2(0f, -14f).RotatedBy(direction), ModContent.ProjectileType<SandstoneShrapnel>(), damage, 0.25f, Projectile.owner, ai1: Main.rand.Next(1,5));
-                    ScreenShakeSystem.StartShake(3, shakeStrengthDissipationIncrement: 0.1f);
+                    ScreenShakeSystem.StartShake(2, shakeStrengthDissipationIncrement: 0.1f);
                 } 
             }
             base.OnKill(timeLeft);
