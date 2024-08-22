@@ -866,16 +866,6 @@ NatureForce: {
 		Бонус урона: +{0}%
 		'Познал все секреты дикой природы'
 		'''
-		[i:FargowiltasSouls/CrimsonEnchant] Heal back 50% of damage taken after not getting hit for 7 seconds, twice
-		[i:FargowiltasSouls/MoltenEnchant] Nearby enemies are ignited in a great radius
-		[i:FargowiltasSouls/RainEnchant] Spawns an umbrella that blocks projectiles from above
-		[i:FargowiltasSouls/FrostEnchant] Icicles will start to appear around you
-		[i:FargowiltasSouls/ChlorophyteEnchant] Summons a ring of leaf crystals to shoot at nearby enemies
-		[i:FargowiltasSouls/JungleEnchant] Grants a double spore jump and a dash
-		[i:FargowiltasSouls/ShroomiteEnchant] Not moving puts you in stealth
-		[i:FargowiltasSouls/ShroomiteEnchant] All attacks gain trails of mushrooms
-		'Tapped into every secret of the wilds'
-		''' */
 }
 
 ShadowForce: {
@@ -919,16 +909,6 @@ SpiritForce: {
 		Увеличивает дальность хлыстов, бейте своих прислужников кнутом, чтобы заставить их работать усерднее
 		'Вознесись выше этого мира смертных'
 		'''
-		[i:FargowiltasSouls/FossilEnchant] If you reach zero HP you will revive with 200 HP, self-cleanse debuffs, and spawn several bones
-		[i:FargowiltasSouls/FossilEnchant] Collect the bones once they stop moving to heal for 20 HP each
-		[i:FargowiltasSouls/ForbiddenEnchant] Double tap down to call an ancient storm to the cursor location
-		[i:FargowiltasSouls/ForbiddenEnchant] Any projectiles shot through your storm gain 60% damage
-		[i:FargowiltasSouls/AncientHallowEnchant] You gain a Terraprisma familiar that can reflect projectiles
-		[i:FargowiltasSouls/HallowEnchant] Healing potions take effect over time and create a projectile-repelling shockwave
-		[i:FargowiltasSouls/TikiEnchant] Whip your summons to make them work harder, whip range increased
-		[i:FargowiltasSouls/SpectreEnchant] Damage has a chance to spawn damaging and healing orbs
-		'Ascend from this mortal realm'
-		''' */
 }
 
 TerraForce: {
@@ -944,17 +924,6 @@ TerraForce: {
 		Шанс 50% не потратить предмет при первом создании, также вы притягиваете предметы с большего расстояния (работает в инвентаре и слотах украшений)
 		'Земля делится своей силой'
 		'''
-		[i:FargowiltasSouls/CopperEnchant][i:FargowiltasSouls/ObsidianEnchant][i:FargowiltasSouls/LeadEnchant] Attacks spawn lightning, explosions, and inflict Lead Poisoning
-		[i:FargowiltasSouls/TinEnchant] Sets Tin crit chance to 10%, increasing up to double your original crit chance or 50%
-		[i:FargowiltasSouls/IronEnchant] 50% chance to not consume each item on first craft
-		[i:FargowiltasSouls/IronEnchant] You attract items from a larger range
-		[i:FargowiltasSouls/LeadEnchant] You take 60% less from damage over time
-		[i:FargowiltasSouls/SilverEnchant] Right Click to guard with your shield
-		[i:FargowiltasSouls/TungstenEnchant] Weapon size increased to 300% and projectile size every quarter second
-		[i:FargowiltasSouls/ObsidianEnchant] Grants immunity to lava
-		[i:FargowiltasSouls/AshWoodEnchant] Player attacks are accompanied by fireballs
-		'The land lends its strength'
-		''' */
 }
 
 TimberForce: {
@@ -971,14 +940,6 @@ TimberForce: {
 		Вы получаете скидку в магазине, размер которой зависит от заполнения бестиария (работает в слотах украшений и инвентаре)
 		'Чрезвычайно суровый'
 		'''
-		[i:FargowiltasSouls/WoodEnchant] You gain a shop discount based on bestiary completion
-		[i:FargowiltasSouls/BorealWoodEnchant] Attacks will periodically be accompanied by several snowballs
-		[i:FargowiltasSouls/RichMahoganyEnchant] All grappling hooks shoot, pull, and retract 2.5x as fast
-		[i:FargowiltasSouls/EbonwoodEnchant][i:FargowiltasSouls/ShadewoodEnchant] You have an aura of Withering and Bleeding
-		[i:FargowiltasSouls/PalmWoodEnchant] Double tap down to spawn up to 2 palm tree sentries
-		[i:FargowiltasSouls/PearlwoodEnchant] Press the Debuff Install key to spawn a damaging star and gain crit reroll
-		'Extremely rigid'
-		''' */
 }
 
 WillForce: {
@@ -994,16 +955,6 @@ WillForce: {
 		У врагов есть 33% шанс оставить в 5 раз больше добычи
 		'Разум несокрушимой решимости'
 		'''
-		[i:FargowiltasSouls/GoldEnchant] Press the Gold hotkey to be encased in a Golden Shell
-		[i:FargowiltasSouls/GoldEnchant] Automatically sends coins to your piggy bank when picked up
-		[i:FargowiltasSouls/PlatinumEnchant] 33% chance for enemies to drop 5x loot
-		[i:FargowiltasSouls/GladiatorEnchant] Double tap down to place a banner that buffs you while close
-		[i:FargowiltasSouls/GladiatorEnchant] Spears will rain down on struck enemies
-		[i:FargowiltasSouls/RedRidingEnchant] Successive attacks gain bonus damage 
-		[i:FargowiltasSouls/ValhallaKnightEnchant] Increases the effectiveness of healing sources by 25%
-		[i:FargowiltasSouls/ValhallaKnightEnchant] Improves mounts and stats while mounted, mounts have a dash
-		'A mind of unbreakable determination'
-		''' */
 }
 
 AbominableWand: {
@@ -1018,14 +969,6 @@ AbominableWand: {
 		Выдержка восстанавливается, когда вы снова при полных ХП
 		'Кажется, чего-то не хватает'
 		'''
-		Grants immunity to Abominable Fang and Abominable Presence
-		Increased damage gained per Sparkling Adoration graze and halves heart cooldown
-		Spectral Abominationn periodically manifests to support your critical hits
-		With Styx armor, charges energy when graze is maxed
-		You can endure any attack and survive with 1 life
-		Endurance recovers when you reach full life again
-		'Seems like something's missing'
-		''' */
 }
 
 AeolusBoots: {
@@ -1042,16 +985,6 @@ AeolusBoots: {
 		На траве, по которуй вы проходите, вырастают цветы
 		'Вернулись и хороши, как никогда'
 		'''
-		Allows flight, super fast running, and extra mobility on ice
-		The wearer can run even faster on sand
-		8% increased movement speed
-		Increases jump speed and height, allows double jump and auto-jump, and negates fall damage
-		Provides the ability to walk on water, honey and lava
-		Grants immunity to fire blocks and 7 seconds of immunity to lava
-		Reduces damage from touching lava
-		Flowers grow on the grass you walk on
-		'Back and better than ever'
-		''' */
 }
 
 AgitatingLens: {
@@ -1065,13 +998,6 @@ AgitatingLens: {
 		Это состояние длится 8 секунд и по его окончании вы будете оглушены на 2 секунды
 		'Раздражительные останки побеждённого противника'
 		'''
-		Grants immunity to Berserked
-		While dashing or running quickly you will create a trail of demon scythes
-		Press the Debuff Install key while holding UP and DOWN to go berserk
-		When berserk, massively increased offenses, massively lowered defenses, and you cannot stop attacking or moving
-		Berserk state lasts for 8 seconds and you are stunned for 2 seconds afterwards
-		'The irritable remnant of a defeated foe'
-		''' */
 }
 
 BetsysHeart: {
@@ -1083,11 +1009,6 @@ BetsysHeart: {
 		При нанесении урона рывком, накладывает на них Проклятье Бетси на 20 секунд и уменьшает перезарядку рывка вдвое
 		'Слегка поджаренно, средняя прожарка'
 		'''
-		Grants immunity to Oozed, Withered Weapon, and Withered Armor
-		Press the Special Dash key to perform a short invincible fireball dash
-		Hitting enemies with the dash inflicts 20 seconds of Betsy's Curse and halves your dash cooldown
-		'Lightly roasted, medium rare'
-		''' */
 }
 
 BionomicCluster: {
@@ -1114,26 +1035,6 @@ BionomicCluster: {
 		    [i:FargowiltasSouls/OrdinaryCarrot] Нажмите ПКМ, чтобы отдалить камеру
 		'Амальгама, в которую слилась тысяча обыкновенных врагов'
 		'''
-		Grants immunity to [i:FargowiltasSouls/FrigidGemstone] Frostburn, [i:FargowiltasSouls/WretchedPouch] Shadowflame, [i:FargowiltasSouls/SqueakyToy] Squeaky Toy, [i:FargowiltasSouls/ConcentratedRainbowMatter] Flames of the Universe, 
-		[i:FargowiltasSouls/WyvernFeather] Clipped Wings, Crippled, [i:FargowiltasSouls/TribalCharm] Webbed, Purified, [i:FargowiltasSouls/NymphsPerfume] Lovestruck, Stinky, Hexed, and [i:FargowiltasSouls/SecurityWallet] Midas
-		[i:FargowiltasSouls/SandsofTime] Use to teleport to your last death point
-		[i:FargowiltasSouls/WyvernFeather] Your attacks can inflict Clipped Wings [i:FargowiltasSouls/NymphsPerfume] and produce hearts
-		[i:FargowiltasSouls/WyvernFeather] You periodically shed light orbs, touch them to refresh your flight time
-		[i:FargowiltasSouls/SqueakyToy] Attacks have a chance to squeak and deal 1 damage to you
-		[i:FargowiltasSouls/WretchedPouch] Press the Debuff Install key to gain Wretched Hex
-		[i:FargowiltasSouls/WretchedPouch] Wretched Hex grants massively increased damage and shadowflame, but less move and defenses and attack speed bonuses while attacking
-		[i:FargowiltasSouls/ConcentratedRainbowMatter] Summons a friendly rainbow slime
-		[i:FargowiltasSouls/TimsConcoction] Certain enemies will drop potions when defeated
-		[i:FargowiltasSouls/TribalCharm] When attacking by manually clicking, increases non-summon damage by 30%
-		[c/00FFFF:Following effects also work passively from inventory or vanity slots (right click to disable in inventory):]
-		    Grants immunity to [i:FargowiltasSouls/SandsofTime] Mighty Wind, cactus damage, [i:FargowiltasSouls/MysticSkull] Suffocation, [i:FargowiltasSouls/FrigidGemstone] Chilled, [i:FargowiltasSouls/SqueakyToy] and Guilty
-		    [i:FargowiltasSouls/WyvernFeather] Stabilizes gravity in space and in liquid, [i:FargowiltasSouls/OrdinaryCarrot] improves your nightvision, [i:FargowiltasSouls/SecurityWallet] and drastically improves reforges
-		    [i:FargowiltasSouls/ConcentratedRainbowMatter] Automatically uses healing & [i:FargowiltasSouls/MysticSkull] mana potions when needed and increases pickup range for mana stars
-		    [i:FargowiltasSouls/NymphsPerfume] You respawn with more life [i:FargowiltasSouls/SandsofTime] and when no boss is alive, respawn faster
-		    [i:FargowiltasSouls/FrigidGemstone] Press the Frigid Spell key to cast Ice Rod
-		    [i:FargowiltasSouls/OrdinaryCarrot] Press right click to zoom in
-		'The amalgamate born of a thousand common enemies'
-		''' */
 }
 
 BionomicClusterInactive: {
@@ -1160,26 +1061,6 @@ BionomicClusterInactive: {
 		    [i:FargowiltasSouls/OrdinaryCarrot] Нажмите ПКМ, чтобы отдалить камеру
 		'Амальгама, в которую слилась тысяча обыкновенных врагов'
 		'''
-		Grants immunity to [i:FargowiltasSouls/FrigidGemstone] Frostburn, [i:FargowiltasSouls/WretchedPouch] Shadowflame, [i:FargowiltasSouls/SqueakyToy] Squeaky Toy, [i:FargowiltasSouls/ConcentratedRainbowMatter] Flames of the Universe, 
-		[i:FargowiltasSouls/WyvernFeather] Clipped Wings, Crippled, [i:FargowiltasSouls/TribalCharm] Webbed, Purified, [i:FargowiltasSouls/NymphsPerfume] Lovestruck, Stinky, Hexed, and [i:FargowiltasSouls/SecurityWallet] Midas
-		[i:FargowiltasSouls/SandsofTime] Use to teleport to your last death point
-		[i:FargowiltasSouls/WyvernFeather] Your attacks can inflict Clipped Wings [i:FargowiltasSouls/NymphsPerfume] and produce hearts
-		[i:FargowiltasSouls/WyvernFeather] You periodically shed light orbs, touch them to refresh your flight time
-		[i:FargowiltasSouls/SqueakyToy] Attacks have a chance to squeak and deal 1 damage to you
-		[i:FargowiltasSouls/WretchedPouch] Press the Debuff Install key to gain Wretched Hex
-		[i:FargowiltasSouls/WretchedPouch] Wretched Hex grants massively increased damage and shadowflame, but less move and defenses and attack speed bonuses while attacking
-		[i:FargowiltasSouls/ConcentratedRainbowMatter] Summons a friendly rainbow slime
-		[i:FargowiltasSouls/TimsConcoction] Certain enemies will drop potions when defeated
-		[i:FargowiltasSouls/TribalCharm] When attacking by manually clicking, increases non-summon damage by 30%
-		[c/00FFFF:Following effects are currently disabled in inventory (right click to enable):]
-		    Grants immunity to [i:FargowiltasSouls/SandsofTime] Mighty Wind, cactus damage, [i:FargowiltasSouls/MysticSkull] Suffocation, [i:FargowiltasSouls/FrigidGemstone] Chilled, [i:FargowiltasSouls/SqueakyToy] and Guilty
-		    [i:FargowiltasSouls/WyvernFeather] Stabilizes gravity in space and in liquid, [i:FargowiltasSouls/OrdinaryCarrot] improves your nightvision, [i:FargowiltasSouls/SecurityWallet] and drastically improves reforges
-		    [i:FargowiltasSouls/ConcentratedRainbowMatter] Automatically uses healing & [i:FargowiltasSouls/MysticSkull] mana potions when needed and increases pickup range for mana stars
-		    [i:FargowiltasSouls/NymphsPerfume] You respawn with more life [i:FargowiltasSouls/SandsofTime] and when no boss is alive, respawn faster
-		    [i:FargowiltasSouls/FrigidGemstone] Press the Frigid Spell key to cast Ice Rod
-		    [i:FargowiltasSouls/OrdinaryCarrot] Press right click to zoom in
-		'The amalgamate born of a thousand common enemies'
-		''' */
 }
 
 CelestialRune: {
@@ -1191,11 +1072,6 @@ CelestialRune: {
 		При получении урона создаёт дружественное Древнее Видение, атакующее врагов
 		'Заклинания падшего врага, направленные в другое русло'
 		'''
-		Grants immunity to Marked for Death
-		You may periodically fire additional attacks depending on weapon type
-		Taking damage creates a friendly Ancient Vision to attack enemies
-		'A fallen enemy's spells, repurposed'
-		''' */
 }
 
 ChaliceoftheMoon: {
@@ -1211,15 +1087,6 @@ ChaliceoftheMoon: {
 		Призывает дружественных [i:FargowiltasSouls/ChaliceoftheMoon] Культиста и [i:FargowiltasSouls/MagicalBulb] растение, сражающихся за вас
 		'Выпей из неё'
 		'''
-		[i:FargowiltasSouls/ChaliceoftheMoon] Grants immunity to Swarming, Atrophied, Jammed, Reverse Mana Flow, and Antisocial
-		Grants immunity to [i:FargowiltasSouls/MagicalBulb] Venom, Ivy Venom, [i:FargowiltasSouls/LihzahrdTreasureBox] Burning, Fused, Lihzahrd Curse, Low Ground, [i:FargowiltasSouls/CelestialRune] and Marked for Death
-		[i:FargowiltasSouls/MagicalBulb] Press the Magical Cleanse key to cure yourself of most debuffs
-		[i:FargowiltasSouls/MagicalBulb] Increases life regeneration based on how much light you receive
-		[i:FargowiltasSouls/LihzahrdTreasureBox] Double tap DOWN in the air to fastfall, creating an explosion on landing after falling a certain distance
-		[i:FargowiltasSouls/CelestialRune] You fire additional attacks depending on weapon type and erupt into Ancient Visions when injured
-		[i:FargowiltasSouls/MagicalBulb] Summons a friendly plant to fight at your side
-		'Consume it'
-		''' */
 }
 
 ConcentratedRainbowMatter: {
@@ -1231,11 +1098,6 @@ ConcentratedRainbowMatter: {
 		Призывает малыша радужного слизня, сражающегося за вас
 		'Попробуй радугу'
 		'''
-		Grants immunity to Flames of the Universe
-		Automatically use healing potions when needed
-		Summons a baby rainbow slime to fight for you
-		'Taste the rainbow'
-		''' */
 }
 
 DarkenedHeart: {
@@ -1247,11 +1109,6 @@ DarkenedHeart: {
 		Вы создаёте маленьких пожирателей, накладывающих Проклятье Ада и наводящихся на врагов, каждые несколько атак
 		'Мухи отказываются подлетать к этому'
 		'''
-		Grants immunity to Rotting
-		10% increased movement speed and increased turnaround traction
-		You spawn mini eaters that inflict Cursed Inferno to seek out enemies every few attacks
-		'Flies refuse to approach it'
-		''' */
 }
 
 Deerclawps: {
@@ -1264,12 +1121,6 @@ Deerclawps: {
 		Ускоренное падение создаёт взрыв из сосулек при приземлении после пролёта определённого расстояния
 		'Подстриженные ногти побеждённого противника'
 		'''
-		Grants immunity to Slow and Frozen
-		Dashing leaves a trail of ice spikes
-		Double tap DOWN in the air to fastfall
-		Fastfall will create a glacial eruption on impact after falling a certain distance
-		'The trimmed nails of a defeated foe'
-		''' */
 }
 
 DreadShell: {
@@ -1286,16 +1137,6 @@ DreadShell: {
 		Увеличивает урон на 30% при поглощении сгустков крови, созданных Антикоагуляцией
 		'Прыбодить сюда было ошибкой'
 		'''
-		Grants immunity to Anticoagulation
-		Grants immunity to knockback
-		Right Click to guard with your shield
-		Defense and damage reduction drastically decreased while and shortly after guarding
-		Guard exactly when hit to parry and counter it on a very long cooldown
-		Parry blocks up to 200 damage
-		Counterattack deals massive damage and inflicts Anticoagulation
-		Absorb Anticoagulation blood clots to gain 30% increased damage
-		'It was a mistake to chum here'
-		''' */
 }
 
 DubiousCircuitry: {
@@ -1310,14 +1151,6 @@ DubiousCircuitry: {
 		[i:FargowiltasSouls/ReinforcedPlating] Уменьшает получаемый урон на 5%
 		'Скорее всего не включает в себя вредоносные программы'
 		'''
-		Grants immunity to [i:FargowiltasSouls/FusedLens] Cursed Inferno, Ichor, [i:FargowiltasSouls/GroundStick] Lightning Rod, [i:FargowiltasSouls/ReinforcedPlating] Defenseless, Nano Injection, and knockback
-		[i:FargowiltasSouls/FusedLens] Press Debuff Install key to toggle being debuffed with Ichor and Cursed Inferno
-		[i:FargowiltasSouls/FusedLens] While being debuffed by Ichor and Cursed Inferno, gain 15% attack speed, 15% crit chance, and inflict Ichor and Cursed Inferno yourself
-		[i:FargowiltasSouls/GroundStick] Your attacks have a small chance to inflict Lightning Rod and get supercharged on electric attacks
-		[i:FargowiltasSouls/GroundStick] Two friendly probes fight by your side and will supercharge with you
-		[i:FargowiltasSouls/ReinforcedPlating] Reduces damage taken by 5%
-		'Malware probably not included'
-		''' */
 }
 
 EurusSock: {
@@ -1336,13 +1169,6 @@ FrigidGemstone: {
 		Ваши ледяные блоки накладывают Ледяной Ожог
 		'Осколок древнего магического льда'
 		'''
-		Works in your inventory
-		Right click to disable
-		Grants immunity to Frostburn and Chilled
-		Press the Frigid Spell key to cast Ice Rod
-		Your ice blocks inflict Frostburn
-		'A shard of ancient magical ice'
-		''' */
 }
 
 FrigidGemstoneInactive: {
@@ -1355,12 +1181,6 @@ FrigidGemstoneInactive: {
 		Ваши ледяные блоки накладывают Ледяной Ожог
 		'Осколок древнего магического льда'
 		'''
-		Currently inactive, Right click to activate
-		Grants immunity to Frostburn and Chilled
-		Press the Frigid Spell key to cast Ice Rod
-		Your ice blocks inflict Frostburn
-		'A shard of ancient magical ice'
-		''' */
 }
 
 FusedLens: {
@@ -1374,13 +1194,6 @@ FusedLens: {
 		Нажмите клавишу Установки Дебаффа, чтобы наложить на себя дебаффы Ихор и Проклятье Ада на 30 секунд
 		'Слишком расплавлена, чтобы улучшать зрение'
 		'''
-		Grants immunity to Cursed Inferno and Ichor
-		When inflicted with Cursed Inferno, 15% increased attack speed
-		When inflicted with Ichor, 15% increased critical strike chance
-		When losing health to damage over time, you inflict Cursed Inferno and Ichor
-		Press the Debuff Install key to inflict yourself with Cursed Inferno and Ichor
-		'Too melted to improve vision'
-		''' */
 }
 
 GalacticGlobe: {
@@ -1393,12 +1206,6 @@ GalacticGlobe: {
 		Увеличивает время полёта на 100%
 		'Всегда наблюдает'
 		'''
-		Grants immunity to Nullification Curse, Flipped, Unstable, and Curse of the Moon
-		Allows the holder to control gravity
-		Summons the true eyes of Cthulhu to protect you
-		Increases flight time by 100%
-		'Always watching'
-		''' */
 }
 
 GelicWings: {
@@ -1411,12 +1218,6 @@ GelicWings: {
 		При приземлении после прыжка от вас в разные стороны разлетаются слизневые шипы
 		'Наступи на меня'
 		'''
-		Allows flight and slow fall
-		Grants immunity to Flipped caused by the Underground Hallow
-		Allows the wearer to double jump
-		When you land after a jump, slime spikes shoot out to your sides
-		'Step on me'
-		''' */
 }
 
 GroundStick: {
@@ -1429,12 +1230,6 @@ GroundStick: {
 		Два дружественных зонда сражаются за вас и подзаряжаются вместе с вами
 		'Часть побеждённого врага с приклеенной антенной'
 		'''
-		Grants immunity to Lightning Rod
-		Electric and ray attacks supercharge you and do halved damage if not already supercharged
-		While supercharged, you have increased movement speed, attack speed, and inflict Electrified and Lightning Rod
-		Two friendly probes fight by your side and will supercharge with you
-		'A defeated foe's segment with an antenna glued on'
-		''' */
 }
 
 GuttedHeart: {
@@ -1449,14 +1244,6 @@ GuttedHeart: {
 		Ползуны накладывают Ихор при получении урона
 		'Некогда бьющееся в разуме побеждённого врага'
 		'''
-		Grants immunity to Bloodthirsty
-		10% increased max life
-		Creepers hover around you blocking some damage
-		A new Creeper appears every 15-10 seconds (faster the lower your health is), and 5 can exist at once
-		Creeper respawn speed increases when not moving
-		Creepers inflict Ichor on-hit
-		'Once beating in the mind of a defeated foe'
-		''' */
 }
 
 HeartoftheMasochist: {
@@ -1478,21 +1265,6 @@ HeartoftheMasochist: {
 		[i:FargowiltasSouls/SaucerControlConsole] Нажмите клавишу Смены Боеприпасов, чтобы переключить используемые боеприпасы (работает пассивно из инвентаря)
 		'Тёплое, бьётся, и не нуждается в теле'
 		'''
-		Grants immunity to [i:FargowiltasSouls/PumpkingsCape] Living Wasteland, [i:FargowiltasSouls/IceQueensCrown] Hypothermia, [i:FargowiltasSouls/SaucerControlConsole] Electrified, Distorted, [i:FargowiltasSouls/BetsysHeart] Oozed, Withered Weapon, Withered Armor
-		[i:FargowiltasSouls/MutantAntibodies] Wet, Feral Bite, Mutant Nibble, Oceanic Maul, water debuffs, [i:FargowiltasSouls/PrecisionSeal] Smite, [i:FargowiltasSouls/GalacticGlobe] Nullification Curse, Flipped, Unstable, and Curse of the Moon	
-		[i:FargowiltasSouls/PumpkingsCape] [i:FargowiltasSouls/MutantAntibodies] [i:FargowiltasSouls/IceQueensCrown] Increases damage and crit chance by 10%, and damage reduction by 5%
-		[i:FargowiltasSouls/PumpkingsCape] Right Click to guard and parry attacks. Parries heal you based on damage. While guarding, gain an aura of Rotting
-		[i:FargowiltasSouls/IceQueensCrown] Graze attacks to charge up a bomb. When it's charged, press Bomb Key to freeze all projectiles and enemies for a short time
-		[i:FargowiltasSouls/SaucerControlConsole] Summons a friendly Mini Saucer which slows enemies it hits
-		[i:FargowiltasSouls/BetsysHeart] Press the Special Dash key to perform a short invincible fireball dash which inflicts Betsy's Curse
-		[i:FargowiltasSouls/MutantAntibodies] Submerging yourself in water refreshes your flight time, and gives improved speed and max flight time
-		[i:FargowiltasSouls/MutantAntibodies] Riding Cute Fishron gives you the Wet debuff
-		[i:FargowiltasSouls/PrecisionSeal] Hold Precision Seal key to disable dashes and double jumps, and show your hurtbox
-		[i:FargowiltasSouls/PrecisionSeal] Decreases hurtbox for projectiles, even when it isn't shown
-		[i:FargowiltasSouls/GalacticGlobe] Allows you to control gravity, increases flight time, and summons mini True Eyes of Cthulhu
-		[i:FargowiltasSouls/SaucerControlConsole] Press Ammo Cycle key to cycle ammos (works passively in inventory)
-		'Warm, beating, and no body needed'
-		''' */
 }
 
 IceQueensCrown: {
@@ -1505,12 +1277,6 @@ IceQueensCrown: {
 		Нажмите клавишу Бомбы, чтобы использовать морозную бомбу
 		'Королевский символ побеждённого врага'
 		'''
-		Grants immunity to Hypothermia
-		Increases damage reduction by 5%
-		Graze attacks to gain a bomb that will freeze almost all enemies and projectiles
-		Press the Bomb key to use your freeze bomb
-		'The royal symbol of a defeated foe'
-		''' */
 }
 
 LihzahrdTreasureBox: {
@@ -1522,11 +1288,6 @@ LihzahrdTreasureBox: {
 		Ускоренное падение создаёт взрыв при приземлении после пролёта определённого расстояния
 		'Передумаешь открывать, когда увидишь все ловушки внутри'
 		'''
-		Grants immunity to Burning, Fused, Lihzahrd Curse and Low Ground
-		Double tap DOWN in the air to fastfall
-		Fastfall will create a fiery eruption on impact after falling a certain distance
-		'Too many booby traps to open'
-		''' */
 }
 
 LumpOfFlesh: {
@@ -1545,18 +1306,6 @@ LumpOfFlesh: {
 		[i:FargowiltasSouls/Deerclawps] Ускоренное падение создаёт взрыв из сосулек при приземлении после пролёта определённого расстояния
 		'Оно растёт'
 		'''
-		Grants immunity to [i:FargowiltasSouls/DreadShell] knockback, Anticoagulation, [i:FargowiltasSouls/PungentEyeball] Blackout, Obstructed, [i:FargowiltasSouls/SkullCharm] Dazed, [i:FargowiltasSouls/Deerclawps] Slow, and Frozen
-		[i:FargowiltasSouls/PungentEyeball] Your cursor causes nearby enemies to take up to 15% increased damage
-		[i:FargowiltasSouls/PungentEyeball] Massively increases spawn rate of rare enemies
-		[i:FargowiltasSouls/SkullCharm] Increases damage dealt by 15%, and gives you an eyeball minion which charges up as you attack
-		[i:FargowiltasSouls/SkullCharm] Enemies are less likely to target you
-		[i:FargowiltasSouls/DreadShell] Right Click to parry, blocking 200 damage and dealing a massive counterattack if it lands
-		[i:FargowiltasSouls/DreadShell] Defense and damage reduction drastically decreased while and shortly after guarding
-		[i:FargowiltasSouls/Deerclawps] Dashing leaves a trail of blood spikes
-		[i:FargowiltasSouls/Deerclawps] Double tap DOWN in the air to fastfall
-		[i:FargowiltasSouls/Deerclawps] Fastfall will create a glacial eruption on impact after falling a certain distance
-		'It's growing'
-		''' */
 }
 
 MagicalBulb: {
@@ -1571,14 +1320,6 @@ MagicalBulb: {
 		Привлекает потомка легендарного растения, расцветающего в бою
 		'Матереубийство?'
 		'''
-		Grants immunity to Acid Venom, Ivy Venom, and Swarming
-		Press the Magical Cleanse key to cure yourself of most debuffs on a cooldown
-		Magical Cleanse also amplifies damage over time effects for nearby enemies
-		Cleanse cooldown is faster when not attacking
-		Increases life regeneration based on how much light you receive
-		Attracts a legendary plant's offspring which flourishes in combat
-		'Matricide?'
-		''' */
 }
 
 MutantAntibodies: {
@@ -1592,13 +1333,6 @@ MutantAntibodies: {
 		При погружении в воду восстанавливает время полёта и увеличивает максимальное время полёта и скорость
 		'Лечебный препарат, рекомендуемый 0 из 10 докторов'
 		'''
-		Grants immunity to Wet, Feral Bite, Mutant Nibble, and Oceanic Maul
-		Grants immunity to most debuffs caused by entering water
-		Grants effects of Wet debuff while riding Cute Fishron
-		Increases damage for your current weapon class by 25%, but decreases life regeneration
-		Submerging in water refreshes flight time and gives you improved speed and increased max flight time
-		'Healthy drug recommended by 0 out of 10 doctors'
-		''' */
 }
 
 MutantEye: {
@@ -1614,15 +1348,6 @@ MutantEye: {
 		Бомба Мутанта имеет время перезарядки в 60 секунд
 		'Лишь немного выглядит подозрительным'
 		'''
-		Grants immunity to Mutant Fang
-		25% increased graze bonus damage cap
-		Upgrades Sparkling Adoration hearts to love rays
-		Increases damage gained per graze
-		Increases Spectral Abominationn respawn rate and damage
-		Press the Bomb key to unleash a wave of spheres and destroy most hostile projectiles
-		Mutant Bomb has a 60 second cooldown
-		'Only a little suspicious'
-		''' */
 }
 
 MysticSkull: {
@@ -1636,13 +1361,6 @@ MysticSkull: {
 		Увеличивает дальность подбора звёзд маны
 		'Тихо бормочущая голова побеждённого врага'
 		'''
-		Works in your inventory
-		Right click to disable
-		Grants immunity to Suffocation
-		Automatically use mana potions when needed
-		Increases pickup range for mana stars
-		'The quietly muttering head of a defeated foe'
-		''' */
 }
 
 MysticSkullInactive: {
@@ -1655,12 +1373,6 @@ MysticSkullInactive: {
 		Увеличивает дальность подбора звёзд маны
 		'Тихо бормочущая голова побеждённого врага'
 		'''
-		Currently inactive, Right click to activate
-		Grants immunity to Suffocation
-		Automatically use mana potions when needed
-		Increases pickup range for mana stars
-		'The quietly muttering head of a defeated foe'
-		''' */
 }
 
 NecromanticBrew: {
@@ -1673,12 +1385,6 @@ NecromanticBrew: {
 		Призывает 2 руки Скелетрона, колотящие врагов
 		'Средство для роста костей побеждённого врага'
 		'''
-		Grants immunity to Lethargic
-		Increases speed when dashing by 50%
-		When dashing, take 15% less damage and reflect 100% of contact damage on attacker
-		Summons 2 Skeletron arms to whack enemies
-		'The bone-growing solution of a defeated foe'
-		''' */
 }
 
 NymphsPerfume: {
@@ -1690,11 +1396,6 @@ NymphsPerfume: {
 		Ваши атаки периодически создают сердца
 		'Запах довольно резкий'
 		'''
-		Grants immunity to Lovestruck, Stinky, and Hexed
-		You respawn with more life, works from inventory
-		Your attacks occasionally produce hearts
-		'The scent is somewhat overpowering'
-		''' */
 }
 
 PrecisionSeal: {
@@ -1707,12 +1408,6 @@ PrecisionSeal: {
 		Размер вашего хёртбокса уменьшен, даже если он скрыт
 		'Пролетело настолько близко, что чуть не съел'
 		'''
-		Grants immunity to Smite
-		Reduces your hurtbox size for projectiles
-		Hold the Precision Seal key to disable dashes and double jumps
-		Your hurtbox size is reduced even when not shown
-		'Dodge so close you can almost taste it'
-		''' */
 }
 
 PuffInABottle: {
@@ -1733,15 +1428,6 @@ PumpkingsCape: {
 		Контратаки восстанавливают здоровье, зависит от заблокированного урона
 		'Каким-то образом, он вам как раз'
 		'''
-		Grants immunity to Living Wasteland
-		Increases damage and critical strike chance by 5%
-		Right Click to guard with your cape
-		You have an aura of Rotting while guarding
-		Guard exactly when hit to parry and counter it on a very long cooldown
-		Parry blocks up to 200 damage
-		Counter an attack to gain life based on the blocked damage
-		'Somehow, it's the right size'
-		''' */
 }
 
 PungentEyeball: {
@@ -1754,12 +1440,6 @@ PungentEyeball: {
 		Чем дольше вы держите курсор на враге, тем сильнее становится эффект
 		'Оно забрело'
 		'''
-		Grants immunity to Blackout and Obstructed
-		Increases spawn rate of rare enemies
-		Your cursor causes nearby enemies to take increased damage
-		Effect intensifies the longer you track them
-		'It's fermenting'
-		''' */
 }
 
 PureHeart: {
@@ -1777,17 +1457,6 @@ PureHeart: {
 		[i:FargowiltasSouls/GelicWings] Увеличивает время полёта на 30%
 		'Оно пульсирует жизненной энергией'
 		'''
-		[i:FargowiltasSouls/PureHeart] Grants immunity to biome debuffs
-		Grants immunity to [i:FargowiltasSouls/DarkenedHeart] Rotting and [i:FargowiltasSouls/GuttedHeart] Bloodthirsty
-		[i:FargowiltasSouls/DarkenedHeart] Increased movement speed and turnaround traction
-		[i:FargowiltasSouls/DarkenedHeart] You spawn mini eaters to seek out enemies every few attacks, inflicting DoT and defense reduction
-		[i:FargowiltasSouls/GuttedHeart] Up to 5 creepers hover around you blocking some damage, respawning faster when not moving
-		[i:FargowiltasSouls/GuttedHeart] Gives 10% increased max life
-		[i:FargowiltasSouls/GelicWings] Allows the wearer to double jump
-		[i:FargowiltasSouls/GelicWings] When you land after a jump, slime spikes shoot out to the sides
-		[i:FargowiltasSouls/GelicWings] Increases wing time by 30%
-		'It pulses with vitality'
-		''' */
 }
 
 QueenStinger: {
@@ -1800,12 +1469,6 @@ QueenStinger: {
 		Пчёлы и слабые Шершни становятся дружелюбными
 		'Вырвано прямо из побеждённого врага'
 		'''
-		Grants immunity to Infested
-		Press the Special Dash key to perform a short quick bee dash
-		Honey buff increases your armor penetration by 10
-		Bees and weak Hornets become friendly
-		'Ripped right off of a defeated foe'
-		''' */
 }
 
 ReinforcedPlating: {
@@ -1816,10 +1479,6 @@ ReinforcedPlating: {
 		Снижает получаемый урон на 5%
 		'Самая крепкая часть побеждённого врага'
 		'''
-		Grants immunity to Defenseless, Nano Injection, and knockback
-		Reduces damage taken by 5%
-		'The sturdiest piece of a defeated foe'
-		''' */
 }
 
 SandsofTime: {
@@ -1832,12 +1491,6 @@ SandsofTime: {
 		Используйте, чтобы телепортироваться к месту вашей последней смерти
 		'Что бы ты не делал, не урони их'
 		'''
-		Works in your inventory
-		Grants immunity to Mighty Wind and cactus damage
-		You respawn twice as fast when no boss is alive
-		Use to teleport to your last death point
-		'Whatever you do, don't drop it'
-		''' */
 }
 
 SaucerControlConsole: {
@@ -1850,12 +1503,6 @@ SaucerControlConsole: {
 		Притягивающие лучи тарелки замедляют врагов при попадании
 		'Просто оставь её в режиме полёта'
 		'''
-		Grants immunity to Electrified and Distorted
-		Press the Ammo Cycle key to cycle ammos (this effect works passively from inventory)
-		Summons a friendly Mini Saucer
-		The saucer's tractor beam slows enemies hit by it
-		'Just keep it in airplane mode'
-		''' */
 }
 
 SecurityWallet: {
@@ -1867,11 +1514,6 @@ SecurityWallet: {
 		Эффект работает из инвентаря
 		'Не защищает от воровства с вашего трупа'
 		'''
-		Grants immunity to Midas
-		Drastically improves reforges
-		Effects work from inventory
-		'Not secure against being looted off of one's corpse'
-		''' */
 }
 
 SinisterIcon: {
@@ -1883,11 +1525,6 @@ SinisterIcon: {
 		С обычных врагов падает в два раза больше предметов
 		'Определённо не жива'
 		'''
-		Grants immunity to Unlucky and Stunned
-		Increases spawn rate
-		Non-boss enemies will drop doubled loot
-		'Most definitely not alive'
-		''' */
 }
 
 SkullCharm: {
@@ -1900,12 +1537,6 @@ SkullCharm: {
 		Пока вы атакуете, хрустальный череп заряжется энергией, чтобы атаковать врагов
 		'Вышел из зоны'
 		'''
-		Grants immunity to Dazed
-		Increases damage dealt by 15% and damage taken by 10%
-		Enemies are less likely to target you
-		The crystal skull charges energy to attack as you attack
-		'No longer in the zone'
-		''' */
 }
 
 SlimyShield: {
@@ -1918,12 +1549,6 @@ SlimyShield: {
 		Слизь накладывает дебаффы Слизень и В Масле
 		'Вырвано из внутренностей побеждённого врага'
 		'''
-		Grants immunity to Slimed
-		Increases fall speed
-		When you land after a jump, slime will fall from the sky over your cursor
-		Slime inflicts Slimed and Oiled
-		'Torn from the innards of a defeated foe'
-		''' */
 }
 
 SparklingAdoration: {
@@ -1936,12 +1561,6 @@ SparklingAdoration: {
 		Ваши атаки периодически вызывают высасывающие жизнь сердца
 		'Всеми своими эмоциями!'
 		'''
-		Grants immunity to Lovestruck and Fake Hearts
-		Graze attacks to gain up to x1.25 increased damage
-		Damage bonus decreases over time and is fully lost on hit
-		Your attacks periodically summon life-draining hearts
-		'With all of your emotion!'
-		''' */
 }
 
 SqueakyToy: {
@@ -1952,10 +1571,6 @@ SqueakyToy: {
 		У атак есть шанс пискнуть и нанести вам 1 единицу урона
 		'Любимая игрушка побеждённого врага...?'
 		'''
-		Grants immunity to Squeaky Toy and Guilty
-		Attacks have a chance to squeak and deal 1 damage to you
-		'The beloved toy of a defeated foe...?'
-		''' */
 }
 
 SupremeDeathbringerFairy: {
@@ -1972,16 +1587,6 @@ SupremeDeathbringerFairy: {
 		[i:FargowiltasSouls/NecromanticBrew] Призывает 2 руки Скелетрона, колотящие врагов
 		'Верховенство не гарантировано'
 		'''
-		Grants immunity to [i:FargowiltasSouls/SlimyShield] Slimed, [i:FargowiltasSouls/AgitatingLens] Berserked, [i:FargowiltasSouls/QueenStinger] Infested, and [i:FargowiltasSouls/NecromanticBrew] Lethargic
-		[i:FargowiltasSouls/SlimyShield] Increases fall speed and landing spawns slime over your cursor
-		[i:FargowiltasSouls/AgitatingLens] While dashing or running quickly you will create a trail of blood scythes
-		[i:FargowiltasSouls/AgitatingLens] Press the Debuff Install key while holding UP and DOWN to go berserk
-		[i:FargowiltasSouls/QueenStinger] Honey buff increases your armor penetration by 5, and bees and weak hornets become friendlier
-		[i:FargowiltasSouls/QueenStinger] Press the Special Dash key to perform a short quick bee dash
-		[i:FargowiltasSouls/NecromanticBrew] Massively increases dash speed, take less contact damage while dashing, and reflect all damage back to attacker while dashing
-		[i:FargowiltasSouls/NecromanticBrew] Summons 2 Skeletron arms to whack enemies
-		'Supremacy not necessarily guaranteed'
-		''' */
 }
 
 TimsConcoction: {
@@ -1991,9 +1596,6 @@ TimsConcoction: {
 		Некоторые враги будут оставлять после смерти зелья
 		'Странно пахнет'
 		'''
-		Certain enemies will drop potions when defeated
-		'Smells funny'
-		''' */
 }
 
 TribalCharm: {
@@ -2004,10 +1606,6 @@ TribalCharm: {
 		Даёт иммунитет к дебаффам Паутина, Очищенный
 		'Идол древних обитателей джунглей'
 		'''
-		When attacking by manually clicking, increases non-summon damage by 30%
-		Grants immunity to Webbed and Purified
-		'An idol of the ancient jungle dwellers'
-		''' */
 }
 
 WretchedPouch: {
@@ -2021,13 +1619,6 @@ WretchedPouch: {
 		Бонусы к скорости атаки в два раза менее эффективны
 		'Проклятый зажигательный порошок побеждённого врага'
 		'''
-		Grants immunity to Shadowflame
-		Press the Debuff Install key to gain Wretched Hex, triggering the following effects
-		While attacking, increases damage by 120% but reduces damage reduction by 20% and massively decreases movement
-		While attacking, shadowflame tentacles lash out at nearby enemies
-		Attack speed bonuses are half as effective
-		'The accursed incendiary powder of a defeated foe'
-		''' */
 }
 
 WyvernFeather: {
@@ -2040,12 +1631,6 @@ WyvernFeather: {
 		Стабилизирует гравитацию в космосе и жидкостях, работает из инвентаря
 		'Тёплое на ощупь'
 		'''
-		Grants immunity to Clipped Wings and Crippled
-		Your attacks have a 10% chance to inflict Clipped Wings on non-boss enemies
-		You periodically shed light orbs, touch them to refresh your flight time
-		Stabilizes gravity in space and in liquids, this works from inventory
-		'Warm to the touch'
-		''' */
 }
 
 ZephyrBoots: {
@@ -2061,15 +1646,6 @@ ZephyrBoots: {
 		Увеличивают высоту прыжка и дают иммунитет к урону от падения
 		'Беги словно ветер'
 		'''
-		Allows flight, super fast running, and extra mobility on ice
-		8% increased movement speed
-		Provides the ability to walk on water, honey and lava
-		Grants immunity to fire blocks and 7 seconds of immunity to lava
-		Reduces damage from touching lava
-		Allows the holder to double jump
-		Increases jump height and negates fall damage
-		'Run like the wind'
-		''' */
 }
 
 ArchWizardsSoul: {
@@ -2951,11 +2527,6 @@ SigilOfChampions: {
 		Нажмите ПКМ, чтобы просмотреть доступные призывы
 		Не расходуется при использовании
 		'''
-		Summons the Champions
-		Summons vary depending on time and biome
-		Right click to check for possible summons
-		Not consumed on use
-		''' */
 
 	Message: {
 		Timber: Вы окружены шумом шелеста деревьев...
@@ -2984,10 +2555,6 @@ BoneZone: {
 		Шанс 33% сохранить боеприпасы
 		'Расколотые останки побеждённого врага..'
 		'''
-		Uses bones for ammo
-		33% chance to not consume ammo
-		'The shattered remains of a defeated foe..'
-		''' */
 }
 
 BrainStaff: {
@@ -3002,9 +2569,6 @@ DestroyerGun: {
 		Становится длиннее и быстрее при наличии до 3 пустых слотов для прислужников
 		'Старый враг, вынужденный перейти в подчинение..'
 		'''
-		Becomes longer and faster with up to 3 empty minion slots
-		'An old foe beaten into submission..'
-		''' */
 }
 
 Dicer: {
@@ -3020,10 +2584,6 @@ DragonBreath: {
 		Шанс 33% сохранить боеприпасы
 		'Уменьшенное тело побеждённого врага..'
 		'''
-		Uses gel for ammo
-		33% chance to not consume ammo
-		'The shrunken body of a defeated foe..'
-		''' */
 }
 
 EaterStaff: {
@@ -3044,11 +2604,6 @@ FishStick: {
 		Акулы игнорируют 20 единиц защиты врагов
 		'Туша побеждённого врага, жёстоко насаженная на палку..'
 		'''
-		Right click to deploy a typhoon
-		The typhoon fires sharks when you attack
-		Sharks ignore 20 enemy defense
-		'The carcass of a defeated foe shoved violently on a stick..'
-		''' */
 }
 
 FleshHand: {
@@ -3086,12 +2641,6 @@ TheSmallSting: {
 		Урон изменяется в зависимости от вашего пчелиного урона и отбрасывания
 		'Брюхо побеждённого врага, нашедшее новое применение..'
 		'''
-		Uses darts for ammo
-		50% chance to not consume ammo
-		Stingers will stick to enemies, hitting the same spot again will deal extra damage
-		Scales with your bee damage and knockback increases
-		'Repurposed from the abdomen of a defeated foe..'
-		''' */
 }
 
 TwinRangs: {
@@ -3101,9 +2650,6 @@ TwinRangs: {
 		В зависимости от нажатой кнопки мыши вылетают разные близнеранги
 		'Сжатые версии побеждённых врагов..'
 		'''
-		Fire a different twinrang depending on mouse click
-		'The compressed forms of defeated foes..'
-		''' */
 }
 
 MoonBow: {
@@ -3118,14 +2664,6 @@ MoonBow: {
 		Шанс 66% сохранить боеприпасы
 		'Натянутый язык побеждённого врага..'
 		'''
-		Wooden arrows turn into Luminite bolts
-		Arrows create portals that fire Luminite bolts
-		Hold right click to gather power
-		Release at the right time to temporarily receive a lunar blessing
-		When blessed, drastically increased attack speed and altered arrow gravity
-		66% chance to save ammo
-		'The restrung mouth of a defeated foe..'
-		''' */
 }
 
 KamikazeSquirrelStaff: {
@@ -3135,9 +2673,6 @@ KamikazeSquirrelStaff: {
 		Призывает дружественных белок потискать твоих врагов
 		Нажмите ПКМ, чтобы подорвать их
 		'''
-		Summons friendly squirrels to cuddle your foes
-		Right click to make them explode
-		''' */
 }
 
 MountedAcornGun: {
@@ -3148,10 +2683,6 @@ MountedAcornGun: {
 		Имеет 50% шанс не потратить боеприпасы
 		Стреляет желудями, которые прорастают во врагах
 		'''
-		Uses acorns as ammo
-		50% chance to not consume ammo
-		Shoots acorns that sprout on enemies
-		''' */
 }
 
 SnowballStaff: {
@@ -3162,10 +2693,6 @@ SnowballStaff: {
 		Нужно непрерывно использовать, чтобы поддерживать снежок
 		Нажмите ПКМ, чтобы подозвать снежок к себе
 		'''
-		Creates a snowball that grows as you roll it
-		Must use continuously to sustain snowball
-		Right click to recall the snowball to yourself
-		''' */
 }
 
 TheLightningRod: {
@@ -3175,9 +2702,6 @@ TheLightningRod: {
 		Заряжает силу, пока раскручивается
 		Когда брошен, урон уменьшается с каждым ударом
 		'''
-		Charges power as it is spun
-		Damage decreases per hit when thrown
-		''' */
 }
 
 TreeSword: {
@@ -3193,10 +2717,6 @@ HentaiSpear: {
 		Имеет разные атаки при зажатии кнопок ВВЕРХ, ВНИЗ, или двух одновременно
 		'Вознаграждение за принятие вечности...'
 		'''
-		Has different attacks when using left or right click
-		Has different attacks when used while holding up, down, or both
-		'The reward for embracing eternity...'
-		''' */
 }
 
 PhantasmalLeashOfCthulhu: {
@@ -3217,10 +2737,6 @@ SparklingLove: {
 		При наличии до 12 свободных слотов для прислужников, атаки становятся интенсивнее
 		'Поглощающий души демонический топор любви и справедливости побеждённого врага...'
 		'''
-		Right click to summon the soul of Deviantt
-		Right click pattern becomes denser with up to 12 empty minion slots
-		'The soul-consuming demon axe of love and justice from a defeated foe...'
-		''' */
 }
 
 StyxGazer: {
@@ -3230,9 +2746,6 @@ StyxGazer: {
 		Нажмите ПКМ, чтобы овладеть клинком инфернальной магии
 		'Истребляющий луч пылающей косо-жезло-меча побеждённого врага...'
 		'''
-		Right click to wield a blade of infernal magic
-		'The blazing scythe wand sword destruction ray of a defeated foe...'
-		''' */
 }
 
 Mahoguny: {
@@ -3242,9 +2755,6 @@ Mahoguny: {
 		Использует жёлуди в качестве боеприпасов
 		Стреляет желудями и листьями
 		'''
-		Uses acorns as ammo
-		Fires leaves and acorns
-		''' */
 }
 
 OvergrownKey: {
@@ -3254,9 +2764,6 @@ OvergrownKey: {
 		Призывает Мимика Джунглей, сражающегося за вас
 		Занимает 2 слота для прислужников
 		'''
-		Summons a Jungle Mimic to fight for you
-		Needs 2 minion slots
-		''' */
 }
 
 TophatSquirrelWeapon: {
@@ -3277,10 +2784,6 @@ BigBrainBuster: {
 		Этот эффект ограничен 16 слотами
 		'Награда за массовую резню...'
 		'''
-		Repeated summons increase the size and damage of the minion
-		This caps at 16 slots
-		'The reward for slaughtering many...'
-		''' */
 }
 
 Blender: {
@@ -3295,9 +2798,6 @@ DestroyerGun2: {
 		Становится длиннее и быстрее при наличии до 5 пустых слотов для прислужников
 		'Награда за массовую резню...'
 		'''
-		Becomes longer and faster with up to 5 empty minion slots
-		'The reward for slaughtering many...'
-		''' */
 }
 
 DragonBreath2: {
@@ -3308,10 +2808,6 @@ DragonBreath2: {
 		Шанс 66% сохранить боеприпасы
 		'Награда за массовую резню..'
 		'''
-		Uses gel for ammo
-		66% chance to not consume ammo
-		'The reward for slaughtering many..'
-		''' */
 }
 
 EaterLauncher: {
@@ -3326,14 +2822,6 @@ EaterLauncher: {
 		Шанс 50% сохранить боеприпасы
 		'Награда за массовую резню..'
 		'''
-		Uses rockets for ammo
-		Fires a spread of rockeaters
-		Increased damage to enemies in the given range
-		Press Right Click to increase this range
-		The range then gradually decreases to normal
-		50% chance to not consume ammo
-		'The reward for slaughtering many..'
-		''' */
 }
 
 FleshCannon: {
@@ -3349,10 +2837,6 @@ GeminiGlaives: {
 		При использовании глевий по очереди атаки усилятся
 		'Сжатые версии побеждённых врагов..'
 		'''
-		Fire different glaives depending on mouse click
-		Alternating clicks will enhance attacks
-		'The compressed forms of defeated foes..'
-		''' */
 }
 
 GolemTome2: {
@@ -3376,13 +2860,6 @@ HellZone: {
 		Помеченные враги получают в 5 раз больше постепенного урона от Адского Огня
 		'Награда за массовую резню...'
 		'''
-		Uses bones for ammo
-		80% chance to not consume ammo
-		Left click attack inflicts Hellfire
-		Right click to fire a skull that marks enemies for death
-		Marked enemies take 5x damage over time from Hellfire
-		'The reward for slaughtering many...'
-		''' */
 }
 
 MechanicalLeashOfCthulhu: {
@@ -3397,9 +2874,6 @@ NukeFishron: {
 		Использует ракеты в качестве боеприпасов
 		'Крайне вооружённые останки побеждённого врага...'
 		'''
-		Uses rockets for ammo
-		'The highly weaponized remains of a defeated foe...'
-		''' */
 }
 
 OpticStaffEX: {
@@ -3410,10 +2884,6 @@ OpticStaffEX: {
 		Требует 3 слота для прислужников
 		'Награда за массовую резню...
 		'''
-		Summons the real twins to fight for you
-		Needs 3 minion slots
-		'The reward for slaughtering many...
-		''' */
 }
 
 RefractorBlaster2: {
@@ -3435,11 +2905,6 @@ TheBigSting: {
 		Имеет 66% шанс не потратить боеприпасы 
 		'Награда за массовую резню..'
 		'''
-		Uses darts for ammo
-		Scales with your bee damage and knockback increases
-		66% chance to not consume ammo
-		'The reward for slaughtering many..'
-		''' */
 }
 
 ForgorGift: {
@@ -3483,9 +2948,18 @@ MasochistReal: {
 		ЛКМ: Переключает возможность сессии играть в Мазо
 		ПКМ: Переключает возможность мира играть в Мазо
 		'''
-	WorldState: "мир в настоящее время мазо: "
-	VarWorld: "мир: "
-	VarMod: "мод: "
+	WorldState: 
+	'''
+	мир в настоящее время мазо: 
+	'''
+	VarWorld: 
+	'''
+	мир: 
+	'''
+	VarMod: 
+	'''
+	мод: 
+	'''
 }
 
 MedallionoftheFallenKing: {
@@ -3501,10 +2975,6 @@ ComputationOrb: {
 		Атаки, кроме магических/прислужников, требуют 10 маны для использования
 		'Внутри ядра остаётся искра надежды.'
 		'''
-		Non-magic/summon attacks deal x1.25 damage but are affected by Mana Sickness
-		Non-magic/summon weapons require 10 mana to use
-		'Within the core, a spark of hope remains.'
-		''' */
 }
 
 StaffOfUnleashedOcean: {
@@ -3515,10 +2985,6 @@ StaffOfUnleashedOcean: {
 		Герцог Рыброн игнорирует до 400 единиц защиты врага
 		'Теперь направь свой гнев против них!'
 		'''
-		Summons Duke Fishron to fight for you
-		Duke Fishron ignores up to 400 enemy defense
-		'Now channel your rage against them!'
-		''' */
 }
 
 DeviousAestheticus: {
@@ -3528,9 +2994,6 @@ DeviousAestheticus: {
 		Разброс выстрелов увеличивается при наличии пустых слотов для прислужников, вплоть до 6 слотов
 		'Если ты видишь это, Ты находишься в коме уже 20 лет, Я не знаю где будет это сообщение, но пожалуйста очнись'
 		'''
-		Shot spread scales with up to 6 empty minion slots
-		'If you're seeing this, You've been in a coma for 20 years, I don't know where this message will be, but please wake up'
-		''' */
 }
 
 ScientificRailgun: {
@@ -3541,10 +3004,6 @@ ScientificRailgun: {
 		Более ценные монеты наносят больше урона
 		'Частично специфичный'
 		'''
-		Uses coins for ammo
-		Higher valued coins do more damage
-		'Particular and specific'
-		''' */
 }
 
 RoombaPet: {
@@ -3580,9 +3039,6 @@ ParadoxWolfSoul: {
 		Дважды нажмите в сторону, чтобы совершить рывок через врагов и нанести им урон
 		Имеет время перезарядки в 3 секунды между использованиями
 		'''
-		Double tap to dash through and damage enemies
-		There is a cooldown of 3 seconds between uses
-		''' */
 }
 
 VermillionTopHat: {
@@ -3592,9 +3048,6 @@ VermillionTopHat: {
 		Призывает мёртвую принцессу 
 		'Утка, Утка, Мышь'
 		'''
-		Summons a dead princess
-		'Duck, Duck, Bat'
-		''' */
 }
 
 PrimeStaff: {
@@ -3604,9 +3057,6 @@ PrimeStaff: {
 		Призывает Скелетрона Прайма сражаться за вас
 		'Используя экспертные навыки взлома (выключить и включить снова), вы перепрограммировали ужас ночи!'
 		'''
-		Summons Skeletron Prime to fight for you
-		'Using expert hacking skills (turning it off and on again), you've reprogrammed a terror of the night!'
-		''' */
 }
 
 SquidwardDoor: {
@@ -3621,9 +3071,6 @@ MissDrakovisFishingPole: {
 		Нажмите ПКМ, чтобы переключиться между режимами атаки
 		Каждый тип урона имеет свой
 		'''
-		Right click to cycle through options of attack
-		Every damage type has one
-		''' */
 }
 
 CrimetroidEgg: {
@@ -3633,9 +3080,6 @@ CrimetroidEgg: {
 		Призывает Дитя
 		Не путать с криминальными андроидами
 		'''
-		Summons the Baby
-		Not to be confused with criminal androids
-		''' */
 }
 
 NanoCore: {
@@ -3646,10 +3090,6 @@ NanoCore: {
 		Нажмите ЛКМ для атаки и ПКМ, чтобы переключаться между оружиями.
 		'Наука на нашей стороне.'
 		'''
-		When holding this, 7 nano units will appear and construct weapons.
-		Left click to attack and right click to switch weapons.
-		'The science sits in our side.'
-		''' */
 }
 
 NekomiLeggings: {
@@ -3659,9 +3099,6 @@ NekomiLeggings: {
 		Увеличивают шанс критического удара на 7%
 		Увеличивают скорость передвижения на 10%
 		'''
-		7% increased critical strike chance
-		10% increased movement speed
-		''' */
 }
 
 AnglerEnchant: {
@@ -3673,11 +3110,6 @@ AnglerEnchant: {
 		Эффекты Лавонепроницаемого Чемоданчика Рыбака
 		'Пока в улове не только одни башмаки, можно идти домой счастливым'
 		'''
-		Increases fishing power
-		You catch fish almost instantly
-		Effects of Lavaproof Tackle Bag
-		'As long as they aren't all shoes, you can go home happily'
-		''' */
 }
 
 LifelightBag: {
@@ -3697,9 +3129,6 @@ LifeRevitalizer: {
 		Нажмите ПКМ по данному блоку, чтобы установить точку возрождения
 		Не нуждается в доме
 		'''
-		Right click tile to set your spawn point
-		No housing required
-		''' */
 }
 
 AbomMusicBox: {
@@ -3754,9 +3183,6 @@ CrystallineCongregation: {
 		Призывает вплоть до 30 кристальных шаров рядом с вашим курсором, наводящихся на вас
 		 Отпустите кнопку, чтобы отправить их к вашему курсору
 		'''
-		Summon up to 30 crystal balls near your mouse cursor that home towards you 
-		 Release the button to send them towards your cursor
-		''' */
 }
 
 EnchantedLifeblade: {
@@ -3777,10 +3203,6 @@ Lightslinger: {
 		После 40 выстрелов, нажмите ПКМ, чтобы запустить световую бомбу
 		Шанс 25% сохранить боеприпасы
 		'''
-		Converts bullets to hallowed shots of light
-		After 40 shots, press Right Click to fire a lightbomb
-		25% chance to not consume ammo
-		''' */
 }
 
 MostlyOrdinaryrock.Tooltip: Mods.FargowiltasSouls.ItemTooltip.MostlyOrdinaryrock
@@ -3799,11 +3221,6 @@ PrismaRegalia: {
 		При полной зарядке, все удары выпускают дополнительные звёзды
 		'Сияющая сила чистейшей эссенции врага...'
 		'''
-		Hitting with the tip of the spear releases homing stars
-		Hold to charge for more damage
-		While fully charged, all hits release additional stars
-		'The radiant power of a foe's pure essence...'
-		''' */
 }
 
 MechLure: {
@@ -3821,11 +3238,6 @@ TheBaronsTusk: {
 		Это наносит большое количество урона и гарантированно наносит критический удар
 		Шрапнель также вырывается из врага после его смерти
 		'''
-		Swings emit flying shrapnel, that can embed in enemies
-		Hitting enemies that have more than 15 embedded shrapnel with the tusk rips it out
-		The rip deals a large chunk of damage and is guaranteed to critically strike
-		Shrapnel is also ripped out when the enemy dies
-		''' */
 }
 
 NavalRustrifle: {
@@ -3836,10 +3248,6 @@ NavalRustrifle: {
 		Перезарядитесь в нужный момент, чтобы усилить следующий выстрел
 		Усиленные выстрелы наносят двойной урон и гарантированный критический удар
 		'''
-		Manually reload after each shot
-		Time the reload correctly to empower your next shot
-		Empowered shots deal double damage and are guaranteed to critically strike
-		''' */
 }
 
 DecrepitAirstrikeRemote: {
@@ -3851,11 +3259,6 @@ DecrepitAirstrikeRemote: {
 		Все ваши прислужники, поражённые взрывом, превращаются в самонаводящиеся осколки
 		Осколки могут наносит критические удары
 		'''
-		Marks a location with a reticle, consuming all your sentries
-		In a few seconds, a massive airstrike explosion will hit it, dealing damage depending on your sentry slots
-		All your minions hit by the explosion are blown up into homing splinters
-		Splinters can critically strike
-		''' */
 }
 
 BanishedBaronBag: {
@@ -3874,13 +3277,6 @@ RustedOxygenTank: {
 		Увеличивает скорость передвижения, пока находитесь в любой жидкости
 		'Никто не знает, как оно работает'
 		'''
-		Works from your inventory
-		Right click to disable
-		You count as wet outside water
-		Grants floaty water movement outside of liquid
-		Increased movement speed while in any liquid
-		'Nobody knows how it works'
-		''' */
 }
 
 RoseTintedVisor: {
@@ -3890,9 +3286,6 @@ RoseTintedVisor: {
 		Выстреливает вплоть до 6 лазеров, в зависимости от времени зарядки
 		Получает дополнительный шанс критического удара, зависящий от количества заряженных лазеров, вплоть до 100%
 		'''
-		Fires up to 6 lasers on release, depending on charge time
-		Has extra critical strike chance depending on lasers charged, up to 100%
-		''' */
 }
 
 BaronTrophy: {
@@ -3917,9 +3310,6 @@ ROBGyro: {
 		'Обладает собственным разумом'
 		Призывает могущественного робота, который не сражается
 		'''
-		'Has a mind of its own'
-		Summons a powerful robot that doesn't fight
-		''' */
 }
 
 EulogistsDoomsdayScenario: {
@@ -3938,13 +3328,6 @@ RustedOxygenTankInactive: {
 		Увеличивает скорость передвижения, пока находитесь в любой жидкости
 		'Никто не знает, как оно работает'
 		'''
-		Works from your inventory
-		Currently inactive, Right click to reactivate
-		You count as wet outside water
-		Grants floaty water movement outside of liquid
-		Increased movement speed while in any liquid
-		'Nobody knows how it works'
-		''' */
 }
 
 EaterLauncherJr: {
@@ -3958,13 +3341,6 @@ EaterLauncherJr: {
 		Наносит увеличенный урон по врагам, находящимся в радиусе оружия
 		'Гниющие останки побеждённого врага..'
 		'''
-		Right Click in inventory to load a Rotten Chunk for ammunition
-		Attempting to fire also loads Rotten Chunk if necessary
-		Each Rotten Chunk provides 100 rounds, up to 1000
-		Fires a chunk of rotted flesh
-		Increased damage to enemies in the given range
-		'The rotting remains of a defeated foe..'
-		''' */
 }
 
 TheBiggestSting: {
@@ -3976,11 +3352,6 @@ TheBiggestSting: {
 		Имеет 66% шанс не потратить боеприпасы 
 		'Непоколебимый рой Королевы..'
 		'''
-		Uses darts for ammo
-		Scales with your bee damage and knockback increases
-		66% chance to not consume ammo
-		'The Queen's unwavering swarm..'
-		''' */
 }
 
 TestAccessory: {
