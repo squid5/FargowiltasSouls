@@ -3537,9 +3537,9 @@ SisypheanFist: {
 	// DisplayName: Sisyphean Fist
 	/* Tooltip:
 		'''
-		Grabs a huge boulder from the earth
+		While grounded, grab a huge boulder from the earth
 		Release the button to hurl it towards your cursor
-		You must be on solid ground to pick up a boulder
+		Boulder damage scales with its speed
 		''' */
 }
 

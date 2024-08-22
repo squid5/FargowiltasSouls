@@ -39,7 +39,7 @@ namespace FargowiltasSouls.Content.Projectiles.ChallengerItems
                 if (timer >= 30 && !player.channel && !player.CCed && !player.noItems)
                 {
                     float angle = Projectile.Center.AngleTo(Main.MouseWorld);
-                    Projectile.velocity = new Vector2(17f, 0f).RotatedBy(angle);
+                    Projectile.velocity = new Vector2(20f, 0f).RotatedBy(angle);
                     Projectile.velocity += player.velocity / 1.25f;
                     launched = true;
                     Projectile.hide = false;
@@ -97,7 +97,7 @@ namespace FargowiltasSouls.Content.Projectiles.ChallengerItems
             {
                 Collision.HitTiles(Projectile.position, Projectile.velocity, Projectile.width, Projectile.height);
                 SoundEngine.PlaySound(SoundID.Dig, Projectile.position);
-                Projectile.velocity.Y = -oldVelocity.Y * 0.6f;
+                Projectile.velocity.Y = -oldVelocity.Y * 0.8f;
                 return false;
             }
             Projectile.Kill();
