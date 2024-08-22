@@ -31,6 +31,7 @@ namespace FargowiltasSouls.Content.Projectiles.ChallengerItems
             Projectile.penetrate = 1;
             Projectile.tileCollide = true;
             Projectile.ignoreWater = true;
+            Projectile.DamageType = DamageClass.Ranged;
         }
         public override void AI()
         {
@@ -46,21 +47,22 @@ namespace FargowiltasSouls.Content.Projectiles.ChallengerItems
             {
                 Projectile.ai[1] = -1;
             }
-            if (Projectile.ai[0] > 10f)
+            if (Projectile.ai[0] > 1f)
             {
                 if (Projectile.ai[0] % 30 == 11f)
-                    Projectile.ai[1] = FargoSoulsUtil.FindClosestHostileNPC(Projectile.Center, 300, true);
+                    Projectile.ai[1] = FargoSoulsUtil.FindClosestHostileNPC(Projectile.Center, 3000, true);
 
                 if (Projectile.ai[1] != -1)
                 {
                     if (Main.npc[(int)Projectile.ai[1]].active) //nestled for no index error
                     {
+                        
                         Vector2 vectorToIdlePosition = Main.npc[(int)Projectile.ai[1]].Center - Projectile.Center;
-                        float num = vectorToIdlePosition.Length();
-                        float speed = 2.5f;
+                        float distance = vectorToIdlePosition.Length();
+                        float speed = 20000f / (2000f + (distance * distance));
                         float inertia = 12f;
                         float deadzone = 2f;
-                        if (num > deadzone)
+                        if (distance > deadzone)
                         {
                             vectorToIdlePosition.Normalize();
                             vectorToIdlePosition *= speed;

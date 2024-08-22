@@ -1,5 +1,6 @@
 using FargowiltasSouls.Content.Projectiles.ChallengerItems;
 using Microsoft.Xna.Framework;
+using System;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -47,7 +48,7 @@ namespace FargowiltasSouls.Content.Items.Weapons.Challengers
         {
             if (lastLMouse && !Main.mouseLeft && CanUseItem(player))
             {
-                delay = (int)(30 * (4 - Charge));
+                delay = (int)MathF.Ceiling(30f / player.FargoSouls().AttackSpeed);
             }
             if (delay-- < 0)
             {

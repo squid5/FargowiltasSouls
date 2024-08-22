@@ -71,7 +71,7 @@ namespace FargowiltasSouls.Content.Projectiles.ChallengerItems
                 {
                     Vector2 shootspeed = new Vector2(10f * charge, 0f);
                     SoundEngine.PlaySound(SoundID.Item102, player.Center);
-                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, shootspeed.RotatedBy(rot), ModContent.ProjectileType<SpiritArrow>(), (int)(Projectile.damage * charge), 3f, Projectile.owner);
+                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, shootspeed.RotatedBy(rot), ModContent.ProjectileType<SpiritArrow>(), (int)(Projectile.originalDamage * charge), 3f, Projectile.owner);
                 }
                 Projectile.Kill();
             }
