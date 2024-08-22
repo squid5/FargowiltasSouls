@@ -52,6 +52,8 @@ namespace FargowiltasSouls.Core.ModPlayers
         public float RustRifleReloadZonePos = 0;
         public float RustRifleTimer = 0;
 
+        public int EgyptianFlailCD = 0;
+
         public int RockeaterDistance = EaterLauncher.BaseDistance;
 
         public int The22Incident;

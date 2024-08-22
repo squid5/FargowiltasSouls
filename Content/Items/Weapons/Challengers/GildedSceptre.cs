@@ -36,7 +36,7 @@ namespace FargowiltasSouls.Content.Items.Weapons.Challengers
             Item.channel = true;
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.knockBack = 1f;
-            Item.value = Item.sellPrice(0, 10);
+            Item.value = Item.sellPrice(0, 2);
             Item.rare = ItemRarityID.Blue;
             Item.UseSound = CursedCoffin.ShotSFX;
             Item.autoReuse = true;
@@ -148,7 +148,7 @@ namespace FargowiltasSouls.Content.Items.Weapons.Challengers
 
         public override void AddRecipes()
         {
-            //CreateRecipe().AddIngredient<LifelightBag>(2).AddTile(TileID.Solidifier).DisableDecraft().Register();
+            //CreateRecipe().AddIngredient<CursedCoffinBag>(2).AddTile(TileID.Solidifier).DisableDecraft().Register();
         }
     }
 }
