@@ -16,6 +16,11 @@ using tModPorter;
 using Microsoft.CodeAnalysis;
 using FargowiltasSouls.Content.WorldGeneration;
 using System.Linq;
+using FargowiltasSouls.Content.Items.Accessories.Expert;
+using FargowiltasSouls.Content.Items.Weapons.Challengers;
+using Terraria.GameContent.ItemDropRules;
+using Terraria.UI;
+using FargowiltasSouls.Content.Items.BossBags;
 
 namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 {
@@ -292,20 +297,25 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 
 		public override void ModifyNPCLoot(NPCLoot npcLoot)
 		{
-			//TODO: Add loot
-			//npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<CursedCoffinBag>()));
-			//npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CursedCoffinTrophy>(), 10));
+            npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<CursedCoffinBag>()));
+            //npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CursedCoffinTrophy>(), 10));
 
-			//npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<CursedCoffinRelic>()));
+            //npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<CursedCoffinRelic>()));
 
-			//LeadingConditionRule rule = new LeadingConditionRule(new Conditions.NotExpert());
-			//rule.OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<EnchantedLifeblade>(), ModContent.ItemType<Lightslinger>(), ModContent.ItemType<CrystallineCongregation>(), ModContent.ItemType<KamikazePixieStaff>()));
-			//rule.OnSuccess(ItemDropRule.Common(ItemID.HallowedFishingCrateHard, 1, 1, 5)); //hallowed crate
-			//rule.OnSuccess(ItemDropRule.Common(ItemID.SoulofLight, 1, 1, 3));
-			//rule.OnSuccess(ItemDropRule.Common(ItemID.PixieDust, 1, 15, 25));
+            LeadingConditionRule rule = new(new Conditions.NotExpert());
+            rule.OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<SisypheanFist>(), ModContent.ItemType<SpiritLongbow>(), ModContent.ItemType<GildedSceptre>(), ModContent.ItemType<EgyptianFlail>()));
+            rule.OnSuccess(ItemDropRule.Common(ItemID.OasisCrate, 1, 1, 5)); //oasis crate
+            // gems
+            rule.OnSuccess(ItemDropRule.Common(ItemID.Amethyst, 3, 1, 4));
+            rule.OnSuccess(ItemDropRule.Common(ItemID.Topaz, 4, 1, 4));
+            rule.OnSuccess(ItemDropRule.Common(ItemID.Sapphire, 5, 1, 3));
+            rule.OnSuccess(ItemDropRule.Common(ItemID.Emerald, 7, 1, 2));
+            rule.OnSuccess(ItemDropRule.Common(ItemID.Ruby, 8, 1, 2));
+            rule.OnSuccess(ItemDropRule.Common(ItemID.Amber, 3, 1, 6));
+            rule.OnSuccess(ItemDropRule.Common(ItemID.Diamond, 10, 1, 1));
 
-			//npcLoot.Add(rule);
-		}
+            npcLoot.Add(rule);
+        }
 		#endregion
 	}
 }
