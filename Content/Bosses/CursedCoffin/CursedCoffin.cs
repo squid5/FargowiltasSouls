@@ -23,6 +23,7 @@ using Terraria.UI;
 using FargowiltasSouls.Content.Items.BossBags;
 using FargowiltasSouls.Content.Items.Placables.Trophies;
 using FargowiltasSouls.Content.Items.Placables.Relics;
+using Luminance.Core.Graphics;
 
 namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 {
@@ -221,17 +222,30 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 		public override void HitEffect(NPC.HitInfo hit)
 		{
 			//TODO: gore
-			/*
+
+			
             if (NPC.life <= 0)
             {
+                /*
                 for (int i = 1; i <= 4; i++)
                 {
                     Vector2 pos = NPC.position + new Vector2(Main.rand.NextFloat(NPC.width), Main.rand.NextFloat(NPC.height));
                     if (!Main.dedServ)
                         Gore.NewGore(NPC.GetSource_FromThis(), pos, NPC.velocity, ModContent.Find<ModGore>(Mod.Name, $"BaronGore{i}").Type, NPC.scale);
                 }
+                */
+                for (int i = 0; i < 100; i++)
+                {
+                    Vector2 inVel = Main.rand.NextVector2Circular(0.65f, 1f);
+                    int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + inVel * 40, inVel * 10f, ModContent.ProjectileType<CoffinDarkSouls>(), 0, 0, Main.myPlayer, NPC.whoAmI , -0.135f);
+                    if (p.IsWithinBounds(Main.maxProjectiles))
+                    {
+                        Main.projectile[p].Opacity = 0.4f;
+                    }
+
+                }
             }
-            */
+            
 		}
 
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
