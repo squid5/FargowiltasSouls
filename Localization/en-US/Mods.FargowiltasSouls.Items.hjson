@@ -314,7 +314,8 @@ MeteorEnchant: {
 	Tooltip:
 		'''
 		Increases your movement speed and acceleration, and decreases your momentum
-		A meteor fall initiates every few seconds while attacking
+		Hitting an enemy occasionally drops a meteor on them
+		Meteor cooldown is decreased faster the more you move around
 		'Drop a draco on 'em'
 		'''
 }
