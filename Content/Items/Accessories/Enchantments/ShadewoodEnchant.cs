@@ -118,7 +118,7 @@ Enemies struck while Bleeding spew damaging blood
 
             if (target.HasBuff(ModContent.BuffType<SuperBleedBuff>()) && modPlayer.ShadewoodCD == 0 && (projectile == null || projectile.type != ModContent.ProjectileType<SuperBlood>()) && player.whoAmI == Main.myPlayer)
             {
-                modPlayer.ShadewoodCD = 20;
+                modPlayer.ShadewoodCD = 30;
                 for (int i = 0; i < Main.rand.Next(3, 6); i++)
                 {
                     Projectile.NewProjectile(player.GetSource_Misc(""), target.Center.X, target.Center.Y - 20, 0f + Main.rand.NextFloat(-5, 5), Main.rand.NextFloat(-5, 5), ModContent.ProjectileType<SuperBlood>(), FargoSoulsUtil.HighestDamageTypeScaling(player, dmg), 0f, Main.myPlayer);
