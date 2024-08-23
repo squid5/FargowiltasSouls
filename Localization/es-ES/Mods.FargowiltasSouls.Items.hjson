@@ -3565,3 +3565,13 @@ CursedCoffinBag: {
 	// DisplayName: Treasure Bag (Cursed Coffin)
 	// Tooltip: ""
 }
+
+CursedCoffinRelic: {
+	// DisplayName: Cursed Coffin Relic
+	// Tooltip: ""
+}
+
+CursedCoffinTrophy: {
+	// DisplayName: Cursed Coffin Trophy
+	// Tooltip: ""
+}

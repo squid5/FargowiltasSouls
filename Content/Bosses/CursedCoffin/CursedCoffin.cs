@@ -21,6 +21,8 @@ using FargowiltasSouls.Content.Items.Weapons.Challengers;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.UI;
 using FargowiltasSouls.Content.Items.BossBags;
+using FargowiltasSouls.Content.Items.Placables.Trophies;
+using FargowiltasSouls.Content.Items.Placables.Relics;
 
 namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 {
@@ -298,9 +300,9 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 		public override void ModifyNPCLoot(NPCLoot npcLoot)
 		{
             npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<CursedCoffinBag>()));
-            //npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CursedCoffinTrophy>(), 10));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CursedCoffinTrophy>(), 10));
 
-            //npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<CursedCoffinRelic>()));
+            npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<CursedCoffinRelic>()));
 
             LeadingConditionRule rule = new(new Conditions.NotExpert());
             rule.OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<SisypheanFist>(), ModContent.ItemType<SpiritLongbow>(), ModContent.ItemType<GildedSceptre>(), ModContent.ItemType<EgyptianFlail>()));
