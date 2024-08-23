@@ -34,7 +34,7 @@ namespace FargowiltasSouls.Content.Items.Weapons.SwarmDrops
             Item.value = Item.sellPrice(0, 5);
             Item.rare = ItemRarityID.Yellow;
             Item.UseSound = null;
-            Item.autoReuse = false;
+            Item.autoReuse = true;
             Item.channel = true;
             Item.shoot = ModContent.ProjectileType<UmbraRegaliaProj>();
             Item.shootSpeed = 4f;
