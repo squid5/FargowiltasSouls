@@ -91,16 +91,16 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 			Rectangle nextFrameHitbox = new((int)(nextCenter.X - localPlayer.Hitbox.Width / 2), (int)(nextCenter.Y - localPlayer.Hitbox.Height / 2), localPlayer.Hitbox.Width, localPlayer.Hitbox.Height);
 			if (nextFrameHitbox.Intersects(NPC.Hitbox))
 			{
-				if (!Main.LocalPlayer.Hitbox.Intersects(NPC.Hitbox))
+				if (!localPlayer.Hitbox.Intersects(NPC.Hitbox))
 				{
-					Main.LocalPlayer.velocity.X /= 2;
-					Main.LocalPlayer.position.X -= Math.Sign(localPlayer.Center.X - NPC.Center.X) * 8;
+                    localPlayer.velocity.X /= 2;
+                    localPlayer.position.X -= Math.Sign(localPlayer.Center.X - NPC.Center.X) * 8;
 					/*
                     Main.LocalPlayer.position -= Main.LocalPlayer.velocity;
                     Main.LocalPlayer.velocity = Vector2.Zero;
 					*/
                 }
-				Main.LocalPlayer.velocity -= Main.LocalPlayer.DirectionTo(NPC.Center);
+                localPlayer.velocity -= localPlayer.DirectionTo(NPC.Center);
                 /*
 				Vector2 dir = Main.LocalPlayer.DirectionTo(NPC.Center);
 				Vector2 vel = Main.LocalPlayer.velocity;
@@ -113,7 +113,46 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 				*/
             }
 
-			if (!Targeting())
+            // Arena stuff
+            Vector2 arenaCenter = CoffinArena.Center.ToWorldCoordinates();
+            float distanceX = Math.Abs(localPlayer.Center.X - arenaCenter.X);
+            float threshold = CoffinArena.VectorWidth / 2f;
+            int DustType = DustID.Sand;
+            if (localPlayer.active && !localPlayer.dead && !localPlayer.ghost) //pull into arena
+            {
+                if (distanceX > threshold && distanceX < threshold * 4f)
+                {
+
+                    Vector2 movement = Vector2.UnitX * (arenaCenter.X - localPlayer.Center.X);
+                    float difference = movement.Length() - threshold;
+                    movement.Normalize();
+                    movement *= difference < 17f ? difference : 17f;
+                    localPlayer.position += movement;
+
+                    for (int i = 0; i < 10; i++)
+                    {
+                        int d = Dust.NewDust(localPlayer.position, localPlayer.width, localPlayer.height, DustType, 0f, 0f, 0, default, 1.25f);
+                        Main.dust[d].noGravity = true;
+                        Main.dust[d].velocity *= 5f;
+                    }
+                }
+            }
+
+            for (int i = -1; i <= 1; i += 2) // Sand walls
+            {
+                float posX = arenaCenter.X + i * threshold;
+                for (int y = 0; y <= CoffinArena.Height * 2; y++)
+                {
+                    float posY = arenaCenter.Y + (CoffinArena.VectorHeight / 2f) - (8f * y);
+                    if (Main.rand.NextBool(3) && !Main.tile[(int)posX / 16, (int)posY / 16].HasUnactuatedTile)
+                    {
+                        int d = Dust.NewDust((posX - 4f) * Vector2.UnitX + (posY - 8f) * Vector2.UnitY, 8, 16, DustType, 0f, 0f, 0, default, 1.25f);
+                        Main.dust[d].noGravity = true;
+                    }
+                }
+            }
+
+            if (!Targeting())
 				return;
 			NPC.timeLeft = 60;
             NPC.Opacity = 1;
