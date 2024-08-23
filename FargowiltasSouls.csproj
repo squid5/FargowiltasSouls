@@ -19,6 +19,14 @@
     <None Remove="Folders to Port\**" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="Content\Items\Placables\Relics\CursedCoffinRelic.png" />
+    <None Remove="Content\Items\Placables\Trophies\CursedCoffinTrophy.png" />
+    <None Remove="Content\Items\Weapons\SwarmDrops\UmbraRegalia.png" />
+    <None Remove="Content\Projectiles\BossWeapons\UmbraRegaliaProj.png" />
+    <None Remove="Content\Tiles\Relics\CursedCoffinRelic.png" />
+    <None Remove="Content\Tiles\Trophies\CursedCoffinTrophy.png" />
+  </ItemGroup>
+  <ItemGroup>
     <Folder Include="Assets\ExtraTextures\Noise\" />
     <Folder Include="Assets\Sounds\VanillaEternity\KingSlime\" />
     <Folder Include="Content\WorldGen\" />
