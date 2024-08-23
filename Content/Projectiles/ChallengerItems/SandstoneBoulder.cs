@@ -85,6 +85,12 @@ namespace FargowiltasSouls.Content.Projectiles.ChallengerItems
                 
             }
         }
+        public override bool? CanHitNPC(NPC target)
+        {
+            if (target.type == NPCID.VileSpit || target.type == NPCID.VileSpitEaterOfWorlds)
+                return false;
+            return base.CanHitNPC(target);
+        }
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
             float bonus = 0.2f * Projectile.velocity.Length() / 20f;
