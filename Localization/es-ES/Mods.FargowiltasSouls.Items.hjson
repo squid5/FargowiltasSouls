@@ -3575,3 +3575,8 @@ CursedCoffinTrophy: {
 	// DisplayName: Cursed Coffin Trophy
 	// Tooltip: ""
 }
+
+UmbraRegalia: {
+	// DisplayName: Umbra Regalia
+	// Tooltip: ""
+}

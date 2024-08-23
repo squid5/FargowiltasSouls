@@ -37,11 +37,11 @@ namespace FargowiltasSouls.Content.Projectiles
             {
                 if (ReworkedSpears.Contains(projectile.type))
                 {
-                    ReworkedSpearSwing(projectile);
+                    ReworkedSpearSwing(projectile, ref SwingDirection);
                 }
             }
         }
-        public void ReworkedSpearSwing(Projectile projectile)
+        public static void ReworkedSpearSwing(Projectile projectile, ref int swingDirection)
         {
             Texture2D tex = (Texture2D)TextureAssets.Projectile[projectile.type];
             float HoldoutRangeMax = (float)tex.Size().Length() * projectile.scale; //since sprite is diagonal
@@ -53,7 +53,7 @@ namespace FargowiltasSouls.Content.Projectiles
             player.heldProj = projectile.whoAmI;
             projectile.spriteDirection = player.direction;
             if (projectile.ai[1] == 0)
-                SwingDirection = Main.rand.NextBool(2) ? 1 : -1;
+                swingDirection = Main.rand.NextBool(2) ? 1 : -1;
             float Swing = 13; //higher value = less swing
             projectile.usesLocalNPCImmunity = true;
             projectile.localNPCHitCooldown = player.itemAnimationMax; //only hit once per swing
@@ -66,18 +66,18 @@ namespace FargowiltasSouls.Content.Projectiles
             if (projectile.ai[1] <= duration / 2)
             {
                 projectile.ai[0] = projectile.ai[1] / (duration / 2);
-                projectile.velocity = projectile.velocity.RotatedBy(SwingDirection * projectile.spriteDirection * -Math.PI / (Swing * player.itemAnimationMax));
+                projectile.velocity = projectile.velocity.RotatedBy(swingDirection * projectile.spriteDirection * -Math.PI / (Swing * player.itemAnimationMax));
             }
             else if (projectile.ai[1] <= duration / 2 + WaitTime)
             {
                 projectile.ai[0] = 1;
-                projectile.velocity = projectile.velocity.RotatedBy(SwingDirection * projectile.spriteDirection * (1.5 * duration / WaitTime) * Math.PI / (Swing * player.itemAnimationMax)); //i know how wacky this looks
+                projectile.velocity = projectile.velocity.RotatedBy(swingDirection * projectile.spriteDirection * (1.5 * duration / WaitTime) * Math.PI / (Swing * player.itemAnimationMax)); //i know how wacky this looks
             }
             else //backswing
             {
                 //projectile.friendly = false; //no hit on backswing
                 projectile.ai[0] = (duration + WaitTime - projectile.ai[1]) / (duration / 2);
-                projectile.velocity = projectile.velocity.RotatedBy(SwingDirection * projectile.spriteDirection * -Math.PI / (Swing * player.itemAnimationMax));
+                projectile.velocity = projectile.velocity.RotatedBy(swingDirection * projectile.spriteDirection * -Math.PI / (Swing * player.itemAnimationMax));
             }
             //if (projectile.ai[1] == duration / 2)
             //SoundEngine.PlaySound(SoundID.Item1, player.Center);
