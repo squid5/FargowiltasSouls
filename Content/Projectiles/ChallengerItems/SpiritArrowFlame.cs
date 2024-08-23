@@ -32,9 +32,12 @@ namespace FargowiltasSouls.Content.Projectiles.ChallengerItems
             Projectile.tileCollide = true;
             Projectile.ignoreWater = true;
             Projectile.DamageType = DamageClass.Ranged;
+
+            Projectile.scale = 0.1f;
         }
         public override void AI()
         {
+            Projectile.scale = MathHelper.Lerp(Projectile.scale, 1f, 0.2f);
             float lightFade = (255f - Projectile.alpha) / 255f;
             Lighting.AddLight(Projectile.Center, lightFade * 0.7f * Color.Plum.R / 255f, lightFade * 0.7f * Color.Plum.G / 255f, lightFade * 0.7f * Color.Plum.B / 255f);
             if (++Projectile.frameCounter >= 4)
