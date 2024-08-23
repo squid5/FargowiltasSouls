@@ -108,7 +108,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 			});
 
         }
-		public const int BaseHP = 3000;
+		public const int BaseHP = 3333;
         public override void SetDefaults()
         {
             NPC.aiStyle = -1;
