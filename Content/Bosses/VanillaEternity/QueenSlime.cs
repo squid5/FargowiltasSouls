@@ -12,6 +12,7 @@ using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
@@ -545,6 +546,11 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             LoadExtra(recolor, 177);
             LoadExtra(recolor, 180);
             LoadExtra(recolor, 185);
+            LoadExtra(recolor, 186);
+            LoadProjectile(recolor, ProjectileID.QueenSlimeGelAttack);
+            LoadProjectile(recolor, ProjectileID.QueenSlimeMinionPinkBall);
+            LoadProjectile(recolor, ProjectileID.QueenSlimeMinionBlueSpike);
+
         }
     }
 

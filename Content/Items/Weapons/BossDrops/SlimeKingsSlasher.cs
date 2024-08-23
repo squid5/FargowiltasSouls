@@ -23,7 +23,7 @@ namespace FargowiltasSouls.Content.Items.Weapons.BossDrops
 
         public override void SetDefaults()
         {
-            Item.damage = 12;
+            Item.damage = 27;
             Item.DamageType = DamageClass.Melee;
             Item.width = 40;
             Item.height = 44;
@@ -84,6 +84,7 @@ namespace FargowiltasSouls.Content.Items.Weapons.BossDrops
         {
             return (x * x * 3) - (x * x * x * 2);
         }
+       
         public override void OnHitNPC(Player player, NPC target, NPC.HitInfo hit, int damageDone)
         {
             target.AddBuff(BuffID.Slimed, 120);
