@@ -356,6 +356,11 @@ namespace FargowiltasSouls.Core.ModPlayers
                 NecromanticBrewRotation = 0f;
             }
         }
+        public override void UpdateLifeRegen()
+        {
+            if (UsingAnkh)
+                Player.lifeRegen += 3;
+        }
         public override void UpdateBadLifeRegen()
         {
             if (Player.electrified && Player.wet)
@@ -501,6 +506,22 @@ namespace FargowiltasSouls.Core.ModPlayers
                 RustRifleTimer++;
             }
 
+            if (Player.HeldItem.type == ModContent.ItemType<EgyptianFlail>())
+            {
+                EgyptianFlailCD--;
+                if (EgyptianFlailCD == 0)
+                {
+                    SoundEngine.PlaySound(SoundID.Item103 with { Volume = 0.8f }, Player.Center);
+
+                    for (int i = 0; i < 20; i++)
+                    {
+                        int d = Dust.NewDust(Player.position, Player.width, Player.height, DustID.GemAmethyst, 0, 0, 0, default, 2.5f);
+                        Main.dust[d].noGravity = true;
+                        Main.dust[d].velocity *= 4f;
+                    }
+                }
+            }
+
             if (ParryDebuffImmuneTime > 0)
             {
                 ParryDebuffImmuneTime--;
@@ -640,6 +661,11 @@ namespace FargowiltasSouls.Core.ModPlayers
                 Player.hideMisc[1] = HidePetToggle1;
 
                 WasAsocial = false;
+            }
+
+            if (UsingAnkh)
+            {
+                Player.statDefense -= 10;
             }
 
             if (Rotting)

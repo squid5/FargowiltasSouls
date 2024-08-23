@@ -12,7 +12,7 @@ using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Content.Projectiles.Deathrays
 {
-    public class DeviDeathray : BaseDeathray, IPixelatedPrimitiveRenderer
+	public class DeviDeathray : BaseDeathray, IPixelatedPrimitiveRenderer
     {
         const int MaxLength = 3000;
         int Length = 10;

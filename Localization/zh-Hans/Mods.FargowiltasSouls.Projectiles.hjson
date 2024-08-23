@@ -717,7 +717,14 @@ HentaiSword.DisplayName: 洞察者
 HentaiSwordBlast.DisplayName: 洞察者爆炸
 HentaiSphereOkuu.DisplayName: 洞察者幻影球
 AbomRitualFTW.DisplayName: 憎恶结界FTW
+// FallingSandstone.DisplayName: Falling Sandstone
+// CoffinPlayerSoul.DisplayName: Your Soul
+// GildedSceptreProj.DisplayName: Shadowflame Sceptre Shot
 // RoyalSubjectProjectile.DisplayName: Royal Subject Projectile
+// SandstoneBoulder.DisplayName: Sandstone Boulder
+// SandstoneShrapnel.DisplayName: Sandstone Shrapnel
+// EgyptianFlailProjectile.DisplayName: Egyptian Flail Projectile
+// SpiritBow.DisplayName: Spirit Bow
 // TimberBranch.DisplayName: Timber Branch
 // CosmosForceMoon.DisplayName: Cosmos Force Moon
 // GladiatorSpirit.DisplayName: Gladiator Spirit
@@ -731,3 +738,4 @@ AbomRitualFTW.DisplayName: 憎恶结界FTW
 // LifeRunespearExplosion.DisplayName: Life Runespear Explosion
 // LifeRuneRetractHitbox.DisplayName: Life Rune Retract Hitbox
 // Slimesplosion.DisplayName: Slimesplosion
+// TwinsEyeFlash.DisplayName: Twins Eye Flash

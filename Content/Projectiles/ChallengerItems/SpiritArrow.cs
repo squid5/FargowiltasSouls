@@ -29,6 +29,7 @@ namespace FargowiltasSouls.Content.Projectiles.ChallengerItems
             Projectile.penetrate = 1;
             Projectile.tileCollide = true;
             Projectile.ignoreWater = true;
+            Projectile.DamageType = DamageClass.Ranged;
         }
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) //circular hitbox
         {
@@ -52,8 +53,8 @@ namespace FargowiltasSouls.Content.Projectiles.ChallengerItems
             {
                 if (FargoSoulsUtil.HostCheck)
                 {
-                    int SplitDamage = Projectile.damage / 2;
-                    Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<SpiritArrowFlame>(), SplitDamage, Projectile.knockBack, Main.myPlayer);
+                    int SplitDamage = Projectile.originalDamage / 2;
+                    Projectile.NewProjectile(Projectile.GetSource_FromThis(), Main.rand.NextVector2FromRectangle(Projectile.Hitbox), Projectile.velocity / 4f, ModContent.ProjectileType<SpiritArrowFlame>(), SplitDamage, Projectile.knockBack, Main.myPlayer);
                 }
                 Projectile.ai[1] = 0;
                 //spawn spirit  flame

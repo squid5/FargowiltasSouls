@@ -24,6 +24,22 @@ using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
+using FargowiltasSouls.Content.Items.BossBags;
+using FargowiltasSouls.Content.Items.Materials;
+using FargowiltasSouls.Content.Items.Placables.Relics;
+using FargowiltasSouls.Content.Items.Placables.Trophies;
+using FargowiltasSouls.Content.Items.Accessories.Forces;
+using FargowiltasSouls.Content.Buffs.Souls;
+using FargowiltasSouls.Content.Buffs.Masomode;
+using FargowiltasSouls.Core.ItemDropRules;
+using FargowiltasSouls.Core.Systems;
+using FargowiltasSouls.Content.Bosses.MutantBoss;
+using FargowiltasSouls.Core.Globals;
+
+using System.Collections.Generic;
+using System.Linq;
+using Fargowiltas.NPCs;
+using Luminance.Core.Graphics;
 
 namespace FargowiltasSouls.Content.Bosses.Champions.Cosmos
 {

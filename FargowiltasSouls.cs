@@ -2,14 +2,12 @@
 global using FargowiltasSouls.Core.Toggler;
 global using Luminance.Common.Utilities;
 global using LumUtils = Luminance.Common.Utilities.Utilities;
-using FargowiltasSouls.Content.Bosses.AbomBoss;
-using FargowiltasSouls.Content.Bosses.DeviBoss;
-using FargowiltasSouls.Content.Bosses.MutantBoss;
 using FargowiltasSouls.Content.Bosses.VanillaEternity;
 using FargowiltasSouls.Content.Buffs.Boss;
 using FargowiltasSouls.Content.Buffs.Masomode;
 using FargowiltasSouls.Content.Buffs.Souls;
 using FargowiltasSouls.Content.Items.Accessories.Masomode;
+using FargowiltasSouls.Content.Items.Consumables;
 using FargowiltasSouls.Content.Items.Dyes;
 using FargowiltasSouls.Content.Items.Misc;
 using FargowiltasSouls.Content.NPCs.EternityModeNPCs;
@@ -590,7 +588,10 @@ namespace FargowiltasSouls
                 //fargos.Call("AddSummon", 18.01f, "FargowiltasSouls", "TruffleWormEX", () => WorldSavingSystem.downedFishronEX, Item.buyPrice(10));
                 fargos.Call("AddSummon", 18.02f, "FargowiltasSouls", "MutantsCurse", new Func<bool>(() => WorldSavingSystem.DownedMutant), Item.buyPrice(20));
 
-
+                //stat sheet
+                fargos.Call("AddPermaUpgrade", new Item(ModContent.ItemType<RabiesVaccine>()), () => Main.LocalPlayer.FargoSouls().RabiesVaccine);
+                fargos.Call("AddPermaUpgrade", new Item(ModContent.ItemType<MutantsDiscountCard>()), () => Main.LocalPlayer.FargoSouls().MutantsDiscountCard);
+                fargos.Call("AddPermaUpgrade", new Item(ModContent.ItemType<MutantsCreditCard>()), () => Main.LocalPlayer.FargoSouls().MutantsCreditCard);
             }
             catch (Exception e)
             {

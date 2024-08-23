@@ -31,9 +31,12 @@ namespace FargowiltasSouls.Content.Projectiles.ChallengerItems
             Projectile.penetrate = 1;
             Projectile.tileCollide = true;
             Projectile.ignoreWater = true;
+            Projectile.DamageType = DamageClass.Ranged;
         }
         public override void AI()
         {
+            float lightFade = (255f - Projectile.alpha) / 255f;
+            Lighting.AddLight(Projectile.Center, lightFade * 0.7f * Color.Plum.R / 255f, lightFade * 0.7f * Color.Plum.G / 255f, lightFade * 0.7f * Color.Plum.B / 255f);
             if (++Projectile.frameCounter >= 4)
             {
                 Projectile.frameCounter = 0;
@@ -44,21 +47,22 @@ namespace FargowiltasSouls.Content.Projectiles.ChallengerItems
             {
                 Projectile.ai[1] = -1;
             }
-            if (Projectile.ai[0] > 10f)
+            if (Projectile.ai[0] > 1f)
             {
                 if (Projectile.ai[0] % 30 == 11f)
-                    Projectile.ai[1] = FargoSoulsUtil.FindClosestHostileNPC(Projectile.Center, 300, true);
+                    Projectile.ai[1] = FargoSoulsUtil.FindClosestHostileNPC(Projectile.Center, 3000, true);
 
                 if (Projectile.ai[1] != -1)
                 {
                     if (Main.npc[(int)Projectile.ai[1]].active) //nestled for no index error
                     {
+                        
                         Vector2 vectorToIdlePosition = Main.npc[(int)Projectile.ai[1]].Center - Projectile.Center;
-                        float num = vectorToIdlePosition.Length();
-                        float speed = 12f;
-                        float inertia = 8f;
+                        float distance = vectorToIdlePosition.Length();
+                        float speed = 20000f / (2000f + (distance * distance));
+                        float inertia = 12f;
                         float deadzone = 2f;
-                        if (num > deadzone)
+                        if (distance > deadzone)
                         {
                             vectorToIdlePosition.Normalize();
                             vectorToIdlePosition *= speed;

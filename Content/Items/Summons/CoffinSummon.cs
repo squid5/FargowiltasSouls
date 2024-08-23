@@ -1,10 +1,11 @@
 
-using FargowiltasSouls.Content.Bosses.CursedCoffin;
 using Terraria;
-using Terraria.Audio;
-using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.ID;
 using static Terraria.ModLoader.ModContent;
+using Terraria.Audio;
+using FargowiltasSouls.Content.Bosses.CursedCoffin;
+using FargowiltasSouls.Content.WorldGeneration;
 
 namespace FargowiltasSouls.Content.Items.Summons
 {
@@ -44,17 +45,17 @@ namespace FargowiltasSouls.Content.Items.Summons
                 .Register();
         }
 
-        public override bool CanUseItem(Player Player)
+        public override bool CanUseItem(Player player)
         {
-            if (Player.ZoneDesert && (Player.ZoneDirtLayerHeight || Player.ZoneRockLayerHeight))
+            if (CoffinArena.Rectangle.Contains(player.Center.ToTileCoordinates()))// && (Player.ZoneDirtLayerHeight || Player.ZoneRockLayerHeight))
                 return !NPC.AnyNPCs(NPCType<CursedCoffin>()); //not (x or y)
             return false;
         }
 
-        public override bool? UseItem(Player Player)
+        public override bool? UseItem(Player player)
         {
-            NPC.SpawnOnPlayer(Player.whoAmI, NPCType<CursedCoffin>());
-            SoundEngine.PlaySound(SoundID.Shatter, Player.Center);
+            NPC.SpawnOnPlayer(player.whoAmI, NPCType<CursedCoffin>());
+            SoundEngine.PlaySound(SoundID.Shatter, player.Center);
             return true;
         }
     }

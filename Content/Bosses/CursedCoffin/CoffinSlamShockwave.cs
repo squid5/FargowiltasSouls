@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
@@ -30,8 +31,10 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
             Projectile.scale = 1f;
             Projectile.light = 1;
             Projectile.timeLeft = 60 * 3;
-        }
 
+            Projectile.hide = true;
+        }
+        public float ScaleX = 1;
         public override void AI()
         {
 
@@ -41,6 +44,9 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
             if (Math.Abs(Projectile.velocity.X) < 15)
                 Projectile.velocity.X *= 1.035f;
 
+            ScaleX = Projectile.scale / 2 + (Math.Abs(Projectile.velocity.X) / 7);
+            Projectile.width = (int)(52f * ScaleX);
+
             int p = Player.FindClosest(Projectile.Center, 0, 0);
             if (p.IsWithinBounds(Main.maxPlayers) && Main.player[p] is Player player && player.Alive())
             {
@@ -48,7 +54,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
                 float distance = Math.Abs(player.Center.X - Projectile.Center.X);
                 Projectile.light = distance < 500 ? (500 - distance) / 500 : 0;
             }
-
+            Vector2 oldPos = Projectile.position;
             // lock on block grid
             Projectile.position.Y = (MathF.Floor((Projectile.position.Y + Projectile.height) / 16) * 16) - Projectile.height;
 
@@ -73,6 +79,8 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 
             if (i >= maxIter - 1)
                 Projectile.Kill();
+
+            Projectile.position = Vector2.Lerp(oldPos, Projectile.position, 0.1f);
             /*
             for (int j = 0; j < 5; j++)
             {
@@ -80,9 +88,14 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
             }
             */
         }
+        public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
+        {
+            if (Projectile.hide)
+                behindNPCsAndTiles.Add(index);
+        }
         public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers)
         {
-            modifiers.Null();
+            modifiers.SetMaxDamage(1);
         }
         public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
@@ -91,10 +104,10 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
         public override bool PreDraw(ref Color lightColor)
         {
             float rotation = Projectile.rotation;
-            Vector2 drawPos = Projectile.Center;
+            Vector2 drawPos = Projectile.Center + Vector2.UnitY * 10;
             Texture2D texture = TextureAssets.Projectile[Type].Value;
 
-            Vector2 scale = Vector2.UnitX * (Projectile.scale / 2 + (Math.Abs(Projectile.velocity.X) / 13)) + Vector2.UnitY * Projectile.scale;
+            Vector2 scale = Vector2.UnitX * ScaleX + Vector2.UnitY * Projectile.scale;
 
             int sizeY = texture.Height / Main.projFrames[Type]; //ypos of lower right corner of sprite to draw
             int frameY = Projectile.frame * sizeY;
@@ -109,7 +122,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
                 Color oldColor = lightColor;
                 oldColor *= 0.5f;
                 oldColor *= (float)(ProjectileID.Sets.TrailCacheLength[Projectile.type] - i) / ProjectileID.Sets.TrailCacheLength[Projectile.type];
-                Vector2 oldPos = Projectile.oldPos[i] + Projectile.Size / 2;
+                Vector2 oldPos = Projectile.oldPos[i] + Projectile.Size / 2 + Vector2.UnitY * 10;
                 float oldRot = Projectile.oldRot[i];
                 Main.EntitySpriteDraw(texture, oldPos - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY), rectangle, Projectile.GetAlpha(oldColor),
                     oldRot, origin, scale, spriteEffects, 0);

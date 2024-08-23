@@ -1,4 +1,6 @@
-﻿using System;
+﻿using FargowiltasSouls.Content.WorldGeneration;
+using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -92,6 +94,8 @@ namespace FargowiltasSouls.Core.Systems
         public static bool PlacedMutantStatue;
 
         public static List<int> IronUsedList = [];
+
+        public static Point CoffinArenaCenter { get; set; }
 
         public override void Unload() => DownedBoss = null;
 
@@ -207,6 +211,8 @@ namespace FargowiltasSouls.Core.Systems
 
             tag.Add("downed", downed);
             tag.Add("mutantP1", SkipMutantP1);
+            tag.Add("CoffinArenaCenterX", CoffinArenaCenter.X);
+            tag.Add("CoffinArenaCenterY", CoffinArenaCenter.Y);
         }
 
         public override void LoadWorldData(TagCompound tag)
@@ -257,6 +263,14 @@ namespace FargowiltasSouls.Core.Systems
 
             if (tag.ContainsKey("mutantP1"))
                 SkipMutantP1 = tag.GetAsInt("mutantP1");
+            int coffinX = 0;
+            if (tag.ContainsKey("CoffinArenaCenterX"))
+                coffinX = tag.GetAsInt("CoffinArenaCenterX");
+            int coffinY = 0;
+            if (tag.ContainsKey("CoffinArenaCenterY"))
+                coffinY = tag.GetAsInt("CoffinArenaCenterY");
+            CoffinArenaCenter = new(coffinX, coffinY);
+            CoffinArena.Rectangle = new(coffinX - CoffinArena.Width / 2, coffinY - CoffinArena.Height / 2, CoffinArena.Width, CoffinArena.Height);
         }
 
         public override void NetReceive(BinaryReader reader)

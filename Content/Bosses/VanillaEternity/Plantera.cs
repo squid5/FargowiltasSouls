@@ -1,29 +1,34 @@
-using FargowiltasSouls.Common.Graphics.Particles;
-using FargowiltasSouls.Common.Utilities;
-using FargowiltasSouls.Content.Bosses.MutantBoss;
-using FargowiltasSouls.Content.Buffs.Masomode;
-using FargowiltasSouls.Content.NPCs.EternityModeNPCs;
-using FargowiltasSouls.Content.Projectiles.Masomode;
-using FargowiltasSouls.Core;
-using FargowiltasSouls.Core.Globals;
-using FargowiltasSouls.Core.NPCMatching;
-using FargowiltasSouls.Core.Systems;
-using Luminance.Core.Graphics;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using System;
 using System.IO;
+using Terraria.ModLoader.IO;
+using FargowiltasSouls.Content.Projectiles.Masomode;
+using Microsoft.Xna.Framework;
+using System;
 using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.ModLoader.IO;
+using FargowiltasSouls.Content.Buffs.Masomode;
+using FargowiltasSouls.Core.Systems;
+using FargowiltasSouls.Core.Globals;
+using FargowiltasSouls.Common.Utilities;
+using FargowiltasSouls.Core.NPCMatching;
+using FargowiltasSouls.Content.NPCs.EternityModeNPCs;
+using FargowiltasSouls.Content.Bosses.MutantBoss;
+using FargowiltasSouls.Common.Graphics.Particles;
+using Microsoft.Xna.Framework.Graphics;
+using FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.Cavern;
+using System.Collections.Generic;
+using Terraria.Map;
+using static tModPorter.ProgressUpdate;
+using FargowiltasSouls.Core;
+using Terraria.WorldBuilding;
+using Luminance.Core.Graphics;
 
 namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 {
-    public abstract class PlanteraPart : EModeNPCBehaviour
+	public abstract class PlanteraPart : EModeNPCBehaviour
     {
         public override void OnFirstTick(NPC npc)
         {
@@ -144,7 +149,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                 npc.ai[1] = 0;
                 npc.ai[2] = 0;
                 npc.ai[3] = 0;
-
+                
                 FargoSoulsUtil.ClearHostileProjectiles(2, npc.whoAmI);
                 foreach (NPC n in Main.npc.Where(n => n.TypeAlive<CrystalLeaf>() && n.ai[0] == npc.whoAmI)) // delete crystal ring
                 {
@@ -155,7 +160,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     if (Main.netMode == NetmodeID.Server)
                         NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n.whoAmI);
                 }
-
+                
                 const int halfAmt = 20;
                 for (int i = -halfAmt; i <= halfAmt; i++)
                 {
@@ -173,7 +178,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             }
             if (EnteredPhase3)
             {
-
+                
                 ref float timer = ref npc.ai[0];
                 ref float state = ref npc.ai[1];
                 ref float movementTimer = ref npc.ai[2];
@@ -255,7 +260,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                         npc.velocity.Y = maxSpeed * Math.Sign(npc.velocity.Y);
 
                     //if (fastX && Math.Sign(npc.velocity.X) != Math.Sign(target.X - npc.Center.X))
-                    //npc.velocity.X = 0;
+                        //npc.velocity.X = 0;
                 }
 
                 if (state == 0) // Phase transition movement, go up while avoiding player
@@ -351,7 +356,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     playerXAvoidWalls += 500;
                 if (!collisionLeft && collisionRight)
                     playerXAvoidWalls -= 500;
-
+ 
                 //repulsed by player whenever too close
                 const float minDist = 250;
                 float distance = npc.Distance(Main.player[npc.target].Center);
@@ -502,12 +507,12 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                                     }
                                 }
                             }
-                            else
+                            else 
                             {
                                 npc.velocity *= 0.96f;
                                 if (timer > vineSpawnTime * (repeatCheck == 1 ? 4.4f : 3.9f))
                                 {
-
+                                    
                                     timer = 0;
                                     if (repeatCheck == 0)
                                     {
@@ -521,7 +526,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                                     }
                                 }
                             }
-
+                            
                         }
                         break;
                     case 3: // cone shots
@@ -530,7 +535,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
                             if (timer < vineSpawnTime)
                             {
-
+                                
                                 float vineProgress = timer / vineSpawnTime;
 
                                 if (timer < vineSpawnTime * 0.7f)
@@ -544,7 +549,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                                 {
                                     float attackAngle = Vector2.Lerp(-Vector2.UnitY.RotatedBy(-i * MathHelper.PiOver2 * 0.1f), Vector2.UnitY.RotatedBy(i * MathHelper.PiOver2 * 0.3f), vineProgress).ToRotation();
 
-
+                                    
                                     const int freq = 5;
                                     if (timer % freq == freq - 1)
                                     {
@@ -676,7 +681,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                         }
                     }
                 }
-
+                
             }
             if (!InPhase2) // redirect attack
             {
@@ -952,7 +957,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             }
             return base.PreDraw(npc, spriteBatch, screenPos, drawColor);
         }
-        public static float DR(NPC npc) =>
+        public static float DR(NPC npc) => 
             npc.GetLifePercent() < 0.25f ? 0.4f // phase 3
             : npc.GetLifePercent() < 0.5f ? 0.4f // phase 2
             : 0; // phase 1

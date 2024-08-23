@@ -629,8 +629,8 @@ SuperBleedBuff: {
 }
 
 CorruptingBuff: {
-	DisplayName: Corrupting
-	Description: You are becoming corrupted
+	DisplayName: Withering
+	Description: You are withering
 }
 
 TimeFrozenBuff: {
@@ -678,14 +678,14 @@ WretchedHexBuff: {
 	Description: Shadowflame tentacles and vastly increased damage, but vastly decreased speed and defenses
 }
 
-WitheredBuff: {
+CorruptedBuff: {
 	DisplayName: Withered
-	Description: Mods.FargowiltasSouls.Buffs.WithereddBuff.Description
+	Description: You have withered
 }
 
-WitheredWizardBuff: {
-	DisplayName: Withered
-	Description: Mods.FargowiltasSouls.Buffs.WitheredWizardBuff.Description
+CorruptedBuffForce: {
+	DisplayName: Withered (Force)
+	Description: You have withered
 }
 
 JungleMimicSummonBuff: {
@@ -753,4 +753,14 @@ TimberBleedBuff: {
 EarthPoison: {
 	DisplayName: Earth Poison
 	Description: Mods.FargowiltasSouls.Buffs.EarthPoison.Description
+}
+
+WitheredBuff: {
+	DisplayName: Withered Buff
+	Description: Mods.FargowiltasSouls.Buffs.WitheredBuff.Description
+}
+
+WitheredWizardBuff: {
+	DisplayName: Withered Wizard Buff
+	Description: Mods.FargowiltasSouls.Buffs.WitheredWizardBuff.Description
 }

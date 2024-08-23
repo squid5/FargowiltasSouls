@@ -1,4 +1,5 @@
 ﻿using FargowiltasSouls.Assets.ExtraTextures;
+
 using FargowiltasSouls.Content.Buffs.Boss;
 using FargowiltasSouls.Content.Buffs.Masomode;
 using FargowiltasSouls.Content.Projectiles.Deathrays;
@@ -10,11 +11,14 @@ using System;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
+using FargowiltasSouls.Core.Systems;
+
+using Luminance.Core.Graphics;
 using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Content.Bosses.MutantBoss
 {
-    public class MutantDeathray2 : MutantSpecialDeathray, IPixelatedPrimitiveRenderer
+	public class MutantDeathray2 : MutantSpecialDeathray, IPixelatedPrimitiveRenderer
     {
         public MutantDeathray2() : base(180) { }
 
