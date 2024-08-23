@@ -1,4 +1,5 @@
 ﻿using FargowiltasSouls.Content.Projectiles.BossWeapons;
+using FargowiltasSouls.Core.Systems;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
@@ -43,10 +44,11 @@ namespace FargowiltasSouls.Content.Items.Weapons.BossDrops
             Item.shoot = ModContent.ProjectileType<Bonez>();
             Item.shootSpeed = 5.5f;
             Item.useAmmo = ItemID.Bone;
+            Item.scale = 0.9f;
         }
 
         // Manually reposition the Item when held out
-        public override Vector2? HoldoutOffset() => new Vector2(-30, 4);
+        public override Vector2? HoldoutOffset() => new Vector2(-20, -2);
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
@@ -71,5 +73,15 @@ namespace FargowiltasSouls.Content.Items.Weapons.BossDrops
             //damage *= (15f / 24f); //current usetime / old usetime
         }
         public override bool CanConsumeAmmo(Item ammo, Player player) => !Main.rand.NextBool(3);
+
+        public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
+        {
+            Vector2 muzzleOffset = Vector2.Normalize(velocity) * 35f;
+
+            if (Collision.CanHit(position, 0, 0, position + muzzleOffset, 0, 0))
+            {
+                position += muzzleOffset;
+            }
+        }
     }
 }
