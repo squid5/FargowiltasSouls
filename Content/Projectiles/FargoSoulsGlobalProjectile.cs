@@ -98,7 +98,7 @@ namespace FargowiltasSouls.Content.Projectiles
 
         public static List<int> ShroomiteBlacklist =
         [
-            ModContent.ProjectileType<MeteorFlame>(),
+            
         ];
         public static List<int> ShroomiteNerfList =
         [

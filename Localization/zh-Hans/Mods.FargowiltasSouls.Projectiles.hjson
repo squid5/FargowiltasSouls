@@ -672,7 +672,7 @@ RoseTintedVisorDeathray.DisplayName: 玫瑰激光
 GladiatorStandard.DisplayName: 角斗士旗帜
 HiveSentry.DisplayName: 蜂巢
 ROB.DisplayName: R.O.B
-MeteorFlame.DisplayName: 流星焰
+// MeteorEnchantMeatball.DisplayName: Massive Meteor
 RainUmbrella.DisplayName: 雨伞
 BeeFlower.DisplayName: 蜜蜂花朵
 MonkDashDamage.DisplayName: 武僧冲刺
@@ -723,7 +723,7 @@ AbomRitualFTW.DisplayName: 憎恶结界FTW
 // RoyalSubjectProjectile.DisplayName: Royal Subject Projectile
 // SandstoneBoulder.DisplayName: Sandstone Boulder
 // SandstoneShrapnel.DisplayName: Sandstone Shrapnel
-// EgyptianFlailProjectile.DisplayName: Egyptian Flail Projectile
+// EgyptianFlailProjectile.DisplayName: Nekhakha
 // SpiritBow.DisplayName: Spirit Bow
 // TimberBranch.DisplayName: Timber Branch
 // CosmosForceMoon.DisplayName: Cosmos Force Moon

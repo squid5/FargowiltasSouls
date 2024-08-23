@@ -147,7 +147,7 @@ namespace FargowiltasSouls.Content.Projectiles.BossWeapons
             float HoldoutRangeMax = (float)Projectile.Size.Length() / 2; //since sprite is diagonal
             float HoldoutRangeMin = (float)-Projectile.Size.Length() / 6;
 
-            if (Main.mouseRight && thrown < 2)
+            if ((Main.mouseRight || chargeLevel < 60) && thrown < 2)
             {
                 player.heldProj = Projectile.whoAmI;
                 Projectile.velocity = player.SafeDirectionTo(Main.MouseWorld);
@@ -168,8 +168,8 @@ namespace FargowiltasSouls.Content.Projectiles.BossWeapons
                 Projectile.spriteDirection = Projectile.direction;
                 player.ChangeDir(Projectile.direction);
                 player.itemRotation = (Projectile.velocity * Projectile.direction).ToRotation();
-                player.itemTime = 2;
-                player.itemAnimation = 2;
+                player.itemTime = 1;
+                player.itemAnimation = 1;
                 if (Projectile.spriteDirection == -1)
                 {
                     Projectile.rotation += MathHelper.ToRadians(-45f) + (float)Math.PI;
@@ -190,6 +190,7 @@ namespace FargowiltasSouls.Content.Projectiles.BossWeapons
                     chargeLevel = -1;
                     Projectile.timeLeft = 60 * 2;
                     thrown = 2;
+                    SoundEngine.PlaySound(SoundID.Item1 with { Pitch = Charged ? -0.6f : -0.2f }, Projectile.Center);
                 }
                 thrown++;
                 float frequency = Charged ? 3 : 5;

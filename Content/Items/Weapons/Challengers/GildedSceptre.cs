@@ -27,12 +27,12 @@ namespace FargowiltasSouls.Content.Items.Weapons.Challengers
 
         public override void SetDefaults()
         {
-            Item.damage = 22;
+            Item.damage = 24;
             Item.DamageType = DamageClass.Magic;
             Item.width = 56;
             Item.height = 56;
-            Item.useTime = 9;
-            Item.useAnimation = 9;
+            Item.useTime = 7;
+            Item.useAnimation = 7;
             Item.channel = true;
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.knockBack = 1f;
@@ -74,7 +74,7 @@ namespace FargowiltasSouls.Content.Items.Weapons.Challengers
         }
         private void FunnyCircle(Player player)
         {
-            const float Threshold = 0.165f; // Average error% to circle must be lower than this 
+            const float Threshold = 0.195f; // Average error% to circle must be lower than this 
             IEnumerable<Projectile> shots = Main.projectile.Where(p => p.TypeAlive(Item.shoot) && p.owner == player.whoAmI && p.ai[2] != 1);
             if (!shots.Any())
                 return;

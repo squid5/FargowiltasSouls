@@ -22,7 +22,7 @@ namespace FargowiltasSouls.Content.Projectiles.Souls
             Projectile.aiStyle = 0;
             AIType = ProjectileID.Bullet;
             Projectile.friendly = true;
-            Projectile.DamageType = DamageClass.Ranged;
+            Projectile.DamageType = DamageClass.Default;
             Projectile.penetrate = 1;
             Projectile.tileCollide = false;
             Projectile.timeLeft = 1000;
