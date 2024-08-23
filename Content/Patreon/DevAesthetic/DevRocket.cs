@@ -31,7 +31,7 @@ namespace FargowiltasSouls.Content.Patreon.DevAesthetic
             Projectile.timeLeft = 75 * (Projectile.extraUpdates + 1);
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = 10;
-            Projectile.FargoSouls().noInteractionWithNPCImmunityFrames = true;
+            //Projectile.FargoSouls().noInteractionWithNPCImmunityFrames = true;
         }
 
         private Color color;
