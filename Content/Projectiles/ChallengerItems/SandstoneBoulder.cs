@@ -93,7 +93,7 @@ namespace FargowiltasSouls.Content.Projectiles.ChallengerItems
         }
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
-            float bonus = 0.2f * Projectile.velocity.Length() / 20f;
+            float bonus = 0.2f * Projectile.MaxUpdates * Projectile.velocity.Length() / 20f;
             bonus = MathHelper.Clamp(bonus, 0, 0.2f);
             modifiers.SourceDamage *= 1 + bonus;
         }
