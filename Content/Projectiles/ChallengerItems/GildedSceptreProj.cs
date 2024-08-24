@@ -42,7 +42,6 @@ namespace FargowiltasSouls.Content.Projectiles.ChallengerItems
         private Vector2 originPos = Vector2.Zero;
         public override void AI()
         {
-            Projectile.ai[1]++;
             if (Projectile.localAI[0] < 6)
             {
                 Projectile.localAI[0]++;
@@ -52,7 +51,7 @@ namespace FargowiltasSouls.Content.Projectiles.ChallengerItems
             {
                 if (originPos == Vector2.Zero)
                     originPos = Projectile.Center;
-                Vector2 desiredPos = originPos + (MathF.Tau * (Projectile.ai[1] % 20) / 20).ToRotationVector2() * 6;
+                //Vector2 desiredPos = originPos + (MathF.Tau * (Projectile.ai[1] % 20) / 20).ToRotationVector2() * 6;
                 //Projectile.velocity = desiredPos - Projectile.Center;
             }
             if (Triggered != 0) // home onto closest 
@@ -148,7 +147,10 @@ namespace FargowiltasSouls.Content.Projectiles.ChallengerItems
         {
             if (completionRatio < 0.08f)
                 return Color.Transparent;
-            return Color.Lerp(Color.Lerp(Color.Lerp(Color.MediumPurple, Color.DeepPink, 0.5f), GlowColor, 0.5f), Projectile.GetAlpha(GlowColor with { A = 100 }) * 0.5f, completionRatio);
+            Color color = Color.Lerp(Color.Lerp(Color.MediumPurple, Color.DeepPink, 0.5f), GlowColor, 0.5f);
+            if (Projectile.ai[1] != 0)
+                color = Color.Lerp(color, Color.Red, 0.6f);
+            return Color.Lerp(color, Projectile.GetAlpha(GlowColor with { A = 100 }) * 0.5f, completionRatio);
 
             //return Color.Lerp(GlowColor, Color.Transparent, completionRatio) * 0.7f;
         }

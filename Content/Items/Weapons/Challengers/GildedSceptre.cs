@@ -27,7 +27,7 @@ namespace FargowiltasSouls.Content.Items.Weapons.Challengers
 
         public override void SetDefaults()
         {
-            Item.damage = 24;
+            Item.damage = 8;
             Item.DamageType = DamageClass.Magic;
             Item.width = 56;
             Item.height = 56;
@@ -116,19 +116,28 @@ namespace FargowiltasSouls.Content.Items.Weapons.Challengers
                     foreach (var shot in shots)
                     {
                         shot.ai[2] = 1;
+                        shot.ai[1] = 1;
                         shot.ai[0] = -1;
                         shot.velocity = shot.DirectionTo(circleCenter) * 18;
                         shot.netUpdate = true;
+                        shot.damage = (int)(shot.damage * 1.7f);
                     }
                     SoundEngine.PlaySound(CursedCoffin.BigShotSFX, circleCenter);
                 }
             }
             else if (Main.mouseLeftRelease)
             {
+                float bonus = 0.5f * (Threshold / error);
+                bonus = MathHelper.Clamp(bonus, 0, 0.5f);
                 foreach (var shot in shots)
                 {
-                    shot.Kill();
+                    shot.ai[2] = 1;
+                    shot.ai[0] = -1;
+                    shot.velocity = shot.DirectionTo(circleCenter) * 18;
+                    shot.netUpdate = true;
+                    shot.damage = (int)(shot.damage * (1f + bonus));
                 }
+                SoundEngine.PlaySound(CursedCoffin.BigShotSFX with { Pitch = -0.4f }, circleCenter);
             }
         }
         public override Vector2? HoldoutOffset()
