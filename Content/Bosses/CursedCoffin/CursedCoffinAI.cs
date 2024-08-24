@@ -26,7 +26,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 
 
 		public static readonly SoundStyle PhaseTransitionSFX = new("FargowiltasSouls/Assets/Sounds/Challengers/Coffin/CoffinPhaseTransition");
-		public static readonly SoundStyle SlamSFX = new("FargowiltasSouls/Assets/Sounds/Challengers/Coffin/CoffinSlam") { PitchVariance = 0.3f };
+		public static readonly SoundStyle SlamSFX = new("FargowiltasSouls/Assets/Sounds/Challengers/Coffin/CoffinSlam") { Volume = 0.5f, PitchVariance = 0.3f };
 		public static readonly SoundStyle SpiritDroneSFX = new("FargowiltasSouls/Assets/Sounds/Challengers/Coffin/CoffinSpiritDrone") { MaxInstances = 1, SoundLimitBehavior = SoundLimitBehavior.IgnoreNew, Volume = 0.2f };
 		public static readonly SoundStyle BigShotSFX = new("FargowiltasSouls/Assets/Sounds/Challengers/Coffin/CoffinBigShot") { Volume = 0.6f, PitchVariance = 0.3f };
 		public static readonly SoundStyle ShotSFX = new("FargowiltasSouls/Assets/Sounds/Challengers/Coffin/CoffinShot") { Volume = 0.3f, PitchVariance = 0.3f };
