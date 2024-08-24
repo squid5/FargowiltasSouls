@@ -3542,6 +3542,7 @@ SisypheanFist: {
 		While grounded, grab a huge boulder from the earth
 		Release the button to hurl it towards your cursor
 		Boulder damage scales with its speed
+		Pierces enemies with low health
 		''' */
 }
 
@@ -3560,6 +3561,7 @@ SpiritLongbow: {
 		'''
 		Converts arrows to Spirit Arrows that release spirit flames behind them
 		Hold button to charge shots for more damage and higher speed
+		Pierces enemies with low health
 		''' */
 }
 

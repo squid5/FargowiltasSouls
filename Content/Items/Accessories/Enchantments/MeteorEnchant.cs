@@ -130,7 +130,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
                 return;
 
             bool forceEffect = modPlayer.ForceEffect<MeteorEnchant>();
-            int damage = forceEffect ? 450 : 90;
+            int damage = forceEffect ? 400 : 90;
             modPlayer.MeteorCD = Cooldown;
 
             Vector2 pos = new(player.Center.X + Main.rand.NextFloat(-1000, 1000), player.Center.Y - 1000);
@@ -150,6 +150,15 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
             SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/ThrowShort"), projectile.Center);
 
             int i = Projectile.NewProjectile(GetSource_EffectItem(player), pos, vel, ModContent.ProjectileType<MeteorEnchantMeatball>(), FargoSoulsUtil.HighestDamageTypeScaling(player, damage), 0.5f, player.whoAmI, 0, 0.5f + (float)Main.rand.NextDouble() * 0.3f);
+            if (forceEffect && i.IsWithinBounds(Main.maxProjectiles))
+            {
+                Projectile p = Main.projectile[i];
+                p.position = p.Center;
+                p.scale *= 2;
+                p.width *= 2;
+                p.height *= 2;
+                p.Center = p.position;
+            }
         }
     }
 }
