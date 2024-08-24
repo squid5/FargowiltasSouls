@@ -211,6 +211,17 @@ namespace FargowiltasSouls.Content.Projectiles.BossWeapons
         }
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
+            ref float thrown = ref Projectile.ai[0];
+
+            if (thrown <= 0)
+            {
+                Player player = Main.player[Projectile.owner];
+                int amount = 2;
+                player.statLife += amount;
+                if (player.statLife > player.statLifeMax2)
+                    player.statLife = player.statLifeMax2;
+                player.HealEffect(amount);
+            }
             Vector2 pos = Projectile.Center + Vector2.Normalize(Projectile.velocity) * (Projectile.Size.Length() / 2f);
             int count = 4;
             if (Charged)
