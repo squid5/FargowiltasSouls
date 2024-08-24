@@ -25,6 +25,7 @@ namespace FargowiltasSouls.Content.Projectiles.ChallengerItems
             Projectile.DamageType = DamageClass.Melee;
             Projectile.ignoreWater = true;
             Projectile.FargoSouls().CanSplit = false;
+            Projectile.penetrate = 10;
         }
 
         public ref float timer => ref Projectile.ai[0];
@@ -87,12 +88,13 @@ namespace FargowiltasSouls.Content.Projectiles.ChallengerItems
         }
         public override bool? CanHitNPC(NPC target)
         {
-            if (target.type == NPCID.VileSpit || target.type == NPCID.VileSpitEaterOfWorlds)
-                return false;
             return base.CanHitNPC(target);
         }
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
+            if (target.life > Projectile.damage && Projectile.penetrate > 1)
+                Projectile.penetrate = 1;
+
             float bonus = 0.2f * Projectile.MaxUpdates * Projectile.velocity.Length() / 20f;
             bonus = MathHelper.Clamp(bonus, 0, 0.2f);
             modifiers.SourceDamage *= 1 + bonus;

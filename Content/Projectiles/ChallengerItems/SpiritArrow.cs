@@ -26,7 +26,7 @@ namespace FargowiltasSouls.Content.Projectiles.ChallengerItems
             Projectile.hostile = false;
             Projectile.friendly = true;
             AIType = 14;
-            Projectile.penetrate = 1;
+            Projectile.penetrate = 10;
             Projectile.tileCollide = true;
             Projectile.ignoreWater = true;
             Projectile.DamageType = DamageClass.Ranged;
@@ -66,7 +66,11 @@ namespace FargowiltasSouls.Content.Projectiles.ChallengerItems
             Projectile.ai[0] += 1f;
             Projectile.ai[1] += 1f;
         }
-
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+        {
+            if (target.life > Projectile.damage && Projectile.penetrate > 1)
+                Projectile.penetrate = 1;
+        }
         public override Color? GetAlpha(Color lightColor) => new Color(255, 255, 255, 610 - Main.mouseTextColor * 2) * Projectile.Opacity;
 
         public override bool PreDraw(ref Color lightColor)
