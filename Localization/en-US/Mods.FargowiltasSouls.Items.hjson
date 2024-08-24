@@ -3521,6 +3521,7 @@ SisypheanFist: {
 		While grounded, grab a huge boulder from the earth
 		Release the button to hurl it towards your cursor
 		Boulder damage scales with its speed
+		Pierces enemies with low health
 		'''
 }
 
@@ -3539,6 +3540,7 @@ SpiritLongbow: {
 		'''
 		Converts arrows to Spirit Arrows that release spirit flames behind them
 		Hold button to charge shots for more damage and higher speed
+		Pierces enemies with low health
 		'''
 }
 
@@ -3559,12 +3561,12 @@ CursedCoffinTrophy: {
 
 UmbraRegalia: {
 	DisplayName: Umbra Regalia
-	Tooltip: 
-	'''
-	Left Click to rapidly stab with the spear
-	Hold Right Click to wind up and release to throw the spear
-	Spear hits release homing umbral crystals
-	Spear throw leaves a trail of umbral crystals in its wake
-	Fully charged spear throws deal more damage and hits release more crystals
-	'''
+	Tooltip:
+		'''
+		Left Click to rapidly stab with the spear
+		Hold Right Click to wind up and release to throw the spear
+		Spear hits release homing umbral crystals
+		Spear throw leaves a trail of umbral crystals in its wake
+		Fully charged spear throws deal more damage and hits release more crystals
+		'''
 }

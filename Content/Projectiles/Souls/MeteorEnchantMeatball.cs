@@ -19,7 +19,7 @@ namespace FargowiltasSouls.Content.Projectiles.Souls
             Projectile.DamageType = DamageClass.Generic;
             Projectile.friendly = true;
             Projectile.timeLeft = 60 * 4;
-            Projectile.tileCollide = true;
+            Projectile.tileCollide = false;
             Projectile.width = 64;
             Projectile.height = 64;
             Projectile.penetrate = 1;
@@ -33,6 +33,8 @@ namespace FargowiltasSouls.Content.Projectiles.Souls
 
         public override void AI()
         {
+            if (Projectile.timeLeft < 60 * 2.5f)
+                Projectile.tileCollide = true;
             if (++Projectile.frameCounter > 4)
             {
                 if (++Projectile.frame >= Main.projFrames[Type])
