@@ -261,12 +261,6 @@ namespace FargowiltasSouls.Content.Items
                 type = ProjectileID.ConfettiGun;
                 damage = 0;
             }
-
-            if (player.Eternity().MythrilHalberdTimer >= 120 && (item.type == ItemID.MythrilHalberd))
-            {
-                damage = (int)(damage * 8 * player.FargoSouls().AttackSpeed);
-                player.Eternity().MythrilHalberdTimer = 0;
-            }
         }
     }
 }

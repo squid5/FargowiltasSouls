@@ -1320,7 +1320,8 @@ namespace FargowiltasSouls.Content.Projectiles
         }
         public override void ModifyHitNPC(Projectile projectile, NPC target, ref NPC.HitModifiers modifiers)
         {
-            FargoSoulsPlayer modPlayer = Main.player[projectile.owner].FargoSouls();
+            Player player = Main.player[projectile.owner];
+            FargoSoulsPlayer modPlayer = player.FargoSouls();
 
             if (stormTimer > 0)
                 modifiers.FinalDamage *= modPlayer.ForceEffect<ForbiddenEnchant>() ? 1.6f : 1.3f;
@@ -1328,11 +1329,19 @@ namespace FargowiltasSouls.Content.Projectiles
             if (TungstenScale != 1 && projectile.type == ProjectileID.PiercingStarlight)
                 modifiers.FinalDamage *= 0.4f;
 
-            if (Main.player[projectile.owner].HasEffect<NinjaEffect>())
+            if (player.HasEffect<NinjaEffect>())
             {
                 float maxDamageIncrease = modPlayer.ForceEffect<NinjaEnchant>() ? 0.3f : 0.2f;
                 modifiers.FinalDamage *= 1f + (maxDamageIncrease * Math.Min((projectile.extraUpdates + 1) * projectile.velocity.Length() / 40f, 1));
 
+            }
+
+            if (projectile.type == ProjectileID.MythrilHalberd)
+            {
+                if (Main.player[projectile.owner].Eternity().MythrilHalberdTimer >= 120)
+                {
+                    modifiers.SourceDamage *= 8 * modPlayer.AttackSpeed;
+                }
             }
             /*
             int AccountForDefenseShred(int modifier)
