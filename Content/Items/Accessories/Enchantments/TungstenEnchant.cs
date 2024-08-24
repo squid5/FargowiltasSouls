@@ -99,13 +99,15 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
                 ProjectileID.ShadowJoustingLance,
                 ModContent.ProjectileType<PrismaRegaliaProj>(),
                 ModContent.ProjectileType<BaronTuskShrapnel>(),
+                ModContent.ProjectileType<UmbraRegaliaProj>(),
         ];
         public static List<int> TungstenAlwaysAffectProjStyle =
         [
             ProjAIStyleID.Spear,
             ProjAIStyleID.Yoyo,
             ProjAIStyleID.ShortSword,
-            ProjAIStyleID.Flail
+            ProjAIStyleID.Flail,
+            ProjAIStyleID.SleepyOctopod
         ];
         public static bool TungstenAlwaysAffectProj(Projectile projectile)
         {

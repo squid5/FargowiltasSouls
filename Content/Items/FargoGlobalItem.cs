@@ -2,6 +2,7 @@ using FargowiltasSouls.Content.Buffs.Souls;
 using FargowiltasSouls.Content.Items.Accessories.Enchantments;
 using FargowiltasSouls.Content.Items.Accessories.Forces;
 using FargowiltasSouls.Content.Items.Placables;
+using FargowiltasSouls.Content.Items.Weapons.BossDrops;
 using FargowiltasSouls.Content.Items.Weapons.Challengers;
 using FargowiltasSouls.Content.Projectiles.Souls;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
@@ -140,7 +141,8 @@ namespace FargowiltasSouls.Content.Items
             //ItemID.PiercingStarlight,
             ItemID.TheHorsemansBlade,
             ModContent.ItemType<TheBaronsTusk>(),
-            ItemID.LucyTheAxe
+            ItemID.LucyTheAxe,
+            ModContent.ItemType<SlimeKingsSlasher>()
         ];
         public override void ModifyItemScale(Item item, Player player, ref float scale)
         {
