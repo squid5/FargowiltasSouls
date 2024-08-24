@@ -142,7 +142,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             {
                 if (npc.ai[2] == 800 - 90) //telegraph spin
                 {
-                    if (FargoSoulsUtil.HostCheck && !WorldSavingSystem.MasochistModeReal)
+                    if (FargoSoulsUtil.HostCheck)
                         Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, Vector2.Zero, ModContent.ProjectileType<TargetingReticle>(), 0, 0f, Main.myPlayer, npc.whoAmI, npc.type);
                 }
                 if (npc.ai[2] < 800 - 5)
