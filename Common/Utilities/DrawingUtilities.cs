@@ -83,6 +83,7 @@ namespace FargowiltasSouls
 
         public static string VanillaTextureProjectile(int projectileID) => $"Terraria/Images/Projectile_{projectileID}";
         public static string VanillaTextureNPC(int npcID) => $"Terraria/Images/NPC_{npcID}";
+        public static string VanillaTextureItem(int itemID) => $"Terraria/Images/Item_{itemID}";
 
         public static void GenericProjectileDraw(Projectile projectile, Color lightColor, Texture2D texture = null, Vector2? drawPos = null, float? rotation = null)
         {
