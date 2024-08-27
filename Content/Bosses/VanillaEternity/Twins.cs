@@ -306,7 +306,8 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                                 if (FargoSoulsUtil.HostCheck)
                                 {
                                     float num429 = 10.5f;
-                                    int attackDamage_ForProjectiles3 = npc.GetAttackDamage_ForProjectiles(20f, 19f);
+                                    int projDamage = npc.GetAttackDamage_ForProjectiles(20f, 19f);
+                                    projDamage = (int)(projDamage * 1.25f);
                                     int num430 = 83;
 
                                     float angle = (float)Math.Sqrt(targetX * targetX + targetY * targetY);
@@ -333,7 +334,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                                         offset *= (int)npc.HorizontalDirectionTo(player.Center);
                                         Vector2 vel2 = vel.RotatedBy(MathHelper.PiOver2 * 0.15f * offset);
                                         //shootPos += vel2 * 6f;
-                                        Projectile.NewProjectile(npc.GetSource_FromThis(), shootPos.X, shootPos.Y, vel2.X, vel2.Y, num430, attackDamage_ForProjectiles3, 0f, Main.myPlayer);
+                                        Projectile.NewProjectile(npc.GetSource_FromThis(), shootPos.X, shootPos.Y, vel2.X, vel2.Y, num430, projDamage, 0f, Main.myPlayer);
                                     }
                                     npc.velocity -= vel;
 
@@ -387,7 +388,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                         }
                     case 2: // mid dash
                         {
-                            
+                            npc.damage = (int)(npc.defDamage * 1.5f);
                             ai_StateTimer += 1f;
                             if (ai_StateTimer >= 25f)
                             {
@@ -957,7 +958,8 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                                 if (FargoSoulsUtil.HostCheck)
                                 {
                                     float vel = 14f;
-                                    int attackDamage_ForProjectiles6 = npc.GetAttackDamage_ForProjectiles(25f, 22f);
+                                    int projDamage = npc.GetAttackDamage_ForProjectiles(25f, 22f);
+                                    //projDamage = (int)(projDamage * 1.25f);
                                     float angle = (float)Math.Sqrt(targetX * targetX + targetY * targetY);
                                     angle = vel / angle;
                                     targetX *= angle;
@@ -966,8 +968,8 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                                     targetY += (float)Main.rand.Next(-40, 41) * 0.05f;
                                     shootPos.X += targetX * 4f;
                                     shootPos.Y += targetY * 4f;
-                                    int num473 = Projectile.NewProjectile(npc.GetSource_FromThis(), shootPos.X, shootPos.Y, targetX / 10f, targetY / 10f, ModContent.ProjectileType<MechElectricOrbSpaz>(), 
-                                        attackDamage_ForProjectiles6, 0f, Main.myPlayer, ai0: npc.target, ai2: MechElectricOrb.Green);
+                                    int num473 = Projectile.NewProjectile(npc.GetSource_FromThis(), shootPos.X, shootPos.Y, targetX / 10f, targetY / 10f, ModContent.ProjectileType<MechElectricOrbSpaz>(),
+                                        projDamage, 0f, Main.myPlayer, ai0: npc.target, ai2: MechElectricOrb.Green);
 
                                     Vector2 shotVel = new(targetX, targetY);
                                     npc.velocity -= shotVel / 2f;
@@ -1028,6 +1030,8 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                         }
                     case 2: // mid dash
                         {
+                            npc.damage = (int)(npc.defDamage * 1.5f);
+
                             ai_StateTimer += 1f;
                             if (ai_StateTimer >= 25f)
                             {
