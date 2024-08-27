@@ -675,6 +675,61 @@ namespace FargowiltasSouls //lets everything access it without using
             }
         }
 
+        public static Vector2 EyePosition(this Player player)
+        {
+            // Taken from player.Yoraiz0rEye().
+            int num = 0;
+            num += player.bodyFrame.Y / 56;
+            if (num >= Main.OffsetsPlayerHeadgear.Length)
+                num = 0;
+
+            Vector2 vector = Main.OffsetsPlayerHeadgear[num];
+            vector *= player.Directions;
+            Vector2 vector2 = new Vector2(player.width / 2, player.height / 2) + vector + (player.MountedCenter - player.Center);
+            player.sitting.GetSittingOffsetInfo(player, out var posOffset, out var seatAdjustment);
+            vector2 += posOffset + new Vector2(0f, seatAdjustment);
+            if (player.face == 19)
+                vector2.Y -= 5f * player.gravDir;
+
+            if (player.head == 276)
+                vector2.X += 2.5f * (float)player.direction;
+
+            if (player.mount.Active && player.mount.Type == 52)
+            {
+                vector2.X += 14f * (float)player.direction;
+                vector2.Y -= 2f * player.gravDir;
+            }
+
+            // this is added to adjust to exact eye position
+            //vector2.X += 1f * player.direction;
+            vector2.Y -= 2f * player.gravDir;
+
+            float y = -11.5f * player.gravDir;
+            Vector2 vector3 = new Vector2(3 * player.direction - ((player.direction == 1) ? 1 : 0), y) + Vector2.UnitY * player.gfxOffY + vector2;
+            Vector2 vector4 = new Vector2(3 * player.shadowDirection[1] - ((player.direction == 1) ? 1 : 0), y) + vector2;
+            Vector2 vector5 = Vector2.Zero;
+            if (player.mount.Active && player.mount.Cart)
+            {
+                int num2 = Math.Sign(player.velocity.X);
+                if (num2 == 0)
+                    num2 = player.direction;
+
+                vector5 = new Vector2(MathHelper.Lerp(0f, -8f, player.fullRotation / ((float)Math.PI / 4f)), MathHelper.Lerp(0f, 2f, Math.Abs(player.fullRotation / ((float)Math.PI / 4f)))).RotatedBy(player.fullRotation);
+                if (num2 == Math.Sign(player.fullRotation))
+                    vector5 *= MathHelper.Lerp(1f, 0.6f, Math.Abs(player.fullRotation / ((float)Math.PI / 4f)));
+            }
+
+            if (player.fullRotation != 0f)
+            {
+                vector3 = vector3.RotatedBy(player.fullRotation, player.fullRotationOrigin);
+                //vector4 = vector4.RotatedBy(player.fullRotation, player.fullRotationOrigin);
+            }
+
+            //float num3 = 0f;
+            Vector2 vector6 = player.position + vector3 + vector5;
+            return vector6;
+        }
+
 
         #region npcloot
 
