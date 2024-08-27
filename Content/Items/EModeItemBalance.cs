@@ -245,18 +245,15 @@ namespace FargowiltasSouls.Content.Items
                     balanceTextKeys = ["CrossNecklaceNerf"];
                     return EModeChange.Nerf;
                 case ItemID.StarCloak:
+                case ItemID.StarVeil:
+                case ItemID.BeeCloak:
+                case ItemID.ManaCloak:
                     if (!Main.hardMode)
                     {
                         balanceTextKeys = ["StarCloak"];
                         return EModeChange.Nerf;
                     }
                     return EModeChange.None;
-                case ItemID.StarVeil:
-                    balanceTextKeys = ["CrossNecklaceNerf"];
-                    if (!Main.hardMode)
-                        balanceTextKeys = ["StarCloak"];
-                    return EModeChange.Nerf;
-
                 #region Sword and Spear Reworks
                 case ItemID.CobaltNaginata:
                     balanceNumber = -1;

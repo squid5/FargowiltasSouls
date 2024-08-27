@@ -1213,6 +1213,9 @@ namespace FargowiltasSouls.Content.Projectiles
                     break;
 
                 case ProjectileID.StarCloakStar:
+                case ProjectileID.StarVeilStar:
+                case ProjectileID.BeeCloakStar:
+                case ProjectileID.ManaCloakStar:
                     if (!Main.hardMode)
                         modifiers.FinalDamage *= 0.33f;
                     break;
