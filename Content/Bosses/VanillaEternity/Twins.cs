@@ -254,7 +254,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             }
             if (!Phase2) // phase 1
             {
-
+                npc.damage = npc.defDamage;
                 ref float ai_State = ref npc.ai[1];
                 ref float ai_StateTimer = ref npc.ai[2];
                 ref float ai_ShotTimer = ref npc.ai[3];
@@ -418,6 +418,8 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             }
             else
             {
+                npc.damage = (int)(npc.defDamage * 1.5f);
+
                 if (npc.ai[1] != 0)
                     npc.localAI[1] -= 1f;
                 if (npc.localAI[1] >= (npc.ai[1] == 0 ? 170 : 50)) //hijacking vanilla laser code
@@ -907,6 +909,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
             if (!Phase2) // phase 1
             {
+                npc.damage = npc.defDamage;
                 ref float ai_State = ref npc.ai[1];
                 ref float ai_StateTimer = ref npc.ai[2];
                 ref float ai_ShotTimer = ref npc.ai[3];
@@ -1060,6 +1063,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             }
             else
             {
+                npc.damage = (int)(npc.defDamage * 1.5f);
                 if (npc.ai[1] == 0f) // not dashing
                 {
                     if (retinazer != null && (retinazer.ai[0] < 4f || retinazer.GetGlobalNPC<Retinazer>().DeathrayState == 0
