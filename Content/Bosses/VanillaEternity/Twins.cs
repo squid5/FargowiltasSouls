@@ -173,6 +173,23 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             if (WorldSavingSystem.SwarmActive)
                 return true;
 
+            if (!npc.HasValidTarget || !Main.player[npc.target].active || Main.player[npc.target].dead)
+            {
+                npc.TargetClosest();
+                Player p = Main.player[npc.target];
+                if (!npc.HasValidTarget || !p.active || p.dead)
+                {
+                    npc.noTileCollide = true;
+                    if (npc.timeLeft > 30)
+                        npc.timeLeft = 30;
+
+                    if (npc.velocity.Y > 0)
+                        npc.velocity.Y = 0;
+                    npc.velocity.Y -= 0.5f;
+                    return false;
+                }
+            }
+
             //have some dr during phase transition animation
             if (npc.ai[0] == 1 || npc.ai[0] == 2)
                 Resist = true;
@@ -819,6 +836,23 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
             if (WorldSavingSystem.SwarmActive)
                 return true;
+
+            if (!npc.HasValidTarget || !Main.player[npc.target].active || Main.player[npc.target].dead)
+            {
+                npc.TargetClosest();
+                Player p = Main.player[npc.target];
+                if (!npc.HasValidTarget || !p.active || p.dead)
+                {
+                    npc.noTileCollide = true;
+                    if (npc.timeLeft > 30)
+                        npc.timeLeft = 30;
+
+                    if (npc.velocity.Y > 0)
+                        npc.velocity.Y = 0;
+                    npc.velocity.Y -= 0.5f;
+                    return false;
+                }
+            }
 
             //have some dr during phase transition animation
             if (npc.ai[0] == 1 || npc.ai[0] == 2)
