@@ -63,7 +63,7 @@ This has a cooldown of 10 seconds during which you cannot gain shards
 
         public override float ContactDamageDR(Player player, NPC npc, ref Player.HurtModifiers modifiers)
         {
-            return base.ContactDamageDR(player, npc, ref modifiers);
+            return TitaniumDR(player, npc);
         }
         public override float ProjectileDamageDR(Player player, Projectile projectile, ref Player.HurtModifiers modifiers)
         {
@@ -75,16 +75,22 @@ This has a cooldown of 10 seconds during which you cannot gain shards
 
             if (!modPlayer.TitaniumDRBuff)
                 return 0;
+            NPC sourceNPC = null;
+            if (attacker is NPC attackerNPC)
+                sourceNPC = attackerNPC;
+            if (attacker is Projectile projectile && projectile.GetSourceNPC() is NPC projNPC)
+                sourceNPC = projNPC;
 
-            bool canUseDR = attacker is NPC ||
-                attacker is Projectile projectile && projectile.GetSourceNPC() is NPC sourceNPC
-                && player.Distance(sourceNPC.Center) < Math.Max(sourceNPC.width, sourceNPC.height) + 16 * 8;
-
-            if (canUseDR)
+            if (sourceNPC != null)
             {
-                float diff = 1f - player.endurance;
-                diff *= modPlayer.ForceEffect<TitaniumEnchant>() ? 0.35f : 0.25f;
-                return diff;
+                float dr = 0.2f;
+                if (modPlayer.ForceEffect<TitaniumEnchant>())
+                    dr += 0.1f;
+                float distance = player.Distance(sourceNPC.Center);
+                float distanceBonus = MathHelper.Lerp(0.1f, 0f, distance / 1000f);
+                distanceBonus = MathHelper.Clamp(distanceBonus, 0f, 0.1f);
+                dr += distanceBonus;
+                return dr;
             }
             return 0;
         }
