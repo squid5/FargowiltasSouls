@@ -91,7 +91,6 @@ This has a cooldown of 10 seconds during which you cannot gain shards
                 float closeBonus = MathHelper.Lerp(closeExtraDR, 0f, distance / 1000f);
                 closeBonus = MathHelper.Clamp(closeBonus, 0f, closeExtraDR);
                 dr += closeBonus;
-                Main.NewText(dr);
                 return dr;
             }
             return 0;
