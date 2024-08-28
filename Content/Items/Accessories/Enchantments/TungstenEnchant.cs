@@ -121,11 +121,14 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
             ModContent.ProjectileType<FishStickWhirlpool>(),
             ProjectileID.ButchersChainsaw,
         ];
-        public static List<int> TungstenNeverAffectProjStyle = [];
+        public static List<int> TungstenNeverAffectProjStyle = 
+            [
+            ProjAIStyleID.Yoyo
+            ];
         public static bool TungstenNeverAffectsProj(Projectile projectile)
         {
             return TungstenNeverAffectProjType.Contains(projectile.type) ||
-                TungstenNeverAffectProjStyle.Contains(projectile.type);
+                TungstenNeverAffectProjStyle.Contains(projectile.aiStyle);
         }
 
         public static void TungstenIncreaseProjSize(Projectile projectile, FargoSoulsPlayer modPlayer, IEntitySource source)
