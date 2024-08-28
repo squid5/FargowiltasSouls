@@ -83,13 +83,15 @@ This has a cooldown of 10 seconds during which you cannot gain shards
 
             if (sourceNPC != null)
             {
-                float dr = 0.2f;
+                float dr = 0.1f;
+                float closeExtraDR = 0.2f;
                 if (modPlayer.ForceEffect<TitaniumEnchant>())
-                    dr += 0.1f;
+                    closeExtraDR += 0.1f;
                 float distance = player.Distance(sourceNPC.Center);
-                float distanceBonus = MathHelper.Lerp(0.1f, 0f, distance / 1000f);
-                distanceBonus = MathHelper.Clamp(distanceBonus, 0f, 0.1f);
-                dr += distanceBonus;
+                float closeBonus = MathHelper.Lerp(closeExtraDR, 0f, distance / 1000f);
+                closeBonus = MathHelper.Clamp(closeBonus, 0f, closeExtraDR);
+                dr += closeBonus;
+                Main.NewText(dr);
                 return dr;
             }
             return 0;
