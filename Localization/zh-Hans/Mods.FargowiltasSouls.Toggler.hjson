@@ -91,8 +91,7 @@ NebulaEffect: 星云 强化焰
 SolarEffect: 耀斑 护盾冲撞
 SolarFlareEffect: 耀斑 太阳耀斑减益
 StardustMinionEffect: 星尘 星尘守卫
-VortexStealthEffect: 星旋 潜行
-VortexVortexEffect: 星旋 星旋旋涡
+// VortexEffect: Vortex Laser
 // CosmosMoonEffect: Cosmic Moons
 DeviEnergyHeader: 永恒模式饰品
 DeerSinewEffect: 鹿筋冲刺

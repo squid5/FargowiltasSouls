@@ -179,7 +179,7 @@ namespace FargowiltasSouls.Core.ModPlayers
         public int turtleRecoverCD = 240;
         public bool ShellHide;
         public int ValhallaDashCD;
-        public bool VortexStealth;
+        public int VortexCD;
         public bool WizardEnchantActive;
         public bool WizardTooltips;
         public Item WizardedItem;

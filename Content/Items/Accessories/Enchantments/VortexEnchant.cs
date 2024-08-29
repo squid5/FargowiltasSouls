@@ -1,4 +1,6 @@
-﻿using FargowiltasSouls.Content.Buffs.Souls;
+﻿using FargowiltasSouls.Content.Bosses.Champions.Cosmos;
+using FargowiltasSouls.Content.Buffs.Souls;
+using FargowiltasSouls.Content.Projectiles.Souls;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using FargowiltasSouls.Core.Toggler.Content;
 using Microsoft.Xna.Framework;
@@ -46,53 +48,7 @@ While in stealth, your own projectiles will not be sucked in
         }
         public static void AddEffects(Player player, Item item)
         {
-            //portal spawn
-            player.AddEffect<VortexStealthEffect>(item);
-            player.AddEffect<VortexVortexEffect>(item);
-
-            //player.AddEffect<VortexProjGravity>(item);
-
-            FargoSoulsPlayer modPlayer = player.FargoSouls();
-            if (player.mount.Active)
-                modPlayer.VortexStealth = false;
-
-            if (modPlayer.VortexStealth)
-            {
-                player.moveSpeed *= 0.3f;
-                player.aggro -= 1200;
-                player.setVortex = true;
-                player.stealth = 0f;
-            }
-        }
-        public static void ActivateVortex(Player player)
-        {
-            if (player != Main.LocalPlayer)
-            {
-                return;
-            }
-            FargoSoulsPlayer modPlayer = player.FargoSouls();
-            bool stealthEffect = player.HasEffect<VortexStealthEffect>();
-            bool vortexEffect = player.HasEffect<VortexVortexEffect>();
-            if (stealthEffect || vortexEffect)
-            {
-                //stealth memes
-                modPlayer.VortexStealth = !modPlayer.VortexStealth;
-
-                if (!stealthEffect)
-                    modPlayer.VortexStealth = false;
-
-                if (Main.netMode == NetmodeID.MultiplayerClient)
-                    NetMessage.SendData(MessageID.SyncPlayer, number: player.whoAmI);
-
-                if (modPlayer.VortexStealth && vortexEffect && !player.HasBuff(ModContent.BuffType<VortexCDBuff>()))
-                {
-                    int p = Projectile.NewProjectile(player.GetSource_EffectItem<VortexVortexEffect>(), player.Center.X, player.Center.Y, 0f, 0f, ModContent.ProjectileType<Content.Projectiles.Souls.Void>(), FargoSoulsUtil.HighestDamageTypeScaling(player, 60), 5f, player.whoAmI);
-                    Main.projectile[p].FargoSouls().CanSplit = false;
-                    Main.projectile[p].netUpdate = true;
-
-                    player.AddBuff(ModContent.BuffType<VortexCDBuff>(), 3600);
-                }
-            }
+            player.AddEffect<VortexEffect>(item);
         }
         public override void AddRecipes()
         {
@@ -137,14 +93,25 @@ While in stealth, your own projectiles will not be sucked in
             }
         }
     }
-    public class VortexVortexEffect : AccessoryEffect
+    public class VortexEffect : AccessoryEffect
     {
         public override Header ToggleHeader => Header.GetHeader<CosmoHeader>();
         public override int ToggleItemType => ModContent.ItemType<VortexEnchant>();
-    }
-    public class VortexStealthEffect : AccessoryEffect
-    {
-        public override Header ToggleHeader => Header.GetHeader<CosmoHeader>();
-        public override int ToggleItemType => ModContent.ItemType<VortexEnchant>();
+        public override void OnHitNPCEither(Player player, NPC target, NPC.HitInfo hitInfo, DamageClass damageClass, int baseDamage, Projectile projectile, Item item)
+        {
+            FargoSoulsPlayer modPlayer = player.FargoSouls();
+            if (modPlayer.VortexCD <= 0 && player.Distance(target.Center) > 1000)
+            {
+                bool force = modPlayer.ForceEffect<VortexEnchant>();
+                int dmg = 10000;
+                if (force)
+                    dmg = 16500;
+                Vector2 velocity = player.DirectionTo(target.Center);
+                int damage = FargoSoulsUtil.HighestDamageTypeScaling(modPlayer.Player, dmg);
+                FargoSoulsUtil.NewProjectileDirectSafe(modPlayer.Player.GetSource_ItemUse(modPlayer.Player.HeldItem), player.Center, velocity, ModContent.ProjectileType<VortexLaser>(), damage, 0f, modPlayer.Player.whoAmI, 1f);
+                float cd = force ? 6f : 8f;
+                modPlayer.VortexCD = LumUtils.SecondsToFrames(cd);
+            }
+        }
     }
 }
