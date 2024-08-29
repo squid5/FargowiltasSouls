@@ -100,7 +100,7 @@ While in stealth, your own projectiles will not be sucked in
         public override void OnHitNPCEither(Player player, NPC target, NPC.HitInfo hitInfo, DamageClass damageClass, int baseDamage, Projectile projectile, Item item)
         {
             FargoSoulsPlayer modPlayer = player.FargoSouls();
-            if (modPlayer.VortexCD <= 0 && player.Distance(target.Center) > 1000)
+            if (modPlayer.VortexCD <= 0 && player.Distance(target.Hitbox.ClosestPointInRect(player.Center)) > 1000)
             {
                 bool force = modPlayer.ForceEffect<VortexEnchant>();
                 int dmg = 10000;

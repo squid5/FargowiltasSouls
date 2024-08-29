@@ -720,9 +720,8 @@ VortexEnchant: {
 	// DisplayName: Vortex Enchantment
 	/* Tooltip:
 		'''
-		Double tap down to toggle stealth, reducing chance for enemies to target you but slowing movement
-		When entering stealth, spawn a vortex that draws in projectiles
-		While in stealth, your own projectiles will not be sucked in
+		Your attacks against very distant enemies fire a piercing laser at them
+		8 second cooldown
 		'Tear into reality'
 		''' */
 }
