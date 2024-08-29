@@ -344,8 +344,8 @@ namespace FargowiltasSouls.Core.ModPlayers
         {
             if (Player.HasBuff(ModContent.BuffType<MagicalCleanseCDBuff>()))
                 return;
-            
-            if (TryCleanseDebuffs())
+            TryCleanseDebuffs();
+            if (true)
             {
                 int cdInSec = 40;
 
