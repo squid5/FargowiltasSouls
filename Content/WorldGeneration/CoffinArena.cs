@@ -24,7 +24,7 @@ namespace FargowiltasSouls.Content.WorldGeneration
         private static int PaddedWidth => StructureSize.X + 2;
         public static Point Center => WorldSavingSystem.CoffinArenaCenter;
         public static Rectangle Rectangle = new();
-        public static Rectangle PaddedRectangle => new(Rectangle.X - 2, Rectangle.Y - 2, Rectangle.Width + 4, Rectangle.Height + 4);
+        public static Rectangle PaddedRectangle => Rectangle.Modified(-2, -2, 4, 4);
 
         public static bool TileIsPyramid(Tile tile) => (tile.TileType == TileID.SandstoneBrick || tile.WallType == WallID.SandstoneBrick);
 
