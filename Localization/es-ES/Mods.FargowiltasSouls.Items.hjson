@@ -592,8 +592,10 @@ SpectreEnchant: {
 	// DisplayName: Spectre Enchantment
 	/* Tooltip:
 		'''
-		Damage has a chance to spawn damaging orbs
-		If you crit, you might also get a healing orb
+		If you reach zero HP you will revive as a ghost with 50 HP, self-cleanse debuffs, and spawn several spirits
+		As a ghost you are immune, faster, have infinite flight and can't attack, lasting for 5 seconds
+		You will also spawn a few spirits on every hit
+		Collect the spirits to heal for 20 HP each and send them towards the nearest enemy
 		'Their lifeforce will be their undoing'
 		''' */
 }
@@ -670,7 +672,8 @@ TitaniumEnchant: {
 		Attacking generates a defensive barrier of up to 20 titanium shards
 		When you reach the maximum amount, you gain resistance to most debuffs on hit and 10-30% damage resistance
 		Damage resistance increases the closer to the enemy you are when hit
-		This has a cooldown of 10 seconds during which you cannot gain shards
+		Resistance effects remain for a few seconds after initial hit
+		This has a cooldown of 15 seconds during which you cannot gain shards
 		'Who needs a dodge when you're indestructible'
 		''' */
 }
@@ -1319,7 +1322,7 @@ MagicalBulb: {
 		'''
 		Grants immunity to Acid Venom, Ivy Venom, and Swarming
 		Press the Magical Cleanse key to cure yourself of most debuffs on a cooldown
-		Magical Cleanse also amplifies damage over time effects for nearby enemies
+		Magical Cleanse also amplifies damage over time effects for nearby enemies by 2x
 		Cleanse cooldown is faster when not attacking
 		Increases life regeneration based on how much light you receive
 		Attracts a legendary plant's offspring which flourishes in combat

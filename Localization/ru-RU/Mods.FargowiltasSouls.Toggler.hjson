@@ -79,7 +79,7 @@ SpiritHeader: "{$Mods.FargowiltasSouls.Items.SpiritForce.DisplayName}"
 FossilBones: Ископаемые Кости При Ударе
 HallowEffect: Лечебные Зелья Освящения
 AncientHallowMinion: Клинок Древнего Освящения
-SpectreEffect: Сферы Спектра
+// SpectreOnHitEffect: Spirits On Hit
 ForbiddenEffect: Запретный Шторм
 TikiEffect: Миньоны Тики
 SpiritTornadoEffect: Торнадо Духа

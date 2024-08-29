@@ -403,14 +403,14 @@ namespace FargowiltasSouls.Core.ModPlayers
 
         public override bool CanBeHitByNPC(NPC npc, ref int CooldownSlot)
         {
-            if (BetsyDashing || GoldShell)
+            if (ImmuneToDamage)
                 return false;
             return true;
         }
 
         public override bool CanBeHitByProjectile(Projectile proj)
         {
-            if (BetsyDashing || GoldShell)
+            if (ImmuneToDamage)
                 return false;
             if (Player.HasEffect<PrecisionSealHurtbox>() && !proj.Colliding(proj.Hitbox, GetPrecisionHurtbox()))
                 return false;
@@ -438,7 +438,7 @@ namespace FargowiltasSouls.Core.ModPlayers
 
             modifiers.ModifyHurtInfo += TryParryAttack;
 
-            if (StyxSet && !BetsyDashing && !GoldShell && Player.ownedProjectileCounts[ModContent.ProjectileType<StyxArmorScythe>()] > 0)
+            if (StyxSet && !ImmuneToDamage && Player.ownedProjectileCounts[ModContent.ProjectileType<StyxArmorScythe>()] > 0)
             {
                 modifiers.ModifyHurtInfo += (ref Player.HurtInfo hurtInfo) =>
                 {

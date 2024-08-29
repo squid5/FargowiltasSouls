@@ -66,7 +66,10 @@ namespace FargowiltasSouls.Core.ModPlayers
         public bool Toggler_MinionsDisabled = false;
         public int ToggleRebuildCooldown = 0;
         public bool UsingAnkh => Player.HeldItem.type == ModContent.ItemType<AccursedAnkh>() && Player.ItemAnimationActive;
-
+        public bool ImmuneToDamage => 
+            BetsyDashing ||
+            GoldShell || 
+            SpectreGhostTime > 0;
 
         public bool IsStillHoldingInSameDirectionAsMovement
             => (Player.velocity.X > 0 && Player.controlRight)
@@ -954,7 +957,11 @@ namespace FargowiltasSouls.Core.ModPlayers
                         return false; //short circuits the rest, this is deliberate
                     }
                 }
-
+                if (Player.whoAmI == Main.myPlayer && retVal && Player.HasEffect<SpectreEffect>() && !Player.HasBuff<FossilReviveCDBuff>())
+                {
+                    SpectreEffect.SpectreRevive(Player);
+                    retVal = false;
+                }
                 if (Player.whoAmI == Main.myPlayer && retVal && Player.HasEffect<FossilEffect>() && !Player.HasBuff<FossilReviveCDBuff>())
                 {
                     FossilEffect.FossilRevive(Player);
@@ -1254,7 +1261,7 @@ namespace FargowiltasSouls.Core.ModPlayers
 
         public override void HideDrawLayers(PlayerDrawSet drawInfo)
         {
-            if (BetsyDashing || ShellHide || GoldShell)
+            if (BetsyDashing || ShellHide || GoldShell || SpectreGhostTime > 0)
             {
                 foreach (var layer in PlayerDrawLayerLoader.Layers)
                 {

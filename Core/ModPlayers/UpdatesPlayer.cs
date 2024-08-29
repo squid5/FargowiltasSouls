@@ -74,6 +74,8 @@ namespace FargowiltasSouls.Core.ModPlayers
                 RustedOxygenTank.PassiveEffect(Player);
             }
 
+            if (SpectreGhostTime > 0)
+                SpectreEffect.GhostUpdate(Player);
 
             if (GoldShell)
                 GoldUpdate();
@@ -164,7 +166,6 @@ namespace FargowiltasSouls.Core.ModPlayers
                 Player.gravControl2 = false;
             }
         }
-
         public override void PostUpdateEquips()
         {
             if (Graze && NekomiSet)
@@ -497,6 +498,8 @@ namespace FargowiltasSouls.Core.ModPlayers
 
             if (SpectreCD > 0)
                 SpectreCD--;
+            if (SpectreGhostTime > 0)
+                SpectreGhostTime--;
 
             if (ChargeSoundDelay > 0)
                 ChargeSoundDelay--;

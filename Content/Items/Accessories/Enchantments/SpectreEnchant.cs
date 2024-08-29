@@ -1,9 +1,14 @@
-﻿using FargowiltasSouls.Core.AccessoryEffectSystem;
+﻿using FargowiltasSouls.Content.Buffs.Souls;
+using FargowiltasSouls.Content.Items.Accessories.Forces;
+using FargowiltasSouls.Content.Projectiles.Souls;
+using FargowiltasSouls.Core.AccessoryEffectSystem;
+using FargowiltasSouls.Core.ModPlayers;
 using FargowiltasSouls.Core.Toggler.Content;
 using Microsoft.Xna.Framework;
 using System;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
@@ -42,23 +47,19 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.AddEffect<SpectreEffect>(Item);
+            player.AddEffect<SpectreOnHitEffect>(Item);
         }
 
         public override void AddRecipes()
         {
             CreateRecipe()
+            .AddIngredient<FossilEnchant>()
 
             .AddRecipeGroup("FargowiltasSouls:AnySpectreHead")
             .AddIngredient(ItemID.SpectreRobe)
             .AddIngredient(ItemID.SpectrePants)
-            //spectre wings
-            .AddIngredient(ItemID.UnholyTrident)
-            //nettle burst
-            //.AddIngredient(ItemID.Keybrand);
+
             .AddIngredient(ItemID.SpectreStaff)
-            .AddIngredient(ItemID.BatScepter)
-            //bat scepter
-            //.AddIngredient(ItemID.WispinaBottle);
 
             .AddTile(TileID.CrystalBall)
             .Register();
@@ -67,8 +68,100 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
     public class SpectreEffect : AccessoryEffect
     {
 
-        public override Header ToggleHeader => Header.GetHeader<SpiritHeader>();
-        public override int ToggleItemType => ModContent.ItemType<SpectreEnchant>();
+        public override Header ToggleHeader => null;
+        public static void SpectreRevive(Player player)
+        {
+            FargoSoulsPlayer modPlayer = player.FargoSouls();
+            bool spiritForce = modPlayer.ForceEffects.Contains(ModContent.ItemType<SpiritForce>());
+
+            int spiritDamage = 200;
+            if (modPlayer.ForceEffect<SpectreEnchant>())
+            {
+                spiritDamage = 400;
+            }
+
+            void Revive(int healAmount, int reviveCooldown)
+            {
+                player.statLife = healAmount;
+                player.HealEffect(healAmount);
+
+                player.immune = true;
+                player.immuneTime = 120;
+                player.hurtCooldowns[0] = 120;
+                player.hurtCooldowns[1] = 120;
+
+                int max = player.buffType.Length;
+                for (int i = 0; i < max; i++)
+                {
+                    int timeLeft = player.buffTime[i];
+                    if (timeLeft <= 0)
+                        continue;
+
+                    int buffType = player.buffType[i];
+                    if (buffType <= 0)
+                        continue;
+
+                    if (timeLeft > 5
+                        && Main.debuff[buffType]
+                        && !Main.buffNoTimeDisplay[buffType]
+                        && !BuffID.Sets.NurseCannotRemoveDebuff[buffType])
+                    {
+                        player.DelBuff(i);
+
+                        i--;
+                        max--; //just in case, to prevent being stuck here forever
+                    }
+                }
+
+                if (!modPlayer.TerrariaSoul && !modPlayer.Eternity)
+                    modPlayer.SpectreGhostTime = LumUtils.SecondsToFrames(5f);
+
+                string text = Language.GetTextValue($"Mods.{FargowiltasSouls.Instance.Name}.Message.Revived");
+                CombatText.NewText(player.Hitbox, Color.LightCyan, text, true);
+                Main.NewText(text, Color.LightCyan);
+
+                player.AddBuff(ModContent.BuffType<FossilReviveCDBuff>(), reviveCooldown);
+            };
+
+            if (modPlayer.Eternity)
+            {
+                Revive(player.statLifeMax2 / 2 > 300 ? player.statLifeMax2 / 2 : 300, 10800);
+                //if (player.HasEffect<SpectreOnHitEffect>())
+                //FargoSoulsUtil.XWay(30, player.GetSource_Misc("FossilEnchant"), player.Center, ModContent.ProjectileType<FossilBone>(), 15, spiritDamage, 0);
+            }
+            else if (modPlayer.TerrariaSoul)
+            {
+                Revive(300, 14400);
+                //if (player.HasEffect<SpectreOnHitEffect>())
+                    //FargoSoulsUtil.XWay(25, player.GetSource_Misc("FossilEnchant"), player.Center, ModContent.ProjectileType<FossilBone>(), 15, spiritDamage, 0);
+            }
+            else
+            {
+                bool forceEffect = modPlayer.ForceEffect<SpectreEnchant>();
+                Revive(forceEffect ? 200 : 50, 18000);
+                if (player.HasEffect<SpectreOnHitEffect>())
+                    FargoSoulsUtil.XWay(forceEffect ? 20 : 10, player.GetSource_EffectItem<SpectreEffect>(), player.Center, ModContent.ProjectileType<SpectreSpirit>(), 15, spiritDamage, 0);
+            }
+        }
+        public static void GhostUpdate(Player player)
+        {
+            player.immune = true;
+            player.immuneTime = 90;
+            player.hurtCooldowns[0] = 90;
+            player.hurtCooldowns[1] = 90;
+            player.stealth = 1;
+            player.controlUseItem = false;
+            player.controlUseTile = false;
+            player.controlThrow = false;
+            player.controlMount = false;
+            player.GrantInfiniteFlight();
+
+            if (player.ownedProjectileCounts[ModContent.ProjectileType<SpectreGhostProj>()] <= 0)
+                Projectile.NewProjectile(player.GetSource_EffectItem<SpectreEffect>(), player.Center.X, player.Center.Y, 0f, 0f, ModContent.ProjectileType<SpectreGhostProj>(), 0, 0, Main.myPlayer);
+            player.moveSpeed *= 2f;
+        }
+
+        /*
         public override void OnHitNPCEither(Player player, NPC target, NPC.HitInfo hitInfo, DamageClass damageClass, int baseDamage, Projectile projectile, Item item)
         {
             FargoSoulsPlayer modPlayer = player.FargoSouls();
@@ -200,6 +293,32 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
             num8 *= num10;
             num9 *= num10;
             Projectile.NewProjectile(proj.GetSource_FromThis(), proj.position.X, proj.position.Y, num8, num9, ProjectileID.SpectreWrath, num, 0f, proj.owner, (float)num6, 0);
+        }
+        */
+    }
+    public class SpectreOnHitEffect : AccessoryEffect
+    {
+
+        public override Header ToggleHeader => Header.GetHeader<SpiritHeader>();
+        public override int ToggleItemType => ModContent.ItemType<SpectreEnchant>();
+        public override void OnHurt(Player player, Player.HurtInfo info)
+        {
+            int spiritDamage = 200;
+            if (player.FargoSouls().ForceEffect<SpectreEnchant>())
+            {
+                spiritDamage = 400;
+            }
+            int damageCopy = info.Damage;
+            for (int i = 0; i < 5; i++)
+            {
+                if (damageCopy < 30)
+                    break;
+                damageCopy -= 30;
+
+                float velX = Main.rand.Next(-5, 6) * 3f;
+                float velY = Main.rand.Next(-5, 6) * 3f;
+                Projectile.NewProjectile(GetSource_EffectItem(player), player.position.X + velX, player.position.Y + velY, velX, velY, ModContent.ProjectileType<SpectreSpirit>(), spiritDamage, 0f, player.whoAmI);
+            }
         }
     }
 }

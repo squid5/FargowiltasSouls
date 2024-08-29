@@ -131,7 +131,7 @@ namespace FargowiltasSouls.Core.ModPlayers
 
             #endregion
 
-            if (GoldShell || Player.CCed || NoUsingItems > 2)
+            if (GoldShell || SpectreGhostTime > 0 || Player.CCed || NoUsingItems > 2)
             {
                 return;
             }

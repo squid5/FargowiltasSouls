@@ -123,18 +123,21 @@ Collect the bones to heal for 20 HP each
             if (modPlayer.Eternity)
             {
                 Revive(player.statLifeMax2 / 2 > 300 ? player.statLifeMax2 / 2 : 300, 10800);
-                //FargoSoulsUtil.XWay(30, player.GetSource_Misc("FossilEnchant"), player.Center, ModContent.ProjectileType<FossilBone>(), 15, 0, 0);
+                //if (player.HasEffect<FossilBones>())
+                    //FargoSoulsUtil.XWay(30, player.GetSource_Misc("FossilEnchant"), player.Center, ModContent.ProjectileType<FossilBone>(), 15, 0, 0);
             }
             else if (modPlayer.TerrariaSoul)
             {
                 Revive(300, 14400);
-                //FargoSoulsUtil.XWay(25, player.GetSource_Misc("FossilEnchant"), player.Center, ModContent.ProjectileType<FossilBone>(), 15, 0, 0);
+                //if (player.HasEffect<FossilBones>())
+                    //FargoSoulsUtil.XWay(25, player.GetSource_Misc("FossilEnchant"), player.Center, ModContent.ProjectileType<FossilBone>(), 15, 0, 0);
             }
             else
             {
                 bool forceEffect = modPlayer.ForceEffect<FossilEnchant>();
                 Revive(forceEffect ? 200 : 50, 18000);
-                FargoSoulsUtil.XWay(forceEffect ? 20 : 10, player.GetSource_Misc("FossilEnchant"), player.Center, ModContent.ProjectileType<FossilBone>(), 15, 0, 0);
+                if (player.HasEffect<FossilBones>())
+                    FargoSoulsUtil.XWay(forceEffect ? 20 : 10, player.GetSource_EffectItem<FossilEffect>(), player.Center, ModContent.ProjectileType<FossilBone>(), 15, 0, 0);
             }
         }
     }

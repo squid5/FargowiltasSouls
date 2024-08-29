@@ -79,13 +79,13 @@
 // FossilBones: Fossil Bones On Hit
 // HallowEffect: Hallowed Healing Potions
 // AncientHallowMinion: Ancient Hallowed Blade
-// SpectreEffect: Spectre Orbs
+// SpectreOnHitEffect: Spirits On Hit
 // ForbiddenEffect: Forbidden Storm
 // TikiEffect: Tiki Minions
 // SpiritTornadoEffect: Spirit Tornado
 // CosmoHeader: "{$Mods.FargowiltasSouls.Items.CosmoForce.DisplayName}"
 // MeteorMomentumEffect: Meteor Speed
-// MeteorEffect: Meteor Shower
+// MeteorEffect: Meteor Strike
 // MeteorTrailEffect: Meteor Spark Trail
 // NebulaEffect: Nebula Boosters
 // SolarEffect: Solar Shield & Dash

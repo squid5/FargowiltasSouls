@@ -165,6 +165,7 @@ namespace FargowiltasSouls.Core.ModPlayers
 
         public bool SnowVisual;
         public int SpectreCD;
+        public int SpectreGhostTime;
         public bool MinionCrits;
         //public bool squireReduceIframes;
         public bool FreezeTime;

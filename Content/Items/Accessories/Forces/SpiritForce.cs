@@ -21,7 +21,6 @@ namespace FargowiltasSouls.Content.Items.Accessories.Forces
         {
             Enchants[Type] =
             [
-                ModContent.ItemType<FossilEnchant>(),
                 ModContent.ItemType<ForbiddenEnchant>(),
                 ModContent.ItemType<HallowEnchant>(),
                 ModContent.ItemType<AncientHallowEnchant>(),
