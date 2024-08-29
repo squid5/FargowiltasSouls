@@ -375,7 +375,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
                 LerpOpacity(1f, 0.4f);
                 LerpScale(1f, 0.4f);
                 AI3 = 2;
-                NPC.velocity = Vector2.UnitY * 7;
+                NPC.velocity = Vector2.UnitY * 1;
 
                 SoundEngine.PlaySound(CursedCoffin.SoulShotSFX, NPC.Center);
                 if (FargoSoulsUtil.HostCheck)

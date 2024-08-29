@@ -3407,7 +3407,7 @@ GravityTestItem: {
 
 CoffinSummon: {
 	// DisplayName: Forgotten Urn
-	// Tooltip: Break close to a Mysterious Coffin to awaken it
+	// Tooltip: Break in the deep pyramid chamber to awaken the ancient coffin
 }
 
 // Dummy Item
