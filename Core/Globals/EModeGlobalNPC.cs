@@ -448,7 +448,12 @@ namespace FargowiltasSouls.Core.Globals
                             }
 
                             if (noInvasion && !oldOnesArmy && bossCanSpawn)
+                            {
                                 pool[NPCID.Clown] = 0.01f;
+                                if (pool[NPCID.Werewolf] < 0.015f)
+                                    pool[NPCID.Werewolf] = 0.015f;
+                            }
+                                
 
                             if (normalSpawn)
                             {
