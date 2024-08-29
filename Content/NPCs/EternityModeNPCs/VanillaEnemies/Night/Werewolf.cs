@@ -1,7 +1,9 @@
 ﻿using FargowiltasSouls.Content.Buffs.Masomode;
 using FargowiltasSouls.Core.Globals;
 using FargowiltasSouls.Core.NPCMatching;
+using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -11,11 +13,47 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.Night
     {
         public override NPCMatcher CreateMatcher() => new NPCMatcher().MatchType(NPCID.Werewolf);
 
-        public override void AI(NPC npc)
+        public override void SetDefaults(NPC npc)
         {
-            base.AI(npc);
+            npc.lifeMax *= 3;
+            npc.knockBackResist = 0f;
+        }
 
-            EModeGlobalNPC.Aura(npc, 200, ModContent.BuffType<BerserkedBuff>(), false, 60);
+        public int JumpTimer = 140;
+        public override bool SafePreAI(NPC npc)
+        {
+            npc.knockBackResist = 0f;
+            //EModeGlobalNPC.Aura(npc, 200, ModContent.BuffType<BerserkedBuff>(), false, 60);
+            JumpTimer--;
+            if (JumpTimer <= 0)
+            {
+                if (JumpTimer == 0)
+                {
+                    FargoSoulsUtil.DustRing(npc.Center, 32, DustID.Blood, 5f, default, 2f);
+                    SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/NPC_Hit_6") with { Pitch = -0.5f }, npc.Center);
+                }
+                npc.velocity *= 0;
+                if (JumpTimer <= -60)
+                {
+                    JumpTimer = 60 * 9;
+                    if (npc.HasPlayerTarget && Collision.CanHitLine(npc.Center, 1, 1, Main.player[npc.target].Center, 1, 1))
+                    {
+                        Vector2 targetPoint = Main.player[npc.target].Center - Vector2.UnitY * 200;
+                        float distanceScale = MathHelper.Clamp(npc.Distance(targetPoint) / 1000f, 0f, 1f);
+                        float vel = 5f + 20f * distanceScale;
+                        npc.velocity = npc.DirectionTo(targetPoint) * vel;
+                        SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/ThrowShort") with { Pitch = 0.5f }, npc.Center);
+                    }
+                        
+                }
+            }
+            else
+            {
+                if (JumpTimer < 10 && !(npc.HasPlayerTarget && Collision.CanHitLine(npc.Center, 1, 1, Main.player[npc.target].Center, 1, 1)))
+                    JumpTimer++;
+            }
+            
+            return base.SafePreAI(npc);
         }
 
         public override void OnHitPlayer(NPC npc, Player target, Player.HurtInfo hurtInfo)
