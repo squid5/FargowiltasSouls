@@ -670,7 +670,7 @@ TitaniumEnchant: {
 		Attacking generates a defensive barrier of up to 20 titanium shards
 		When you reach the maximum amount, you gain resistance to most debuffs on hit and 10-30% damage resistance
 		Damage resistance increases the closer to the enemy you are when hit
-		Resistance effect remains for a few seconds after initial hit
+		Resistance effects remains for a few seconds after initial hit
 		This has a cooldown of 15 seconds during which you cannot gain shards
 		'Who needs a dodge when you're indestructible'
 		'''
