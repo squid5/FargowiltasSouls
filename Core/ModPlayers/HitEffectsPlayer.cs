@@ -482,7 +482,7 @@ namespace FargowiltasSouls.Core.ModPlayers
             if (Player.HasBuff(ModContent.BuffType<TitaniumDRBuff>())
                 && !Player.HasBuff(ModContent.BuffType<TitaniumCDBuff>()))
             {
-                Player.AddBuff(ModContent.BuffType<TitaniumCDBuff>(), LumUtils.SecondsToFrames(10));
+                Player.AddBuff(ModContent.BuffType<TitaniumCDBuff>(), LumUtils.SecondsToFrames(15));
             }
 
             if (NekomiSet && NekomiHitCD <= 0)
