@@ -49,14 +49,27 @@ namespace FargowiltasSouls.Content.Items.Summons
         public override bool CanUseItem(Player player)
         {
             if (CoffinArena.Rectangle.Contains(player.Center.ToTileCoordinates()))// && (Player.ZoneDirtLayerHeight || Player.ZoneRockLayerHeight))
-                return NPC.AnyNPCs(NPCType<CursedCoffinInactive>());
+                return !NPC.AnyNPCs(NPCType<CursedCoffin>());
             return false;
         }
 
         public override bool? UseItem(Player player)
         {
-            //NPC.SpawnOnPlayer(player.whoAmI, NPCType<CursedCoffin>());
-            ;
+            if (!NPC.AnyNPCs(NPCType<CursedCoffinInactive>())) // no dormant coffin, just summon the boss
+            {
+                Vector2 coffinArenaCenter = CoffinArena.Center.ToWorldCoordinates();
+                SoundEngine.PlaySound(CursedCoffin.ShotSFX with { Pitch = -0.75f }, coffinArenaCenter);
+                int n = NPC.NewNPC(player.GetSource_ItemUse(Item), (int)coffinArenaCenter.X, (int)coffinArenaCenter.Y, ModContent.NPCType<CursedCoffin>());
+                if (n.IsWithinBounds(Main.maxNPCs))
+                {
+                    if (Main.npc[n].ModNPC is CursedCoffin coffin)
+                        coffin.LockVector1 = coffinArenaCenter;
+                }
+                return true;
+            }
+
+            // else: dormant coffin exists, turn it into boss
+
             for (int i = 0; i < Main.maxNPCs; i++)
             {
                 NPC npc = Main.npc[i];

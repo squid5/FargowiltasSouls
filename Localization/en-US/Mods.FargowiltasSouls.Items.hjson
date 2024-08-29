@@ -3386,7 +3386,7 @@ GravityTestItem: {
 
 CoffinSummon: {
 	DisplayName: Forgotten Urn
-	Tooltip: Break close to a Mysterious Coffin to awaken it
+	Tooltip: Break in the deep pyramid chamber to awaken the ancient coffin
 }
 
 // Dummy Item
@@ -3572,9 +3572,4 @@ UmbraRegalia: {
 		Spear throw leaves a trail of umbral crystals in its wake
 		Fully charged spear throws deal more damage and hits release more crystals
 		'''
-}
-
-CoffinSummon2: {
-	DisplayName: Forgotten Urn
-	Tooltip: Break in the special pyramid chamber to summon the Cursed Coffin
 }
