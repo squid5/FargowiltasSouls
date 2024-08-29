@@ -7,11 +7,15 @@ using Terraria.Audio;
 using FargowiltasSouls.Content.Bosses.CursedCoffin;
 using FargowiltasSouls.Content.WorldGeneration;
 using Microsoft.Xna.Framework;
+using static FargowiltasSouls.Core.Systems.WorldSavingSystem;
+using System;
+using Fargowiltas;
+using FargowiltasSouls.Core.Systems;
 
 namespace FargowiltasSouls.Content.Items.Summons
 {
 
-    public class CoffinSummon : SoulsItem
+    public class CoffinSummon2 : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -34,7 +38,7 @@ namespace FargowiltasSouls.Content.Items.Summons
             Item.maxStack = 20;
             Item.noUseGraphic = false;
         }
-
+        Condition DownedCursedCoffin = new("Mods.FargowiltasSouls.Conditions.DownedCursedCoffin", () => DownedBoss[(int)Downed.CursedCoffin]);
         public override void AddRecipes()
         {
             CreateRecipe()
@@ -42,6 +46,7 @@ namespace FargowiltasSouls.Content.Items.Summons
                 .AddIngredient(ItemID.ClayBlock, 15)
                 .AddIngredient(ItemID.FossilOre, 8)
                 .AddIngredient(ItemID.Sapphire, 2)
+                .AddCondition(DownedCursedCoffin)
                 .AddTile(TileID.DemonAltar)
                 .Register();
         }
@@ -49,25 +54,19 @@ namespace FargowiltasSouls.Content.Items.Summons
         public override bool CanUseItem(Player player)
         {
             if (CoffinArena.Rectangle.Contains(player.Center.ToTileCoordinates()))// && (Player.ZoneDirtLayerHeight || Player.ZoneRockLayerHeight))
-                return NPC.AnyNPCs(NPCType<CursedCoffinInactive>());
+                return !NPC.AnyNPCs(NPCType<CursedCoffin>());
             return false;
         }
 
         public override bool? UseItem(Player player)
         {
-            //NPC.SpawnOnPlayer(player.whoAmI, NPCType<CursedCoffin>());
-            ;
-            for (int i = 0; i < Main.maxNPCs; i++)
+            Vector2 coffinArenaCenter = CoffinArena.Center.ToWorldCoordinates();
+            SoundEngine.PlaySound(CursedCoffin.ShotSFX with { Pitch = -0.75f }, coffinArenaCenter);
+            int n = NPC.NewNPC(player.GetSource_ItemUse(Item), (int)coffinArenaCenter.X, (int)coffinArenaCenter.Y, ModContent.NPCType<CursedCoffin>());
+            if (n.IsWithinBounds(Main.maxNPCs))
             {
-                NPC npc = Main.npc[i];
-                if (npc.TypeAlive<CursedCoffinInactive>())
-                {
-                    npc.Transform(ModContent.NPCType<CursedCoffin>());
-                    SoundEngine.PlaySound(CursedCoffin.ShotSFX with { Pitch = -0.75f }, npc.Center);
-                    if (npc.ModNPC is CursedCoffin coffin)
-                        coffin.LockVector1 = npc.Center + Vector2.UnitY * 16;
-                    npc.velocity.Y = -8f;
-                }
+                if (Main.npc[n].ModNPC is CursedCoffin coffin)
+                    coffin.LockVector1 = coffinArenaCenter;
             }
             return true;
         }

@@ -66,6 +66,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 		public override void OnSpawn(IEntitySource source)
 		{
 			Targeting();
+            /*
 			Player player = Main.player[NPC.target];
 			if (player.Alive())
 			{
@@ -73,6 +74,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 				LockVector1 = player.Top - Vector2.UnitY * 50;
 				NPC.velocity = new Vector2(0, 0.25f);
 			}
+            */
 		}
 		public override bool? CanFallThroughPlatforms() => NPC.noTileCollide || (Player.Top.Y > NPC.Bottom.Y + 30) ? true : null;
 		public override void AI()
@@ -82,7 +84,6 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 			if (Main.npc.Any(p => p.TypeAlive<CursedSpirit>()))
 				NPC.defense += 15;
 			NPC.rotation = 0;
-			NPC.noTileCollide = true;
 
 			// Pushaway collision (solid object)
 			// this is jank
@@ -172,12 +173,17 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 		[AutoloadAsBehavior<EntityAIState<BehaviorStates>, BehaviorStates>(BehaviorStates.Opening)]
 		public void Opening()
 		{
+            if (Timer == 2)
+            {
+                if (WorldSavingSystem.EternityMode && !WorldSavingSystem.DownedBoss[(int)WorldSavingSystem.Downed.CursedCoffin] && FargoSoulsUtil.HostCheck)
+                    Item.NewItem(NPC.GetSource_Loot(), Main.player[NPC.target].Hitbox, ModContent.ItemType<CoffinSummon>());
+            }
 			if (Timer >= 0)
 			{
 				ExtraTrail = true;
-				if (Math.Abs(NPC.velocity.Y) < 22)
-					NPC.velocity.Y *= 1.04f;
-				if (NPC.Center.Y >= LockVector1.Y || Timer > 60 * 2)
+                if (Math.Abs(NPC.velocity.Y) < 22)
+                    NPC.velocity.Y += 0.2f;
+				if ((Timer > 5 && NPC.Bottom.Y >= LockVector1.Y && NPC.velocity.Y > 0) || Timer > 60 * 2)
 				{
 					NPC.noTileCollide = false;
 					if (NPC.velocity.Y <= 1) //when you hit tile

@@ -34,6 +34,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
         public override bool IsLoadingEnabled(Mod mod) => Enabled;
 
         #region Variables
+        float DrawcodeOpacity = 0f;
 
         private int Phase = 1;
 		private bool Attacking = true;
@@ -41,9 +42,9 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 
 		public int MashTimer = 15;
 
-		private int Frame = 0;
+		public int Frame = 0;
 
-		private Vector2 LockVector1 = Vector2.Zero;
+		public Vector2 LockVector1 = Vector2.Zero;
 
 		private int LastAttackChoice { get; set; }
 
@@ -252,21 +253,24 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 		{
 			if (NPC.IsABestiaryIconDummy)
 				return true;
-			Texture2D bodytexture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
+            if (DrawcodeOpacity < 1f)
+                DrawcodeOpacity += 0.025f;
+
+            Texture2D bodytexture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
 			Vector2 drawPos = NPC.Center - screenPos;
 			SpriteEffects spriteEffects = NPC.direction == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 			Vector2 origin = new Vector2(bodytexture.Width / 2, bodytexture.Height / 2 / Main.npcFrameCount[NPC.type]);
 
-			for (int i = 0; i < (ExtraTrail ? NPCID.Sets.TrailCacheLength[NPC.type] : NPCID.Sets.TrailCacheLength[NPC.type] / 4); i++)
-			{
-				Vector2 value4 = NPC.oldPos[i];
-				int oldFrame = Frame;
-				Rectangle oldRectangle = new(0, oldFrame * bodytexture.Height / Main.npcFrameCount[NPC.type], bodytexture.Width, bodytexture.Height / Main.npcFrameCount[NPC.type]);
-				DrawData oldGlow = new(bodytexture, value4 + NPC.Size / 2f - screenPos + new Vector2(0, NPC.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(oldRectangle), GlowColor * (0.5f / i), NPC.rotation, origin, NPC.scale, spriteEffects, 0);
-				GameShaders.Misc["LCWingShader"].UseColor(Color.Blue).UseSecondaryColor(Color.Black);
-				GameShaders.Misc["LCWingShader"].Apply(oldGlow);
-				oldGlow.Draw(spriteBatch);
-			}
+            for (int i = 0; i < (ExtraTrail ? NPCID.Sets.TrailCacheLength[NPC.type] : NPCID.Sets.TrailCacheLength[NPC.type] / 4); i++)
+            {
+                Vector2 value4 = NPC.oldPos[i];
+                int oldFrame = Frame;
+                Rectangle oldRectangle = new(0, oldFrame * bodytexture.Height / Main.npcFrameCount[NPC.type], bodytexture.Width, bodytexture.Height / Main.npcFrameCount[NPC.type]);
+                DrawData oldGlow = new(bodytexture, value4 + NPC.Size / 2f - screenPos + new Vector2(0, NPC.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(oldRectangle), GlowColor * (0.5f / i) * DrawcodeOpacity, NPC.rotation, origin, NPC.scale, spriteEffects, 0);
+                GameShaders.Misc["LCWingShader"].UseColor(Color.Blue).UseSecondaryColor(Color.Black);
+                GameShaders.Misc["LCWingShader"].Apply(oldGlow);
+                oldGlow.Draw(spriteBatch);
+            }
             for (int j = 0; j < 12; j++)
             {
                 float spinOffset = (Main.GameUpdateCount * 0.001f * j) % 12;
@@ -274,25 +278,26 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
                 Vector2 afterimageOffset = (MathHelper.TwoPi * (j + spinOffset) / 12f).ToRotationVector2() * magnitude * NPC.scale;
                 Color glowColor = GlowColor;
 
-                spriteBatch.Draw(bodytexture, drawPos + afterimageOffset, NPC.frame, glowColor, NPC.rotation, origin, NPC.scale, spriteEffects, 0f);
+                spriteBatch.Draw(bodytexture, drawPos + afterimageOffset, NPC.frame, glowColor * DrawcodeOpacity, NPC.rotation, origin, NPC.scale, spriteEffects, 0f);
             }
+
             spriteBatch.Draw(bodytexture, drawPos, NPC.frame, drawColor, NPC.rotation, origin, NPC.scale, spriteEffects, 0f);
 
-			if (!Main.npc.Any(p => p.TypeAlive<CursedSpirit>()))
-			{
-				float shakeFactor = 1;
-				if (StateMachine.StateStack.Count != 0 && StateMachine.CurrentState.Identifier == BehaviorStates.PhaseTransition)
-					shakeFactor = 3 + 5 * (Timer / 60);
-				Texture2D glowTexture = ModContent.Request<Texture2D>(Texture + "_MaskGlow", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-				Color glowColor = GlowColor;
-				int glowTimer = (int)(Main.GlobalTimeWrappedHourly * 60) % 60;
-				DrawData oldGlow = new(glowTexture, drawPos + Main.rand.NextVector2Circular(shakeFactor, shakeFactor), NPC.frame, glowColor * (0.75f + 0.25f * MathF.Sin(MathF.Tau * glowTimer / 60f)), NPC.rotation, new Vector2(bodytexture.Width / 2, bodytexture.Height / 2 / Main.npcFrameCount[NPC.type]), NPC.scale, spriteEffects, 0);
-				GameShaders.Misc["LCWingShader"].UseColor(Color.Purple).UseSecondaryColor(Color.Black);
-				GameShaders.Misc["LCWingShader"].Apply(oldGlow);
-				oldGlow.Draw(spriteBatch);
-			}
+            if (!Main.npc.Any(p => p.TypeAlive<CursedSpirit>()))
+            {
+                float shakeFactor = 1;
+                if (StateMachine.StateStack.Count != 0 && StateMachine.CurrentState.Identifier == BehaviorStates.PhaseTransition)
+                    shakeFactor = 3 + 5 * (Timer / 60);
+                Texture2D glowTexture = ModContent.Request<Texture2D>(Texture + "_MaskGlow", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+                Color glowColor = GlowColor;
+                int glowTimer = (int)(Main.GlobalTimeWrappedHourly * 60) % 60;
+                DrawData oldGlow = new(glowTexture, drawPos + Main.rand.NextVector2Circular(shakeFactor, shakeFactor), NPC.frame, glowColor * DrawcodeOpacity * (0.75f + 0.25f * MathF.Sin(MathF.Tau * glowTimer / 60f)), NPC.rotation, new Vector2(bodytexture.Width / 2, bodytexture.Height / 2 / Main.npcFrameCount[NPC.type]), NPC.scale, spriteEffects, 0);
+                GameShaders.Misc["LCWingShader"].UseColor(Color.Purple).UseSecondaryColor(Color.Black);
+                GameShaders.Misc["LCWingShader"].Apply(oldGlow);
+                oldGlow.Draw(spriteBatch);
+            }
 
-			return false;
+            return false;
 		}
 
 		public override void FindFrame(int frameHeight)
@@ -303,7 +308,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 
 		public override void OnKill()
 		{
-			NPC.SetEventFlagCleared(ref WorldSavingSystem.downedBoss[(int)WorldSavingSystem.Downed.CursedCoffin], -1);
+			NPC.SetEventFlagCleared(ref WorldSavingSystem.DownedBoss[(int)WorldSavingSystem.Downed.CursedCoffin], -1);
 		}
 
 		public override void BossLoot(ref string name, ref int potionType)

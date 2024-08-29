@@ -3608,3 +3608,8 @@ UmbraRegalia: {
 		Fully charged spear throws deal more damage and hits release more crystals
 		''' */
 }
+
+CoffinSummon2: {
+	// DisplayName: Forgotten Urn
+	// Tooltip: Break in the special pyramid chamber to summon the Cursed Coffin
+}

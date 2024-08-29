@@ -134,6 +134,22 @@ namespace FargowiltasSouls.Content.Items.Misc
                     ModContent.ItemType<TungstenEnchant>()
                 );
             }
+            else if (!WorldSavingSystem.downedBoss[(int)WorldSavingSystem.Downed.CursedCoffin])
+            {
+                summonType = ModContent.ItemType<CoffinSummon>();
+                build += GetBuildText(
+                    Main.rand.Next(new int[] { ItemID.SpectreBoots, ItemID.LightningBoots, ItemID.FrostsparkBoots }),
+                    Main.rand.Next(new int[] { ItemID.EoCShield, ModContent.ItemType<JungleEnchant>() })
+                ) + GetBuildTextRandom(
+                    3,
+                    ModContent.ItemType<ShadewoodEnchant>(),
+                    ModContent.ItemType<EbonwoodEnchant>(),
+                     ModContent.ItemType<NinjaEnchant>(),
+                    ModContent.ItemType<CactusEnchant>(),
+                    ModContent.ItemType<PalmWoodEnchant>(),
+                    ModContent.ItemType<TungstenEnchant>()
+                );
+            }
             else if (!NPC.downedBoss2)
             {
                 summonType = WorldGen.crimson ? ItemID.BloodySpine : ItemID.WormFood;

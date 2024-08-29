@@ -1,4 +1,7 @@
-﻿using Microsoft.Xna.Framework;
+﻿using FargowiltasSouls.Content.Bosses.CursedCoffin;
+using FargowiltasSouls.Content.WorldGeneration;
+using Microsoft.Xna.Framework;
+using System;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -14,6 +17,20 @@ namespace FargowiltasSouls.Core.Systems
         public override void PostUpdateWorld()
         {
             //NPC.LunarShieldPowerMax = NPC.downedMoonlord ? 50 : 100;
+
+            if (!downedBoss[(int)Downed.CursedCoffin] && !NPC.AnyNPCs(ModContent.NPCType<CursedCoffinInactive>()) && !NPC.AnyNPCs(ModContent.NPCType<CursedCoffin>()))
+            {
+                Vector2 coffinArenaCenter = CoffinArena.Center.ToWorldCoordinates();
+                for (int i = 0; i < Main.maxPlayers; i++)
+                {
+                    Player player = Main.player[i];
+                    if (player != null && player.Alive() && Math.Abs(player.Center.X - coffinArenaCenter.X) < 2500 && Math.Abs(player.Center.Y - coffinArenaCenter.Y) < 2500)
+                    {
+                        int n = NPC.NewNPC(NPC.GetSource_NaturalSpawn(), (int)coffinArenaCenter.X, (int)coffinArenaCenter.Y, ModContent.NPCType<CursedCoffinInactive>());
+                    }
+                }
+            }
+
 
             if (!PlacedMutantStatue && (Main.zenithWorld || Main.remixWorld))
             {
