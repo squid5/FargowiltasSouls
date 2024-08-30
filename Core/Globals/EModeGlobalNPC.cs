@@ -335,6 +335,9 @@ namespace FargowiltasSouls.Core.Globals
                         {
                             if (noBiome && NPC.downedBoss3)
                                 pool[NPCID.DarkCaster] = .02f;
+                            if (noBiome && (!pool.ContainsKey(NPCID.RockGolem) || pool[NPCID.RockGolem] < 0.1f))
+                                pool[NPCID.RockGolem] = 0.1f;
+                                
                         }
 
                         if (NPC.downedGoblins && !NPC.savedGoblin && !NPC.AnyNPCs(NPCID.BoundGoblin))
@@ -450,8 +453,8 @@ namespace FargowiltasSouls.Core.Globals
                             if (noInvasion && !oldOnesArmy && bossCanSpawn)
                             {
                                 pool[NPCID.Clown] = 0.01f;
-                                if (pool[NPCID.Werewolf] < 0.015f)
-                                    pool[NPCID.Werewolf] = 0.015f;
+                                if (!pool.ContainsKey(NPCID.Werewolf) || pool[NPCID.Werewolf] < 0.02f)
+                                    pool[NPCID.Werewolf] = 0.02f;
                             }
                                 
 

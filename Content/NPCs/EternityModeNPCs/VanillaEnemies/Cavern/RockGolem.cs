@@ -37,6 +37,12 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.Cavern
             base.SetDefaults(npc);
 
             JumpTimer = 300 + Main.rand.Next(60);
+
+            if (!Main.hardMode)
+            {
+                npc.lifeMax = (int)(npc.lifeMax / 2f);
+                npc.damage = (int)(npc.damage * 0.6f);
+            }
         }
 
         public override bool SafePreAI(NPC npc)
@@ -120,11 +126,21 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.Cavern
             if (npc.velocity.Y == 0f && Jumped)
             {
                 Jumped = false;
-                if (FargoSoulsUtil.HostCheck)
+                if (FargoSoulsUtil.HostCheck && Main.hardMode)
                     Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, Vector2.Zero, ProjectileID.DD2OgreStomp, FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 0f, Main.myPlayer);
             }
 
             return result;
+        }
+        public override void OnKill(NPC npc)
+        {
+            if (FargoSoulsUtil.HostCheck)
+            {
+                for (int i = -1; i <= 1; i += 2)
+                {
+                    Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, -Vector2.UnitY * 3 + Vector2.UnitX * 2 * i, ProjectileID.Boulder, FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage, 1.5f), 0f, Main.myPlayer);
+                }
+            }
         }
     }
 }
