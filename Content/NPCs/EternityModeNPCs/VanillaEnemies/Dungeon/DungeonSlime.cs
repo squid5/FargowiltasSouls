@@ -9,7 +9,12 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.Dungeon
     public class DungeonSlime : EModeNPCBehaviour
     {
         public override NPCMatcher CreateMatcher() => new NPCMatcher().MatchType(NPCID.DungeonSlime);
-
+        public override void SetDefaults(NPC npc)
+        {
+            npc.lifeMax *= 3;
+            npc.knockBackResist = 0f;
+            npc.scale *= 2;
+        }
         public override void OnHitPlayer(NPC npc, Player target, Player.HurtInfo hurtInfo)
         {
             base.OnHitPlayer(npc, target, hurtInfo);
