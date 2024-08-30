@@ -1,5 +1,7 @@
 ﻿using FargowiltasSouls.Core.Globals;
 using FargowiltasSouls.Core.NPCMatching;
+using Microsoft.Xna.Framework;
+using System.Linq;
 using Terraria;
 using Terraria.ID;
 
@@ -8,7 +10,10 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.Cavern
     public class Ghost : EModeNPCBehaviour
     {
         public override NPCMatcher CreateMatcher() => new NPCMatcher().MatchType(NPCID.Ghost);
-
+        public override void SetDefaults(NPC npc)
+        {
+            npc.knockBackResist = 0f;
+        }
         public override void OnFirstTick(NPC npc)
         {
             base.OnFirstTick(npc);
@@ -22,6 +27,23 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.Cavern
             base.AI(npc);
 
             EModeGlobalNPC.Aura(npc, 100, BuffID.Cursed, false, 20);
+            npc.dontTakeDamage = false;
+            if (!Main.player.Any(p => p.Alive() && p.direction == p.HorizontalDirectionTo(npc.Center)))
+            {
+                npc.dontTakeDamage = true;
+                npc.velocity *= 0f;
+                npc.Opacity = MathHelper.Lerp(npc.Opacity, 0.4f, 0.05f);
+            }
+            else
+            {
+                npc.Opacity = MathHelper.Lerp(npc.Opacity, 1f, 0.05f);
+                npc.position += npc.velocity * 1f;
+            }
+        }
+        public override void ModifyHitByAnything(NPC npc, Player player, ref NPC.HitModifiers modifiers)
+        {
+            if (Main.rand.NextBool(3))
+                modifiers.SetMaxDamage(1);
         }
     }
 }
