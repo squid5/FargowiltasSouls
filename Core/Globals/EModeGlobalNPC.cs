@@ -311,7 +311,7 @@ namespace FargowiltasSouls.Core.Globals
 
                         if (day && NPC.downedGolemBoss && (noBiome || dungeon))
                             pool[NPCID.CultistArcherWhite] = .01f;
-                        float scoutRate = 0.04f;
+                        float scoutRate = 0.07f;
                         if (day && !NPC.savedGoblin && !NPC.AnyNPCs(NPCID.GoblinScout) && (!pool.ContainsKey(NPCID.GoblinScout) || pool[NPCID.GoblinScout] < scoutRate))
                         {
                             pool[NPCID.GoblinScout] = scoutRate;
