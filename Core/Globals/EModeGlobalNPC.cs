@@ -311,6 +311,13 @@ namespace FargowiltasSouls.Core.Globals
 
                         if (day && NPC.downedGolemBoss && (noBiome || dungeon))
                             pool[NPCID.CultistArcherWhite] = .01f;
+                        float scoutRate = 0.04f;
+                        if (day && !NPC.savedGoblin && !NPC.AnyNPCs(NPCID.GoblinScout) && (!pool.ContainsKey(NPCID.GoblinScout) || pool[NPCID.GoblinScout] < scoutRate))
+                        {
+                            pool[NPCID.GoblinScout] = scoutRate;
+                        }
+                            
+
                     }
                     else if (wideUnderground)
                     {
@@ -1417,7 +1424,7 @@ namespace FargowiltasSouls.Core.Globals
 
             //works because buffs are client side anyway :ech:
             float range = npc.Distance(p.Center);
-            if (p.active && !p.dead && !p.ghost && (reverse ? range > distance && range < Math.Max(3000f, distance * 2) : range < distance))
+            if (p.Alive() && (reverse ? range > distance && range < Math.Max(3000f, distance * 2) : range < distance))
             {
                 foreach (int buff in buffs)
                 {
