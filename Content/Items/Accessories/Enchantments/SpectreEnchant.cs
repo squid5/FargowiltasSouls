@@ -152,6 +152,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
             player.stealth = 1;
             player.controlUseItem = false;
             player.controlUseTile = false;
+            player.cursed = true;
             player.controlThrow = false;
             player.controlMount = false;
             player.GrantInfiniteFlight();

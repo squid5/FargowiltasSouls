@@ -318,15 +318,19 @@ namespace FargowiltasSouls.Content.Items
                 case ItemID.ObsidianSwordfish:
                     balanceNumber = 0.8f;
                     balanceTextKeys = ["Damage", "SpearRework"];
-                    #endregion
-
                     return EModeChange.Buff;
+                #endregion
+
                 case ItemID.WarmthPotion:
                     balanceTextKeys = ["WarmthPotionNerf"];
                     return EModeChange.Nerf;
 
                 case ItemID.JungleRose:
                     balanceTextKeys = ["JungleRose"];
+                    return EModeChange.Buff;
+
+                case ItemID.SniperRifle:
+                    balanceTextKeys = ["SniperRifle"];
                     return EModeChange.Buff;
 
                 default:

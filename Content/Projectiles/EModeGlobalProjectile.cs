@@ -44,6 +44,8 @@ namespace FargowiltasSouls.Content.Projectiles
 
         public static Dictionary<int, bool> IgnoreMinionNerf = [];
 
+        public bool SniperShot = false;
+
 
 
         public override void Unload()
@@ -235,6 +237,11 @@ namespace FargowiltasSouls.Content.Projectiles
             Projectile sourceProj = null;
             if (source is EntitySource_Parent parent && parent.Entity is Projectile)
                 sourceProj = parent.Entity as Projectile;
+
+            if (source is EntitySource_ItemUse itemUse && itemUse.Item.type == ItemID.SniperRifle)
+            {
+                SniperShot = true;
+            }
 
             if (FargoSoulsUtil.IsSummonDamage(projectile, true, false))
             {
@@ -1223,6 +1230,21 @@ namespace FargowiltasSouls.Content.Projectiles
                 case ProjectileID.OrichalcumHalberd:
                     modifiers.FinalDamage *= SpearRework.OrichalcumDoTDamageModifier(target.lifeRegen);
                     break;
+            }
+
+            if (SniperShot)
+            {
+                if (projectile.owner.IsWithinBounds(Main.maxProjectiles))
+                {
+                    Player player = Main.player[projectile.owner];
+                    if (player.Alive())
+                    {
+                        float maxBonus = 1f;
+                        float bonus = maxBonus * player.Distance(target.Center) / 1200f;
+                        bonus = MathHelper.Clamp(bonus, 0f, maxBonus);
+                        modifiers.FinalDamage *= 1 + bonus;
+                    }
+                }
             }
             //if (projectile.arrow) //change archery and quiver to additive damage
             //{
