@@ -48,7 +48,7 @@ ApprenticeEnchant: {
 	Tooltip:
 		'''
 		While attacking, fire your next closest weapon's projectile as support
-		The support weapon will fire 1/4 as often as they would normally and deal 1/2 damage
+		The support weapon will fire 1/4 as often as they would normally and deal 75% damage
 		Only works on hotbar weapons
 		Consumables are consumed, mana is spent, and ammo is selected
 		Flameburst field of view and range are dramatically increased

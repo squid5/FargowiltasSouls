@@ -155,7 +155,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
                             //ApprenticeShoot(player, player.whoAmI, item2, item2.damage / 2);
                             int projToShoot = item2.shoot;
                             float speed = item2.shootSpeed;
-                            int damage = item2.damage / 2;
+                            int damage = (int)(item2.damage * 0.75f);
                             float KnockBack = item2.knockBack;
                             int usedAmmoItemId;
                             if (item2.useAmmo > 0)
