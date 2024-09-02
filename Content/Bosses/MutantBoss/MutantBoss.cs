@@ -1937,7 +1937,11 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
 
             int endTime = 240 + pillarAttackDelay * 4 + 60;
             if (WorldSavingSystem.MasochistModeReal)
+            {
                 endTime += pillarAttackDelay * 2;
+                if (Main.getGoodWorld)
+                    endTime += 210;
+            }
 
             NPC.localAI[0] = endTime - NPC.ai[1]; //for pillars to know remaining duration
             NPC.localAI[0] += 60f + 60f * (1f - NPC.ai[1] / endTime); //staggered despawn
@@ -2942,6 +2946,19 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
             }
         }
 
+        void SpawnSpearTossDirectP2Attack()
+        {
+            if (FargoSoulsUtil.HostCheck)
+            {
+                Vector2 vel = NPC.SafeDirectionTo(player.Center) * 30f;
+                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Normalize(vel), ModContent.ProjectileType<MutantDeathray2>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage, 0.8f), 0f, Main.myPlayer);
+                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, -Vector2.Normalize(vel), ModContent.ProjectileType<MutantDeathray2>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage, 0.8f), 0f, Main.myPlayer);
+                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, vel, ModContent.ProjectileType<MutantSpearThrown>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), 0f, Main.myPlayer, NPC.target);
+            }
+
+            EdgyBossText(RandomObnoxiousQuote());
+        }
+
         void SpearTossDirectP2()
         {
             if (!AliveCheck(player))
@@ -2974,19 +2991,6 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
 
             ++NPC.ai[3]; //for keeping track of how much time has actually passed (ai1 jumps around)
 
-            void Attack()
-            {
-                if (FargoSoulsUtil.HostCheck)
-                {
-                    Vector2 vel = NPC.SafeDirectionTo(player.Center) * 30f;
-                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Normalize(vel), ModContent.ProjectileType<MutantDeathray2>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage, 0.8f), 0f, Main.myPlayer);
-                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, -Vector2.Normalize(vel), ModContent.ProjectileType<MutantDeathray2>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage, 0.8f), 0f, Main.myPlayer);
-                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, vel, ModContent.ProjectileType<MutantSpearThrown>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), 0f, Main.myPlayer, NPC.target);
-                }
-
-                EdgyBossText(RandomObnoxiousQuote());
-            };
-
             if (++NPC.ai[1] > 180)
             {
                 NPC.netUpdate = true;
@@ -3004,12 +3008,12 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
 
                 if (shouldAttack || WorldSavingSystem.MasochistModeReal)
                 {
-                    Attack();
+                    SpawnSpearTossDirectP2Attack();
                 }
             }
             else if (WorldSavingSystem.MasochistModeReal && NPC.ai[1] == 165)
             {
-                Attack();
+                SpawnSpearTossDirectP2Attack();
             }
             else if (NPC.ai[1] == 151)
             {
@@ -3797,11 +3801,22 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
                 return;
             NPC.ai[3] -= (float)Math.PI / 6f / 60f;
             NPC.velocity = Vector2.Zero;
-            if (++NPC.ai[1] > 120)
+            //in maso, if player got timestopped at very end of final spark, fucking kill them
+            bool killPlayer = WorldSavingSystem.MasochistModeReal && Main.player[NPC.target].HasBuff(ModContent.BuffType<TimeFrozenBuff>());
+            if (killPlayer)
+            {
+                if (++NPC.ai[2] > 90)
+                {
+                    NPC.ai[2] -= 15;
+                    SpawnSpearTossDirectP2Attack();
+                }
+            }
+            else if (++NPC.ai[1] > 120)
             {
                 NPC.netUpdate = true;
                 AttackChoice--;
                 NPC.ai[1] = 0;
+                NPC.ai[2] = 0;
                 NPC.ai[3] = (float)-Math.PI / 2;
                 NPC.netUpdate = true;
                 if (FargoSoulsUtil.HostCheck) //shoot death anim mega ray
