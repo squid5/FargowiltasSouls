@@ -532,7 +532,7 @@ namespace FargowiltasSouls.Core.ModPlayers
                 return;
 
             //whips no longer benefit from melee speed bonus
-            if (Player.HeldItem.shoot > ProjectileID.None && ProjectileID.Sets.IsAWhip[Player.HeldItem.shoot])
+            if (Player.HeldItem.shoot > ProjectileID.None && ProjectileID.Sets.IsAWhip[Player.HeldItem.shoot] && !Player.HasEffect<TikiEffect>())
             {
                 Player.GetAttackSpeed(DamageClass.Melee) = 1;
             }

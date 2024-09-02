@@ -41,8 +41,7 @@ Whip your summons to make them work harder
         }
         public static void AddEffects(Player player, Item item)
         {
-            if (player.FargoSouls().ForceEffect<TikiEnchant>())
-                player.whipRangeMultiplier += 0.2f;
+            player.whipRangeMultiplier += player.FargoSouls().ForceEffect<TikiEnchant>() ? 1.2f : 1.1f;
             player.AddEffect<TikiEffect>(item);
         }
 

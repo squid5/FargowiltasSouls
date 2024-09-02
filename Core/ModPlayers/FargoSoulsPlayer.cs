@@ -612,7 +612,6 @@ namespace FargowiltasSouls.Core.ModPlayers
                 LifeReductionUpdateTimer = 0;
             }
         }
-
         public override float UseSpeedMultiplier(Item item)
         {
             int useTime = item.useTime;

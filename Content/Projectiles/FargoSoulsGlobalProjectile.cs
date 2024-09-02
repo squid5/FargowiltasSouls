@@ -57,8 +57,7 @@ namespace FargowiltasSouls.Content.Projectiles
         public int stormTimer;
         public float TungstenScale = 1;
         public int AdamModifier;
-        public bool tikiMinion;
-        public int tikiTimer;
+        public bool TikiTagged;
         public float shroomiteMushroomCD;
         public Vector2 shroomiteStorePosition;
         private int spookyCD;
@@ -226,15 +225,12 @@ namespace FargowiltasSouls.Content.Projectiles
             Player player = Main.player[projectile.owner];
             FargoSoulsPlayer modPlayer = player.FargoSouls();
 
-            if (projectile.friendly && FargoSoulsUtil.IsSummonDamage(projectile, true, false))
+            if (projectile.friendly)
             {
-                //projs shot by tiki-buffed minions will also inherit the tiki buff
-                if (source is EntitySource_Parent parent && parent.Entity is Projectile sourceProj
-                    && FargoSoulsUtil.IsSummonDamage(sourceProj, true, false)
-                    && sourceProj.FargoSouls().tikiMinion)
+                //projs shot by tiki-buffed projs will also inherit the tiki buff
+                if (source is EntitySource_Parent parent && parent.Entity is Projectile sourceProj && sourceProj.FargoSouls().TikiTagged)
                 {
-                    tikiMinion = true;
-                    tikiTimer = sourceProj.FargoSouls().tikiTimer;
+                    //TikiTagged = true;
                 }
             }
             if (player.HasEffect<NinjaEffect>()
@@ -1167,33 +1163,18 @@ namespace FargowiltasSouls.Content.Projectiles
             if (ProjectileID.Sets.IsAWhip[projectile.type] && projectile.owner == Main.myPlayer
                 && Main.player[projectile.owner].HasEffect<TikiEffect>())
             {
-                foreach (Projectile p in Main.projectile.Where(p => p.active && !p.hostile && p.owner == Main.myPlayer
-                    && FargoSoulsUtil.IsSummonDamage(p, true, false)
+                foreach (Projectile p in Main.projectile.Where(p => p.active && p.friendly && !p.hostile && p.owner == Main.myPlayer
                     && !ProjectileID.Sets.IsAWhip[p.type]
                     && projectile.Colliding(projectile.Hitbox, p.Hitbox)))
                 {
-                    p.FargoSouls().tikiMinion = true;
-                    p.FargoSouls().tikiTimer = MAX_TIKI_TIMER * p.MaxUpdates;
+                    p.FargoSouls().TikiTagged = true;
                 }
             }
 
-            if (tikiMinion)
+            if (TikiTagged)
             {
-                if (projectile.type != ProjectileID.UFOLaser) //avoid movement glitches
-                {
-                    //move faster
-                    projectile.position.X += projectile.velocity.X;
-                    if (!projectile.tileCollide || projectile.velocity.Y < 0 || projectile.shouldFallThrough)
-                        projectile.position.Y += projectile.velocity.Y;
-                }
-
-                if (tikiTimer > 0)
-                    tikiTimer--;
-                else
-                    tikiMinion = false;
-
                 //dust
-                if (Main.rand.NextBool(2))
+                if (Main.rand.NextBool(10))
                 {
                     int dust = Dust.NewDust(new Vector2(projectile.position.X - 2f, projectile.position.Y - 2f), projectile.width + 4, projectile.height + 4, DustID.JungleSpore, projectile.velocity.X * 0.4f, projectile.velocity.Y * 0.4f, 100, Color.LimeGreen, .8f);
                     Main.dust[dust].noGravity = true;
@@ -1314,10 +1295,6 @@ namespace FargowiltasSouls.Content.Projectiles
             return base.CanDamage(projectile);
         }
 
-        public override bool CanHitPlayer(Projectile projectile, Player target)
-        {
-            return true;
-        }
         public override void ModifyHitNPC(Projectile projectile, NPC target, ref NPC.HitModifiers modifiers)
         {
             Player player = Main.player[projectile.owner];
@@ -1328,6 +1305,13 @@ namespace FargowiltasSouls.Content.Projectiles
 
             if (TungstenScale != 1 && projectile.type == ProjectileID.PiercingStarlight)
                 modifiers.FinalDamage *= 0.4f;
+
+            if (TikiTagged)
+            {
+                modifiers.FinalDamage *= modPlayer.ForceEffect<TikiEnchant>() ? 1.4f : 1.2f;
+                TikiTagged = false;
+            }
+                
 
             if (player.HasEffect<NinjaEffect>())
             {
@@ -1370,11 +1354,6 @@ namespace FargowiltasSouls.Content.Projectiles
                 tempIframe = target.immune[projectile.owner];
 
             if (projectile.type == ProjectileID.SharpTears && !projectile.usesLocalNPCImmunity && projectile.usesIDStaticNPCImmunity && projectile.idStaticNPCHitCooldown == 60 && noInteractionWithNPCImmunityFrames)
-            {
-                modifiers.SetCrit();
-            }
-
-            if (tikiMinion && tikiTimer > MAX_TIKI_TIMER * projectile.MaxUpdates / 4)
             {
                 modifiers.SetCrit();
             }

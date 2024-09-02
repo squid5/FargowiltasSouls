@@ -647,7 +647,9 @@ TikiEnchant: {
 	DisplayName: Tiki Enchantment
 	Tooltip:
 		'''
-		Whip your summons to make them work harder
+		Summoner whips scale with your strongest class instead
+		+10% whip range
+		Whip your minions or projectiles to empower them for 1.2x damage on their next hit
 		'Aku Aku!'
 		'''
 }

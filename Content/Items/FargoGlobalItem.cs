@@ -11,6 +11,7 @@ using FargowiltasSouls.Core.AccessoryEffectSystem;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -187,7 +188,35 @@ namespace FargowiltasSouls.Content.Items
             }
             return base.CanAutoReuseItem(item, player);
         }
-
+        public override void ModifyWeaponDamage(Item item, Player player, ref StatModifier damage)
+        {
+            if (player.HasEffect<TikiEffect>())
+            {
+                if (item.shoot > ProjectileID.None && ProjectileID.Sets.IsAWhip[item.shoot] && item.DamageType.CountsAsClass(DamageClass.SummonMeleeSpeed))
+                {
+                    damage /= player.ActualClassDamage(DamageClass.SummonMeleeSpeed);
+                    List<float> types =
+                        [
+                            player.ActualClassDamage(DamageClass.Melee),
+                            player.ActualClassDamage(DamageClass.Ranged),
+                            player.ActualClassDamage(DamageClass.Magic),
+                            player.ActualClassDamage(DamageClass.Summon)
+                        ];
+                    damage *= types.Max();
+                }
+            }
+        }
+        public override void ModifyWeaponCrit(Item item, Player player, ref float crit)
+        {
+            if (player.HasEffect<TikiEffect>())
+            {
+                if (item.shoot > ProjectileID.None && ProjectileID.Sets.IsAWhip[item.shoot] && item.DamageType.CountsAsClass(DamageClass.SummonMeleeSpeed))
+                {
+                    crit /= player.ActualClassCrit(DamageClass.SummonMeleeSpeed);
+                    crit *= FargoSoulsUtil.HighestCritChance(player);
+                }
+            }
+        }
         public override bool CanUseItem(Item item, Player player)
         {
             FargoSoulsPlayer modPlayer = player.FargoSouls();

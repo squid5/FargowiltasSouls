@@ -300,7 +300,7 @@ namespace FargowiltasSouls.Content.Items
                 case ItemID.ChlorophytePartisan:
                     balanceNumber = 1;
                     balanceTextKeys = ["SpearRework"];
-                    return EModeChange.Buff;
+                    return EModeChange.Buff; 
 
                 case ItemID.AdamantiteGlaive:
                 case ItemID.TitaniumTrident:

@@ -14,7 +14,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.Cavern
         {
             npc.knockBackResist = 0f;
             if (Main.hardMode)
-                npc.lifeMax = (int)(npc.lifeMax * 2.5f);
+                npc.lifeMax = (int)(npc.lifeMax * 1.25f);
         }
         public override void OnFirstTick(NPC npc)
         {
