@@ -25,3 +25,4 @@ fixed qb ai breaking and doing nothing forever if you make her circle
 implemented use time debt
 
 maso ftw mutant waits longer after pillar dunk before doing other attacks
+maso mutant kills you if you get timestopped right as/after final spark ends
