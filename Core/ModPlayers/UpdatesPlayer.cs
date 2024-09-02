@@ -504,6 +504,19 @@ namespace FargowiltasSouls.Core.ModPlayers
             if (SpectreGhostTime > 0)
                 SpectreGhostTime--;
 
+            if (LockedMana > 0)
+            {
+                float previousLockedMana = LockedMana;
+                LockedMana -= 0.3f;
+                Player.statManaMax2 -= (int)Player.FargoSouls().LockedMana;
+                if ((int)LockedMana != (int)previousLockedMana)
+                {
+                    Player.statMana += 1;
+                }
+
+            }
+                
+
             if (ChargeSoundDelay > 0)
                 ChargeSoundDelay--;
 
@@ -599,13 +612,6 @@ namespace FargowiltasSouls.Core.ModPlayers
                     CirnoGrazeCounter--;
             }
 
-
-            if (Atrophied)
-            {
-                Player.GetDamage(DamageClass.Melee) *= 0.01f;
-                Player.GetCritChance(DamageClass.Melee) /= 100;
-            }
-
             if (Slimed)
             {
                 //slowed effect
@@ -658,8 +664,8 @@ namespace FargowiltasSouls.Core.ModPlayers
             if (Asocial)
             {
                 KillPets();
-                Player.maxMinions = 0;
-                Player.maxTurrets = 0;
+                Player.maxMinions /= 2;
+                Player.maxTurrets /= 2;
             }
             else if (WasAsocial) //should only occur when above debuffs end
             {

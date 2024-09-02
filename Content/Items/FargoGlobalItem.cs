@@ -77,8 +77,8 @@ namespace FargowiltasSouls.Content.Items
 
         public override void PickAmmo(Item weapon, Item ammo, Player player, ref int type, ref float speed, ref StatModifier damage, ref float knockback)
         {
-            if (weapon.CountsAsClass(DamageClass.Ranged) && player.FargoSouls().Jammed)
-                type = ProjectileID.ConfettiGun;
+            //if (weapon.CountsAsClass(DamageClass.Ranged) && player.FargoSouls().Jammed)
+                //type = ProjectileID.ConfettiGun;
 
             //coin gun is broken as fucking shit codingwise so i'm fixing it
             if (weapon.type == ItemID.CoinGun)
@@ -149,11 +149,12 @@ namespace FargowiltasSouls.Content.Items
         {
             FargoSoulsPlayer modPlayer = player.FargoSouls();
 
-
-            if (player.HasEffect<TungstenEffect>()
-                && !item.IsAir && ((item.IsWeapon() && !item.noMelee) || TungstenAlwaysAffects.Contains(item.type)))
+            if (!item.IsAir && ((item.IsWeapon() && !item.noMelee) || TungstenAlwaysAffects.Contains(item.type)))
             {
-                scale *= TungstenEffect.TungstenIncreaseWeaponSize(modPlayer);
+                if (player.HasEffect<TungstenEffect>())
+                    scale *= TungstenEffect.TungstenIncreaseWeaponSize(modPlayer);
+                if (modPlayer.Atrophied)
+                    scale *= 0.5f;
             }
         }
 
@@ -236,14 +237,6 @@ namespace FargowiltasSouls.Content.Items
                     player.ClearBuff(ModContent.BuffType<GoldenStasisBuff>());
                 else
                     return false;
-            }
-
-            if (item.CountsAsClass(DamageClass.Magic) && player.FargoSouls().ReverseManaFlow)
-            {
-                int damage = (int)(item.mana / (1f - player.endurance) + player.statDefense);
-                player.Hurt(PlayerDeathReason.ByCustomReason(Language.GetTextValue("Mods.FargowiltasSouls.DeathMessage.ReverseManaFlow", player.name)), damage, 0);
-                player.immune = false;
-                player.immuneTime = 0;
             }
 
             if (modPlayer.BuilderMode && (item.createTile != -1 || item.createWall != -1) && item.type != ItemID.PlatinumCoin && item.type != ItemID.GoldCoin)

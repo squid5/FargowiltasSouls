@@ -1,3 +1,4 @@
+using FargowiltasSouls.Common.Graphics.Particles;
 using FargowiltasSouls.Content.Bosses.Champions.Shadow;
 using FargowiltasSouls.Content.Bosses.Champions.Timber;
 using FargowiltasSouls.Content.Bosses.DeviBoss;
@@ -16,6 +17,7 @@ using FargowiltasSouls.Content.Projectiles.Souls;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using FargowiltasSouls.Core.Globals;
 using FargowiltasSouls.Core.Systems;
+using Luminance.Core.Graphics;
 using Microsoft.CodeAnalysis;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -227,6 +229,18 @@ namespace FargowiltasSouls.Content.Projectiles
 
             if (projectile.friendly)
             {
+                if (Main.rand.NextBool(2) && !projectile.hostile && !projectile.trap && !projectile.npcProj && modPlayer.Jammed && projectile.CountsAsClass(DamageClass.Ranged) && projectile.type != ProjectileID.ConfettiGun)
+                {
+                    for (int i = 0; i < 3; i++)
+                    {
+                        Particle p = new SparkParticle(projectile.Center + projectile.velocity * 4,
+                            projectile.velocity.RotatedByRandom(MathHelper.PiOver2 * 0.15f) * Main.rand.NextFloat(0.7f, 1f), Color.OrangeRed, Main.rand.NextFloat(0.75f, 1.25f), 20, true, Color.Red);
+                        p.Spawn();
+                    }
+                    //Projectile.NewProjectile(Entity.InheritSource(projectile), projectile.Center, projectile.velocity, ProjectileID.ConfettiGun, 0, 0f, projectile.owner);
+                    projectile.active = false;
+                }
+
                 //projs shot by tiki-buffed projs will also inherit the tiki buff
                 if (source is EntitySource_Parent parent && parent.Entity is Projectile sourceProj && sourceProj.FargoSouls().TikiTagged)
                 {
@@ -491,17 +505,6 @@ namespace FargowiltasSouls.Content.Projectiles
 
                 if (!projectile.hostile && !projectile.trap && !projectile.npcProj)
                 {
-                    if (modPlayer.Jammed && projectile.CountsAsClass(DamageClass.Ranged) && projectile.type != ProjectileID.ConfettiGun)
-                    {
-                        Projectile.NewProjectile(Entity.InheritSource(projectile), projectile.Center, projectile.velocity, ProjectileID.ConfettiGun, 0, 0f, projectile.owner);
-                        projectile.active = false;
-                    }
-
-                    if (modPlayer.Atrophied && projectile.CountsAsClass(DamageClass.Throwing))
-                    {
-                        projectile.damage = 0;
-                        projectile.Kill();
-                    }
 
                     if (player.HasEffect<ShroomiteShroomEffect>() && projectile.damage > 0 && !ShroomiteBlacklist.Contains(projectile.type) && projectile.velocity.Length() > 1 && projectile.minionSlots == 0 && projectile.type != ModContent.ProjectileType<ShroomiteShroom>() && player.ownedProjectileCounts[ModContent.ProjectileType<ShroomiteShroom>()] < 75)
                     {
@@ -571,12 +574,6 @@ namespace FargowiltasSouls.Content.Projectiles
                         }
 
                     }
-                }
-
-                if (modPlayer.Asocial && FargoSoulsUtil.IsSummonDamage(projectile, true, false))
-                {
-                    projectile.Kill();
-                    retVal = false;
                 }
             }
 

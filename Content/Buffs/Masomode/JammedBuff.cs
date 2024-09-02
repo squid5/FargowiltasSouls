@@ -19,6 +19,8 @@ namespace FargowiltasSouls.Content.Buffs.Masomode
         {
             //all ranged weapons shoot confetti 
             player.FargoSouls().Jammed = true;
+
+            player.GetDamage(DamageClass.Ranged) *= 0.8f;
         }
     }
 }

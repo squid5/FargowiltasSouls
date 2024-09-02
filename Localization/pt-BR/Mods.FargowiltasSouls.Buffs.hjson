@@ -180,7 +180,7 @@ AnticoagulationBuff: {
 
 AntisocialBuff: {
 	// DisplayName: Antisocial
-	// Description: You have no friends and no summon damage
+	// Description: You have less friends and whip damage
 }
 
 AtrophiedBuff: {
@@ -399,7 +399,7 @@ RefreshedBuff: {
 
 ReverseManaFlowBuff: {
 	// DisplayName: Reverse Mana Flow
-	// Description: Your magic weapons cost life instead of mana
+	// Description: Your magic weapons lock your mana for a duration
 }
 
 RottingBuff: {

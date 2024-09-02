@@ -48,15 +48,6 @@ namespace FargowiltasSouls.Core.ModPlayers
                 return;
             }
 
-            if (Asocial && FargoSoulsUtil.IsSummonDamage(proj, true, false))
-            {
-                modifiers.Null();
-            }
-
-            if (Atrophied && (proj.CountsAsClass(DamageClass.Melee) || proj.CountsAsClass(DamageClass.Throwing)))
-            {
-                modifiers.Null();
-            }
             ModifyHitNPCBoth(target, ref modifiers, proj.DamageType);
         }
 
@@ -69,11 +60,6 @@ namespace FargowiltasSouls.Core.ModPlayers
                 modifiers.SetMaxDamage(1);
                 Squeak(target.Center);
                 return;
-            }
-
-            if (Atrophied)
-            {
-                modifiers.Null();
             }
 
             ModifyHitNPCBoth(target, ref modifiers, item.DamageType);
@@ -113,7 +99,7 @@ namespace FargowiltasSouls.Core.ModPlayers
                         hitInfo.Damage = (int)(hitInfo.Damage * 0.75);
                 }
 
-                if (Hexed || (ReverseManaFlow && damageClass == DamageClass.Magic))
+                if (Hexed)
                 {
                     target.life += hitInfo.Damage;
                     target.HealEffect(hitInfo.Damage);

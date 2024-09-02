@@ -60,6 +60,8 @@ namespace FargowiltasSouls.Core.ModPlayers
 
         public bool SpawnedCoffinGhost = false;
 
+        public float LockedMana = 0;
+
         public Dictionary<int, bool> KnownBuffsToPurify = [];
 
         public bool Toggler_ExtraAttacksDisabled = false;
@@ -679,8 +681,14 @@ namespace FargowiltasSouls.Core.ModPlayers
 
             return AttackSpeed;
         }
+        public override void OnConsumeMana(Item item, int manaConsumed)
+        {
+            if (ReverseManaFlow)
+            {
+                LockedMana += manaConsumed;
+            }
+        }
 
-        
         public override void DrawEffects(PlayerDrawSet drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright)
         {
             //            if (squireReduceIframes && (SquireEnchant || ValhallaEnchant))
