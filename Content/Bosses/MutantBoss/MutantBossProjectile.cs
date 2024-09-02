@@ -121,9 +121,17 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
                         Projectile.localAI[0] = 0;
                 }
 
-                if (!npc.HasValidTarget && npc.velocity.Y < 0 && WorldSavingSystem.MasochistModeReal && Main.getGoodWorld)
+                if (WorldSavingSystem.MasochistModeReal && Main.getGoodWorld)
                 {
-                    Cake = true;
+                    if (!npc.HasValidTarget && npc.velocity.Y < 0)
+                    {
+                        Cake = true;
+                    }
+
+                    if (npc.ai[0] == -7) //death anim
+                    {
+                        Cake = true;
+                    }
                 }
             }
             else
