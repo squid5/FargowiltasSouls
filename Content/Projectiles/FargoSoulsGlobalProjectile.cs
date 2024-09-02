@@ -1013,8 +1013,6 @@ namespace FargowiltasSouls.Content.Projectiles
             }
         }
 
-        const int MAX_TIKI_TIMER = 20;
-
         public override void AI(Projectile projectile)
         {
             Player player = Main.player[projectile.owner];
@@ -1167,6 +1165,23 @@ namespace FargowiltasSouls.Content.Projectiles
                     && !ProjectileID.Sets.IsAWhip[p.type]
                     && projectile.Colliding(projectile.Hitbox, p.Hitbox)))
                 {
+                    if (!p.FargoSouls().TikiTagged)
+                    {
+                        SoundEngine.PlaySound(SoundID.Item147 with { Pitch = 1, Volume = 0.7f }, p.Center);
+                        for (int i = 0; i < 8; i++)
+                        {
+                            int dust = Dust.NewDust(new Vector2(projectile.position.X - 2f, projectile.position.Y - 2f), projectile.width + 4, projectile.height + 4, DustID.JungleSpore, projectile.velocity.X * 0.4f, projectile.velocity.Y * 0.4f, 100, Color.LimeGreen, .8f);
+                            Main.dust[dust].noGravity = true;
+                            Main.dust[dust].velocity *= 1.8f;
+                            Dust expr_1CCF_cp_0 = Main.dust[dust];
+                            expr_1CCF_cp_0.velocity.Y -= 0.5f;
+                            if (Main.rand.NextBool(4))
+                            {
+                                Main.dust[dust].noGravity = false;
+                                Main.dust[dust].scale *= 0.5f;
+                            }
+                        }
+                    }
                     p.FargoSouls().TikiTagged = true;
                 }
             }
