@@ -23,3 +23,5 @@ hopefully fixed sound engine completely breaking during destroyer light show
 fixed qb ai breaking and doing nothing forever if you make her circle
 
 implemented use time debt
+
+maso ftw mutant waits longer after pillar dunk before doing other attacks

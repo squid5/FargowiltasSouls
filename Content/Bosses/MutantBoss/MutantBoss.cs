@@ -1937,7 +1937,11 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
 
             int endTime = 240 + pillarAttackDelay * 4 + 60;
             if (WorldSavingSystem.MasochistModeReal)
+            {
                 endTime += pillarAttackDelay * 2;
+                if (Main.getGoodWorld)
+                    endTime += 210;
+            }
 
             NPC.localAI[0] = endTime - NPC.ai[1]; //for pillars to know remaining duration
             NPC.localAI[0] += 60f + 60f * (1f - NPC.ai[1] / endTime); //staggered despawn
