@@ -91,7 +91,6 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
 
         public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
-            Vector2.One.RotatedBy();
             if (WorldSavingSystem.EternityMode)
             {
                 target.AddBuff(ModContent.BuffType<Buffs.Boss.AbomFangBuff>(), 300);

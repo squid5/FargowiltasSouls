@@ -139,7 +139,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
             else
             {
                 bool forceEffect = modPlayer.ForceEffect<SpectreEnchant>();
-                Revive(forceEffect ? 200 : 50, 18000);
+                Revive(forceEffect ? 200 : 100, 18000);
                 if (player.HasEffect<SpectreOnHitEffect>())
                     FargoSoulsUtil.XWay(forceEffect ? 20 : 10, player.GetSource_EffectItem<SpectreEffect>(), player.Center, ModContent.ProjectileType<SpectreSpirit>(), 15, spiritDamage, 0);
             }

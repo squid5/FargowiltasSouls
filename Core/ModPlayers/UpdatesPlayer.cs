@@ -74,9 +74,6 @@ namespace FargowiltasSouls.Core.ModPlayers
                 RustedOxygenTank.PassiveEffect(Player);
             }
 
-            if (SpectreGhostTime > 0)
-                SpectreEffect.GhostUpdate(Player);
-
             if (GoldShell)
                 GoldUpdate();
 
@@ -172,6 +169,9 @@ namespace FargowiltasSouls.Core.ModPlayers
             {
                 GrazeRadius *= DeviGraze || CirnoGraze ? 1.5f : 0.75f;
             }
+
+            if (SpectreGhostTime > 0)
+                SpectreEffect.GhostUpdate(Player);
 
             if (DeerSinew)
                 Player.AddEffect<DeerSinewEffect>(ModContent.GetInstance<DeerSinew>().Item);
