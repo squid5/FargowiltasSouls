@@ -1,8 +1,4 @@
-﻿sampler diagonalNoise : register(s1);
-
-float colorMult;
-float time;
-float radius;
+﻿float radius;
 float maxOpacity;
 
 float2 screenPosition;
@@ -23,17 +19,6 @@ float4 PixelShaderFunction(float4 sampleColor : COLOR0, float2 uv : TEXCOORD0) :
     float2 worldUV = screenPosition + screenSize * uv;
     float2 provUV = anchorPoint / screenSize;
     float worldDistance = distance(worldUV, anchorPoint);
-    float adjustedTime = time * 0.1;
-    
-    // Pixelate the uvs
-    float2 pixelatedUV = worldUV / screenSize;
-    pixelatedUV.x -= worldUV.x % (1 / screenSize.x);
-    pixelatedUV.y -= worldUV.y % (1 / (screenSize.y / 2) * 2);
-    
-    // Sample the noise textures
-    float noiseMesh1 = tex2D(diagonalNoise, frac(pixelatedUV * 1.46 + float2(adjustedTime * 0.56, adjustedTime * 1.2))).g;
-    float noiseMesh2 = tex2D(diagonalNoise, frac(pixelatedUV * 1.57 + float2(adjustedTime * -0.56, adjustedTime * 1.2))).g;
-    float textureMesh = noiseMesh1 * 0.5 + noiseMesh2 * 0.5;
     
     float opacity = 1;
     

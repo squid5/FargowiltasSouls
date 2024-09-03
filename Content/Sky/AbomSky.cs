@@ -1,3 +1,4 @@
+using FargowiltasSouls.Assets.ExtraTextures;
 using FargowiltasSouls.Content.Bosses.AbomBoss;
 using FargowiltasSouls.Core.Globals;
 using Luminance.Core.Graphics;
@@ -55,19 +56,14 @@ namespace FargowiltasSouls.Content.Sky
                     var target = Main.LocalPlayer;
 
                     var blackTile = TextureAssets.MagicPixel;
-                    var diagonalNoise = blackTile;
 
                     ManagedShader blackShader = ShaderManager.GetShader("FargowiltasSouls.AbomRitualBackgroundShader");
-                    blackShader.TrySetParameter("colorMult", 7.35f);
-                    blackShader.TrySetParameter("time", Main.GlobalTimeWrappedHourly);
                     blackShader.TrySetParameter("radius", radius);
                     blackShader.TrySetParameter("anchorPoint", auraPos);
                     blackShader.TrySetParameter("screenPosition", Main.screenPosition);
                     blackShader.TrySetParameter("screenSize", Main.ScreenSize.ToVector2());
                     blackShader.TrySetParameter("playerPosition", target.Center);
                     blackShader.TrySetParameter("maxOpacity", intensity);
-
-                    Main.spriteBatch.GraphicsDevice.Textures[1] = diagonalNoise.Value;
 
                     spriteBatch.End();
                     spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, blackShader.WrappedEffect, Main.GameViewMatrix.TransformationMatrix);

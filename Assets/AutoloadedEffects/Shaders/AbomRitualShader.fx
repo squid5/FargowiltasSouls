@@ -30,10 +30,23 @@ float4 PixelShaderFunction(float4 sampleColor : COLOR0, float2 uv : TEXCOORD0) :
     pixelatedUV.x -= worldUV.x % (1 / screenSize.x);
     pixelatedUV.y -= worldUV.y % (1 / (screenSize.y / 2) * 2);
     
+    
     // Sample the noise textures
     float2 noiseUV = pixelatedUV - (anchorPoint / screenSize);
-    float noiseMesh1 = tex2D(diagonalNoise, frac(noiseUV * 1.46 + float2(adjustedTime * 0.56, adjustedTime * 1.2))).g;
-    float noiseMesh2 = tex2D(diagonalNoise, frac(noiseUV * 1.57 + float2(adjustedTime * -0.56, adjustedTime * 1.2))).g;
+    float2 vec1 = float2(0.56, 1.2);
+    float2 vec2 = float2(-0.56, 1.2);
+    /*
+    float2 polar = normalize(worldUV - anchorPoint);
+    float polarRotation = atan2(polar.y, polar.x);
+    float polarCos = cos(polarRotation);
+    float polarSin = sin(polarRotation);
+    vec1 = float2(vec1.x * polarCos - vec1.y * polarSin, vec1.x * polarSin + vec1.y * polarCos);
+    vec2 = float2(vec2.x * polarCos - vec2.y * polarSin, vec2.x * polarSin + vec2.y * polarCos);
+*/
+    //float2x2 polarRotation = float2x2(swirlCosine, -swirlSine, swirlSine, swirlCosine);
+    
+    float noiseMesh1 = tex2D(diagonalNoise, frac(noiseUV * 1.46 + vec1 * adjustedTime)).g;
+    float noiseMesh2 = tex2D(diagonalNoise, frac(noiseUV * 1.57 + vec2 * adjustedTime)).g;
     float textureMesh = noiseMesh1 * 0.5 + noiseMesh2 * 0.5;
     
     // Get the distance to the pixel from the player.
@@ -41,13 +54,13 @@ float4 PixelShaderFunction(float4 sampleColor : COLOR0, float2 uv : TEXCOORD0) :
     // And get the correct opacity based on it.
     float opacity = 0.25f;
     // Fade in quickly as the player approaches the pixels
-    opacity += InverseLerp(900, 500, distToPlayer);
+    opacity += InverseLerp(1100, 500, distToPlayer);
     
     // Define the border and fade
     bool border = worldDistance < radius && opacity > 0;
     float colorMult = 1;
     if (border) 
-        colorMult = InverseLerp(radius * 0.97, radius, worldDistance);
+        colorMult = InverseLerp(radius * 0.98, radius, worldDistance);
     else
     {
         colorMult = InverseLerp(radius * 1.4, radius, worldDistance);
@@ -58,11 +71,12 @@ float4 PixelShaderFunction(float4 sampleColor : COLOR0, float2 uv : TEXCOORD0) :
     if (colorMult == 1 && (opacity == 0 || worldDistance < radius))
         return sampleColor;
     
-    float4 darkColor = float4(0.67, 0.32, 0.12, 1);
+    float4 darkColor = float4(0.75, 0.36, 0.08, 1);
+    //float4 darkColor = float4(0.67, 0.32, 0.12, 1);
     float4 midColor = float4(0.96, 0.60, 0.09, 1);
     float4 lightColor = float4(0.98, 0.95, 0.79, 1);
     
-    float colorLerp = pow(colorMult, 3);
+    float colorLerp = pow(colorMult, 4);
     //colorLerp = lerp(colorLerp, colorLerp * textureMesh + 0.3, 0.2);
     float4 color;
     float split = 0.6;
@@ -78,6 +92,8 @@ float4 PixelShaderFunction(float4 sampleColor : COLOR0, float2 uv : TEXCOORD0) :
     }
     color *= pow(abs(textureMesh), 0.03);
 
+    if (!border)
+        colorMult += 0.05;
         
     return color * colorMult * opacity;
 }
