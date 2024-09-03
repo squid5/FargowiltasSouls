@@ -14,7 +14,7 @@ namespace FargowiltasSouls.Content.Projectiles
         protected readonly int dustType;
         protected readonly int increment;
         protected readonly int visualCount;
-        protected float threshold;
+        public float threshold;
         protected float targetPlayer;
 
         protected BaseArena(float rotationPerTick, float threshold, int npcType, int dustType = 135, int increment = 2, int visualCount = 32)
