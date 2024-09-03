@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static FargowiltasSouls.Content.Items.Accessories.Forces.TimberForce;
 
 namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
 {
@@ -58,10 +59,25 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
         public override Header ToggleHeader => Header.GetHeader<TimberHeader>();
         public override int ToggleItemType => ModContent.ItemType<PalmWoodEnchant>();
         public override bool MinionEffect => true;
+        public override void OnHitNPCEither(Player player, NPC target, NPC.HitInfo hitInfo, DamageClass damageClass, int baseDamage, Projectile projectile, Item item)
+        {
+            if (player.HasEffect<TimberEffect>())
+            {
+                if (player.FargoSouls().PalmWoodForceCD <= 0 && Collision.CanHit(player.Center, 0, 0, target.Center, 0, 0))
+                {
+                    Vector2 velocity = Vector2.Normalize(target.Center - player.Center) * 10;
 
+                    int p = Projectile.NewProjectile(GetSource_EffectItem(player), player.Center, velocity, ProjectileID.SeedlerNut, hitInfo.SourceDamage * 2, 2, player.whoAmI);
+                    if (p != Main.maxProjectiles)
+                        Main.projectile[p].DamageType = DamageClass.Summon;
+
+                    player.FargoSouls().PalmWoodForceCD = 90;
+                }
+            }
+        }
         public static void ActivatePalmwoodSentry(Player player)
         {
-            if (player.HasEffect<PalmwoodEffect>())
+            if (player.HasEffect<PalmwoodEffect>() && !player.HasEffect<TimberEffect>())
             {
                 if (player.whoAmI == Main.myPlayer)
                 {

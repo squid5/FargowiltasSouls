@@ -908,9 +908,9 @@ namespace FargowiltasSouls.Core.Globals
 
             if (TimberBleed)
             {
-                npc.lifeRegen -= 1000;
-                if (damage < 100)
-                    damage = 100;
+                npc.lifeRegen -= 400;
+                if (damage < 40)
+                    damage = 40;
             }
 
             if (Anticoagulation)

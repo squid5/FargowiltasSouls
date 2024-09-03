@@ -32,10 +32,23 @@ namespace FargowiltasSouls.Content.Items.Accessories.Forces
         {
             FargoSoulsPlayer modPlayer = player.FargoSouls();
             SetActive(player);
-            WoodEnchant.WoodEffect(player, Item);
-            player.AddEffect<MahoganyEffect>(Item);
-            player.AddEffect<PearlwoodEffect>(Item);
             player.AddEffect<TimberEffect>(Item);
+            // wood 
+            WoodEnchant.WoodEffect(player, Item);
+            // boreal
+            player.AddEffect<BorealEffect>(Item);
+            // mahog
+            player.AddEffect<MahoganyEffect>(Item);
+            // ebon
+            player.AddEffect<EbonwoodEffect>(Item);
+            // shade
+            player.AddEffect<ShadewoodEffect>(Item);
+            // palmwood
+            player.AddEffect<PalmwoodEffect>(Item);
+            // pearlwood
+            player.AddEffect<PearlwoodEffect>(Item);
+            player.AddEffect<PearlwoodManaEffect>(Item);
+            player.AddEffect<PearlwoodRainbowEffect>(Item);
         }
 
         public override void UpdateVanity(Player player)
@@ -60,49 +73,6 @@ namespace FargowiltasSouls.Content.Items.Accessories.Forces
         {
             public override Header ToggleHeader => Header.GetHeader<TimberHeader>();
             public override int ToggleItemType => ModContent.ItemType<TimberForce>();
-            public override bool ExtraAttackEffect => true;
-            
-
-            public override void PostUpdateEquips(Player player)
-            {
-                FargoSoulsPlayer modPlayer = player.FargoSouls();
-                if (modPlayer.TimberBranchCD > 0)
-                    modPlayer.TimberBranchCD--;
-                if (modPlayer.TimberSwingCD > 0)
-                    modPlayer.TimberSwingCD--;
-            }
-            public override void TryAdditionalAttacks(Player player, int damage, DamageClass damageType)
-            {
-                FargoSoulsPlayer modPlayer = player.FargoSouls();
-                if (player.whoAmI == Main.myPlayer)
-                {
-                    if (modPlayer.TimberBranchCD <= 0)
-                    {
-                        Item item = EffectItem(player);
-                        modPlayer.TimberBranchCD = 60 * 4;
-
-                        Vector2 vel = Vector2.Normalize(Main.MouseWorld - player.Center) * 1f;
-                        int branchDamage = FargoSoulsUtil.HighestDamageTypeScaling(player, 5750);
-
-                        int depth = 5;
-                        int p = Projectile.NewProjectile(player.GetSource_Accessory(item), player.Center, vel, ModContent.ProjectileType<TimberBranch>(), branchDamage, 1, Main.myPlayer, ai0: depth);
-
-                        //int numSnowballs = 1;
-                        //if (p != Main.maxProjectiles)
-                        //FargoSoulsGlobalProjectile.SplitProj(Main.projectile[p], numSnowballs, MathHelper.Pi / 10, 1);
-                    }
-                    else // Slightly reduce cooldown on attack
-                    {
-                        if (modPlayer.TimberSwingCD <= 0)
-                        {
-                            modPlayer.TimberBranchCD -= 4;
-                            modPlayer.TimberSwingCD = 10;
-                        }
-                        
-                    }
-                }
-            }
-
         }
     }
 }

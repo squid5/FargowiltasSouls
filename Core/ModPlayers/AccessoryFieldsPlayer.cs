@@ -143,6 +143,7 @@ namespace FargowiltasSouls.Core.ModPlayers
         public int JungleCD;
         public int BeetleEnchantDefenseTimer;
         public int BorealCD;
+        public int PalmWoodForceCD;
         public bool CrystalEnchantActive = false;
 
         public int MonkDashing;

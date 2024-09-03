@@ -515,7 +515,11 @@ namespace FargowiltasSouls.Core.ModPlayers
                 }
 
             }
-                
+            if (BorealCD > 0)
+                BorealCD--;
+
+            if (PalmWoodForceCD > 0)
+                PalmWoodForceCD--;
 
             if (ChargeSoundDelay > 0)
                 ChargeSoundDelay--;

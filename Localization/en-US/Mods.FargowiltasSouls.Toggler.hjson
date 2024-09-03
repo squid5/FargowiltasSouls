@@ -4,13 +4,13 @@ TimberHeader: "{$Mods.FargowiltasSouls.Items.TimberForce.DisplayName}"
 WoodCompletionEffect: Wood Completion Speedup
 BorealEffect: Boreal Snowballs
 MahoganyEffect: Mahogany Hook Speed
-EbonwoodEffect: Ebonwood Shadowflame
-ShadewoodEffect: Blood Geyser On Hit
+EbonwoodEffect: Ebonwood Withering
+ShadewoodEffect: Shadewood Bleeding
 PalmwoodEffect: Palmwood Sentry
 PearlwoodStarEffect: Pearlwood Stars
 PearlwoodManaEffect: Pearlwood Mana Pickups
 PearlwoodRainbowEffect: Pearlwood Rainbow Trail
-TimberEffect: Timber Branches
+TimberEffect: Concise Timber Force
 EarthHeader: "{$Mods.FargowiltasSouls.Items.EarthForce.DisplayName}"
 AdamantiteEffect: Adamantite Projectile Splitting
 CobaltEffect: Cobalt Hit Explosion

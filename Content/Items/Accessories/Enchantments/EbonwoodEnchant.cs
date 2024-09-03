@@ -8,6 +8,7 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static FargowiltasSouls.Content.Items.Accessories.Forces.TimberForce;
 
 namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
 {
@@ -70,7 +71,7 @@ Any projectiles that would deal less than 10 damage to you are destroyed
                 return;
 
             bool forceEffect = modPlayer.ForceEffect<EbonwoodEnchant>();
-            int dist = forceEffect ? 400 : 200;
+            int dist = ShadewoodEffect.Range(forceEffect);
             foreach (NPC npc in Main.npc.Where(n => n.active && !n.friendly && n.lifeMax > 5 && !n.dontTakeDamage))
             {
                 Vector2 npcComparePoint = FargoSoulsUtil.ClosestPointInHitbox(npc, player.Center);
@@ -81,7 +82,8 @@ Any projectiles that would deal less than 10 damage to you are destroyed
                         npc.AddBuff(ModContent.BuffType<CorruptingBuff>(), 2);
                     }
                 }
-                if (npc.FargoSouls().EbonCorruptionTimer > 60 * 3 && (!(npc.HasBuff<WitheredWizardBuff>() || npc.HasBuff<WitheredBuff>())))
+                float corruptTime = player.HasEffect<TimberEffect>() ? 10f : 60 * 3;
+                if (npc.FargoSouls().EbonCorruptionTimer > corruptTime && (!(npc.HasBuff<WitheredWizardBuff>() || npc.HasBuff<WitheredBuff>())))
                 {
                     EbonwoodProc(player, npc, dist, forceEffect, 5);
                 }

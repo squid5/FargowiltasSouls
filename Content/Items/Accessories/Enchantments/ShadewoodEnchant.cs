@@ -7,6 +7,7 @@ using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static FargowiltasSouls.Content.Items.Accessories.Forces.TimberForce;
 
 namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
 {
@@ -58,6 +59,7 @@ Enemies struck while Bleeding spew damaging blood
 
         public override Header ToggleHeader => Header.GetHeader<TimberHeader>();
         public override int ToggleItemType => ModContent.ItemType<ShadewoodEnchant>();
+        public static int Range(bool forceEffect) => forceEffect ? 400 : 200;
         public override void PostUpdateEquips(Player player)
         {
             FargoSoulsPlayer modPlayer = player.FargoSouls();
@@ -65,7 +67,7 @@ Enemies struck while Bleeding spew damaging blood
             if (player.whoAmI != Main.myPlayer)
                 return;
             bool forceEffect = modPlayer.ForceEffect<ShadewoodEnchant>();
-            int dist = forceEffect ? 400 : 200;
+            int dist = Range(forceEffect);
 
             for (int i = 0; i < Main.maxNPCs; i++)
             {
@@ -74,7 +76,13 @@ Enemies struck while Bleeding spew damaging blood
                 {
                     Vector2 npcComparePoint = FargoSoulsUtil.ClosestPointInHitbox(npc, player.Center);
                     if (player.Distance(npcComparePoint) < dist && (forceEffect || Collision.CanHitLine(player.Center, 0, 0, npcComparePoint, 0, 0)))
-                        npc.AddBuff(ModContent.BuffType<SuperBleedBuff>(), 120);
+                    {
+                        if (player.HasEffect<TimberEffect>()) // timber force
+                            npc.AddBuff(ModContent.BuffType<TimberBleedBuff>(), 120);
+                        else
+                            npc.AddBuff(ModContent.BuffType<SuperBleedBuff>(), 120);
+                    }
+                        
                 }
             }
 
