@@ -1,4 +1,5 @@
-﻿using FargowiltasSouls.Content.Buffs.Souls;
+﻿using Fargowiltas;
+using FargowiltasSouls.Content.Buffs.Souls;
 using FargowiltasSouls.Content.Items.Accessories.Forces;
 using FargowiltasSouls.Content.Projectiles.Souls;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
@@ -156,6 +157,14 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
             player.controlThrow = false;
             player.controlMount = false;
             player.GrantInfiniteFlight();
+
+            player.controlHook = false;
+            player.RemoveAllGrapplingHooks();
+            player.releaseHook = true;
+            if (player.mount.Active)
+                player.mount.Dismount(player);
+            //fargoPlayer.Stunned = true;
+            player.FargoSouls().NoUsingItems = 2;
 
             if (player.ownedProjectileCounts[ModContent.ProjectileType<SpectreGhostProj>()] <= 0)
                 Projectile.NewProjectile(player.GetSource_EffectItem<SpectreEffect>(), player.Center.X, player.Center.Y, 0f, 0f, ModContent.ProjectileType<SpectreGhostProj>(), 0, 0, Main.myPlayer);
