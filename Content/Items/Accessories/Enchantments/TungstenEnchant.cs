@@ -1,3 +1,4 @@
+using FargowiltasSouls.Content.Items.Accessories.Forces;
 using FargowiltasSouls.Content.Projectiles;
 using FargowiltasSouls.Content.Projectiles.BossWeapons;
 using FargowiltasSouls.Content.Projectiles.ChallengerItems;
@@ -86,7 +87,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
         }
         public static float TungstenIncreaseWeaponSize(FargoSoulsPlayer modPlayer)
         {
-            return 1f + (modPlayer.ForceEffect<TungstenEnchant>() ? 2f : 1f);
+            return 1f + (modPlayer.ForceEffect<TungstenEnchant>() && !modPlayer.Player.HasEffect<TerraLightningEffect>() ? 2f : 1f);
         }
 
         public static List<int> TungstenAlwaysAffectProjType =
@@ -133,6 +134,9 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
 
         public static void TungstenIncreaseProjSize(Projectile projectile, FargoSoulsPlayer modPlayer, IEntitySource source)
         {
+            if (modPlayer.Player.HasEffect<TerraLightningEffect>())
+                return;
+
             if (TungstenNeverAffectsProj(projectile))
             {
                 return;

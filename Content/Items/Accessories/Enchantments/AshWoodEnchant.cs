@@ -1,4 +1,5 @@
 ﻿using FargowiltasSouls.Content.Buffs.Masomode;
+using FargowiltasSouls.Content.Items.Accessories.Forces;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using FargowiltasSouls.Core.Toggler.Content;
 using Microsoft.Xna.Framework;
@@ -78,6 +79,8 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
         }
         public override void TryAdditionalAttacks(Player player, int damage, DamageClass damageType)
         {
+            if (player.HasEffect<TerraLightningEffect>())
+                return;
             FargoSoulsPlayer modPlayer = player.FargoSouls();
             bool burning = (player.onFire || player.onFire2 || player.onFire3);
             if (modPlayer.AshwoodCD <= 0 && (burning || player.HasEffect<ObsidianProcEffect>()))

@@ -43,7 +43,7 @@ namespace FargowiltasSouls.Content.Projectiles.Minions
             FargoSoulsPlayer modPlayer = player.FargoSouls();
             FargoSoulsPlayer localModPlayer = Main.LocalPlayer.FargoSouls();
 
-            if (player.whoAmI == Main.myPlayer && (player.dead || !player.HasEffect<WillGladiatorEffect>()))
+            if (player.whoAmI == Main.myPlayer && (player.dead || !player.HasEffect<WillEffect>()))
             {
                 Projectile.Kill();
                 return;
@@ -71,10 +71,10 @@ namespace FargowiltasSouls.Content.Projectiles.Minions
                 Projectile.velocity *= 0.97f;
             }
 
-            int AuraSize = 600;
+            int AuraSize = 500;
 
             FargoSoulsUtil.AuraDust(Projectile, AuraSize, DustID.GoldCoin);
-            if (FargoSoulsUtil.ClosestPointInHitbox(Main.LocalPlayer.Hitbox, Projectile.Center).Distance(Projectile.Center) < AuraSize && player.HasEffect<WillGladiatorEffect>() && !localModPlayer.Purified)
+            if (FargoSoulsUtil.ClosestPointInHitbox(Main.LocalPlayer.Hitbox, Projectile.Center).Distance(Projectile.Center) < AuraSize && player.HasEffect<WillEffect>() && !localModPlayer.Purified)
             {
                 Main.LocalPlayer.AddBuff(ModContent.BuffType<GladiatorSpiritBuff>(), 2);
             }

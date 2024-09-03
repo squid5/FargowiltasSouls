@@ -1,3 +1,4 @@
+using FargowiltasSouls.Content.Items.Accessories.Forces;
 using FargowiltasSouls.Content.Projectiles.Souls;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using FargowiltasSouls.Core.Toggler.Content;
@@ -74,6 +75,8 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
 
         public static void CopperProc(Player player, NPC target)
         {
+            if (player.HasEffect<TerraLightningEffect>())
+                return;
             FargoSoulsPlayer modPlayer = player.FargoSouls();
             if (modPlayer.CopperProcCD == 0)
             {

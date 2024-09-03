@@ -30,10 +30,10 @@ TinEffect: Tin Crits
 TungstenEffect: Tungsten Effect
 ObsidianProcEffect: Obsidian Explosions
 AshWoodFireballs: Ash Fireballs
-TerraLightningEffect: Terra Lightning
+TerraLightningEffect: Concise Terra Force
 WillHeader: "{$Mods.FargowiltasSouls.Items.WillForce.DisplayName}"
 GladiatorSpears: Gladiator Spears
-GladiatorBanner: Gladiator Banner
+GladiatorBanner: Gladiator Zone
 GoldEffect: Gold Lucky Coin
 GoldToPiggy: Gold To Piggy Bank
 HuntressEffect: Huntress Ability
@@ -41,7 +41,7 @@ RedRidingEffect: Red Riding Arrow Rain
 ValhallaDash: Valhalla Mount Dash
 SquireMountJump: Squire Mount Jump
 SquireMountSpeed: Squire Mount Speed
-WillGladiatorEffect: Will Gladiator Spirit
+WillEffect: Concise Will Force
 LifeHeader: "{$Mods.FargowiltasSouls.Items.LifeForce.DisplayName}"
 BeeEffect: Bee Flowers
 BeetleEffect: Beetles

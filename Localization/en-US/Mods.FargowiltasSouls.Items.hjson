@@ -925,13 +925,12 @@ TerraForce: {
 	DisplayName: Force of Terra
 	Tooltip:
 		'''
-		[i:FargowiltasSouls/CopperEnchant] [i:FargowiltasSouls/TinEnchant] [i:FargowiltasSouls/IronEnchant] [i:FargowiltasSouls/LeadEnchant] [i:FargowiltasSouls/SilverEnchant] [i:FargowiltasSouls/TungstenEnchant] [i:FargowiltasSouls/ObsidianEnchant]    
-		Right Click to guard with your shield
-		Critical strikes sometimes fire a lightning bolt that explodes on hit and inflicts a stronger Lead Poisoning
-		Lightning bolts are less frequent if you got hit recently
-		Successful parries instantly fire a lightning bolt 
-		You take 60% less damage over time
-		50% chance to not consume each item on first craft and you attract items from a larger range (works in vanity and inventory)
+		[i:FargowiltasSouls/CopperEnchant] [i:FargowiltasSouls/ObsidianEnchant] [i:FargowiltasSouls/LeadEnchant] Critical strikes sometimes fire a lightning bolt that explodes on hit and inflicts a stronger Lead Poisoning
+		[i:FargowiltasSouls/SilverEnchant] Right Click to guard with your shield, successful parries instantly fire a lightning bolt 
+		[i:FargowiltasSouls/LeadEnchant] You take 60% less damage over time
+		[i:FargowiltasSouls/TungstenEnchant] Your swords are larger and deal 14% more damage
+		[i:FargowiltasSouls/TinEnchant] Sets Tin crit chance to 10%, increasing up to double your original crit chance or 50%
+		[i:FargowiltasSouls/IronEnchant] 50% chance to not consume each item on first craft and you attract items from a larger range (works in vanity and inventory)
 		'The land lends its strength'
 		'''
 }
@@ -955,13 +954,12 @@ WillForce: {
 	DisplayName: Force of Will
 	Tooltip:
 		'''
-		[i:FargowiltasSouls/GoldEnchant] [i:FargowiltasSouls/PlatinumEnchant] [i:FargowiltasSouls/GladiatorEnchant] [i:FargowiltasSouls/RedRidingEnchant] [i:FargowiltasSouls/ValhallaKnightEnchant]
-		You are followed by a gladiator spirit with a banner that empowers you while close
-		Successive attacks gain bonus damage, increased when empowered by the banner
-		Increases the effectiveness of healing sources by 25%
-		Improves mounts and stats while mounted, mounts have a dash
-		Automatically sends coins to your piggy bank when picked up (works in vanity and inventory)
-		33% chance for enemies to drop 5x loot
+		[i:FargowiltasSouls/GladiatorEnchant] You are followed by a gladiator spirit with a banner that empowers you while close
+		[i:FargowiltasSouls/RedRidingEnchant] Successive attacks gain bonus damage, increased when empowered by the banner
+		[i:FargowiltasSouls/ValhallaKnightEnchant] Increases the effectiveness of healing sources by 25%
+		[i:FargowiltasSouls/ValhallaKnightEnchant] Improves mounts and stats while mounted, mounts have a dash
+		[i:FargowiltasSouls/GoldEnchant] Automatically sends coins to your piggy bank when picked up (works in vanity and inventory)
+		[i:FargowiltasSouls/PlatinumEnchant] 33% chance for enemies to drop 5x loot
 		'''
 }
 

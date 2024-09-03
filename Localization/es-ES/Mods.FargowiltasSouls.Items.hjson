@@ -925,13 +925,12 @@ TerraForce: {
 	// DisplayName: Force of Terra
 	/* Tooltip:
 		'''
-		[i:FargowiltasSouls/CopperEnchant] [i:FargowiltasSouls/TinEnchant] [i:FargowiltasSouls/IronEnchant] [i:FargowiltasSouls/LeadEnchant] [i:FargowiltasSouls/SilverEnchant] [i:FargowiltasSouls/TungstenEnchant] [i:FargowiltasSouls/ObsidianEnchant]    
-		Right Click to guard with your shield
-		Critical strikes sometimes fire a lightning bolt that explodes on hit and inflicts a stronger Lead Poisoning
-		Lightning bolts are less frequent if you got hit recently
-		Successful parries instantly fire a lightning bolt 
-		You take 60% less damage over time
-		50% chance to not consume each item on first craft and you attract items from a larger range (works in vanity and inventory)
+		[i:FargowiltasSouls/CopperEnchant] [i:FargowiltasSouls/ObsidianEnchant] [i:FargowiltasSouls/LeadEnchant] Critical strikes sometimes fire a lightning bolt that explodes on hit and inflicts a stronger Lead Poisoning
+		[i:FargowiltasSouls/SilverEnchant] Right Click to guard with your shield, successful parries instantly fire a lightning bolt 
+		[i:FargowiltasSouls/LeadEnchant] You take 60% less damage over time
+		[i:FargowiltasSouls/TungstenEnchant] Your swords are larger and deal 14% more damage
+		[i:FargowiltasSouls/TinEnchant] Sets Tin crit chance to 10%, increasing up to double your original crit chance or 50%
+		[i:FargowiltasSouls/IronEnchant] 50% chance to not consume each item on first craft and you attract items from a larger range (works in vanity and inventory)
 		'The land lends its strength'
 		''' */
 }
@@ -941,9 +940,10 @@ TimberForce: {
 	/* Tooltip:
 		'''
 		[i:FargowiltasSouls/EbonwoodEnchant] [i:FargowiltasSouls/ShadewoodEnchant] You have an aura of Withering and Bleeding, reducing defense and dealing damage over time
-		[i:FargowiltasSouls/BorealWoodEnchant]  [i:FargowiltasSouls/PalmWoodEnchant] Fire snowballs and acorns on enemies in this aura on hit
+		[i:FargowiltasSouls/BorealWoodEnchant] [i:FargowiltasSouls/PalmWoodEnchant] Fire snowballs and acorns on enemies in this aura on hit
 		[i:FargowiltasSouls/RichMahoganyEnchant] All grappling hooks shoot, pull, and retract 2.5x as fast
 		[i:FargowiltasSouls/PearlwoodEnchant] Retreiving pickups empowers you, making your crits reroll favorably for 5 seconds
+		[i:FargowiltasSouls/PearlwoodEnchant] Your attacks occasionally spawn mana stars on-hit
 		[i:FargowiltasSouls/WoodEnchant] Bestiary and banner entries complete faster
 		[i:FargowiltasSouls/WoodEnchant] You gain a shop discount based on bestiary completion (works in vanity and inventory)
 		'Extremely rigid'

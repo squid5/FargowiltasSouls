@@ -81,7 +81,7 @@ Missing any attack will reset these bonuses
             {
                 FargoSoulsPlayer modPlayer = player.FargoSouls();
                 soulsProj.HuntressProj = 2;
-                bool redRiding = player.HasEffect<RedRidingEffect>();
+                bool redRiding = player.HasEffect<RedRidingHuntressEffect>();
 
                 if (modPlayer.HuntressCD == 0)
                 {
@@ -91,7 +91,7 @@ Missing any attack will reset these bonuses
                     {
                         modPlayer.HuntressStage = 10;
 
-                        if (redRiding && modPlayer.RedRidingArrowCD == 0)
+                        if (player.HasEffect<RedRidingEffect>() && modPlayer.RedRidingArrowCD == 0)
                         {
                             RedRidingEffect.SpawnArrowRain(modPlayer.Player, target);
                         }

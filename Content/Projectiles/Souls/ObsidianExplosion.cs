@@ -1,5 +1,7 @@
 ﻿using FargowiltasSouls.Content.Buffs.Souls;
+using FargowiltasSouls.Content.Items.Accessories.Enchantments;
 using FargowiltasSouls.Content.Projectiles.Masomode;
+using FargowiltasSouls.Core.AccessoryEffectSystem;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
@@ -71,7 +73,8 @@ namespace FargowiltasSouls.Content.Projectiles.Souls
             if (SourceIsTerra)
             {
                 target.AddBuff(BuffID.Electrified, 60 * 5);
-                target.AddBuff(ModContent.BuffType<LeadPoisonBuff>(), 60 * 5);
+                if (Projectile.owner.IsWithinBounds(Main.maxProjectiles) && Main.player[Projectile.owner].HasEffect<LeadEffect>())
+                    target.AddBuff(ModContent.BuffType<LeadPoisonBuff>(), 60 * 5);
             }
         }
         public override bool PreDraw(ref Color lightColor)

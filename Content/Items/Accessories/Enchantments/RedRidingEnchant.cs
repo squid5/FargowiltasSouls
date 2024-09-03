@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static FargowiltasSouls.Content.Items.Accessories.Forces.TimberForce;
 
 namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
 {
@@ -39,6 +40,7 @@ Missing any attack will reset these bonuses
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.AddEffect<RedRidingEffect>(Item);
+            player.AddEffect<RedRidingHuntressEffect>(Item);
             player.AddEffect<HuntressEffect>(Item);
         }
 
@@ -56,6 +58,10 @@ Missing any attack will reset these bonuses
             .Register();
         }
     }
+    public class RedRidingHuntressEffect : AccessoryEffect
+    {
+        public override Header ToggleHeader => null;
+    }
     public class RedRidingEffect : AccessoryEffect
     {
 
@@ -72,6 +78,8 @@ Missing any attack will reset these bonuses
         }
         public static void SpawnArrowRain(Player player, NPC target)
         {
+            if (player.HasEffect<TimberEffect>())
+                return;
             FargoSoulsPlayer modPlayer = player.FargoSouls();
             Item effectItem = player.EffectItem<RedRidingEffect>();
             Item firstAmmo = PickAmmo(player);

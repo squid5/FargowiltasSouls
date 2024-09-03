@@ -33,13 +33,19 @@ namespace FargowiltasSouls.Content.Items.Accessories.Forces
         {
             SetActive(player);
             FargoSoulsPlayer modPlayer = player.FargoSouls();
+            // gold
             player.AddEffect<GoldToPiggy>(Item);
+            // platinum
             modPlayer.PlatinumEffect = Item;
+            // red riding
             player.AddEffect<HuntressEffect>(Item);
+            player.AddEffect<RedRidingHuntressEffect>(Item);
+            // valhalla
             player.FargoSouls().ValhallaEnchantActive = true;
             player.AddEffect<ValhallaDash>(Item);
             SquireEnchant.SquireEffect(player, Item);
-            player.AddEffect<WillGladiatorEffect>(Item);
+            // will
+            player.AddEffect<WillEffect>(Item);
         }
 
         public override void AddRecipes()
@@ -51,11 +57,11 @@ namespace FargowiltasSouls.Content.Items.Accessories.Forces
             recipe.Register();
         }
     }
-    public class WillGladiatorEffect : AccessoryEffect
+    public class WillEffect : AccessoryEffect
     {
         public override Header ToggleHeader => Header.GetHeader<WillHeader>();
         public override int ToggleItemType => ModContent.ItemType<WillForce>();
-        public override bool MinionEffect => true;
+        public override bool MinionEffect => false;
         
         public override void PostUpdateEquips(Player player)
         {

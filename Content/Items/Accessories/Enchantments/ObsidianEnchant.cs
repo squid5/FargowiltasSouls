@@ -1,4 +1,5 @@
 using FargowiltasSouls.Content.Buffs.Souls;
+using FargowiltasSouls.Content.Items.Accessories.Forces;
 using FargowiltasSouls.Content.Projectiles.Souls;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using FargowiltasSouls.Core.Toggler.Content;
@@ -91,6 +92,8 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
         public override bool ExtraAttackEffect => true;
         public override void OnHitNPCEither(Player player, NPC target, NPC.HitInfo hitInfo, DamageClass damageClass, int baseDamage, Projectile projectile, Item item)
         {
+            if (player.HasEffect<TerraLightningEffect>())
+                return;
             if (player.FargoSouls().ObsidianCD == 0)
             {
                 int damage = baseDamage;

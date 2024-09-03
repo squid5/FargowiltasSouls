@@ -41,7 +41,7 @@ RedRidingEffect: Дождь Стрел Красного Наездника
 ValhallaDash: Наездный Рывок Вальгаллы
 SquireMountJump: Наездный Прыжок Оруженосца
 SquireMountSpeed: Скорость Наездных Питомцев Оруженосца
-WillGladiatorEffect: Дух Гладиатора Воли
+WillEffect: Дух Гладиатора Воли
 LifeHeader: "{$Mods.FargowiltasSouls.Items.LifeForce.DisplayName}"
 BeeEffect: Цветы Пчелы
 BeetleEffect: Жуки

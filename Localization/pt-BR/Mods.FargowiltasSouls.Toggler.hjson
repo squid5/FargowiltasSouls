@@ -4,13 +4,13 @@
 // WoodCompletionEffect: Wood Completion Speedup
 // BorealEffect: Boreal Snowballs
 // MahoganyEffect: Mahogany Hook Speed
-// EbonwoodEffect: Ebonwood Shadowflame
-// ShadewoodEffect: Blood Geyser On Hit
+// EbonwoodEffect: Ebonwood Withering
+// ShadewoodEffect: Shadewood Bleeding
 // PalmwoodEffect: Palmwood Sentry
 // PearlwoodStarEffect: Pearlwood Stars
 // PearlwoodManaEffect: Pearlwood Mana Pickups
 // PearlwoodRainbowEffect: Pearlwood Rainbow Trail
-// TimberEffect: Timber Branches
+// TimberEffect: Concise Timber Force
 // EarthHeader: "{$Mods.FargowiltasSouls.Items.EarthForce.DisplayName}"
 // AdamantiteEffect: Adamantite Projectile Splitting
 // CobaltEffect: Cobalt Hit Explosion
@@ -30,10 +30,10 @@
 // TungstenEffect: Tungsten Effect
 // ObsidianProcEffect: Obsidian Explosions
 // AshWoodFireballs: Ash Fireballs
-// TerraLightningEffect: Terra Lightning
+// TerraLightningEffect: Concise Terra Force
 // WillHeader: "{$Mods.FargowiltasSouls.Items.WillForce.DisplayName}"
 // GladiatorSpears: Gladiator Spears
-// GladiatorBanner: Gladiator Banner
+// GladiatorBanner: Gladiator Zone
 // GoldEffect: Gold Lucky Coin
 // GoldToPiggy: Gold To Piggy Bank
 // HuntressEffect: Huntress Ability
@@ -41,7 +41,7 @@
 // ValhallaDash: Valhalla Mount Dash
 // SquireMountJump: Squire Mount Jump
 // SquireMountSpeed: Squire Mount Speed
-// WillGladiatorEffect: Will Gladiator Spirit
+// WillEffect: Concise Will Force
 // LifeHeader: "{$Mods.FargowiltasSouls.Items.LifeForce.DisplayName}"
 // BeeEffect: Bee Flowers
 // BeetleEffect: Beetles

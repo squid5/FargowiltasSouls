@@ -1,5 +1,7 @@
 ﻿using FargowiltasSouls.Common.Graphics.Particles;
 using FargowiltasSouls.Content.Buffs.Souls;
+using FargowiltasSouls.Content.Items.Accessories.Enchantments;
+using FargowiltasSouls.Core.AccessoryEffectSystem;
 using FargowiltasSouls.Core.Systems;
 using Luminance.Core.Graphics;
 using Microsoft.Xna.Framework;
@@ -29,15 +31,19 @@ namespace FargowiltasSouls.Content.Projectiles.Souls
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             target.AddBuff(BuffID.Electrified, 60 * 5);
-            target.AddBuff(ModContent.BuffType<LeadPoisonBuff>(), 60 * 5);
+            if (Projectile.owner.IsWithinBounds(Main.maxProjectiles) && Main.player[Projectile.owner].HasEffect<LeadEffect>())
+                target.AddBuff(ModContent.BuffType<LeadPoisonBuff>(), 60 * 5);
         }
         public override void OnKill(int timeLeft)
         {
-            SoundEngine.PlaySound(SoundID.Item62);
-            if (FargoSoulsUtil.HostCheck)
+            if (Projectile.owner.IsWithinBounds(Main.maxProjectiles) && Main.player[Projectile.owner].HasEffect<ObsidianEffect>())
             {
-                Projectile.NewProjectile(Terraria.Entity.InheritSource(Projectile), Projectile.Center, Vector2.Zero,
+                SoundEngine.PlaySound(SoundID.Item62);
+                if (FargoSoulsUtil.HostCheck)
+                {
+                    Projectile.NewProjectile(Terraria.Entity.InheritSource(Projectile), Projectile.Center, Vector2.Zero,
                     ModContent.ProjectileType<ObsidianExplosion>(), Projectile.originalDamage, Projectile.knockBack, Projectile.owner);
+                }
             }
         }
         public override bool OnTileCollide(Vector2 oldVelocity)
