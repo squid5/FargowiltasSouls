@@ -310,12 +310,13 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
             Vector2 targetPos;
             float speedModifier;
 
+            /* perma laevaetinn debug
             if (NPC.localAI[3] > 1 && NPC.ai[0] == 0)
             {
                 NPC.dontTakeDamage = false;
                 NPC.ai[0] = 15;
             }
-                
+            */   
 
             switch ((int)NPC.ai[0])
             {
