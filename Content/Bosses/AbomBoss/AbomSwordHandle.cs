@@ -154,7 +154,7 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
 
         public override bool PreDraw(ref Color lightColor)
         {
-            AbomSword.DrawStyxGazerDeathray(Projectile, Projectile.localAI[1], WidthFunction);
+            //AbomSword.DrawStyxGazerDeathray(Projectile, Projectile.localAI[1], WidthFunction);
             return false;
         }
     }

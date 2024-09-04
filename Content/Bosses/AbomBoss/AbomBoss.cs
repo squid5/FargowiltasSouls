@@ -289,14 +289,13 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
                     if (!SkyManager.Instance["FargowiltasSouls:AbomBoss"].IsActive())
                         SkyManager.Instance.Activate("FargowiltasSouls:AbomBoss");
 
-                    Main.dayTime = true;
-                    Main.time = 27000; //noon
+                    Main.dayTime = false;
+                    Main.time = 16200; //midnight
 
                     Main.raining = false; //disable rain
                     Main.rainTime = 0;
                     Main.maxRaining = 0;
 
-                    Main.eclipse = true;
                 }
             }
 
@@ -310,13 +309,14 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
             Vector2 targetPos;
             float speedModifier;
 
-            /* perma laevaetinn debug
+             // perma laevaetinn debug
+             /*
             if (NPC.localAI[3] > 1 && NPC.ai[0] == 0)
             {
                 NPC.dontTakeDamage = false;
                 NPC.ai[0] = 15;
             }
-            */   
+           */
 
             switch ((int)NPC.ai[0])
             {
@@ -433,7 +433,7 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
                     else if (NPC.ai[1] == 120)
                     {
                         FargoSoulsUtil.ClearFriendlyProjectiles(1);
-                        if (FargoSoulsUtil.HostCheck)
+                        if (FargoSoulsUtil.HostCheck && FargoSoulsUtil.ProjectileExists(ritualProj, ModContent.ProjectileType<AbomRitual>()) == null)
                         {
                             ritualProj = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<AbomRitual>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), 0f, Main.myPlayer, 0f, NPC.whoAmI);
                         }

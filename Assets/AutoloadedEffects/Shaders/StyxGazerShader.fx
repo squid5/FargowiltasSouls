@@ -4,7 +4,6 @@ sampler uImage2 : register(s2);
 
 float globalTime;
 float3 mainColor;
-float modifier;
 
 matrix uWorldViewProjection;
 
@@ -49,15 +48,14 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
     coords.y = (coords.y - 0.5) / input.TextureCoordinates.z + 0.5;
 
     // This basically makes the prim wiggle based on a sine wave.
-    //float y = coords.y + sin(coords.x * 68 + globalTime * 6.283) * 0.05;
-    float y = coords.y;
+    //float y = coords.y + sin(coords.x * 68 - globalTime * 6.283) * 0.5;
     
     // Get the pixel of the fade map. What coords.x is being multiplied by determines
     // how many times the uImage1 is copied to cover the entirety of the prim. 2, 2
-    float speedScale = 1;
-    if (modifier < 0.5)
-        speedScale = 0.5;
-    float4 fadeMapColor = tex2D(uImage1, float2(frac(coords.x * 4 * modifier - globalTime * 2 * speedScale), coords.y));
+    float4 tex1 = tex2D(uImage1, float2(frac(coords.x * 4 - globalTime * 2), coords.y));
+    float4 tex2 = tex2D(uImage1, float2(frac(coords.x * 4 - globalTime * 2.64), coords.y + sin(coords.x * 68 - globalTime * 6.283) * 0.1));
+    float4 tex3 = tex2D(uImage1, float2(frac(coords.x * 4 - globalTime * 5.12), coords.y));
+    float4 fadeMapColor = tex1 * 0.4 + tex2 * 0.4 + tex3 * 0.4;
     
     // Use the red value for the opacity, as the provided image *should* be grayscale.
     float opacity = fadeMapColor.r;
@@ -72,14 +70,16 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
         opacity *= pow(1 - (coords.y - 0.8) / 0.8, 6);
     
     // Fade out at the end of the streak.
-    float startFade = 0.05;
-    if (modifier < 0.5)
-        startFade = 0.1;
-    if (coords.x < startFade)
-        opacity *= pow(coords.x / startFade, 2);
-    float endFade = 0.7;
+    //float startFade = 0.00;
+    //if (coords.x < startFade)
+    //    opacity *= pow(coords.x / startFade, 2);
+    
+    float endFade = 0.1;
+    float endFader = 1;
     if (coords.x > endFade)
-        opacity *= pow(1 - (coords.x - endFade) / (1 - endFade), 2);
+        endFader = pow(1 - (coords.x - endFade) / (1 - endFade), 2);
+    endFader = clamp(endFader, 0.75, 1);
+    opacity *= endFader;
    
     return colorCorrected * opacity * 1.2;
 }

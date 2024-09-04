@@ -149,10 +149,12 @@ namespace FargowiltasSouls.Content.Projectiles.BossWeapons
                 spawnedHandle = true;
                 if (Projectile.owner == Main.myPlayer)
                 {
+                    /*
                     Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<StyxGazerHandle>(),
                         Projectile.damage, Projectile.knockBack, Projectile.owner, (float)Math.PI / 2, Projectile.identity);
                     Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<StyxGazerHandle>(),
                         Projectile.damage, Projectile.knockBack, Projectile.owner, -(float)Math.PI / 2, Projectile.identity);
+                    */
                 }
             }
 
