@@ -2,6 +2,7 @@ using FargowiltasSouls.Content.Bosses.Champions.Cosmos;
 using FargowiltasSouls.Content.Items.Accessories.Enchantments;
 using FargowiltasSouls.Content.Items.Accessories.Forces;
 using FargowiltasSouls.Content.Projectiles.Souls;
+using FargowiltasSouls.Core;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using FargowiltasSouls.Core.Toggler.Content;
 using Microsoft.Xna.Framework;
@@ -39,7 +40,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Souls
 
             // Tooltip.SetDefault(tooltip);
 
-            Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(6, 24));
+            Main.RegisterItemAnimation(Item.type, new DrawAnimationRectangularV(6, 6, 8));
             ItemID.Sets.AnimatesAsSoul[Item.type] = true;
         }
 
