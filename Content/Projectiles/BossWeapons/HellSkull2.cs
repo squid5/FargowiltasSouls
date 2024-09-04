@@ -11,7 +11,6 @@ namespace FargowiltasSouls.Content.Projectiles.BossWeapons
 {
     public class HellSkull2 : ModProjectile
     {
-        public override string Texture => "Terraria/Images/Projectile_585";
 
         public float targetRotation;
         /*public int targetID = -1;
@@ -22,7 +21,7 @@ namespace FargowiltasSouls.Content.Projectiles.BossWeapons
             // DisplayName.SetDefault("Hell Skull");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 20;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
-            Main.projFrames[Projectile.type] = Main.projFrames[ProjectileID.ClothiersCurse];
+            Main.projFrames[Projectile.type] = 3;
         }
 
         public override void SetDefaults()
@@ -74,11 +73,9 @@ namespace FargowiltasSouls.Content.Projectiles.BossWeapons
             if (Projectile.alpha < 0)
                 Projectile.alpha = 0;
 
-            if (++Projectile.frameCounter >= 12)
-                Projectile.frameCounter = 0;
-            Projectile.frame = Projectile.frameCounter / 2;
-            if (Projectile.frame > 3)
-                Projectile.frame = 6 - Projectile.frame;
+            if (++Projectile.frameCounter > 4)
+                if (++Projectile.frame >= Main.projFrames[Type])
+                    Projectile.frame = 0;
 
             Lighting.AddLight(Projectile.Center, NPCID.Sets.MagicAuraColor[54].ToVector3());
 

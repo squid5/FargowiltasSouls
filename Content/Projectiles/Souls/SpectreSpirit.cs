@@ -10,11 +10,10 @@ namespace FargowiltasSouls.Content.Projectiles.Souls
 {
     public class SpectreSpirit : ModProjectile
     {
-        public override string Texture => FargoSoulsUtil.VanillaTextureNPC(NPCID.DungeonSpirit);
 
         public override void SetStaticDefaults()
         {
-            Main.projFrames[Type] = 3;
+            Main.projFrames[Type] = 5;
         }
 
         public override void SetDefaults()
