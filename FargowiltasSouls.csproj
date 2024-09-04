@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="Assets\AutoloadedEffects\Shaders\AbomRitualBackgroundShader.fx" />
+    <None Remove="Assets\AutoloadedEffects\Shaders\StyxGazerShader.fx" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Assets\ExtraTextures\Noise\" />

@@ -72,7 +72,6 @@ float4 PixelShaderFunction(float4 sampleColor : COLOR0, float2 uv : TEXCOORD0) :
         return sampleColor;
     
     float4 darkColor = float4(0.75, 0.36, 0.08, 1);
-    //float4 darkColor = float4(0.67, 0.32, 0.12, 1);
     float4 midColor = float4(0.96, 0.60, 0.09, 1);
     float4 lightColor = float4(0.98, 0.95, 0.79, 1);
     

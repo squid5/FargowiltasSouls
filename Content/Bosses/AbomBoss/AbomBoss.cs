@@ -309,6 +309,14 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
             NPC.direction = NPC.spriteDirection = NPC.Center.X < player.Center.X ? 1 : -1;
             Vector2 targetPos;
             float speedModifier;
+
+            if (NPC.localAI[3] > 1 && NPC.ai[0] == 0)
+            {
+                NPC.dontTakeDamage = false;
+                NPC.ai[0] = 15;
+            }
+                
+
             switch ((int)NPC.ai[0])
             {
                 case -4: //ACTUALLY dead

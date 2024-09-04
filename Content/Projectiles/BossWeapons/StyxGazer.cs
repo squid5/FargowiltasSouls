@@ -202,46 +202,7 @@ namespace FargowiltasSouls.Content.Projectiles.BossWeapons
 
         public override bool PreDraw(ref Color lightColor)
         {
-            // This should never happen, but just in case.
-            if (Projectile.velocity == Vector2.Zero)
-                return false;
-
-            ManagedShader shader = ShaderManager.GetShader("FargowiltasSouls.WillBigDeathray");
-
-            // Get the laser end position.
-            Vector2 laserEnd = Projectile.Center + Projectile.velocity.SafeNormalize(Vector2.UnitY) * drawDistance;
-
-            // Create 8 points that span across the draw distance from the projectile center.
-
-            // This allows the drawing to be pushed back, which is needed due to the shader fading in at the start to avoid
-            // sharp lines.
-            Vector2 initialDrawPoint = Projectile.Center;
-            Vector2[] baseDrawPoints = new Vector2[8];
-            for (int i = 0; i < baseDrawPoints.Length; i++)
-                baseDrawPoints[i] = Vector2.Lerp(initialDrawPoint, laserEnd, i / (float)(baseDrawPoints.Length - 1f));
-
-            // Set shader parameters. This one takes a fademap and a color.
-
-            // The laser should fade to this in the middle.
-            Color brightColor = Color.Black;
-            shader.TrySetParameter("mainColor", brightColor);
-            // GameShaders.Misc["FargoswiltasSouls:MutantDeathray"].UseImage1(); cannot be used due to only accepting vanilla paths.
-            Texture2D fademap = ModContent.Request<Texture2D>("FargowiltasSouls/Assets/ExtraTextures/Trails/WillStreak").Value;
-            FargoSoulsUtil.SetTexture1(fademap);
-            for (int j = 0; j < 2; j++)
-            {
-                PrimitiveSettings primSettings = new(WidthFunction, ColorFunction, Shader: shader);
-                PrimitiveRenderer.RenderTrail(baseDrawPoints, primSettings, 30);
-
-                for (int i = 0; i < baseDrawPoints.Length / 2; i++)
-                {
-                    Vector2 temp = baseDrawPoints[i];
-                    int swap = baseDrawPoints.Length - 1 - i;
-                    baseDrawPoints[i] = baseDrawPoints[swap];
-                    baseDrawPoints[swap] = temp;
-                }
-                PrimitiveRenderer.RenderTrail(baseDrawPoints, primSettings, 30);
-            }
+            AbomSword.DrawStyxGazerDeathray(Projectile, drawDistance, WidthFunction);
             return false;
         }
     }

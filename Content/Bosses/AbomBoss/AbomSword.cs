@@ -1,5 +1,6 @@
 ﻿
 
+using FargowiltasSouls.Assets.ExtraTextures;
 using FargowiltasSouls.Content.Projectiles;
 using FargowiltasSouls.Content.Projectiles.Deathrays;
 using FargowiltasSouls.Core.Systems;
@@ -7,6 +8,7 @@ using Luminance.Core.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Runtime.InteropServices;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -179,25 +181,38 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
         }
 
         public float WidthFunction(float _) => Projectile.width * Projectile.scale * 2;
+        public static Color FromDecimal(double r, double g, double b, double a) => new((int)(r * 255), (int)(g * 255), (int)(b * 255), (int)(a * 255)); 
+        public static readonly Color darkColor = FromDecimal(0.75, 0.36, 0.08, 1);
+        public static readonly Color midColor = FromDecimal(0.96, 0.60, 0.09, 1);
+        public static readonly Color lightColor = FromDecimal(0.98, 0.95, 0.79, 1);
 
-        public static Color ColorFunction(float _) => new(253, 254, 32, 100);
+        public static Color ColorFunction(float _) => darkColor;
 
         public override bool PreDraw(ref Color lightColor)
         {
-            // This should never happen, but just in case.
-            if (Projectile.velocity == Vector2.Zero)
-                return false;
+            DrawStyxGazerDeathray(Projectile, drawDistance, WidthFunction);
+            return false;
+        }
+        public static void DrawStyxGazerDeathray(Projectile projectile, float drawDistance, PrimitiveSettings.VertexWidthFunction widthFunction)
+        {
 
-            ManagedShader shader = ShaderManager.GetShader("FargowiltasSouls.WillBigDeathray");
+            // This should never happen, but just in case.
+            if (projectile.velocity == Vector2.Zero)
+                return;
+
+            Main.spriteBatch.End();
+            Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, SamplerState.LinearWrap, DepthStencilState.None, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
+
+            ManagedShader shader = ShaderManager.GetShader("FargowiltasSouls.StyxGazerShader");
 
             // Get the laser end position.
-            Vector2 laserEnd = Projectile.Center + Projectile.velocity.SafeNormalize(Vector2.UnitY) * drawDistance;
+            Vector2 laserEnd = projectile.Center + projectile.velocity.SafeNormalize(Vector2.UnitY) * drawDistance;
 
             // Create 8 points that span across the draw distance from the projectile center.
 
             // This allows the drawing to be pushed back, which is needed due to the shader fading in at the start to avoid
             // sharp lines.
-            Vector2 initialDrawPoint = Projectile.Center;
+            Vector2 initialDrawPoint = projectile.Center;
             Vector2[] baseDrawPoints = new Vector2[8];
             for (int i = 0; i < baseDrawPoints.Length; i++)
                 baseDrawPoints[i] = Vector2.Lerp(initialDrawPoint, laserEnd, i / (float)(baseDrawPoints.Length - 1f));
@@ -205,16 +220,19 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
             // Set shader parameters. This one takes a fademap and a color.
 
             // The laser should fade to this in the middle.
-            Color brightColor = Color.Black;
+            Color brightColor = midColor;
             shader.TrySetParameter("mainColor", brightColor);
+
+            float modifier = drawDistance / 3000f;
+            shader.TrySetParameter("modifier", modifier);
             // GameShaders.Misc["FargoswiltasSouls:MutantDeathray"].UseImage1(); cannot be used due to only accepting vanilla paths.
-            Texture2D fademap = ModContent.Request<Texture2D>("FargowiltasSouls/Assets/ExtraTextures/Trails/WillStreak").Value;
+            Texture2D fademap = FargosTextureRegistry.MagmaStreak.Value;
             FargoSoulsUtil.SetTexture1(fademap);
             for (int j = 0; j < 2; j++)
             {
-                PrimitiveSettings primSettings = new(WidthFunction, ColorFunction, Shader: shader);
+                PrimitiveSettings primSettings = new(widthFunction, ColorFunction, Shader: shader);
                 PrimitiveRenderer.RenderTrail(baseDrawPoints, primSettings, 30);
-
+                /*
                 for (int i = 0; i < baseDrawPoints.Length / 2; i++)
                 {
                     Vector2 temp = baseDrawPoints[i];
@@ -223,8 +241,11 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
                     baseDrawPoints[swap] = temp;
                 }
                 PrimitiveRenderer.RenderTrail(baseDrawPoints, primSettings, 30);
+                */
             }
-            return false;
+
+            Main.spriteBatch.End();
+            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
         }
     }
 }
