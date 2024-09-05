@@ -76,6 +76,7 @@ namespace FargowiltasSouls.Content.Projectiles.Souls
             SyncMouse(player);
             Movement(player);
 
+            /*
             if (Timer % 13 == 0)
             {
                 if (FargoSoulsUtil.HostCheck)
@@ -89,6 +90,7 @@ namespace FargowiltasSouls.Content.Projectiles.Souls
                         FargoSoulsUtil.NewProjectileDirectSafe(Projectile.InheritSource(Projectile), Projectile.Center + Vector2.UnitY * Main.rand.Next(-50, 50), vel, ProjectileID.SpectreWrath, Projectile.damage, 0, player.whoAmI, target.whoAmI);
                 }
             }
+            */
 
             float num1123 = 900f;
             if (Projectile.soundDelay == 0)
@@ -192,8 +194,8 @@ namespace FargowiltasSouls.Content.Projectiles.Souls
             Vector2 idlePosition = mousePos;
             Vector2 toIdlePosition = idlePosition - Projectile.Center;
             float distance = toIdlePosition.Length();
-            float speed = 25f;
-            float inertia = 15f;
+            float speed = 4f;
+            float inertia = 30f;
             toIdlePosition.Normalize();
             toIdlePosition *= speed;
             Projectile.velocity = (Projectile.velocity * (inertia - 1f) + toIdlePosition) / inertia;

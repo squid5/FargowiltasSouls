@@ -193,7 +193,7 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
             DrawStyxGazerDeathray(Projectile, drawDistance, WidthFunction);
             return false;
         }
-        public static void DrawStyxGazerDeathray(Projectile projectile, float drawDistance, PrimitiveSettings.VertexWidthFunction widthFunction)
+        public static void DrawStyxGazerDeathray(Projectile projectile, float drawDistance, PrimitiveSettings.VertexWidthFunction widthFunction, bool drawHandle = true)
         {
             // This should never happen, but just in case.
             if (projectile.velocity == Vector2.Zero)

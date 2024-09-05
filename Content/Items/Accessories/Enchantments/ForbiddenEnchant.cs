@@ -1,3 +1,4 @@
+using FargowiltasSouls.Content.Items.Accessories.Forces;
 using FargowiltasSouls.Content.Projectiles.Souls;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using FargowiltasSouls.Core.Toggler.Content;
@@ -70,7 +71,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
         public override int ToggleItemType => ModContent.ItemType<ForbiddenEnchant>();
         public static void ActivateForbiddenStorm(Player player)
         {
-            if (player.HasEffect<ForbiddenEffect>())
+            if (player.HasEffect<ForbiddenEffect>() && !player.HasEffect<SpiritTornadoEffect>())
             {
                 FargoSoulsPlayer modPlayer = player.FargoSouls();
                 if (modPlayer.CanSummonForbiddenStorm)

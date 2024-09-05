@@ -33,9 +33,19 @@ namespace FargowiltasSouls.Content.Items.Accessories.Forces
         {
             SetActive(player);
             player.AddEffect<SpiritTornadoEffect>(Item);
-            player.AddEffect<FossilEffect>(Item);
+            // forbidden
+            player.AddEffect<ForbiddenEffect>(Item);
+            // hallow
             player.AddEffect<HallowEffect>(Item);
+            // ahallow
+            if (!player.HasEffect<SpiritTornadoEffect>())
+                AncientHallowEnchant.AddEffects(player, Item);
+            // tiki
             TikiEnchant.AddEffects(player, Item);
+            // spectre
+            player.AddEffect<SpectreEffect>(Item);
+            if (!player.HasEffect<SpiritTornadoEffect>())
+                player.AddEffect<SpectreOnHitEffect>(Item);
         }
 
         public override void AddRecipes()
@@ -54,7 +64,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Forces
         
         public static void ActivateSpiritStorm(Player player)
         {
-            if (player.HasEffect<SpiritTornadoEffect>())
+            if (player.HasEffect<SpiritTornadoEffect>() && player.HasEffect<ForbiddenEffect>())
             {
                 CommandSpiritStorm(player);
             }
@@ -66,7 +76,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Forces
                 Projectile projectile = Main.projectile[i];
                 if (projectile.active && projectile.type == ModContent.ProjectileType<SpiritTornado>() && projectile.owner == Player.whoAmI)
                 {
-                    projectile.Kill();
+                    return;
                 }
             }
 
