@@ -1,6 +1,7 @@
 ﻿using FargowiltasSouls.Content.Items.Accessories.Enchantments;
 using FargowiltasSouls.Content.Items.Accessories.Souls;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
+using FargowiltasSouls.Core.Toggler.Content;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -26,21 +27,46 @@ namespace FargowiltasSouls.Content.Items.Accessories.Forces
         {
             FargoSoulsPlayer modPlayer = player.FargoSouls();
             SetActive(player);
+            player.AddEffect<LifeForceEffect>(Item);
             modPlayer.LifeForceActive = true;
+            // Pumpkin Enchant
+            if (!player.HasEffect<LifeForceEffect>())
+                player.AddEffect<PumpkinEffect>(Item);
+            // Bee Enchant
             player.AddEffect<BeeEffect>(Item);
-            player.AddEffect<SpiderEffect>(Item);
-            player.AddEffect<BeetleEffect>(Item);
-            modPlayer.CactusImmune = true;
             player.strongBees = true;
-
-            if (modPlayer.LifeBeetleDuration > 0 && player.HasEffect<BeetleEffect>())
+            // Spider Enchant
+            player.AddEffect<SpiderEffect>(Item);
+            // Turtle Enchant
+            if (player.HasEffect<LifeForceEffect>())
             {
-                player.AddBuff(BuffID.BeetleMight3, modPlayer.LifeBeetleDuration);
-                player.AddBuff(BuffID.BeetleEndurance3, modPlayer.LifeBeetleDuration);
-                player.beetleOffense = true;
-                player.beetleDefense = true;
-                player.GetDamage(DamageClass.Generic) += 0.3f;
-                player.GetDamage(DamageClass.Melee) -= 0.3f; //offset the actual vanilla beetle buff
+                player.turtleThorns = true;
+                player.thorns = 5f;
+                modPlayer.CactusImmune = true;
+            }
+            else
+            {
+                TurtleEnchant.AddEffects(player, Item);
+            }
+            // Beetle Enchant
+
+            if (player.HasEffect<LifeForceEffect>())
+            {
+                player.AddEffect<BeetleEffect>(Item);
+                if (modPlayer.LifeBeetleDuration > 0 && player.HasEffect<BeetleEffect>())
+                {
+                    player.AddBuff(BuffID.BeetleMight3, modPlayer.LifeBeetleDuration);
+                    player.AddBuff(BuffID.BeetleEndurance3, modPlayer.LifeBeetleDuration);
+                    player.beetleOffense = true;
+                    player.beetleDefense = true;
+                    player.GetDamage(DamageClass.Generic) += 0.3f;
+                    player.GetDamage(DamageClass.Melee) -= 0.3f; //offset the actual vanilla beetle buff
+                }
+            }
+            else
+            {
+
+                BeetleEnchant.AddEffects(player, Item);
             }
         }
 
@@ -72,5 +98,10 @@ namespace FargowiltasSouls.Content.Items.Accessories.Forces
             speed = 18f;
             acceleration = 0.75f;
         }
+    }
+    public class LifeForceEffect : AccessoryEffect
+    {
+        public override Header ToggleHeader => Header.GetHeader<LifeHeader>();
+        public override int ToggleItemType => ModContent.ItemType<LifeForce>();
     }
 }

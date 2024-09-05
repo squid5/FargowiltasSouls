@@ -20,7 +20,7 @@ OrichalcumEffect: Orichalcum Petals
 PalladiumHealing: Palladium Healing
 PalladiumEffect: Palladium Orbs
 TitaniumEffect: Titanium Shards
-EarthForceEffect: Earth Weapon Charge
+EarthForceEffect: Concise Earth Force
 TerraHeader: "{$Mods.FargowiltasSouls.Items.TerraForce.DisplayName}"
 CopperEffect: Copper Lightning
 IronEffect: Iron Magnet
@@ -49,6 +49,7 @@ CactusEffect: Cactus Needles
 PumpkinEffect: Grow Pumpkins
 SpiderEffect: Spider Crits
 TurtleEffect: Turtle Shell Buff
+LifeForceEffect: Concise Life Force
 NatureHeader: "{$Mods.FargowiltasSouls.Items.NatureForce.DisplayName}"
 ChloroMinion: Chlorophyte Leaf Crystal
 CrimsonEffect: Crimson Healing
@@ -82,7 +83,7 @@ AncientHallowMinion: Ancient Hallowed Blade
 SpectreOnHitEffect: Spirits On Hit
 ForbiddenEffect: Forbidden Storm
 TikiEffect: Tiki Minions
-SpiritTornadoEffect: Spirit Tornado
+SpiritTornadoEffect: Concise Spirit Force
 CosmoHeader: "{$Mods.FargowiltasSouls.Items.CosmoForce.DisplayName}"
 MeteorMomentumEffect: Meteor Speed
 MeteorEffect: Meteor Strike

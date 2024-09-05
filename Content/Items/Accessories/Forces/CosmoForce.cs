@@ -34,20 +34,21 @@ namespace FargowiltasSouls.Content.Items.Accessories.Forces
             player.AddEffect<MeteorMomentumEffect>(Item);
             player.AddEffect<CosmosMoonEffect>(Item);
 
-            /*
-            //meteor shower
-            MeteorEnchant.AddEffects(player, Item);
-            //solar shields
-            player.AddEffect<SolarEffect>(Item);
-            player.AddEffect<SolarFlareEffect>(Item);
-            //stealth, voids, pet
-            VortexEnchant.AddEffects(player, Item);
-            //boosters
-            player.AddEffect<NebulaEffect>(Item);
-            //guardian and time freeze
-            player.AddEffect<StardustMinionEffect>(Item);
-            player.AddEffect<StardustEffect>(Item);
-            */
+            if (!player.HasEffect<CosmosMoonEffect>())
+            {
+                //meteor shower
+                MeteorEnchant.AddEffects(player, Item);
+                //solar shields
+                player.AddEffect<SolarEffect>(Item);
+                player.AddEffect<SolarFlareEffect>(Item);
+                //stealth, voids, pet
+                VortexEnchant.AddEffects(player, Item);
+                //boosters
+                player.AddEffect<NebulaEffect>(Item);
+                //guardian and time freeze
+                player.AddEffect<StardustMinionEffect>(Item);
+                player.AddEffect<StardustEffect>(Item);
+            }
         }
 
         public override void AddRecipes()
@@ -75,12 +76,12 @@ namespace FargowiltasSouls.Content.Items.Accessories.Forces
             if (player.HeldItem != null && player.HeldItem.damage > 0 && player.controlUseItem)
             {
                 modPlayer.CosmosMoonTimer += 2;
-
-                if (modPlayer.CosmosMoonTimer >= LumUtils.SecondsToFrames(3) && player.whoAmI == Main.myPlayer && player.ownedProjectileCounts[ModContent.ProjectileType<CosmosForceMoon>()] < 4)
+                int moonCount = player.ownedProjectileCounts[ModContent.ProjectileType<CosmosForceMoon>()];
+                if (modPlayer.CosmosMoonTimer >= LumUtils.SecondsToFrames(3) && player.whoAmI == Main.myPlayer && moonCount < 4)
                 {
                     int moonDamage = FargoSoulsUtil.HighestDamageTypeScaling(player, 3200);
 
-                    Projectile.NewProjectileDirect(player.GetSource_EffectItem<CosmosMoonEffect>(), player.Center, Vector2.Zero, ModContent.ProjectileType<CosmosForceMoon>(), moonDamage, 1, player.whoAmI, MathHelper.Pi);
+                    Projectile.NewProjectileDirect(player.GetSource_EffectItem<CosmosMoonEffect>(), player.Center, Vector2.Zero, ModContent.ProjectileType<CosmosForceMoon>(), moonDamage, 1, player.whoAmI, MathHelper.Pi, ai2: moonCount);
                     modPlayer.CosmosMoonTimer = 0;
                 }
             }

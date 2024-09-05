@@ -49,6 +49,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Cosmos
         }
 
         ref float State => ref Projectile.ai[1];
+        ref float FragmentType => ref Projectile.ai[2];
         public override bool? CanHitNPC(NPC target)
         {
             if (State == 0)
@@ -134,7 +135,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Cosmos
             return base.TileCollideStyle(ref width, ref height, ref fallThrough, ref hitboxCenterFrac);
         }
 
-        public override void OnKill(int timeLeft) //vanilla explosion code echhhhhhhhhhh
+        public override void OnKill(int timeLeft)
         {
             SoundEngine.PlaySound(SoundID.Item89, Projectile.position);
 
@@ -153,17 +154,8 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Cosmos
                 int stardust = ModContent.ItemType<StardustBooster>();
 
                 List<int> possibleBoosters = [solar, vortex, nebula, stardust];
-                if (Main.item.Any(i => i.active && i.type == solar) || Main.LocalPlayer.GetModPlayer<BoosterPlayer>().SolarTimer > 0)
-                    possibleBoosters.Remove(solar);
-                if (Main.item.Any(i => i.active && i.type == vortex) || Main.LocalPlayer.GetModPlayer<BoosterPlayer>().VortexTimer > 0)
-                    possibleBoosters.Remove(vortex);
-                if (Main.item.Any(i => i.active && i.type == nebula) || Main.LocalPlayer.GetModPlayer<BoosterPlayer>().NebulaTimer > 0)
-                    possibleBoosters.Remove(nebula);
-                if (Main.item.Any(i => i.active && i.type == stardust) || Main.LocalPlayer.GetModPlayer<BoosterPlayer>().StardustTimer > 0)
-                    possibleBoosters.Remove(stardust);
-                if (possibleBoosters.Count == 0)
-                    possibleBoosters = [solar, vortex, nebula, stardust];
-                int itemType = Main.rand.NextFromCollection(possibleBoosters);
+
+                int itemType = possibleBoosters[(int)FragmentType];
                 Item.NewItem(Projectile.GetSource_FromThis(), Projectile.Hitbox, itemType, noGrabDelay: true);
             }
 
@@ -192,8 +184,15 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Cosmos
             int y3 = num156 * Projectile.frame; //ypos of upper left corner of sprite to draw
             Rectangle rectangle = new(0, y3, texture2D13.Width, num156);
             Vector2 origin2 = rectangle.Size() / 2f;
-            Color glow = new Color(Main.DiscoR + 210, Main.DiscoG + 210, Main.DiscoB + 210) * Projectile.Opacity;
-            Color glow2 = new Color(Main.DiscoR + 50, Main.DiscoG + 50, Main.DiscoB + 50) * Projectile.Opacity;
+            //Color glow = new Color(Main.DiscoR + 210, Main.DiscoG + 210, Main.DiscoB + 210) * Projectile.Opacity;
+            //Color glow2 = new Color(Main.DiscoR + 50, Main.DiscoG + 50, Main.DiscoB + 50) * Projectile.Opacity;
+            Color glow = FragmentType switch
+            {
+                1 => Color.LightCyan,
+                2 => Color.Magenta,
+                3 => Color.Cyan,
+                _ => Color.Yellow
+            };
 
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.ZoomMatrix);
@@ -201,7 +200,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Cosmos
             {
                 Vector2 value4 = Projectile.oldPos[i];
                 float num165 = Projectile.oldRot[i];
-                Main.spriteBatch.Draw(texture2D13, value4 + Projectile.Size / 2f - Main.screenPosition + new Vector2(0, Projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), glow2 * 0.35f, num165, origin2, Projectile.scale, SpriteEffects.None, 0);
+                Main.spriteBatch.Draw(texture2D13, value4 + Projectile.Size / 2f - Main.screenPosition + new Vector2(0, Projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), glow * 0.35f, num165, origin2, Projectile.scale, SpriteEffects.None, 0);
             }
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.ZoomMatrix);
@@ -209,7 +208,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Cosmos
 
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.ZoomMatrix);
-            Main.spriteBatch.Draw(texture2D13, Projectile.Center - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), glow2 * 0.35f, Projectile.rotation, origin2, Projectile.scale, SpriteEffects.None, 0);
+            Main.spriteBatch.Draw(texture2D13, Projectile.Center - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), glow * 0.35f, Projectile.rotation, origin2, Projectile.scale, SpriteEffects.None, 0);
 
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.ZoomMatrix);
