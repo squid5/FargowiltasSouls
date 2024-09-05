@@ -157,6 +157,7 @@ namespace FargowiltasSouls.Core.ModPlayers
         public int IFrameDashTimer;
         public bool IFrameDash;
         public int EarthTimer;
+        public int EarthSplitTimer;
 
         //public int RainCD;
 

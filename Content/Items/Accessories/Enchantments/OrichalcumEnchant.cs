@@ -1,3 +1,4 @@
+using FargowiltasSouls.Content.Items.Accessories.Forces;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using FargowiltasSouls.Core.Toggler.Content;
 using Microsoft.Xna.Framework;
@@ -81,6 +82,8 @@ Damaging debuffs deal 2.5x damage
 
         public override void PostUpdateEquips(Player player)
         {
+            if (player.HasEffect<EarthForceEffect>())
+                return;
             player.onHitPetal = true;
         }
 

@@ -1,3 +1,4 @@
+using FargowiltasSouls.Content.Items.Accessories.Forces;
 using FargowiltasSouls.Content.Projectiles.Souls;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using FargowiltasSouls.Core.Toggler.Content;
@@ -59,7 +60,10 @@ When you are hurt, you violently explode to damage nearby enemies
 
         public override void OnHurt(Player player, Player.HurtInfo info)
         {
-            if (player.whoAmI == Main.myPlayer)
+            bool canProc = true;
+            if (!player.HasEffect<EarthForceEffect>())
+                canProc = player.HeldItem != null && player.HeldItem.damage > 0 && player.controlUseItem;
+            if (player.whoAmI == Main.myPlayer && canProc)
             {
                 FargoSoulsPlayer modPlayer = player.FargoSouls();
 
@@ -74,11 +78,11 @@ When you are hurt, you violently explode to damage nearby enemies
                     cap = 400;
                 }
 
-                if (modPlayer.TerrariaSoul)
+                if (player.HasEffect<EarthForceEffect>() || modPlayer.TerrariaSoul)
                 {
-                    baseDamage = 300;
+                    baseDamage = 600;
                     multiplier = 5;
-                    cap = 600;
+                    cap = 2500;
                 }
 
                 int explosionDamage = baseDamage + info.Damage * multiplier;

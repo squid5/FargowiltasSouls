@@ -33,17 +33,23 @@ namespace FargowiltasSouls.Content.Items.Accessories.Forces
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             SetActive(player);
-            //player.AddEffect<AncientCobaltEffect>(Item);
-            //player.AddEffect<CobaltEffect>(Item);
-            //player.AddEffect<PalladiumEffect>(Item);
-            //player.AddEffect<PalladiumHealing>(Item);
-            //player.AddEffect<MythrilEffect>(Item);
-            //player.AddEffect<OrichalcumEffect>(Item);
-            //player.AddEffect<AdamantiteEffect>(Item);
-            //player.AddEffect<TitaniumEffect>(Item);
-
             player.AddEffect<EarthForceEffect>(Item);
-            
+            // COBALT
+            if (!player.HasEffect<EarthForceEffect>())
+                player.AddEffect<AncientCobaltEffect>(Item);
+            player.AddEffect<CobaltEffect>(Item);
+            // PALLADIUM
+            if (!player.HasEffect<EarthForceEffect>())
+                player.AddEffect<PalladiumEffect>(Item);
+            player.AddEffect<PalladiumHealing>(Item);
+            // MYTHRIL
+            player.AddEffect<MythrilEffect>(Item);
+            // ORICHALCUM
+            player.AddEffect<OrichalcumEffect>(Item);
+            // ADAMANTITE
+            player.AddEffect<AdamantiteEffect>(Item);
+            // TITANIUM
+            player.AddEffect<TitaniumEffect>(Item);
         }
 
         public override void AddRecipes()
@@ -73,10 +79,12 @@ namespace FargowiltasSouls.Content.Items.Accessories.Forces
         public override void PostUpdateEquips(Player player)
         {
             FargoSoulsPlayer farg = player.FargoSouls();
-            if (!player.controlUseItem && farg.EarthTimer < EarthMaxCharge)
+            bool attacking = player.HeldItem != null && player.HeldItem.damage > 0 && player.controlUseItem;
+
+            if (!attacking && farg.EarthTimer < EarthMaxCharge)
             {
                 farg.EarthTimer += 2;
-            }else if (player.controlUseItem && farg.EarthTimer > 0)
+            }else if (attacking && farg.EarthTimer > 0)
             {
                 farg.EarthTimer--;
             }
@@ -84,13 +92,15 @@ namespace FargowiltasSouls.Content.Items.Accessories.Forces
             float lerper = GetEarthForceLerpValue(player);
             //player.GetDamage(DamageClass.Generic) *= MathHelper.Lerp(1, 0.3f, lerper);
             
-            //mythril takes priority if equipped
-            if (!player.HasEffect<MythrilEffect>())
-            {
+            if (player.HasEffect<MythrilEffect>())
                 farg.AttackSpeed *= MathHelper.Lerp(1, 2f, lerper);
-            }
-            player.lifeRegen += (int)MathHelper.Lerp(0, 8, lerper);
-            player.endurance += (int)MathHelper.Lerp(0, 0.1f, lerper);
+
+            if (player.HasEffect<PalladiumEffect>())
+                player.lifeRegen += (int)MathHelper.Lerp(5, 25, lerper);
+
+            if (player.HasEffect<TitaniumEffect>())
+                player.endurance += (int)MathHelper.Lerp(0.1f, 0.25f, lerper);
+
             //Main.NewText(player.GetAttackSpeed(DamageClass.Generic));
 
             //one below or two below because it increments by 2 so it could skip this if it was just one number
@@ -116,7 +126,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Forces
         public override void OnHitNPCEither(Player player, NPC target, NPC.HitInfo hitInfo, DamageClass damageClass, int baseDamage, Projectile projectile, Item item)
         {
             float lerper = GetEarthForceLerpValue(player);
-            int debuffDamage = (int)(baseDamage * MathHelper.Lerp(1, 0.3f, lerper));
+            int debuffDamage = (int)(baseDamage * MathHelper.Lerp(1, 0.75f, lerper));
             //divide by 2.3 because want to deal that damage over the course of ~6.6 seconds, deal a bit more than the actual missing damage to compensate for constant re-application of debuff without increasing the duration
             // Change damage to average of old and new damage to make it less affected by random extreme variation in damage
             target.FargoSouls().EarthDoTValue = (int)MathHelper.Lerp(target.FargoSouls().EarthDoTValue, debuffDamage / 2.3f, 0.5f);
@@ -137,14 +147,15 @@ namespace FargowiltasSouls.Content.Items.Accessories.Forces
                 return;
             }
             float angleDif = MathHelper.Lerp(2, 30, lerper);
-            foreach (Projectile p in FargoSoulsGlobalProjectile.SplitProj(projectile, 3, MathHelper.ToRadians(angleDif), 1))
+            float damageMult = 1f;
+            foreach (Projectile p in FargoSoulsGlobalProjectile.SplitProj(projectile, 3, MathHelper.ToRadians(angleDif), damageMult))
             {
                 if (p.Alive())
                 {
                     p.FargoSouls().HuntressProj = projectile.FargoSouls().HuntressProj;
                 }
             }
-            projectile.damage = (int)(projectile.damage * 0.4f);
+            projectile.damage = (int)(projectile.damage * damageMult);
 
         }
     }

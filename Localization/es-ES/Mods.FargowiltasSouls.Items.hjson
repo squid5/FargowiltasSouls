@@ -195,7 +195,7 @@ ForbiddenEnchant: {
 	/* Tooltip:
 		'''
 		Double tap down to call an ancient storm to the cursor location, that scales with magic and summon damage
-		Any projectiles shot through your storm gain 30% damage
+		Any projectiles shot through your storm deal 1.3x damage
 		Touch it yourself to add back missing wing time
 		Storm can be resummoned after touching the ground
 		'Walk like an Egyptian'
@@ -833,13 +833,12 @@ EarthForce: {
 	// DisplayName: Force of Earth
 	/* Tooltip:
 		'''
-		Not attacking charges up your weapons
-		Increased life regeneration and damage reduction the more charge is stored
-		Attack to consume charge
-		While charged up, projectiles will split into three and weapons will fire faster
-		While charged up you also inflict Earth Poison, which does a percentage of your weapons damage
-
-		Enemies take 4x damage from debuffs
+		[i:FargowiltasSouls/MythrilEnchant] Not attacking builds up charge; attack to consume charge
+		[i:FargowiltasSouls/PalladiumEnchant] [i:FargowiltasSouls/TitaniumEnchant] Increased life regeneration and damage reduction the more charge is stored
+		[i:FargowiltasSouls/CobaltEnchant] You also explode on hit while not attacking
+		[i:FargowiltasSouls/AdamantiteEnchant] While charged up, projectiles will split into three and weapons will fire faster
+		[i:FargowiltasSouls/OrichalcumEnchant] While charged up you also inflict Earth Poison, which does a percentage of the hit's damage
+		[i:FargowiltasSouls/OrichalcumEnchant] Enemies take 4x damage from debuffs
 		'Gaia's blessing shines upon you'
 		''' */
 	/* SaveOldTooltip:
@@ -911,7 +910,7 @@ SpiritForce: {
 	/* Tooltip:
 		'''
 		[i:FargowiltasSouls/ForbiddenEnchant] Double tap down to call an ancient tornado that scales with magic and summon damage
-		[i:FargowiltasSouls/ForbiddenEnchant] Any projectiles shot through your tornado gain 30% damage
+		[i:FargowiltasSouls/ForbiddenEnchant] Any projectiles shot through your tornado deal 1.6x damage
 		[i:FargowiltasSouls/AncientHallowEnchant] The tornado tracks your mouse slightly 
 		[i:FargowiltasSouls/HallowEnchant] Healing potions restore more health but take effect over time
 		[i:FargowiltasSouls/SpectreEnchant] If you reach zero HP you will revive with 200 HP, self-cleanse debuffs, and spawn healing spirits

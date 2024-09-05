@@ -1,4 +1,5 @@
 using FargowiltasSouls.Content.Buffs.Souls;
+using FargowiltasSouls.Content.Items.Accessories.Forces;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using FargowiltasSouls.Core.Toggler.Content;
 using Microsoft.Xna.Framework;
@@ -71,6 +72,8 @@ This has a cooldown of 10 seconds during which you cannot gain shards
         }
         public static float TitaniumDR(Player player, Entity attacker)
         {
+            if (player.HasEffect<EarthForceEffect>())
+                return 0;
             FargoSoulsPlayer modPlayer = player.FargoSouls();
 
             if (!modPlayer.TitaniumDRBuff)
@@ -98,8 +101,9 @@ This has a cooldown of 10 seconds during which you cannot gain shards
 
         public static void TitaniumShards(FargoSoulsPlayer modPlayer, Player player)
         {
-
             if (modPlayer.TitaniumCD)
+                return;
+            if (player.HasEffect<EarthForceEffect>())
                 return;
 
             player.AddBuff(306, 600, true, false);
@@ -137,6 +141,8 @@ This has a cooldown of 10 seconds during which you cannot gain shards
 
         public override void PostUpdateMiscEffects(Player player)
         {
+            if (player.HasEffect<EarthForceEffect>())
+                return;
             FargoSoulsPlayer modPlayer = player.FargoSouls();
 
             if (modPlayer.TitaniumDRBuff && modPlayer.prevDyes == null)

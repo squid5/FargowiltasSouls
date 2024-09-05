@@ -1,3 +1,4 @@
+using FargowiltasSouls.Content.Items.Accessories.Forces;
 using FargowiltasSouls.Content.Items.Weapons.BossDrops;
 using FargowiltasSouls.Content.Projectiles;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
@@ -63,7 +64,8 @@ Bonus ends after attacking for 3 seconds and rebuilds over 5 seconds
 
         public static void CalcMythrilAttackSpeed(FargoSoulsPlayer modPlayer, Item item)
         {
-
+            if (modPlayer.Player.HasEffect<EarthForceEffect>())
+                return;
 
             if (item.DamageType != DamageClass.Default && item.pick == 0 && item.axe == 0 && item.hammer == 0 && item.type != ModContent.ItemType<PrismaRegalia>())
             {
@@ -74,6 +76,9 @@ Bonus ends after attacking for 3 seconds and rebuilds over 5 seconds
 
         public override void PostUpdateEquips(Player player)
         {
+            if (player.HasEffect<EarthForceEffect>())
+                return;
+
             FargoSoulsPlayer modPlayer = player.FargoSouls();
 
             const int cooldown = 60 * 5;

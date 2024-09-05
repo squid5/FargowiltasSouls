@@ -1,3 +1,4 @@
+using FargowiltasSouls.Content.Items.Accessories.Forces;
 using FargowiltasSouls.Content.Items.Weapons.Challengers;
 using FargowiltasSouls.Content.Projectiles;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
@@ -63,6 +64,8 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
 
         public override void PostUpdateEquips(Player player)
         {
+            if (player.HasEffect<EarthForceEffect>())
+                return;
             FargoSoulsPlayer modPlayer = player.FargoSouls();
             //modPlayer.AdamantiteEnchantItem = item;
 

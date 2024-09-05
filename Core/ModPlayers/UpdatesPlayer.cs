@@ -524,6 +524,9 @@ namespace FargowiltasSouls.Core.ModPlayers
             if (ChargeSoundDelay > 0)
                 ChargeSoundDelay--;
 
+            if (EarthSplitTimer > 0)
+                EarthSplitTimer--;
+
             if (RustRifleReloading && Player.HeldItem.type == ModContent.ItemType<NavalRustrifle>())
             {
                 RustRifleTimer++;

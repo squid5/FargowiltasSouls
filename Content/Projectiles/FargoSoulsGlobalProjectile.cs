@@ -378,46 +378,36 @@ namespace FargowiltasSouls.Content.Projectiles
             {
                 HuntressProj = 1;
             }
-
-            if (player.HasEffect<EarthForceEffect>() && !player.HasEffect<AdamantiteEffect>()
-                && FargoSoulsUtil.OnSpawnEnchCanAffectProjectile(projectile, false)
+            bool canAdaSplit = projectile.owner == Main.myPlayer && FargoSoulsUtil.OnSpawnEnchCanAffectProjectile(projectile, false)
                 && CanSplit && Array.IndexOf(NoSplit, projectile.type) <= -1
-                && projectile.aiStyle != ProjAIStyleID.Spear)
+                && projectile.aiStyle != ProjAIStyleID.Spear
+                && !(AdamantiteEffect.AdamIgnoreItems.Contains(modPlayer.Player.HeldItem.type) || modPlayer.Player.heldProj == projectile.whoAmI)
+                && (FargoSoulsUtil.IsProjSourceItemUseReal(projectile, source)
+                || source is EntitySource_Parent parent2 && parent2.Entity is Projectile sourceProj2 && (sourceProj2.aiStyle == ProjAIStyleID.Spear || sourceProj2.minion || sourceProj2.sentry || ProjectileID.Sets.IsAWhip[sourceProj2.type] && !ProjectileID.Sets.IsAWhip[projectile.type]));
+
+            if (player.HasEffect<EarthForceEffect>() && player.HasEffect<AdamantiteEffect>())
             {
-                if (projectile.owner == Main.myPlayer && modPlayer.EarthTimer > 100
-                    && !(AdamantiteEffect.AdamIgnoreItems.Contains(modPlayer.Player.HeldItem.type) || modPlayer.Player.heldProj == projectile.whoAmI)
-                    && (FargoSoulsUtil.IsProjSourceItemUseReal(projectile, source)
-                    || source is EntitySource_Parent parent && parent.Entity is Projectile sourceProj && (sourceProj.aiStyle == ProjAIStyleID.Spear || sourceProj.minion || sourceProj.sentry || ProjectileID.Sets.IsAWhip[sourceProj.type] && !ProjectileID.Sets.IsAWhip[projectile.type]))){
-                    EarthForceEffect.EarthSplit(projectile, Main.LocalPlayer);
-                    AdamModifier = 3;
+                if (canAdaSplit)
+                {
+                    if (projectile.owner == Main.myPlayer && modPlayer.EarthTimer > 100 && modPlayer.EarthSplitTimer <= 0)
+                    {
+                        EarthForceEffect.EarthSplit(projectile, Main.LocalPlayer);
+                        AdamModifier = 3;
+                        modPlayer.EarthSplitTimer = 60 * 3;
+                    }
                 }
-            }
-            //reduce iframes so that the accessory actually increases dps for real
-            if (player.HasEffect<EarthForceEffect>())
-            {
+                //reduce iframes so that the accessory actually increases dps for real
                 if (projectile.usesIDStaticNPCImmunity && AdamModifier == 3)
                 {
                     projectile.idStaticNPCHitCooldown = (int)(projectile.idStaticNPCHitCooldown * 0.3333f);
                 }
             }
-            
-            if (player.HasEffect<AdamantiteEffect>()
-                && FargoSoulsUtil.OnSpawnEnchCanAffectProjectile(projectile, false)
-                && CanSplit && Array.IndexOf(NoSplit, projectile.type) <= -1
-                && projectile.aiStyle != ProjAIStyleID.Spear)
+            else if (player.HasEffect<AdamantiteEffect>() && canAdaSplit)
             {
-                if (projectile.owner == Main.myPlayer
-                    && !(AdamantiteEffect.AdamIgnoreItems.Contains(modPlayer.Player.HeldItem.type) || modPlayer.Player.heldProj == projectile.whoAmI)
-                    && (FargoSoulsUtil.IsProjSourceItemUseReal(projectile, source)
-                    || source is EntitySource_Parent parent && parent.Entity is Projectile sourceProj && (sourceProj.aiStyle == ProjAIStyleID.Spear || sourceProj.minion || sourceProj.sentry || ProjectileID.Sets.IsAWhip[sourceProj.type] && !ProjectileID.Sets.IsAWhip[projectile.type])))
-                {
-                    //apen is inherited from proj to proj
-                    projectile.ArmorPenetration += projectile.damage / 2;
-                    AdamantiteEffect.AdamantiteSplit(projectile, modPlayer, 1 + (int)modPlayer.AdamantiteSpread);
-                    AdamModifier = modPlayer.ForceEffect<AdamantiteEnchant>() ? 3 : 2;
-
-                }
-
+                //apen is inherited from proj to proj
+                projectile.ArmorPenetration += projectile.damage / 2;
+                AdamantiteEffect.AdamantiteSplit(projectile, modPlayer, 1 + (int)modPlayer.AdamantiteSpread);
+                AdamModifier = modPlayer.ForceEffect<AdamantiteEnchant>() ? 3 : 2;
             }
 
             if (projectile.bobber && CanSplit && source is EntitySource_ItemUse)
