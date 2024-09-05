@@ -49,6 +49,7 @@ CactusEffect: Иглы Кактуса
 PumpkinEffect: Растущие Тыквы
 SpiderEffect: Криты Паука
 TurtleEffect: Бафф Черепашьего Панциря
+// LifeForceEffect: Concise Life Force
 NatureHeader: "{$Mods.FargowiltasSouls.Items.NatureForce.DisplayName}"
 ChloroMinion: Кристальный Лист Хлорофита
 CrimsonEffect: Лечение Багрянца
@@ -74,7 +75,7 @@ SpookyEffect: Косы Жути
 NinjaEffect: Скорость Ниндзя
 CrystalAssassinDash: Рывок Хрустального Убийцы
 ShadowForceDashEffect: Рывок Тени
-ShadowForceDamageEffect: Урон Рывка Тени
+// ShadowForceEffect: Concise Death Enchantment
 SpiritHeader: "{$Mods.FargowiltasSouls.Items.SpiritForce.DisplayName}"
 FossilBones: Ископаемые Кости При Ударе
 HallowEffect: Лечебные Зелья Освящения

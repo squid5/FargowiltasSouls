@@ -20,7 +20,7 @@ OrichalcumEffect: 山铜 花瓣
 PalladiumHealing: 钯金 生命恢复
 PalladiumEffect: 钯金 伤害珠
 TitaniumEffect: 钛金 碎片
-// EarthForceEffect: Earth Weapon Charge
+// EarthForceEffect: Concise Earth Force
 TerraHeader: "{$Mods.FargowiltasSouls.Items.TerraForce.DisplayName}"
 CopperEffect: 铜 闪电
 IronEffect: 铁 吸引掉落物
@@ -49,6 +49,7 @@ CactusEffect: 仙人掌 针刺
 PumpkinEffect: 南瓜 种植南瓜
 SpiderEffect: 蜘蛛 召唤物暴击
 TurtleEffect: 乌龟 缩壳减伤
+// LifeForceEffect: Concise Life Force
 NatureHeader: "{$Mods.FargowiltasSouls.Items.NatureForce.DisplayName}"
 ChloroMinion: 叶绿 水晶
 CrimsonEffect: 猩红 治愈
@@ -74,7 +75,7 @@ SpookyEffect: 阴森 镰刀攻击
 NinjaEffect: 忍者 弹幕速度
 CrystalAssassinDash: 水晶刺客冲刺
 // ShadowForceDashEffect: Shadow Dash
-// ShadowForceDamageEffect: Shadow Dash Damage
+// ShadowForceEffect: Concise Death Enchantment
 SpiritHeader: "{$Mods.FargowiltasSouls.Items.SpiritForce.DisplayName}"
 FossilBones: 化石 受击释放骨头
 HallowEffect: 神圣 治疗药水
@@ -82,7 +83,7 @@ AncientHallowMinion: 远古神圣 泰拉棱镜
 // SpectreOnHitEffect: Spirits On Hit
 ForbiddenEffect: 禁戒 风暴
 TikiEffect: 提基 鞭打召唤物
-// SpiritTornadoEffect: Spirit Tornado
+// SpiritTornadoEffect: Concise Spirit Force
 CosmoHeader: "{$Mods.FargowiltasSouls.Items.CosmoForce.DisplayName}"
 MeteorMomentumEffect: 流星 速度
 MeteorEffect: 流星 流星雨

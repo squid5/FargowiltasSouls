@@ -883,10 +883,15 @@ ShadowForce: {
 	DisplayName: Force of Death
 	Tooltip:
 		'''
-		Grants a shadow dash
-		Every 4 seconds, your next dash will envolope you in shade, making you invincible during the dash
-		Dashing through an enemy with the shade dash damages them and inflicts Marked for Death
-		Moving slowly increases your damage, up to 40%
+		[i:FargowiltasSouls/CrystalAssassinEnchant] Grants a shadow dash
+		[i:FargowiltasSouls/ShinobiEnchant] Every 4 seconds, your next dash will envolope you in shade, making you invincible during the dash
+		[i:FargowiltasSouls/ShinobiEnchant] Dashing through an enemy with the shade dash damages them and inflicts Marked for Death 
+		[i:FargowiltasSouls/AncientShadowEnchant] Dashing fires a burst of shadowflame projectiles around you
+		[i:FargowiltasSouls/NinjaEnchant] Increases projectile damage based on projectile speed
+		[i:FargowiltasSouls/NinjaEnchant] Increases projectile speed while moving slowly
+		[i:FargowiltasSouls/NecroEnchant] Slain enemies may drop a pile of bones
+		[i:FargowiltasSouls/DarkArtistEnchant] While attacking, fire your next 3 closest weapons' projectiles as support
+		[i:FargowiltasSouls/SpookyEnchant] All of your minions gain an extra scythe attack
 		'Dark, Darker, Yet Darker'
 		'''
 	SavingOldTooltip:

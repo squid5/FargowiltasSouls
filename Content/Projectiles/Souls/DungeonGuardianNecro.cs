@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -53,14 +54,10 @@ namespace FargowiltasSouls.Content.Projectiles.Souls
 
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
-            if (Main.player[Projectile.owner].FargoSouls().TerrariaSoul)
-            {
-                modifiers.SetCrit();
-            }
-            else
-            {
-                modifiers.DisableCrit();
-            }
+            modifiers.SetMaxDamage(Math.Min(Projectile.originalDamage, 40 * 1000));
+            modifiers.FinalDamage = new();
+            modifiers.SourceDamage = new();
+            modifiers.DisableCrit();
         }
 
         public override void OnKill(int timeLeft)

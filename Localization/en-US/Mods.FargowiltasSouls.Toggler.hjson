@@ -75,7 +75,7 @@ SpookyEffect: Spooky Scythes
 NinjaEffect: Ninja Speed
 CrystalAssassinDash: Crystal Assassin Dash
 ShadowForceDashEffect: Shadow Dash
-ShadowForceDamageEffect: Shadow Dash Damage
+ShadowForceEffect: Concise Death Enchantment
 SpiritHeader: "{$Mods.FargowiltasSouls.Items.SpiritForce.DisplayName}"
 FossilBones: Fossil Bones On Hit
 HallowEffect: Hallowed Healing Potions
