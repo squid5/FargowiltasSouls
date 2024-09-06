@@ -936,8 +936,8 @@ namespace FargowiltasSouls.Core.ModPlayers
                 wasHoldingShield = false;
                 return;
             }
-            Player.shieldRaised = Player.selectedItem != 58 && Player.controlUseTile && Player.releaseUseItem && FargoSoulsUtil.ActuallyClickingInGameplay(Player)
-                && Player.itemAnimation == 0 && Player.itemTime == 0 && Player.reuseDelay == 0 && PlayerInput.Triggers.Current.MouseRight;
+            Player.shieldRaised = Player.selectedItem != 58 && Player.controlUseTile && Player.releaseUseItem && !Player.tileInteractionHappened && !Player.controlUseItem && FargoSoulsUtil.ActuallyClickingInGameplay(Player)
+                && !Main.HoveringOverAnNPC && !Main.SmartInteractShowingGenuine && Player.itemAnimation == 0 && Player.itemTime == 0 && Player.reuseDelay == 0 && PlayerInput.Triggers.Current.MouseRight;
 
             if (Player.shieldRaised)
             {

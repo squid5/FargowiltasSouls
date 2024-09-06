@@ -80,7 +80,7 @@ namespace FargowiltasSouls.Content.Projectiles.ChallengerItems
                     Projectile.friendly = false;
                     Projectile.tileCollide = false;
                 }
-                if (player.channel && !player.noItems && !player.CCed || !((player.Center - Projectile.Center).Length() < 50)) //homing on player while mouse held
+                if ((Main.mouseLeft || player.whoAmI != Main.myPlayer) || !((player.Center - Projectile.Center).Length() < 50)) //homing on player while mouse held
                 {
                     vectorToIdlePosition = player.Center - Projectile.Center;
                     speed = 24f;
