@@ -339,7 +339,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             {
                 npc.defense = npc.defDefense / 2;
 
-                if (!NPC.AnyNPCs(ModContent.NPCType<GelatinSubject>()) && RainTimer < 0 && SummonCooldown <= 0)
+                if (!NPC.AnyNPCs(ModContent.NPCType<GelatinSubject>()) && RainTimer < 0)
                 {
                     bool condition1 = npc.ai[0] == 0 && npc.ai[1] == 20;
                     if (condition1)
@@ -347,7 +347,6 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                         if (FargoSoulsUtil.HostCheck && NPC.CountNPCS(ModContent.NPCType<GelatinFlyer>()) < MaxMinions)
                             FargoSoulsUtil.NewNPCEasy(npc.GetSource_FromAI(), npc.Center, ModContent.NPCType<GelatinFlyer>(), npc.whoAmI, target: npc.target,
                                 velocity: 16f * npc.DirectionFrom(Main.player[npc.target].Center).RotatedBy(MathHelper.PiOver2 * 0.3f * (Main.rand.NextBool() ? 1 : -1)));
-                        SummonCooldown = LumUtils.SecondsToFrames(8);
                     }
                 }
 
