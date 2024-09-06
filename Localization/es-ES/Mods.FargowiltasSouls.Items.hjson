@@ -546,7 +546,7 @@ ShroomiteEnchant: {
 	// DisplayName: Shroomite Enchantment
 	/* Tooltip:
 		'''
-		Mushrooms heal 50 HP and consuming them grants Mushroom Power for 15 seconds
+		Mushrooms heal 50 HP and consuming them grants Mushroom Power for 20 seconds
 		Mushroom Power grants +20% damage and critical strike chance
 		Piercing projectiles spawn a cloud of mushrooms on their first hit, with a short cooldown
 		'Made with real shrooms!'

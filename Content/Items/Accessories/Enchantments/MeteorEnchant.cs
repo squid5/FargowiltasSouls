@@ -147,7 +147,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
                 Vector2 accurateVel = vel.Length() * pos.SafeDirectionTo(targetPos);
                 vel = Vector2.Lerp(vel, accurateVel, 0.9f);
             }
-            SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/ThrowShort"), projectile.Center);
+            SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/ThrowShort"), pos);
 
             int i = Projectile.NewProjectile(GetSource_EffectItem(player), pos, vel, ModContent.ProjectileType<MeteorEnchantMeatball>(), FargoSoulsUtil.HighestDamageTypeScaling(player, damage), 0.5f, player.whoAmI, 0, 0.5f + (float)Main.rand.NextDouble() * 0.3f);
             if (forceEffect && i.IsWithinBounds(Main.maxProjectiles))
