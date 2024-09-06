@@ -21,6 +21,7 @@ using FargowiltasSouls.Core.Globals;
 using FargowiltasSouls.Common.Graphics.Particles;
 using System.Reflection;
 using Luminance.Core.Graphics;
+using Terraria.Graphics.Capture;
 
 namespace FargowiltasSouls //lets everything access it without using
 {
@@ -34,6 +35,9 @@ namespace FargowiltasSouls //lets everything access it without using
         public static bool WorldIsMaster() => Main.masterMode || (Main.GameModeInfo.IsJourneyMode && CreativePowerManager.Instance.GetPower<CreativePowers.DifficultySliderPower>().StrengthMultiplierToGiveNPCs >= 3);
 
         public static bool HostCheck => Main.netMode != NetmodeID.MultiplayerClient;
+
+        public static bool ActuallyClickingInGameplay(Player player) => !player.tileInteractionHappened && !player.controlUseItem && !player.mouseInterface && 
+            !CaptureManager.Instance.Active && !Main.HoveringOverAnNPC && !Main.SmartInteractShowingGenuine;
 
         public static void AddDebuffFixedDuration(Player player, int buffID, int intendedTime, bool quiet = true)
         {

@@ -118,7 +118,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                 }
             }
 
-            if (npc.ai[0] != 2f || WorldSavingSystem.MasochistModeReal)
+            if (npc.ai[0] != 2f)
             {
                 if (!HaveShotGuardians && npc.ai[1] == 1f && npc.ai[2] > 2f) //spinning, do wave of guardians
                 {
