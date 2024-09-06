@@ -820,8 +820,8 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                 if (--TentacleTimer <= 0)
                 {
                     float slowdown = Math.Min(0.9f, -TentacleTimer / 60f);
-                    if (WorldSavingSystem.MasochistModeReal && slowdown > 0.75f)
-                        slowdown = 0.75f;
+                    //if (WorldSavingSystem.MasochistModeReal && slowdown > 0.75f)
+                    //    slowdown = 0.75f;
                     npc.position -= npc.velocity * slowdown;
 
                     if (TentacleTimer == 0)
