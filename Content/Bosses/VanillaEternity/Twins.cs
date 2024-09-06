@@ -1303,6 +1303,12 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
                             return false;
                         }
+                        else // if reti dead, switch to dashing
+                        {
+                            npc.ai[1] = 1; 
+                            npc.ai[2] = 0;
+                            npc.ai[3] = 0;
+                        }
                     }
                     else //dashing
                     {
