@@ -445,13 +445,13 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     Vector2 vel = npc.SafeDirectionTo(Main.player[npc.target].Center);
                     Vector2 shotVel = vel;
                     shotVel *= 20;
-                    int spread = 1;
                     int type = ModContent.ProjectileType<MechElectricOrb>();
                     bool middle = true;
                     float spreadAngle = 0.4f;
-                    if (npc.ai[1] != 0 || !WorldSavingSystem.MasochistModeReal)
+                    int spread = 0; // 1;
+                    if (npc.ai[1] == 0 && Main.getGoodWorld)
                     {
-                        spread = 0;
+                        spread = 1;
                     }
                         
                     for (int i = -spread; i <= spread; i++)
