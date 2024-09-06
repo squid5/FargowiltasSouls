@@ -29,6 +29,8 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
         public int RainTimer;
         public int SpikeCounter;
 
+        public int SummonCooldown;
+
         public float StompVelocityX;
         public float StompVelocityY;
 
@@ -51,6 +53,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             binaryWriter.Write7BitEncodedInt(StompTimer);
             binaryWriter.Write7BitEncodedInt(StompCounter);
             binaryWriter.Write7BitEncodedInt(RainTimer);
+            binaryWriter.Write7BitEncodedInt(SummonCooldown);
             binaryWriter.Write(StompVelocityX);
             binaryWriter.Write(StompVelocityY);
         }
@@ -62,6 +65,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             StompTimer = binaryReader.Read7BitEncodedInt();
             StompCounter = binaryReader.Read7BitEncodedInt();
             RainTimer = binaryReader.Read7BitEncodedInt();
+            SummonCooldown = binaryReader.Read7BitEncodedInt();
             StompVelocityX = binaryReader.ReadSingle();
             StompVelocityY = binaryReader.ReadSingle();
         }
@@ -253,6 +257,9 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             GelatinSubjectDR = NPC.AnyNPCs(ModContent.NPCType<GelatinSubject>());
             npc.HitSound = GelatinSubjectDR ? SoundID.Item27 : SoundID.NPCHit1;
 
+            if (SummonCooldown > 0)
+                SummonCooldown--;
+
             //ai0
             //0 = default
             //3 = chase?
@@ -314,7 +321,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                 }
 
                 // minion spawns
-                if (!NPC.AnyNPCs(ModContent.NPCType<GelatinSubject>()))
+                if (!NPC.AnyNPCs(ModContent.NPCType<GelatinSubject>()) && SummonCooldown <= 0)
                 {
                     bool condition1 = npc.ai[0] == 3 && npc.ai[1] == -20;
                     bool condition2 = npc.ai[0] == 0 && npc.ai[1] == 40;
@@ -323,6 +330,8 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                         if (FargoSoulsUtil.HostCheck && NPC.CountNPCS(ModContent.NPCType<GelatinBouncer>()) < MaxMinions)
                             FargoSoulsUtil.NewNPCEasy(npc.GetSource_FromAI(), npc.Center, ModContent.NPCType<GelatinBouncer>(), npc.whoAmI, target: npc.target,
                                 velocity: Main.rand.NextFloat(8f) * npc.DirectionFrom(Main.player[npc.target].Center).RotatedByRandom(MathHelper.PiOver2));
+
+                        SummonCooldown = LumUtils.SecondsToFrames(8);
                     }
                 }
             }
@@ -330,7 +339,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             {
                 npc.defense = npc.defDefense / 2;
 
-                if (!NPC.AnyNPCs(ModContent.NPCType<GelatinSubject>()) && RainTimer < 0)
+                if (!NPC.AnyNPCs(ModContent.NPCType<GelatinSubject>()) && RainTimer < 0 && SummonCooldown <= 0)
                 {
                     bool condition1 = npc.ai[0] == 0 && npc.ai[1] == 20;
                     if (condition1)
@@ -338,6 +347,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                         if (FargoSoulsUtil.HostCheck && NPC.CountNPCS(ModContent.NPCType<GelatinFlyer>()) < MaxMinions)
                             FargoSoulsUtil.NewNPCEasy(npc.GetSource_FromAI(), npc.Center, ModContent.NPCType<GelatinFlyer>(), npc.whoAmI, target: npc.target,
                                 velocity: 16f * npc.DirectionFrom(Main.player[npc.target].Center).RotatedBy(MathHelper.PiOver2 * 0.3f * (Main.rand.NextBool() ? 1 : -1)));
+                        SummonCooldown = LumUtils.SecondsToFrames(8);
                     }
                 }
 
