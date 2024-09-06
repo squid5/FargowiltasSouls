@@ -1317,10 +1317,13 @@ namespace FargowiltasSouls.Core.ModPlayers
 
             return heal;
         }
-
         public override void GetHealLife(Item item, bool quickHeal, ref int healValue)
         {
             healValue = GetHealMultiplier(healValue);
+            if (Player.HasEffect<ShroomiteHealEffect>())
+                if (item.type == ItemID.Mushroom && healValue < 75)
+                    healValue = 50;
+
             if (Player.HasEffect<HallowEffect>())
             {
                 healValue = 0;

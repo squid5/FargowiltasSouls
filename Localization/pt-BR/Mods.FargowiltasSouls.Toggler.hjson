@@ -59,8 +59,9 @@
 // JungleJump: Jungle Jump and Spores
 // JungleDashEffect: Jungle Dash
 // MoltenEffect: Molten Inferno Buff
-// ShroomiteStealthEffect: Shroomite Stealth
-// ShroomiteShroomEffect: Shroomite Mushrooms
+// ShroomiteHealEffect: Shroomite Consumption Buff
+// ShroomiteMushroomPriority: Mushrooms Take Potion Priority
+// ShroomiteShroomEffect: Shroomite Mushroom Cloud
 // NatureBeamEffect: Nature Heal Beams
 // ShadowHeader: "{$Mods.FargowiltasSouls.Items.ShadowForce.DisplayName}"
 // DarkArtistMinion: Flameburst Minion
@@ -75,7 +76,7 @@
 // NinjaEffect: Ninja Speed
 // CrystalAssassinDash: Crystal Assassin Dash
 // ShadowForceDashEffect: Shadow Dash
-// ShadowForceEffect: Concise Death Enchantment
+// ShadowForceEffect: Concise Death Force
 // SpiritHeader: "{$Mods.FargowiltasSouls.Items.SpiritForce.DisplayName}"
 // FossilBones: Fossil Bones On Hit
 // HallowEffect: Hallowed Healing Potions

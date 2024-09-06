@@ -22,6 +22,7 @@
     <None Remove="Assets\AutoloadedEffects\Shaders\AbomRitualBackgroundShader.fx" />
     <None Remove="Assets\AutoloadedEffects\Shaders\StyxGazerShader.fx" />
     <None Remove="Content\Bosses\AbomBoss\AbomSword.png" />
+    <None Remove="Content\Buffs\Souls\MushroomPowerBuff.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Assets\ExtraTextures\Noise\" />

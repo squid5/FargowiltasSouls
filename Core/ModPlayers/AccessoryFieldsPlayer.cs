@@ -48,14 +48,11 @@ namespace FargowiltasSouls.Core.ModPlayers
         public bool ChibiDevi;
         public bool MutantSpawn;
         public bool BabyAbom;
-
         public bool PetsActive;
 
         #region enchantments
 
         // new forces
-        public int TimberBranchCD;
-        public int TimberSwingCD;
         public int TerraProcCD;
         public int CosmosMoonTimer;
         public bool LifeForceActive;
@@ -98,6 +95,7 @@ namespace FargowiltasSouls.Core.ModPlayers
         public int monkTimer = 0;
 
         public int PumpkinSpawnCD;
+        public int ShroomiteCD;
 
         public bool TitaniumDRBuff;
         public bool TitaniumCD;

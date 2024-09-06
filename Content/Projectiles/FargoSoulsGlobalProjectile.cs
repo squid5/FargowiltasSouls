@@ -60,8 +60,6 @@ namespace FargowiltasSouls.Content.Projectiles
         public float TungstenScale = 1;
         public int AdamModifier;
         public bool TikiTagged;
-        public float shroomiteMushroomCD;
-        public Vector2 shroomiteStorePosition;
         private int spookyCD;
         public bool FrostFreeze;
         //        public bool SuperBee;
@@ -257,8 +255,6 @@ namespace FargowiltasSouls.Content.Projectiles
             {
                 NinjaEnchant.NinjaSpeedSetup(modPlayer, projectile, this);
             }
-
-            shroomiteStorePosition = projectile.Center;
 
             switch (projectile.type)
             {
@@ -495,36 +491,6 @@ namespace FargowiltasSouls.Content.Projectiles
 
                 if (!projectile.hostile && !projectile.trap && !projectile.npcProj)
                 {
-
-                    if (player.HasEffect<ShroomiteShroomEffect>() && projectile.damage > 0 && !ShroomiteBlacklist.Contains(projectile.type) && projectile.velocity.Length() > 1 && projectile.minionSlots == 0 && projectile.type != ModContent.ProjectileType<ShroomiteShroom>() && player.ownedProjectileCounts[ModContent.ProjectileType<ShroomiteShroom>()] < 75)
-                    {
-                        float maxCD = 100f;
-                        if (ShroomiteNerfList.Contains(projectile.type))
-                        {
-                            maxCD = 800f;
-                        }
-                        if (shroomiteMushroomCD >= maxCD)
-                        {
-                            shroomiteMushroomCD = 0;
-                            if (modPlayer.ForceEffect<ShroomiteEnchant>())
-                            {
-                                shroomiteMushroomCD += maxCD / 4f;
-                            }
-                            if (player.stealth == 0)
-                            {
-                                shroomiteMushroomCD += maxCD / 4f;
-                            }
-
-                            int p = Projectile.NewProjectile(projectile.GetSource_FromThis(), projectile.Center, projectile.velocity, ModContent.ProjectileType<ShroomiteShroom>(), projectile.damage / 4, projectile.knockBack / 2, projectile.owner);
-                            if (p != Main.maxProjectiles)
-                            {
-                                Main.projectile[p].FargoSouls().AdamModifier = AdamModifier;
-                            }
-
-                        }
-                        shroomiteMushroomCD += Vector2.Distance(projectile.Center, shroomiteStorePosition);
-                        shroomiteStorePosition = projectile.Center;
-                    }
 
                     if (player.HasEffect<SpookyEffect>()
                         && projectile.minionSlots > 0 && spookyCD == 0)

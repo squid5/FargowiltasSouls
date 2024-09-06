@@ -31,7 +31,7 @@ namespace FargowiltasSouls.Content.Projectiles.Souls
         public override void AI()
         {
             //dies thrice as fast
-            Projectile.alpha += 8;
+            //Projectile.alpha += 8;
         }
 
         public override Color? GetAlpha(Color lightColor)

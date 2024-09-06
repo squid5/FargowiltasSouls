@@ -6,6 +6,7 @@ using FargowiltasSouls.Content.Bosses.VanillaEternity;
 using FargowiltasSouls.Content.Buffs.Boss;
 using FargowiltasSouls.Content.Buffs.Masomode;
 using FargowiltasSouls.Content.Buffs.Souls;
+using FargowiltasSouls.Content.Items.Accessories.Enchantments;
 using FargowiltasSouls.Content.Items.Accessories.Masomode;
 using FargowiltasSouls.Content.Items.Consumables;
 using FargowiltasSouls.Content.Items.Dyes;
@@ -177,6 +178,7 @@ namespace FargowiltasSouls
 
             On_Player.CheckSpawn_Internal += LifeRevitalizer_CheckSpawn_Internal;
             On_Player.AddBuff += AddBuff;
+            On_Player.QuickHeal_GetItemToUse += QuickHeal_GetItemToUse;
         }
         private static bool LifeRevitalizer_CheckSpawn_Internal(
             On_Player.orig_CheckSpawn_Internal orig,
@@ -228,6 +230,29 @@ namespace FargowiltasSouls
             }
 
             orig(self, type, timeToAdd, quiet, foodHack);
+        }
+
+        private Item QuickHeal_GetItemToUse(On_Player.orig_QuickHeal_GetItemToUse orig, Player self)
+        {
+            Item value = orig(self);
+
+            int num3 = 58;
+            if (self.useVoidBag())
+            {
+                num3 = 98;
+            }
+            for (int i = 0; i < num3; i++)
+            {
+                Item item = ((i >= 58) ? self.bank4.item[i - 58] : self.inventory[i]);
+                if (item.stack <= 0 || item.type <= ItemID.None || !item.potion || item.healLife <= 0)
+                {
+                    continue;
+                }
+                if (self.HasEffect<ShroomiteMushroomPriority>() && item.type == ItemID.Mushroom)
+                    return item;
+            }
+
+            return value;
         }
 
         //private static bool IsMasterModeOrEMode_CanDrop(
@@ -331,6 +356,7 @@ namespace FargowiltasSouls
 
             On_Player.CheckSpawn_Internal -= LifeRevitalizer_CheckSpawn_Internal;
             On_Player.AddBuff -= AddBuff;
+            On_Player.QuickHeal_GetItemToUse -= QuickHeal_GetItemToUse;
         }
 
         public override object Call(params object[] args) => ModCallManager.ProcessAllModCalls(this, args); // Our mod calls can be found in ModCalls.cs.

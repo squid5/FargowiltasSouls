@@ -108,6 +108,13 @@ namespace FargowiltasSouls.Content.Items
 
             if (item.healLife > 0)
             {
+                if (player.HasEffect<ShroomiteHealEffect>())
+                {
+                    if (item.type == ItemID.Mushroom)
+                    {
+                        player.AddBuff(ModContent.BuffType<MushroomPowerBuff>(), LumUtils.SecondsToFrames(20f));
+                    }
+                }
                 if (player.HasEffect<HallowEffect>())
                 {
                     modPlayer.HallowHealTime = 6 * modPlayer.GetHealMultiplier(item.healLife);

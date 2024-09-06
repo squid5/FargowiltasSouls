@@ -59,7 +59,8 @@ SnowEffect: 冰雪 雪球
 JungleJump: 丛林 跳跃孢子
 JungleDashEffect: 丛林 冲刺
 MoltenEffect: 熔岩 狱火增益
-ShroomiteStealthEffect: 蘑菇 潜行
+// ShroomiteHealEffect: Shroomite Consumption Buff
+// ShroomiteMushroomPriority: Mushrooms Take Potion Priority
 ShroomiteShroomEffect: 蘑菇 蘑菇尾迹
 // NatureBeamEffect: Nature Heal Beams
 ShadowHeader: "{$Mods.FargowiltasSouls.Items.ShadowForce.DisplayName}"
@@ -75,7 +76,7 @@ SpookyEffect: 阴森 镰刀攻击
 NinjaEffect: 忍者 弹幕速度
 CrystalAssassinDash: 水晶刺客冲刺
 // ShadowForceDashEffect: Shadow Dash
-// ShadowForceEffect: Concise Death Enchantment
+// ShadowForceEffect: Concise Death Force
 SpiritHeader: "{$Mods.FargowiltasSouls.Items.SpiritForce.DisplayName}"
 FossilBones: 化石 受击释放骨头
 HallowEffect: 神圣 治疗药水

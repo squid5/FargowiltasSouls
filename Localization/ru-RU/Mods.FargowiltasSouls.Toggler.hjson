@@ -59,7 +59,8 @@ SnowEffect: Замораживающие Снежки
 JungleJump: Прыжок и Споры Джунглей
 JungleDashEffect: Рывок Джунглей
 MoltenEffect: Бафф Литого Инферно
-ShroomiteStealthEffect: Невидимость Грибов
+// ShroomiteHealEffect: Shroomite Consumption Buff
+// ShroomiteMushroomPriority: Mushrooms Take Potion Priority
 ShroomiteShroomEffect: Грибы Грибов
 NatureBeamEffect: Лечебные Лучи Природы
 ShadowHeader: "{$Mods.FargowiltasSouls.Items.ShadowForce.DisplayName}"
@@ -75,7 +76,7 @@ SpookyEffect: Косы Жути
 NinjaEffect: Скорость Ниндзя
 CrystalAssassinDash: Рывок Хрустального Убийцы
 ShadowForceDashEffect: Рывок Тени
-// ShadowForceEffect: Concise Death Enchantment
+// ShadowForceEffect: Concise Death Force
 SpiritHeader: "{$Mods.FargowiltasSouls.Items.SpiritForce.DisplayName}"
 FossilBones: Ископаемые Кости При Ударе
 HallowEffect: Лечебные Зелья Освящения

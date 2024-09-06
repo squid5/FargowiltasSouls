@@ -764,3 +764,8 @@ WitheredWizardBuff: {
 	// DisplayName: Withered Wizard Buff
 	// Description: Mods.FargowiltasSouls.Buffs.WitheredWizardBuff.Description
 }
+
+MushroomPowerBuff: {
+	// DisplayName: Mushroom Power Buff
+	// Description: Mods.FargowiltasSouls.Buffs.MushroomPowerBuff.Description
+}
