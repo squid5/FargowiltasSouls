@@ -597,6 +597,17 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                 npc.knockBackResist = 0;
         }
 
+        public override void OnFirstTick(NPC npc)
+        {
+            if (NPC.AnyNPCs(NPCID.QueenSlimeBoss))
+            {
+                npc.life = 0;
+                npc.active = false;
+                npc.timeLeft = 0;
+                npc = null;
+                return;
+            }
+        }
         public override void AI(NPC npc)
         {
             if (NPC.AnyNPCs(NPCID.QueenSlimeBoss))
