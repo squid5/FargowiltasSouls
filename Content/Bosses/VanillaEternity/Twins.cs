@@ -385,8 +385,18 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                             float accel = 0.6f;
                             TwinDefaultMovement(npc, desiredX, desiredY, accel, 4);
                             TwinManageRotation(npc);
-                            if (ai_StateTimer < prepTime - 30 && npc.Distance(desiredPos) > 300)
+
+                            bool waitForSpaz = spazmatism.ai[1] == npc.ai[1];
+                            Vector2 spazDesiredPos = player.Center + spazmatism.GetGlobalNPC<Spazmatism>().LockedRotation.ToRotationVector2() * distance;
+                            if (spazmatism.Distance(spazDesiredPos) <= 300)
+                                waitForSpaz = false;
+
+                            if (ai_StateTimer < prepTime - 30 && (npc.Distance(desiredPos) > 300 || waitForSpaz))
                                 ai_StateTimer--;
+
+                            if (ai_StateTimer < prepTime - 30 && spazmatism.ai[2] < npc.ai[2])
+                                npc.ai[2] = spazmatism.ai[2];
+
                             if (ai_StateTimer == prepTime - (WorldSavingSystem.MasochistModeReal ? 25 : 35))
                             {
                                 if (FargoSoulsUtil.HostCheck)
@@ -394,6 +404,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                                     Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center + TwinsEyeFlash.Offset(npc), Vector2.Zero, ModContent.ProjectileType<TwinsEyeFlash>(), 0, 0, Main.myPlayer, npc.whoAmI);
                                 }
                             }
+
                             if (++ai_StateTimer >= prepTime)
                             {
                                 npc.velocity = npc.DirectionTo(player.Center) * 30;
@@ -1040,15 +1051,26 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                             }
 
                             // lock on to spot next to player
-                            Vector2 desiredPos = player.Center + LockedRotation.ToRotationVector2() * 350f;
+                            float distance = WorldSavingSystem.MasochistModeReal ? 350f : 450f;
+                            Vector2 desiredPos = player.Center + LockedRotation.ToRotationVector2() * distance;
                             float desiredX = desiredPos.X - npc.Center.X;
                             float desiredY = desiredPos.Y - npc.Center.Y;
 
                             float accel = 0.6f;
                             Retinazer.TwinDefaultMovement(npc, desiredX, desiredY, accel, 4);
                             Retinazer.TwinManageRotation(npc);
-                            if (ai_StateTimer < prepTime - 30 && npc.Distance(desiredPos) > 300)
+
+                            bool waitForReti = retinazer.ai[1] == npc.ai[1];
+                            Vector2 spazDesiredPos = player.Center + retinazer.GetGlobalNPC<Retinazer>().LockedRotation.ToRotationVector2() * distance;
+                            if (retinazer.Distance(spazDesiredPos) <= 300)
+                                waitForReti = false;
+
+                            if (ai_StateTimer < prepTime - 30 && (npc.Distance(desiredPos) > 300 || waitForReti))
                                 ai_StateTimer--;
+
+                            if (ai_StateTimer < prepTime - 30 && retinazer.ai[2] < npc.ai[2])
+                                npc.ai[2] = retinazer.ai[2];
+
                             if (ai_StateTimer == prepTime - 25)
                             {
                                 if (FargoSoulsUtil.HostCheck)
