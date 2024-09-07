@@ -1120,8 +1120,8 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
         {
             if (NPC.AnyNPCs(NPCID.Plantera))
             {
-                NPC.life = 0;
-                NPC.checkDead();
+                npc.life = 0;
+                npc.checkDead();
                 npc.active = false;
             }
         }
