@@ -5,6 +5,7 @@ using FargowiltasSouls.Core.AccessoryEffectSystem;
 using FargowiltasSouls.Core.Toggler.Content;
 using Microsoft.Xna.Framework;
 using System;
+using System.Linq;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -72,6 +73,8 @@ Grants knockback immunity when you are facing the attack
             {
                 modPlayer.GladiatorCD--;
             }
+            if (modPlayer.GladiatorStandardCD > 0)
+                modPlayer.GladiatorStandardCD--;
         }
 
         public static void ActivateGladiatorBanner(Player player)
@@ -80,9 +83,16 @@ Grants knockback immunity when you are facing the attack
             if (player.whoAmI == Main.myPlayer && player.HasEffect<GladiatorBanner>())
             {
                 int GladiatorStandard = ModContent.ProjectileType<GladiatorStandard>();
-                if (player.ownedProjectileCounts[GladiatorStandard] < 1)
+
+                if (player.ownedProjectileCounts[GladiatorStandard] <= 0)
+                    modPlayer.GladiatorStandardCD = 0;
+
+                if (modPlayer.GladiatorStandardCD <= 0)
                 {
-                    Projectile.NewProjectile(player.GetSource_Misc(""), player.Top, Vector2.UnitY * 25, GladiatorStandard, modPlayer.ForceEffect<GladiatorEnchant>() ? 300 : 100, 3f, player.whoAmI);
+                    foreach (Projectile p in Main.projectile.Where(p => p.TypeAlive(GladiatorStandard) && p.owner == player.whoAmI))
+                        p.Kill();
+                    Projectile.NewProjectile(player.GetSource_EffectItem<GladiatorBanner>(), player.Top, Vector2.UnitY * 25, GladiatorStandard, modPlayer.ForceEffect<GladiatorEnchant>() ? 300 : 100, 3f, player.whoAmI);
+                    modPlayer.GladiatorStandardCD = 60 * 15;
                 }
             }
         }
@@ -99,8 +109,13 @@ Grants knockback immunity when you are facing the attack
             FargoSoulsPlayer modPlayer = player.FargoSouls();
             if (player.whoAmI == Main.myPlayer && modPlayer.GladiatorCD <= 0 && (projectile == null || projectile.type != ModContent.ProjectileType<GladiatorJavelin>()))
             {
+                bool force = modPlayer.ForceEffect<GladiatorEnchant>();
+
                 bool buff = player.HasBuff<GladiatorBuff>();
                 int spearDamage = baseDamage / (buff ? 3 : 5);
+
+                if (force)
+                    spearDamage *= 2;
 
                 if (spearDamage > 0)
                 {
@@ -120,7 +135,7 @@ Grants knockback immunity when you are facing the attack
                         Projectile.NewProjectile(player.GetSource_Accessory(effectItem), spawn, Vector2.Normalize(aim - spawn).RotatedByRandom(MathHelper.Pi / 20) * speed, ModContent.ProjectileType<GladiatorJavelin>(), spearDamage, 4f, Main.myPlayer);
                     }
 
-                    modPlayer.GladiatorCD = modPlayer.ForceEffect<GladiatorEnchant>() ? 10 : 30;
+                    modPlayer.GladiatorCD = force ? 10 : 30;
                     modPlayer.GladiatorCD = buff ? modPlayer.GladiatorCD : (int)Math.Round(modPlayer.GladiatorCD * 1.5f);
                 }
             }

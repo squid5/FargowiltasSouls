@@ -26,7 +26,7 @@ namespace FargowiltasSouls.Content.Projectiles.Minions
             Projectile.penetrate = -1;
             Projectile.friendly = true;
             Projectile.DamageType = DamageClass.Ranged;
-            Projectile.timeLeft = 60 * 15;
+            Projectile.timeLeft = 60 * 600;
         }
         ref float hits => ref Projectile.ai[2];
         public override bool? CanDamage()

@@ -123,6 +123,7 @@ namespace FargowiltasSouls.Core.ModPlayers
         public int IcicleCount;
         public int icicleCD;
         public int GladiatorCD;
+        public int GladiatorStandardCD;
         public bool GoldEnchMoveCoins;
         public bool GoldShell;
         private int goldHP;

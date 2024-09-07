@@ -1,4 +1,5 @@
-﻿using Terraria;
+﻿using FargowiltasSouls.Content.Items.Accessories.Enchantments;
+using Terraria;
 using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Content.Buffs
@@ -12,8 +13,11 @@ namespace FargowiltasSouls.Content.Buffs
         }
         public override void Update(Player player, ref int buffIndex)
         {
-            player.GetDamage(DamageClass.Generic) += 0.05f;
-            player.endurance += 0.05f;
+            float stats = 0.05f;
+            if (player.FargoSouls().ForceEffect<GladiatorEnchant>())
+                stats = 0.1f;
+            player.GetDamage(DamageClass.Generic) += stats;
+            player.endurance += stats;
             player.noKnockback = true;
         }
     }
