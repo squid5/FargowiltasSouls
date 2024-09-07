@@ -3387,8 +3387,8 @@ GravityTestItem: {
 }
 
 CoffinSummon: {
-	DisplayName: Forgotten Urn
-	Tooltip: Break in the deep pyramid chamber to awaken the ancient coffin
+	DisplayName: Urn of Souls
+	Tooltip: Open in the deep pyramid chamber to awaken the ancient coffin
 }
 
 // Dummy Item
