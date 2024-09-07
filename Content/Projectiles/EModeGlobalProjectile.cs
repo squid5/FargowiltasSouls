@@ -1700,9 +1700,9 @@ namespace FargowiltasSouls.Content.Projectiles
                     {
                         if (sourceNPC.type == NPCID.Golem)
                         {
-                            target.AddBuff(BuffID.BrokenArmor, 600);
+                            //target.AddBuff(BuffID.BrokenArmor, 600);
                             target.AddBuff(ModContent.BuffType<DefenselessBuff>(), 600);
-                            target.AddBuff(BuffID.WitheredArmor, 600);
+                            //target.AddBuff(BuffID.WitheredArmor, 600);
 
                             if (Framing.GetTileSafely(sourceNPC.Center).WallType != WallID.LihzahrdBrickUnsafe)
                                 target.AddBuff(BuffID.Burning, 120);

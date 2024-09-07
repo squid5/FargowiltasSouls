@@ -52,9 +52,9 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
         public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
             target.AddBuff(BuffID.OnFire, 600);
-            target.AddBuff(BuffID.BrokenArmor, 600);
+            //target.AddBuff(BuffID.BrokenArmor, 600);
             target.AddBuff(ModContent.BuffType<DefenselessBuff>(), 600);
-            target.AddBuff(BuffID.WitheredArmor, 600);
+            //target.AddBuff(BuffID.WitheredArmor, 600);
             NPC npc = FargoSoulsUtil.NPCExists(NPC.golemBoss, NPCID.Golem);
             if (npc != null)
             {

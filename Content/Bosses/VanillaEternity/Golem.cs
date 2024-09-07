@@ -193,7 +193,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     p.AddBuff(ModContent.BuffType<LowGroundBuff>(), 2);
             }
 
-            HealPerSecond = WorldSavingSystem.MasochistModeReal ? 360 : 180;
+            HealPerSecond = 180; // WorldSavingSystem.MasochistModeReal ? 360 : 180;
             if (!IsInTemple) //temple enrage, more horiz move and fast jumps
             {
                 HealPerSecond *= 2;
@@ -374,6 +374,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             }
 
             //spray spiky balls
+            /*
             if (WorldSavingSystem.MasochistModeReal && ++SpikyBallTimer >= 900)
             {
                 if (CheckTempleWalls(npc.Center))
@@ -398,6 +399,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     }
                 }
             }
+            */
 
             //golem's anti-air fireball spray (when player is above)
             //if (WorldSavingSystem.MasochistModeReal && ++AntiAirTimer > 240 && npc.velocity.Y == 0)
@@ -582,6 +584,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
         public bool DoAttack;
         public bool DoDeathray;
+        public bool SecondDeathray = false;
         public bool SweepToLeft;
         public bool IsInTemple;
 
@@ -597,6 +600,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             binaryWriter.Write(SuppressedAi2);
             bitWriter.WriteBit(DoAttack);
             bitWriter.WriteBit(DoDeathray);
+            bitWriter.WriteBit(SecondDeathray);
             bitWriter.WriteBit(SweepToLeft);
             bitWriter.WriteBit(IsInTemple);
         }
@@ -611,6 +615,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             SuppressedAi2 = binaryReader.ReadSingle();
             DoAttack = bitReader.ReadBit();
             DoDeathray = bitReader.ReadBit();
+            SecondDeathray = bitReader.ReadBit();
             SweepToLeft = bitReader.ReadBit();
             IsInTemple = bitReader.ReadBit();
         }
@@ -656,7 +661,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                         npc.position += npc.SafeDirectionTo(Main.player[npc.target].Center) * 4;
 
                     //disable attacks when nearby
-                    if (npc.HasValidTarget && npc.Distance(Main.player[npc.target].Center) < 350 && !WorldSavingSystem.MasochistModeReal)
+                    if (npc.HasValidTarget && npc.Distance(Main.player[npc.target].Center) < 350)// && !WorldSavingSystem.MasochistModeReal)
                     {
                         if (SuppressedAi1 < npc.ai[1])
                             SuppressedAi1 = npc.ai[1];
@@ -715,7 +720,8 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     if (WorldSavingSystem.MasochistModeReal || !IsInTemple)
                     {
                         DoDeathray = true;
-                        doSpikeBalls = true;
+                        if (!SecondDeathray)
+                            doSpikeBalls = true;
                     }
 
                     if (++AttackTimer < fireTime) //move to above golem
@@ -782,10 +788,20 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                         {
                             npc.velocity = Vector2.Zero;
                             npc.netUpdate = true;
+                            NetSync(npc);
 
                             AttackTimer = 0;
                             DeathraySweepTargetHeight = 0;
                             DoAttack = false;
+
+                            if (WorldSavingSystem.MasochistModeReal && !SecondDeathray)
+                            {
+                                SecondDeathray = true;
+                                AttackTimer = attackThreshold - 40;
+                                IsInTemple = Golem.CheckTempleWalls(npc.Center);
+                            }
+                            else
+                                SecondDeathray = false;
                         }
                     }
                     else
@@ -797,7 +813,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                         DoAttack = false;
                     }
 
-                    if (!WorldSavingSystem.MasochistModeReal)
+                    if (true) //!WorldSavingSystem.MasochistModeReal)
                     {
                         const float geyserTiming = 100;
                         if (AttackTimer % geyserTiming == geyserTiming - 5)
