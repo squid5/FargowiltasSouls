@@ -25,6 +25,7 @@ using static tModPorter.ProgressUpdate;
 using FargowiltasSouls.Core;
 using Terraria.WorldBuilding;
 using Luminance.Core.Graphics;
+using Terraria.DataStructures;
 
 namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 {
@@ -1115,5 +1116,14 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
     public class Spore : PlanteraPart
     {
         public override NPCMatcher CreateMatcher() => new NPCMatcher().MatchType(NPCID.Spore);
+        public override void OnSpawn(NPC npc, IEntitySource source)
+        {
+            if (NPC.AnyNPCs(NPCID.Plantera))
+            {
+                NPC.life = 0;
+                NPC.checkDead();
+                npc.active = false;
+            }
+        }
     }
 }

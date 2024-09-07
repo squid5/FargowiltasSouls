@@ -62,7 +62,6 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
 
         public override bool PreDraw(ref Color lightColor)
         {
-            
             Texture2D texture = TextureAssets.Projectile[WorldSavingSystem.MasochistModeReal ? ProjectileID.PoisonSeedPlantera : ProjectileID.SeedPlantera].Value;
             FargoSoulsUtil.GenericProjectileDraw(Projectile, lightColor, texture);
             return false;
