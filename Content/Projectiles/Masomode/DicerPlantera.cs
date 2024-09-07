@@ -167,7 +167,7 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
                             float rotation = Main.rand.NextFloat(MathHelper.TwoPi);
                             for (int i = 0; i < max; i++)
                             {
-                                int type = WorldSavingSystem.MasochistModeReal ? ProjectileID.PoisonSeedPlantera : ProjectileID.SeedPlantera;
+                                int type = ModContent.ProjectileType<DicerPlanteraSeed>();
                                 int p = Projectile.NewProjectile(Terraria.Entity.InheritSource(Projectile), Projectile.Center, range / time * Vector2.UnitX.RotatedBy(Math.PI * 2f / max * i + rotation),
                                     type, Projectile.damage, Projectile.knockBack, Projectile.owner);
                                 if (p != Main.maxProjectiles)

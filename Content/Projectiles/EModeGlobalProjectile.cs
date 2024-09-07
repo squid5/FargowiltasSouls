@@ -1903,12 +1903,6 @@ namespace FargowiltasSouls.Content.Projectiles
                         Projectile.NewProjectile(Entity.InheritSource(projectile), projectile.Center, Vector2.Zero, ModContent.ProjectileType<BloodFountain>(), projectile.damage, 0f, Main.myPlayer, Main.rand.Next(16, 48));
                     break;
 
-                case ProjectileID.PoisonSeedPlantera:
-                case ProjectileID.SeedPlantera:
-                    int dustType = true ? DustID.GlowingMushroom : DustID.JungleGrass;
-                    Dust.NewDust(projectile.Center, 0, 0, dustType);
-                    break;
-
                 default:
                     break;
             }
