@@ -1903,6 +1903,12 @@ namespace FargowiltasSouls.Content.Projectiles
                         Projectile.NewProjectile(Entity.InheritSource(projectile), projectile.Center, Vector2.Zero, ModContent.ProjectileType<BloodFountain>(), projectile.damage, 0f, Main.myPlayer, Main.rand.Next(16, 48));
                     break;
 
+                case ProjectileID.PoisonSeedPlantera:
+                case ProjectileID.SeedPlantera:
+                    int dustType = true ? DustID.GlowingMushroom : DustID.JungleGrass;
+                    Dust.NewDust(projectile.Center, 0, 0, dustType);
+                    break;
+
                 default:
                     break;
             }
@@ -1913,13 +1919,23 @@ namespace FargowiltasSouls.Content.Projectiles
             if (!WorldSavingSystem.EternityMode)
                 return base.GetAlpha(projectile, lightColor);
 
-            if ((projectile.type == ProjectileID.PoisonSeedPlantera || projectile.type == ProjectileID.SeedPlantera)
-                && counter % 8 < 4)
+            if (projectile.type == ProjectileID.PoisonSeedPlantera || projectile.type == ProjectileID.SeedPlantera)
             {
-                return new Color(255, 255, 255, 0) * projectile.Opacity;
+                if (counter % 8 < 4)
+                    return new Color(255, 255, 255, 0);
+                return lightColor;
             }
 
             return base.GetAlpha(projectile, lightColor);
+        }
+        public override bool PreDraw(Projectile projectile, ref Color lightColor)
+        {
+            if (projectile.type == ProjectileID.PoisonSeedPlantera || projectile.type == ProjectileID.SeedPlantera)
+            {
+                projectile.Opacity = 1f;
+                FargoSoulsUtil.GenericProjectileDraw(projectile, lightColor);
+            }
+            return base.PreDraw(projectile, ref lightColor);
         }
     }
 }

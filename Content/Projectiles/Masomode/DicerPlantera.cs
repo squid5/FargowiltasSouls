@@ -17,7 +17,7 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
     {
         public override string Texture => FargoSoulsUtil.VanillaTextureProjectile(ProjectileID.ThornBall);
 
-        private const float range = 200;
+        private const float range = 160f;
 
         public override void SetDefaults()
         {
@@ -162,16 +162,16 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
                         }
                         else //do the actual attack
                         {
-                            const int time = 16;
-                            const int max = 16;
+                            const float time = 16f;
+                            const float max = 16f;
                             float rotation = Main.rand.NextFloat(MathHelper.TwoPi);
                             for (int i = 0; i < max; i++)
                             {
                                 int type = WorldSavingSystem.MasochistModeReal ? ProjectileID.PoisonSeedPlantera : ProjectileID.SeedPlantera;
-                                int p = Projectile.NewProjectile(Terraria.Entity.InheritSource(Projectile), Projectile.Center, range / time * Vector2.UnitX.RotatedBy(Math.PI * 2 / max * i + rotation),
+                                int p = Projectile.NewProjectile(Terraria.Entity.InheritSource(Projectile), Projectile.Center, range / time * Vector2.UnitX.RotatedBy(Math.PI * 2f / max * i + rotation),
                                     type, Projectile.damage, Projectile.knockBack, Projectile.owner);
                                 if (p != Main.maxProjectiles)
-                                    Main.projectile[p].timeLeft = time;
+                                    Main.projectile[p].timeLeft = (int)time;
                             }
                         }
 
