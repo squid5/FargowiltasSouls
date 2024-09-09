@@ -197,7 +197,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
             StateMachine.StateStack.Clear();
 
             // Get the correct attack list, and remove the last attack to avoid repeating it.
-            List<BehaviorStates> attackList = Attacks.Where(attack => attack != (BehaviorStates)LastAttackChoice).ToList();
+            List<BehaviorStates> attackList = Attacks.Where(attack => attack != (BehaviorStates)LastAttackChoice && !(attack == BehaviorStates.RandomStuff && !WorldSavingSystem.EternityMode)).ToList();
 
             // Fill a list of indices.
             var indices = new List<int>();
