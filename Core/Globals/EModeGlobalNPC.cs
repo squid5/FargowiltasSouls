@@ -209,6 +209,7 @@ namespace FargowiltasSouls.Core.Globals
         public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo)
         {
             //layers
+            int x = spawnInfo.SpawnTileX;
             int y = spawnInfo.SpawnTileY;
             bool cavern = y >= Main.maxTilesY * 0.4f && y <= Main.maxTilesY * 0.8f;
             bool underground = y > Main.worldSurface && y <= Main.maxTilesY * 0.4f;
@@ -312,8 +313,12 @@ namespace FargowiltasSouls.Core.Globals
                         if (day && NPC.downedGolemBoss && (noBiome || dungeon))
                             pool[NPCID.CultistArcherWhite] = .01f;
                         float scoutRate = 0.07f;
-                        if (day && !NPC.savedGoblin && !NPC.AnyNPCs(NPCID.GoblinScout) && (!pool.ContainsKey(NPCID.GoblinScout) || pool[NPCID.GoblinScout] < scoutRate))
+                        Main.NewText("b");
+                        int xFromSpawn = Math.Abs(x - Main.spawnTileX);
+                        bool goblinCondition = (xFromSpawn > Main.maxTilesX / 3 || Main.remixWorld)
+                        if (!NPC.savedGoblin && goblinCondition && pool.TryGetValue(NPCID.GoblinScout, out float value) && value < scoutRate)
                         {
+                            Main.NewText("e");
                             pool[NPCID.GoblinScout] = scoutRate;
                         }
                             
