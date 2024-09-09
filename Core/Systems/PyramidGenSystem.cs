@@ -1,4 +1,5 @@
-﻿using FargowiltasSouls.Content.WorldGeneration;
+﻿using FargowiltasSouls.Content.Tiles;
+using FargowiltasSouls.Content.WorldGeneration;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -17,23 +18,21 @@ namespace FargowiltasSouls.Core.Systems
         public override void Load()
         {
             On_WorldGen.Pyramid += OnPyramidGen;
-            On_WorldGen.CheckTileBreakability += CoffinCheckTileBreakability;
-            On_WorldGen.CheckTileBreakability2_ShouldTileSurvive += CoffinCheckTileBreakability2_ShouldTileSurvive;
-            On_HitTile.HitObject += CoffinHitObject;
+            On_WorldGen.PlaceTile += OnPlaceTile;
+            On_WorldGen.CanKillTile_int_int_refBoolean += OnCanKillTile;
         }
         public override void Unload()
         {
             On_WorldGen.Pyramid -= OnPyramidGen;
-            On_WorldGen.CheckTileBreakability -= CoffinCheckTileBreakability;
-            On_WorldGen.CheckTileBreakability2_ShouldTileSurvive -= CoffinCheckTileBreakability2_ShouldTileSurvive;
-            On_HitTile.HitObject -= CoffinHitObject;
+            On_WorldGen.PlaceTile -= OnPlaceTile;
+            On_WorldGen.CanKillTile_int_int_refBoolean -= OnCanKillTile;
         }
         public static Point PyramidLocation = new(); // Doesn't save. Only used within worldgen.
         public override void PreWorldGen()
         {
             PyramidLocation = new();
         }
-        public bool OnPyramidGen(On_WorldGen.orig_Pyramid orig, int i, int j)
+        public static bool OnPyramidGen(On_WorldGen.orig_Pyramid orig, int i, int j)
         {
             bool ret = orig(i, j);
             if (ret)
@@ -45,25 +44,51 @@ namespace FargowiltasSouls.Core.Systems
             }
             return ret;
         }
-        private static int CoffinCheckTileBreakability(On_WorldGen.orig_CheckTileBreakability orig, int x, int y)
+        public static bool OnPlaceTile(On_WorldGen.orig_PlaceTile orig, int i, int j, int Type, bool mute = false, bool forced = false, int plr = -1, int style = 0)
         {
-            int ret = orig(x, y);
-            if (!WorldSavingSystem.downedBoss[(int)WorldSavingSystem.Downed.CursedCoffin] && WorldGen.SolidTile(x, y) && CoffinArena.PaddedRectangle.Contains(x, y) && ret == 0)
-                ret = 2;
+            if (!TileID.Sets.Torch[Type] && CoffinProtectionActive(i, j))
+                return false;
+            return orig(i, j, Type, mute, forced, plr, style);
+        }
+        public static bool OnCanKillTile(On_WorldGen.orig_CanKillTile_int_int_refBoolean orig, int x, int y, out bool blockDamaged)
+        {
+            bool ret = orig(x, y, out blockDamaged);
+            if (FargoGlobalTile.SolidTile(x, y) && CoffinProtectionActive(x, y))
+                ret = false;
             return ret;
         }
-        private static bool CoffinCheckTileBreakability2_ShouldTileSurvive(On_WorldGen.orig_CheckTileBreakability2_ShouldTileSurvive orig, int x, int y)
+        // Tile protection with this is done in FargoGlobalTile.
+        public static bool CoffinProtectionActive(int x, int y) => !WorldGen.generatingWorld && !WorldSavingSystem.downedBoss[(int)WorldSavingSystem.Downed.CursedCoffin] && CoffinArena.PaddedRectangle.Contains(x, y);
+        public static bool ArenaItemPrevention(Item item, Player player)
         {
-            bool ret = orig(x, y);
-            if (!WorldSavingSystem.downedBoss[(int)WorldSavingSystem.Downed.CursedCoffin] && WorldGen.SolidTile(x, y) && CoffinArena.PaddedRectangle.Contains(x, y))
-                ret = true;
-            return ret;
-        }
-        private static int CoffinHitObject(On_HitTile.orig_HitObject orig, HitTile self, int x, int y, int hitType)
-        {
-            if (!WorldSavingSystem.downedBoss[(int)WorldSavingSystem.Downed.CursedCoffin] && WorldGen.SolidTile(x, y) && CoffinArena.PaddedRectangle.Contains(x, y))
-                return 0;
-            return orig(self, x, y, hitType);
+            bool illegalItem = false;
+            bool buildItem = false;
+
+            // no placing
+            if (item.createTile != -1 || item.createWall != -1)
+            {
+                illegalItem = true;
+                buildItem = true;
+            }
+
+            // no mining
+            if (item.pick != 0 || item.hammer != 0 || item.axe != 0)
+                illegalItem = true;
+
+            if (item.type == ItemID.WetBomb || item.type == ItemID.LavaBomb)
+            {
+                illegalItem = true;
+                buildItem = true;
+            }
+
+            if (!illegalItem)
+                return false;
+
+            Point tilePos = Main.MouseWorld.ToTileCoordinates();
+            if ((FargoGlobalTile.SolidTile(tilePos.X, tilePos.Y) || buildItem) && CoffinProtectionActive(tilePos.X, tilePos.Y))
+                return true;
+
+            return false;
         }
         public override void PreUpdateWorld()
         {

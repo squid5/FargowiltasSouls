@@ -269,8 +269,7 @@ namespace FargowiltasSouls.Core.Systems
             int coffinY = 0;
             if (tag.ContainsKey("CoffinArenaCenterY"))
                 coffinY = tag.GetAsInt("CoffinArenaCenterY");
-            CoffinArenaCenter = new(coffinX, coffinY);
-            CoffinArena.Rectangle = new(coffinX - CoffinArena.Width / 2, coffinY - CoffinArena.Height / 2, CoffinArena.Width, CoffinArena.Height);
+            CoffinArena.SetArenaPosition(new(coffinX, coffinY));
         }
 
         public override void NetReceive(BinaryReader reader)

@@ -1,4 +1,6 @@
-﻿using FargowiltasSouls.Content.Tiles;
+﻿using Fargowiltas.NPCs;
+using Fargowiltas.Projectiles;
+using FargowiltasSouls.Content.Tiles;
 using FargowiltasSouls.Core.Systems;
 using Microsoft.Xna.Framework;
 using StructureHelper;
@@ -108,8 +110,15 @@ namespace FargowiltasSouls.Content.WorldGeneration
                     WorldGen.PlaceTile(point.X, point.Y, RandomSandstoneBrick(), mute: true, forced: true);
                 }
             }
-            WorldSavingSystem.CoffinArenaCenter = new(arenaTopCenter.X, arenaTopCenter.Y + Height / 2);
-            Rectangle = new(arenaTopCenter.X - Width / 2, arenaTopCenter.Y, Width, Height);
+            SetArenaPosition(new(arenaTopCenter.X, arenaTopCenter.Y + Height / 2));
+
+        }
+        public static void SetArenaPosition(Point arenaCenter)
+        {
+            WorldSavingSystem.CoffinArenaCenter = arenaCenter;
+            Rectangle = new(arenaCenter.X - Width / 2, arenaCenter.Y - Height / 2, Width, Height);
+            string command = "AddIndestructibleRectangle";
+            FargowiltasSouls.MutantMod.Call(command, PaddedRectangle.ToWorldCoords());
         }
 
         public static void PlacePassage(Point arenaTopCenter) // Separated because the manual item doesn't do this

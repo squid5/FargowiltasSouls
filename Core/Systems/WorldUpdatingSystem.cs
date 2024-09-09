@@ -12,7 +12,7 @@ namespace FargowiltasSouls.Core.Systems
 {
     public class WorldUpdatingSystem : ModSystem
     {
-        public override void PreUpdateNPCs() => SwarmActive = ModLoader.TryGetMod("Fargowiltas", out Mod fargo) && (bool)fargo.Call("SwarmActive");
+        public override void PreUpdateNPCs() => SwarmActive = FargowiltasSouls.MutantMod is Mod fargo && (bool)fargo.Call("SwarmActive");
 
         public override void PostUpdateWorld()
         {

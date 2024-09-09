@@ -32,8 +32,7 @@ namespace FargowiltasSouls.Content.Projectiles.Minions
             Projectile.idStaticNPCHitCooldown = 10;
             Projectile.FargoSouls().noInteractionWithNPCImmunityFrames = true;
 
-            if (ModLoader.TryGetMod("Fargowiltas", out Mod fargo))
-                fargo.Call("LowRenderProj", Projectile);
+            FargowiltasSouls.MutantMod.Call("LowRenderProj", Projectile);
         }
 
         public override void AI()

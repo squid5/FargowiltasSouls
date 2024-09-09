@@ -6,6 +6,8 @@ using FargowiltasSouls.Content.Items.Weapons.BossDrops;
 using FargowiltasSouls.Content.Items.Weapons.Challengers;
 using FargowiltasSouls.Content.Projectiles.Souls;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
+using FargowiltasSouls.Core.Systems;
+
 //using FargowiltasSouls.Content.Buffs.Souls;
 //using FargowiltasSouls.Content.Projectiles.Critters;
 using Microsoft.Xna.Framework;
@@ -232,6 +234,8 @@ namespace FargowiltasSouls.Content.Items
             if (modPlayer.NoUsingItems > 0)
                 return false;
 
+            if (PyramidGenSystem.ArenaItemPrevention(item, player))
+                return false;
             //if (modPlayer.AdamantiteEnchantActive && modPlayer.AdamantiteCD == 0)
             //{
             //// ??? tm

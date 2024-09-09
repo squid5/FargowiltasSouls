@@ -36,8 +36,7 @@ namespace FargowiltasSouls.Content.Projectiles.Minions
             Projectile.localNPCHitCooldown = 10;
             Projectile.FargoSouls().DeletionImmuneRank = 1;
 
-            if (ModLoader.TryGetMod("Fargowiltas", out Mod fargo))
-                fargo.Call("LowRenderProj", Projectile);
+            FargowiltasSouls.MutantMod.Call("LowRenderProj", Projectile);
         }
 
         public override void AI()

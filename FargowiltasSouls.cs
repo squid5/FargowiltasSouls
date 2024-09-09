@@ -42,6 +42,8 @@ namespace FargowiltasSouls
 {
     public partial class FargowiltasSouls : Mod
     {
+        public static Mod MutantMod;
+
         internal static ModKeybind FreezeKey;
         internal static ModKeybind GoldKey;
         internal static ModKeybind SmokeBombKey;
@@ -92,6 +94,7 @@ namespace FargowiltasSouls
         public override void Load()
         {
             Instance = this;
+            ModLoader.TryGetMod("Fargowiltas", out MutantMod);
 
             SkyManager.Instance["FargowiltasSouls:AbomBoss"] = new AbomSky();
             SkyManager.Instance["FargowiltasSouls:MutantBoss"] = new MutantSky();
@@ -603,7 +606,7 @@ namespace FargowiltasSouls
                 //}
 
                 //mutant shop
-                Mod fargos = ModLoader.GetMod("Fargowiltas");
+                Mod fargos = FargowiltasSouls.MutantMod;
                 fargos.Call("AddSummon", 0.5f, "FargowiltasSouls", "SquirrelCoatofArms", new Func<bool>(() => WorldSavingSystem.DownedBoss[(int)WorldSavingSystem.Downed.TrojanSquirrel]), Item.buyPrice(0, 4));
                 fargos.Call("AddSummon", 2.79f, "FargowiltasSouls", "CoffinSummon", new Func<bool>(() => WorldSavingSystem.DownedBoss[(int)WorldSavingSystem.Downed.CursedCoffin]), Item.buyPrice(0, 9));
                 fargos.Call("AddSummon", 6.9f, "FargowiltasSouls", "DevisCurse", new Func<bool>(() => WorldSavingSystem.DownedDevi), Item.buyPrice(0, 17, 50));

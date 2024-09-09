@@ -323,8 +323,7 @@ namespace FargowiltasSouls.Content.Projectiles
                             projectile.FargoSouls().CanSplit = false;
                             projectile.FargoSouls().noInteractionWithNPCImmunityFrames = true;
 
-                            if (ModLoader.TryGetMod("Fargowiltas", out Mod fargo))
-                                fargo.Call("LowRenderProj", projectile);
+                            FargowiltasSouls.MutantMod.Call("LowRenderProj", projectile);
                         }
                     }
                     break;

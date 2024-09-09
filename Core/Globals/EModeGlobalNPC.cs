@@ -315,7 +315,7 @@ namespace FargowiltasSouls.Core.Globals
                         float scoutRate = 0.07f;
                         Main.NewText("b");
                         int xFromSpawn = Math.Abs(x - Main.spawnTileX);
-                        bool goblinCondition = (xFromSpawn > Main.maxTilesX / 3 || Main.remixWorld)
+                        bool goblinCondition = xFromSpawn > Main.maxTilesX / 3 || Main.remixWorld;
                         if (!NPC.savedGoblin && goblinCondition && pool.TryGetValue(NPCID.GoblinScout, out float value) && value < scoutRate)
                         {
                             Main.NewText("e");

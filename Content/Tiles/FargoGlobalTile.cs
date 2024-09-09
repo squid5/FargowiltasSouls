@@ -1,4 +1,5 @@
-﻿using Terraria;
+﻿using FargowiltasSouls.Core.Systems;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -205,7 +206,7 @@ namespace FargowiltasSouls.Content.Tiles
         {
             Tile tile = Main.tile[x, y];
             return tile.HasTile && Main.tileSolid[tile.TileType] && !Main.tileSolidTop[tile.TileType] && !tile.IsHalfBlock
-                && tile.Slope == 0 && !tile.HasUnactuatedTile;
+                && tile.Slope == 0 && tile.HasUnactuatedTile;
         }
         /*
         public override void NearbyEffects(int i, int j, int type, bool closer)
@@ -223,5 +224,29 @@ namespace FargowiltasSouls.Content.Tiles
             }
         }
         */
+        public override bool CanPlace(int i, int j, int type)
+        {
+            if (!TileID.Sets.Torch[type] && PyramidGenSystem.CoffinProtectionActive(i, j))
+                return false;
+            return base.CanPlace(i, j, type);
+        }
+        public override bool CanExplode(int i, int j, int type)
+        {
+            if (SolidTile(i, j) && PyramidGenSystem.CoffinProtectionActive(i, j))
+                return false;
+            return base.CanExplode(i, j, type);
+        }
+        public override bool CanKillTile(int i, int j, int type, ref bool blockDamaged)
+        {
+            if (SolidTile(i, j) && PyramidGenSystem.CoffinProtectionActive(i, j))
+                return false;
+            return base.CanKillTile(i, j, type, ref blockDamaged);
+        }
+        public override bool CanReplace(int i, int j, int type, int tileTypeBeingPlaced)
+        {
+            if (SolidTile(i, j) && PyramidGenSystem.CoffinProtectionActive(i, j))
+                return false;
+            return base.CanReplace(i, j, type, tileTypeBeingPlaced);
+        }
     }
 }
