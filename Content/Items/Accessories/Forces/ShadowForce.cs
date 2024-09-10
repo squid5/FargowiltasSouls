@@ -2,6 +2,7 @@
 using FargowiltasSouls.Content.Items.Accessories.Enchantments;
 using FargowiltasSouls.Content.Items.Dyes;
 using FargowiltasSouls.Content.Projectiles.Souls;
+using FargowiltasSouls.Content.UI.Elements;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using FargowiltasSouls.Core.Systems;
 using FargowiltasSouls.Core.Toggler.Content;
@@ -100,6 +101,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Forces
             {
                 farg.IFrameDashTimer--;
             }
+            CooldownBarManager.Activate("DeathForceIframeCooldown", ModContent.Request<Texture2D>("FargowiltasSouls/Content/Items/Accessories/Enchantments/ShinobiEnchant").Value, new(147, 91, 24), () => 1 - farg.IFrameDashTimer / 250f);
             if (farg.IFrameDashTimer == 1)
             {
                 SoundEngine.PlaySound(SoundID.DD2_BetsyFireballImpact with { Pitch = -0.5f });
