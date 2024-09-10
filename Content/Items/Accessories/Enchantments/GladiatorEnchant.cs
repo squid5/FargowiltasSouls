@@ -1,9 +1,11 @@
 ﻿using FargowiltasSouls.Content.Buffs;
 using FargowiltasSouls.Content.Projectiles.Minions;
 using FargowiltasSouls.Content.Projectiles.Souls;
+using FargowiltasSouls.Content.UI.Elements;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using FargowiltasSouls.Core.Toggler.Content;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Linq;
 using Terraria;
@@ -92,7 +94,9 @@ Grants knockback immunity when you are facing the attack
                     foreach (Projectile p in Main.projectile.Where(p => p.TypeAlive(GladiatorStandard) && p.owner == player.whoAmI))
                         p.Kill();
                     Projectile.NewProjectile(player.GetSource_EffectItem<GladiatorBanner>(), player.Top, Vector2.UnitY * 25, GladiatorStandard, modPlayer.ForceEffect<GladiatorEnchant>() ? 300 : 100, 3f, player.whoAmI);
-                    modPlayer.GladiatorStandardCD = 60 * 15;
+                    modPlayer.GladiatorStandardCD = LumUtils.SecondsToFrames(15);
+
+                    CooldownBarManager.Activate("GladiatorStandardCooldown", ModContent.Request<Texture2D>("FargowiltasSouls/Content/Items/Accessories/Enchantments/GladiatorEnchant").Value, new(156, 146, 78), () => 1f - (float)Main.LocalPlayer.FargoSouls().GladiatorStandardCD / LumUtils.SecondsToFrames(15));
                 }
             }
         }

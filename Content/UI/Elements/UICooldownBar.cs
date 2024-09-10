@@ -14,22 +14,28 @@ namespace FargowiltasSouls.Content.UI.Elements
 {
     public class UICooldownBar : UIPanel
     {
+        public bool Active = true;
+
         public string NameKey;
         public Texture2D BarTexture;
         public Texture2D FillTexture;
         public Texture2D ItemTexture;
         public Color FillColor;
         public Func<float> FillRatio;
+        public bool DisplayAtFull;
+
         public float Opacity = 0f;
 
-        public UICooldownBar(string nameKey, Texture2D barTexture, Texture2D fillTexture, Texture2D itemTexture, Color fillColor, Func<float> fillRatio)
+        public UICooldownBar(string nameKey, Texture2D barTexture, Texture2D fillTexture, Texture2D itemTexture, Color fillColor, Func<float> fillRatio, bool displayAtFull)
         {
+            Active = true;
             NameKey = nameKey;
             BarTexture = barTexture;
             FillTexture = fillTexture;
             ItemTexture = itemTexture;
             FillColor = fillColor;
             FillRatio = fillRatio;
+            DisplayAtFull = displayAtFull;
 
             Width.Set(100, 0);
             Height.Set(20, 0);
@@ -38,11 +44,17 @@ namespace FargowiltasSouls.Content.UI.Elements
         {
             float fillRatio = FillRatio.Invoke();
             fillRatio = MathHelper.Clamp(fillRatio, 0f, 1f);
-            if (fillRatio <= 0 || fillRatio >= 1)
+            if (!Active || fillRatio <= 0 || (!DisplayAtFull && fillRatio >= 1))
                 Opacity -= 0.05f;
             else
+            {
+                if (Opacity < 0)
+                    Opacity = 0;
                 Opacity += 0.1f;
+            }
             Opacity = MathHelper.Clamp(Opacity, -1, 1f);
+            if (Opacity < -0.5f)
+                Active = false;
             float opacity = MathHelper.Clamp(Opacity, 0, 1f);
             //base.DrawSelf(spriteBatch);
             //float fillRatio = FillRatio.Invoke();

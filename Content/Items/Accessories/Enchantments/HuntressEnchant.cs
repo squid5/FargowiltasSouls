@@ -1,8 +1,10 @@
 ﻿using FargowiltasSouls.Content.Buffs;
 using FargowiltasSouls.Content.Projectiles;
+using FargowiltasSouls.Content.UI.Elements;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using FargowiltasSouls.Core.Toggler.Content;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -98,6 +100,8 @@ Missing any attack will reset these bonuses
                     }
 
                     modPlayer.HuntressCD = 30;
+
+                    CooldownBarManager.Activate("HuntressBuildup", ModContent.Request<Texture2D>("FargowiltasSouls/Content/Items/Accessories/Enchantments/HuntressEnchant").Value, new(122, 192, 76), () => modPlayer.HuntressStage / 10f, true);
                 }
                 int bonus = modPlayer.ForceEffect<HuntressEnchant>() || redRiding ? 5 : 3;
                 if (player.HasBuff<GladiatorSpiritBuff>())

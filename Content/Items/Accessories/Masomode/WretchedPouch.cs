@@ -84,7 +84,7 @@ Attack speed bonuses are half as effective
                     Main.dust[d].velocity *= 5f;
                 }
 
-                CooldownBarManager.Activate("WretchedPouchCharge", ModContent.Request<Texture2D>("FargowiltasSouls/Content/Items/Accessories/Masomode/WretchedPouch").Value, Color.DarkMagenta, () => modPlayer.WretchedPouchCD / (float)MaxChargeTime);
+                CooldownBarManager.Activate("WretchedPouchCharge", ModContent.Request<Texture2D>("FargowiltasSouls/Content/Items/Accessories/Masomode/WretchedPouch").Value, Color.DarkMagenta, () => modPlayer.WretchedPouchCD / (float)MaxChargeTime, true);
             }
             else
             {

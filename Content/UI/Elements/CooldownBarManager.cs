@@ -13,33 +13,36 @@ namespace FargowiltasSouls.Content.UI.Elements
 {
     public class CooldownBarManager : UIState
     {
+        public static List<UICooldownBar> uiCooldownBars = new();
         public static CooldownBarManager Instance;
         //public static List<UICooldownBar> CooldownBars;
         const int BarWidth = 100;
         const int BarHeight = 20;
         const int SpaceBetweenBars = 20;
-        public static void Activate(string nameKey, Texture2D itemTexture, Color fillColor, Func<float> fillRatio)
+        public static void Activate(string nameKey, Texture2D itemTexture, Color fillColor, Func<float> fillRatio, bool displayAtFull = false)
         {
             if (!SoulConfig.Instance.CooldownBars)
                 return;
-            if (Instance.Children.Any(b => b is UICooldownBar cdBar && cdBar.NameKey == nameKey))
+            if (Instance.Children.Any(b => b is UICooldownBar cdBar && cdBar.Active && cdBar.NameKey == nameKey))
                 return;
-
             float x = SoulConfig.Instance.CooldownBarsX;
             float y = SoulConfig.Instance.CooldownBarsY;
             int i = Instance.Children.Count();
 
             // If there's a free unused bar, transform it into the new bar
-            if (Instance.Children.FirstOrDefault(b => b is UICooldownBar cdBar && cdBar.Opacity <= -0.5f) is UICooldownBar freeBar)
+            if (Instance.Children.FirstOrDefault(b => b is UICooldownBar cdBar && !cdBar.Active) is UICooldownBar freeBar)
             {
                 freeBar.NameKey = nameKey;
                 freeBar.ItemTexture = itemTexture;
                 freeBar.FillColor = fillColor;
                 freeBar.FillRatio = fillRatio;
+                freeBar.Opacity = 0f;
+                freeBar.Active = true;
+                freeBar.DisplayAtFull = displayAtFull;
             }
             else
             {
-                UICooldownBar newBar = new(nameKey, FargoUIManager.CooldownBarTexture.Value, FargoUIManager.CooldownBarFillTexture.Value, itemTexture, fillColor, fillRatio);
+                UICooldownBar newBar = new(nameKey, FargoUIManager.CooldownBarTexture.Value, FargoUIManager.CooldownBarFillTexture.Value, itemTexture, fillColor, fillRatio, displayAtFull);
                 //int nX = i / 3;
                 //int nY = i % 3;
                 int nY = i;

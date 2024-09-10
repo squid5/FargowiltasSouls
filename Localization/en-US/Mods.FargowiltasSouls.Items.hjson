@@ -27,7 +27,7 @@ AncientHallowEnchant: {
 		The sword follows the direction of your mouse
 		Press Right Click to slash with the sword
 		Slashing enemy projectiles reflects them back at the enemy
-		Reflects has a 15 second cooldown and can only affect projectiles that deal less than 150 damage
+		Reflects have a 15 second cooldown and can only affect projectiles that deal less than 150 damage
 		'Have you power enough to wield me?'
 		'''
 }

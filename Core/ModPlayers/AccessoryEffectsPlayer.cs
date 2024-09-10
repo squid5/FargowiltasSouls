@@ -30,6 +30,8 @@ using FargowiltasSouls.Content.Items.Accessories.Souls;
 using FargowiltasSouls.Content.Items.Accessories.Masomode;
 using Luminance.Core.Graphics;
 using FargowiltasSouls.Content.Items.Accessories.Forces;
+using FargowiltasSouls.Content.UI.Elements;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace FargowiltasSouls.Core.ModPlayers
 {
@@ -294,6 +296,8 @@ namespace FargowiltasSouls.Core.ModPlayers
                                 Player.buffImmune[debuff] = true;
                             }
                         }
+
+                        CooldownBarManager.Activate("SpecialDashCooldown", ModContent.Request<Texture2D>("FargowiltasSouls/Content/Items/Accessories/Masomode/BetsysHeart").Value, Color.OrangeRed, () => 1 - (float)SpecialDashCD / LumUtils.SecondsToFrames(5));
                     }
                     else if (QueenStingerItem != null)
                     {
@@ -301,6 +305,8 @@ namespace FargowiltasSouls.Core.ModPlayers
 
                         Vector2 vel = Player.SafeDirectionTo(Main.MouseWorld) * 20;
                         Projectile.NewProjectile(Player.GetSource_Accessory(QueenStingerItem), Player.Center, vel, ModContent.ProjectileType<BeeDash>(), (int)(44 * Player.ActualClassDamage(DamageClass.Melee)), 6f, Player.whoAmI);
+
+                        CooldownBarManager.Activate("SpecialDashCooldown", ModContent.Request<Texture2D>("FargowiltasSouls/Content/Items/Accessories/Masomode/QueenStinger").Value, Color.Yellow, () => 1 - (float)SpecialDashCD / LumUtils.SecondsToFrames(6));
                     }
 
                     Player.AddBuff(ModContent.BuffType<BetsyDashBuff>(), 20);
@@ -861,6 +867,8 @@ namespace FargowiltasSouls.Core.ModPlayers
                 ParryDebuffImmuneTime = invul;
                 shieldCD = invul + extrashieldCD;
 
+                CooldownBarManager.Activate("ParryCooldown", ModContent.Request<Texture2D>("FargowiltasSouls/Content/Items/Accessories/Enchantments/SilverEnchant").Value, Color.Gray, () => 1 - shieldCD / (float)(invul + extrashieldCD));
+
                 foreach (int debuff in FargowiltasSouls.DebuffIDs) //immune to all debuffs
                 {
                     if (!Player.HasBuff(debuff))
@@ -918,6 +926,8 @@ namespace FargowiltasSouls.Core.ModPlayers
 
             if (shieldCD < cooldown)
                 shieldCD = cooldown;
+
+            CooldownBarManager.Activate("ParryCooldown", ModContent.Request<Texture2D>("FargowiltasSouls/Content/Items/Accessories/Enchantments/SilverEnchant").Value, Color.Gray, () => (float)shieldCD / cooldown);
         }
 
         public void UpdateShield()
