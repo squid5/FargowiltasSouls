@@ -5,6 +5,7 @@ using Humanizer;
 using Luminance.Core.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent;
@@ -18,6 +19,7 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
         public override string Texture => "Terraria/Images/Projectile_274";
 
         private const float realRotation = MathHelper.Pi / 180f;
+        public float VisualScale = 0f;
 
         public AbomRitual() : base(realRotation, 1400f, ModContent.NPCType<AbomBoss>(), 87, visualCount: 64) { }
 
@@ -53,6 +55,10 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
         {
             base.AI();
             Projectile.rotation += 1f;
+            if (Projectile.Opacity < 0.5f)
+                Projectile.Opacity = 0.5f;
+            if (VisualScale < 1)
+                VisualScale += 0.01f;
         }
 
         public override void OnHitPlayer(Player target, Player.HurtInfo info)
@@ -87,11 +93,12 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
             var diagonalNoise = FargosTextureRegistry.WavyNoise;
 
             var maxOpacity = Projectile.Opacity;
+            float scale = MathF.Sqrt(VisualScale);
 
             ManagedShader borderShader = ShaderManager.GetShader("FargowiltasSouls.AbomRitualShader");
             borderShader.TrySetParameter("colorMult", 7.35f);
             borderShader.TrySetParameter("time", Main.GlobalTimeWrappedHourly);
-            borderShader.TrySetParameter("radius", radius);
+            borderShader.TrySetParameter("radius", radius * scale);
             borderShader.TrySetParameter("anchorPoint", auraPos);
             borderShader.TrySetParameter("screenPosition", Main.screenPosition);
             borderShader.TrySetParameter("screenSize", Main.ScreenSize.ToVector2());

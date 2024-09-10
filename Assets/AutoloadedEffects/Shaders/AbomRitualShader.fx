@@ -2,8 +2,8 @@
 
 float colorMult;
 float time;
-float radius;
 float maxOpacity;
+float scale;
 
 float2 screenPosition;
 float2 screenSize;
@@ -24,6 +24,7 @@ float4 PixelShaderFunction(float4 sampleColor : COLOR0, float2 uv : TEXCOORD0) :
     float2 provUV = anchorPoint / screenSize;
     float worldDistance = distance(worldUV, anchorPoint);
     float adjustedTime = time * 0.1;
+    
     
     // Pixelate the uvs
     float2 pixelatedUV = worldUV / screenSize;

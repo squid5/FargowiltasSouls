@@ -4,6 +4,7 @@ using FargowiltasSouls.Core.Globals;
 using Luminance.Core.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Linq;
 using Terraria;
 using Terraria.GameContent;
@@ -54,11 +55,12 @@ namespace FargowiltasSouls.Content.Sky
                     float radius = ritual.threshold - leeway;
                     Vector2 auraPos = proj.Center;
                     var target = Main.LocalPlayer;
+                    float scale = MathF.Sqrt(ritual.VisualScale);
 
                     var blackTile = TextureAssets.MagicPixel;
 
                     ManagedShader blackShader = ShaderManager.GetShader("FargowiltasSouls.AbomRitualBackgroundShader");
-                    blackShader.TrySetParameter("radius", radius);
+                    blackShader.TrySetParameter("radius", radius * scale);
                     blackShader.TrySetParameter("anchorPoint", auraPos);
                     blackShader.TrySetParameter("screenPosition", Main.screenPosition);
                     blackShader.TrySetParameter("screenSize", Main.ScreenSize.ToVector2());

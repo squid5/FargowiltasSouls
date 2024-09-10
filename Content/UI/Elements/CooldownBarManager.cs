@@ -13,7 +13,7 @@ namespace FargowiltasSouls.Content.UI.Elements
 {
     public class CooldownBarManager : UIState
     {
-        public static List<UICooldownBar> uiCooldownBars = new();
+        public static List<UICooldownBar> uiCooldownBars = [];
         public static CooldownBarManager Instance;
         //public static List<UICooldownBar> CooldownBars;
         public const int BarWidth = 100;
@@ -54,12 +54,15 @@ namespace FargowiltasSouls.Content.UI.Elements
                 Instance.Append(newBar);
             }
         }
+        public override void Update(GameTime gameTime)
+        {
+            base.Update(gameTime);
+        }
         public override void OnActivate()
         {
             Instance = this;
             base.OnActivate();
         }
-
         public override void Draw(SpriteBatch spriteBatch)
         {
             if (!SoulConfig.Instance.CooldownBars)

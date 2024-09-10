@@ -11,6 +11,7 @@ using FargowiltasSouls.Content.Items.Accessories.Souls;
 using FargowiltasSouls.Content.Items.Dyes;
 using FargowiltasSouls.Content.Items.Weapons.SwarmDrops;
 using FargowiltasSouls.Content.Projectiles;
+using FargowiltasSouls.Content.UI.Elements;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using FargowiltasSouls.Core.Systems;
 using Microsoft.Xna.Framework;
@@ -132,6 +133,7 @@ namespace FargowiltasSouls.Core.ModPlayers
             Toggler.TryLoad();
             Toggler.LoadPlayerToggles(this);
             disabledToggles.Clear();
+            CooldownBarManager.Instance.RemoveAllChildren();
 
             if (!ModLoader.TryGetMod("FargowiltasMusic", out Mod _))
             {

@@ -98,7 +98,6 @@ namespace FargowiltasSouls.Content.UI
                 CooldownBarUserInterface.SetState(CooldownBarManager);
             }
         }
-
         public static void UpdateUI(GameTime gameTime)
         {
             LastUpdateUIGameTime = gameTime;

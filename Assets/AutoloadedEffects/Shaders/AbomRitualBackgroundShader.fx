@@ -1,13 +1,11 @@
 ﻿float radius;
 float maxOpacity;
 
+
 float2 screenPosition;
 float2 screenSize;
 float2 anchorPoint;
 float2 playerPosition;
-
-// This code has roots in the Providence arena shader in The Calamity Mod.
-// I'm still learning the ropes of shader drawing, and like to have a reference point as a foundation.
 
 float InverseLerp(float a, float b, float t)
 {
