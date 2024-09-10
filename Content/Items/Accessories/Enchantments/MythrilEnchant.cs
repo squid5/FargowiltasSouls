@@ -1,9 +1,11 @@
 using FargowiltasSouls.Content.Items.Accessories.Forces;
 using FargowiltasSouls.Content.Items.Weapons.BossDrops;
 using FargowiltasSouls.Content.Projectiles;
+using FargowiltasSouls.Content.UI.Elements;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using FargowiltasSouls.Core.Toggler.Content;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
 using Terraria.Audio;
@@ -24,8 +26,8 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
 Bonus ends after attacking for 3 seconds and rebuilds over 5 seconds
 'You feel the knowledge of your weapons seep into your mind'"); */
         }
-
-        public override Color nameColor => new(157, 210, 144);
+        public static readonly Color NameColor = new(157, 210, 144);
+        public override Color nameColor => NameColor;
 
 
         public override void SetDefaults()
@@ -100,6 +102,8 @@ Bonus ends after attacking for 3 seconds and rebuilds over 5 seconds
                 modPlayer.MythrilTimer = modPlayer.MythrilMaxTime;
             if (modPlayer.MythrilTimer < mythrilEndTime)
                 modPlayer.MythrilTimer = mythrilEndTime;
+
+            CooldownBarManager.Activate("MythrilEnchantCharge", ModContent.Request<Texture2D>("FargowiltasSouls/Content/Items/Accessories/Enchantments/MythrilEnchant").Value, MythrilEnchant.NameColor, () => (float)Main.LocalPlayer.FargoSouls().MythrilTimer / Main.LocalPlayer.FargoSouls().MythrilMaxTime);
         }
     }
 

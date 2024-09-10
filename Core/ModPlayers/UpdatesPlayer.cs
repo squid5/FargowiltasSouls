@@ -464,6 +464,15 @@ namespace FargowiltasSouls.Core.ModPlayers
             if (VortexCD > 0)
                 VortexCD--;
 
+            if (WretchedPouchCD > 0 && !Player.HasEffect<WretchedPouchEffect>())
+                WretchedPouchCD--;
+
+            if (LightslingerHitShots > 0 && Player.HeldItem.type != ModContent.ItemType<Lightslinger>())
+                LightslingerHitShots--;
+
+            if (MeteorCD < MeteorEffect.Cooldown && !Player.HasEffect<MeteorEffect>())
+                MeteorCD++;
+
             //these are here so that emode minion nerf can properly detect the real set bonuses over in EModePlayer postupdateequips
             if (SquireEnchantActive)
                 Player.setSquireT2 = true;

@@ -140,4 +140,19 @@ SoulConfig: {
 		Label: 性能模式
 		Tooltip: 禁用高性能要求的视觉效果。目前会禁用突变体幻影眼的拖尾绘制
 	}
+
+	CooldownBars: {
+		// Label: Cooldown Bars
+		// Tooltip: ""
+	}
+
+	CooldownBarsX: {
+		// Label: Cooldown Bars X
+		// Tooltip: ""
+	}
+
+	CooldownBarsY: {
+		// Label: Cooldown Bars Y
+		// Tooltip: ""
+	}
 }

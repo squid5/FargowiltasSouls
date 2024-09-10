@@ -37,6 +37,23 @@ namespace FargowiltasSouls.Core
         [DefaultValue(true)]
         public bool ForcedFilters;
 
+        private const float max4kX = 3840f;
+
+        private const float max4kY = 2160f;
+
+        [DefaultValue(true)]
+        public bool CooldownBars;
+
+        [Increment(1f)]
+        [Range(0f, max4kX)]
+        [DefaultValue(40f)]
+        public float CooldownBarsX;
+
+        [Increment(1f)]
+        [Range(0f, max4kY)]
+        [DefaultValue(300f)]
+        public float CooldownBarsY;
+
         #region maso
 
         [Header("Maso")]
@@ -48,18 +65,17 @@ namespace FargowiltasSouls.Core
         [DefaultValue(true)]
         public bool PrecisionSealIsHold;
 
-        private const float max4kX = 3840f;
+
         [Increment(1f)]
         [Range(0f, max4kX)]
         [DefaultValue(610f)]
         public float OncomingMutantX;
 
-        private const float max4kY = 2160f;
+
         [Increment(1f)]
         [Range(0f, max4kY)]
         [DefaultValue(250f)]
         public float OncomingMutantY;
-
         #endregion
 
         #region patreon

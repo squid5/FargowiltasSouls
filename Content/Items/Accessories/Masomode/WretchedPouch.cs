@@ -1,11 +1,14 @@
 ﻿using FargowiltasSouls.Content.Bosses.Champions.Cosmos;
 using FargowiltasSouls.Content.Buffs;
 using FargowiltasSouls.Content.Buffs.Masomode;
+using FargowiltasSouls.Content.Items.Accessories.Enchantments;
 using FargowiltasSouls.Content.Items.Accessories.Forces;
 using FargowiltasSouls.Content.Projectiles.Masomode;
+using FargowiltasSouls.Content.UI.Elements;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using FargowiltasSouls.Core.Toggler.Content;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Linq;
 using Terraria;
@@ -80,11 +83,15 @@ Attack speed bonuses are half as effective
                     Main.dust[d].noGravity = true;
                     Main.dust[d].velocity *= 5f;
                 }
+
+                CooldownBarManager.Activate("WretchedPouchCharge", ModContent.Request<Texture2D>("FargowiltasSouls/Content/Items/Accessories/Masomode/WretchedPouch").Value, Color.DarkMagenta, () => modPlayer.WretchedPouchCD / (float)MaxChargeTime);
             }
             else
             {
                 // maximum charge: 8 seconds
                 float charge = modPlayer.WretchedPouchCD / (float)MaxChargeTime;
+                if (modPlayer.WretchedPouchCD > 0)
+                    modPlayer.WretchedPouchCD--;
                 if (charge < 0.2f)
                     return;
                 charge = MathHelper.Clamp(charge, 0, 1);

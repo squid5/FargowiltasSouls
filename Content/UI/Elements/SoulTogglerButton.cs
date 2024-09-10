@@ -72,6 +72,7 @@ namespace FargowiltasSouls.Content.UI.Elements
                 if (!Main.LocalPlayer.FargoSouls().HasClickedWrench && Main.GlobalTimeWrappedHourly % 1f < 0.5f)
                     IconFlash.Draw(spriteBatch);
             }
+
         }
     }
 }

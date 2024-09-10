@@ -1,9 +1,11 @@
 using FargowiltasSouls.Content.Items.Accessories.Forces;
 using FargowiltasSouls.Content.Projectiles.Souls;
+using FargowiltasSouls.Content.UI.Elements;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using FargowiltasSouls.Core.ModPlayers;
 using FargowiltasSouls.Core.Toggler.Content;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
@@ -16,8 +18,8 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
 {
     public class MeteorEnchant : BaseEnchant
     {
-
-        public override Color nameColor => new(95, 71, 82);
+        public static readonly Color NameColor = new(95, 71, 82);
+        public override Color nameColor => NameColor;
 
 
         public override void SetDefaults()
@@ -132,6 +134,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
             bool forceEffect = modPlayer.ForceEffect<MeteorEnchant>();
             int damage = forceEffect ? 400 : 90;
             modPlayer.MeteorCD = Cooldown;
+            CooldownBarManager.Activate("MeteorEnchantCooldown", ModContent.Request<Texture2D>("FargowiltasSouls/Content/Items/Accessories/Enchantments/MeteorEnchant").Value, MeteorEnchant.NameColor, () => 1 - Main.LocalPlayer.FargoSouls().MeteorCD / Cooldown); 
 
             Vector2 pos = new(player.Center.X + Main.rand.NextFloat(-1000, 1000), player.Center.Y - 1000);
             Vector2 vel = new(Main.rand.NextFloat(-2, 2), Main.rand.NextFloat(8, 12));

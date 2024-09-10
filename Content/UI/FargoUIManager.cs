@@ -18,9 +18,13 @@ namespace FargowiltasSouls.Content.UI
 
         public static UserInterface TogglerToggleUserInterface { get; private set; }
 
+        public static UserInterface CooldownBarUserInterface { get; private set; }
+
         public static SoulToggler SoulToggler { get; private set; }
 
         public static SoulTogglerButton SoulTogglerButton { get; private set; }
+
+        public static CooldownBarManager CooldownBarManager { get; private set; }
 
         private static GameTime LastUpdateUIGameTime { get; set; }
 
@@ -51,6 +55,10 @@ namespace FargowiltasSouls.Content.UI
 
         public static Asset<Texture2D> OncomingMutantAuraTexture { get; private set; }
 
+        public static Asset<Texture2D> CooldownBarTexture { get; private set; }
+
+        public static Asset<Texture2D> CooldownBarFillTexture { get; private set; }
+
         public static void LoadUI()
         {
             if (!Main.dedServ)
@@ -70,18 +78,24 @@ namespace FargowiltasSouls.Content.UI
                 ReloadButtonTexture = ModContent.Request<Texture2D>("FargowiltasSouls/Assets/UI/ReloadButton", AssetRequestMode.ImmediateLoad);
                 OncomingMutantTexture = ModContent.Request<Texture2D>("FargowiltasSouls/Assets/UI/OncomingMutant", AssetRequestMode.ImmediateLoad);
                 OncomingMutantAuraTexture = ModContent.Request<Texture2D>("FargowiltasSouls/Assets/UI/OncomingMutantAura", AssetRequestMode.ImmediateLoad);
+                CooldownBarTexture = ModContent.Request<Texture2D>("FargowiltasSouls/Assets/UI/CooldownBar", AssetRequestMode.ImmediateLoad);
+                CooldownBarFillTexture = ModContent.Request<Texture2D>("FargowiltasSouls/Assets/UI/CooldownBarFill", AssetRequestMode.ImmediateLoad);
 
                 // Initialize UserInterfaces
-                TogglerUserInterface = new UserInterface();
-                TogglerToggleUserInterface = new UserInterface();
+                TogglerUserInterface = new();
+                TogglerToggleUserInterface = new();
+                CooldownBarUserInterface = new();
 
                 // Activate UIs
                 SoulToggler = new();
                 SoulToggler.Activate();
                 SoulTogglerButton = new();
                 SoulTogglerButton.Activate();
+                CooldownBarManager = new();
+                CooldownBarManager.Activate();
 
                 TogglerToggleUserInterface.SetState(SoulTogglerButton);
+                CooldownBarUserInterface.SetState(CooldownBarManager);
             }
         }
 
@@ -155,6 +169,14 @@ namespace FargowiltasSouls.Content.UI
                 {
                     if (LastUpdateUIGameTime != null && TogglerToggleUserInterface?.CurrentState != null)
                         TogglerToggleUserInterface.Draw(Main.spriteBatch, LastUpdateUIGameTime);
+
+                    return true;
+                }, InterfaceScaleType.UI));
+
+                layers.Insert(index + 1, new LegacyGameInterfaceLayer("Fargos: Cooldown Bars", delegate
+                {
+                    if (LastUpdateUIGameTime != null && CooldownBarUserInterface?.CurrentState != null)
+                        CooldownBarUserInterface.Draw(Main.spriteBatch, LastUpdateUIGameTime);
 
                     return true;
                 }, InterfaceScaleType.UI));

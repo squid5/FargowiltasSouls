@@ -313,12 +313,10 @@ namespace FargowiltasSouls.Core.Globals
                         if (day && NPC.downedGolemBoss && (noBiome || dungeon))
                             pool[NPCID.CultistArcherWhite] = .01f;
                         float scoutRate = 0.07f;
-                        Main.NewText("b");
                         int xFromSpawn = Math.Abs(x - Main.spawnTileX);
                         bool goblinCondition = xFromSpawn > Main.maxTilesX / 3 || Main.remixWorld;
-                        if (!NPC.savedGoblin && goblinCondition && pool.TryGetValue(NPCID.GoblinScout, out float value) && value < scoutRate)
+                        if ((!NPC.savedGoblin && goblinCondition) || (pool.TryGetValue(NPCID.GoblinScout, out float value) && value < scoutRate))
                         {
-                            Main.NewText("e");
                             pool[NPCID.GoblinScout] = scoutRate;
                         }
                             
