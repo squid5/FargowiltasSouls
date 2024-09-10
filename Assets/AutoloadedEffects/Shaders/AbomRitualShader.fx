@@ -3,7 +3,7 @@
 float colorMult;
 float time;
 float maxOpacity;
-float scale;
+float radius;
 
 float2 screenPosition;
 float2 screenSize;
@@ -30,7 +30,6 @@ float4 PixelShaderFunction(float4 sampleColor : COLOR0, float2 uv : TEXCOORD0) :
     float2 pixelatedUV = worldUV / screenSize;
     pixelatedUV.x -= worldUV.x % (1 / screenSize.x);
     pixelatedUV.y -= worldUV.y % (1 / (screenSize.y / 2) * 2);
-    
     
     // Sample the noise textures
     float2 noiseUV = pixelatedUV - (anchorPoint / screenSize);
