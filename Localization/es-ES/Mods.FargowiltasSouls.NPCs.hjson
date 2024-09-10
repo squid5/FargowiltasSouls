@@ -74,12 +74,12 @@ NatureChampion: {
 // NatureChampionHead.DisplayName: Champion of Nature
 
 ShadowChampion: {
-	// DisplayName: Champion of Shadow
+	// DisplayName: Champion of Death
 
 	BossChecklistIntegration: {
 		// EntryName: "{$Mods.FargowiltasSouls.NPCs.ShadowChampion.DisplayName}"
 		// SpawnInfo: Spawn by using [i:FargowiltasSouls/SigilOfChampions] in the Corruption or Crimson at night.
-		// DespawnMessage: Champion of Shadow fades away...
+		// DespawnMessage: Champion of Death fades away...
 	}
 }
 

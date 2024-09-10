@@ -262,16 +262,28 @@ namespace FargowiltasSouls.Core.ModPlayers
                     DevianttHeartsCD--;
             }
 
-            if ((BetsysHeartItem != null || QueenStingerItem != null) && SpecialDashCD > 0 && --SpecialDashCD == 0)
-            {
-                SoundEngine.PlaySound(SoundID.Item9, Player.Center);
 
-                for (int i = 0; i < 30; i++)
+
+            if ((BetsysHeartItem != null || QueenStingerItem != null))
+            {
+                if (SpecialDashCD > 0)
+                    SpecialDashCD--;
+                if (SpecialDashCD == 1)
                 {
-                    int d = Dust.NewDust(Player.position, Player.width, Player.height, DustID.GemTopaz, 0, 0, 0, default, 2.5f);
-                    Main.dust[d].noGravity = true;
-                    Main.dust[d].velocity *= 4f;
+                    SoundEngine.PlaySound(SoundID.Item9, Player.Center);
+
+                    for (int i = 0; i < 30; i++)
+                    {
+                        int d = Dust.NewDust(Player.position, Player.width, Player.height, DustID.GemTopaz, 0, 0, 0, default, 2.5f);
+                        Main.dust[d].noGravity = true;
+                        Main.dust[d].velocity *= 4f;
+                    }
                 }
+            }
+            else
+            {
+                if (SpecialDashCD > 0 && SpecialDashCD < LumUtils.SecondsToFrames(7))
+                    SpecialDashCD++;
             }
 
 
@@ -472,6 +484,15 @@ namespace FargowiltasSouls.Core.ModPlayers
 
             if (MeteorCD < MeteorEffect.Cooldown && !Player.HasEffect<MeteorEffect>())
                 MeteorCD++;
+
+            if (MythrilTimer > 0 && !Player.HasEffect<MythrilEffect>())
+                MythrilTimer--;
+
+            if (TinCrit > 0 && !Player.HasEffect<TinEffect>())
+                TinCrit--;
+
+            if (HuntressStage > 0 && !Player.HasEffect<HuntressEffect>())
+                HuntressStage--;
 
             //these are here so that emode minion nerf can properly detect the real set bonuses over in EModePlayer postupdateequips
             if (SquireEnchantActive)

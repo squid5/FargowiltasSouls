@@ -103,7 +103,7 @@ Bonus ends after attacking for 3 seconds and rebuilds over 5 seconds
             if (modPlayer.MythrilTimer < mythrilEndTime)
                 modPlayer.MythrilTimer = mythrilEndTime;
 
-            CooldownBarManager.Activate("MythrilEnchantCharge", ModContent.Request<Texture2D>("FargowiltasSouls/Content/Items/Accessories/Enchantments/MythrilEnchant").Value, MythrilEnchant.NameColor, () => (float)Main.LocalPlayer.FargoSouls().MythrilTimer / Main.LocalPlayer.FargoSouls().MythrilMaxTime, true);
+            CooldownBarManager.Activate("MythrilEnchantCharge", ModContent.Request<Texture2D>("FargowiltasSouls/Content/Items/Accessories/Enchantments/MythrilEnchant").Value, MythrilEnchant.NameColor, () => (float)Main.LocalPlayer.FargoSouls().MythrilTimer / Main.LocalPlayer.FargoSouls().MythrilMaxTime, true, 60 * 10);
         }
     }
 

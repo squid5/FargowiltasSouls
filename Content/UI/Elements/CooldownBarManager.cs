@@ -16,10 +16,10 @@ namespace FargowiltasSouls.Content.UI.Elements
         public static List<UICooldownBar> uiCooldownBars = new();
         public static CooldownBarManager Instance;
         //public static List<UICooldownBar> CooldownBars;
-        const int BarWidth = 100;
-        const int BarHeight = 20;
-        const int SpaceBetweenBars = 20;
-        public static void Activate(string nameKey, Texture2D itemTexture, Color fillColor, Func<float> fillRatio, bool displayAtFull = false)
+        public const int BarWidth = 100;
+        public const int BarHeight = 20;
+        public const int SpaceBetweenBars = 20;
+        public static void Activate(string nameKey, Texture2D itemTexture, Color fillColor, Func<float> fillRatio, bool displayAtFull = false, int fadeDelay = 0)
         {
             if (!SoulConfig.Instance.CooldownBars)
                 return;
@@ -32,17 +32,19 @@ namespace FargowiltasSouls.Content.UI.Elements
             // If there's a free unused bar, transform it into the new bar
             if (Instance.Children.FirstOrDefault(b => b is UICooldownBar cdBar && !cdBar.Active) is UICooldownBar freeBar)
             {
+                freeBar.Opacity = 0f;
+                freeBar.Active = true;
+
                 freeBar.NameKey = nameKey;
                 freeBar.ItemTexture = itemTexture;
                 freeBar.FillColor = fillColor;
                 freeBar.FillRatio = fillRatio;
-                freeBar.Opacity = 0f;
-                freeBar.Active = true;
                 freeBar.DisplayAtFull = displayAtFull;
+                freeBar.FadeDelay = fadeDelay;
             }
             else
             {
-                UICooldownBar newBar = new(nameKey, FargoUIManager.CooldownBarTexture.Value, FargoUIManager.CooldownBarFillTexture.Value, itemTexture, fillColor, fillRatio, displayAtFull);
+                UICooldownBar newBar = new(nameKey, FargoUIManager.CooldownBarTexture.Value, FargoUIManager.CooldownBarFillTexture.Value, itemTexture, fillColor, fillRatio, displayAtFull, fadeDelay);
                 //int nX = i / 3;
                 //int nY = i % 3;
                 int nY = i;
