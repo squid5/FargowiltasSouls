@@ -105,9 +105,9 @@ While in stealth, your own projectiles will not be sucked in
             if (modPlayer.VortexCD <= 0 && player.Distance(target.Hitbox.ClosestPointInRect(player.Center)) > 850)
             {
                 bool force = modPlayer.ForceEffect<VortexEnchant>();
-                int dmg = 10000;
+                int dmg = 11000;
                 if (force)
-                    dmg = 20000;
+                    dmg += 10000;
                 Vector2 velocity = player.DirectionTo(target.Center);
                 int damage = FargoSoulsUtil.HighestDamageTypeScaling(modPlayer.Player, dmg);
                 FargoSoulsUtil.NewProjectileDirectSafe(modPlayer.Player.GetSource_ItemUse(modPlayer.Player.HeldItem), player.Center, velocity, ModContent.ProjectileType<VortexLaser>(), damage, 0f, modPlayer.Player.whoAmI, 1f);
