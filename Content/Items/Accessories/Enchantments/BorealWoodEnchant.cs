@@ -65,7 +65,15 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
         public override void OnHitNPCEither(Player player, NPC target, NPC.HitInfo hitInfo, DamageClass damageClass, int baseDamage, Projectile projectile, Item item)
         {
             if (player.HasEffect<TimberEffect>())
-                BorealSnowballs(player, hitInfo.SourceDamage * 2);
+            {
+                if (projectile != null && projectile.type == ProjectileID.SnowBallFriendly)
+                    return;
+                int damage = hitInfo.SourceDamage;
+                damage = (int)(damage * 0.9f);
+                damage = (int)MathHelper.Clamp(0, 1000, damage); // big sting could be roughly 1700 here
+                BorealSnowballs(player, damage * 2);
+            }
+                
         }
         public void BorealSnowballs(Player player, int damage)
         {
