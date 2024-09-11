@@ -470,8 +470,6 @@ namespace FargowiltasSouls.Core.ModPlayers
             if (LifeBeetleDuration > 0)
                 LifeBeetleDuration--;
 
-            if (NatureHealCounter > 0 && NatureHealCD <= 0)
-                NatureHealCounter--;
 
             if (VortexCD > 0)
                 VortexCD--;

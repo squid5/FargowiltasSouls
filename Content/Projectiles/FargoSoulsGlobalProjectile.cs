@@ -80,8 +80,6 @@ namespace FargowiltasSouls.Content.Projectiles
         private bool firstTick = true;
         private readonly bool squeakyToy = false;
 
-
-
         public const int TimeFreezeMoveDuration = 10;
         public int TimeFrozen = 0;
         public bool TimeFreezeImmune;
@@ -1384,6 +1382,11 @@ namespace FargowiltasSouls.Content.Projectiles
             if (projectile.type == ProjectileID.IceBlock && Main.player[projectile.owner].FargoSouls().FrigidGemstoneItem != null)
             {
                 target.AddBuff(BuffID.Frostburn, 360);
+            }
+
+            if (projectile.type == ProjectileID.CrystalLeafShot && player.HasEffect<NatureEffect>() && player.HasEffect<ShroomiteShroomEffect>())
+            {
+                ShroomiteShroomEffect.SpawnShrooms(player, target, (int)(damageDone * 1.25f));
             }
         }
 

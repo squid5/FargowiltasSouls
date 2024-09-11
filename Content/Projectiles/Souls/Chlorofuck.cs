@@ -1,4 +1,5 @@
 ﻿using FargowiltasSouls.Content.Items.Accessories.Enchantments;
+using FargowiltasSouls.Content.Items.Accessories.Forces;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using Microsoft.Xna.Framework;
 using System;
@@ -47,7 +48,7 @@ namespace FargowiltasSouls.Content.Projectiles.Souls
             }
 
             Projectile.netUpdate = true;
-
+            Projectile.Opacity = player.HasEffect<NatureEffect>() ? 0 : 1;
 
             float num395 = Main.mouseTextColor / 200f - 0.35f;
             num395 *= 0.2f;
@@ -93,6 +94,9 @@ namespace FargowiltasSouls.Content.Projectiles.Souls
                     num397 = npc.Center.Y;
                     num398 = Projectile.Distance(npc.Center);
                     flag11 = true;
+
+                    if (player.HasEffect<NatureEffect>() && player.Distance(npc.Center) > MoltenEffect.AuraSize(player))
+                        flag11 = false;
                 }
 
                 //shoot

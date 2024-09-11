@@ -1,5 +1,7 @@
-﻿using FargowiltasSouls.Content.Projectiles.Souls;
+﻿using FargowiltasSouls.Content.Items.Accessories.Forces;
+using FargowiltasSouls.Content.Projectiles.Souls;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
+using FargowiltasSouls.Core.ModPlayers;
 using FargowiltasSouls.Core.Toggler.Content;
 using Microsoft.Xna.Framework;
 using Terraria;
@@ -95,28 +97,37 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
         public override void OnHitNPCEither(Player player, NPC target, NPC.HitInfo hitInfo, DamageClass damageClass, int baseDamage, Projectile projectile, Item item)
         {
             FargoSoulsPlayer modPlayer = player.FargoSouls();
+            if (player.HasEffect<NatureEffect>())
+                return;
+
             if (modPlayer.ShroomiteCD > 0)
                 return;
 
             if (projectile != null && (projectile.penetrate > 1 || projectile.penetrate < 0) && projectile.maxPenetrate == projectile.penetrate)
             {
-                int damage = baseDamage / 4;
-                int num = 3;
-                if (modPlayer.ForceEffect<ShroomiteEnchant>())
-                {
-                    num = 5;
-                    damage = (int)(baseDamage / 2.5f);
-                }
-                Projectile[] projs = FargoSoulsUtil.XWay(num, GetSource_EffectItem(player), target.Center, ModContent.ProjectileType<ShroomiteShroom>(), 16, damage, 0f);
-
-                foreach (Projectile p in projs)
-                {
-                    p.velocity = p.velocity.RotatedByRandom(MathHelper.PiOver2 * 0.15f);
-                    p.velocity *= Main.rand.NextFloat(0.8f, 1.2f);
-                }
-
-                modPlayer.ShroomiteCD = 20;
+                SpawnShrooms(player, target, baseDamage);
             }
+        }
+
+        public static void SpawnShrooms(Player player, NPC target, int baseDamage)
+        {
+            FargoSoulsPlayer modPlayer = player.FargoSouls();
+            int damage = baseDamage / 4;
+            int num = 3;
+            if (modPlayer.ForceEffect<ShroomiteEnchant>())
+            {
+                num = 5;
+                damage = (int)(baseDamage / 2.5f);
+            }
+            Projectile[] projs = FargoSoulsUtil.XWay(num, player.GetSource_EffectItem<ShroomiteShroomEffect>(), target.Center, ModContent.ProjectileType<ShroomiteShroom>(), 16, damage, 0f);
+
+            foreach (Projectile p in projs)
+            {
+                p.velocity = p.velocity.RotatedByRandom(MathHelper.PiOver2 * 0.15f);
+                p.velocity *= Main.rand.NextFloat(0.8f, 1.2f);
+            }
+
+            modPlayer.ShroomiteCD = 20;
         }
     }
 }

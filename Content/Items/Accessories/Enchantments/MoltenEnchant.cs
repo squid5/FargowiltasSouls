@@ -1,3 +1,5 @@
+using FargowiltasSouls.Content.Items.Accessories.Forces;
+using FargowiltasSouls.Content.Projectiles;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using FargowiltasSouls.Core.Toggler.Content;
 using Microsoft.Xna.Framework;
@@ -44,26 +46,42 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
     {
         public override Header ToggleHeader => Header.GetHeader<NatureHeader>();
         public override int ToggleItemType => ModContent.ItemType<MoltenEnchant>();
+        public static float AuraSize(Player player)
+        {
+            if (player.HasEffect<NatureEffect>())
+            {
+                return ShadewoodEffect.Range(player, true);
+            }
+            if (player.FargoSouls().ForceEffect<MoltenEnchant>())
+                return 200 * 1.2f;
+            return 200;
+             
+        }
         public override void PostUpdateEquips(Player player)
         {
             if (player.whoAmI == Main.myPlayer)
             {
-                player.inferno = true;
-                Lighting.AddLight((int)(player.Center.X / 16f), (int)(player.Center.Y / 16f), 0.65f, 0.4f, 0.1f);
-                int buff = BuffID.OnFire;
-                float distance = 200f;
-                int baseDamage = 20;
+                bool nature = player.HasEffect<NatureEffect>();
 
-                if (player.FargoSouls().ForceEffect<MoltenEnchant>())
+                //player.inferno = true;
+                int visualProj = ModContent.ProjectileType<MoltenAuraProj>();
+                if (player.ownedProjectileCounts[visualProj] <= 0)
                 {
-                    distance *= 1.2f;
-                    baseDamage *= 2;
+                    Projectile.NewProjectile(GetSource_EffectItem(player), player.Center, Vector2.Zero, visualProj, 0, 0, Main.myPlayer);
                 }
+                if (!nature)
+                    Lighting.AddLight((int)(player.Center.X / 16f), (int)(player.Center.Y / 16f), 0.65f, 0.4f, 0.1f);
+
+                int buff = BuffID.OnFire;
+                float distance = AuraSize(player);
+                int baseDamage = player.FargoSouls().ForceEffect<MoltenEnchant>() ? 40 : 20;
 
                 int damage = FargoSoulsUtil.HighestDamageTypeScaling(player, baseDamage);
 
                 if (player.whoAmI == Main.myPlayer)
                 {
+                    bool healed = false;
+
                     for (int i = 0; i < Main.maxNPCs; i++)
                     {
                         NPC npc = Main.npc[i];
@@ -71,39 +89,48 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
                         {
                             if (Vector2.Distance(player.Center, FargoSoulsUtil.ClosestPointInHitbox(npc.Hitbox, player.Center)) <= distance)
                             {
-                                if (player.FindBuffIndex(BuffID.OnFire) == -1)
-                                {
-                                    player.AddBuff(BuffID.OnFire, 10);
-                                }
-
                                 int dmgRate = 30;//60;
 
-                                if (npc.FindBuffIndex(buff) == -1)
+                                if (!nature)
                                 {
-                                    npc.AddBuff(buff, 120);
+                                    if (player.FindBuffIndex(BuffID.OnFire) == -1)
+                                        player.AddBuff(BuffID.OnFire, 10);
+
+                                    if (npc.FindBuffIndex(buff) == -1)
+                                        npc.AddBuff(buff, 120);
+
+                                    if (player.infernoCounter % dmgRate == 0)
+                                        player.ApplyDamageToNPC(npc, damage, 0f, 0, false);
+                                }
+                                else
+                                {
+                                    baseDamage = 50;
+                                    int time = player.FargoSouls().TimeSinceHurt;
+                                    float minTime = 60 * 4;
+                                    if (time > minTime)
+                                    {
+                                        float maxBonus = 4; // at 16s
+                                        float bonus = MathHelper.Clamp(time / (60 * 4), 1, maxBonus);
+                                        baseDamage = (int)(baseDamage * bonus);
+                                        damage = FargoSoulsUtil.HighestDamageTypeScaling(player, baseDamage);
+
+                                        if (player.infernoCounter % dmgRate == 0)
+                                        {
+                                            player.ApplyDamageToNPC(npc, damage, 0f, 0, false);
+                                            if (player.HasEffect<CrimsonEffect>() && !healed)
+                                            {
+                                                healed = true;
+                                                player.FargoSouls().HealPlayer(damage / 100);
+                                            }  
+                                        }
+                                    }
                                 }
 
                                 int moltenDebuff = ModContent.BuffType<Buffs.Souls.MoltenAmplifyBuff>();
                                 if (npc.FindBuffIndex(moltenDebuff) == -1)
                                     npc.AddBuff(moltenDebuff, 10);
 
-                                //if (Vector2.Distance(player.Center, npc.Center) <= 50)
-                                //{
-                                //    dmgRate /= 10;
-                                //}
-                                //else if (Vector2.Distance(player.Center, npc.Center) <= 100)
-                                //{
-                                //    dmgRate /= 5;
-                                //}
-                                //else if (Vector2.Distance(player.Center, npc.Center) <= 150)
-                                //{
-                                //    dmgRate /= 2;
-                                //}
 
-                                if (player.infernoCounter % dmgRate == 0)
-                                {
-                                    player.ApplyDamageToNPC(npc, damage, 0f, 0, false);
-                                }
                             }
                         }
                     }

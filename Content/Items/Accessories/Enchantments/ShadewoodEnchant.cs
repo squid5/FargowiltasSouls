@@ -59,7 +59,7 @@ Enemies struck while Bleeding spew damaging blood
 
         public override Header ToggleHeader => Header.GetHeader<TimberHeader>();
         public override int ToggleItemType => ModContent.ItemType<ShadewoodEnchant>();
-        public static int Range(bool forceEffect) => forceEffect ? 400 : 200;
+        public static int Range(Player player, bool forceEffect) => (int)((forceEffect ? 400f : 200f) * (1f + player.FargoSouls().AuraSizeBonus));
         public override void PostUpdateEquips(Player player)
         {
             FargoSoulsPlayer modPlayer = player.FargoSouls();
@@ -67,7 +67,7 @@ Enemies struck while Bleeding spew damaging blood
             if (player.whoAmI != Main.myPlayer)
                 return;
             bool forceEffect = modPlayer.ForceEffect<ShadewoodEnchant>();
-            int dist = Range(forceEffect);
+            int dist = Range(player, forceEffect);
 
             for (int i = 0; i < Main.maxNPCs; i++)
             {

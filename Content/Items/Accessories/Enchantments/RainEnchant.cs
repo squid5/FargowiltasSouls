@@ -1,4 +1,5 @@
 ﻿using FargowiltasSouls.Content.Buffs.Souls;
+using FargowiltasSouls.Content.Items.Accessories.Forces;
 using FargowiltasSouls.Content.Projectiles.Souls;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using FargowiltasSouls.Core.Toggler.Content;
@@ -73,7 +74,7 @@ Effects of Inner Tube
             {
                 player.FargoSouls().AddMinion(EffectItem(player), true, ModContent.ProjectileType<RainUmbrella>(), 0, 0);
 
-                if (!player.controlDown)
+                if (!player.controlDown && !player.HasEffect<NatureEffect>())
                 {
                     player.slowFall = true;
                 }

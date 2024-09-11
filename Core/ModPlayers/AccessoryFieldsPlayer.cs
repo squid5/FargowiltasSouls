@@ -57,8 +57,7 @@ namespace FargowiltasSouls.Core.ModPlayers
         public int CosmosMoonTimer;
         public bool LifeForceActive;
         public int LifeBeetleDuration;
-        public int NatureHealCounter;
-        public int NatureHealCD;
+        public float AuraSizeBonus;
         public int TerrariaSoulProcCD;
 
         public int TimeSinceHurt;

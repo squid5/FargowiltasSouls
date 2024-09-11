@@ -71,7 +71,7 @@ Any projectiles that would deal less than 10 damage to you are destroyed
                 return;
 
             bool forceEffect = modPlayer.ForceEffect<EbonwoodEnchant>();
-            int dist = ShadewoodEffect.Range(forceEffect);
+            int dist = ShadewoodEffect.Range(player, forceEffect);
             foreach (NPC npc in Main.npc.Where(n => n.active && !n.friendly && n.lifeMax > 5 && !n.dontTakeDamage))
             {
                 Vector2 npcComparePoint = FargoSoulsUtil.ClosestPointInHitbox(npc, player.Center);

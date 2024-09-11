@@ -1,4 +1,5 @@
-﻿using FargowiltasSouls.Core.AccessoryEffectSystem;
+﻿using FargowiltasSouls.Content.Items.Accessories.Forces;
+using FargowiltasSouls.Core.AccessoryEffectSystem;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
@@ -75,5 +76,13 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
     {
         public override Header ToggleHeader => null;
         public override int ToggleItemType => ModContent.ItemType<FrostEnchant>();
+        public override void OnHitNPCEither(Player player, NPC target, NPC.HitInfo hitInfo, DamageClass damageClass, int baseDamage, Projectile projectile, Item item)
+        {
+            if (player.HasEffect<NatureEffect>())
+            {
+                target.AddBuff(BuffID.Frostburn, 60);
+                target.AddBuff(BuffID.Frostburn2, 60);
+            }
+        }
     }
 }
