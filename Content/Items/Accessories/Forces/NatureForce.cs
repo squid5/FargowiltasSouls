@@ -84,7 +84,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Forces
             else
                 modPlayer.AuraSizeBonus -= 0.05f;
 
-            modPlayer.AuraSizeBonus = MathHelper.Clamp(modPlayer.AuraSizeBonus, 0, 1);
+            modPlayer.AuraSizeBonus = MathHelper.Clamp(modPlayer.AuraSizeBonus, 0, 0.4f);
         }
 
     }

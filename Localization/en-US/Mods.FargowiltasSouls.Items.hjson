@@ -876,7 +876,7 @@ NatureForce: {
 		[i:FargowiltasSouls/ChlorophyteEnchant] Occasionally fire leaf crystal shots at enemies in the aura
 		[i:FargowiltasSouls/ShroomiteEnchant] Leaf crystal shots spawn a cloud of mushrooms on hit
 		[i:FargowiltasSouls/ShroomiteEnchant] Mushrooms heal 50 HP and consuming them grants Mushroom Power for 20 seconds
-		[i:FargowiltasSouls/ShroomiteEnchant] Mushroom Power grants +30% damage and crit and increases the aura's size
+		[i:FargowiltasSouls/ShroomiteEnchant] Mushroom Power grants +30% damage and crit and increases your aura size
 		[i:FargowiltasSouls/FrostEnchant] Your attacks briefly inflict Frostburn and Frostbite
 		[i:FargowiltasSouls/RainEnchant] Spawns an umbrella that deflects up to 200 damage from above
 		'Tapped into every secret of the wilds'
