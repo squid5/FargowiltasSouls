@@ -645,7 +645,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                 return true;
 
             //EVIL EVIL EVIL change
-            if (WorldSavingSystem.MasochistModeReal && Main.getGoodWorld)
+            if (WorldSavingSystem.MasochistModeReal && Main.zenithWorld)
                 return true;
 
             if (!SpawnSynchronized && ++OnSpawnCounter > 2) //sync to other eyes of same core when spawned
@@ -680,7 +680,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                 NetSync(npc);
             }
 
-            if (WorldSavingSystem.MasochistModeReal && LastState != npc.ai[0])
+            if (WorldSavingSystem.MasochistModeReal && Main.getGoodWorld && LastState != npc.ai[0])
             {
                 LastState = npc.ai[0];
 
