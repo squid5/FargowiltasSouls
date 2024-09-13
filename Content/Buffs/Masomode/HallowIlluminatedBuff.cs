@@ -1,14 +1,19 @@
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Content.Buffs.Masomode
 {
-    public class FlippedHallowBuff : FlippedBuff
+    public class HallowIlluminatedBuff : ModBuff
     {
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
 
+            Main.buffNoSave[Type] = true;
+            Main.debuff[Type] = true;
+            Main.pvpBuff[Type] = true;
             Main.buffNoTimeDisplay[Type] = true;
             BuffID.Sets.NurseCannotRemoveDebuff[Type] = true;
         }
@@ -16,6 +21,9 @@ namespace FargowiltasSouls.Content.Buffs.Masomode
         public override void Update(Player player, ref int buffIndex)
         {
             base.Update(player, ref buffIndex);
+
+            player.FargoSouls().Illuminated = true;
+            Lighting.GlobalBrightness += 1;
 
             if (player.Center.Y / 16 <= Main.worldSurface) //above ground, purge debuff immediately
             {

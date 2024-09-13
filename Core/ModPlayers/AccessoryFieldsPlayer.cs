@@ -359,6 +359,7 @@ namespace FargowiltasSouls.Core.ModPlayers
         public bool Swarming;
         public bool LowGround;
         public bool Flipped;
+        public bool Illuminated;
         public bool Mash;
         public bool[] MashPressed = new bool[4];
         public int MashCounter;

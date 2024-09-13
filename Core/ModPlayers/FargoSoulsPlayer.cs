@@ -405,6 +405,7 @@ namespace FargowiltasSouls.Core.ModPlayers
             Swarming = false;
             LowGround = false;
             Flipped = false;
+            Illuminated = false;
             LihzahrdCurse = false;
             //LihzahrdBlessing = false;
             Berserked = false;

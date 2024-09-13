@@ -238,9 +238,9 @@ FlippedBuff: {
 	Description: Your gravity is reversed
 }
 
-FlippedHallowBuff: {
-	DisplayName: Flipped
-	Description: Your gravity is reversed
+HallowIlluminatedBuff: {
+	DisplayName: Illuminated
+	Description: Increased brightness, spawn rates and damage increased in bright areas
 }
 
 FusedBuff: {

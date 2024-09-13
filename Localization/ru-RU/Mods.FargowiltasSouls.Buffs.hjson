@@ -238,9 +238,9 @@ FlippedBuff: {
 	Description: Силы гравитации изменили своё направление
 }
 
-FlippedHallowBuff: {
-	DisplayName: Перевёрнутый
-	Description: Силы гравитации изменили своё направление
+HallowIlluminatedBuff: {
+	// DisplayName: Illuminated
+	// Description: Increased light, spawn rates and damage increased in lit areas
 }
 
 FusedBuff: {

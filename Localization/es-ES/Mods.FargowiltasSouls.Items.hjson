@@ -1213,7 +1213,7 @@ GalacticGlobe: {
 	// DisplayName: Galactic Globe
 	/* Tooltip:
 		'''
-		Grants immunity to Nullification Curse, Flipped, Unstable, and Curse of the Moon
+		Grants immunity to Nullification Curse, Flipped, Illuminated, Unstable, and Curse of the Moon
 		Allows the holder to control gravity
 		Summons the true eyes of Cthulhu to protect you
 		Increases flight time by 100%
@@ -1226,7 +1226,7 @@ GelicWings: {
 	/* Tooltip:
 		'''
 		Allows flight and slow fall
-		Grants immunity to Flipped caused by the Underground Hallow
+		Grants immunity to Illuminated caused by the Underground Hallow
 		Allows the wearer to double jump
 		When you land after a jump, slime spikes shoot out to your sides
 		'Step on me'
@@ -1264,7 +1264,7 @@ HeartoftheMasochist: {
 	/* Tooltip:
 		'''
 		Grants immunity to [i:FargowiltasSouls/PumpkingsCape] Living Wasteland, [i:FargowiltasSouls/IceQueensCrown] Hypothermia, [i:FargowiltasSouls/SaucerControlConsole] Electrified, Distorted, [i:FargowiltasSouls/BetsysHeart] Oozed, Withered Weapon, Withered Armor
-		[i:FargowiltasSouls/MutantAntibodies] Wet, Feral Bite, Mutant Nibble, Oceanic Maul, water debuffs, [i:FargowiltasSouls/PrecisionSeal] Smite, [i:FargowiltasSouls/GalacticGlobe] Nullification Curse, Flipped, Unstable, and Curse of the Moon	
+		[i:FargowiltasSouls/MutantAntibodies] Wet, Feral Bite, Mutant Nibble, Oceanic Maul, water debuffs, [i:FargowiltasSouls/PrecisionSeal] Smite, [i:FargowiltasSouls/GalacticGlobe] Nullification Curse, Flipped, Illuminated, Unstable, and Curse of the Moon	
 		[i:FargowiltasSouls/PumpkingsCape] [i:FargowiltasSouls/MutantAntibodies] [i:FargowiltasSouls/IceQueensCrown] Increases damage and crit chance by 10%, and damage reduction by 5%
 		[i:FargowiltasSouls/PumpkingsCape] Right Click to guard and parry attacks. Parries heal you based on damage. While guarding, gain an aura of Rotting
 		[i:FargowiltasSouls/IceQueensCrown] Graze attacks to charge up a bomb. When it's charged, press Bomb Key to freeze all projectiles and enemies for a short time

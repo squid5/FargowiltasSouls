@@ -521,7 +521,7 @@ namespace FargowiltasSouls
                     ModContent.BuffType<DefenselessBuff>(),
                     ModContent.BuffType<FlamesoftheUniverseBuff>(),
                     ModContent.BuffType<FlippedBuff>(),
-                    ModContent.BuffType<FlippedHallowBuff>(),
+                    ModContent.BuffType<HallowIlluminatedBuff>(),
                     ModContent.BuffType<FusedBuff>(),
                     ModContent.BuffType<GodEaterBuff>(),
                     ModContent.BuffType<GuiltyBuff>(),

@@ -81,7 +81,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Masomode
 
             //galactic globe
             player.buffImmune[ModContent.BuffType<FlippedBuff>()] = true;
-            player.buffImmune[ModContent.BuffType<FlippedHallowBuff>()] = true;
+            player.buffImmune[ModContent.BuffType<HallowIlluminatedBuff>()] = true;
             player.buffImmune[ModContent.BuffType<UnstableBuff>()] = true;
             player.buffImmune[ModContent.BuffType<CurseoftheMoonBuff>()] = true;
             //player.buffImmune[BuffID.ChaosState] = true;

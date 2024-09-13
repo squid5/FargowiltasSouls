@@ -958,7 +958,7 @@ namespace FargowiltasSouls.Core.Globals
             int timeLeft = npc.buffTime[buffIndex];
             if (MaxInfestTime <= 0)
                 MaxInfestTime = timeLeft;
-            float baseVal = (MaxInfestTime - timeLeft) / 30f; //change the denominator to adjust max power of DOT
+            float baseVal = (MaxInfestTime - timeLeft) / 20f; //change the denominator to adjust max power of DOT
             int dmg = (int)(baseVal * baseVal + 8);
 
             InfestedDust = baseVal / 15 + .5f;
@@ -979,6 +979,10 @@ namespace FargowiltasSouls.Core.Globals
                 //2x max spawn
                 maxSpawns *= 3;
             }
+
+            if (modPlayer.Illuminated)
+            {
+                
 
             if (player.HasEffect<SinisterIconEffect>())
             {

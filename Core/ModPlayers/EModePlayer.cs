@@ -266,7 +266,7 @@ namespace FargowiltasSouls.Core.ModPlayers
                                     && !Main.wallHouse[Framing.GetTileSafely(Player.BottomLeft).WallType]
                                     && !Main.wallHouse[Framing.GetTileSafely(Player.BottomRight).WallType])
                                 {
-                                    Player.AddBuff(ModContent.BuffType<FlippedHallowBuff>(), 90);
+                                    Player.AddBuff(ModContent.BuffType<HallowIlluminatedBuff>(), 90);
                                 }
                             }
                         }

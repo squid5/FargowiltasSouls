@@ -294,7 +294,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Souls
             player.buffImmune[ModContent.BuffType<DefenselessBuff>()] = true;
             player.buffImmune[ModContent.BuffType<FlamesoftheUniverseBuff>()] = true;
             player.buffImmune[ModContent.BuffType<FlippedBuff>()] = true;
-            player.buffImmune[ModContent.BuffType<FlippedHallowBuff>()] = true;
+            player.buffImmune[ModContent.BuffType<HallowIlluminatedBuff>()] = true;
             player.buffImmune[ModContent.BuffType<FusedBuff>()] = true;
             //player.buffImmune[ModContent.BuffType<GodEater>()] = true;
             player.buffImmune[ModContent.BuffType<GuiltyBuff>()] = true;

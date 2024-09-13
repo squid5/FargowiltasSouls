@@ -238,9 +238,9 @@ FlippedBuff: {
 	Description: 你的重力被颠倒了
 }
 
-FlippedHallowBuff: {
-	DisplayName: 翻转
-	Description: 你的重力被颠倒了
+HallowIlluminatedBuff: {
+	// DisplayName: Illuminated
+	// Description: Increased light, spawn rates and damage increased in lit areas
 }
 
 FusedBuff: {
