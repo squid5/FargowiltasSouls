@@ -1,4 +1,5 @@
 ﻿using FargowiltasSouls.Content.Buffs.Masomode;
+using FargowiltasSouls.Core.Systems;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -49,9 +50,14 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
             Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
 
             if (Projectile.localAI[0] < 25)
-
             {
-
+                if (Projectile.localAI[0] == 1)
+                {
+                    if (WorldSavingSystem.MasochistModeReal)
+                    {
+                        Projectile.ai[1] *= 1.25f; // increased accel
+                    }
+                }
                 Projectile.localAI[0]++;
 
                 Projectile.scale = MathHelper.Lerp(0.15f, 1, Projectile.localAI[0] / 25);
@@ -77,7 +83,6 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
             Projectile.Animate(6);
 
             if (Projectile.ai[1] != 0)
-
                 Projectile.velocity.Y += Projectile.ai[1]; //ai1 is Y-acceleration
 
             if (Projectile.timeLeft <= 20)

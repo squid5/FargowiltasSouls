@@ -1,14 +1,11 @@
-﻿using FargowiltasSouls.Assets.ExtraTextures;
-using FargowiltasSouls.Common.Graphics.Particles;
+﻿using FargowiltasSouls.Common.Graphics.Particles;
 using FargowiltasSouls.Core.Systems;
 using Luminance.Core.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System.Collections.Generic;
 using System;
 using Terraria;
 using Terraria.Audio;
-using Terraria.Graphics;
 using Terraria.ID;
 using Terraria.ModLoader;
 

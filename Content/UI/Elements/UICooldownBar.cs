@@ -1,13 +1,7 @@
-﻿using FargowiltasSouls.Core;
-using FargowiltasSouls.Core.Systems;
-using Luminance.Common.Utilities;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using System;
-using Terraria;
 using Terraria.GameContent.UI.Elements;
-using Terraria.GameInput;
 using Terraria.UI;
 
 namespace FargowiltasSouls.Content.UI.Elements

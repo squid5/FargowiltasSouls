@@ -1,3 +1,4 @@
+using FargowiltasSouls.Content.Items.BossBags;
 using FargowiltasSouls.Content.Projectiles.ChallengerItems;
 using Microsoft.Xna.Framework;
 using System;
@@ -85,7 +86,7 @@ namespace FargowiltasSouls.Content.Items.Weapons.Challengers
        
         public override void AddRecipes()
         {
-            //CreateRecipe().AddIngredient<CursedCoffinBag>(2).AddTile(TileID.Solidifier).DisableDecraft().Register();
+            CreateRecipe().AddIngredient<CursedCoffinBag>(2).AddTile(TileID.Solidifier).DisableDecraft().Register();
         }
     }
 }

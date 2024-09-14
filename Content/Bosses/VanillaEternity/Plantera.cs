@@ -18,18 +18,13 @@ using FargowiltasSouls.Content.NPCs.EternityModeNPCs;
 using FargowiltasSouls.Content.Bosses.MutantBoss;
 using FargowiltasSouls.Common.Graphics.Particles;
 using Microsoft.Xna.Framework.Graphics;
-using FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.Cavern;
-using System.Collections.Generic;
-using Terraria.Map;
-using static tModPorter.ProgressUpdate;
 using FargowiltasSouls.Core;
-using Terraria.WorldBuilding;
 using Luminance.Core.Graphics;
 using Terraria.DataStructures;
 
 namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 {
-	public abstract class PlanteraPart : EModeNPCBehaviour
+    public abstract class PlanteraPart : EModeNPCBehaviour
     {
         public override void OnFirstTick(NPC npc)
         {

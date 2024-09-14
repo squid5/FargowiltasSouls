@@ -1,8 +1,5 @@
 ﻿using FargowiltasSouls.Content.Projectiles.BossWeapons;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 

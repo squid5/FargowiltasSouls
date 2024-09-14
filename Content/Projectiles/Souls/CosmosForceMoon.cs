@@ -1,8 +1,5 @@
 using FargowiltasSouls.Content.Items.Misc;
 using FargowiltasSouls.Content.Projectiles;
-using FargowiltasSouls.Content.Projectiles.Masomode;
-using FargowiltasSouls.Core.Globals;
-using FargowiltasSouls.Core.Systems;
 using Luminance.Core.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;

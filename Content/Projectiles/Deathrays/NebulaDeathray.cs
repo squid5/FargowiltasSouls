@@ -5,14 +5,13 @@ using Luminance.Core.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 
 namespace FargowiltasSouls.Content.Projectiles.Deathrays
 {
-	public class NebulaDeathray : BaseDeathray, IPixelatedPrimitiveRenderer
+    public class NebulaDeathray : BaseDeathray, IPixelatedPrimitiveRenderer
     {
         public override string Texture => "FargowiltasSouls/Content/Projectiles/Deathrays/DeviDeathray";
 

@@ -22,7 +22,7 @@ namespace FargowiltasSouls.Content.Buffs.Masomode
             if (player.HeldItem.DamageType.CountsAsClass(DamageClass.Melee) || player.HeldItem.DamageType.CountsAsClass(DamageClass.Throwing))
                 player.FargoSouls().AttackSpeed /= 2;
 
-            player.GetDamage(DamageClass.Melee) *= 0.8f;
+            player.GetDamage(DamageClass.Melee) *= 0.6f;
         }
     }
 }

@@ -81,7 +81,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
             {
                 StateMachine.RegisterTransition(state, BehaviorStates.YouCantEscape, false, () =>
                 {
-					return Main.player.Any(p => p.Alive() && !CoffinArena.Rectangle.Contains(p.Center.ToTileCoordinates()) && !p.HasBuff<GrabbedBuff>());
+					return Main.player.Any(p => p.Alive() && !CoffinArena.PaddedRectangle.Contains(p.Center.ToTileCoordinates()) && !p.HasBuff<GrabbedBuff>());
                 });
             }, BehaviorStates.StunPunish, BehaviorStates.PhaseTransition, BehaviorStates.YouCantEscape, BehaviorStates.SpiritGrabPunish);
 
