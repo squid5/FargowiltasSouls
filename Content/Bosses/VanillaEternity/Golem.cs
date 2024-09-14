@@ -661,12 +661,11 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                         npc.position += npc.SafeDirectionTo(Main.player[npc.target].Center) * 4;
 
                     //disable attacks when nearby
-                    if (npc.HasValidTarget && npc.Distance(Main.player[npc.target].Center) < 350)// && !WorldSavingSystem.MasochistModeReal)
+                    if (npc.HasValidTarget && npc.Distance(Main.player[npc.target].Center) < 350 && !WorldSavingSystem.MasochistModeReal)
                     {
                         if (SuppressedAi1 < npc.ai[1])
                             SuppressedAi1 = npc.ai[1];
                         npc.ai[1] = 0f;
-
                         if (SuppressedAi2 < npc.ai[2])
                             SuppressedAi2 = npc.ai[2];
                         npc.ai[2] = 0f;

@@ -26,6 +26,7 @@ using FargowiltasSouls.Content.Bosses.Champions.Will;
 using FargowiltasSouls.Content.Bosses.Champions.Spirit;
 using FargowiltasSouls.Core;
 using Luminance.Core.Graphics;
+using System.Runtime.CompilerServices;
 
 namespace FargowiltasSouls.Content.Projectiles
 {
@@ -45,8 +46,6 @@ namespace FargowiltasSouls.Content.Projectiles
         public static Dictionary<int, bool> IgnoreMinionNerf = [];
 
         public bool SniperShot = false;
-
-
 
         public override void Unload()
         {
@@ -790,15 +789,28 @@ namespace FargowiltasSouls.Content.Projectiles
                     break;
 
                 case ProjectileID.EyeBeam:
-                    if (!WorldSavingSystem.MasochistModeReal && NonSwarmFight(projectile, NPCID.GolemHead, NPCID.GolemHeadFree))
+                    if (NonSwarmFight(projectile, NPCID.GolemHead, NPCID.GolemHeadFree))
                     {
                         if (!firstTickAICheckDone)
                         {
+                            if (WorldSavingSystem.MasochistModeReal)
+                            {
+                                // only run alt behavior (accelerating) if too close to player
+                                if (NPC.FindFirstNPC(NPCID.GolemHeadFree) is int id && id.IsWithinBounds(Main.maxNPCs) && Main.npc[id].TypeAlive(NPCID.GolemHeadFree) && Main.npc[id].HasPlayerTarget)
+                                {
+                                    NPC golemHead = Main.npc[id];
+                                    if (golemHead.Distance(Main.player[golemHead.target].Center) > 350)
+                                        break;
+                                }
+                                else
+                                    break;
+                            }
+                            altBehaviour = true;
                             projectile.velocity = projectile.velocity.SafeNormalize(Vector2.UnitY);
                             projectile.timeLeft = 180 * projectile.MaxUpdates;
                         }
 
-                        if (projectile.timeLeft % projectile.MaxUpdates == 0) //only run once per tick
+                        if (altBehaviour && projectile.timeLeft % projectile.MaxUpdates == 0) //only run once per tick
                         {
                             if (++projectile.localAI[1] < 90)
                                 projectile.velocity *= 1.04f;
