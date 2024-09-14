@@ -130,6 +130,18 @@ namespace FargowiltasSouls.Core.ModPlayers
                 //target.defense -= 5;
                 target.AddBuff(BuffID.BrokenArmor, 600);
             }
+
+            if (Illuminated)
+            {
+                float maxBonus = 0.15f;
+
+                Color light = Lighting.GetColor(Player.Center.ToTileCoordinates());
+                float modifier = (light.R + light.G + light.B) / 700f;
+                modifier = MathHelper.Clamp(modifier, 0, 1);
+
+                modifier = 1 + maxBonus * modifier;
+                modifiers.FinalDamage *= modifier;
+            }
         }
 
         public override void OnHitNPCWithProj(Projectile proj, NPC target, NPC.HitInfo hit, int damageDone)/* tModPorter If you don't need the Projectile, consider using OnHitNPC instead */
@@ -336,6 +348,18 @@ namespace FargowiltasSouls.Core.ModPlayers
 
             if (proj.coldDamage && Hypothermia)
                 dr -= 0.2f;
+
+            if (Illuminated)
+            {
+                float maxDRReduction = 0.25f;
+
+                Color light = Lighting.GetColor(Player.Center.ToTileCoordinates());
+                float modifier = (light.R + light.G + light.B) / 700f;
+                modifier = MathHelper.Clamp(modifier, 0, 1);
+
+                modifier = maxDRReduction * modifier;
+                dr -= modifier;
+            }
 
             dr += Player.AccessoryEffects().ProjectileDamageDR(proj, ref modifiers);
 

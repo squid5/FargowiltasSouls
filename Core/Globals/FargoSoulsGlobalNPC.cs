@@ -982,6 +982,13 @@ namespace FargowiltasSouls.Core.Globals
 
             if (modPlayer.Illuminated)
             {
+                Color light = Lighting.GetColor(player.Center.ToTileCoordinates());
+                float modifier = (light.R + light.G + light.B) / 700f;
+                modifier = MathHelper.Clamp(modifier, 0, 1);
+                modifier += 1;
+
+                spawnRate = (int)(spawnRate / modifier);
+                maxSpawns = (int)(maxSpawns * modifier);
             }
 
             if (player.HasEffect<SinisterIconEffect>())
