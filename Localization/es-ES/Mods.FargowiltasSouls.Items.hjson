@@ -1845,39 +1845,24 @@ TerrariaSoul: {
 	// DisplayName: Soul of Terraria
 	/* Tooltip:
 		'''
-		[i:FargowiltasSouls/SolarEnchant] [i:FargowiltasSouls/VortexEnchant] [i:FargowiltasSouls/NebulaEnchant] [i:FargowiltasSouls/StardustEnchant] Attacking generates up to 4 moons that orbit around you, spawning boosters on exploding
-		[i:FargowiltasSouls/CrimsonEnchant] [i:FargowiltasSouls/MoltenEnchant] [i:FargowiltasSouls/EbonwoodEnchant] [i:FargowiltasSouls/ShadewoodEnchant] You have a burning, siphoning aura of Withering and Bleeding
-		[i:FargowiltasSouls/BorealWoodEnchant] [i:FargowiltasSouls/PalmWoodEnchant] [i:FargowiltasSouls/ChlorophyteEnchant] Fire snowballs and acorns on enemies in this aura on hit, and leaf crystals occasionally
-		[i:FargowiltasSouls/RainEnchant] [i:FargowiltasSouls/GladiatorEnchant] [i:FargowiltasSouls/ForbiddenEnchant] Spawns a gladiator spirit and an umbrella, double tap down to call an ancient tornado
-		[i:FargowiltasSouls/CopperEnchant] [i:FargowiltasSouls/ObsidianEnchant] [i:FargowiltasSouls/LeadEnchant] Critical strikes sometimes fire a lightning bolt that explodes on hit and inflicts a stronger Lead Poisoning
-		[i:FargowiltasSouls/MythrilEnchant] [i:FargowiltasSouls/PalladiumEnchant] [i:FargowiltasSouls/TitaniumEnchant] [i:FargowiltasSouls/AdamantiteEnchant] [i:FargowiltasSouls/OrichalcumEnchant] Not attacking builds up charge and boosts your defensive stats; attack to consume charge and gain several offensive bonuses
-		[i:FargowiltasSouls/CrystalAssassinEnchant] Grants a shadow dash that fires a burst of shadowflame around you, and a special invincible shade dash every 4 seconds
-
-		[i:FargowiltasSouls/PearlwoodEnchant] Your attacks occasionally spawn mana stars on-hit and retreiving pickups empowers you, making your crits reroll favorably for 5 seconds
-		[i:FargowiltasSouls/NecroEnchant] [i:FargowiltasSouls/BeeEnchant] [i:FargowiltasSouls/BeetleEnchant] [i:FargowiltasSouls/PumpkinEnchant] Slain enemies may drop a pile of bones and you leave behind powerful flowers while flying
-		 
-		[i:FargowiltasSouls/TungstenEnchant] Your swords are larger and deal 14% more damage
-		[i:FargowiltasSouls/TinEnchant] Sets Tin crit chance to 10%, increasing up to double your original crit chance or 50%
-		[i:FargowiltasSouls/SpiderEnchant] [i:FargowiltasSouls/SpookyEnchant] Your minions and sentries can crit for 1.5x damage and your minions gain a scythe attack
-		[i:FargowiltasSouls/TikiEnchant] Increased whip range, whips scale with any class, and empower your projectiles they hit
-		[i:FargowiltasSouls/DarkArtistEnchant]  While attacking, fire your next 3 closest weapons' projectiles as support
-		[i:FargowiltasSouls/RedRidingEnchant] [i:FargowiltasSouls/FrostEnchant] Successive attacks gain bonus damage and your attacks briefly inflict Frostburn and Frostbite
-		[i:FargowiltasSouls/NinjaEnchant] Increases projectile damage based on projectile speed and increases projectile speed while moving slowly
-
-		[i:FargowiltasSouls/SilverEnchant] Right Click to guard with your shield, successful parries instantly fire a lightning bolt 
-		[i:FargowiltasSouls/TurtleEnchant] [i:FargowiltasSouls/CobaltEnchant] 500% of contact damage is reflected, you explode on hit while not attacking
-		[i:FargowiltasSouls/OrichalcumEnchant] [i:FargowiltasSouls/LeadEnchant] Enemies take 4x damage over time and you take 60% less
-		[i:FargowiltasSouls/ValhallaKnightEnchant] [i:FargowiltasSouls/HallowEnchant] [i:FargowiltasSouls/ShroomiteEnchant] Increases the effectiveness of healing sources by 25%, healing potions restore more effect but take effect over time, Mushrooms heal 50 HP and consuming them grants buffs
-		[i:FargowiltasSouls/SpectreEnchant] If you reach zero HP you will revive with 200 HP, self-cleanse debuffs, and spawn healing spirits
-
-		[i:FargowiltasSouls/MeteorEnchant] Increases your movement speed and acceleration, and decreases your momentum
-		[i:FargowiltasSouls/RichMahoganyEnchant] All grappling hooks shoot, pull, and retract 2.5x as fast
-		[i:FargowiltasSouls/ValhallaKnightEnchant] Improves mounts and stats while mounted, mounts have a dash
-
-		[i:FargowiltasSouls/GoldEnchant] Automatically sends coins to your piggy bank when picked up (works in vanity and inventory)
-		[i:FargowiltasSouls/PlatinumEnchant] [i:FargowiltasSouls/WoodEnchant] 33% chance for enemies to drop 5x loot, bestiary and banner entries complete faster and you gain a shop discount based on bestiary completion (works in vanity and inventory)
-		[i:FargowiltasSouls/IronEnchant] 50% chance to not consume each item on first craft and you attract items from a larger range (works in vanity and inventory)
-		[i:FargowiltasSouls/BeeEnchant] Effects of Hive Pack
+		[i:FargowiltasSouls/TimberForce] Gain an aura that fires projectiles, improved hooks, and occasional mana stars on hit
+		[i:FargowiltasSouls/TimberForce] Gain crit rerolls when retreiving pickups, bestiary completion and discount
+		[i:FargowiltasSouls/TerraForce] Critical strikes fire powerful lightning, Right Click to guard and parry, you take less debuff damage and your swords are empowered
+		[i:FargowiltasSouls/TerraForce] 10% set critical strike chance increased on hit, further item grab range, and you sometimes don't consume crafting ingredients
+		[i:FargowiltasSouls/EarthForce] You gain defensive bonuses while not attacking and offensive bonuses while attacking
+		[i:FargowiltasSouls/EarthForce] 4x debuff damage and you explode on hit while not attacking
+		[i:FargowiltasSouls/NatureForce] You have an aura that siphons life, increases damage taken, and you fire leaf shots at nearby enemies
+		[i:FargowiltasSouls/NatureForce] Mushroom healing is improved and grants buffs, your attacks inflict several debuffs, and you have an umbrella
+		[i:FargowiltasSouls/LifeForce] Leave behind powerful flowers while flying and you have the effects of Hive Pack
+		[i:FargowiltasSouls/LifeForce] You reflect contact damage and your minions and sentries can crit
+		[i:FargowiltasSouls/SpiritForce] Double tap down to call an ancient tornado, healing potions restore more over time, and your whips are improved
+		[i:FargowiltasSouls/SpiritForce] If you reach zero HP you will revive with 200 HP, self-cleanse debuffs, and spawn healing spirits
+		[i:FargowiltasSouls/ShadowForce] Grants a shadow dash, and an invincible shade dash every 4 seconds, increased projectile stats based on speed
+		[i:FargowiltasSouls/ShadowForce] You fire additional weapons as support, your minions get a scythe attack, and slain enemies may drop a pile of bones
+		[i:FargowiltasSouls/WillForce] Summons a gladiator spirit, increases your healing and mount stats, and successive attacks gain bonus damage
+		[i:FargowiltasSouls/WillForce] Automatically sends coins to your piggy bank when picked up (works in vanity and inventory), enemies may drop extra loot
+		[i:FargowiltasSouls/CosmoForce] Attacking generates moons around you that explode into Lunar Boosters when fired
+		[i:FargowiltasSouls/CosmoForce] Increases your movement speed and acceleration, and decreases your momentum
 		'A true master of Terraria'
 		''' */
 }

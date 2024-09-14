@@ -108,7 +108,7 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
                 NPC.width = Player.defaultWidth;
                 NPC.height = Player.defaultHeight;
             }
-            NPC.damage = 444;
+            NPC.damage = 444+44;
             NPC.defense = 255;
             NPC.value = Item.buyPrice(7);
             NPC.lifeMax = Main.expertMode ? 7700000 : 3500000;
@@ -148,7 +148,19 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
             NPC.damage = (int)Math.Round(NPC.damage * 0.5);
             NPC.lifeMax = (int)Math.Round(NPC.lifeMax * 0.5 * balance);
         }
-
+        public override void ModifyHitByItem(Player player, Item item, ref NPC.HitModifiers modifiers)
+        {
+            modifiers.FinalDamage *= 0.65f;
+        }
+        public override void ModifyHitByProjectile(Projectile projectile, ref NPC.HitModifiers modifiers)
+        {
+            modifiers.FinalDamage *= 0.65f;
+        }
+        public override void UpdateLifeRegen(ref int damage)
+        {
+            damage /= 2;
+            base.UpdateLifeRegen(ref damage);
+        }
         public override bool CanHitPlayer(Player target, ref int CooldownSlot)
         {
             CooldownSlot = 1;

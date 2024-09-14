@@ -1316,6 +1316,9 @@ namespace FargowiltasSouls.Core.ModPlayers
                     multiplier = 1.10f;
             }
 
+            if (MutantPresence)
+                multiplier *= 0.5f;
+
             heal = (int)(heal * multiplier);
 
             return heal;

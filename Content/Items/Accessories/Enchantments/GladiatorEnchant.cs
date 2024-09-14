@@ -70,7 +70,8 @@ Grants knockback immunity when you are facing the attack
 
         public override Header ToggleHeader => Header.GetHeader<WillHeader>();
         public override int ToggleItemType => ModContent.ItemType<GladiatorEnchant>();
-        public override bool MinionEffect => true;
+        public override bool MinionEffect => false;
+        public override bool MutantsPresenceAffects => true;
         public override void PostUpdateEquips(Player player)
         {
             FargoSoulsPlayer modPlayer = player.FargoSouls();
