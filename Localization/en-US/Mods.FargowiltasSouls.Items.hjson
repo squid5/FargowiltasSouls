@@ -369,7 +369,8 @@ NebulaEnchant: {
 	DisplayName: Nebula Enchantment
 	Tooltip:
 		'''
-		Hurting enemies has a chance to spawn buff boosters
+		Once every 3 seconds a projectile will be replaced with a nebula shot
+		Nebula shots chase after enemies and spawns a nebula booster
 		Buff booster stacking capped at 2
 		'The pillars of creation have shined upon you'
 		'''

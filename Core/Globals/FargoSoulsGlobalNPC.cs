@@ -980,10 +980,6 @@ namespace FargowiltasSouls.Core.Globals
                 maxSpawns *= 3;
             }
 
-            if (modPlayer.Illuminated)
-            {
-                
-
             if (player.HasEffect<SinisterIconEffect>())
             {
                 spawnRate /= 2;
