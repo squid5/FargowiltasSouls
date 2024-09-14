@@ -65,7 +65,7 @@ namespace FargowiltasSouls.Core.Systems
             bool buildItem = false;
 
             // no placing
-            if (item.createTile != -1 || item.createWall != -1)
+            if (!ItemID.Sets.Torches[item.type] && (item.createTile != -1 || item.createWall != -1))
             {
                 illegalItem = true;
                 buildItem = true;
