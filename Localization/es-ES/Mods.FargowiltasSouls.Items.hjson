@@ -821,11 +821,11 @@ CosmoForce: {
 	// DisplayName: Force of Cosmos
 	/* Tooltip:
 		'''
-		[i:FargowiltasSouls/MeteorEnchant] [i:FargowiltasSouls/WizardEnchant] [i:FargowiltasSouls/SolarEnchant] [i:FargowiltasSouls/VortexEnchant] [i:FargowiltasSouls/NebulaEnchant] [i:FargowiltasSouls/StardustEnchant]
-		Attacking generates up to 4 moons that orbit around you 
+		[i:FargowiltasSouls/SolarEnchant] [i:FargowiltasSouls/VortexEnchant] [i:FargowiltasSouls/NebulaEnchant] [i:FargowiltasSouls/StardustEnchant] Attacking generates up to 4 moons that orbit around you 
 		Stop attacking to launch them towards your cursor, exploding into Lunar Boosters
 		Picking up Lunar Boosters increases your damage, crit, life regen or damage reduction
-		Increases your movement speed and acceleration, and decreases your momentum
+		[i:FargowiltasSouls/MeteorEnchant] Increases your movement speed and acceleration, and decreases your momentum
+		[i:FargowiltasSouls/WizardEnchant] Amplifies the effect of all your Enchantments
 		'Been around since the Big Bang'
 		''' */
 }
@@ -1845,16 +1845,39 @@ TerrariaSoul: {
 	// DisplayName: Soul of Terraria
 	/* Tooltip:
 		'''
-		Critical strikes occasionally fire moons that explode into Force Boosters on hit
-		Moons are less frequent if you got hit recently
-		If you reach zero HP you will revive with 300 HP and self-cleanse debuffs
-		Increases your movement speed and acceleration, and decreases your momentum
-		Bestiary and banner entries complete faster
-		33% chance for enemies to drop 5x loot
-		Works in vanity and inventory:
-		You gain a shop discount based on bestiary completion
-		Automatically sends coins to your piggy bank when picked up
-		50% chance to not consume each item on first craft and you attract items from a larger range
+		[i:FargowiltasSouls/SolarEnchant] [i:FargowiltasSouls/VortexEnchant] [i:FargowiltasSouls/NebulaEnchant] [i:FargowiltasSouls/StardustEnchant] Attacking generates up to 4 moons that orbit around you, spawning boosters on exploding
+		[i:FargowiltasSouls/CrimsonEnchant] [i:FargowiltasSouls/MoltenEnchant] [i:FargowiltasSouls/EbonwoodEnchant] [i:FargowiltasSouls/ShadewoodEnchant] You have a burning, siphoning aura of Withering and Bleeding
+		[i:FargowiltasSouls/BorealWoodEnchant] [i:FargowiltasSouls/PalmWoodEnchant] [i:FargowiltasSouls/ChlorophyteEnchant] Fire snowballs and acorns on enemies in this aura on hit, and leaf crystals occasionally
+		[i:FargowiltasSouls/RainEnchant] [i:FargowiltasSouls/GladiatorEnchant] [i:FargowiltasSouls/ForbiddenEnchant] Spawns a gladiator spirit and an umbrella, double tap down to call an ancient tornado
+		[i:FargowiltasSouls/CopperEnchant] [i:FargowiltasSouls/ObsidianEnchant] [i:FargowiltasSouls/LeadEnchant] Critical strikes sometimes fire a lightning bolt that explodes on hit and inflicts a stronger Lead Poisoning
+		[i:FargowiltasSouls/MythrilEnchant] [i:FargowiltasSouls/PalladiumEnchant] [i:FargowiltasSouls/TitaniumEnchant] [i:FargowiltasSouls/AdamantiteEnchant] [i:FargowiltasSouls/OrichalcumEnchant] Not attacking builds up charge and boosts your defensive stats; attack to consume charge and gain several offensive bonuses
+		[i:FargowiltasSouls/CrystalAssassinEnchant] Grants a shadow dash that fires a burst of shadowflame around you, and a special invincible shade dash every 4 seconds
+
+		[i:FargowiltasSouls/PearlwoodEnchant] Your attacks occasionally spawn mana stars on-hit and retreiving pickups empowers you, making your crits reroll favorably for 5 seconds
+		[i:FargowiltasSouls/NecroEnchant] [i:FargowiltasSouls/BeeEnchant] [i:FargowiltasSouls/BeetleEnchant] [i:FargowiltasSouls/PumpkinEnchant] Slain enemies may drop a pile of bones and you leave behind powerful flowers while flying
+		 
+		[i:FargowiltasSouls/TungstenEnchant] Your swords are larger and deal 14% more damage
+		[i:FargowiltasSouls/TinEnchant] Sets Tin crit chance to 10%, increasing up to double your original crit chance or 50%
+		[i:FargowiltasSouls/SpiderEnchant] [i:FargowiltasSouls/SpookyEnchant] Your minions and sentries can crit for 1.5x damage and your minions gain a scythe attack
+		[i:FargowiltasSouls/TikiEnchant] Increased whip range, whips scale with any class, and empower your projectiles they hit
+		[i:FargowiltasSouls/DarkArtistEnchant]  While attacking, fire your next 3 closest weapons' projectiles as support
+		[i:FargowiltasSouls/RedRidingEnchant] [i:FargowiltasSouls/FrostEnchant] Successive attacks gain bonus damage and your attacks briefly inflict Frostburn and Frostbite
+		[i:FargowiltasSouls/NinjaEnchant] Increases projectile damage based on projectile speed and increases projectile speed while moving slowly
+
+		[i:FargowiltasSouls/SilverEnchant] Right Click to guard with your shield, successful parries instantly fire a lightning bolt 
+		[i:FargowiltasSouls/TurtleEnchant] [i:FargowiltasSouls/CobaltEnchant] 500% of contact damage is reflected, you explode on hit while not attacking
+		[i:FargowiltasSouls/OrichalcumEnchant] [i:FargowiltasSouls/LeadEnchant] Enemies take 4x damage over time and you take 60% less
+		[i:FargowiltasSouls/ValhallaKnightEnchant] [i:FargowiltasSouls/HallowEnchant] [i:FargowiltasSouls/ShroomiteEnchant] Increases the effectiveness of healing sources by 25%, healing potions restore more effect but take effect over time, Mushrooms heal 50 HP and consuming them grants buffs
+		[i:FargowiltasSouls/SpectreEnchant] If you reach zero HP you will revive with 200 HP, self-cleanse debuffs, and spawn healing spirits
+
+		[i:FargowiltasSouls/MeteorEnchant] Increases your movement speed and acceleration, and decreases your momentum
+		[i:FargowiltasSouls/RichMahoganyEnchant] All grappling hooks shoot, pull, and retract 2.5x as fast
+		[i:FargowiltasSouls/ValhallaKnightEnchant] Improves mounts and stats while mounted, mounts have a dash
+
+		[i:FargowiltasSouls/GoldEnchant] Automatically sends coins to your piggy bank when picked up (works in vanity and inventory)
+		[i:FargowiltasSouls/PlatinumEnchant] [i:FargowiltasSouls/WoodEnchant] 33% chance for enemies to drop 5x loot, bestiary and banner entries complete faster and you gain a shop discount based on bestiary completion (works in vanity and inventory)
+		[i:FargowiltasSouls/IronEnchant] 50% chance to not consume each item on first craft and you attract items from a larger range (works in vanity and inventory)
+		[i:FargowiltasSouls/BeeEnchant] Effects of Hive Pack
 		'A true master of Terraria'
 		''' */
 }
