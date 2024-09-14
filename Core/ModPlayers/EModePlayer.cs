@@ -287,12 +287,10 @@ namespace FargowiltasSouls.Core.ModPlayers
                 {
                     Color light = Lighting.GetColor(Player.Center.ToTileCoordinates());
                     float lightLevel = light.R + light.G + light.B;
-                    Main.NewText(lightLevel);
-                    Main.NewText(LightLevelCounter);
                     // underground deerclops hands
                     if (Player.ZoneRockLayerHeight && !NPC.downedDeerclops)
                     {
-                        if (lightLevel < 500)
+                        if (false && lightLevel < 500)
                         {
                             LightLevelCounter++;
                             if (LightLevelCounter > LumUtils.SecondsToFrames(10) && Main.rand.NextBool(300))
