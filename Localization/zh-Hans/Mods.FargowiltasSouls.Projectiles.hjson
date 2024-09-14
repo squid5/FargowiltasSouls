@@ -720,7 +720,7 @@ AbomRitualFTW.DisplayName: 憎恶结界FTW
 // FallingSandstone.DisplayName: Falling Sandstone
 // CoffinPlayerSoul.DisplayName: Your Soul
 // GildedSceptreProj.DisplayName: Shadowflame Sceptre Shot
-// RoyalSubjectProjectile.DisplayName: Royal Subject Projectile
+// RoyalSubjectProjectile.DisplayName: Royal Subject
 // SandstoneBoulder.DisplayName: Sandstone Boulder
 // SandstoneShrapnel.DisplayName: Sandstone Shrapnel
 // EgyptianFlailProjectile.DisplayName: Nekhakha
@@ -730,20 +730,20 @@ AbomRitualFTW.DisplayName: 憎恶结界FTW
 // GladiatorSpirit.DisplayName: Gladiator Spirit
 // ShadowDash.DisplayName: Shadow Dash
 // SpiritTornado.DisplayName: Spirit Tornado
-// TerrariaSoulMoon.DisplayName: Terraria Soul Moon
-// DeviDevilScythe.DisplayName: Devi Devil Scythe
-// LifeHomingProjSmall.DisplayName: Life Homing Proj Small
+// TerrariaSoulMoon.DisplayName: Moon of Terraria
+// DeviDevilScythe.DisplayName: Devil Scythe
+// LifeHomingProjSmall.DisplayName: Lifeshot
 // LifeRuneExplosion.DisplayName: Life Rune Explosion
-// LifeRunespearHitbox.DisplayName: Life Runespear Hitbox
+// LifeRunespearHitbox.DisplayName: Life Runespear
 // LifeRunespearExplosion.DisplayName: Life Runespear Explosion
-// LifeRuneRetractHitbox.DisplayName: Life Rune Retract Hitbox
+// LifeRuneRetractHitbox.DisplayName: Life Rune
 // Slimesplosion.DisplayName: Slimesplosion
 // TwinsEyeFlash.DisplayName: Twins Eye Flash
-// UmbraRegaliaProj.DisplayName: Umbra Regalia Proj
+// UmbraRegaliaProj.DisplayName: Umbra Regalia
 // EffectVisual.DisplayName: Effect Visual
-// SpectreGhostProj.DisplayName: Spectre Ghost Proj
+// SpectreGhostProj.DisplayName: Spectre Ghost
 // SpectreSpirit.DisplayName: Spectre Spirit
 // VortexLaser.DisplayName: Vortex Laser
-// DicerPlanteraSeed.DisplayName: Dicer Plantera Seed
-// MoltenAuraProj.DisplayName: Molten Aura Proj
-// LifelightEnvironmentStar.DisplayName: Lifelight Environment Star
+// DicerPlanteraSeed.DisplayName: Dicer Bomb Seed
+// MoltenAuraProj.DisplayName: Molten Aura
+// LifelightEnvironmentStar.DisplayName: Life Star
