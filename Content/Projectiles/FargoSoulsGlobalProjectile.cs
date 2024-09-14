@@ -254,6 +254,22 @@ namespace FargowiltasSouls.Content.Projectiles
                 NinjaEnchant.NinjaSpeedSetup(modPlayer, projectile, this);
             }
 
+            if (player.HasEffect<NebulaEffect>() && projectile.type != ModContent.ProjectileType<NebulaShot>())
+            {
+                if (modPlayer.NebulaEnchCD <= 0)
+                {
+                    int damage = modPlayer.ForceEffect<NebulaEnchant>() ? 2000 : 1200;
+                    if (FargoSoulsUtil.OnSpawnEnchCanAffectProjectile(projectile, false)
+                        && projectile.whoAmI != player.heldProj
+                        && projectile.aiStyle != 190)
+                    {
+                        Projectile.NewProjectile(player.GetSource_FromThis(), projectile.Center, projectile.velocity, ModContent.ProjectileType<NebulaShot>(), damage, 1f, player.whoAmI, 0);
+                        projectile.active = false;
+                        modPlayer.NebulaEnchCD = 3 * 60;
+                    }
+                }
+            }
+
             switch (projectile.type)
             {
                 case ProjectileID.SpiritHeal:
