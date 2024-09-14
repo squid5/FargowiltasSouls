@@ -2,8 +2,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
-using Luminance.Core.Graphics;
-using Luminance.Common.Utilities;
 
 namespace FargowiltasSouls.Common.Graphics.Particles
 {

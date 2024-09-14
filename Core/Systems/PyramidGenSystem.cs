@@ -9,7 +9,6 @@ using Terraria.GameContent.Generation;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.WorldBuilding;
-using static tModPorter.ProgressUpdate;
 
 namespace FargowiltasSouls.Core.Systems
 {

@@ -1,6 +1,4 @@
 ﻿using FargowiltasSouls.Common.Graphics.Particles;
-using FargowiltasSouls.Content.Projectiles.Souls;
-using FargowiltasSouls.Core.Systems;
 using Luminance.Core.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -10,7 +8,6 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.ID;
-using Terraria.ModLoader;
 using FargowiltasSouls.Content.Bosses.Lifelight;
 
 namespace FargowiltasSouls.Content.Projectiles.Masomode

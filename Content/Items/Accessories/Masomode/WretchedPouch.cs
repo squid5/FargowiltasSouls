@@ -1,8 +1,4 @@
-﻿using FargowiltasSouls.Content.Bosses.Champions.Cosmos;
-using FargowiltasSouls.Content.Buffs;
-using FargowiltasSouls.Content.Buffs.Masomode;
-using FargowiltasSouls.Content.Items.Accessories.Enchantments;
-using FargowiltasSouls.Content.Items.Accessories.Forces;
+﻿using FargowiltasSouls.Content.Buffs.Masomode;
 using FargowiltasSouls.Content.Projectiles.Masomode;
 using FargowiltasSouls.Content.UI.Elements;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
@@ -10,7 +6,6 @@ using FargowiltasSouls.Core.Toggler.Content;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;

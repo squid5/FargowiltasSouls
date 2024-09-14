@@ -1,9 +1,6 @@
 ﻿
 using FargowiltasSouls.Common.Graphics.Particles;
-using FargowiltasSouls.Content.Buffs.Souls;
-using FargowiltasSouls.Content.Items.Accessories.Masomode;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
-using FargowiltasSouls.Core.ModPlayers;
 using FargowiltasSouls.Core.Toggler.Content;
 using Luminance.Core.Graphics;
 using Microsoft.Xna.Framework;

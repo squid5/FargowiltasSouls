@@ -3,11 +3,9 @@ using FargowiltasSouls.Content.Buffs.Souls;
 using FargowiltasSouls.Content.Items.Accessories.Enchantments;
 using FargowiltasSouls.Content.Projectiles.Masomode;
 using FargowiltasSouls.Content.Projectiles.Minions;
-using FargowiltasSouls.Content.Projectiles.Souls;
 using FargowiltasSouls.Content.Projectiles;
 using Microsoft.Xna.Framework;
 using System;
-using FargowiltasSouls.Common.Utilities;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria;
@@ -16,19 +14,16 @@ using FargowiltasSouls.Core.Globals;
 using FargowiltasSouls.Content.Bosses.DeviBoss;
 using FargowiltasSouls.Content.Bosses.AbomBoss;
 using FargowiltasSouls.Content.Bosses.MutantBoss;
-using FargowiltasSouls.Content.Buffs;
-using Terraria.WorldBuilding;
 using Terraria.Audio;
 using FargowiltasSouls.Content.Items.Accessories.Masomode;
 using FargowiltasSouls.Core.Systems;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using Terraria.Localization;
 using Luminance.Core.Graphics;
-using FargowiltasSouls.Content.Bosses.Champions.Cosmos;
 
 namespace FargowiltasSouls.Core.ModPlayers
 {
-	public partial class FargoSoulsPlayer
+    public partial class FargoSoulsPlayer
     {
         public override void ModifyHitNPCWithProj(Projectile proj, NPC target, ref NPC.HitModifiers modifiers)
         {

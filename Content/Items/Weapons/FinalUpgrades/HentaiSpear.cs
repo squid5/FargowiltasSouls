@@ -9,10 +9,6 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using FargowiltasSouls.Content.Items.Materials;
-using FargowiltasSouls.Content.Items.Accessories.Masomode;
-
-using Luminance.Core.Graphics;
 
 namespace FargowiltasSouls.Content.Items.Weapons.FinalUpgrades
 {

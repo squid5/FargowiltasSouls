@@ -1,13 +1,11 @@
 using FargowiltasSouls.Content.Projectiles.Masomode;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
-using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Vector2 = Microsoft.Xna.Framework.Vector2;
@@ -24,9 +22,6 @@ using FargowiltasSouls.Content.Bosses.Champions.Terra;
 using FargowiltasSouls.Content.Bosses.Champions.Timber;
 using FargowiltasSouls.Content.Bosses.Champions.Will;
 using FargowiltasSouls.Content.Bosses.Champions.Spirit;
-using FargowiltasSouls.Core;
-using Luminance.Core.Graphics;
-using System.Runtime.CompilerServices;
 
 namespace FargowiltasSouls.Content.Projectiles
 {

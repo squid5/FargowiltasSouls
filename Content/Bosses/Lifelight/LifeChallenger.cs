@@ -10,7 +10,6 @@ using FargowiltasSouls.Content.Items.Weapons.Challengers;
 using FargowiltasSouls.Content.Projectiles;
 using FargowiltasSouls.Content.Projectiles.ChallengerItems;
 using FargowiltasSouls.Core.Systems;
-using Luminance.Common.Utilities;
 using Luminance.Core.Graphics;
 using Microsoft.CodeAnalysis;
 using Microsoft.Xna.Framework;
@@ -23,16 +22,10 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent.Bestiary;
-using Terraria.GameContent.Golf;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
-using static FargowiltasSouls.Content.Bosses.Magmaw.Magmaw;
-using static FargowiltasSouls.Core.Systems.DashManager;
-
-using Luminance.Core.Graphics;
 
 namespace FargowiltasSouls.Content.Bosses.Lifelight
 {

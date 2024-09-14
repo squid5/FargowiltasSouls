@@ -1,12 +1,9 @@
-using FargowiltasSouls.Content.Bosses.Lifelight;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Runtime.InteropServices;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
-using Terraria.Graphics.Renderers;
 using Terraria.ID;
 using Terraria.ModLoader;
 

@@ -1,5 +1,4 @@
 ﻿using FargowiltasSouls.Content.Tiles;
-using FargowiltasSouls.Content.WorldGeneration;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;

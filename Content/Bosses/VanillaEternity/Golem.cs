@@ -16,7 +16,6 @@ using FargowiltasSouls.Common.Utilities;
 using FargowiltasSouls.Core.NPCMatching;
 using Terraria.GameContent;
 using Terraria.WorldBuilding;
-using System.Drawing;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System.Collections.Generic;

@@ -1,16 +1,8 @@
 ﻿using FargowiltasSouls.Core.Systems;
 using Luminance.Core.MenuInfoUI;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
 using System.Collections.Generic;
-using Terraria;
-using Terraria.GameContent.UI.Elements;
-using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
-using Terraria.UI;
 
 namespace FargowiltasSouls.Common
 {

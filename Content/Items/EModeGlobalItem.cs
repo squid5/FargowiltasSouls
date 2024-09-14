@@ -3,7 +3,6 @@ using FargowiltasSouls.Content.Projectiles;
 using FargowiltasSouls.Content.Projectiles.Souls;
 using FargowiltasSouls.Core.Systems;
 using Microsoft.Xna.Framework;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;

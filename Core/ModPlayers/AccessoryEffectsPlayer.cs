@@ -1,16 +1,13 @@
 ﻿using FargowiltasSouls.Content.Projectiles.BossWeapons;
 using FargowiltasSouls.Content.Projectiles.Masomode;
-using FargowiltasSouls.Content.Projectiles.Minions;
 using FargowiltasSouls.Content.Projectiles.Souls;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using FargowiltasSouls.Common.Utilities;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameInput;
-using Terraria.Graphics.Capture;
 using Terraria.ID;
 using Terraria.ModLoader;
 using FargowiltasSouls.Content.Projectiles;
@@ -18,15 +15,7 @@ using FargowiltasSouls.Content.Items.Accessories.Enchantments;
 using FargowiltasSouls.Content.Buffs;
 using FargowiltasSouls.Content.Buffs.Souls;
 using FargowiltasSouls.Content.Buffs.Masomode;
-using FargowiltasSouls.Content.Projectiles.Deathrays;
-using FargowiltasSouls.Core.Globals;
-using FargowiltasSouls.Content.NPCs.EternityModeNPCs;
-
-using FargowiltasSouls.Core.Systems;
-using Fargowiltas.Common.Configs;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
-using FargowiltasSouls.Core.Toggler;
-using FargowiltasSouls.Content.Items.Accessories.Souls;
 using FargowiltasSouls.Content.Items.Accessories.Masomode;
 using Luminance.Core.Graphics;
 using FargowiltasSouls.Content.Items.Accessories.Forces;
@@ -35,7 +24,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace FargowiltasSouls.Core.ModPlayers
 {
-	public partial class FargoSoulsPlayer
+    public partial class FargoSoulsPlayer
     {
 
         public void GoldKey()

@@ -10,7 +10,6 @@ using Terraria.Audio;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static FargowiltasSouls.Core.Systems.DashManager;
 
 namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs
 {

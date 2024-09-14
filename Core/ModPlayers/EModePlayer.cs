@@ -1,5 +1,3 @@
-using FargowiltasSouls.Content.Bosses.Champions.Cosmos;
-using FargowiltasSouls.Content.Buffs.Boss;
 using FargowiltasSouls.Content.Buffs.Masomode;
 using FargowiltasSouls.Content.Items;
 using FargowiltasSouls.Content.Items.Accessories.Enchantments;

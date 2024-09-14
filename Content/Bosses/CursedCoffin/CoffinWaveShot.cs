@@ -9,8 +9,6 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-using Luminance.Core.Graphics;
-
 namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 {
     public class CoffinWaveShot : ModProjectile, IPixelatedPrimitiveRenderer
