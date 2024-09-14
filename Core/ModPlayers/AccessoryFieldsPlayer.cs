@@ -78,6 +78,7 @@ namespace FargowiltasSouls.Core.ModPlayers
         public int AshwoodCD;
 
         //force of cosmos
+        public float NebulaEnchCD = 3 * 60;
         public float MeteorCD = 60;
 
         public int ApprenticeCD;
