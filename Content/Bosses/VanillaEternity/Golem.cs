@@ -810,6 +810,15 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                         AttackTimer = 0;
                         DeathraySweepTargetHeight = 0;
                         DoAttack = false;
+
+                        if (WorldSavingSystem.MasochistModeReal && !SecondDeathray)
+                        {
+                            SecondDeathray = true;
+                            AttackTimer = attackThreshold - 1;
+                            IsInTemple = Golem.CheckTempleWalls(npc.Center);
+                        }
+                        else
+                            SecondDeathray = false;
                     }
 
                     if (true) //!WorldSavingSystem.MasochistModeReal)
