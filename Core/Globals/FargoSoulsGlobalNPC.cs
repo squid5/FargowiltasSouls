@@ -269,7 +269,7 @@ namespace FargowiltasSouls.Core.Globals
             //            }
             if (!npc.HasBuff<CorruptingBuff>())
             {
-                EbonCorruptionTimer -= Math.Min(3, EbonCorruptionTimer);
+                EbonCorruptionTimer -= Math.Min(1, EbonCorruptionTimer);
             }
             if (SnowChilled)
             {
@@ -1281,12 +1281,12 @@ namespace FargowiltasSouls.Core.Globals
 
             if (Corrupted)
             {
-                modifiers.ArmorPenetration += 10;
+                modifiers.FlatBonusDamage += 10;
             }
             if (CorruptedForce)
             {
-                int pen = player.HasEffect<TimberEffect>() ? 100 : 40;
-                modifiers.ArmorPenetration += pen;
+                int pen = player.HasEffect<TimberEffect>() ? 80 : 30;
+                modifiers.FlatBonusDamage += pen;
             }
 
             if (OceanicMaul)
