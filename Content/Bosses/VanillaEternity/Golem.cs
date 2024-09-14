@@ -642,7 +642,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                 return result;
 
             NPC golem = FargoSoulsUtil.NPCExists(NPC.golemBoss, NPCID.Golem);
-
+            FargoSoulsUtil.PrintAI(npc);
             if (npc.type == NPCID.GolemHead)
             {
                 if (golem != null)
@@ -796,7 +796,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                             if (WorldSavingSystem.MasochistModeReal && !SecondDeathray)
                             {
                                 SecondDeathray = true;
-                                AttackTimer = attackThreshold - 40;
+                                AttackTimer = attackThreshold - 1;
                                 IsInTemple = Golem.CheckTempleWalls(npc.Center);
                             }
                             else
@@ -846,6 +846,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     if (!DoAttack) //spray lasers after dash
                     {
                         DoDeathray = !DoDeathray;
+                        npc.ai[2] = 0; // reset vanilla eye laser timer
 
                         if (FargoSoulsUtil.HostCheck)
                         {
