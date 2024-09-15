@@ -76,6 +76,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Souls
             modPlayer.TerrariaSoul = true;
             modPlayer.WizardEnchantActive = true;
 
+            /*
             // super moons
             player.AddEffect<TerrariaMoonEffect>(Item);
             // revive
@@ -91,8 +92,9 @@ namespace FargowiltasSouls.Content.Items.Accessories.Souls
             player.AddEffect<WoodCompletionEffect>(Item);
             // iron items and attraction
             IronEnchant.AddEffects(player, Item);
+            */
 
-            /*
+            
             //TIMBER
             ModContent.GetInstance<TimberForce>().UpdateAccessory(player, hideVisual);
             //TERRA
@@ -111,7 +113,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Souls
             ModContent.GetInstance<WillForce>().UpdateAccessory(player, hideVisual);
             //COSMOS
             ModContent.GetInstance<CosmoForce>().UpdateAccessory(player, hideVisual);
-            */
+            
         }
 
         public override void UpdateVanity(Player player)

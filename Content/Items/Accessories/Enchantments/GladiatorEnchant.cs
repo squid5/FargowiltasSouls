@@ -1,8 +1,10 @@
 ﻿using FargowiltasSouls.Content.Buffs;
+using FargowiltasSouls.Content.Items.Accessories.Forces;
 using FargowiltasSouls.Content.Projectiles.Minions;
 using FargowiltasSouls.Content.Projectiles.Souls;
 using FargowiltasSouls.Content.UI.Elements;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
+using FargowiltasSouls.Core.ModPlayers;
 using FargowiltasSouls.Core.Toggler.Content;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -68,12 +70,18 @@ Grants knockback immunity when you are facing the attack
 
         public override Header ToggleHeader => Header.GetHeader<WillHeader>();
         public override int ToggleItemType => ModContent.ItemType<GladiatorEnchant>();
+        public override bool MinionEffect => false;
+        public override bool MutantsPresenceAffects => true;
         public override void PostUpdateEquips(Player player)
         {
             FargoSoulsPlayer modPlayer = player.FargoSouls();
-            if (modPlayer.GladiatorCD > 0)
+            if (player.HasEffect<WillEffect>())
             {
-                modPlayer.GladiatorCD--;
+                if (player.ownedProjectileCounts[ModContent.ProjectileType<GladiatorSpirit>()] == 0 && player.whoAmI == Main.myPlayer)
+                {
+                    Projectile proj = Projectile.NewProjectileDirect(GetSource_EffectItem(player), player.Center, Vector2.Zero, ModContent.ProjectileType<GladiatorSpirit>(), 0, 0f, player.whoAmI);
+                    proj.netUpdate = true;
+                }
             }
             if (modPlayer.GladiatorStandardCD > 0)
                 modPlayer.GladiatorStandardCD--;
@@ -82,6 +90,8 @@ Grants knockback immunity when you are facing the attack
         public static void ActivateGladiatorBanner(Player player)
         {
             FargoSoulsPlayer modPlayer = player.FargoSouls();
+            if (player.HasEffect<WillEffect>())
+                return;
             if (player.whoAmI == Main.myPlayer && player.HasEffect<GladiatorBanner>())
             {
                 int GladiatorStandard = ModContent.ProjectileType<GladiatorStandard>();
@@ -108,6 +118,12 @@ Grants knockback immunity when you are facing the attack
         public override int ToggleItemType => ModContent.ItemType<GladiatorEnchant>();
 
         public override bool ExtraAttackEffect => true;
+        public override void PostUpdateEquips(Player player)
+        {
+            FargoSoulsPlayer modPlayer = player.FargoSouls();
+            if (modPlayer.GladiatorCD > 0)
+                modPlayer.GladiatorCD--;
+        }
         public override void OnHitNPCEither(Player player, NPC target, NPC.HitInfo hitInfo, DamageClass damageClass, int baseDamage, Projectile projectile, Item item)
         {
             FargoSoulsPlayer modPlayer = player.FargoSouls();

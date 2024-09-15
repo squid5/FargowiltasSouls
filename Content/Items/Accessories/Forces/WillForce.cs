@@ -33,6 +33,10 @@ namespace FargowiltasSouls.Content.Items.Accessories.Forces
         {
             SetActive(player);
             FargoSoulsPlayer modPlayer = player.FargoSouls();
+            player.AddEffect<WillEffect>(Item);
+
+            // gladi
+            player.AddEffect<GladiatorBanner>(Item);
             // gold
             player.AddEffect<GoldToPiggy>(Item);
             // platinum
@@ -44,8 +48,13 @@ namespace FargowiltasSouls.Content.Items.Accessories.Forces
             player.FargoSouls().ValhallaEnchantActive = true;
             player.AddEffect<ValhallaDash>(Item);
             SquireEnchant.SquireEffect(player, Item);
-            // will
-            player.AddEffect<WillEffect>(Item);
+
+            if (!player.HasEffect<WillEffect>())
+            {
+                player.AddEffect<GladiatorSpears>(Item);
+                player.AddEffect<GoldEffect>(Item);
+                player.AddEffect<RedRidingEffect>(Item);
+            }
         }
 
         public override void AddRecipes()
@@ -62,17 +71,6 @@ namespace FargowiltasSouls.Content.Items.Accessories.Forces
         public override Header ToggleHeader => Header.GetHeader<WillHeader>();
         public override int ToggleItemType => ModContent.ItemType<WillForce>();
         public override bool MinionEffect => false;
-        
-        public override void PostUpdateEquips(Player player)
-        {
-            if (player.ownedProjectileCounts[ModContent.ProjectileType<GladiatorSpirit>()] == 0)
-            {
-                if (player.whoAmI == Main.myPlayer)
-                {
-                    Projectile proj = Projectile.NewProjectileDirect(GetSource_EffectItem(player), player.Center, Vector2.Zero, ModContent.ProjectileType<GladiatorSpirit>(), 0, 0f, player.whoAmI);
-                    proj.netUpdate = true;
-                }
-            }
-        }
+       
     }
 }

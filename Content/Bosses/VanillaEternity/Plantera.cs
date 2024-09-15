@@ -445,7 +445,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                                             angle += i * MathHelper.PiOver2 * spreadAngle;
                                             Vector2 dir = angle.ToRotationVector2();
                                             Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center + dir * npc.width / 2f, dir * speed,
-                                                ModContent.ProjectileType<PlanteraThornChakram>(), FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 0f, Main.myPlayer, 4);
+                                                ModContent.ProjectileType<PlanteraTooth>(), FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 0f, Main.myPlayer, 4, ai1: (int)PlanteraTooth.Alts.Small);
                                         }
                                         for (int i = -spreadAmount; i <= spreadAmount + 1; i++)
                                         {
@@ -455,7 +455,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                                             angle += x * MathHelper.PiOver2 * spreadAngle;
                                             Vector2 dir = angle.ToRotationVector2();
                                             Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center + dir * npc.width / 2f, dir * speed,
-                                                ModContent.ProjectileType<PlanteraThornChakram>(), FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 0f, Main.myPlayer, 8);
+                                                ModContent.ProjectileType<PlanteraTooth>(), FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 0f, Main.myPlayer, 8);
                                         }
                                     }
                                 }
