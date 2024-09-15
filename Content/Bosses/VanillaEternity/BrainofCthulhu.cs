@@ -7,11 +7,14 @@ using FargowiltasSouls.Core.Globals;
 using FargowiltasSouls.Core.NPCMatching;
 using FargowiltasSouls.Core.Systems;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
 using System;
 using System.IO;
 using System.Linq;
 using Terraria;
 using Terraria.Audio;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
@@ -30,6 +33,9 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
         public bool DroppedSummon;
 
+        public int ClonefadeDashTimer;
+        public float CloneFade = 0f;
+        public bool ManuallyDrawing;
 
         public override void SendExtraAI(NPC npc, BitWriter bitWriter, BinaryWriter binaryWriter)
         {
@@ -37,6 +43,8 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
             binaryWriter.Write7BitEncodedInt(ConfusionTimer);
             binaryWriter.Write7BitEncodedInt(IllusionTimer);
+            binaryWriter.Write7BitEncodedInt(ClonefadeDashTimer);
+            binaryWriter.Write(CloneFade);
             bitWriter.WriteBit(EnteredPhase2);
         }
 
@@ -46,6 +54,8 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
             ConfusionTimer = binaryReader.Read7BitEncodedInt();
             IllusionTimer = binaryReader.Read7BitEncodedInt();
+            ClonefadeDashTimer = binaryReader.Read7BitEncodedInt();
+            CloneFade = binaryReader.ReadSingle();
             EnteredPhase2 = bitReader.ReadBit();
         }
 
@@ -106,6 +116,41 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
             if (EnteredPhase2)
             {
+                float cloneTime = 40;
+                int dashTime = 60;
+
+                ref float teleportTimer = ref npc.localAI[1];
+                if (teleportTimer >= cloneTime && teleportTimer <= 60)
+                {
+                    if (CloneFade < 1)
+                        CloneFade += 0.05f;
+                    if (ClonefadeDashTimer < dashTime && npc.HasPlayerTarget)
+                    {
+                        npc.knockBackResist = 0;
+                        ClonefadeDashTimer++;
+                        teleportTimer = cloneTime;
+                        Player player = Main.player[npc.target];
+                        npc.velocity += npc.DirectionTo(player.Center) * 0.35f;
+                    }
+                    else
+                    {
+                        teleportTimer = 60;
+                    }
+                       
+                }
+                if (teleportTimer < cloneTime)
+                {
+                    const float safeRange = 360;
+                    Vector2 stayAwayFromHere = Main.player[npc.target].Center;
+                    if (npc.Distance(stayAwayFromHere) < safeRange)
+                        npc.Center = stayAwayFromHere + npc.DirectionFrom(stayAwayFromHere) * safeRange;
+
+                    ClonefadeDashTimer = 0;
+                    CloneFade = 0;
+                    npc.knockBackResist = 1;
+                }
+                    
+
                 //debuff cleanse when tp'ing
                 if (npc.alpha > 0 && npc.buffType[0] != 0)
                 {
@@ -158,6 +203,30 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
                     npc.netUpdate = true;
                     NetSync(npc);
+                }
+                else if (ConfusionTimer > confusionThreshold2) // after telegraph
+                {
+                    npc.knockBackResist = 1f;
+                    // no teleporting
+                    teleportTimer = 2;
+                    if (!Main.player[npc.target].HasBuff(BuffID.Confused))
+                    {
+                        if (npc.HasPlayerTarget)
+                        {
+                            Player player = Main.player[npc.target];
+                            Vector2 desiredPos = player.Center;
+                            Vector2 toNPC = npc.Center - desiredPos;
+                            desiredPos += Vector2.UnitX * MathF.Sign(toNPC.X) * 300f + Vector2.UnitY * MathF.Sign(toNPC.Y) * 300f;
+                            npc.velocity = Vector2.Lerp(npc.velocity, npc.DirectionTo(desiredPos) * Math.Min(10, npc.Distance(desiredPos)), 0.2f);
+                            npc.knockBackResist = 0f;
+                        }
+                        
+                    }
+                    if (ConfusionTimer % 15 == 0 && !WorldSavingSystem.MasochistModeReal)
+                    {
+                        if (!Main.dedServ)
+                            SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/ReticleBeep"), Main.LocalPlayer.Center);
+                    }
                 }
                 else if (ConfusionTimer == confusionThreshold2)
                 {
@@ -286,6 +355,32 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             npc.defDefense = 0;
 
             return base.SafePreAI(npc);
+        }
+        public override Color? GetAlpha(NPC npc, Color drawColor)
+        {
+            if (!ManuallyDrawing)
+                drawColor *= (1 - CloneFade);
+            drawColor *= npc.Opacity;
+            return drawColor;
+        }
+        public override bool PreDraw(NPC npc, SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
+            if (CloneFade > 0)
+            {
+                Asset<Texture2D> texture = TextureAssets.Npc[npc.type];
+                ManuallyDrawing = true;
+                Color color = npc.GetAlpha(drawColor);
+                ManuallyDrawing = false;
+                SpriteEffects effects = npc.spriteDirection < 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+
+                Vector2 halfSize = new(texture.Width() / 2, texture.Height() / Main.npcFrameCount[npc.type] / 2);
+                float num35 = 50f * npc.scale;
+                float num36 = Main.NPCAddHeight(npc);
+                spriteBatch.Draw(texture.Value, new Vector2(npc.position.X - screenPos.X + (float)(npc.width / 2) - (float)TextureAssets.Npc[npc.type].Width() * npc.scale / 2f + halfSize.X * npc.scale, npc.position.Y - screenPos.Y + (float)npc.height - (float)texture.Height() * npc.scale / (float)Main.npcFrameCount[npc.type] + 4f + halfSize.Y * npc.scale + num36 + num35 + npc.gfxOffY), npc.frame, color, npc.rotation, halfSize, npc.scale, effects, 0f);
+                //Main.EntitySpriteDraw(texture, npc.Center - screenPos + new Vector2(0f, npc.gfxOffY + Main.NPCAddHeight(npc)), npc.frame, color, npc.rotation, npc.frame.Size() / 2, npc.scale, effects, 0);
+                return true;
+            }
+            return base.PreDraw(npc, spriteBatch, screenPos, drawColor);
         }
 
         public override void ModifyIncomingHit(NPC npc, ref NPC.HitModifiers modifiers)
