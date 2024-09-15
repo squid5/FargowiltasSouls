@@ -982,7 +982,7 @@ namespace FargowiltasSouls.Core.Globals
 
             if (modPlayer.Illuminated)
             {
-                
+            }
 
             if (player.HasEffect<SinisterIconEffect>())
             {

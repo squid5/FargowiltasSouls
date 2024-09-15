@@ -16,6 +16,7 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
         public override string Texture => "FargowiltasSouls/Content/Projectiles/Deathrays/AbomDeathray";
         public AbomDeathray() : base(120) { }
         private Vector2 spawnPos;
+        public bool fadeStart = false;
 
         public override void SetStaticDefaults()
         {
@@ -160,7 +161,7 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
 
         public override bool PreDraw(ref Color lightColor)
         {
-            AbomSword.DrawStyxGazerDeathray(Projectile, drawDistance, WidthFunction, false);
+            AbomSword.DrawStyxGazerDeathray(Projectile, drawDistance, WidthFunction, false, fadeStart);
             return false;
         }
     }

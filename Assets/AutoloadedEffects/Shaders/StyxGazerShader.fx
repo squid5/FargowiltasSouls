@@ -4,6 +4,7 @@ sampler uImage2 : register(s2);
 
 float globalTime;
 float3 mainColor;
+bool fadeStart;
 
 matrix uWorldViewProjection;
 
@@ -46,15 +47,11 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
     float4 color = input.Color;
     float2 coords = input.TextureCoordinates;
     coords.y = (coords.y - 0.5) / input.TextureCoordinates.z + 0.5;
-
-    // This basically makes the prim wiggle based on a sine wave.
-    //float y = coords.y + sin(coords.x * 68 - globalTime * 6.283) * 0.5;
     
-    // Get the pixel of the fade map. What coords.x is being multiplied by determines
-    // how many times the uImage1 is copied to cover the entirety of the prim. 2, 2
-    float4 tex1 = tex2D(uImage1, float2(frac(coords.x * 4 - globalTime * 2), coords.y));
-    float4 tex2 = tex2D(uImage1, float2(frac(coords.x * 4 - globalTime * 2.64), coords.y + sin(coords.x * 68 - globalTime * 6.283) * 0.1));
-    float4 tex3 = tex2D(uImage1, float2(frac(coords.x * 4 - globalTime * 5.12), coords.y));
+    float texX = coords.x * 4;
+    float4 tex1 = tex2D(uImage1, float2(frac(texX - globalTime * 2), coords.y));
+    float4 tex2 = tex2D(uImage1, float2(frac(texX - globalTime * 2.64), coords.y + sin(coords.x * 68 - globalTime * 6.283) * 0.1));
+    float4 tex3 = tex2D(uImage1, float2(frac(texX - globalTime * 5.12), coords.y));
     float4 fadeMapColor = tex1 * 0.4 + tex2 * 0.4 + tex3 * 0.4;
     
     // Use the red value for the opacity, as the provided image *should* be grayscale.
@@ -64,24 +61,30 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
     float4 colorCorrected = lerp(color, changedColor, fadeMapColor.r);
     
     // Fade out at the top and bottom of the streak.
-    if (coords.y < 0.2)
-        opacity *= pow(coords.y / 0.2, 6);
-    if (coords.y > 0.8)
-        opacity *= pow(1 - (coords.y - 0.8) / 0.8, 6);
+    float y = 0.5 - abs(coords.y - 0.5);
+    if (y < 0.2)
+        opacity *= pow(y / 0.2, 6);
+    //if (coords.y < 0.2)
+    //    opacity *= pow(coords.y / 0.2, 6);
+    //if (coords.y > 0.8)
+    //    opacity *= pow(1 - (coords.y - 0.8) / 0.8, 6);
     
     // Fade out at the end of the streak.
-    //float startFade = 0.00;
-    //if (coords.x < startFade)
-    //    opacity *= pow(coords.x / startFade, 2);
-    
+    if (fadeStart)
+    {
+        float startFade = 0.2;
+        if (coords.x < startFade)
+            opacity *= pow(coords.x / startFade, 2);
+    }
+
     float endFade = 0.1;
     float endFader = 1;
     if (coords.x > endFade)
         endFader = pow(1 - (coords.x - endFade) / (1 - endFade), 2);
-    endFader = clamp(endFader, 0.75, 1);
-    opacity *= endFader;
+    if (endFader < 0.75)
+        endFader = 0.75;
    
-    return colorCorrected * opacity * 1.2;
+    return colorCorrected * opacity * endFader * 1.2;
 }
 
 technique Technique1
