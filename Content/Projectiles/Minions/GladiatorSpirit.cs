@@ -4,7 +4,6 @@ using FargowiltasSouls.Content.Items.Accessories.Forces;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -43,7 +42,7 @@ namespace FargowiltasSouls.Content.Projectiles.Minions
             FargoSoulsPlayer modPlayer = player.FargoSouls();
             FargoSoulsPlayer localModPlayer = Main.LocalPlayer.FargoSouls();
 
-            if (player.whoAmI == Main.myPlayer && (player.dead || !player.HasEffect<WillEffect>()))
+            if (player.whoAmI == Main.myPlayer && (player.dead || !player.HasEffect<WillEffect>() || !player.HasEffect<GladiatorBanner>()))
             {
                 Projectile.Kill();
                 return;
@@ -74,7 +73,7 @@ namespace FargowiltasSouls.Content.Projectiles.Minions
             int AuraSize = 500;
 
             FargoSoulsUtil.AuraDust(Projectile, AuraSize, DustID.GoldCoin);
-            if (FargoSoulsUtil.ClosestPointInHitbox(Main.LocalPlayer.Hitbox, Projectile.Center).Distance(Projectile.Center) < AuraSize && player.HasEffect<WillEffect>() && !localModPlayer.Purified)
+            if (FargoSoulsUtil.ClosestPointInHitbox(Main.LocalPlayer.Hitbox, Projectile.Center).Distance(Projectile.Center) < AuraSize && player.HasEffect<GladiatorBanner>() && !localModPlayer.Purified)
             {
                 Main.LocalPlayer.AddBuff(ModContent.BuffType<GladiatorSpiritBuff>(), 2);
             }

@@ -1,5 +1,4 @@
 ﻿using FargowiltasSouls.Content.Items.Accessories.Enchantments;
-using FargowiltasSouls.Content.Items.Accessories.Souls;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using FargowiltasSouls.Core.Toggler.Content;
 using Terraria;
@@ -81,11 +80,11 @@ namespace FargowiltasSouls.Content.Items.Accessories.Forces
         public override void VerticalWingSpeeds(Player player, ref float ascentWhenFalling, ref float ascentWhenRising, ref float maxCanAscendMultiplier, ref float maxAscentMultiplier, ref float constantAscend)
         {
             player.wingsLogic = ArmorIDs.Wing.LongTrailRainbowWings;
-            ascentWhenFalling = 1f;
-            ascentWhenRising = 0.25f;
-            maxCanAscendMultiplier = 1f;
-            maxAscentMultiplier = 1.75f;
-            constantAscend = 0.135f;
+            ascentWhenFalling = 1.25f;
+            ascentWhenRising = 0.35f;
+            maxCanAscendMultiplier = 1.25f;
+            maxAscentMultiplier = 2f;
+            constantAscend = 0.15f;
             if (player.controlUp)
             {
                 ascentWhenFalling *= 6f;

@@ -1,14 +1,12 @@
 ﻿
 
 using FargowiltasSouls.Assets.ExtraTextures;
-using FargowiltasSouls.Content.Projectiles;
 using FargowiltasSouls.Content.Projectiles.Deathrays;
 using FargowiltasSouls.Core.Systems;
 using Luminance.Core.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Runtime.InteropServices;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;

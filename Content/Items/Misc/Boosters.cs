@@ -1,12 +1,5 @@
-﻿using FargowiltasSouls.Core.ModPlayers;
-using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
@@ -60,7 +53,7 @@ namespace FargowiltasSouls.Content.Items.Misc
         public override void PickupEffect(BoosterPlayer boosterPlayer)
         {
             if (boosterPlayer.SolarTimer <= 0)
-                CombatText.NewText(boosterPlayer.Player.Hitbox, Color.Yellow, Language.GetTextValue("Mods.FargowiltasSouls.Items.SolarBooster.Activate", 25), true);
+                CombatText.NewText(boosterPlayer.Player.Hitbox, Color.Yellow, Language.GetTextValue("Mods.FargowiltasSouls.Items.SolarBooster.Activate", 15), true);
             boosterPlayer.SolarTimer = LunarDuration;
         }
     }
@@ -69,7 +62,7 @@ namespace FargowiltasSouls.Content.Items.Misc
         public override void PickupEffect(BoosterPlayer boosterPlayer)
         {
             if (boosterPlayer.VortexTimer <= 0)
-                CombatText.NewText(boosterPlayer.Player.Hitbox, Color.LightCyan, Language.GetTextValue("Mods.FargowiltasSouls.Items.VortexBooster.Activate", 35), true);
+                CombatText.NewText(boosterPlayer.Player.Hitbox, Color.LightCyan, Language.GetTextValue("Mods.FargowiltasSouls.Items.VortexBooster.Activate", 25), true);
             boosterPlayer.VortexTimer = LunarDuration;
         }
     }
@@ -87,7 +80,7 @@ namespace FargowiltasSouls.Content.Items.Misc
         public override void PickupEffect(BoosterPlayer boosterPlayer)
         {
             if (boosterPlayer.StardustTimer <= 0)
-                CombatText.NewText(boosterPlayer.Player.Hitbox, Color.Cyan, Language.GetTextValue("Mods.FargowiltasSouls.Items.StardustBooster.Activate", 35), true);
+                CombatText.NewText(boosterPlayer.Player.Hitbox, Color.Cyan, Language.GetTextValue("Mods.FargowiltasSouls.Items.StardustBooster.Activate", 25), true);
             boosterPlayer.StardustTimer = LunarDuration;
         }
     }

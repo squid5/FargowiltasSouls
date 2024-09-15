@@ -3,6 +3,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using System;
+using FargowiltasSouls.Content.Items.BossBags;
 
 namespace FargowiltasSouls.Content.Items.Weapons.Challengers
 {
@@ -64,7 +65,7 @@ namespace FargowiltasSouls.Content.Items.Weapons.Challengers
 
         public override void AddRecipes()
         {
-            //CreateRecipe().AddIngredient<CursedCoffinBag>(2).AddTile(TileID.Solidifier).DisableDecraft().Register();
+            CreateRecipe().AddIngredient<CursedCoffinBag>(2).AddTile(TileID.Solidifier).DisableDecraft().Register();
         }
     }
 }

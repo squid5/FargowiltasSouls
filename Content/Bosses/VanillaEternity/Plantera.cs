@@ -18,18 +18,13 @@ using FargowiltasSouls.Content.NPCs.EternityModeNPCs;
 using FargowiltasSouls.Content.Bosses.MutantBoss;
 using FargowiltasSouls.Common.Graphics.Particles;
 using Microsoft.Xna.Framework.Graphics;
-using FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.Cavern;
-using System.Collections.Generic;
-using Terraria.Map;
-using static tModPorter.ProgressUpdate;
 using FargowiltasSouls.Core;
-using Terraria.WorldBuilding;
 using Luminance.Core.Graphics;
 using Terraria.DataStructures;
 
 namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 {
-	public abstract class PlanteraPart : EModeNPCBehaviour
+    public abstract class PlanteraPart : EModeNPCBehaviour
     {
         public override void OnFirstTick(NPC npc)
         {
@@ -450,7 +445,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                                             angle += i * MathHelper.PiOver2 * spreadAngle;
                                             Vector2 dir = angle.ToRotationVector2();
                                             Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center + dir * npc.width / 2f, dir * speed,
-                                                ModContent.ProjectileType<PlanteraThornChakram>(), FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 0f, Main.myPlayer, 4);
+                                                ModContent.ProjectileType<PlanteraTooth>(), FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 0f, Main.myPlayer, 4, ai1: (int)PlanteraTooth.Alts.Small);
                                         }
                                         for (int i = -spreadAmount; i <= spreadAmount + 1; i++)
                                         {
@@ -460,7 +455,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                                             angle += x * MathHelper.PiOver2 * spreadAngle;
                                             Vector2 dir = angle.ToRotationVector2();
                                             Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center + dir * npc.width / 2f, dir * speed,
-                                                ModContent.ProjectileType<PlanteraThornChakram>(), FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 0f, Main.myPlayer, 8);
+                                                ModContent.ProjectileType<PlanteraTooth>(), FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 0f, Main.myPlayer, 8);
                                         }
                                     }
                                 }

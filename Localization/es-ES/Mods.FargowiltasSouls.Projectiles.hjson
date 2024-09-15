@@ -618,7 +618,7 @@
 // LifeNeggravProj.DisplayName: Cross
 // LifeNuke.DisplayName: Life Bomb
 // LifeProjLarge.DisplayName: Cross
-// LifeProjSmall.DisplayName: Life Shot
+// LifeProjSmall.DisplayName: Lifeshot
 // LifeRuneHitbox.DisplayName: Life Rune
 // LifeScar.DisplayName: Life Mine
 // LifeSlurp.DisplayName: Gem
@@ -687,7 +687,7 @@
 // PungentEyeballMinion.DisplayName: Pungent Eyeball Minion
 // MinosPrime.DisplayName: Minos Prime
 // RainLightning.DisplayName: Rain Lightning
-// PlanteraThornChakram.DisplayName: Plantera Thorn Chakram
+// PlanteraTooth.DisplayName: Plantera Tooth
 // PlanteraRitual.DisplayName: Plantera Ritual
 // PlanteraManEater.DisplayName: Plantera Man Eater
 // PlanteraSnatcher.DisplayName: Plantera Snatcher
@@ -716,11 +716,11 @@
 // HentaiSword.DisplayName: Hentai Sword
 // HentaiSwordBlast.DisplayName: Hentai Sword Blast
 // HentaiSphereOkuu.DisplayName: Hentai Sphere Okuu
-// AbomRitualFTW.DisplayName: Abom Ritual F T W
+// AbomRitualFTW.DisplayName: Abom Ritual
 // FallingSandstone.DisplayName: Falling Sandstone
 // CoffinPlayerSoul.DisplayName: Your Soul
 // GildedSceptreProj.DisplayName: Shadowflame Sceptre Shot
-// RoyalSubjectProjectile.DisplayName: Royal Subject Projectile
+// RoyalSubjectProjectile.DisplayName: Royal Subject
 // SandstoneBoulder.DisplayName: Sandstone Boulder
 // SandstoneShrapnel.DisplayName: Sandstone Shrapnel
 // EgyptianFlailProjectile.DisplayName: Nekhakha
@@ -730,19 +730,21 @@
 // GladiatorSpirit.DisplayName: Gladiator Spirit
 // ShadowDash.DisplayName: Shadow Dash
 // SpiritTornado.DisplayName: Spirit Tornado
-// TerrariaSoulMoon.DisplayName: Terraria Soul Moon
-// DeviDevilScythe.DisplayName: Devi Devil Scythe
-// LifeHomingProjSmall.DisplayName: Life Homing Proj Small
+// TerrariaSoulMoon.DisplayName: Moon of Terraria
+// DeviDevilScythe.DisplayName: Devil Scythe
+// LifeHomingProjSmall.DisplayName: Lifeshot
 // LifeRuneExplosion.DisplayName: Life Rune Explosion
-// LifeRunespearHitbox.DisplayName: Life Runespear Hitbox
+// LifeRunespearHitbox.DisplayName: Life Runespear
 // LifeRunespearExplosion.DisplayName: Life Runespear Explosion
-// LifeRuneRetractHitbox.DisplayName: Life Rune Retract Hitbox
+// LifeRuneRetractHitbox.DisplayName: Life Rune
 // Slimesplosion.DisplayName: Slimesplosion
 // TwinsEyeFlash.DisplayName: Twins Eye Flash
-// UmbraRegaliaProj.DisplayName: Umbra Regalia Proj
+// UmbraRegaliaProj.DisplayName: Umbra Regalia
 // EffectVisual.DisplayName: Effect Visual
-// SpectreGhostProj.DisplayName: Spectre Ghost Proj
+// SpectreGhostProj.DisplayName: Spectre Ghost
 // SpectreSpirit.DisplayName: Spectre Spirit
 // VortexLaser.DisplayName: Vortex Laser
-// DicerPlanteraSeed.DisplayName: Dicer Plantera Seed
-// MoltenAuraProj.DisplayName: Molten Aura Proj
+// DicerPlanteraSeed.DisplayName: Dicer Bomb Seed
+// MoltenAuraProj.DisplayName: Molten Aura
+// LifelightEnvironmentStar.DisplayName: Life Star
+// NebulaShot.DisplayName: Nebula Shot

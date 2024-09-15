@@ -1,6 +1,4 @@
-﻿using FargowiltasSouls.Content.Projectiles;
-using FargowiltasSouls.Content.Projectiles.Deathrays;
-using Luminance.Core.Graphics;
+﻿using FargowiltasSouls.Content.Projectiles.Deathrays;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;

@@ -5,11 +5,6 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
 using Terraria.ID;
-using FargowiltasSouls.Core.Systems;
-using FargowiltasSouls.Common.Graphics.Particles;
-using Luminance.Core.Graphics;
-using Luminance.Common.Utilities;
-using FargowiltasSouls.Assets.ExtraTextures;
 using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Content.Bosses.Lifelight

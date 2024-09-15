@@ -20,10 +20,6 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Color = Microsoft.Xna.Framework.Color;
-using FargowiltasSouls.Content.Patreon.DanielTheRobot;
-using Microsoft.Xna.Framework.Graphics;
-using Terraria.Graphics.Shaders;
-using Luminance.Core.Graphics;
 
 namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 {

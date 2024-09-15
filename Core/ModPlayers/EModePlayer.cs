@@ -1,5 +1,3 @@
-using FargowiltasSouls.Content.Bosses.Champions.Cosmos;
-using FargowiltasSouls.Content.Buffs.Boss;
 using FargowiltasSouls.Content.Buffs.Masomode;
 using FargowiltasSouls.Content.Items;
 using FargowiltasSouls.Content.Items.Accessories.Enchantments;
@@ -44,6 +42,7 @@ namespace FargowiltasSouls.Core.ModPlayers
         public int CobaltHitCounter;
 
         public int LightningCounter;
+        public int LightLevelCounter;
 
         public int CrossNecklaceTimer;
         private int WeaponUseTimer => Player.FargoSouls().WeaponUseTimer;
@@ -281,125 +280,178 @@ namespace FargowiltasSouls.Core.ModPlayers
                 tileCenter.Y /= 16;
                 Tile currentTile = Framing.GetTileSafely((int)tileCenter.X, (int)tileCenter.Y);
 
-                if (!fargoSoulsPlayer.PureHeart && Main.raining && (Player.ZoneOverworldHeight)
-                    && Player.HeldItem.type != ItemID.Umbrella && Player.HeldItem.type != ItemID.TragicUmbrella
-                    && Player.armor[0].type != ItemID.UmbrellaHat && Player.armor[0].type != ItemID.Eyebrella
-                    && !Player.HasEffect<RainUmbrellaEffect>())
+                
+                if (!fargoSoulsPlayer.PureHeart) // Pure Heart-affected biome debuffs
                 {
-                    if (currentTile.WallType == WallID.None)
+                    Color light = Lighting.GetColor(Player.Center.ToTileCoordinates());
+                    float lightLevel = light.R + light.G + light.B;
+                    // underground deerclops hands
+                    if (Player.ZoneRockLayerHeight && !NPC.downedDeerclops)
                     {
-                        if (Player.ZoneSnow)
-                            Player.AddBuff(ModContent.BuffType<HypothermiaBuff>(), 2);
-                        else
-                            Player.AddBuff(BuffID.Wet, 2);
-
-                        LightningCounter++;
-
-                        int lighntningMinSeconds = WorldSavingSystem.MasochistModeReal ? 10 : 17;
-                        if (LightningCounter >= LumUtils.SecondsToFrames(lighntningMinSeconds))
+                        if (false && lightLevel < 500)
                         {
-                            Point tileCoordinates = Player.Top.ToTileCoordinates();
-
-                            tileCoordinates.X += Main.rand.Next(-25, 25);
-                            tileCoordinates.Y -= Main.rand.Next(4, 8);
-
-
-                            bool foundMetal = false;
-                            if (WorldSavingSystem.MasochistModeReal)
-                                foundMetal = true;
-
-                            /* TODO: make this work
-                            for (int x = -5; x < 5; x++)
+                            LightLevelCounter++;
+                            if (LightLevelCounter > LumUtils.SecondsToFrames(10) && Main.rand.NextBool(300))
                             {
-                                for (int y = -5; y < 5; y++)
-                                {
-                                    int testX = tileCoordinates.X + x;
-                                    int testY = tileCoordinates.Y + y;
-                                    Tile tile = Main.tile[testX, testY];
-                                    if (IronTiles.Contains(tile.TileType) ||IronTiles.Contains(tile.WallType))
-                                    {
-                                        foundMetal = true;
-                                        tileCoordinates.X = testX;
-                                        tileCoordinates.Y = testY;
-                                        Main.NewText("found metal");
-                                        break;
-                                    }
-                                }
-                            }
-                            */
-                            
-                            if (LumUtils.AnyBosses() && !WorldSavingSystem.MasochistModeReal)
-                            {
-                                LightningCounter = 0;
-                            }
-                            else if (Main.rand.NextBool(300) || foundMetal)
-                            {
-                                //tends to spawn in ceilings if the Player goes indoors/underground
-
-
-                                //for (int index = 0; index < 10 && !WorldGen.SolidTile(tileCoordinates.X, tileCoordinates.Y) && tileCoordinates.Y > 10; ++index) 
-                                //    tileCoordinates.Y -= 1;
-
-
-                                float ai1 = Player.Center.Y;
+                                Vector2 pos = Player.Center + Vector2.UnitX * (Main.rand.NextBool() ? 1 : -1) * 200 - Vector2.UnitY * 90;
                                 int damage = (Main.hardMode ? 120 : 60) / 4;
-                                Projectile.NewProjectile(Player.GetSource_Misc(""), tileCoordinates.X * 16 + 8, (tileCoordinates.Y * 16 + 17) - 900, 0f, 0f, ModContent.ProjectileType<RainLightning>(), damage, 2f, Main.myPlayer,
-                                    Vector2.UnitY.ToRotation(), ai1);
-
-                                LightningCounter = 0;
+                                int p = Projectile.NewProjectile(Player.GetSource_Misc(""), pos, pos.DirectionTo(Player.Center) * 8, ProjectileID.InsanityShadowHostile, damage, 2f, Main.myPlayer);
+                                if (p.IsWithinBounds(Main.maxProjectiles))
+                                {
+                                    Main.projectile[p].light = 1f;
+                                }
+                                Lighting.AddLight(pos, 1f, 1f, 1f);
+                                LightLevelCounter = 0;
                             }
                         }
                     }
+                    // hallow lifelight sparks
+                    if (Player.ZoneHallow && Player.ZoneRockLayerHeight && !WorldSavingSystem.DownedBoss[(int)WorldSavingSystem.Downed.Lifelight])
+                    {
+                        if (lightLevel > 500)
+                        {
+                            LightLevelCounter++;
+                            if (LightLevelCounter > LumUtils.SecondsToFrames(10) && Main.rand.NextBool(300))
+                            {
+                                Vector2 pos = Player.Center;
+                                int damage = (Main.hardMode ? 120 : 60) / 4;
+                                int p = Projectile.NewProjectile(Player.GetSource_Misc(""), pos, Vector2.Zero, ModContent.ProjectileType<LifelightEnvironmentStar>(), damage, 2f, Main.myPlayer, -90);
+                                if (p.IsWithinBounds(Main.maxProjectiles))
+                                {
+                                    
+                                }
+                                LightLevelCounter = 0;
+                            }
+                        }
+                    }
+
+                    // rain lightning
+                    if (Main.raining && (Player.ZoneOverworldHeight)
+                    && Player.HeldItem.type != ItemID.Umbrella && Player.HeldItem.type != ItemID.TragicUmbrella
+                    && Player.armor[0].type != ItemID.UmbrellaHat && Player.armor[0].type != ItemID.Eyebrella
+                    && !Player.HasEffect<RainUmbrellaEffect>())
+                    {
+                        if (currentTile.WallType == WallID.None)
+                        {
+                            if (Player.ZoneSnow)
+                                Player.AddBuff(ModContent.BuffType<HypothermiaBuff>(), 2);
+                            else
+                                Player.AddBuff(BuffID.Wet, 2);
+
+                            LightningCounter++;
+
+                            int lighntningMinSeconds = WorldSavingSystem.MasochistModeReal ? 10 : 17;
+                            if (LightningCounter >= LumUtils.SecondsToFrames(lighntningMinSeconds))
+                            {
+                                Point tileCoordinates = Player.Top.ToTileCoordinates();
+
+                                tileCoordinates.X += Main.rand.Next(-25, 25);
+                                tileCoordinates.Y -= Main.rand.Next(4, 8);
+
+
+                                bool foundMetal = false;
+                                if (WorldSavingSystem.MasochistModeReal)
+                                    foundMetal = true;
+
+                                /* TODO: make this work
+                                for (int x = -5; x < 5; x++)
+                                {
+                                    for (int y = -5; y < 5; y++)
+                                    {
+                                        int testX = tileCoordinates.X + x;
+                                        int testY = tileCoordinates.Y + y;
+                                        Tile tile = Main.tile[testX, testY];
+                                        if (IronTiles.Contains(tile.TileType) ||IronTiles.Contains(tile.WallType))
+                                        {
+                                            foundMetal = true;
+                                            tileCoordinates.X = testX;
+                                            tileCoordinates.Y = testY;
+                                            Main.NewText("found metal");
+                                            break;
+                                        }
+                                    }
+                                }
+                                */
+
+                                if (LumUtils.AnyBosses() && !WorldSavingSystem.MasochistModeReal)
+                                {
+                                    LightningCounter = 0;
+                                }
+                                else if (Main.rand.NextBool(300) || foundMetal)
+                                {
+                                    //tends to spawn in ceilings if the Player goes indoors/underground
+
+
+                                    //for (int index = 0; index < 10 && !WorldGen.SolidTile(tileCoordinates.X, tileCoordinates.Y) && tileCoordinates.Y > 10; ++index) 
+                                    //    tileCoordinates.Y -= 1;
+
+
+                                    float ai1 = Player.Center.Y;
+                                    int damage = (Main.hardMode ? 120 : 60) / 4;
+                                    Projectile.NewProjectile(Player.GetSource_Misc(""), tileCoordinates.X * 16 + 8, (tileCoordinates.Y * 16 + 17) - 900, 0f, 0f, ModContent.ProjectileType<RainLightning>(), damage, 2f, Main.myPlayer,
+                                        Vector2.UnitY.ToRotation(), ai1);
+
+                                    LightningCounter = 0;
+                                }
+                            }
+                        }
+                    }
+
+                    // space breath
+                    if (!Player.buffImmune[BuffID.Suffocation] && Player.ZoneSkyHeight && Player.whoAmI == Main.myPlayer)
+                    {
+                        bool inLiquid = Collision.DrownCollision(Player.position, Player.width, Player.height, Player.gravDir) || !Player.armor[0].IsAir && (Player.armor[0].type == ItemID.FishBowl || Player.armor[0].type == ItemID.GoldGoldfishBowl);
+                        if (!inLiquid)
+                        {
+                            Player.breath -= 3;
+                            if (++MasomodeSpaceBreathTimer > 10)
+                            {
+                                MasomodeSpaceBreathTimer = 0;
+                                Player.breath--;
+                            }
+                            if (Player.breath == 0)
+                                SoundEngine.PlaySound(SoundID.Drown);
+                            if (Player.breath <= 0)
+                                Player.AddBuff(BuffID.Suffocation, 2);
+
+                            if (Player.breath < -10) //don't stack far into negatives
+                            {
+
+                                Player.breath = -10;
+                            }
+
+                        }
+                    }
+
+                    // spider
+                    if (!Player.buffImmune[BuffID.Webbed] && Player.stickyBreak > 0)
+                    {
+
+                        if (currentTile != null && currentTile.WallType == WallID.SpiderUnsafe)
+                        {
+                            Player.AddBuff(BuffID.Webbed, 30);
+                            Player.AddBuff(BuffID.Slow, 90);
+                            Player.stickyBreak = 0;
+
+                            Vector2 vector = Collision.StickyTiles(Player.position, Player.velocity, Player.width, Player.height);
+                            if (vector.X != -1 && vector.Y != -1)
+                            {
+                                int num3 = (int)vector.X;
+                                int num4 = (int)vector.Y;
+                                WorldGen.KillTile(num3, num4, false, false, false);
+                                if (Main.netMode == NetmodeID.MultiplayerClient && !Main.tile[num3, num4].HasTile)
+                                    NetMessage.SendData(MessageID.TileManipulation, -1, -1, null, 0, num3, num4, 0f, 0, 0, 0);
+                            }
+                        }
+                    }
+
+                    // blood moon
+                    if (Main.bloodMoon)
+                        Player.AddBuff(BuffID.WaterCandle, 2);
                 }
 
                 if (Player.wet && !Player.lavaWet && !Player.honeyWet && !(Player.GetJumpState(ExtraJump.Flipper).Enabled || Player.gills || fargoSoulsPlayer.MutantAntibodies))
                     Player.AddBuff(ModContent.BuffType<LethargicBuff>(), 2);
-
-                if (!fargoSoulsPlayer.PureHeart && !Player.buffImmune[BuffID.Suffocation] && Player.ZoneSkyHeight && Player.whoAmI == Main.myPlayer)
-                {
-                    bool inLiquid = Collision.DrownCollision(Player.position, Player.width, Player.height, Player.gravDir) || !Player.armor[0].IsAir && (Player.armor[0].type == ItemID.FishBowl || Player.armor[0].type == ItemID.GoldGoldfishBowl);
-                    if (!inLiquid)
-                    {
-                        Player.breath -= 3;
-                        if (++MasomodeSpaceBreathTimer > 10)
-                        {
-                            MasomodeSpaceBreathTimer = 0;
-                            Player.breath--;
-                        }
-                        if (Player.breath == 0)
-                            SoundEngine.PlaySound(SoundID.Drown);
-                        if (Player.breath <= 0)
-                            Player.AddBuff(BuffID.Suffocation, 2);
-
-                        if (Player.breath < -10) //don't stack far into negatives
-                        {
-
-                            Player.breath = -10;
-                        }
-
-                    }
-                }
-
-                if (!fargoSoulsPlayer.PureHeart && !Player.buffImmune[BuffID.Webbed] && Player.stickyBreak > 0)
-                {
-
-                    if (currentTile != null && currentTile.WallType == WallID.SpiderUnsafe)
-                    {
-                        Player.AddBuff(BuffID.Webbed, 30);
-                        Player.AddBuff(BuffID.Slow, 90);
-                        Player.stickyBreak = 0;
-
-                        Vector2 vector = Collision.StickyTiles(Player.position, Player.velocity, Player.width, Player.height);
-                        if (vector.X != -1 && vector.Y != -1)
-                        {
-                            int num3 = (int)vector.X;
-                            int num4 = (int)vector.Y;
-                            WorldGen.KillTile(num3, num4, false, false, false);
-                            if (Main.netMode == NetmodeID.MultiplayerClient && !Main.tile[num3, num4].HasTile)
-                                NetMessage.SendData(MessageID.TileManipulation, -1, -1, null, 0, num3, num4, 0f, 0, 0, 0);
-                        }
-                    }
-                }
 
                 if (currentTile != null && currentTile.TileType == TileID.Cactus && currentTile.HasUnactuatedTile && !fargoSoulsPlayer.CactusImmune)
                 {
@@ -429,9 +481,6 @@ namespace FargowiltasSouls.Core.ModPlayers
                     if (Player.hurtCooldowns[0] <= 0) //same i-frames as spike tiles
                         Player.Hurt(PlayerDeathReason.ByCustomReason(Language.GetTextValue("Mods.FargowiltasSouls.DeathMessage.Cactus", Player.name)), damage, 0, false, false, 0, false);
                 }
-
-                if (!fargoSoulsPlayer.PureHeart && Main.bloodMoon)
-                    Player.AddBuff(BuffID.WaterCandle, 2);
             }
         }
 
