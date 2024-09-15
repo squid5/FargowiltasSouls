@@ -386,7 +386,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
         public override void ModifyIncomingHit(NPC npc, ref NPC.HitModifiers modifiers)
         {
             if (npc.life > 0)
-                modifiers.FinalDamage *= Math.Max(0.2f, (float)Math.Sqrt((double)npc.life / npc.lifeMax));
+                modifiers.FinalDamage *= Math.Max(0.17f, (float)Math.Sqrt((double)npc.life / npc.lifeMax));
 
             base.ModifyIncomingHit(npc, ref modifiers);
         }
@@ -440,7 +440,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
         {
             base.SetDefaults(npc);
 
-            npc.lifeMax = (int)Math.Round(npc.lifeMax * 1.25);
+            npc.lifeMax = (int)Math.Round(npc.lifeMax * 1.5);
 
             IchorAttackTimer = Main.rand.Next(60 * NPC.CountNPCS(NPCID.Creeper)) + Main.rand.Next(61) + 60;
         }
@@ -482,7 +482,11 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
             return result;
         }
-
+        public override void SafeModifyHitByProjectile(NPC npc, Projectile projectile, ref NPC.HitModifiers modifiers)
+        {
+            if (projectile.penetrate > 1 || projectile.penetrate < -1)
+                modifiers.FinalDamage *= 0.5f;
+        }
         public override void OnHitPlayer(NPC npc, Player target, Player.HurtInfo hurtInfo)
         {
             base.OnHitPlayer(npc, target, hurtInfo);
