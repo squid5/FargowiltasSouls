@@ -77,7 +77,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
 
             if (hitInfo.Crit)
             {
-                SoundEngine.PlaySound(SoundID.Item25, target.position);
+                //SoundEngine.PlaySound(SoundID.Item25, target.position);
                 for (int i = 0; i < 7; i++)
                 { //idk how to make dust look good (3)
                     Color color = Main.rand.NextFromList(Color.Goldenrod, Color.Pink, Color.Cyan);
