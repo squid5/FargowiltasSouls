@@ -50,6 +50,24 @@ namespace FargowiltasSouls.Content.Projectiles
 
             switch ((int)Projectile.ai[1])
             {
+                case -25: //abom p2 dash chargeup
+                    {   
+                        //customScaleAlpha = true;
+                        scale = 0;
+                        maxTime = 200;
+                        float modifier = Projectile.localAI[0] / maxTime;
+                        float progress = 1 - modifier;
+                        color = Color.Yellow;                 
+                        Vector2 sparkDir = Vector2.UnitX.RotatedByRandom(MathHelper.TwoPi);
+                        float sparkDistance = (400 * progress) * Main.rand.NextFloat(0.6f, 1.8f);
+                        Vector2 sparkCenter = Projectile.Center + sparkDir * sparkDistance;
+                        float sparkTime = 25;
+                        Vector2 sparkVel = (Projectile.Center - sparkCenter) / sparkTime;
+                        float sparkScale = 2f - modifier * 1.2f;
+                        Particle spark = new ElectricSpark(sparkCenter, sparkVel, color, sparkScale, (int)sparkTime);
+                        spark.Spawn(); //shrink down
+                    }
+                    break;
                 case -24: //baron debuff apply at opening
                     {
                         //customScaleAlpha = true;
