@@ -641,7 +641,6 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                 return result;
 
             NPC golem = FargoSoulsUtil.NPCExists(NPC.golemBoss, NPCID.Golem);
-            FargoSoulsUtil.PrintAI(npc);
             if (npc.type == NPCID.GolemHead)
             {
                 if (golem != null)
