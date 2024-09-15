@@ -65,13 +65,22 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
                     Projectile.Center = Projectile.position;
                 }
             }
-            Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
+            if (Projectile.velocity != Vector2.Zero)
+                Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
 
             float MaxSpeed = Projectile.ai[0];
             if (Timer <= 20)
             {
                 if (Projectile.velocity.Length() < MaxSpeed)
                     Projectile.velocity *= 1.08f;
+            }
+            Projectile.tileCollide = Timer > 40;
+            if (Projectile.velocity == Vector2.Zero)
+            {
+                Projectile.hostile = false;
+                Projectile.Opacity -= 0.01f;
+                if (Projectile.Opacity < 0.05)
+                    Projectile.Kill();
             }
             /*
             const int turnTime = 80;
@@ -91,6 +100,17 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
             Timer++;
         }
 
+        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
+        {
+            fallThrough = true;
+            return true;
+        }
+        public override bool OnTileCollide(Vector2 oldVelocity)
+        {
+            Projectile.hostile = false;
+            Projectile.velocity *= 0;
+            return false;
+        }
         public override bool PreDraw(ref Color lightColor)
         {
             bool recolor = SoulConfig.Instance.BossRecolors && WorldSavingSystem.EternityMode;
