@@ -61,6 +61,8 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
             if (Projectile.ai[1] == 0f)
             {
                 Projectile.alpha = (int)(255f * npc.life / npc.lifeMax);
+                if (Projectile.Opacity > 0.5f)
+                    Projectile.Opacity = 0.5f;
             }
             else if (Projectile.ai[1] == 1f)
             {
