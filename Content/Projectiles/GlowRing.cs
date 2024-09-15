@@ -50,6 +50,24 @@ namespace FargowiltasSouls.Content.Projectiles
 
             switch ((int)Projectile.ai[1])
             {
+                case -26: //abom styx gazer charge up
+                    {
+
+                        scale = 0;
+                        maxTime = 20;
+                        float modifier = Projectile.localAI[0] / maxTime;
+                        float progress = 1 - modifier;
+                        color = Color.Purple;
+                        Vector2 sparkDir = Vector2.UnitX.RotatedByRandom(MathHelper.TwoPi);
+                        float sparkDistance = 300 * (1f - modifier);
+                        Vector2 sparkCenter = Projectile.Center + sparkDir * sparkDistance;
+                        float sparkTime = 25;
+                        Vector2 sparkVel = (Projectile.Center - sparkCenter) / sparkTime;
+                        float sparkScale = 2f - modifier * 1.2f;
+                        Particle spark = new ElectricSpark(sparkCenter, sparkVel, color, sparkScale, (int)sparkTime);
+                        spark.Spawn();
+                    }
+                    break;
                 case -25: //abom p2 dash chargeup
                     {   
                         //customScaleAlpha = true;
