@@ -11,13 +11,15 @@ using FargowiltasSouls.Common.Graphics.Particles;
 using FargowiltasSouls.Core.Systems;
 using FargowiltasSouls.Content.Items.Summons;
 using FargowiltasSouls.Content.WorldGeneration;
+using FargowiltasSouls.Content.Projectiles.Masomode;
+using Fargowiltas.Projectiles;
 using Luminance.Core.Graphics;
 using FargowiltasSouls.Content.Buffs.Masomode;
 using Luminance.Common.StateMachines;
 
 namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 {
-    public partial class CursedCoffin : ModNPC
+	public partial class CursedCoffin : ModNPC
 	{
 		#region Variables
 		public const int RandomStuffOpenTime = 60;

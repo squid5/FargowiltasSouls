@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
+using Terraria.GameContent.UI.Elements;
+using Terraria.Localization;
 using Terraria.UI;
 
 namespace FargowiltasSouls.Content.UI.Elements

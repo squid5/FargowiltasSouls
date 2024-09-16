@@ -1,7 +1,9 @@
 ﻿
 
 using FargowiltasSouls.Content.Bosses.AbomBoss;
+using Luminance.Core.Graphics;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
 using Terraria.ID;

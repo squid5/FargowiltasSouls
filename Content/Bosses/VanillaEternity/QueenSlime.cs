@@ -8,11 +8,15 @@ using FargowiltasSouls.Core.Systems;
 using Microsoft.Xna.Framework;
 using System;
 using System.IO;
+using System.Linq;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
+using Terraria.WorldBuilding;
 
 namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 {

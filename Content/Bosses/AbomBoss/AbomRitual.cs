@@ -1,6 +1,7 @@
 ﻿using FargowiltasSouls.Assets.ExtraTextures;
 using FargowiltasSouls.Content.Projectiles;
 using FargowiltasSouls.Core.Systems;
+using Humanizer;
 using Luminance.Core.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;

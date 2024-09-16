@@ -17,6 +17,10 @@ using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using FargowiltasSouls.Core.Globals;
+using FargowiltasSouls.Common.Graphics.Particles;
+using System.Reflection;
+using Luminance.Core.Graphics;
 using Terraria.Graphics.Capture;
 
 namespace FargowiltasSouls //lets everything access it without using

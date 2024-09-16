@@ -1,8 +1,11 @@
 ﻿using FargowiltasSouls.Content.Bosses.CursedCoffin;
+using FargowiltasSouls.Core.Systems;
 using Microsoft.Xna.Framework;
+using System;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Content.Items.Accessories.Expert
 {

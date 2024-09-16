@@ -1,4 +1,5 @@
 ﻿using FargowiltasSouls.Content.Projectiles.BossWeapons;
+using FargowiltasSouls.Core.Systems;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;

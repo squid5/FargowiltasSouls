@@ -1,6 +1,8 @@
 ﻿using FargowiltasSouls.Content.Bosses.CursedCoffin;
+using FargowiltasSouls.Content.Bosses.Lifelight;
 using FargowiltasSouls.Content.Items.Accessories.Expert;
 using FargowiltasSouls.Content.Items.Weapons.Challengers;
+using System.Data;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;

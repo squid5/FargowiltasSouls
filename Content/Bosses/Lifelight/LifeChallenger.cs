@@ -10,6 +10,7 @@ using FargowiltasSouls.Content.Items.Weapons.Challengers;
 using FargowiltasSouls.Content.Projectiles;
 using FargowiltasSouls.Content.Projectiles.ChallengerItems;
 using FargowiltasSouls.Core.Systems;
+using Luminance.Common.Utilities;
 using Luminance.Core.Graphics;
 using Microsoft.CodeAnalysis;
 using Microsoft.Xna.Framework;
@@ -22,10 +23,16 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.Golf;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
+using static FargowiltasSouls.Content.Bosses.Magmaw.Magmaw;
+using static FargowiltasSouls.Core.Systems.DashManager;
+
+using Luminance.Core.Graphics;
 
 namespace FargowiltasSouls.Content.Bosses.Lifelight
 {
@@ -1076,6 +1083,13 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                         Projectile.NewProjectile(NPC.GetSource_FromThis(), runePos, Vector2.Zero, ModContent.ProjectileType<LifeRuneHitbox>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), 3f, Main.myPlayer, NPC.whoAmI, i);
 
                 }
+
+                if (WorldSavingSystem.MasochistModeReal)
+                {
+                    SoundEngine.PlaySound(SoundID.Item91, NPC.Center);
+                    if (FargoSoulsUtil.HostCheck)
+                        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.DirectionTo(Player.Center).RotatedBy(MathF.PI * 0.4f * (Main.rand.NextBool() ? 1 : -1)) * 10f, ModContent.ProjectileType<LifeNuke>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), 3f, Main.myPlayer, 32f, 0);
+                }
                     
                 //decrease size to size of triangle
                 NPC.position = NPC.Center;
@@ -1092,15 +1106,6 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
 
             if (AI_Timer < ExpandTime) //expand
             {
-                if (AI_Timer == ExpandTime - 150)
-                {
-                    if (WorldSavingSystem.MasochistModeReal)
-                    {
-                        SoundEngine.PlaySound(SoundID.Item91, NPC.Center);
-                        if (FargoSoulsUtil.HostCheck)
-                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.DirectionTo(Player.Center).RotatedBy(MathF.PI * 0.4f * (Main.rand.NextBool() ? 1 : -1)) * 10f, ModContent.ProjectileType<LifeNuke>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), 3f, Main.myPlayer, 32f, 0);
-                    }
-                }
                 if (AI_Timer < 30)
                 {
                     if (NPC.Distance(Player.Center) > 350)
@@ -1122,6 +1127,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                 LockVector1 = LockVector1.RotateTowards(NPC.DirectionTo(Player.Center).ToRotation(), 0.02f);
 
                 Vector2 tipPos = NPC.Center + LockVector1.SafeNormalize(Vector2.UnitX) * 40;
+
                 if (AI_Timer >= ExpandTime - 120)
                 {
                     if (AI_Timer % 5 == 0)

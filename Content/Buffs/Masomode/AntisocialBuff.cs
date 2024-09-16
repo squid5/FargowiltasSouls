@@ -21,7 +21,7 @@ namespace FargowiltasSouls.Content.Buffs.Masomode
             //disables minions, disables pets
             player.FargoSouls().Asocial = true;
 
-            player.GetDamage(DamageClass.Summon) *= 0.6f;
+            player.GetDamage(DamageClass.Summon) *= 0.8f;
 
             if (player.HeldItem.DamageType.CountsAsClass(DamageClass.SummonMeleeSpeed))
                 player.FargoSouls().AttackSpeed /= 2;

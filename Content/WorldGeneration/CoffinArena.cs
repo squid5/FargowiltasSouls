@@ -1,4 +1,6 @@
-﻿using FargowiltasSouls.Content.Tiles;
+﻿using Fargowiltas.NPCs;
+using Fargowiltas.Projectiles;
+using FargowiltasSouls.Content.Tiles;
 using FargowiltasSouls.Core.Systems;
 using Microsoft.Xna.Framework;
 using StructureHelper;

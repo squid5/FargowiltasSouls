@@ -13,6 +13,15 @@ using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
+using FargowiltasSouls.Core.Systems;
+using FargowiltasSouls.Core.Globals;
+using FargowiltasSouls.Common.Utilities;
+using FargowiltasSouls.Core.NPCMatching;
+using Terraria.DataStructures;
+using System;
+using FargowiltasSouls.Content.NPCs.EternityModeNPCs;
+using FargowiltasSouls.Common.Graphics.Particles;
+using Luminance.Core.Graphics;
 
 namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 {

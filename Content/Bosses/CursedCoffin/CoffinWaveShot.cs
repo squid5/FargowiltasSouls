@@ -9,6 +9,8 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
+using Luminance.Core.Graphics;
+
 namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 {
     public class CoffinWaveShot : ModProjectile, IPixelatedPrimitiveRenderer
@@ -45,7 +47,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
             float rot = MathHelper.PiOver2 * rotStr * MathF.Sin(MathF.Tau * (Projectile.ai[1] / 50f));
             Projectile.velocity = Projectile.velocity.RotatedBy(rot);
 
-            float accel = WorldSavingSystem.MasochistModeReal ? 1.012f : 1.012f;
+            float accel = WorldSavingSystem.MasochistModeReal ? 1.02f : 1.016f;
             if (Projectile.velocity.Length() < 15f)
                 Projectile.velocity *= accel;
 

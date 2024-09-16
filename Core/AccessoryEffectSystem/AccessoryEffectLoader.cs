@@ -1,4 +1,5 @@
 ﻿using FargowiltasSouls.Content.Items;
+using FargowiltasSouls.Content.UI;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;

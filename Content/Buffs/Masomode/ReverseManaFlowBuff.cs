@@ -20,7 +20,7 @@ namespace FargowiltasSouls.Content.Buffs.Masomode
             //mana cost also damages
             player.FargoSouls().ReverseManaFlow = true;
 
-            player.GetDamage(DamageClass.Summon) *= 0.6f;
+            player.GetDamage(DamageClass.Summon) *= 0.8f;
         }
     }
 }

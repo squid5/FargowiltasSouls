@@ -1,4 +1,5 @@
-﻿using FargowiltasSouls.Common.Graphics.Particles;
+﻿using FargowiltasSouls.Assets.ExtraTextures;
+using FargowiltasSouls.Common.Graphics.Particles;
 using FargowiltasSouls.Core.Systems;
 using Luminance.Core.Graphics;
 using Microsoft.Xna.Framework;
