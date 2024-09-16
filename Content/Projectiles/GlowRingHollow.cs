@@ -297,6 +297,15 @@ namespace FargowiltasSouls.Content.Projectiles
                     }
                     break;
 
+                case 15: // BoC player confusion telegraph
+                    {
+                        color = Color.Red;
+                        maxTime = 15;
+                        alphaModifier = 3;
+                        radius = Projectile.ai[1] * (float)Math.Sqrt(Math.Sin(Math.PI / 2 * Projectile.localAI[0] / maxTime));
+                    }
+                    break;
+
                 default:
                     Main.NewText("glow ring hollow: you shouldnt be seeing this text, show terry");
                     break;

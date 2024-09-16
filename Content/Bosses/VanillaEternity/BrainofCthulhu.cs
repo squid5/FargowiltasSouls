@@ -116,11 +116,15 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
             if (EnteredPhase2)
             {
+                int confusionThreshold = WorldSavingSystem.MasochistModeReal ? 240 : 300;
+                int confusionThreshold2 = confusionThreshold - 60;
+
+                // Fade dash
                 float cloneTime = 40;
                 int dashTime = 60;
-
                 ref float teleportTimer = ref npc.localAI[1];
-                if (teleportTimer >= cloneTime && teleportTimer <= 60)
+                bool noFadeDash = ConfusionTimer.IsWithinBounds(confusionThreshold2 - 90, confusionThreshold2);
+                if (teleportTimer >= cloneTime && teleportTimer <= 60 && !noFadeDash)
                 {
                     if (CloneFade < 1)
                         CloneFade += 0.05f;
@@ -181,9 +185,6 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     }
                 };
 
-                int confusionThreshold = WorldSavingSystem.MasochistModeReal ? 240 : 300;
-                int confusionThreshold2 = confusionThreshold - 60;
-
                 if (--ConfusionTimer < 0)
                 {
                     ConfusionTimer = confusionThreshold;
@@ -222,11 +223,29 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                         }
                         
                     }
-                    if (ConfusionTimer % 15 == 0 && !WorldSavingSystem.MasochistModeReal)
+                    void TelegraphCircle()
                     {
-                        if (!Main.dedServ)
-                            SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/ReticleBeep"), Main.LocalPlayer.Center);
+                        if (FargoSoulsUtil.HostCheck)
+                        {
+                            float size = 20f + 180f * (ConfusionTimer - confusionThreshold2) / (confusionThreshold - confusionThreshold2);
+                            foreach (Player p in Main.player.Where(p => p.Alive()))
+                                Projectile.NewProjectile(npc.GetSource_FromThis(), p.Center, Vector2.Zero, ModContent.ProjectileType<GlowRingHollow>(), 0, 0f, Main.myPlayer, 15, size);
+                        }
                     }
+                    if (ConfusionTimer % 15 == 0 && !WorldSavingSystem.MasochistModeReal)
+                        if (!Main.dedServ)
+                        {
+                            TelegraphCircle();
+                            SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/ReticleBeep"), Main.LocalPlayer.Center);
+                        }
+                            
+
+                    if (ConfusionTimer == confusionThreshold2 + 1 && !WorldSavingSystem.MasochistModeReal)
+                        if (!Main.dedServ)
+                        {
+                            TelegraphCircle();
+                            SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/ReticleBeep") with { Pitch = -0.5f }, Main.LocalPlayer.Center);
+                        }
                 }
                 else if (ConfusionTimer == confusionThreshold2)
                 {
@@ -386,7 +405,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
         public override void ModifyIncomingHit(NPC npc, ref NPC.HitModifiers modifiers)
         {
             if (npc.life > 0)
-                modifiers.FinalDamage *= Math.Max(0.17f, (float)Math.Sqrt((double)npc.life / npc.lifeMax));
+                modifiers.FinalDamage *= Math.Max(0.18f, (float)Math.Sqrt((double)npc.life / npc.lifeMax));
 
             base.ModifyIncomingHit(npc, ref modifiers);
         }
@@ -485,7 +504,11 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
         public override void SafeModifyHitByProjectile(NPC npc, Projectile projectile, ref NPC.HitModifiers modifiers)
         {
             if (projectile.penetrate > 1 || projectile.penetrate < -1)
-                modifiers.FinalDamage *= 0.5f;
+                modifiers.FinalDamage *= 0.75f;
+        }
+        public override void SafeModifyHitByItem(NPC npc, Player player, Item item, ref NPC.HitModifiers modifiers)
+        {
+            modifiers.FinalDamage *= 0.75f;
         }
         public override void OnHitPlayer(NPC npc, Player target, Player.HurtInfo hurtInfo)
         {
