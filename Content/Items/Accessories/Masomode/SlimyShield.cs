@@ -51,6 +51,7 @@ Slime inflicts Slimed and Oiled
     {
         public override Header ToggleHeader => Header.GetHeader<SupremeFairyHeader>();
         public override int ToggleItemType => ModContent.ItemType<SlimyShield>();
+        public override bool MutantsPresenceAffects => true;
 
         public override void PostUpdateEquips(Player player)
         {

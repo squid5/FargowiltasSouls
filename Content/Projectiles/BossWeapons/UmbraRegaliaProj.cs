@@ -1,3 +1,4 @@
+using FargowiltasSouls.Content.UI.Elements;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -152,6 +153,7 @@ namespace FargowiltasSouls.Content.Projectiles.BossWeapons
                 Projectile.friendly = false;
                 if (chargeLevel < maxCharge)
                     chargeLevel++;
+                CooldownBarManager.Activate("UmbraRegaliaCharge", ModContent.Request<Texture2D>("FargowiltasSouls/Content/Items/Weapons/SwarmDrops/UmbraRegalia").Value, Color.DarkRed, () => Projectile.ai[2] / maxCharge, true);
                 if (chargeLevel == (int)maxCharge - 1 && player.whoAmI == Main.myPlayer)
                 {
                     SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/Accessories/ChargeSound"), Projectile.Center + Projectile.velocity * Projectile.Size.Length() / 2);
@@ -181,7 +183,7 @@ namespace FargowiltasSouls.Content.Projectiles.BossWeapons
                 Projectile.friendly = true;
                 if (chargeLevel > -1) //check once
                 {
-                    Projectile.damage = (int)(Projectile.damage * (1.15f + chargeLevel / 60f)); //modify this to change damage charge
+                    Projectile.damage = (int)(Projectile.damage * (1.15f + chargeLevel / 18f)); //modify this to change damage charge
                     Charged = chargeLevel == maxCharge;
                     Projectile.velocity = Vector2.Normalize(Projectile.velocity) * (25f + 25f * (chargeLevel / maxCharge));
                     chargeLevel = -1;
@@ -264,6 +266,17 @@ namespace FargowiltasSouls.Content.Projectiles.BossWeapons
                 }
             }
 
+            //offset glow
+            if (Projectile.ai[0] > 0)
+            {
+                for (int j = 0; j < 16; j++)
+                {
+                    float offsetDistance = 4f * (Projectile.localAI[1] / maxCharge);
+                    Vector2 afterimageOffset = (MathHelper.TwoPi * j / 12f).ToRotationVector2() * offsetDistance;
+                    Color glowColor = Color.DarkRed * 0.3f;
+                    Main.spriteBatch.Draw(texture2D13, pos + afterimageOffset, null, glowColor, Projectile.rotation, origin2, Projectile.scale, effects, 0f);
+                }
+            }
 
             Main.EntitySpriteDraw(texture2D13, pos, new Microsoft.Xna.Framework.Rectangle?(rectangle), Projectile.GetAlpha(lightColor), Projectile.rotation, origin2, Projectile.scale, effects, 0);
             return false;

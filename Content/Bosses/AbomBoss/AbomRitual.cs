@@ -53,8 +53,9 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
         public override void AI()
         {
             base.AI();
+            NPC npc = FargoSoulsUtil.NPCExists(Projectile.ai[1], npcType);
             Projectile.rotation += 1f;
-            if (Projectile.Opacity < 0.5f)
+            if (Projectile.Opacity < 0.5f && npc != null)
                 Projectile.Opacity = 0.5f;
             if (VisualScale < 1)
                 VisualScale += 0.01f;

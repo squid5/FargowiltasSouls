@@ -258,11 +258,16 @@ namespace FargowiltasSouls.Content.Projectiles
             {
                 if (modPlayer.NebulaEnchCD <= 0)
                 {
-                    int damage = modPlayer.ForceEffect<NebulaEnchant>() ? 2000 : 1200;
                     if (FargoSoulsUtil.OnSpawnEnchCanAffectProjectile(projectile, false)
                         && projectile.whoAmI != player.heldProj
-                        && projectile.aiStyle != 190)
+                        && projectile.aiStyle != 190 // fancy sword swings like excalibur
+                        && !projectile.minion) 
                     {
+                        int damage = Math.Max(1200, projectile.originalDamage);
+                        damage = (int)MathHelper.Clamp(damage, 0, 3000);
+                        if (modPlayer.ForceEffect<NebulaEnchant>())
+                            damage = (int)(damage * 1.66667f);
+
                         Projectile.NewProjectile(player.GetSource_FromThis(), projectile.Center, projectile.velocity, ModContent.ProjectileType<NebulaShot>(), damage, 1f, player.whoAmI, 0);
                         projectile.active = false;
                         modPlayer.NebulaEnchCD = 3 * 60;
@@ -1402,7 +1407,7 @@ namespace FargowiltasSouls.Content.Projectiles
 
             if (projectile.type == ProjectileID.CrystalLeafShot && player.HasEffect<NatureEffect>() && player.HasEffect<ShroomiteShroomEffect>())
             {
-                ShroomiteShroomEffect.SpawnShrooms(player, target, (int)(damageDone * 1.25f));
+                ShroomiteShroomEffect.SpawnShrooms(player, target, (int)(damageDone * 1f));
             }
         }
 

@@ -687,7 +687,7 @@ MagmawHand.DisplayName: Рука Магможора
 PungentEyeballMinion.DisplayName: Едкое Глазное Яблоко Миньон
 MinosPrime.DisplayName: Минос Прайм
 RainLightning.DisplayName: Дождевая Молния
-PlanteraThornChakram.DisplayName: Колючий Чакрам Плантеры
+// PlanteraTooth.DisplayName: Plantera Tooth
 PlanteraRitual.DisplayName: Ритуал Плантеры
 PlanteraManEater.DisplayName: Людоед Плантеры
 PlanteraSnatcher.DisplayName: Хвататель Плантеры
@@ -736,16 +736,16 @@ LifeHomingProjSmall.DisplayName: Маленький Бла Бла
 LifeRuneExplosion.DisplayName: Life Rune Explosion
 LifeRunespearHitbox.DisplayName: Life Runespear Hitbox
 LifeRunespearExplosion.DisplayName: Life Runespear Explosion
-// LifeRuneRetractHitbox.DisplayName: Life Rune Retract Hitbox
+// LifeRuneRetractHitbox.DisplayName: Life Rune
 // Slimesplosion.DisplayName: Slimesplosion
 // TwinsEyeFlash.DisplayName: Twins Eye Flash
-// UmbraRegaliaProj.DisplayName: Umbra Regalia Proj
+// UmbraRegaliaProj.DisplayName: Umbra Regalia
 // EffectVisual.DisplayName: Effect Visual
-// SpectreGhostProj.DisplayName: Spectre Ghost Proj
+// SpectreGhostProj.DisplayName: Spectre Ghost
 // SpectreSpirit.DisplayName: Spectre Spirit
 // VortexLaser.DisplayName: Vortex Laser
-// DicerPlanteraSeed.DisplayName: Dicer Plantera Seed
-// MoltenAuraProj.DisplayName: Molten Aura Proj
+// DicerPlanteraSeed.DisplayName: Dicer Bomb Seed
+// MoltenAuraProj.DisplayName: Molten Aura
+// LifelightEnvironmentStar.DisplayName: Life Star
 // NebulaShot.DisplayName: Nebula Shot
-// LifelightEnvironmentStar.DisplayName: Lifelight Environment Star
 // SolarEnchFlare.DisplayName: Solar Flare

@@ -821,11 +821,11 @@ CosmoForce: {
 	// DisplayName: Force of Cosmos
 	/* Tooltip:
 		'''
-		[i:FargowiltasSouls/MeteorEnchant] [i:FargowiltasSouls/WizardEnchant] [i:FargowiltasSouls/SolarEnchant] [i:FargowiltasSouls/VortexEnchant] [i:FargowiltasSouls/NebulaEnchant] [i:FargowiltasSouls/StardustEnchant]
-		Attacking generates up to 4 moons that orbit around you 
+		[i:FargowiltasSouls/SolarEnchant] [i:FargowiltasSouls/VortexEnchant] [i:FargowiltasSouls/NebulaEnchant] [i:FargowiltasSouls/StardustEnchant] Attacking generates up to 4 moons that orbit around you 
 		Stop attacking to launch them towards your cursor, exploding into Lunar Boosters
 		Picking up Lunar Boosters increases your damage, crit, life regen or damage reduction
-		Increases your movement speed and acceleration, and decreases your momentum
+		[i:FargowiltasSouls/MeteorEnchant] Increases your movement speed and acceleration, and decreases your momentum
+		[i:FargowiltasSouls/WizardEnchant] Amplifies the effect of all your Enchantments
 		'Been around since the Big Bang'
 		''' */
 }
@@ -1845,16 +1845,24 @@ TerrariaSoul: {
 	// DisplayName: Soul of Terraria
 	/* Tooltip:
 		'''
-		Critical strikes occasionally fire moons that explode into Force Boosters on hit
-		Moons are less frequent if you got hit recently
-		If you reach zero HP you will revive with 300 HP and self-cleanse debuffs
-		Increases your movement speed and acceleration, and decreases your momentum
-		Bestiary and banner entries complete faster
-		33% chance for enemies to drop 5x loot
-		Works in vanity and inventory:
-		You gain a shop discount based on bestiary completion
-		Automatically sends coins to your piggy bank when picked up
-		50% chance to not consume each item on first craft and you attract items from a larger range
+		[i:FargowiltasSouls/TimberForce] Gain an aura that fires projectiles, improved hooks, and occasional mana stars on hit
+		[i:FargowiltasSouls/TimberForce] Gain crit rerolls when retreiving pickups, bestiary completion and discount
+		[i:FargowiltasSouls/TerraForce] Critical strikes fire powerful lightning, Right Click to guard and parry, you take less debuff damage and your swords are empowered
+		[i:FargowiltasSouls/TerraForce] 10% set critical strike chance increased on hit, further item grab range, and you sometimes don't consume crafting ingredients
+		[i:FargowiltasSouls/EarthForce] You gain defensive bonuses while not attacking and offensive bonuses while attacking
+		[i:FargowiltasSouls/EarthForce] 4x debuff damage and you explode on hit while not attacking
+		[i:FargowiltasSouls/NatureForce] You have an aura that siphons life, increases damage taken, and you fire leaf shots at nearby enemies
+		[i:FargowiltasSouls/NatureForce] Mushroom healing is improved and grants buffs, your attacks inflict several debuffs, and you have an umbrella
+		[i:FargowiltasSouls/LifeForce] Leave behind powerful flowers while flying and you have the effects of Hive Pack
+		[i:FargowiltasSouls/LifeForce] You reflect contact damage and your minions and sentries can crit
+		[i:FargowiltasSouls/SpiritForce] Double tap down to call an ancient tornado, healing potions restore more over time, and your whips are improved
+		[i:FargowiltasSouls/SpiritForce] If you reach zero HP you will revive with 200 HP, self-cleanse debuffs, and spawn healing spirits
+		[i:FargowiltasSouls/ShadowForce] Grants a shadow dash, and an invincible shade dash every 4 seconds, increased projectile stats based on speed
+		[i:FargowiltasSouls/ShadowForce] You fire additional weapons as support, your minions get a scythe attack, and slain enemies may drop a pile of bones
+		[i:FargowiltasSouls/WillForce] Summons a gladiator spirit, increases your healing and mount stats, and successive attacks gain bonus damage
+		[i:FargowiltasSouls/WillForce] Automatically sends coins to your piggy bank when picked up (works in vanity and inventory), enemies may drop extra loot
+		[i:FargowiltasSouls/CosmoForce] Attacking generates moons around you that explode into Lunar Boosters when fired
+		[i:FargowiltasSouls/CosmoForce] Increases your movement speed and acceleration, and decreases your momentum
 		'A true master of Terraria'
 		''' */
 }
@@ -3599,5 +3607,6 @@ UmbraRegalia: {
 		Spear hits release homing umbral crystals
 		Spear throw leaves a trail of umbral crystals in its wake
 		Fully charged spear throws deal more damage and hits release more crystals
+		'The dark side of a defeated foe..'
 		''' */
 }

@@ -191,7 +191,7 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
             DrawStyxGazerDeathray(Projectile, drawDistance, WidthFunction);
             return false;
         }
-        public static void DrawStyxGazerDeathray(Projectile projectile, float drawDistance, PrimitiveSettings.VertexWidthFunction widthFunction, bool drawHandle = true)
+        public static void DrawStyxGazerDeathray(Projectile projectile, float drawDistance, PrimitiveSettings.VertexWidthFunction widthFunction, bool drawHandle = true, bool fadeStart = false)
         {
             // This should never happen, but just in case.
             if (projectile.velocity == Vector2.Zero)
@@ -250,6 +250,7 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
             // The laser should fade to this in the middle.
             Color brightColor = midColor;
             shader.TrySetParameter("mainColor", brightColor);
+            shader.TrySetParameter("fadeStart", fadeStart);
 
             // GameShaders.Misc["FargoswiltasSouls:MutantDeathray"].UseImage1(); cannot be used due to only accepting vanilla paths.
             Texture2D fademap = FargosTextureRegistry.MagmaStreak.Value;

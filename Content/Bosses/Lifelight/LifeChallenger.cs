@@ -976,6 +976,17 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
             if (flyPosition.HasValue)
                 AbovePlayer = flyPosition.Value;
 
+            if (NPC.velocity == Vector2.Zero)
+            {
+                NPC.velocity = NPC.SafeDirectionTo(AbovePlayer) * 1f;
+            }
+
+            // new smart accel
+            //NPC.velocity = FargoSoulsUtil.SmartAccel(NPC.Center, AbovePlayer, NPC.velocity, 0.25f, 1f);
+            //if (NPC.velocity.Length() > 20f)
+            //    NPC.velocity = NPC.velocity.SafeNormalize(Vector2.Zero) * 20f;
+
+            
             bool Close = Math.Abs(AbovePlayer.Y - NPC.Center.Y) < 32f && Math.Abs(AbovePlayer.X - NPC.Center.X) < 160f;
             if (!Close && NPC.Distance(AbovePlayer) < 500f)
             {
@@ -1002,6 +1013,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                 Vector2 flyabovePlayer = NPC.SafeDirectionTo(AbovePlayer) * flySpeed;
                 NPC.velocity = flyabovePlayer;
             }
+            
 
             //orientation
             if (orient)

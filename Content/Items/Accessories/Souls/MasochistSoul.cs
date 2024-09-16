@@ -210,7 +210,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Souls
             player.AddEffect<TimsConcoctionEffect>(Item);
 
             //wyvern feather
-            player.AddEffect<WyvernBalls>(Item);
+            //player.AddEffect<WyvernBalls>(Item); pointless; you have infinite flight at this point
 
             //dubious circuitry
             player.buffImmune[BuffID.CursedInferno] = true;

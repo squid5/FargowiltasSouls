@@ -1,7 +1,9 @@
-﻿using FargowiltasSouls.Content.Bosses.MutantBoss;
+﻿using FargowiltasSouls.Common.Graphics.Particles;
+using FargowiltasSouls.Content.Bosses.MutantBoss;
 using FargowiltasSouls.Content.Buffs.Masomode;
 using FargowiltasSouls.Core;
 using FargowiltasSouls.Core.Systems;
+using Luminance.Core.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -69,6 +71,15 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
                 if (plantera != null && Projectile.Distance(plantera.Center) < 1600f && FargoSoulsUtil.HostCheck)
                     Projectile.NewProjectile(Terraria.Entity.InheritSource(Projectile), Projectile.Center, 4f * Projectile.ai[1].ToRotationVector2(), ModContent.ProjectileType<CrystalLeafShot>(), Projectile.damage, Projectile.knockBack, Projectile.owner, ai0: plantera.whoAmI);
             }
+
+            /*
+            if (true || Projectile.localAI[0] % 2 == 0)
+            {
+                Color color = recolor ? Color.SkyBlue : Color.Lime;
+                Particle boom = new AlphaBloomParticle(Projectile.Center - Projectile.velocity, Vector2.Zero, color, Vector2.One * 1, Vector2.One * 0.1f, 120, false);
+                boom.Spawn();
+            }
+            */
         }
 
         public override void OnHitPlayer(Player target, Player.HurtInfo info)

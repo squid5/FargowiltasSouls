@@ -135,7 +135,8 @@ namespace FargowiltasSouls.Content.Projectiles.Minions
             Vector2 desiredPos = mousePos + offset;
             handlePos = Vector2.Lerp(handlePos, desiredPos, 0.5f);
 
-            Vector2 desiredCenter = handlePos;// + (Projectile.rotation - MathHelper.PiOver2).ToRotationVector2() * TextureAssets.Projectile[Projectile.type].Value.Width * Projectile.scale / 2;
+            Vector2 desiredCenter = handlePos;
+            //Projectile.velocity = FargoSoulsUtil.SmartAccel(Projectile.Center, Main.MouseWorld, Projectile.velocity, 1f, 1f);
             Projectile.velocity = (desiredCenter - Projectile.Center) / 3;
 
             if (Action == 0)

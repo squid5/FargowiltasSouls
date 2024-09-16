@@ -53,5 +53,6 @@ Attacks have a chance to squeak and deal 1 damage to you
     {
         public override Header ToggleHeader => Header.GetHeader<BionomicHeader>();
         public override int ToggleItemType => ModContent.ItemType<SqueakyToy>();
+        public override bool MutantsPresenceAffects => true;
     }
 }
