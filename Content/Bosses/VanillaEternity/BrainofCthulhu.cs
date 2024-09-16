@@ -82,7 +82,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
         public override bool SafePreAI(NPC npc)
         {
             EModeGlobalNPC.brainBoss = npc.whoAmI;
-
+            Main.NewText(npc.knockBackResist);
             if (WorldSavingSystem.SwarmActive)
                 return base.SafePreAI(npc);
 
@@ -151,7 +151,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
                     ClonefadeDashTimer = 0;
                     CloneFade = 0;
-                    npc.knockBackResist = 1;
+                    npc.knockBackResist = 0.45f;
                 }
                     
 
@@ -207,7 +207,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                 }
                 else if (ConfusionTimer > confusionThreshold2) // after telegraph
                 {
-                    npc.knockBackResist = 1f;
+                    npc.knockBackResist = 0.45f;
                     // no teleporting
                     teleportTimer = 2;
                     if (!Main.player[npc.target].HasBuff(BuffID.Confused))
