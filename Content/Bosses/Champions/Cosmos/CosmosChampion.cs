@@ -1609,6 +1609,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Cosmos
 
         private void Movement(Vector2 targetPos, float speedModifier, float cap = 12f, bool fastY = false)
         {
+            
             if (NPC.Distance(targetPos) < NPC.Size.Length())
                 speedModifier /= 3f;
             if (NPC.Center.X < targetPos.X)
@@ -1635,6 +1636,8 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Cosmos
                 if (NPC.velocity.Y > 0)
                     NPC.velocity.Y -= speedModifier * 6;
             }
+            
+            //NPC.velocity = FargoSoulsUtil.SmartAccel(NPC.Center, targetPos, NPC.velocity, 1f * speedModifier, 1.5f * speedModifier);
 
             float dist = NPC.Distance(targetPos);
             if (dist == 0)
