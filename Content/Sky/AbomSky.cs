@@ -1,4 +1,3 @@
-using FargowiltasSouls.Assets.ExtraTextures;
 using FargowiltasSouls.Content.Bosses.AbomBoss;
 using FargowiltasSouls.Core.Globals;
 using Luminance.Core.Graphics;

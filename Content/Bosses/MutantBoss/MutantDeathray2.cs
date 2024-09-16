@@ -11,14 +11,11 @@ using System;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
-using FargowiltasSouls.Core.Systems;
-
-using Luminance.Core.Graphics;
 using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Content.Bosses.MutantBoss
 {
-	public class MutantDeathray2 : MutantSpecialDeathray, IPixelatedPrimitiveRenderer
+    public class MutantDeathray2 : MutantSpecialDeathray, IPixelatedPrimitiveRenderer
     {
         public MutantDeathray2() : base(180) { }
 

@@ -1,11 +1,8 @@
-﻿using FargowiltasSouls.Content.Buffs.Masomode;
-using FargowiltasSouls.Core.Globals;
-using FargowiltasSouls.Core.Systems;
+﻿using FargowiltasSouls.Core.Systems;
 using Microsoft.Xna.Framework;
 using System;
 using Terraria;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Content.Projectiles.Masomode

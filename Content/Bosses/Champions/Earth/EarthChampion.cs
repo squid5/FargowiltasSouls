@@ -7,21 +7,12 @@ using FargowiltasSouls.Core.Systems;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
-using FargowiltasSouls.Content.Items.Placables.Relics;
-using FargowiltasSouls.Content.Items.Accessories.Forces;
-using FargowiltasSouls.Content.Buffs.Masomode;
-using FargowiltasSouls.Core.ItemDropRules;
-using FargowiltasSouls.Core.Systems;
-using FargowiltasSouls.Core.Globals;
-using FargowiltasSouls.Content.Buffs.Souls;
-using System.Collections.Generic;
 using Luminance.Core.Graphics;
 
 namespace FargowiltasSouls.Content.Bosses.Champions.Earth

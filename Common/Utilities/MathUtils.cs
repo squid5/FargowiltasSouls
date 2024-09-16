@@ -1,8 +1,4 @@
-﻿using FargowiltasSouls.Core.Systems;
-using Terraria;
-using Terraria.ModLoader;
-
-namespace FargowiltasSouls.Common.Utilities
+﻿namespace FargowiltasSouls.Common.Utilities
 {
     public static class MathUtils
     {

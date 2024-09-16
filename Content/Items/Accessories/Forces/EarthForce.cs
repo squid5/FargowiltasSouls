@@ -12,7 +12,6 @@ using System;
 using System.Linq;
 using Terraria;
 using Terraria.Audio;
-using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Content.Items.Accessories.Forces

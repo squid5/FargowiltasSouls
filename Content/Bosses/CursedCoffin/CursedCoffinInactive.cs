@@ -1,29 +1,8 @@
-﻿using System;
-using System.IO;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using System.Collections.Generic;
-using Terraria.DataStructures;
-using FargowiltasSouls.Content.Buffs.Masomode;
-using Terraria.GameContent.Bestiary;
 using Microsoft.Xna.Framework.Graphics;
-using Terraria.Graphics.Shaders;
-using FargowiltasSouls.Core.Systems;
-using FargowiltasSouls.Content.Buffs.Souls;
-using tModPorter;
-using Microsoft.CodeAnalysis;
-using FargowiltasSouls.Content.WorldGeneration;
-using System.Linq;
-using FargowiltasSouls.Content.Items.Accessories.Expert;
-using FargowiltasSouls.Content.Items.Weapons.Challengers;
-using Terraria.GameContent.ItemDropRules;
-using Terraria.UI;
-using FargowiltasSouls.Content.Items.BossBags;
-using FargowiltasSouls.Content.Items.Placables.Trophies;
-using FargowiltasSouls.Content.Items.Placables.Relics;
-using Luminance.Core.Graphics;
 
 namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 {

@@ -8,13 +8,6 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.Audio;
-using Microsoft.Xna.Framework.Graphics;
-using FargowiltasSouls.Core.Systems;
-
-using FargowiltasSouls.Assets.ExtraTextures;
-
-using Luminance.Core.Graphics;
 
 namespace FargowiltasSouls.Content.Bosses.Lifelight
 {

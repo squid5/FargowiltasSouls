@@ -16,7 +16,6 @@ using FargowiltasSouls.Common.Utilities;
 using FargowiltasSouls.Core.NPCMatching;
 using Terraria.GameContent;
 using Terraria.WorldBuilding;
-using System.Drawing;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System.Collections.Generic;
@@ -642,7 +641,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                 return result;
 
             NPC golem = FargoSoulsUtil.NPCExists(NPC.golemBoss, NPCID.Golem);
-
+            FargoSoulsUtil.PrintAI(npc);
             if (npc.type == NPCID.GolemHead)
             {
                 if (golem != null)
@@ -661,12 +660,11 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                         npc.position += npc.SafeDirectionTo(Main.player[npc.target].Center) * 4;
 
                     //disable attacks when nearby
-                    if (npc.HasValidTarget && npc.Distance(Main.player[npc.target].Center) < 350)// && !WorldSavingSystem.MasochistModeReal)
+                    if (npc.HasValidTarget && npc.Distance(Main.player[npc.target].Center) < 350 && !WorldSavingSystem.MasochistModeReal)
                     {
                         if (SuppressedAi1 < npc.ai[1])
                             SuppressedAi1 = npc.ai[1];
                         npc.ai[1] = 0f;
-
                         if (SuppressedAi2 < npc.ai[2])
                             SuppressedAi2 = npc.ai[2];
                         npc.ai[2] = 0f;
@@ -797,7 +795,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                             if (WorldSavingSystem.MasochistModeReal && !SecondDeathray)
                             {
                                 SecondDeathray = true;
-                                AttackTimer = attackThreshold - 40;
+                                AttackTimer = attackThreshold - 1;
                                 IsInTemple = Golem.CheckTempleWalls(npc.Center);
                             }
                             else
@@ -811,6 +809,15 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                         AttackTimer = 0;
                         DeathraySweepTargetHeight = 0;
                         DoAttack = false;
+
+                        if (WorldSavingSystem.MasochistModeReal && !SecondDeathray)
+                        {
+                            SecondDeathray = true;
+                            AttackTimer = attackThreshold - 1;
+                            IsInTemple = Golem.CheckTempleWalls(npc.Center);
+                        }
+                        else
+                            SecondDeathray = false;
                     }
 
                     if (true) //!WorldSavingSystem.MasochistModeReal)
@@ -847,6 +854,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     if (!DoAttack) //spray lasers after dash
                     {
                         DoDeathray = !DoDeathray;
+                        npc.ai[2] = 0; // reset vanilla eye laser timer
 
                         if (FargoSoulsUtil.HostCheck)
                         {
