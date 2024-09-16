@@ -1,6 +1,5 @@
 ﻿using FargowiltasSouls.Content.Buffs.Masomode;
 using FargowiltasSouls.Core.Systems;
-using Luminance.Core.Graphics;
 using Microsoft.Xna.Framework;
 using System;
 using Terraria;

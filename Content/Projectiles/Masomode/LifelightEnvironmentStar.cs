@@ -1,26 +1,25 @@
 ﻿using FargowiltasSouls.Common.Graphics.Particles;
-using FargowiltasSouls.Core.Systems;
 using Luminance.Core.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using System.IO;
+using System;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.ID;
-using Terraria.ModLoader;
+using FargowiltasSouls.Content.Bosses.Lifelight;
 
-namespace FargowiltasSouls.Content.Bosses.Lifelight
+namespace FargowiltasSouls.Content.Projectiles.Masomode
 {
-
-    public class LifeRunespearExplosion : ModProjectile
+    public class LifelightEnvironmentStar : LightningArc
     {
         // Kills the projectile above 0, so set it to a negative value.
         public ref float Timer => ref Projectile.ai[0];
 
         // The .whoAmI of the parent npc.
         public ref float ParentIndex => ref Projectile.ai[1];
+
         public override string Texture => "FargowiltasSouls/Assets/Effects/LifeStar";
 
         public override void SetDefaults()
@@ -31,10 +30,9 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
             Projectile.penetrate = 1;
             Projectile.tileCollide = false;
             Projectile.ignoreWater = true;
-            Projectile.alpha = 0;
-
+            Projectile.friendly = true;
             Projectile.hostile = true;
-            Projectile.scale = 1;
+            Projectile.alpha = 0;
         }
         public override void SendExtraAI(BinaryWriter writer)
         {
@@ -46,9 +44,24 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
             Projectile.localAI[0] = reader.Read();
             base.ReceiveExtraAI(reader);
         }
-        public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
+        public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) //circular hitbox
         {
-            return LumUtils.CircularHitboxCollision(Projectile.Center, projHitbox.Width / 2, targetHitbox);
+            int clampedX = projHitbox.Center.X - targetHitbox.Center.X;
+            int clampedY = projHitbox.Center.Y - targetHitbox.Center.Y;
+
+            if (Math.Abs(clampedX) > targetHitbox.Width / 2)
+                clampedX = targetHitbox.Width / 2 * Math.Sign(clampedX);
+            if (Math.Abs(clampedY) > targetHitbox.Height / 2)
+                clampedY = targetHitbox.Height / 2 * Math.Sign(clampedY);
+
+            int dX = projHitbox.Center.X - targetHitbox.Center.X - clampedX;
+            int dY = projHitbox.Center.Y - targetHitbox.Center.Y - clampedY;
+
+            return Math.Sqrt(dX * dX + dY * dY) <= Projectile.width / 2;
+        }
+        private Color GetColor()
+        {
+            return Main.rand.NextFromCollection([Color.Cyan, Color.Goldenrod, Color.DeepPink]);
         }
         public override void AI()
         {
@@ -58,30 +71,14 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                 SoundEngine.PlaySound(SoundID.Item29 with { Volume = 1.5f }, Projectile.Center);
                 Projectile.netUpdate = true;
             }
-
-            if (Timer > 0f)
-                Projectile.Kill();
-
-            // Ramp up the scale and rotation over time
-            float ratio = 1f - Math.Abs(Timer + 5) / Projectile.localAI[0];
-            float rampupVfx = (float)Math.Sin(MathHelper.PiOver2 * ratio);
-            Projectile.scale = 0.1f + 1.4f * rampupVfx;
-
-            // rescale hitbox
-            Projectile.position = Projectile.Center;
-            Projectile.width = Projectile.height = (int)(150 * Projectile.scale);
-            Projectile.Center = Projectile.position;
-
-            if (Timer == -5f)
+            if (Timer == -5)
             {
-                Projectile.Opacity = 0;
+                Projectile.position = Projectile.Center;
+                Projectile.width = Projectile.height = (int)(150 * Projectile.scale);
+                Projectile.Center = Projectile.position;
+
                 SoundEngine.PlaySound(SoundID.Item14, Projectile.Center);
                 SoundEngine.PlaySound(LifeChallenger.RuneSound1 with { PitchRange = (-0.6f, -0.4f) }, Projectile.Center);
-
-                int damage = Projectile.damage;
-                if (FargoSoulsUtil.HostCheck)
-                    for (int i = 0; i < 4; i++)
-                        Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, (Projectile.rotation + MathHelper.PiOver2 * i).ToRotationVector2() * 20f, ModContent.ProjectileType<LifeWave>(), damage, 0f, Main.myPlayer);
 
                 for (int j = 0; j < 32; j++)
                 {
@@ -89,7 +86,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                     Particle p = new SmallSparkle(
                         worldPosition: Projectile.Center + offset,
                         velocity: Vector2.Zero,
-                        drawColor: Color.Cyan,
+                        drawColor: GetColor(),
                         scale: 1f,
                         lifetime: Main.rand.Next(20, 80),
                         rotation: 0,
@@ -98,38 +95,37 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                     p.Spawn();
                 }
             }
-            
-
-            NPC parent = FargoSoulsUtil.NPCExists(ParentIndex);
-            // Stick to a position set by lifelight.
-            if (parent != null && parent.ModNPC is LifeChallenger lifelight)
-            {
-                Projectile.Center = parent.Center + lifelight.LockVector1 + lifelight.LockVector2 * (LifeRunespearHitbox.Length + 30);
-                if (parent.HasPlayerTarget)
-                    Projectile.rotation = 1f * MathHelper.TwoPi * rampupVfx + Projectile.DirectionTo(Main.player[parent.target].Center).ToRotation();
-                else
-                    Projectile.Kill();
-            }
-            else
+            if (Timer > 0f)
                 Projectile.Kill();
+            else if (Timer > -5)
+            {
+                Projectile.Opacity = 0f;
+            }
+
+            // Ramp up the scale and rotation over time
+            float ratio = 1f - Math.Abs(Timer) / Projectile.localAI[0];
+            float rampupVfx = (float)Math.Sin(MathHelper.PiOver2 * ratio);
+            Projectile.scale = 0.1f + 1.4f * rampupVfx;
+            Projectile.scale *= Main.rand.NextFloat(0.8f, 1.2f);
+            Projectile.rotation = 2f * MathHelper.TwoPi * rampupVfx;
 
             Timer++;
         }
-        public override bool CanHitPlayer(Player target) => Timer > -5f;
-        public override void OnHitPlayer(Player target, Player.HurtInfo info)
+
+        // Telegraphs should not deal damage.
+        public override bool? CanDamage() => Timer > -5 && Timer < 0 ? null : false;
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
-            if (WorldSavingSystem.EternityMode)
-                target.AddBuff(ModContent.BuffType<Buffs.Masomode.SmiteBuff>(), 60 * 6);
+            if (target.townNPC)
+                return;
+            modifiers.SourceDamage *= 10;
         }
-        public override void OnKill(int timeLeft)
-        {
-            
-        }
+
         public override Color? GetAlpha(Color lightColor)
         {
-            Color color = Color.Cyan;
+            Color color = Color.HotPink;
             color.A = 50;
-            return color * Projectile.Opacity;
+            return color;
         }
 
         public override bool PreDraw(ref Color lightColor)

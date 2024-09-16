@@ -1,8 +1,6 @@
 using FargowiltasSouls.Common.Graphics.Particles;
 using FargowiltasSouls.Common.Utilities;
-using FargowiltasSouls.Content.Bosses.BanishedBaron;
 using FargowiltasSouls.Content.Buffs.Masomode;
-using FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies;
 using FargowiltasSouls.Content.Projectiles;
 using FargowiltasSouls.Content.Projectiles.Deathrays;
 using FargowiltasSouls.Content.Projectiles.Masomode;

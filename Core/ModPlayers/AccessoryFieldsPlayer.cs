@@ -1,11 +1,7 @@
 ﻿using FargowiltasSouls.Content.Items.Accessories.Enchantments;
-using FargowiltasSouls.Content.Projectiles.Souls;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
-using Microsoft.Xna.Framework;
 using System.Collections.Generic;
-using System.Linq;
 using Terraria;
-using Terraria.ID;
 using static FargowiltasSouls.Core.Systems.DashManager;
 
 namespace FargowiltasSouls.Core.ModPlayers

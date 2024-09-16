@@ -16,16 +16,13 @@ using FargowiltasSouls.Common.Utilities;
 using FargowiltasSouls.Content.Bosses.Champions.Shadow;
 using FargowiltasSouls.Core.NPCMatching;
 using FargowiltasSouls.Content.Bosses.DeviBoss;
-using FargowiltasSouls.Content.Patreon.DanielTheRobot;
 using FargowiltasSouls.Common.Graphics.Particles;
 using Terraria.DataStructures;
-using Terraria.Localization;
-using Terraria.WorldBuilding;
 using Luminance.Core.Graphics;
 
 namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 {
-	public class SkeletronHead : EModeNPCBehaviour
+    public class SkeletronHead : EModeNPCBehaviour
     {
         public override NPCMatcher CreateMatcher() => new NPCMatcher().MatchType(NPCID.SkeletronHead);
 

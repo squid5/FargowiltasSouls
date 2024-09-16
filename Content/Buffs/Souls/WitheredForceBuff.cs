@@ -1,7 +1,4 @@
-﻿using FargowiltasSouls.Content.Items.Accessories.Enchantments;
-using FargowiltasSouls.Core.AccessoryEffectSystem;
-using System.Linq;
-using Terraria;
+﻿using Terraria;
 using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Content.Buffs.Souls

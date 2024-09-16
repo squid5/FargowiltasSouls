@@ -9,7 +9,6 @@ using Terraria.GameContent.Generation;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.WorldBuilding;
-using static tModPorter.ProgressUpdate;
 
 namespace FargowiltasSouls.Core.Systems
 {
@@ -65,7 +64,7 @@ namespace FargowiltasSouls.Core.Systems
             bool buildItem = false;
 
             // no placing
-            if (item.createTile != -1 || item.createWall != -1)
+            if (!ItemID.Sets.Torches[item.type] && (item.createTile != -1 || item.createWall != -1))
             {
                 illegalItem = true;
                 buildItem = true;

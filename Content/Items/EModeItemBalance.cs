@@ -1,5 +1,7 @@
-﻿using FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.FrostMoon;
+﻿using FargowiltasSouls.Content.Items.Accessories.Enchantments;
+using FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.FrostMoon;
 using FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.PumpkinMoon;
+using FargowiltasSouls.Core.AccessoryEffectSystem;
 using FargowiltasSouls.Core.Systems;
 using System;
 using System.Collections.Generic;
@@ -466,7 +468,8 @@ namespace FargowiltasSouls.Content.Items
             */
             if (item.shoot > ProjectileID.None && ProjectileID.Sets.IsAWhip[item.shoot])
             {
-                ItemBalance(tooltips, EModeChange.Nerf, "WhipSpeed");
+                if (!Main.LocalPlayer.HasEffect<TikiEffect>())
+                    ItemBalance(tooltips, EModeChange.Nerf, "WhipSpeed");
                 ItemBalance(tooltips, EModeChange.Nerf, "WhipStack");
             }
             if (item.prefix >= PrefixID.Hard && item.prefix <= PrefixID.Warding)

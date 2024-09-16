@@ -2,11 +2,10 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
-using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Common.Graphics.Particles
 {
-	public class AlphaSparkParticle : Particle
+    public class AlphaSparkParticle : Particle
 	{
         public override string AtlasTextureName => "FargowiltasSouls.SparkParticle";
         public Color BloomColor;

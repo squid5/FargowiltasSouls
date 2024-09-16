@@ -1,6 +1,5 @@
 ﻿using FargowiltasSouls.Content.Bosses.VanillaEternity;
 using FargowiltasSouls.Core.Systems;
-using Luminance.Core.Graphics;
 using Microsoft.Xna.Framework;
 using System;
 using Terraria;

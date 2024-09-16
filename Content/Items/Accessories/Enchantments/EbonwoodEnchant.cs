@@ -17,13 +17,6 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
-
-            // DisplayName.SetDefault("Ebonwood Enchantment");
-            /* Tooltip.SetDefault(
-@"You are surrounded by an aura of Shadowflame
-Any projectiles that would deal less than 10 damage to you are destroyed
-'Untapped potential'"); */
-            //in force damage theshold increased to 25 AND any npc that has less than 200 HP is instantly killed in the aura
         }
 
         public override Color nameColor => new(100, 90, 141);

@@ -5,10 +5,8 @@ using Terraria.GameContent;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using System.Linq;
 using Terraria.Audio;
 using FargowiltasSouls.Content.Projectiles.Masomode;
-using FargowiltasSouls.Core.ModPlayers;
 using FargowiltasSouls.Content.Items.Weapons.Challengers;
 using FargowiltasSouls.Content.UI.Elements;
 

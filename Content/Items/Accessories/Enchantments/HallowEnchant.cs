@@ -1,6 +1,5 @@
 ﻿using FargowiltasSouls.Common.Graphics.Particles;
 using FargowiltasSouls.Content.Items.Accessories.Forces;
-using FargowiltasSouls.Content.Projectiles;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using FargowiltasSouls.Core.Toggler.Content;
 using Luminance.Core.Graphics;

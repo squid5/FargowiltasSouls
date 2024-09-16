@@ -1,5 +1,4 @@
-﻿using FargowiltasSouls.Common.Utilities;
-using FargowiltasSouls.Core.Systems;
+﻿using FargowiltasSouls.Core.Systems;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
