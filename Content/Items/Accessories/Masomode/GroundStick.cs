@@ -1,4 +1,5 @@
-﻿using FargowiltasSouls.Content.Buffs;
+﻿using FargowiltasSouls.Content.Bosses.MutantBoss;
+using FargowiltasSouls.Content.Buffs;
 using FargowiltasSouls.Content.Buffs.Masomode;
 using FargowiltasSouls.Content.Buffs.Minions;
 using FargowiltasSouls.Content.Projectiles.Deathrays;
@@ -98,6 +99,9 @@ Two friendly probes fight by your side and will supercharge with you
                 if (name.Contains("lightning") || name.Contains("electr") || name.Contains("thunder") || name.Contains("laser"))
                     electricAttack = true;
             }
+
+            if (NPC.AnyNPCs(ModContent.NPCType<MutantBoss>()))
+                electricAttack = false;
 
             if (electricAttack && player.whoAmI == Main.myPlayer && !player.HasBuff(ModContent.BuffType<SuperchargedBuff>()))
             {
