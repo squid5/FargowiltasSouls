@@ -39,10 +39,12 @@ namespace FargowiltasSouls.Core.Systems
             {
                 MonkDashEffect.AddDash(player);
             }
+            /*
             if (player.HasEffect<SolarEffect>())
             {
                 SolarEffect.AddDash(player);
             }
+            */
             if (player.HasEffect<ShadowForceDashEffect>())
             {
                 ShadowForceDashEffect.AddDash(player);

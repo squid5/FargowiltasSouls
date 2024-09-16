@@ -39,7 +39,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Forces
                 //meteor shower
                 MeteorEnchant.AddEffects(player, Item);
                 //solar shields
-                player.AddEffect<SolarEffect>(Item);
+                //player.AddEffect<SolarEffect>(Item);
                 player.AddEffect<SolarFlareEffect>(Item);
                 //stealth, voids, pet
                 VortexEnchant.AddEffects(player, Item);
