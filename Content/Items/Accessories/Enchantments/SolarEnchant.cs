@@ -1,9 +1,18 @@
-﻿using FargowiltasSouls.Content.Buffs.Souls;
+﻿using FargowiltasSouls.Common.Graphics.Particles;
+using FargowiltasSouls.Content.Bosses.Champions.Cosmos;
+using FargowiltasSouls.Content.Buffs.Souls;
+using FargowiltasSouls.Content.Items.Accessories.Forces;
+using FargowiltasSouls.Content.Projectiles.Souls;
+using FargowiltasSouls.Content.UI.Elements;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using FargowiltasSouls.Core.Systems;
 using FargowiltasSouls.Core.Toggler.Content;
+using Luminance.Core.Graphics;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using rail;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -29,7 +38,8 @@ Attacks may inflict the Solar Flare debuff
             // '烫手魔石'");
         }
 
-        public override Color nameColor => new(254, 158, 35);
+        public static readonly Color NameColor = new(254, 158, 35);
+        public override Color nameColor => NameColor;
 
 
         public override void SetDefaults()
@@ -42,7 +52,7 @@ Attacks may inflict the Solar Flare debuff
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.AddEffect<SolarEffect>(Item);
+            //player.AddEffect<SolarEffect>(Item);
             player.AddEffect<SolarFlareEffect>(Item);
         }
 
@@ -65,6 +75,7 @@ Attacks may inflict the Solar Flare debuff
 
         }
     }
+    /*
     public class SolarEffect : AccessoryEffect
     {
         public override Header ToggleHeader => Header.GetHeader<CosmoHeader>();
@@ -137,14 +148,62 @@ Attacks may inflict the Solar Flare debuff
             }
         }
     }
+    */
     public class SolarFlareEffect : AccessoryEffect
     {
         public override Header ToggleHeader => Header.GetHeader<CosmoHeader>();
         public override int ToggleItemType => ModContent.ItemType<SolarEnchant>();
+
+        /*
         public override void OnHitNPCEither(Player player, NPC target, NPC.HitInfo hitInfo, DamageClass damageClass, int baseDamage, Projectile projectile, Item item)
         {
             if (Main.rand.NextBool(4))
                 target.AddBuff(ModContent.BuffType<SolarFlareBuff>(), 300);
+        }
+        */
+
+        public override void PostUpdateEquips(Player player)
+        {
+            FargoSoulsPlayer modPlayer = player.FargoSouls();
+
+            CooldownBarManager.Activate("SolarEnchantCharge", ModContent.Request<Texture2D>("FargowiltasSouls/Content/Items/Accessories/Enchantments/SolarEnchant").Value, SolarEnchant.NameColor, () => Main.LocalPlayer.FargoSouls().SolarEnchCharge / 180, true);
+
+            if (player.HeldItem != null && player.HeldItem.damage > 0 && player.controlUseItem)
+            {
+                if (modPlayer.SolarEnchCharge < 180)
+                {
+                    modPlayer.SolarEnchCharge += 1;
+                    if (modPlayer.SolarEnchCharge == 180)
+                    {
+                        SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/Accessories/ChargeSound"), player.Center);
+                    }
+                }
+                else
+                {
+                    //Charged particles
+                    float rotation = Main.rand.NextFloat(0, 2 * MathHelper.Pi);
+                    Vector2 pos = player.Center + 24 * Vector2.UnitX.RotatedBy(rotation);
+                    Particle spark = new SparkParticle(pos, -(0.8f * Vector2.UnitX).RotatedBy(rotation), Color.OrangeRed, 0.4f, 10);
+                    spark.Spawn();
+                }
+            }
+            else if (modPlayer.SolarEnchCharge >= 180)
+            {
+                SoundEngine.PlaySound(SoundID.DD2_BetsyFlameBreath with {Pitch = -0.6f, Volume = 0.8f}, player.Center);
+
+                bool wizBoost = modPlayer.ForceEffect<SolarEnchant>();
+                int multiplier = wizBoost ? 2 : 1;
+                int damage = 3 * 1800 * multiplier;
+                int speed = wizBoost ? 17 : 13;
+
+                Projectile.NewProjectile(player.GetSource_EffectItem<SolarFlareEffect>(), player.Center, Vector2.Zero, ModContent.ProjectileType<SolarEnchFlare>(), damage, 1f, player.whoAmI, ai2: speed);
+
+                modPlayer.SolarEnchCharge = 0;
+            }
+            else if (modPlayer.SolarEnchCharge > 0)
+            {
+                modPlayer.SolarEnchCharge--;
+            }
         }
     }
 }

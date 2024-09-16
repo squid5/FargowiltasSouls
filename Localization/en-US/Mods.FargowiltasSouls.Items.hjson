@@ -582,9 +582,9 @@ SolarEnchant: {
 	DisplayName: Solar Enchantment
 	Tooltip:
 		'''
-		Solar shield allows you to dash through enemies
-		Solar shield is not depleted on hit, but has reduced damage reduction
-		Attacks may inflict the Solar Flare debuff
+		Build up solar charge while attacking
+		Stop attacking when fully charged to release a large solar burst
+		Solar bursts inflict the Solar Flare debuff and scale with melee damage
 		'Too hot to handle'
 		'''
 }

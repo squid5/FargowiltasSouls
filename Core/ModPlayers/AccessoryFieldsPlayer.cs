@@ -79,6 +79,7 @@ namespace FargowiltasSouls.Core.ModPlayers
 
         //force of cosmos
         public float NebulaEnchCD = 3 * 60;
+        public float SolarEnchCharge = 0;
         public float MeteorCD = 60;
 
         public int ApprenticeCD;

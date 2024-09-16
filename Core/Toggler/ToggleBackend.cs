@@ -230,7 +230,7 @@ namespace FargowiltasSouls.Core.Toggler
             player.SetToggleValue<SquireMountJump>(true);
             player.SetToggleValue<SquireMountSpeed>(true);
             player.SetToggleValue<NebulaEffect>(true);
-            player.SetToggleValue<SolarEffect>(true);
+            //player.SetToggleValue<SolarEffect>(true);
             player.SetToggleValue<HuntressEffect>(true);
             player.SetToggleValue<CrystalAssassinDash>(true);
             player.SetToggleValue<GladiatorBanner>(true);
