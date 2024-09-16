@@ -732,29 +732,34 @@ namespace FargowiltasSouls //lets everything access it without using
         public static Vector2 SmartAccel(Vector2 position, Vector2 destination, Vector2 velocity, float accel, float decel)
         {
             Vector2 dif = destination - position;
+
             if (dif == Vector2.Zero)
                 return Vector2.Zero;
-            // Project velocity onto difference
 
+            if (velocity == Vector2.Zero)
+                velocity = Vector2.UnitX * 0.1f;
+
+            // Project velocity onto difference
             Vector2 a = velocity;
             Vector2 b = dif.SafeNormalize(Vector2.Zero);
-            float scalarProj = Vector2.Dot(a, b) / Vector2.Dot(b, b);
+            float scalarProj = Vector2.Dot(a, b);
             Vector2 vProj = b * scalarProj;
             Vector2 vOrth = velocity - vProj;
 
             // towards target
             Vector2 vProjN = vProj.SafeNormalize(Vector2.Zero);
             if (scalarProj > 0)
-                velocity += vProjN * SmartAccel1D(dif.Length(), vProj.Length(), accel, decel);
+                velocity += vProjN * (float)SmartAccel1D(dif.Length(), vProj.Length(), accel, decel);
             else
                 velocity -= vProjN * decel;
+
             // perpendicular to target
             velocity -= Math.Min(decel, vOrth.Length()) * vOrth.SafeNormalize(Vector2.Zero);
 
             return velocity;
         }
 
-        public static float SmartAccel1D(float s, float v, float a, float d)
+        public static double SmartAccel1D(double s, double v, double a, double d)
         {
             // Deceleration should be negative, acceleration positive, and distance positive.
             s = Math.Abs(s);
@@ -766,17 +771,16 @@ namespace FargowiltasSouls //lets everything access it without using
             // If the root is 0, there's 1 solution for t, which means we perfectly match the target by decelerating.
             // If the root is imaginary, we would undershoot by decelerating now.
 
-            float root = Math.Abs(v * v / d * d) + 2 * s / d;
-
+            double root = Math.Abs(v * v / (d * d)) + 2 * s / d;
             if (root >= 0)
                 return d;
 
             // We're undershooting.
             // If full acceleration would cause us to overshoot next frame, only accelerate enough to perfectly match deceleration time with arrival time.
-            float root2 = -2 * s / d;
+            double root2 = -2 * s / d;
             if (root2 <= 0)
                 return a;
-            float accelFraction = (MathF.Sqrt(root2) * -d - v) / a;
+            double accelFraction = (Math.Sqrt(root2) * -d - v) / a;
             if (accelFraction > 0 && accelFraction < 1)
                 return accelFraction * a;
             return a;
