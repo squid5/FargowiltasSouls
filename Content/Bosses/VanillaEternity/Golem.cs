@@ -650,6 +650,37 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             {
                 const int attackThreshold = 540;
 
+                if (DoAttack || (WorldSavingSystem.MasochistModeReal && SecondDeathray))
+                {
+                    const float geyserTiming = 100;
+                    if (AttackTimer % geyserTiming == geyserTiming - 5)
+                    {
+                        Vector2 spawnPos = golem.Center;
+                        float offset = AttackTimer % (geyserTiming * 2) == geyserTiming - 5 ? 0 : 0.5f;
+                        for (int i = -3; i <= 3; i++) //ceiling geysers
+                        {
+                            int tilePosX = (int)(spawnPos.X / 16 + golem.width * (i + offset) * 3 / 16);
+                            int tilePosY = (int)spawnPos.Y / 16;// + 1;
+
+                            int type = IsInTemple ? ModContent.ProjectileType<GolemGeyser>() : ModContent.ProjectileType<GolemGeyser2>();
+                            Projectile.NewProjectile(npc.GetSource_FromThis(), tilePosX * 16 + 8, tilePosY * 16 + 8, 0f, 0f, type, FargoSoulsUtil.ScaledProjectileDamage(golem.damage), 0f, Main.myPlayer, golem.whoAmI);
+                        }
+                    }
+
+                    if (IsInTemple) //nerf golem movement during deathray dash, provided we're in temple
+                    {
+                        if (golem.HasValidTarget)
+                        {
+                            //golem.velocity.X = 0f;
+
+                            if (golem.ai[0] == 0f && golem.velocity.Y == 0f && golem.ai[1] > 1f) //if golem is standing on ground and preparing to jump, stall it
+                                golem.ai[1] = 1f;
+
+                            golem.GetGlobalNPC<Golem>().DoStompBehaviour = false; //disable stomp attacks
+                        }
+                    }
+                }
+
                 if (!DoAttack) //default mode
                 {
                     npc.position += npc.velocity * 0.25f;
@@ -846,37 +877,6 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                         NetSync(npc);
                     }
                     return false;
-                }
-
-                if (DoAttack || WorldSavingSystem.MasochistModeReal && SecondDeathray) //!WorldSavingSystem.MasochistModeReal)
-                {
-                    const float geyserTiming = 100;
-                    if (AttackTimer % geyserTiming == geyserTiming - 5)
-                    {
-                        Vector2 spawnPos = golem.Center;
-                        float offset = AttackTimer % (geyserTiming * 2) == geyserTiming - 5 ? 0 : 0.5f;
-                        for (int i = -3; i <= 3; i++) //ceiling geysers
-                        {
-                            int tilePosX = (int)(spawnPos.X / 16 + golem.width * (i + offset) * 3 / 16);
-                            int tilePosY = (int)spawnPos.Y / 16;// + 1;
-
-                            int type = IsInTemple ? ModContent.ProjectileType<GolemGeyser>() : ModContent.ProjectileType<GolemGeyser2>();
-                            Projectile.NewProjectile(npc.GetSource_FromThis(), tilePosX * 16 + 8, tilePosY * 16 + 8, 0f, 0f, type, FargoSoulsUtil.ScaledProjectileDamage(golem.damage), 0f, Main.myPlayer, golem.whoAmI);
-                        }
-                    }
-
-                    if (IsInTemple) //nerf golem movement during deathray dash, provided we're in temple
-                    {
-                        if (golem.HasValidTarget)
-                        {
-                            //golem.velocity.X = 0f;
-
-                            if (golem.ai[0] == 0f && golem.velocity.Y == 0f && golem.ai[1] > 1f) //if golem is standing on ground and preparing to jump, stall it
-                                golem.ai[1] = 1f;
-
-                            golem.GetGlobalNPC<Golem>().DoStompBehaviour = false; //disable stomp attacks
-                        }
-                    }
                 }
             }
 
