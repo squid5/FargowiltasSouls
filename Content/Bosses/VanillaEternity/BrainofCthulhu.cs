@@ -36,6 +36,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
         public int ClonefadeDashTimer;
         public float CloneFade = 0f;
         public bool ManuallyDrawing;
+        public bool KnockbackImmune;
 
         public override void SendExtraAI(NPC npc, BitWriter bitWriter, BinaryWriter binaryWriter)
         {
@@ -46,6 +47,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             binaryWriter.Write7BitEncodedInt(ClonefadeDashTimer);
             binaryWriter.Write(CloneFade);
             bitWriter.WriteBit(EnteredPhase2);
+            bitWriter.WriteBit(KnockbackImmune);
         }
 
         public override void ReceiveExtraAI(NPC npc, BitReader bitReader, BinaryReader binaryReader)
@@ -57,6 +59,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             ClonefadeDashTimer = binaryReader.Read7BitEncodedInt();
             CloneFade = binaryReader.ReadSingle();
             EnteredPhase2 = bitReader.ReadBit();
+            KnockbackImmune = bitReader.ReadBit();
         }
 
         public override void SetDefaults(NPC npc)
@@ -82,7 +85,6 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
         public override bool SafePreAI(NPC npc)
         {
             EModeGlobalNPC.brainBoss = npc.whoAmI;
-            Main.NewText(npc.knockBackResist);
             if (WorldSavingSystem.SwarmActive)
                 return base.SafePreAI(npc);
 
@@ -120,19 +122,19 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                 int confusionThreshold2 = confusionThreshold - 60;
 
                 // Fade dash
-                float cloneTime = 40;
+                float cloneTime = 50;
                 int dashTime = 60;
                 ref float teleportTimer = ref npc.localAI[1];
-                bool noFadeDash = ConfusionTimer.IsWithinBounds(confusionThreshold2 - 90, confusionThreshold2);
+                bool noFadeDash = ConfusionTimer.IsWithinBounds(confusionThreshold2 - 90, confusionThreshold2) || (npc.HasPlayerTarget && !Main.player[npc.target].HasBuff(BuffID.Confused));
                 if (teleportTimer >= cloneTime && teleportTimer <= 60 && !noFadeDash)
                 {
                     if (CloneFade < 1)
                         CloneFade += 0.05f;
                     if (ClonefadeDashTimer < dashTime && npc.HasPlayerTarget)
                     {
-                        npc.knockBackResist = 0;
+                        KnockbackImmune = true;
                         ClonefadeDashTimer++;
-                        teleportTimer = cloneTime;
+                        teleportTimer = cloneTime + 5;
                         Player player = Main.player[npc.target];
                         npc.velocity += npc.DirectionTo(player.Center) * 0.35f;
                     }
@@ -151,7 +153,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
                     ClonefadeDashTimer = 0;
                     CloneFade = 0;
-                    npc.knockBackResist = 0.45f;
+                    KnockbackImmune = false;
                 }
                     
 
@@ -207,9 +209,11 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                 }
                 else if (ConfusionTimer > confusionThreshold2) // after telegraph
                 {
-                    npc.knockBackResist = 0.45f;
+                    KnockbackImmune = false;
                     // no teleporting
                     teleportTimer = 2;
+                    ClonefadeDashTimer = 0;
+                    CloneFade = 0;
                     if (!Main.player[npc.target].HasBuff(BuffID.Confused))
                     {
                         if (npc.HasPlayerTarget)
@@ -219,7 +223,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                             Vector2 toNPC = npc.Center - desiredPos;
                             desiredPos += Vector2.UnitX * MathF.Sign(toNPC.X) * 300f + Vector2.UnitY * MathF.Sign(toNPC.Y) * 300f;
                             npc.velocity = Vector2.Lerp(npc.velocity, npc.DirectionTo(desiredPos) * Math.Min(10, npc.Distance(desiredPos)), 0.2f);
-                            npc.knockBackResist = 0f;
+                            KnockbackImmune = true;
                         }
                         
                     }
@@ -406,6 +410,13 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
         {
             if (npc.life > 0)
                 modifiers.FinalDamage *= Math.Max(0.18f, (float)Math.Sqrt((double)npc.life / npc.lifeMax));
+
+            if (KnockbackImmune)
+            {
+                Main.NewText("kbi");
+                modifiers.DisableKnockback();
+            }
+                
 
             base.ModifyIncomingHit(npc, ref modifiers);
         }
