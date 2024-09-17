@@ -21,6 +21,7 @@
   <ItemGroup>
     <None Remove="Assets\AutoloadedEffects\Shaders\AbomRitualBackgroundShader.fx" />
     <None Remove="Assets\AutoloadedEffects\Shaders\MoltenEnchantShader.fx" />
+    <None Remove="Assets\AutoloadedEffects\Shaders\SolarEnchantShader.fx" />
     <None Remove="Assets\AutoloadedEffects\Shaders\StyxGazerShader.fx" />
     <None Remove="Assets\UI\CooldownBar.png" />
     <None Remove="Assets\UI\CooldownBarFill.png" />
