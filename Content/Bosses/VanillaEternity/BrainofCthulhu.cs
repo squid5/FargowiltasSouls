@@ -413,7 +413,6 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
             if (KnockbackImmune)
             {
-                Main.NewText("kbi");
                 modifiers.DisableKnockback();
             }
                 
