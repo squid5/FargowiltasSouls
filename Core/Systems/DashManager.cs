@@ -1,7 +1,4 @@
-﻿//this currently does not work: it still does the vanilla dash, i do not know how, i do not know how to fix it.
-
-
-using FargowiltasSouls.Content.Items.Accessories.Enchantments;
+﻿using FargowiltasSouls.Content.Items.Accessories.Enchantments;
 using FargowiltasSouls.Content.Items.Accessories.Forces;
 using FargowiltasSouls.Content.Items.Consumables;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
@@ -113,14 +110,12 @@ namespace FargowiltasSouls.Core.Systems
             dir = 1;
             dashing = true; //these two are overriden by the actual method anyway
 
-
             Player player = Main.LocalPlayer;
             Player.DashStartAction action = null;
             object[] args = [dir, dashing, action];
             DashHandleMethod.Invoke(player, args);
             dir = (int)args[0];
             dashing = (bool)args[1];
-            //action = (Player.DashStartAction)args[2];
         }
 
     }

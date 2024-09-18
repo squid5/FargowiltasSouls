@@ -33,6 +33,9 @@
     <None Remove="Content\Projectiles\Masomode\PlanteraToothVanilla.png" />
     <None Remove="Content\Projectiles\Masomode\PlanteraToothVanilla2.png" />
     <None Remove="Content\Projectiles\Masomode\PlanteraToothVanillaSmall.png" />
+    <None Remove="Content\Projectiles\Souls\MeteorEnchantMeatball.png" />
+    <None Remove="Content\Projectiles\Souls\MeteorEnchantMeatballGlow.png" />
+    <None Remove="Content\Projectiles\Souls\MeteorEnchantMeatballWizard.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Assets\ExtraTextures\Noise\" />

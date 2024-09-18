@@ -123,6 +123,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
             if (player.whoAmI != Main.myPlayer)
                 return;
             FargoSoulsPlayer modPlayer = player.FargoSouls();
+
             if (modPlayer.MeteorCD > 0)
                 return;
 
@@ -134,7 +135,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
             Vector2 pos = new(player.Center.X + Main.rand.NextFloat(-1000, 1000), player.Center.Y - 1000);
             Vector2 vel = new(Main.rand.NextFloat(-2, 2), Main.rand.NextFloat(8, 12));
 
-            pos.X = target.Center.X + Main.rand.NextFloat(-16, 16);
+            pos.X = target.Center.X + Main.rand.NextFloat(-320, 320);
 
             //can retarget better at them, but dont aim meteors upwards
             Vector2 predictive = Main.rand.NextFloat(10f, 30f) * target.velocity;
@@ -147,16 +148,8 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
             }
             SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/ThrowShort"), pos);
 
-            int i = Projectile.NewProjectile(GetSource_EffectItem(player), pos, vel, ModContent.ProjectileType<MeteorEnchantMeatball>(), FargoSoulsUtil.HighestDamageTypeScaling(player, damage), 0.5f, player.whoAmI, 0, 0.5f + (float)Main.rand.NextDouble() * 0.3f);
-            if (forceEffect && i.IsWithinBounds(Main.maxProjectiles))
-            {
-                Projectile p = Main.projectile[i];
-                p.position = p.Center;
-                p.scale *= 2;
-                p.width *= 2;
-                p.height *= 2;
-                p.Center = p.position;
-            }
+            int force = forceEffect ? 1 : 0;
+            int i = Projectile.NewProjectile(GetSource_EffectItem(player), pos, vel, ModContent.ProjectileType<MeteorEnchantMeatball>(), FargoSoulsUtil.HighestDamageTypeScaling(player, damage), 0.5f, player.whoAmI, force);
         }
     }
 }
