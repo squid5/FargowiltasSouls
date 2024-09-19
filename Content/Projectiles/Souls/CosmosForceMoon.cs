@@ -135,12 +135,14 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Cosmos
         public override void OnKill(int timeLeft)
         {
             SoundEngine.PlaySound(SoundID.Item89, Projectile.position);
+            Main.NewText("e");
 
             if (!Main.dedServ && Main.LocalPlayer.active)
                 ScreenShakeSystem.StartShake(4, shakeStrengthDissipationIncrement: 4f / 30);
 
             if (Projectile.owner == Main.myPlayer)
             {
+                Main.NewText("b");
                 int p = Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<Explosion>(), Projectile.damage, 0f, Main.myPlayer);
                 if (p != Main.maxProjectiles)
                     Main.projectile[p].FargoSouls().CanSplit = false;

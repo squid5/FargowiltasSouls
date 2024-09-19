@@ -72,6 +72,41 @@ namespace FargowiltasSouls.Content.Items.Accessories.Forces
         {
             FargoSoulsPlayer modPlayer = player.FargoSouls();
 
+            if (modPlayer.TerrariaSoul)
+            {
+                if (!player.ItemTimeIsZero)
+                {
+                    modPlayer.CosmosMoonTimer += 2;
+                    if (modPlayer.CosmosMoonTimer >= LumUtils.SecondsToFrames(3) && player.whoAmI == Main.myPlayer)
+                    {
+                        int moonDamage = FargoSoulsUtil.HighestDamageTypeScaling(player, 2300);
+
+                        NPC result = null;
+                        float range = 1200;
+                        for (int i = 0; i < 200; i++)
+                        {
+                            NPC npc = Main.npc[i];
+                            if (npc.CanBeChasedBy() && Collision.CanHitLine(player.Center, 1, 1, npc.Center, 1, 1))
+                            {
+                                float foundRange = player.Distance(npc.Center);
+                                if (!(range <= foundRange))
+                                {
+                                    range = foundRange;
+                                    result = npc;
+                                }
+                            }
+                        }
+                        int npcid = result != null ? result.whoAmI : -1;
+
+                        Projectile.NewProjectileDirect(player.GetSource_EffectItem<CosmosMoonEffect>(), player.Center, Vector2.Zero, ModContent.ProjectileType<TerrariaSoulMoon>(), moonDamage, 1, player.whoAmI, MathHelper.Pi, ai1: npcid, ai2: modPlayer.CosmosMoonCycle);
+                        modPlayer.CosmosMoonTimer = 0;
+                        modPlayer.CosmosMoonCycle++;
+                        modPlayer.CosmosMoonCycle %= 4;
+                    }
+                }
+                return;
+            }
+
             if (player.HeldItem != null && player.HeldItem.damage > 0 && player.controlUseItem)
             {
                 modPlayer.CosmosMoonTimer += 2;

@@ -51,6 +51,7 @@ namespace FargowiltasSouls.Core.ModPlayers
         // new forces
         public int TerraProcCD;
         public int CosmosMoonTimer;
+        public int CosmosMoonCycle;
         public bool LifeForceActive;
         public int LifeBeetleDuration;
         public float AuraSizeBonus;
