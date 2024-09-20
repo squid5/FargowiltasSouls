@@ -61,6 +61,8 @@ namespace FargowiltasSouls.Content.Items.Misc
     {
         public override void PickupEffect(BoosterPlayer boosterPlayer)
         {
+            if (boosterPlayer.Player.HasBuff(BuffID.NebulaUpDmg1) || boosterPlayer.Player.HasBuff(BuffID.NebulaUpDmg2) || boosterPlayer.Player.HasBuff(BuffID.NebulaUpDmg3))
+                return;
             if (boosterPlayer.VortexTimer <= 0)
                 CombatText.NewText(boosterPlayer.Player.Hitbox, Color.LightCyan, Language.GetTextValue("Mods.FargowiltasSouls.Items.VortexBooster.Activate", 25), true);
             boosterPlayer.VortexTimer = LunarDuration;
@@ -70,6 +72,8 @@ namespace FargowiltasSouls.Content.Items.Misc
     {
         public override void PickupEffect(BoosterPlayer boosterPlayer)
         {
+            if (boosterPlayer.Player.HasBuff(BuffID.NebulaUpLife1) || boosterPlayer.Player.HasBuff(BuffID.NebulaUpLife2) || boosterPlayer.Player.HasBuff(BuffID.NebulaUpLife3))
+                return;
             if (boosterPlayer.NebulaTimer <= 0)
                 CombatText.NewText(boosterPlayer.Player.Hitbox, Color.Magenta, Language.GetTextValue("Mods.FargowiltasSouls.Items.NebulaBooster.Activate", 5), true);
             boosterPlayer.NebulaTimer = LunarDuration;
@@ -79,6 +83,8 @@ namespace FargowiltasSouls.Content.Items.Misc
     {
         public override void PickupEffect(BoosterPlayer boosterPlayer)
         {
+            if (boosterPlayer.Player.HasBuff(BuffID.NebulaUpDmg1) || boosterPlayer.Player.HasBuff(BuffID.NebulaUpDmg2) || boosterPlayer.Player.HasBuff(BuffID.NebulaUpDmg3))
+                return;
             if (boosterPlayer.StardustTimer <= 0)
                 CombatText.NewText(boosterPlayer.Player.Hitbox, Color.Cyan, Language.GetTextValue("Mods.FargowiltasSouls.Items.StardustBooster.Activate", 25), true);
             boosterPlayer.StardustTimer = LunarDuration;
