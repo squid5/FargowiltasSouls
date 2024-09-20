@@ -33,13 +33,14 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
         }
 
         bool spawned;
-        int oldMash;
+        bool fading = false;
         public ref float Timer => ref Projectile.ai[0];
         public ref float PlayerID => ref Projectile.ai[1];
 
         int telegraphTime = 60;
         int aimTime = 30;
         int chargeTime = 60;
+
 
         public override void AI()
         {
@@ -49,7 +50,20 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
                 spawned = true;
                 SoundEngine.PlaySound(SoundID.DD2_GhastlyGlaiveImpactGhost, Projectile.Center);
             }
-           
+
+            Color light = Lighting.GetColor(Projectile.Center.ToTileCoordinates());
+            float lightLevel = light.R + light.G + light.B;
+            if (lightLevel > 500)
+                fading = true;
+            if (fading)
+            {
+                Projectile.Opacity -= 0.05f;
+                if (Projectile.Opacity < 0.1f)
+                {
+                    Projectile.Kill();
+                    return;
+                }
+            }
 
             if (++Timer < telegraphTime)
             {

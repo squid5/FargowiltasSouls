@@ -285,6 +285,7 @@ namespace FargowiltasSouls.Core.ModPlayers
                 {
                     Color light = Lighting.GetColor(Player.Center.ToTileCoordinates());
                     float lightLevel = light.R + light.G + light.B;
+                    /*
                     // underground deerclops hands
                     if (Player.ZoneRockLayerHeight && !NPC.downedDeerclops && !Player.ZoneHallow)
                     {
@@ -305,6 +306,7 @@ namespace FargowiltasSouls.Core.ModPlayers
                             }
                         }
                     }
+                    */
                     // hallow lifelight sparks
                     if (Player.ZoneHallow && Player.ZoneRockLayerHeight && !WorldSavingSystem.DownedBoss[(int)WorldSavingSystem.Downed.Lifelight])
                     {
