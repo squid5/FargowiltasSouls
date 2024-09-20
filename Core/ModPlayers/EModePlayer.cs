@@ -288,14 +288,14 @@ namespace FargowiltasSouls.Core.ModPlayers
                     // underground deerclops hands
                     if (Player.ZoneRockLayerHeight && !NPC.downedDeerclops)
                     {
-                        if (false && lightLevel < 500)
+                        if (lightLevel < 500)
                         {
                             LightLevelCounter++;
                             if (LightLevelCounter > LumUtils.SecondsToFrames(10) && Main.rand.NextBool(300))
                             {
                                 Vector2 pos = Player.Center + Vector2.UnitX * (Main.rand.NextBool() ? 1 : -1) * 200 - Vector2.UnitY * 90;
                                 int damage = (Main.hardMode ? 120 : 60) / 4;
-                                int p = Projectile.NewProjectile(Player.GetSource_Misc(""), pos, pos.DirectionTo(Player.Center) * 8, ProjectileID.InsanityShadowHostile, damage, 2f, Main.myPlayer);
+                                int p = Projectile.NewProjectile(Player.GetSource_Misc(""), pos, pos.DirectionTo(Player.Center) * 0f, ModContent.ProjectileType<DeerclopsDarknessHand>(), damage, 2f, Main.myPlayer);
                                 if (p.IsWithinBounds(Main.maxProjectiles))
                                 {
                                     Main.projectile[p].light = 1f;
