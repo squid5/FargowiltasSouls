@@ -23,7 +23,7 @@ AncientHallowEnchant: {
 	// DisplayName: Ancient Hallowed Enchantment
 	/* Tooltip:
 		'''
-		Summons a Terraprisma familiar that scales with minion damage
+		Summons a Terraprisma familiar that scales with minion damage and takes a minion slot
 		The sword follows the direction of your mouse
 		Press Right Click to slash with the sword
 		Slashing enemy projectiles reflects them back at the enemy
@@ -194,7 +194,7 @@ ForbiddenEnchant: {
 	// DisplayName: Forbidden Enchantment
 	/* Tooltip:
 		'''
-		Double tap down to call an ancient storm to the cursor location, that scales with magic and summon damage
+		Double tap down to call an ancient storm to the cursor location which scales with magic and summon damage
 		Any projectiles shot through your storm deal 1.3x damage
 		Touch it yourself to add back missing wing time
 		Storm can be resummoned after touching the ground
@@ -559,9 +559,8 @@ SilverEnchant: {
 	/* Tooltip:
 		'''
 		Right Click to guard with your shield
-		Guard shortly before being hit to parry and negate damage
+		Guard shortly before being hit to parry and negate up to 100 damage
 		Guard exactly when hit to perfect parry, gaining Striking Moment
-		Parry blocks up to 100 damage
 		'Reflection'
 		''' */
 }
@@ -606,7 +605,7 @@ SpiderEnchant: {
 	/* Tooltip:
 		'''
 		Your minions and sentries can crit
-		Minion and sentry crits deal x1.5 damage, instead of 2x
+		Minion and sentry crits deal 1.5x damage, instead of 2x
 		'Arachnophobia is punishable by arachnid induced death'
 		''' */
 }
@@ -676,7 +675,7 @@ TitaniumEnchant: {
 		When you reach the maximum amount, you gain resistance to most debuffs on hit and 10-30% damage resistance
 		Damage resistance increases the closer to the enemy you are when hit
 		Resistance effects remain for a few seconds after initial hit
-		This has a cooldown of 15 seconds during which you cannot gain shards
+		This has a cooldown of 15 seconds, during which you cannot gain shards
 		'Who needs a dodge when you're indestructible'
 		''' */
 }
@@ -934,7 +933,7 @@ TerraForce: {
 	/* Tooltip:
 		'''
 		[i:FargowiltasSouls/CopperEnchant] [i:FargowiltasSouls/ObsidianEnchant] [i:FargowiltasSouls/LeadEnchant] Critical strikes sometimes fire a lightning bolt that explodes on hit and inflicts a stronger Lead Poisoning
-		[i:FargowiltasSouls/SilverEnchant] Right Click to guard with your shield, successful parries instantly fire a lightning bolt 
+		[i:FargowiltasSouls/SilverEnchant] Right Click to guard with your shield for up to 200 damage, successful parries instantly fire a lightning bolt 
 		[i:FargowiltasSouls/LeadEnchant] You take 60% less damage over time
 		[i:FargowiltasSouls/TungstenEnchant] Your swords are larger and deal 14% more damage
 		[i:FargowiltasSouls/TinEnchant] Sets Tin crit chance to 10%, increasing up to double your original crit chance or 50%
@@ -1034,7 +1033,7 @@ BionomicCluster: {
 		[i:FargowiltasSouls/SandsofTime] Use to teleport to your last death point
 		[i:FargowiltasSouls/WyvernFeather] Your attacks can inflict Clipped Wings [i:FargowiltasSouls/NymphsPerfume] and produce hearts
 		[i:FargowiltasSouls/WyvernFeather] You periodically shed light orbs, touch them to refresh your flight time
-		[i:FargowiltasSouls/SqueakyToy] Attacks have a chance to squeak and deal 1 damage to you
+		[i:FargowiltasSouls/SqueakyToy] Enemy attacks have a 10% chance to squeak and only deal 1 damage to you
 		[i:FargowiltasSouls/WretchedPouch] While attacking, builds up shadowflame charge but reduces damage reduction by 10%
 		[i:FargowiltasSouls/WretchedPouch] Stop attacking to consume shadowflame charge, releasing a burst of shadowflame tentacles that deal magic damage
 		[i:FargowiltasSouls/ConcentratedRainbowMatter] Summons a friendly rainbow slime
@@ -1094,7 +1093,7 @@ ChaliceoftheMoon: {
 		'''
 		[i:FargowiltasSouls/ChaliceoftheMoon] Grants immunity to Swarming, Atrophied, Jammed, Reverse Mana Flow, and Antisocial
 		Grants immunity to [i:FargowiltasSouls/MagicalBulb] Venom, Ivy Venom, [i:FargowiltasSouls/LihzahrdTreasureBox] Burning, Fused, Lihzahrd Curse, Low Ground, [i:FargowiltasSouls/CelestialRune] and Marked for Death
-		[i:FargowiltasSouls/MagicalBulb] Press the Magical Cleanse key to cure yourself of most debuffs
+		[i:FargowiltasSouls/MagicalBulb] Press the Magical Cleanse key to cure yourself of most debuffs and amplify damage over time effects for nearby enemies by 2x for a duration
 		[i:FargowiltasSouls/MagicalBulb] Increases life regeneration based on how much light you receive
 		[i:FargowiltasSouls/LihzahrdTreasureBox] Double tap DOWN in the air to fastfall, creating an explosion on landing after falling a certain distance
 		[i:FargowiltasSouls/CelestialRune] You fire additional attacks depending on weapon type and erupt into Ancient Visions when injured
@@ -1145,8 +1144,7 @@ DreadShell: {
 		Grants immunity to knockback
 		Right Click to guard with your shield
 		Defense and damage reduction drastically decreased while and shortly after guarding
-		Guard exactly when hit to parry and counter it on a very long cooldown
-		Parry blocks up to 200 damage
+		Guard exactly when hit to parry for up to 200 damage and counter it on a very long cooldown
 		Counterattack deals massive damage and inflicts Anticoagulation
 		Absorb Anticoagulation blood clots to gain 30% increased damage
 		'It was a mistake to chum here'
@@ -1267,7 +1265,7 @@ HeartoftheMasochist: {
 		Grants immunity to [i:FargowiltasSouls/PumpkingsCape] Living Wasteland, [i:FargowiltasSouls/IceQueensCrown] Hypothermia, [i:FargowiltasSouls/SaucerControlConsole] Electrified, Distorted, [i:FargowiltasSouls/BetsysHeart] Oozed, Withered Weapon, Withered Armor
 		[i:FargowiltasSouls/MutantAntibodies] Wet, Feral Bite, Mutant Nibble, Oceanic Maul, water debuffs, [i:FargowiltasSouls/PrecisionSeal] Smite, [i:FargowiltasSouls/GalacticGlobe] Nullification Curse, Flipped, Illuminated, Unstable, and Curse of the Moon	
 		[i:FargowiltasSouls/PumpkingsCape] [i:FargowiltasSouls/MutantAntibodies] [i:FargowiltasSouls/IceQueensCrown] Increases damage and crit chance by 10%, and damage reduction by 5%
-		[i:FargowiltasSouls/PumpkingsCape] Right Click to guard and parry attacks. Parries heal you based on damage. While guarding, gain an aura of Rotting
+		[i:FargowiltasSouls/PumpkingsCape] Right Click to guard and parry attacks for up to 200 damage. Parries heal you based on damage. While guarding, gain an aura of Rotting
 		[i:FargowiltasSouls/IceQueensCrown] Graze attacks to charge up a bomb. When it's charged, press Bomb Key to freeze all projectiles and enemies for a short time
 		[i:FargowiltasSouls/SaucerControlConsole] Summons a friendly Mini Saucer which slows enemies it hits
 		[i:FargowiltasSouls/BetsysHeart] Press the Special Dash key to perform a short invincible fireball dash which inflicts Betsy's Curse
@@ -1309,11 +1307,11 @@ LumpOfFlesh: {
 	/* Tooltip:
 		'''
 		Grants immunity to [i:FargowiltasSouls/DreadShell] knockback, Anticoagulation, [i:FargowiltasSouls/PungentEyeball] Blackout, Obstructed, [i:FargowiltasSouls/SkullCharm] Dazed, [i:FargowiltasSouls/Deerclawps] Slow, and Frozen
-		[i:FargowiltasSouls/PungentEyeball] Your cursor causes nearby enemies to take up to 15% increased damage
+		[i:FargowiltasSouls/PungentEyeball] Your cursor causes nearby enemies to take up to 1.15x damage
 		[i:FargowiltasSouls/PungentEyeball] Massively increases spawn rate of rare enemies
 		[i:FargowiltasSouls/SkullCharm] Increases damage dealt by 15%, and gives you an eyeball minion which charges up as you attack
 		[i:FargowiltasSouls/SkullCharm] Enemies are less likely to target you
-		[i:FargowiltasSouls/DreadShell] Right Click to parry, blocking 200 damage and dealing a massive counterattack if it lands
+		[i:FargowiltasSouls/DreadShell] Right Click to parry for up to 200 damage, dealing a massive counterattack if it lands
 		[i:FargowiltasSouls/DreadShell] Defense and damage reduction drastically decreased while and shortly after guarding
 		[i:FargowiltasSouls/Deerclawps] Dashing leaves a trail of blood spikes
 		[i:FargowiltasSouls/Deerclawps] Double tap DOWN in the air to fastfall
@@ -1435,10 +1433,9 @@ PumpkingsCape: {
 		'''
 		Grants immunity to Living Wasteland
 		Increases damage and critical strike chance by 5%
-		Right Click to guard with your cape
+		Right Click to guard with your cape for up to 200 damage
 		You have an aura of Rotting while guarding
 		Guard exactly when hit to parry and counter it on a very long cooldown
-		Parry blocks up to 200 damage
 		Counter an attack to gain life based on the blocked damage
 		'Somehow, it's the right size'
 		''' */
@@ -1450,7 +1447,7 @@ PungentEyeball: {
 		'''
 		Grants immunity to Blackout and Obstructed
 		Increases spawn rate of rare enemies
-		Your cursor causes nearby enemies to take increased damage
+		Your cursor causes nearby enemies to take up to 1.15x damage
 		Effect intensifies the longer you track them
 		'It's fermenting'
 		''' */
@@ -1582,7 +1579,7 @@ SqueakyToy: {
 	/* Tooltip:
 		'''
 		Grants immunity to Squeaky Toy and Guilty
-		Attacks have a chance to squeak and deal 1 damage to you
+		Enemy attacks have a 10% chance to squeak and only deal 1 damage to you
 		'The beloved toy of a defeated foe...?'
 		''' */
 }
@@ -1796,15 +1793,15 @@ MasochistSoul: {
 	/* Tooltip:
 		'''
 		[i:FargowiltasSouls/GalacticGlobe] Increases wing time by 200%, [i:FargowiltasSouls/QueenStinger] armor penetration by 50, [i:FargowiltasSouls/GalacticGlobe] and movement speed by 20%
-		[i:FargowiltasSouls/GuttedHeart] Increases max life by 100%, [i:FargowiltasSouls/MagicalBulb] life regen, [i:FargowiltasSouls/MutantAntibodies][i:FargowiltasSouls/SkullCharm][i:FargowiltasSouls/PumpkingsCape] damage for your current weapon class by 50%, [i:FargowiltasSouls/ReinforcedPlating] and damage reduction by 10%
+		[i:FargowiltasSouls/GuttedHeart] Increases max life by 100%, [i:FargowiltasSouls/MagicalBulb] life regen, [i:FargowiltasSouls/MutantAntibodies][i:FargowiltasSouls/SkullCharm][i:FargowiltasSouls/PumpkingsCape] damage for your current weapon class by 50%, and [i:FargowiltasSouls/ReinforcedPlating] damage reduction by 10%
 		[i:FargowiltasSouls/PungentEyeball] Increases spawn chance of rare enemies massively, [i:FargowiltasSouls/SinisterIcon] doubles spawnrates, makes non-boss enemies drop doubled loot, and [i:FargowiltasSouls/TimsConcoction] causes certain enemies to drop potions 
 		Grants [i:FargowiltasSouls/SlimyShield] fastfall, [i:FargowiltasSouls/ReinforcedPlating] knockback immunity, [i:FargowiltasSouls/PureHeart] immunity to biome debuffs, [i:FargowiltasSouls/GalacticGlobe] gravity control, immunity to almost all Eternity Mode debuffs, and more
 		Press [i:FargowiltasSouls/BetsysHeart] the Special Dash key to perform an invincible dash, [i:FargowiltasSouls/PrecisionSeal] the Precision Seal key to prevent dashes and double jumps, [i:FargowiltasSouls/AgitatingLens] [i:FargowiltasSouls/FusedLens] the Debuff Install key to debuff and buff yourself
-		Press [i:FargowiltasSouls/FrigidGemstone] the Frigid Spell key to cast Ice Rod, [i:FargowiltasSouls/IceQueensCrown] the bomb key to freeze everything with enough graze, and [i:FargowiltasSouls/OrdinaryCarrot] right click to zoom [i:FargowiltasSouls/DreadShell] [i:FargowiltasSouls/PumpkingsCape] and parry
+		Press [i:FargowiltasSouls/FrigidGemstone] the Frigid Spell key to cast Ice Rod, [i:FargowiltasSouls/IceQueensCrown] the bomb key to freeze everything with enough graze, and right click to [i:FargowiltasSouls/OrdinaryCarrot] zoom and [i:FargowiltasSouls/DreadShell] [i:FargowiltasSouls/PumpkingsCape] parry for up to 200 damage
 		[i:FargowiltasSouls/Deerclawps] [i:FargowiltasSouls/LihzahrdTreasureBox] Double tap DOWN to fastfall and explode and create ice spikes on landing.
-		[i:FargowiltasSouls/PrecisionSeal] Reduces hurtbox size, [i:FargowiltasSouls/NecromanticBrew] increases dash distance, and causes  [i:FargowiltasSouls/PungentEyeball] your cursor to increase damage dealt to nearby enemies
-		Improves your [i:FargowiltasSouls/SecurityWallet] reforges, [i:FargowiltasSouls/OrdinaryCarrot] night vision, [i:FargowiltasSouls/NymphsPerfume] respawn hp, [i:FargowiltasSouls/SandsofTime] and respawn time, as well as using [i:FargowiltasSouls/ConcentratedRainbowMatter] healing and [i:FargowiltasSouls/MysticSkull] mana potions as needed.
-		On hit, [i:FargowiltasSouls/SqueakyToy] have a chance to only take 1 damage, [i:FargowiltasSouls/NecromanticBrew] and reflect damage while dashing
+		[i:FargowiltasSouls/PrecisionSeal] Reduces hurtbox size, [i:FargowiltasSouls/NecromanticBrew] increases dash distance, and [i:FargowiltasSouls/PungentEyeball] causes enemies near your cursor to take up to 1.15x damage
+		Improves your [i:FargowiltasSouls/SecurityWallet] reforges, [i:FargowiltasSouls/OrdinaryCarrot] night vision, [i:FargowiltasSouls/NymphsPerfume] respawn hp, and [i:FargowiltasSouls/SandsofTime] respawn time, as well as using [i:FargowiltasSouls/ConcentratedRainbowMatter] healing and [i:FargowiltasSouls/MysticSkull] mana potions as needed.
+		When hit, [i:FargowiltasSouls/SqueakyToy] you have a 10% chance to only take 1 damage, and [i:FargowiltasSouls/NecromanticBrew] you reflect damage while dashing
 		Your attacks [i:FargowiltasSouls/NymphsPerfume] produce hearts and inflict a cocktail of Eternity Mode debuffs
 		Summons [i:FargowiltasSouls/GuttedHeart] True-Eye Creepers to defend you
 		[i:FargowiltasSouls/SandsofTime] Use to teleport to your last death point
@@ -1847,7 +1844,7 @@ TerrariaSoul: {
 		'''
 		[i:FargowiltasSouls/TimberForce] Gain an aura that fires projectiles, improved hooks, and occasional mana stars on hit
 		[i:FargowiltasSouls/TimberForce] Gain crit rerolls when retreiving pickups, bestiary completion and discount
-		[i:FargowiltasSouls/TerraForce] Critical strikes fire powerful lightning, Right Click to guard and parry, you take less debuff damage and your swords are empowered
+		[i:FargowiltasSouls/TerraForce] Critical strikes fire powerful lightning, Right Click to guard and parry for up to 200 damage, you take less debuff damage and your swords are empowered
 		[i:FargowiltasSouls/TerraForce] 10% set critical strike chance increased on hit, further item grab range, and you sometimes don't consume crafting ingredients
 		[i:FargowiltasSouls/EarthForce] You gain defensive bonuses while not attacking and offensive bonuses while attacking
 		[i:FargowiltasSouls/EarthForce] 4x debuff damage and you explode on hit while not attacking
@@ -2116,7 +2113,7 @@ DeerSinew: {
 		Allows the ability to dash without a dash accessory
 		Double tap a direction
 		Taking damage may briefly freeze you
-		Reduces damage when your speed increases, down to 0.85x at max
+		Deal less damage as your speed increases, down to 0.85x at max
 		All effects negated if toggled off or another dash is already in use
 		'Cold but twitching'
 		''' */
@@ -3006,7 +3003,7 @@ ComputationOrb: {
 	// DisplayName: Computation Orb
 	/* Tooltip:
 		'''
-		Non-magic/summon attacks deal x1.25 damage but are affected by Mana Sickness
+		Non-magic/summon attacks deal 1.25x damage but are affected by Mana Sickness
 		Non-magic/summon weapons require 10 mana to use
 		'Within the core, a spark of hope remains.'
 		''' */
@@ -3268,7 +3265,7 @@ TheBaronsTusk: {
 	// DisplayName: The Baron's Tusk
 	/* Tooltip:
 		'''
-		Swings emit flying shrapnel, that can embed in enemies
+		Swings emit flying shrapnel that can embed in enemies
 		Hitting enemies that have more than 15 embedded shrapnel with the tusk rips it out
 		The rip deals a large chunk of damage and is guaranteed to critically strike
 		Shrapnel is also ripped out when the enemy dies

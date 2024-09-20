@@ -400,8 +400,12 @@ namespace FargowiltasSouls.Core.ModPlayers
                     // space breath
                     if (!Player.buffImmune[BuffID.Suffocation] && Player.ZoneSkyHeight && Player.whoAmI == Main.myPlayer)
                     {
-                        bool inLiquid = Collision.DrownCollision(Player.position, Player.width, Player.height, Player.gravDir) || !Player.armor[0].IsAir && (Player.armor[0].type == ItemID.FishBowl || Player.armor[0].type == ItemID.GoldGoldfishBowl);
-                        if (!inLiquid)
+                        bool immunity = !Player.armor[0].IsAir && (Player.armor[0].type == ItemID.FishBowl || Player.armor[0].type == ItemID.GoldGoldfishBowl);
+                        if (Player.accDivingHelm)
+                            immunity = true;
+
+                        bool inLiquid = Collision.DrownCollision(Player.position, Player.width, Player.height, Player.gravDir);
+                        if (!inLiquid || immunity)
                         {
                             Player.breath -= 3;
                             if (++MasomodeSpaceBreathTimer > 10)

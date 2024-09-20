@@ -22,7 +22,7 @@ AncientHallowEnchant: {
 	// DisplayName: Ancient Hallowed Enchantment
 	/* Tooltip:
 		'''
-		Summons a Terraprisma familiar that scales with minion damage
+		Summons a Terraprisma familiar that scales with minion damage and takes a minion slot
 		The sword follows the direction of your mouse
 		Press Right Click to slash with the sword
 		Slashing enemy projectiles reflects them back at the enemy
@@ -3215,7 +3215,7 @@ TheBaronsTusk: {
 	// DisplayName: The Baron's Tusk
 	/* Tooltip:
 		'''
-		Swings emit flying shrapnel, that can embed in enemies
+		Swings emit flying shrapnel that can embed in enemies
 		Hitting enemies that have more than 15 embedded shrapnel with the tusk rips it out
 		The rip deals a large chunk of damage and is guaranteed to critically strike
 		Shrapnel is also ripped out when the enemy dies
