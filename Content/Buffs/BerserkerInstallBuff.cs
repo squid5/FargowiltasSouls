@@ -53,7 +53,7 @@ namespace FargowiltasSouls.Content.Buffs
             if (player.buffTime[buffIndex] == 2)
             {
                 int stunDuration = 120; //2sec
-                player.AddBuff(ModContent.BuffType<BerserkerInstallCDBuff>(), stunDuration);
+                player.AddBuff(ModContent.BuffType<BerserkerInstallCDBuff>(), 60 * 10);
                 player.AddBuff(ModContent.BuffType<StunnedBuff>(), stunDuration);
             }
         }

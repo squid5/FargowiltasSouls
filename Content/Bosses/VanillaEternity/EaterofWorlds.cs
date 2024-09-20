@@ -795,7 +795,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     Player player = Main.player[head.target];
                     if (player.Distance(npc.Center) < EaterofWorldsHead.CoilRadius)
                     {
-                        npc.Center = Vector2.Lerp(npc.Center, headEternity.CoilCenter + headEternity.CoilCenter.DirectionTo(npc.Center) * EaterofWorldsHead.CoilRadius, 0.2f);
+                        npc.Center = Vector2.Lerp(npc.Center, headEternity.CoilCenter + headEternity.CoilCenter.DirectionTo(npc.Center) * EaterofWorldsHead.CoilRadius, 0.75f);
                     }
                 }
             }
