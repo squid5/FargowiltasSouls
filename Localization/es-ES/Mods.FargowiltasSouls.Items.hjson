@@ -1861,7 +1861,7 @@ TerrariaSoul: {
 		[i:FargowiltasSouls/ShadowForce] You fire additional weapons as support, your minions get a scythe attack, and slain enemies may drop a pile of bones
 		[i:FargowiltasSouls/WillForce] Summons a gladiator spirit, increases your healing and mount stats, and successive attacks gain bonus damage
 		[i:FargowiltasSouls/WillForce] Automatically sends coins to your piggy bank when picked up (works in vanity and inventory), enemies may drop extra loot
-		[i:FargowiltasSouls/CosmoForce] Attacking generates moons around you that explode into Lunar Boosters when fired
+		[i:FargowiltasSouls/CosmoForce] Attacking occasionally launches moons at enemies that explode into Lunar Boosters
 		[i:FargowiltasSouls/CosmoForce] Increases your movement speed and acceleration, and decreases your momentum
 		'A true master of Terraria'
 		''' */

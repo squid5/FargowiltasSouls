@@ -107,7 +107,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Forces
                 return;
             }
 
-            if (player.HeldItem != null && player.HeldItem.damage > 0 && player.controlUseItem)
+            if (player.HeldItem != null && player.HeldItem.damage > 0 && (player.controlUseItem || !player.ItemTimeIsZero))
             {
                 modPlayer.CosmosMoonTimer += 2;
                 int moonCount = player.ownedProjectileCounts[ModContent.ProjectileType<CosmosForceMoon>()];
@@ -115,8 +115,10 @@ namespace FargowiltasSouls.Content.Items.Accessories.Forces
                 {
                     int moonDamage = FargoSoulsUtil.HighestDamageTypeScaling(player, 2300);
 
-                    Projectile.NewProjectileDirect(player.GetSource_EffectItem<CosmosMoonEffect>(), player.Center, Vector2.Zero, ModContent.ProjectileType<CosmosForceMoon>(), moonDamage, 1, player.whoAmI, MathHelper.Pi, ai2: moonCount);
+                    Projectile.NewProjectileDirect(player.GetSource_EffectItem<CosmosMoonEffect>(), player.Center, Vector2.Zero, ModContent.ProjectileType<CosmosForceMoon>(), moonDamage, 1, player.whoAmI, MathHelper.Pi, ai2: modPlayer.CosmosMoonCycle);
                     modPlayer.CosmosMoonTimer = 0;
+                    modPlayer.CosmosMoonCycle++;
+                    modPlayer.CosmosMoonCycle %= 4;
                 }
             }
             
