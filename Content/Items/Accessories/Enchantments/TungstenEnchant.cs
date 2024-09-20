@@ -136,7 +136,6 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
         {
             if (modPlayer.Player.HasEffect<TerraLightningEffect>())
                 return;
-
             if (TungstenNeverAffectsProj(projectile))
             {
                 return;
@@ -169,7 +168,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
                     }
                 }
             }
-
+            //Main.NewText(projectile.Name + " " + canAffect + " " + FargoSoulsUtil.IsProjSourceItemUseReal(projectile, source) + modPlayer.TungstenCD);
             if (canAffect)
             {
                 bool forceEffect = modPlayer.ForceEffect<TungstenEnchant>();

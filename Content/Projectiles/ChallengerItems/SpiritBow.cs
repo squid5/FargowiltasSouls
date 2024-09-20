@@ -21,12 +21,13 @@ namespace FargowiltasSouls.Content.Projectiles.ChallengerItems
             Projectile.hide = true;
             Projectile.FargoSouls().CanSplit = false;
             Projectile.tileCollide = false;
-            Projectile.friendly = false;
+            Projectile.friendly = true;
         }
 
         private const int chargeMax = 4;
         public ref float charge => ref Projectile.ai[0];
         public ref float soundTimer => ref Projectile.ai[1];
+        public override bool? CanDamage() => false;
 
         public override void AI()
         {
@@ -71,7 +72,7 @@ namespace FargowiltasSouls.Content.Projectiles.ChallengerItems
                 {
                     Vector2 shootspeed = new Vector2(10f * charge, 0f);
                     SoundEngine.PlaySound(SoundID.Item102, player.Center);
-                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, shootspeed.RotatedBy(rot), ModContent.ProjectileType<SpiritArrow>(), (int)(Projectile.originalDamage * charge), 3f, Projectile.owner);
+                    Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center, shootspeed.RotatedBy(rot), ModContent.ProjectileType<SpiritArrow>(), (int)(Projectile.originalDamage * charge), 3f, Projectile.owner);
                 }
                 Projectile.Kill();
             }
@@ -81,7 +82,8 @@ namespace FargowiltasSouls.Content.Projectiles.ChallengerItems
             Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
             Vector2 drawPos = Projectile.Center - Main.screenPosition;
             float rot = Projectile.rotation + MathHelper.Pi;
-            Rectangle frame = new(0, Projectile.height * (int)charge, texture.Width, Projectile.height);
+            int textureHeight = texture.Height / Main.projFrames[Type];
+            Rectangle frame = new(0, textureHeight * (int)charge, texture.Width, textureHeight);
             int direction = Main.player[Projectile.owner].direction;
             SpriteEffects flip = direction == 1 ? SpriteEffects.None : SpriteEffects.FlipVertically;
             Main.EntitySpriteDraw(texture, drawPos, frame, lightColor, rot, new Vector2(frame.Width / 2, frame.Height / 2), Projectile.scale, flip);
