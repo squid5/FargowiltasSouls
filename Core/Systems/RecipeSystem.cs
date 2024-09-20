@@ -204,7 +204,7 @@ namespace FargowiltasSouls.Core.Systems
             RecipeGroup.RegisterGroup("FargowiltasSouls:AnyShellphone", group);
 
             // any gem
-            group = new RecipeGroup(() => AnyItem(ItemID.Diamond), ItemID.Diamond, ItemID.Amber, ItemID.Ruby, ItemID.Emerald, ItemID.Sapphire, ItemID.Topaz, ItemID.Amethyst);
+            group = new RecipeGroup(() => AnyItem("Gem"), ItemID.Diamond, ItemID.Amber, ItemID.Ruby, ItemID.Emerald, ItemID.Sapphire, ItemID.Topaz, ItemID.Amethyst);
             RecipeGroup.RegisterGroup("FargowiltasSouls:AnyGem", group);
 
 
