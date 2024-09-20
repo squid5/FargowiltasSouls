@@ -116,7 +116,11 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                 TeleportTimer++;
 
             if (Main.LocalPlayer.active && !Main.LocalPlayer.ghost && !Main.LocalPlayer.dead && npc.Distance(Main.LocalPlayer.Center) < 1000)
+            {
                 Main.LocalPlayer.AddBuff(ModContent.BuffType<LowGroundBuff>(), 2);
+                Main.LocalPlayer.buffImmune[BuffID.Frozen] = true;
+            }
+                
 
             switch ((int)npc.ai[0])
             {
