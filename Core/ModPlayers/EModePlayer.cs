@@ -678,7 +678,7 @@ namespace FargowiltasSouls.Core.ModPlayers
 
             //because NO MODIFY/ONHITPLAYER HOOK WORKS
             if (modifiers.DamageSource.SourceProjectileType == ProjectileID.Explosives)
-                Player.FargoSouls().AddBuffNoStack(ModContent.BuffType<StunnedBuff>(), 120);
+                Player.FargoSouls().AddBuffNoStack(ModContent.BuffType<StunnedBuff>(), 60);
 
             if (Player.brainOfConfusionItem != null && !Player.brainOfConfusionItem.IsAir)
             {

@@ -1473,7 +1473,7 @@ namespace FargowiltasSouls.Content.Projectiles
 
                 case ProjectileID.JavelinHostile:
                     target.AddBuff(ModContent.BuffType<DefenselessBuff>(), 600);
-                    target.FargoSouls().AddBuffNoStack(ModContent.BuffType<StunnedBuff>(), 60);
+                    target.FargoSouls().AddBuffNoStack(ModContent.BuffType<StunnedBuff>(), 30);
                     break;
 
                 case ProjectileID.DemonSickle:
@@ -1487,7 +1487,7 @@ namespace FargowiltasSouls.Content.Projectiles
                 case ProjectileID.SandBallFalling:
                     if (projectile.velocity.X != 0) //so only antlion sand and not falling sand 
                     {
-                        target.FargoSouls().AddBuffNoStack(ModContent.BuffType<StunnedBuff>(), 120);
+                        target.FargoSouls().AddBuffNoStack(ModContent.BuffType<StunnedBuff>(), 60);
                     }
                     break;
 
