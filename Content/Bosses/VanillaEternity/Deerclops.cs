@@ -32,7 +32,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
         public bool DroppedSummon;
 
         public int ForceDespawnTimer;
-
+        public int LockDirection;
 
         public override void SendExtraAI(NPC npc, BitWriter bitWriter, BinaryWriter binaryWriter)
         {
@@ -314,6 +314,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
                         if (npc.ai[1] == 0)
                         {
+                            LockDirection = npc.direction;
                             if (EnteredPhase2)
                             {
                                 if (npc.alpha == 0) //i.e. dont randomize when coming out of tp
@@ -332,7 +333,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                                 Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, Vector2.Zero, ProjectileID.DD2OgreSmash, 0, 0f, Main.myPlayer);
                             }
                         }
-
+                        npc.direction = LockDirection;
                         Vector2 eye = npc.Center + new Vector2(64 * npc.direction, -24f) * npc.scale;
 
                         if (WorldSavingSystem.MasochistModeReal)
