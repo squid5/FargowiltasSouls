@@ -185,7 +185,7 @@ EbonwoodEnchant: {
 		'''
 		You are surrounded by an aura that builds up Withering on enemies
 		After 3 seconds of buildup they burst, Withering all nearby enemies
-		Withered enemies have 10 less defense and deal 20% less contact damage
+		Withered enemies take 5 extra flat damage from all hits and deal 20% less contact damage
 		'Untapped potential'
 		'''
 }

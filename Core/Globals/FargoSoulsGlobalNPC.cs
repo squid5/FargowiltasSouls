@@ -1281,7 +1281,7 @@ namespace FargowiltasSouls.Core.Globals
 
             if (Corrupted)
             {
-                modifiers.FlatBonusDamage += 10;
+                modifiers.FlatBonusDamage += 5;
             }
             if (CorruptedForce)
             {
