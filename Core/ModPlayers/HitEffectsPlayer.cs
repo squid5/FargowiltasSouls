@@ -435,7 +435,7 @@ namespace FargowiltasSouls.Core.ModPlayers
             if (DeathMarked)
                 modifiers.SourceDamage *= 1.5f;
 
-            if (Player.whoAmI == Main.myPlayer && !noDodge && Player.HasEffect<SqueakEffect>() && Main.rand.NextBool(10))
+            if (Player.whoAmI == Main.myPlayer && !noDodge && Player.HasEffect<SqueakEffect>() && Main.rand.NextBool(20))
             {
                 Squeak(Player.Center);
                 modifiers.SetMaxDamage(1);
