@@ -1,4 +1,7 @@
-﻿using Microsoft.Xna.Framework;
+﻿using FargowiltasSouls.Common.Graphics.Particles;
+using FargowiltasSouls.Content.Items.Weapons.Challengers;
+using Luminance.Core.Graphics;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.Audio;
@@ -54,15 +57,26 @@ namespace FargowiltasSouls.Content.Projectiles.ChallengerItems
                     charge += 1 / 30f;
                 }
 
-                if (charge >= 3.8f)
+                if (charge >= chargeMax - 0.2f)
                 {
                     float shake = 0.8f;
                     Projectile.position += new Vector2(Main.rand.NextFloat(-shake, shake), Main.rand.NextFloat(-shake, shake));
                 }
+                if (charge < chargeMax && charge > chargeMax - (1 / 30f) * 1.5f)
+                {
+                    for (int i = 0; i < 5; i++)
+                    {
+                        Particle p = new SmallSparkle(Projectile.Center, player.velocity - Projectile.rotation.ToRotationVector2().RotatedByRandom(MathHelper.Pi * 0.1f) * Main.rand.NextFloat(4f, 7f), Color.Magenta, Main.rand.NextFloat(0.25f, 0.75f), 20);
+                        p.Spawn();
+                    }
+                    
+                    SoundEngine.PlaySound(SoundID.MaxMana, player.Center);
+                }
+                    
 
                 if (soundTimer-- == 0)
                 {
-                    SoundEngine.PlaySound(SoundID.NPCDeath6 with {Pitch = 0.1f + ((charge - 1) / 3) }, player.Center);
+                    //SoundEngine.PlaySound(SoundID.NPCDeath6 with {Pitch = 0.1f + ((charge - 1) / 3) }, player.Center);
                     soundTimer = 10;
                 }
             }
@@ -71,7 +85,7 @@ namespace FargowiltasSouls.Content.Projectiles.ChallengerItems
                 if (FargoSoulsUtil.HostCheck)
                 {
                     Vector2 shootspeed = new Vector2(10f * charge, 0f);
-                    SoundEngine.PlaySound(SoundID.Item102, player.Center);
+                    SoundEngine.PlaySound(SpiritLongbow.ReleaseSound with { Pitch = -0.5f }, player.Center);
                     Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center, shootspeed.RotatedBy(rot), ModContent.ProjectileType<SpiritArrow>(), (int)(Projectile.originalDamage * charge), 3f, Projectile.owner);
                 }
                 Projectile.Kill();

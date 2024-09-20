@@ -3,6 +3,7 @@ using FargowiltasSouls.Content.Projectiles.ChallengerItems;
 using Microsoft.Xna.Framework;
 using System;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -14,6 +15,8 @@ namespace FargowiltasSouls.Content.Items.Weapons.Challengers
         private int delay = 0;
         private bool lastLMouse = false;
 
+        public static readonly SoundStyle PullSound = new SoundStyle($"FargowiltasSouls/Assets/Sounds/Weapons/BowPull") with { Volume = 1f };
+        public static readonly SoundStyle ReleaseSound = new SoundStyle($"FargowiltasSouls/Assets/Sounds/Weapons/BowRelease") with { Volume = 1f };
         public override void SetStaticDefaults()
         {
             //DisplayName.SetDefault("Spirit Longbow");
@@ -34,7 +37,7 @@ namespace FargowiltasSouls.Content.Items.Weapons.Challengers
             Item.knockBack = 0.5f;
             Item.value = Item.sellPrice(0, 2);
             Item.rare = ItemRarityID.Blue;
-            Item.UseSound = null;
+            Item.UseSound = PullSound with { Pitch = -0.5f };
             Item.channel = true;
             Item.noUseGraphic = true;
             Item.autoReuse = true;

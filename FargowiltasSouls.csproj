@@ -27,6 +27,7 @@
     <None Remove="Assets\UI\CooldownBarFill.png" />
     <None Remove="Content\Bosses\AbomBoss\AbomSword.png" />
     <None Remove="Content\Buffs\Souls\MushroomPowerBuff.png" />
+    <None Remove="Content\Items\Weapons\Challengers\SpiritLongbow.png" />
     <None Remove="Content\Projectiles\Masomode\PlanteraTooth.png" />
     <None Remove="Content\Projectiles\Masomode\PlanteraTooth2.png" />
     <None Remove="Content\Projectiles\Masomode\PlanteraToothSmall.png" />
