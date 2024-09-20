@@ -90,6 +90,12 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
             return base.CheckDead(npc);
         }
+        public override void UpdateLifeRegen(NPC npc, ref int damage)
+        {
+            damage /= 3;
+            if (UseMassDefense)
+                damage /= 10;
+        }
 
         public override void SafeModifyHitByItem(NPC npc, Player player, Item item, ref NPC.HitModifiers modifiers)
         {
