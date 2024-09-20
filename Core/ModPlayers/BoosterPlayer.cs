@@ -25,8 +25,8 @@ namespace FargowiltasSouls.Core.ModPlayers
         public override void PostUpdateEquips()
         {
             bool hasNebulaDmg = Player.HasBuff(BuffID.NebulaUpDmg1) || Player.HasBuff(BuffID.NebulaUpDmg2) || Player.HasBuff(BuffID.NebulaUpDmg3)
-            if (VortexTimer > 0 && hasNebulaDmg)
-                VortexTimer = 0;
+            //if (VortexTimer > 0 && hasNebulaDmg)
+            //    VortexTimer = 0;
             if (StardustTimer > 0 && hasNebulaDmg)
                 StardustTimer = 0;
             if (NebulaTimer > 0 && (Player.HasBuff(BuffID.NebulaUpLife1) || Player.HasBuff(BuffID.NebulaUpLife2) || Player.HasBuff(BuffID.NebulaUpLife3)))

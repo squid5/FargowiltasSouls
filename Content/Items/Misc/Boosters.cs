@@ -61,8 +61,8 @@ namespace FargowiltasSouls.Content.Items.Misc
     {
         public override void PickupEffect(BoosterPlayer boosterPlayer)
         {
-            if (boosterPlayer.Player.HasBuff(BuffID.NebulaUpDmg1) || boosterPlayer.Player.HasBuff(BuffID.NebulaUpDmg2) || boosterPlayer.Player.HasBuff(BuffID.NebulaUpDmg3))
-                return;
+            //if (boosterPlayer.Player.HasBuff(BuffID.NebulaUpDmg1) || boosterPlayer.Player.HasBuff(BuffID.NebulaUpDmg2) || boosterPlayer.Player.HasBuff(BuffID.NebulaUpDmg3))
+            //    return;
             if (boosterPlayer.VortexTimer <= 0)
                 CombatText.NewText(boosterPlayer.Player.Hitbox, Color.LightCyan, Language.GetTextValue("Mods.FargowiltasSouls.Items.VortexBooster.Activate", 25), true);
             boosterPlayer.VortexTimer = LunarDuration;
