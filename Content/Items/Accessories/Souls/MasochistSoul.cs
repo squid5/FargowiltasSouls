@@ -301,7 +301,8 @@ namespace FargowiltasSouls.Content.Items.Accessories.Souls
             player.buffImmune[ModContent.BuffType<HexedBuff>()] = true;
             player.buffImmune[ModContent.BuffType<HypothermiaBuff>()] = true;
             player.buffImmune[ModContent.BuffType<InfestedBuff>()] = true;
-            player.buffImmune[ModContent.BuffType<IvyVenomBuff>()] = true;
+            if (Main.getGoodWorld)
+                player.buffImmune[ModContent.BuffType<IvyVenomBuff>()] = true;
             player.buffImmune[ModContent.BuffType<JammedBuff>()] = true;
             player.buffImmune[ModContent.BuffType<LethargicBuff>()] = true;
             player.buffImmune[ModContent.BuffType<LihzahrdCurseBuff>()] = true;

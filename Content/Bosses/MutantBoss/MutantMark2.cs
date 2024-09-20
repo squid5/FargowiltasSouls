@@ -67,7 +67,8 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
             if (WorldSavingSystem.EternityMode)
             {
                 target.AddBuff(ModContent.BuffType<InfestedBuff>(), Main.rand.Next(60, 300));
-                target.AddBuff(ModContent.BuffType<IvyVenomBuff>(), Main.rand.Next(60, 300));
+                if (Main.getGoodWorld)
+                    target.AddBuff(ModContent.BuffType<IvyVenomBuff>(), Main.rand.Next(60, 300));
                 target.AddBuff(ModContent.BuffType<MutantFangBuff>(), 180);
             }
         }

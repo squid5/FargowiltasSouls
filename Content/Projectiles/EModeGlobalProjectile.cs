@@ -1467,7 +1467,8 @@ namespace FargowiltasSouls.Content.Projectiles
                 case ProjectileID.PoisonDartTrap:
                 case ProjectileID.SpearTrap:
                 case ProjectileID.SpikyBallTrap:
-                    target.AddBuff(ModContent.BuffType<IvyVenomBuff>(), 360);
+                    if (Main.getGoodWorld)
+                        target.AddBuff(ModContent.BuffType<IvyVenomBuff>(), 360);
                     break;
 
                 case ProjectileID.JavelinHostile:
@@ -1599,7 +1600,8 @@ namespace FargowiltasSouls.Content.Projectiles
                     goto case ProjectileID.SeedPlantera;
                 case ProjectileID.SeedPlantera:
                 case ProjectileID.ThornBall:
-                    target.AddBuff(ModContent.BuffType<IvyVenomBuff>(), 240);
+                    if (Main.getGoodWorld)
+                        target.AddBuff(ModContent.BuffType<IvyVenomBuff>(), 240);
                     break;
 
                 case ProjectileID.DesertDjinnCurse:

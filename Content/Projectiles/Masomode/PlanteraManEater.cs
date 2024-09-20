@@ -149,7 +149,8 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
         */
         public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
-            target.AddBuff(ModContent.BuffType<IvyVenomBuff>(), 240);
+            if (Main.getGoodWorld)
+                target.AddBuff(ModContent.BuffType<IvyVenomBuff>(), 240);
         }
         /*
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
