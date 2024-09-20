@@ -1377,7 +1377,7 @@ namespace FargowiltasSouls.Content.Projectiles
                 target.AddBuff(BuffID.Frostburn2, 360);
 
                 FargoSoulsGlobalNPC globalNPC = target.FargoSouls();
-
+               
                 int debuff = ModContent.BuffType<FrozenBuff>();
                 int duration = target.HasBuff(debuff) ? 5 : 15;
 
