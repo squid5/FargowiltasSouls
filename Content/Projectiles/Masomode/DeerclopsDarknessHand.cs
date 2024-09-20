@@ -37,6 +37,10 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
         public ref float Timer => ref Projectile.ai[0];
         public ref float PlayerID => ref Projectile.ai[1];
 
+        int telegraphTime = 60;
+        int aimTime = 30;
+        int chargeTime = 60;
+
         public override void AI()
         {
             ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
@@ -45,9 +49,6 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
                 spawned = true;
                 SoundEngine.PlaySound(SoundID.DD2_GhastlyGlaiveImpactGhost, Projectile.Center);
             }
-            int telegraphTime = 60;
-            int aimTime = 30;
-            int chargeTime = 60;
            
 
             if (++Timer < telegraphTime)
@@ -102,6 +103,13 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
                     Projectile.Kill();
                 }
             }
+        }
+
+        public override bool? CanDamage()
+        {
+            if (Timer < telegraphTime + aimTime)
+                return false;
+            return base.CanDamage();
         }
 
         public override void OnHitPlayer(Player target, Player.HurtInfo info)
