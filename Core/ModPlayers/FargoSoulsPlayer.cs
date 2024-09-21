@@ -1437,6 +1437,8 @@ namespace FargowiltasSouls.Core.ModPlayers
             }
             bool CheckWizard(int type)
             {
+                if (ForceEffects.Contains(ModContent.ItemType<CosmoForce>()))
+                    return true;
                 if (WizardedItem != null && !WizardedItem.IsAir && WizardedItem.type == type)
                     return true;
                 return (BaseEnchant.CraftsInto[type] > 0 && CheckWizard(BaseEnchant.CraftsInto[type]));
