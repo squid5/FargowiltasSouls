@@ -127,8 +127,7 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
         {
             if (target.hurtCooldowns[1] == 0)
             {
-                if (WorldSavingSystem.MasochistModeReal)
-                    target.AddBuff(ModContent.BuffType<IvyVenomBuff>(), 240);
+                target.AddBuff(ModContent.BuffType<IvyVenomBuff>(), 240);
             }
         }
 

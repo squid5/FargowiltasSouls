@@ -54,9 +54,7 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
         }
         public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
-            if (WorldSavingSystem.MasochistModeReal)
-                if (WorldSavingSystem.MasochistModeReal)
-                    target.AddBuff(ModContent.BuffType<IvyVenomBuff>(), 240);
+            target.AddBuff(ModContent.BuffType<IvyVenomBuff>(), 240);
             target.AddBuff(BuffID.Poisoned, 300);
         }
 

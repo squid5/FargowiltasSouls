@@ -38,8 +38,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
         {
             base.OnHitPlayer(npc, target, hurtInfo);
 
-            if (WorldSavingSystem.MasochistModeReal)
-                target.AddBuff(ModContent.BuffType<IvyVenomBuff>(), 240);
+            target.AddBuff(ModContent.BuffType<IvyVenomBuff>(), 240);
         }
 
         public override void LoadSprites(NPC npc, bool recolor)
