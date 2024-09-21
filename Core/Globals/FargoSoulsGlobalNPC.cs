@@ -1305,7 +1305,7 @@ namespace FargowiltasSouls.Core.Globals
             if (MoltenAmplify)
             {
                 float modifier = 1.2f;
-                if (modPlayer.ForceEffect<MoltenEnchant>())
+                if (modPlayer.ForceEffect<MoltenEnchant>() && player.EffectItem<MoltenEffect>().type == ModContent.ItemType<MoltenEnchant>())
                 {
                     modifier = 1.3f;
                 }
