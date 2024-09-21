@@ -1579,7 +1579,7 @@ SqueakyToy: {
 	Tooltip:
 		'''
 		Grants immunity to Squeaky Toy and Guilty
-		Enemy attacks have a 5% chance to squeak and only deal 1 damage to you
+		Enemy attacks have a 10% chance to squeak and only deal 1 damage to you
 		'The beloved toy of a defeated foe...?'
 		'''
 }

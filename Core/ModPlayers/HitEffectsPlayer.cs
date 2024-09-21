@@ -435,10 +435,17 @@ namespace FargowiltasSouls.Core.ModPlayers
             if (DeathMarked)
                 modifiers.SourceDamage *= 1.5f;
 
-            if (Player.whoAmI == Main.myPlayer && !noDodge && Player.HasEffect<SqueakEffect>() && Main.rand.NextBool(20))
+            if (Player.whoAmI == Main.myPlayer && !noDodge && Player.HasEffect<SqueakEffect>())
             {
-                Squeak(Player.Center);
-                modifiers.SetMaxDamage(1);
+                int chanceDenominator = 10;
+                if (Player.EffectItem<SqueakEffect>() == null || Player.EffectItem<SqueakEffect>().type != ModContent.ItemType<SqueakyToy>())
+                    chanceDenominator = 20;
+
+                if (Main.rand.NextBool(chanceDenominator))
+                {
+                    Squeak(Player.Center);
+                    modifiers.SetMaxDamage(1);
+                }
             }
 
             modifiers.ModifyHurtInfo += TryParryAttack;
