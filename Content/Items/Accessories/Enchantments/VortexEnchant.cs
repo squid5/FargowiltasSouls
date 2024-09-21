@@ -112,7 +112,8 @@ While in stealth, your own projectiles will not be sucked in
                 float cd = force ? 6f : 8f;
                 modPlayer.VortexCD = LumUtils.SecondsToFrames(cd);
 
-                CooldownBarManager.Activate("VortexEnchantCooldown", ModContent.Request<Texture2D>("FargowiltasSouls/Content/Items/Accessories/Enchantments/VortexEnchant").Value, new(0, 242, 170), () => 1f - Main.LocalPlayer.FargoSouls().VortexCD / (float)LumUtils.SecondsToFrames(cd));
+                CooldownBarManager.Activate("VortexEnchantCooldown", ModContent.Request<Texture2D>("FargowiltasSouls/Content/Items/Accessories/Enchantments/VortexEnchant").Value, new(0, 242, 170), 
+                    () => 1f - Main.LocalPlayer.FargoSouls().VortexCD / (float)LumUtils.SecondsToFrames(cd), activeFunction: () => player.HasEffect<VortexEffect>());
             }
         }
     }

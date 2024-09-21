@@ -74,7 +74,8 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
                 modPlayer.TinProcCD--;
 
             if (Main.myPlayer == player.whoAmI)
-                CooldownBarManager.Activate("TinCritCharge", ModContent.Request<Texture2D>("FargowiltasSouls/Content/Items/Accessories/Enchantments/TinEnchant").Value, new(162, 139, 78), () =>  (float)Main.LocalPlayer.FargoSouls().TinCrit / Main.LocalPlayer.FargoSouls().TinCritMax, true);
+                CooldownBarManager.Activate("TinCritCharge", ModContent.Request<Texture2D>("FargowiltasSouls/Content/Items/Accessories/Enchantments/TinEnchant").Value, new(162, 139, 78), 
+                    () => (float)Main.LocalPlayer.FargoSouls().TinCrit / Main.LocalPlayer.FargoSouls().TinCritMax, true, activeFunction: () => player.HasEffect<TinEffect>());
         }
         public override void OnHitNPCEither(Player player, NPC target, NPC.HitInfo hitInfo, DamageClass damageClass, int baseDamage, Projectile projectile, Item item)
         {

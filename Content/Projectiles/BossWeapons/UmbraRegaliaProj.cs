@@ -1,4 +1,7 @@
+using FargowiltasSouls.Content.Items.Accessories.Enchantments;
+using FargowiltasSouls.Content.Items.Weapons.SwarmDrops;
 using FargowiltasSouls.Content.UI.Elements;
+using FargowiltasSouls.Core.AccessoryEffectSystem;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -153,7 +156,8 @@ namespace FargowiltasSouls.Content.Projectiles.BossWeapons
                 Projectile.friendly = false;
                 if (chargeLevel < maxCharge)
                     chargeLevel++;
-                CooldownBarManager.Activate("UmbraRegaliaCharge", ModContent.Request<Texture2D>("FargowiltasSouls/Content/Items/Weapons/SwarmDrops/UmbraRegalia").Value, Color.DarkRed, () => Projectile.ai[2] / maxCharge, true);
+                CooldownBarManager.Activate("UmbraRegaliaCharge", ModContent.Request<Texture2D>("FargowiltasSouls/Content/Items/Weapons/SwarmDrops/UmbraRegalia").Value, Color.DarkRed, 
+                    () => Projectile.ai[2] / maxCharge, true, activeFunction: () => player.HeldItem != null && player.HeldItem.type == ModContent.ItemType<UmbraRegalia>());
                 if (chargeLevel == (int)maxCharge - 1 && player.whoAmI == Main.myPlayer)
                 {
                     SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/Accessories/ChargeSound"), Projectile.Center + Projectile.velocity * Projectile.Size.Length() / 2);

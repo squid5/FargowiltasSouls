@@ -18,11 +18,12 @@ namespace FargowiltasSouls.Content.UI.Elements
         public Func<float> FillRatio;
         public bool DisplayAtFull;
         public int FadeDelay;
+        public Func<bool> ActiveFunction;
 
         public float Opacity = 0f;
         public int FadeTimer = 0;
 
-        public UICooldownBar(string nameKey, Texture2D barTexture, Texture2D fillTexture, Texture2D itemTexture, Color fillColor, Func<float> fillRatio, bool displayAtFull, int fadeDelay)
+        public UICooldownBar(string nameKey, Texture2D barTexture, Texture2D fillTexture, Texture2D itemTexture, Color fillColor, Func<float> fillRatio, bool displayAtFull, int fadeDelay, Func<bool> activeFunction)
         {
             Active = true;
             NameKey = nameKey;
@@ -33,6 +34,7 @@ namespace FargowiltasSouls.Content.UI.Elements
             FillRatio = fillRatio;
             DisplayAtFull = displayAtFull;
             FadeDelay = fadeDelay;
+            ActiveFunction = activeFunction;
 
             Width.Set(CooldownBarManager.BarWidth, 0);
             Height.Set(CooldownBarManager.BarHeight, 0);
@@ -41,7 +43,7 @@ namespace FargowiltasSouls.Content.UI.Elements
         {
             float fillRatio = FillRatio.Invoke();
             fillRatio = MathHelper.Clamp(fillRatio, 0f, 1f);
-            if (!Active || fillRatio <= 0 || (!DisplayAtFull && fillRatio >= 1))
+            if (!Active || fillRatio <= 0 || (!DisplayAtFull && fillRatio >= 1) || !ActiveFunction.Invoke())
             {
                 if (++FadeTimer > FadeDelay)
                     Opacity -= 0.1f;

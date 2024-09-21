@@ -75,7 +75,8 @@ Buff booster stacking capped at 2
             }
             
             int max = 3 * 60;
-            CooldownBarManager.Activate("NebulaEnchantCharge", ModContent.Request<Texture2D>("FargowiltasSouls/Content/Items/Accessories/Enchantments/NebulaEnchant").Value, NebulaEnchant.NameColor, () => (float)(max - Main.LocalPlayer.FargoSouls().NebulaEnchCD) / max);
+            CooldownBarManager.Activate("NebulaEnchantCharge", ModContent.Request<Texture2D>("FargowiltasSouls/Content/Items/Accessories/Enchantments/NebulaEnchant").Value, NebulaEnchant.NameColor, 
+                () => (float)(max - Main.LocalPlayer.FargoSouls().NebulaEnchCD) / max, activeFunction: () => player.HasEffect<NebulaEffect>());
 
             if (player.setNebula)
                 return;

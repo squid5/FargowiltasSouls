@@ -166,7 +166,8 @@ Attacks may inflict the Solar Flare debuff
         {
             FargoSoulsPlayer modPlayer = player.FargoSouls();
 
-            CooldownBarManager.Activate("SolarEnchantCharge", ModContent.Request<Texture2D>("FargowiltasSouls/Content/Items/Accessories/Enchantments/SolarEnchant").Value, SolarEnchant.NameColor, () => Main.LocalPlayer.FargoSouls().SolarEnchCharge / 180, true);
+            CooldownBarManager.Activate("SolarEnchantCharge", ModContent.Request<Texture2D>("FargowiltasSouls/Content/Items/Accessories/Enchantments/SolarEnchant").Value, SolarEnchant.NameColor, 
+                () => Main.LocalPlayer.FargoSouls().SolarEnchCharge / 180, true, activeFunction: () => player.HasEffect<SolarFlareEffect>());
 
             if (player.HeldItem != null && player.HeldItem.damage > 0 && player.controlUseItem)
             {

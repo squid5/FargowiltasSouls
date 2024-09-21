@@ -17,12 +17,15 @@ namespace FargowiltasSouls.Content.UI.Elements
         public const int BarWidth = 100;
         public const int BarHeight = 20;
         public const int SpaceBetweenBars = 20;
-        public static void Activate(string nameKey, Texture2D itemTexture, Color fillColor, Func<float> fillRatio, bool displayAtFull = false, int fadeDelay = 0)
+        public static void Activate(string nameKey, Texture2D itemTexture, Color fillColor, Func<float> fillRatio, bool displayAtFull = false, int fadeDelay = 0, Func<bool> activeFunction = null)
         {
             if (!SoulConfig.Instance.CooldownBars)
                 return;
             if (Instance.Children.Any(b => b is UICooldownBar cdBar && cdBar.Active && cdBar.NameKey == nameKey))
                 return;
+
+            activeFunction ??= () => true;
+
             float x = SoulConfig.Instance.CooldownBarsX;
             float y = SoulConfig.Instance.CooldownBarsY;
             int i = Instance.Children.Count();
@@ -39,10 +42,11 @@ namespace FargowiltasSouls.Content.UI.Elements
                 freeBar.FillRatio = fillRatio;
                 freeBar.DisplayAtFull = displayAtFull;
                 freeBar.FadeDelay = fadeDelay;
+                freeBar.ActiveFunction = activeFunction;
             }
             else
             {
-                UICooldownBar newBar = new(nameKey, FargoUIManager.CooldownBarTexture.Value, FargoUIManager.CooldownBarFillTexture.Value, itemTexture, fillColor, fillRatio, displayAtFull, fadeDelay);
+                UICooldownBar newBar = new(nameKey, FargoUIManager.CooldownBarTexture.Value, FargoUIManager.CooldownBarFillTexture.Value, itemTexture, fillColor, fillRatio, displayAtFull, fadeDelay, activeFunction);
                 //int nX = i / 3;
                 //int nY = i % 3;
                 int nY = i;

@@ -1,4 +1,5 @@
 ﻿using FargowiltasSouls.Content.Buffs.Masomode;
+using FargowiltasSouls.Content.Items.Accessories.Enchantments;
 using FargowiltasSouls.Content.Projectiles.Masomode;
 using FargowiltasSouls.Content.UI.Elements;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
@@ -79,7 +80,8 @@ Attack speed bonuses are half as effective
                     Main.dust[d].velocity *= 5f;
                 }
 
-                CooldownBarManager.Activate("WretchedPouchCharge", ModContent.Request<Texture2D>("FargowiltasSouls/Content/Items/Accessories/Masomode/WretchedPouch").Value, Color.DarkMagenta, () => modPlayer.WretchedPouchCD / (float)MaxChargeTime, true);
+                CooldownBarManager.Activate("WretchedPouchCharge", ModContent.Request<Texture2D>("FargowiltasSouls/Content/Items/Accessories/Masomode/WretchedPouch").Value, Color.DarkMagenta, 
+                    () => modPlayer.WretchedPouchCD / (float)MaxChargeTime, true, activeFunction: () => player.HasEffect<WretchedPouchEffect>());
             }
             else
             {

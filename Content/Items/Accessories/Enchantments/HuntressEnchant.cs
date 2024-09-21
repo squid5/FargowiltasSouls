@@ -101,7 +101,8 @@ Missing any attack will reset these bonuses
 
                     modPlayer.HuntressCD = 30;
 
-                    CooldownBarManager.Activate("HuntressBuildup", ModContent.Request<Texture2D>("FargowiltasSouls/Content/Items/Accessories/Enchantments/HuntressEnchant").Value, new(122, 192, 76), () => modPlayer.HuntressStage / 10f, true);
+                    CooldownBarManager.Activate("HuntressBuildup", ModContent.Request<Texture2D>("FargowiltasSouls/Content/Items/Accessories/Enchantments/HuntressEnchant").Value, new(122, 192, 76),
+                        () => modPlayer.HuntressStage / 10f, true, activeFunction: () => player.HasEffect<HuntressEffect>());
                 }
                 int bonus = modPlayer.ForceEffect<HuntressEnchant>() || redRiding ? 5 : 3;
                 if (player.HasBuff<GladiatorSpiritBuff>())
