@@ -1467,7 +1467,7 @@ namespace FargowiltasSouls.Content.Projectiles
                 case ProjectileID.PoisonDartTrap:
                 case ProjectileID.SpearTrap:
                 case ProjectileID.SpikyBallTrap:
-                    if (Main.getGoodWorld)
+                    if (WorldSavingSystem.MasochistModeReal)
                         target.AddBuff(ModContent.BuffType<IvyVenomBuff>(), 360);
                     break;
 
@@ -1600,7 +1600,7 @@ namespace FargowiltasSouls.Content.Projectiles
                     goto case ProjectileID.SeedPlantera;
                 case ProjectileID.SeedPlantera:
                 case ProjectileID.ThornBall:
-                    if (Main.getGoodWorld)
+                    if (WorldSavingSystem.MasochistModeReal)
                         target.AddBuff(ModContent.BuffType<IvyVenomBuff>(), 240);
                     break;
 

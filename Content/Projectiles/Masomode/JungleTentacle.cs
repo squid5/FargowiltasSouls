@@ -1,3 +1,4 @@
+using FargowiltasSouls.Core.Systems;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -73,7 +74,7 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
 
         public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
-            if (Main.getGoodWorld)
+            if (WorldSavingSystem.MasochistModeReal)
                 target.AddBuff(ModContent.BuffType<Buffs.Masomode.IvyVenomBuff>(), 240);
         }
 

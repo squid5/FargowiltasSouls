@@ -38,7 +38,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
         {
             base.OnHitPlayer(npc, target, hurtInfo);
 
-            if (Main.getGoodWorld)
+            if (WorldSavingSystem.MasochistModeReal)
                 target.AddBuff(ModContent.BuffType<IvyVenomBuff>(), 240);
         }
 
