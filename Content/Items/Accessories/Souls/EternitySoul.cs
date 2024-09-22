@@ -21,8 +21,6 @@ namespace FargowiltasSouls.Content.Items.Accessories.Souls
     public class EternitySoul : FlightMasteryWings
     {
 
-        public override bool HasSupersonicSpeed => true;
-
         public override bool Eternity => true;
         public override int NumFrames => 10;
 

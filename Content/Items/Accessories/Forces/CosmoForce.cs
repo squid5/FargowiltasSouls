@@ -98,7 +98,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Forces
                         }
                         int npcid = result != null ? result.whoAmI : -1;
 
-                        Projectile.NewProjectileDirect(player.GetSource_EffectItem<CosmosMoonEffect>(), player.Center, Vector2.Zero, ModContent.ProjectileType<TerrariaSoulMoon>(), moonDamage, 1, player.whoAmI, MathHelper.Pi, ai1: npcid, ai2: modPlayer.CosmosMoonCycle);
+                        Projectile.NewProjectileDirect(player.GetSource_EffectItem<CosmosMoonEffect>(), player.Center, player.DirectionTo(Main.MouseWorld) * 7, ModContent.ProjectileType<TerrariaSoulMoon>(), moonDamage, 1, player.whoAmI, MathHelper.Pi, ai1: npcid, ai2: modPlayer.CosmosMoonCycle);
                         modPlayer.CosmosMoonTimer = 0;
                         modPlayer.CosmosMoonCycle++;
                         modPlayer.CosmosMoonCycle %= 4;

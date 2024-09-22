@@ -183,7 +183,6 @@ RunSpeed: Увеличенная Базовая Скорость Бега
 NoMomentum: Нет Инерции
 SupersonicTabi: Рывок Таби
 SupersonicClimbing: Альпинистский Набор Тигра
-SupersonicSpeedEffect: Увеличение Скорости
 SupersonicJumps: Прыжки
 SupersonicRocketBoots: Реактивные Сапоги
 SupersonicCarpet: Ковёр-самолёт
@@ -196,7 +195,6 @@ TrawlerJump: Прыжок
 TrawlerGel: Нестабильный Желатин
 EternityHeader: "{$Mods.FargowiltasSouls.Items.EternitySoul.DisplayName}"
 EternityTin: Эффект Накладывающихся Критов Вечности
-TerrariaMoonEffect: Луны Террарии
 // the pets are no longer existing in game
 // PetHeader: Pets
 // PetDinoConfig: Dino Pet

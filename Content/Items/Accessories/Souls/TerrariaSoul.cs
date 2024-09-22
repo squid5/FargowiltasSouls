@@ -72,7 +72,6 @@ namespace FargowiltasSouls.Content.Items.Accessories.Souls
             foreach (int force in Forces)
                 modPlayer.ForceEffects.Add(force);
 
-            //includes revive, both spectres, adamantite, and star heal
             modPlayer.TerrariaSoul = true;
             modPlayer.WizardEnchantActive = true;
 
@@ -143,6 +142,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Souls
             .Register();
         }
     }
+    /*
     public class TerrariaMoonEffect : AccessoryEffect
     {
         public override Header ToggleHeader => Header.GetHeader<EternityHeader>();
@@ -196,4 +196,5 @@ namespace FargowiltasSouls.Content.Items.Accessories.Souls
             modPlayer.TerrariaSoulProcCD = 160 * 2;
         }
     }
+    */
 }

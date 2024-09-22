@@ -94,7 +94,7 @@ SolarEffect: 耀斑 护盾冲撞
 SolarFlareEffect: 耀斑 太阳耀斑减益
 StardustMinionEffect: 星尘 星尘守卫
 // VortexEffect: Vortex Laser
-// CosmosMoonEffect: Cosmic Moons
+// CosmosMoonEffect: Concise Cosmo Force
 DeviEnergyHeader: 永恒模式饰品
 DeerSinewEffect: 鹿筋冲刺
 ZephyrJump: 风神跳跃
@@ -183,7 +183,6 @@ RunSpeed: 提高基础奔跑速度
 NoMomentum: 不计算动量
 SupersonicTabi: 分趾厚底袜冲刺
 SupersonicClimbing: 猛虎攀爬装备
-SupersonicSpeedEffect: 超音速之魂速度提升
 SupersonicJumps: 超音速之魂五段跳
 SupersonicRocketBoots: 超音速之魂火箭靴
 SupersonicCarpet: 超音速之魂飞毯
@@ -196,7 +195,6 @@ TrawlerJump: 捕鱼之魂跳跃
 TrawlerGel: 挥发明胶
 EternityHeader: "{$Mods.FargowiltasSouls.Items.EternitySoul.DisplayName}"
 EternityTin: 永恒之魂属性叠加
-// TerrariaMoonEffect: Terraria Moons
 // the pets are no longer existing in game
 PetHeader: 宠物
 PetDinoConfig: 恐龙宝宝

@@ -1718,7 +1718,7 @@ DimensionSoul: {
 		Increases life regeneration by 8
 		Grants immunity to knockback and several debuffs
 		Enemies are more likely to target you
-		Allows Supersonic running and infinite flight
+		Allows Supersonic running and infinite flight, [c/BC5252:and disables all of your jumps (togglable)]
 		Increases fishing skill substantially, All fishing rods will have 10 extra lures
 		Increased block and wall placement speed by 50%
 		Near infinite block placement and mining reach, Mining speed tripled
@@ -1784,7 +1784,7 @@ FlightMasterySoul: {
 		Hold DOWN and JUMP to hover
 		Hold UP to boost faster
 		Increases gravity
-		[c/FF0000:Disables all of your jumps (togglable)]
+		[c/BC5252:Disables all of your jumps (togglable)]
 		'Pierce the heavens'
 		''' */
 }
