@@ -2669,6 +2669,7 @@ SlimeKingsSlasher: {
 	/* Tooltip:
 		'''
 		Deals 20% increased damage to enemies on fire
+		Reduced size benefit from Tungsten Enchantment
 		'Torn from the insides of a defeated foe..'
 		''' */
 }

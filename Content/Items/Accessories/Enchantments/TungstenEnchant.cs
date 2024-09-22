@@ -101,6 +101,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
                 ModContent.ProjectileType<PrismaRegaliaProj>(),
                 ModContent.ProjectileType<BaronTuskShrapnel>(),
                 ModContent.ProjectileType<UmbraRegaliaProj>(),
+                ModContent.ProjectileType<SlimeKingSlasherProj>()
         ];
         public static List<int> TungstenAlwaysAffectProjStyle =
         [
@@ -109,6 +110,10 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
             ProjAIStyleID.ShortSword,
             ProjAIStyleID.Flail,
             ProjAIStyleID.SleepyOctopod
+        ];
+        public static List<int> TungstenNerfedProjType = 
+        [
+            ModContent.ProjectileType<SlimeKingSlasherProj>()
         ];
         public static bool TungstenAlwaysAffectProj(Projectile projectile)
         {
@@ -126,6 +131,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
             [
             ProjAIStyleID.Yoyo
             ];
+        public static bool TungstenNerfedProj(Projectile projectile) => TungstenNerfedProjType.Contains(projectile.type);
         public static bool TungstenNeverAffectsProj(Projectile projectile)
         {
             return TungstenNeverAffectProjType.Contains(projectile.type) ||
@@ -173,6 +179,8 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
             {
                 bool forceEffect = modPlayer.ForceEffect<TungstenEnchant>();
                 float scale = forceEffect ? 3f : 2f;
+                if (TungstenNerfedProj(projectile))
+                    scale -= (scale - 1f) / 2f;
                 projectile.position = projectile.Center;
                 projectile.scale *= scale;
                 projectile.width = (int)(projectile.width * scale);
