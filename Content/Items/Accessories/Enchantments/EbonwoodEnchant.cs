@@ -1,4 +1,5 @@
 ﻿using FargowiltasSouls.Content.Buffs.Souls;
+using FargowiltasSouls.Content.Projectiles;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using FargowiltasSouls.Core.Toggler.Content;
 using Microsoft.Xna.Framework;
@@ -82,23 +83,26 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
                 }
             }
             //dust
-            for (int i = 0; i < 20; i++)
+            if (!MoltenAuraProj.CombinedAura(player))
             {
-                Vector2 offset = new();
-                double angle = Main.rand.NextDouble() * 2d * Math.PI;
-                offset.X += (float)(Math.Sin(angle) * dist);
-                offset.Y += (float)(Math.Cos(angle) * dist);
-                Vector2 spawnPos = player.Center + offset - new Vector2(4, 4);
-                if (forceEffect || Collision.CanHitLine(player.Left, 0, 0, spawnPos, 0, 0) || Collision.CanHitLine(player.Right, 0, 0, spawnPos, 0, 0))
+                for (int i = 0; i < 20; i++)
                 {
-                    Dust dust = Main.dust[Dust.NewDust(
-                        spawnPos, 0, 0,
-                        DustID.Shadowflame, 0, 0, 100, Color.White, 1f
-                        )];
-                    dust.velocity = player.velocity;
-                    if (Main.rand.NextBool(3))
-                        dust.velocity += Vector2.Normalize(offset) * -5f;
-                    dust.noGravity = true;
+                    Vector2 offset = new();
+                    double angle = Main.rand.NextDouble() * 2d * Math.PI;
+                    offset.X += (float)(Math.Sin(angle) * dist);
+                    offset.Y += (float)(Math.Cos(angle) * dist);
+                    Vector2 spawnPos = player.Center + offset - new Vector2(4, 4);
+                    if (forceEffect || Collision.CanHitLine(player.Left, 0, 0, spawnPos, 0, 0) || Collision.CanHitLine(player.Right, 0, 0, spawnPos, 0, 0))
+                    {
+                        Dust dust = Main.dust[Dust.NewDust(
+                            spawnPos, 0, 0,
+                            DustID.Shadowflame, 0, 0, 100, Color.White, 1f
+                            )];
+                        dust.velocity = player.velocity;
+                        if (Main.rand.NextBool(3))
+                            dust.velocity += Vector2.Normalize(offset) * -5f;
+                        dust.noGravity = true;
+                    }
                 }
             }
         }
