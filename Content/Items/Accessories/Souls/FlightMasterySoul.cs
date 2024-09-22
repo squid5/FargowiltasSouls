@@ -1,4 +1,6 @@
-﻿using FargowiltasSouls.Core.AccessoryEffectSystem;
+﻿using FargowiltasSouls.Content.Items.Accessories.Expert;
+using FargowiltasSouls.Core.AccessoryEffectSystem;
+using FargowiltasSouls.Core.ModPlayers;
 using FargowiltasSouls.Core.Toggler.Content;
 using Microsoft.Xna.Framework;
 using Terraria;
@@ -21,11 +23,15 @@ namespace FargowiltasSouls.Content.Items.Accessories.Souls
         }
         public static void AddEffects(Player player, Item item)
         {
-            Player Player = player;
-            player.FargoSouls().FlightMasterySoul = true;
-            Player.wingTimeMax = 999999;
-            Player.wingTime = Player.wingTimeMax;
-            Player.ignoreWater = true;
+            FargoSoulsPlayer modPlayer = player.FargoSouls();
+            player.AddEffect<JumpsDisabled>(item);
+            //if (player.AddEffect<JumpsDisabled>(item))
+                //modPlayer.JumpsDisabled = modPlayer.JumpsDisabledBuffer = true;
+
+            modPlayer.FlightMasterySoul = true;
+            player.wingTimeMax = 999999;
+            player.wingTime = player.wingTimeMax;
+            player.ignoreWater = true;
 
             player.AddEffect<FlightMasteryInsignia>(item);
             player.AddEffect<FlightMasteryGravity>(item);
@@ -33,13 +39,13 @@ namespace FargowiltasSouls.Content.Items.Accessories.Souls
                 player.AddEffect<SupersonicSpeedEffect>(item);
 
             //hover
-            if (Player.controlDown && Player.controlJump && !Player.mount.Active)
+            if (player.controlDown && player.controlJump && !player.mount.Active)
             {
-                Player.position.Y -= Player.velocity.Y;
-                if (Player.velocity.Y > 0.1f)
-                    Player.velocity.Y = 0.1f;
-                else if (Player.velocity.Y < -0.1f)
-                    Player.velocity.Y = -0.1f;
+                player.position.Y -= player.velocity.Y;
+                if (player.velocity.Y > 0.1f)
+                    player.velocity.Y = 0.1f;
+                else if (player.velocity.Y < -0.1f)
+                    player.velocity.Y = -0.1f;
             }
         }
         public override void AddRecipes()
@@ -88,6 +94,15 @@ namespace FargowiltasSouls.Content.Items.Accessories.Souls
         public override void PostUpdateEquips(Player player)
         {
             player.gravity = Player.defaultGravity * 1.5f;
+        }
+    }
+    public class JumpsDisabled : AccessoryEffect
+    {
+        public override Header ToggleHeader => Header.GetHeader<FlightMasteryHeader>();
+        public override int ToggleItemType => ModContent.ItemType<FlightMasterySoul>();
+        public override void PostUpdateEquips(Player player)
+        {
+            player.ConsumeAllExtraJumps();
         }
     }
 }

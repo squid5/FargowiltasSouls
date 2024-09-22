@@ -177,6 +177,7 @@ ShimmerImmunityEffect: 免疫微光闪烁
 FlightMasteryHeader: "{$Mods.FargowiltasSouls.Items.FlightMasterySoul.DisplayName}"
 FlightMasteryInsignia: 翱翔徽章加速
 FlightMasteryGravity: 增加重力
+// JumpsDisabled: Disable All Jumps
 SupersonicHeader: "{$Mods.FargowiltasSouls.Items.SupersonicSoul.DisplayName}"
 RunSpeed: 提高基础奔跑速度
 NoMomentum: 不计算动量

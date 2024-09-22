@@ -112,6 +112,9 @@ namespace FargowiltasSouls.Core.ModPlayers
 
         public bool PrimeSoulActive = false;
         public bool PrimeSoulActiveBuffer = false; // Needed to make sure the item effect is applied during the entirety of the update cycle, so it doesn't miss anything
+        //public bool JumpsDisabled = false;
+        //public bool JumpsDisabledBuffer = false;  // Needed to make sure the item effect is applied during the entirety of the update cycle, so it doesn't miss anything
+
         public int PrimeSoulItemCount = 0;
 
         public int CrimsonRegenAmount;

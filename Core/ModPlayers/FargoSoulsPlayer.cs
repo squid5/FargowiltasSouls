@@ -299,8 +299,15 @@ namespace FargowiltasSouls.Core.ModPlayers
             }
             PrimeSoulActiveBuffer = false;
 
-            if (ForceEffects != null)
-                ForceEffects.Clear();
+            /*
+            if (!JumpsDisabledBuffer)
+            {
+                JumpsDisabled = false;
+            }
+            JumpsDisabledBuffer = false;
+            */
+
+            ForceEffects?.Clear();
 
             //maso
             SlimyShieldItem = null;
