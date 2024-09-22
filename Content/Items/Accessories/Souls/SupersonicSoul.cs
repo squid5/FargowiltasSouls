@@ -38,7 +38,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Souls
             modPlayer.SupersonicSoul = true;
 
             //calculated to match flight mastery soul, 6.75 same as frostspark
-            Player.accRunSpeed = player.AddEffect<RunSpeed>(item) ? 15.6f : 6.75f;
+            Player.accRunSpeed = player.AddEffect<RunSpeed>(item) ? 6.75f : 15.6f;
 
             if (player.AddEffect<NoMomentum>(item))
                 modPlayer.NoMomentum = true;

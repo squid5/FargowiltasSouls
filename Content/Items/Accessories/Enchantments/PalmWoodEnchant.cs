@@ -63,6 +63,8 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
         {
             if (player.HasEffect<TimberEffect>())
             {
+                if (player.Distance(target.Center) > ShadewoodEffect.Range(player, true))
+                    return;
                 if (player.FargoSouls().PalmWoodForceCD <= 0 && Collision.CanHit(player.Center, 0, 0, target.Center, 0, 0))
                 {
                     Vector2 velocity = Vector2.Normalize(target.Center - player.Center) * 10;

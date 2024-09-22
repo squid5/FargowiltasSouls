@@ -65,6 +65,8 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
         {
             if (player.HasEffect<TimberEffect>())
             {
+                if (player.Distance(target.Center) > ShadewoodEffect.Range(player, true))
+                    return;
                 if (projectile != null && projectile.type == ProjectileID.SnowBallFriendly)
                     return;
                 int damage = hitInfo.SourceDamage;
