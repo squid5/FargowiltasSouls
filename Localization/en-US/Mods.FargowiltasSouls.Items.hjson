@@ -807,12 +807,12 @@ BoxofGizmos: {
 }
 
 UniverseCore: {
-	DisplayName: Universe Core
+	DisplayName: Cosmic Core
 	Tooltip:
 		'''
 		Your critical strikes can critically strike
 		The chance of this is equal to half of your critical strike chance
-		These supercrits deal 4x damage and inflict Flames of the Universe
+		These supercrits deal 4x damage and inflict Flames of the Cosmos
 		'Bursting with ultra-high-energy cosmic rays'
 		'''
 }
@@ -1029,7 +1029,7 @@ BionomicCluster: {
 	DisplayName: Bionomic Cluster
 	Tooltip:
 		'''
-		Grants immunity to [i:FargowiltasSouls/FrigidGemstone] Frostburn, [i:FargowiltasSouls/WretchedPouch] Shadowflame, [i:FargowiltasSouls/SqueakyToy] Squeaky Toy, [i:FargowiltasSouls/ConcentratedRainbowMatter] Flames of the Universe, 
+		Grants immunity to [i:FargowiltasSouls/FrigidGemstone] Frostburn, [i:FargowiltasSouls/WretchedPouch] Shadowflame, [i:FargowiltasSouls/SqueakyToy] Squeaky Toy, [i:FargowiltasSouls/ConcentratedRainbowMatter] Flames of the Cosmos, 
 		[i:FargowiltasSouls/WyvernFeather] Clipped Wings, Crippled, [i:FargowiltasSouls/TribalCharm] Webbed, Purified, [i:FargowiltasSouls/NymphsPerfume] Lovestruck, Stinky, Hexed, and [i:FargowiltasSouls/SecurityWallet] Midas
 		[i:FargowiltasSouls/SandsofTime] Use to teleport to your last death point
 		[i:FargowiltasSouls/WyvernFeather] Your attacks can inflict Clipped Wings [i:FargowiltasSouls/NymphsPerfume] and produce hearts
@@ -1055,7 +1055,7 @@ BionomicClusterInactive: {
 	DisplayName: Bionomic Cluster (Inactive)
 	Tooltip:
 		'''
-		Grants immunity to [i:FargowiltasSouls/FrigidGemstone] Frostburn, [i:FargowiltasSouls/WretchedPouch] Shadowflame, [i:FargowiltasSouls/SqueakyToy] Squeaky Toy, [i:FargowiltasSouls/ConcentratedRainbowMatter] Flames of the Universe, 
+		Grants immunity to [i:FargowiltasSouls/FrigidGemstone] Frostburn, [i:FargowiltasSouls/WretchedPouch] Shadowflame, [i:FargowiltasSouls/SqueakyToy] Squeaky Toy, [i:FargowiltasSouls/ConcentratedRainbowMatter] Flames of the Cosmos, 
 		[i:FargowiltasSouls/WyvernFeather] Clipped Wings, Crippled, [i:FargowiltasSouls/TribalCharm] Webbed, Purified, [i:FargowiltasSouls/NymphsPerfume] Lovestruck, Stinky, Hexed, and [i:FargowiltasSouls/SecurityWallet] Midas
 		[i:FargowiltasSouls/SandsofTime] Use to teleport to your last death point
 		[i:FargowiltasSouls/WyvernFeather] Your attacks can inflict Clipped Wings [i:FargowiltasSouls/NymphsPerfume] and produce hearts
@@ -1107,7 +1107,7 @@ ConcentratedRainbowMatter: {
 	DisplayName: Concentrated Rainbow Matter
 	Tooltip:
 		'''
-		Grants immunity to Flames of the Universe
+		Grants immunity to Flames of the Cosmos
 		Automatically use healing potions when needed
 		Summons a baby rainbow slime to fight for you
 		'Taste the rainbow'
@@ -1867,7 +1867,6 @@ UniverseSoul: {
 		25% increased critical chance for your current weapon class
 		25% increased attack speed
 		50% increased shoot velocity
-		Crits deal 4x instead of 2x and inflict Flames of the Universe
 		All weapons have double knockback
 		Increases your maximum mana by 300
 		Increases your max number of minions by 2

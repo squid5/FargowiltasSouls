@@ -575,12 +575,9 @@ namespace FargowiltasSouls.Content.Items.Misc
                     ModContent.ItemType<UniverseSoul>(),
                     ModContent.ItemType<DimensionSoul>(),
                     ModContent.ItemType<SparklingAdoration>(),
-                    ModContent.ItemType<AbominableWand>()
+                    ModContent.ItemType<AbominableWand>(),
+                    ModContent.ItemType<UniverseCore>()
                 );
-                meleeSpecific = [ModContent.ItemType<BerserkerSoul>()];
-                rangerSpecific = [ModContent.ItemType<SnipersSoul>()];
-                mageSpecific = [ModContent.ItemType<ArchWizardsSoul>()];
-                summonerSpecific = [ModContent.ItemType<ConjuristsSoul>()];
             }
             else
             {
@@ -595,13 +592,9 @@ namespace FargowiltasSouls.Content.Items.Misc
                     ModContent.ItemType<UniverseSoul>(),
                     ModContent.ItemType<SparklingAdoration>(),
                     ModContent.ItemType<AbominableWand>(),
-                    ModContent.ItemType<MutantEye>()
+                    ModContent.ItemType<MutantEye>(),
+                    ModContent.ItemType<UniverseCore>()
                 );
-
-                meleeSpecific = [ModContent.ItemType<BerserkerSoul>()];
-                rangerSpecific = [ModContent.ItemType<SnipersSoul>()];
-                mageSpecific = [ModContent.ItemType<ArchWizardsSoul>()];
-                summonerSpecific = [ModContent.ItemType<ConjuristsSoul>()];
             }
 
 

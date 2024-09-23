@@ -207,6 +207,7 @@ namespace FargowiltasSouls.Core.ModPlayers
         public bool RangedEssence;
         public bool BuilderMode;
         public bool UniverseSoul;
+        public bool UniverseSoulBuffer;  // Needed to make sure the item effect is applied during the entirety of the update cycle, so it doesn't miss anything
         public bool UniverseCore;
         public bool FishSoul1;
         public bool FishSoul2;

@@ -25,6 +25,8 @@ namespace FargowiltasSouls.Content.Items.Accessories.Souls
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
+            if (player.FargoSouls().UniverseSoul)
+                return;
             player.GetDamage(DamageClass.Melee) += 0.3f;
             player.GetCritChance(DamageClass.Melee) += 15;
 

@@ -19,6 +19,8 @@ namespace FargowiltasSouls.Content.Items.Accessories.Souls
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
+            if (player.FargoSouls().UniverseSoul)
+                return;
             //reduce ammo consume
             player.FargoSouls().RangedSoul = true;
             player.GetDamage(DamageClass.Ranged) += 0.3f;

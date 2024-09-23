@@ -286,6 +286,10 @@ namespace FargowiltasSouls.Core.ModPlayers
             FlightMasterySoul = false;
             RangedEssence = false;
             BuilderMode = false;
+            if (!UniverseSoulBuffer)
+            {
+                UniverseSoul = false;
+            }
             UniverseSoul = false;
             UniverseCore = false;
             FishSoul1 = false;

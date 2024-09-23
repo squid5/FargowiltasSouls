@@ -79,7 +79,6 @@ namespace FargowiltasSouls.Content.Items.Accessories.Souls
         public override void AddRecipes()
         {
             Recipe recipe = CreateRecipe()
-            .AddIngredient<UniverseCore>()
             .AddIngredient<BerserkerSoul>()
             .AddIngredient<SnipersSoul>()
             .AddIngredient<ArchWizardsSoul>()
