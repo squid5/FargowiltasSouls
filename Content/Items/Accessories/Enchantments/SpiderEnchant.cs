@@ -12,12 +12,6 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
-            // Tooltip.SetDefault(tooltip);
-
-            //             string tooltip_ch =
-            // @"你的仆从和哨兵现在可以造成暴击且有15%基础暴击率
-            // '对恐蛛症者可惩罚他们死于蜘蛛之口'";
-            //             Tooltip.AddTranslation((int)GameCulture.CultureName.Chinese, tooltip_ch);
 
         }
 

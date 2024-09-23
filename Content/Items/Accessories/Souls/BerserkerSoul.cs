@@ -13,22 +13,6 @@ namespace FargowiltasSouls.Content.Items.Accessories.Souls
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
-
-            // DisplayName.SetDefault("Berserker's Soul");
-
-            //DisplayName.AddTranslation((int)GameCulture.CultureName.Chinese, "狂战士之魂");
-
-            // Tooltip.SetDefault(tooltip);
-            //string tooltip_ch =
-            //@"增加30%近战伤害
-            //增加20%近战攻速
-            //增加15%近战暴击率
-            //增加近战击退
-            //拥有烈火手套、悠悠球袋和天界壳效果
-            //'吾之传说生者弗能传颂'";
-            //Tooltip.AddTranslation((int)GameCulture.CultureName.Chinese, tooltip_ch);
-
-
         }
 
         public override void SetDefaults()

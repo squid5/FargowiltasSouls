@@ -13,10 +13,6 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
-
-            // DisplayName.SetDefault("Silver Enchantment");
-
-            // Tooltip.SetDefault(tooltip);
         }
 
         public override Color nameColor => new(180, 180, 204);

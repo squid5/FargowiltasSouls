@@ -13,14 +13,6 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
-
-            // DisplayName.SetDefault("Rich Mahogany Enchantment");
-            /* Tooltip.SetDefault(
-@"All grappling hooks pull 1.5x as fast, shoot 2x as fast, and retract 3x as fast
-While grappling you gain 10% damage resistance for one hit and a 50% thorns effect
-'Guaranteed to keep you hooked'"); */
-
-            //in force multiplier is 2.5x pull speed, DR increases to 50% and thorns to 500%
         }
 
         public override Color nameColor => new(181, 108, 100);

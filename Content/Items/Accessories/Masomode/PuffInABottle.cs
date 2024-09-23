@@ -10,9 +10,6 @@ namespace FargowiltasSouls.Content.Items.Accessories.Masomode
     {
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("Puff in a Bottle");
-            // Tooltip.SetDefault(@"Allows the holder to double jump");
-
             Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 

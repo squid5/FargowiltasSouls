@@ -13,18 +13,6 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
-
-            // DisplayName.SetDefault("Cactus Enchantment");
-            /* Tooltip.SetDefault(
-@"While attacking you release a spray of needles
-Enemies will explode into needles on death if they are struck with your needles
-'It's the quenchiest!'"); */
-
-            //             DisplayName.AddTranslation((int)GameCulture.CultureName.Chinese, "仙人掌魔石");
-            //             Tooltip.AddTranslation((int)GameCulture.CultureName.Chinese, 
-            // @"反弹25%接触伤害
-            // 敌人死亡时有几率爆裂出针刺
-            // '太解渴了！'");
         }
 
         public override Color nameColor => new(121, 158, 29);

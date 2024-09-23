@@ -13,15 +13,6 @@ namespace FargowiltasSouls.Content.Items.Accessories.Masomode
 
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("Concentrated Rainbow Matter");
-            /* Tooltip.SetDefault(@"Grants immunity to Flames of the Universe
-Automatically use healing potions when needed
-Summons a baby rainbow slime to fight for you
-'Taste the rainbow'"); */
-            //             DisplayName.AddTranslation((int)GameCulture.CultureName.Chinese, "浓缩彩虹物质");
-            //             Tooltip.AddTranslation((int)GameCulture.CultureName.Chinese, @"'品尝彩虹'
-            // 免疫宇宙之火
-            // 召唤一个彩虹史莱姆宝宝");
 
             Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }

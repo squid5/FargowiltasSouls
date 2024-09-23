@@ -33,11 +33,6 @@ namespace FargowiltasSouls.Content.Items.Accessories.Souls
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
-
-            // DisplayName.SetDefault("Soul of Terraria");
-
-            // Tooltip.SetDefault(tooltip);
-
             Main.RegisterItemAnimation(Item.type, new DrawAnimationRectangularV(6, 6, 8));
             ItemID.Sets.AnimatesAsSoul[Item.type] = true;
         }

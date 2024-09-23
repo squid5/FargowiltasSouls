@@ -13,13 +13,6 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
-
-            // DisplayName.SetDefault("Ninja Enchantment");
-            /* Tooltip.SetDefault(
-@"Drastically increases projectile and attack speed
-Reduces damage to compensate for increased speed
-Increases armor pen by 15
-'Attack faster than the eye can see'"); */
         }
 
         public override Color nameColor => new(48, 49, 52);

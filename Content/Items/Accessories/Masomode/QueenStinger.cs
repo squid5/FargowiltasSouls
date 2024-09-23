@@ -10,21 +10,6 @@ namespace FargowiltasSouls.Content.Items.Accessories.Masomode
 
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("The Queen's Stinger");
-            /* Tooltip.SetDefault("Grants immunity to Infested" +
-                "\nPress the Special Dash key to perform a short quick bee dash" +
-                "\nHoney buff increases your armor penetration by 10" +
-                "\nBees and weak Hornets become friendly" +
-                "\n'Ripped right off of a defeated foe'"); */
-
-            // DisplayName.AddTranslation((int)GameCulture.CultureName.Chinese, "女王的毒刺");
-            // Tooltip.AddTranslation((int)GameCulture.CultureName.Chinese, "'从一个被打败的敌人身上撕下来'" +
-            //     "\n免疫感染" +
-            //     "\n增加10点护甲穿透" +
-            //     "\n攻击造成中毒效果" +
-            //     "\n永久蜂蜜Buff效果" +
-            //     "\n蜜蜂和虚弱黄蜂变得友好");
-
             Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 

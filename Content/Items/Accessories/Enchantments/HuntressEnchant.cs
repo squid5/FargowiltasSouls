@@ -16,15 +16,6 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
-
-            // DisplayName.SetDefault("Huntress Enchantment");
-            /* Tooltip.SetDefault(
-@"Attacks ignore 10 enemy defense and deal 5 flat extra damage
-Each successive attack ignores an additional 10 defense and deals 5 more damage
-This stacks up to 10 times
-Homing and minion attacks do not increase these bonuses
-Missing any attack will reset these bonuses
-'Accuracy brings power'"); */
         }
 
         public override Color nameColor => new(122, 192, 76);

@@ -16,10 +16,6 @@ namespace FargowiltasSouls.Content.Items.Accessories.Souls
         {
             base.SetStaticDefaults();
 
-            // DisplayName.SetDefault("Soul of the Universe");
-
-            // Tooltip.SetDefault(tooltip);
-
 
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(6, 7));
             ItemID.Sets.AnimatesAsSoul[Item.type] = true;

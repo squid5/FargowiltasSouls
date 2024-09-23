@@ -37,11 +37,6 @@ namespace FargowiltasSouls.Content.Items.Accessories.Souls
             .AddIngredient(ItemID.DeadlySphereStaff)
             .AddIngredient(ItemID.StormTigerStaff)
             .AddIngredient(ItemID.StaffoftheFrostHydra)
-            //mourningstar?
-            //.AddIngredient(ItemID.DD2BallistraTowerT3Popper);
-            //.AddIngredient(ItemID.DD2ExplosiveTrapT3Popper);
-            //.AddIngredient(ItemID.DD2FlameburstTowerT3Popper);
-            //.AddIngredient(ItemID.DD2LightningAuraT3Popper);
             .AddIngredient(ItemID.TempestStaff)
             .AddIngredient(ItemID.RavenStaff)
             .AddIngredient(ItemID.XenoStaff)

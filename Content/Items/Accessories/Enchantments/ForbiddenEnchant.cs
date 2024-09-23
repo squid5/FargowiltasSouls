@@ -19,10 +19,6 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
-
-            // DisplayName.SetDefault("Forbidden Enchantment");
-
-            // Tooltip.SetDefault(tooltip);
         }
 
         public override Color nameColor => new(231, 178, 28);

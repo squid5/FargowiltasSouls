@@ -18,12 +18,6 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
-
-            // DisplayName.SetDefault("Mythril Enchantment");
-            /* Tooltip.SetDefault(
-@"Temporarily increases attack speed after not attacking for a while
-Bonus ends after attacking for 3 seconds and rebuilds over 5 seconds
-'You feel the knowledge of your weapons seep into your mind'"); */
         }
         public static readonly Color NameColor = new(157, 210, 144);
         public override Color nameColor => NameColor;

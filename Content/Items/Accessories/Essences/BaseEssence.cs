@@ -14,7 +14,6 @@ namespace FargowiltasSouls.Content.Items.Accessories.Essences
         {
             base.SetStaticDefaults();
 
-            //ItemID.Sets.ItemNoGravity[Type] = true;
             Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
