@@ -1285,7 +1285,7 @@ namespace FargowiltasSouls.Core.Globals
             }
             if (CorruptedForce)
             {
-                int pen = player.HasEffect<TimberEffect>() ? 15 : 15;
+                int pen = player.HasEffect<TimberEffect>() ? 15 : 20;
                 modifiers.FlatBonusDamage += pen;
             }
 
