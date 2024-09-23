@@ -58,6 +58,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
     {
         public override Header ToggleHeader => Header.GetHeader<ShadowHeader>();
         public override int ToggleItemType => ModContent.ItemType<MonkEnchant>();
+        public override bool MutantsPresenceAffects => true;
         public static void AddDash(Player player)
         {
             FargoSoulsPlayer modPlayer = player.FargoSouls();

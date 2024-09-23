@@ -146,7 +146,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Souls
             player.AddEffect<EternityTin>(Item);
 
             //UNIVERSE
-            modPlayer.UniverseSoul = true;
+            modPlayer.UniverseSoul = modPlayer.UniverseSoulBuffer = true;
             modPlayer.UniverseCore = true;
             player.GetDamage(DamageClass.Generic) += 2.5f;
             player.AddEffect<UniverseSpeedEffect>(Item);

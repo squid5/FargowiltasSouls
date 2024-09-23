@@ -43,7 +43,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Souls
 
             FargoSoulsPlayer modPlayer = player.FargoSouls();
             //use speed, velocity, debuffs, crit dmg, mana up, double knockback
-            modPlayer.UniverseSoul = true;
+            modPlayer.UniverseSoul = modPlayer.UniverseSoulBuffer = true;
             modPlayer.UniverseCore = true;
 
             player.AddEffect<UniverseSpeedEffect>(Item);

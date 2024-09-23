@@ -359,6 +359,7 @@ namespace FargowiltasSouls.Core.ModPlayers
         public bool Midas;
         public bool HadMutantPresence;
         public bool MutantPresence;
+        public bool MutantPresenceBuffer;
         public int PresenceTogglerTimer;
         public bool MutantFang;
         public bool DevianttPresence;

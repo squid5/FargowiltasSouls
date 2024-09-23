@@ -91,7 +91,8 @@ namespace FargowiltasSouls.Content.Items.Accessories.Forces
     {
         public override Header ToggleHeader => Header.GetHeader<ShadowHeader>();
         public override int ToggleItemType => ModContent.ItemType<ShadowForce>();
-        
+        public override bool MutantsPresenceAffects => true;
+
         public override void PostUpdateEquips(Player player)
         {
             FargoSoulsPlayer farg = player.FargoSouls();

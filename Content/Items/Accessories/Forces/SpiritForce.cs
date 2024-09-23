@@ -59,8 +59,6 @@ namespace FargowiltasSouls.Content.Items.Accessories.Forces
         public override Header ToggleHeader => Header.GetHeader<SpiritHeader>();
         public override int ToggleItemType => ModContent.ItemType<SpiritForce>();
 
-        public override bool MinionEffect => true;
-
         public static void ActivateSpiritStorm(Player player)
         {
             if (player.HasEffect<SpiritTornadoEffect>() && player.HasEffect<ForbiddenEffect>())

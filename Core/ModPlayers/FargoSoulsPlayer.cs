@@ -290,7 +290,7 @@ namespace FargowiltasSouls.Core.ModPlayers
             {
                 UniverseSoul = false;
             }
-            UniverseSoul = false;
+            UniverseSoulBuffer = false;
             UniverseCore = false;
             FishSoul1 = false;
             FishSoul2 = false;
@@ -409,9 +409,13 @@ namespace FargowiltasSouls.Core.ModPlayers
             DeathMarked = false;
             Hypothermia = false;
             Midas = false;
-            if (MutantPresence == false)
-                PresenceTogglerTimer = 0;
-            MutantPresence = MutantPresence && Player.HasBuff(ModContent.BuffType<MutantPresenceBuff>());
+            if (!MutantPresenceBuffer)
+            {
+                if (MutantPresence == false)
+                    PresenceTogglerTimer = 0;
+                MutantPresence = MutantPresence && Player.HasBuff(ModContent.BuffType<MutantPresenceBuff>());
+            }
+            MutantPresenceBuffer = false;
             HadMutantPresence = MutantPresence;
             MutantFang = false;
             DevianttPresence = false;
