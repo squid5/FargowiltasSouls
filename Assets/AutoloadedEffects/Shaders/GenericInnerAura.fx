@@ -47,6 +47,7 @@ float4 PixelShaderFunction(float4 sampleColor : COLOR0, float2 uv : TEXCOORD0) :
     
     float opacity = 0.25;
     
+    
     // Thresholds
     bool border = worldDistance < radius && opacity > 0;
     float colorMult = 1;

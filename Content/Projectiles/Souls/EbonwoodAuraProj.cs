@@ -14,7 +14,7 @@ using FargowiltasSouls.Content.Items.Accessories.Forces;
 
 namespace FargowiltasSouls.Content.Projectiles
 {
-    public class MoltenAuraProj : ModProjectile
+    public class EbonwoodAuraProj : ModProjectile
     {
         public override string Texture => FargoSoulsUtil.EmptyTexture;
 
@@ -39,14 +39,14 @@ namespace FargowiltasSouls.Content.Projectiles
                 return;
             }
             Player player = Main.player[Projectile.owner];
-            if (!player.Alive() || !player.HasEffect<MoltenEffect>())
+            if (!player.Alive() || !player.HasEffect<EbonwoodEffect>())
             {
                 Projectile.Kill();
                 return;
             }
             Projectile.Center = player.Center;
             Projectile.timeLeft = 60;
-            Projectile.ai[0] = MoltenEffect.AuraSize(player);
+            Projectile.ai[0] = ShadewoodEffect.Range(player, player.ForceEffect<EbonwoodEffect>());
         }
         public static bool CombinedAura(Player player) => player.HasEffect<NatureEffect>() && player.HasEffect<MoltenEffect>() && (player.HasEffect<EbonwoodEffect>() || player.HasEffect<EbonwoodEffect>()) && player.HasEffect<TimberEffect>();
         public override bool PreDraw(ref Color lightColor)
@@ -57,57 +57,27 @@ namespace FargowiltasSouls.Content.Projectiles
                 return false;
             }
             Player player = Main.player[Projectile.owner];
-            if (!player.Alive() || !player.HasEffect<MoltenEffect>())
+            if (!player.Alive() || !player.HasEffect<EbonwoodEffect>())
             {
                 Projectile.Kill();
                 return false;
             }
 
-            Vector2 auraPos = Projectile.Center;
+            if (CombinedAura(player))
+            {
+                return false;
+            }
+
+            Color darkColor = Color.Magenta;
+            Color mediumColor = Color.MediumPurple;
+            Color lightColor2 = Color.Lerp(Color.Purple, Color.White, 0.35f);
+
+            Vector2 auraPos = player.Center;
             float radius = Projectile.ai[0];
             var target = Main.LocalPlayer;
             var blackTile = TextureAssets.MagicPixel;
             var diagonalNoise = FargosTextureRegistry.WavyNoise;
             var maxOpacity = Projectile.Opacity * ModContent.GetInstance<FargoClientConfig>().TransparentFriendlyProjectiles;
-
-            if (CombinedAura(player))
-            {
-                DrawCombinedAura(player, Projectile.Opacity * ModContent.GetInstance<FargoClientConfig>().TransparentFriendlyProjectiles, radius);
-                return false;
-            }
-
-            ManagedShader borderShader = ShaderManager.GetShader("FargowiltasSouls.MoltenEnchantShader");
-            borderShader.TrySetParameter("colorMult", 7.35f);
-            borderShader.TrySetParameter("time", Main.GlobalTimeWrappedHourly);
-            borderShader.TrySetParameter("radius", radius);
-            borderShader.TrySetParameter("anchorPoint", auraPos);
-            borderShader.TrySetParameter("screenPosition", Main.screenPosition);
-            borderShader.TrySetParameter("screenSize", Main.ScreenSize.ToVector2());
-            borderShader.TrySetParameter("playerPosition", target.Center);
-            borderShader.TrySetParameter("maxOpacity", maxOpacity);
-
-            Main.spriteBatch.GraphicsDevice.Textures[1] = diagonalNoise.Value;
-
-            Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, SamplerState.LinearWrap, DepthStencilState.None, Main.Rasterizer, borderShader.WrappedEffect, Main.GameViewMatrix.TransformationMatrix);
-            Rectangle rekt = new(Main.screenWidth / 2, Main.screenHeight / 2, Main.screenWidth, Main.screenHeight);
-            Main.spriteBatch.Draw(blackTile.Value, rekt, null, default, 0f, blackTile.Value.Size() * 0.5f, 0, 0f);
-            Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
-            return false;
-        }
-
-        public static void DrawCombinedAura(Player player, float opacity, float radius)
-        {
-            Color darkColor = Color.Magenta;
-            Color mediumColor = Color.MediumPurple;
-            Color lightColor = Color.Lerp(Color.Purple, Color.White, 0.35f);
-
-            Vector2 auraPos = player.Center;
-            var target = Main.LocalPlayer;
-            var blackTile = TextureAssets.MagicPixel;
-            var diagonalNoise = FargosTextureRegistry.WavyNoise;
-            var maxOpacity = opacity * ModContent.GetInstance<FargoClientConfig>().TransparentFriendlyProjectiles;
 
             ManagedShader borderShader = ShaderManager.GetShader("FargowiltasSouls.GenericInnerAura");
             borderShader.TrySetParameter("colorMult", 7.35f);
@@ -120,7 +90,7 @@ namespace FargowiltasSouls.Content.Projectiles
             borderShader.TrySetParameter("maxOpacity", maxOpacity);
             borderShader.TrySetParameter("darkColor", darkColor.ToVector4());
             borderShader.TrySetParameter("midColor", mediumColor.ToVector4());
-            borderShader.TrySetParameter("lightColor", lightColor.ToVector4());
+            borderShader.TrySetParameter("lightColor", lightColor2.ToVector4());
 
             Main.spriteBatch.GraphicsDevice.Textures[1] = diagonalNoise.Value;
 
@@ -130,6 +100,7 @@ namespace FargowiltasSouls.Content.Projectiles
             Main.spriteBatch.Draw(blackTile.Value, rekt, null, default, 0f, blackTile.Value.Size() * 0.5f, 0, 0f);
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
+            return false;
         }
     }
 }
