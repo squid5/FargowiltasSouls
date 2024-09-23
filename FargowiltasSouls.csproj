@@ -24,6 +24,11 @@
     <None Remove="Assets\AutoloadedEffects\Shaders\MoltenEnchantShader.fx" />
     <None Remove="Assets\AutoloadedEffects\Shaders\SolarEnchantShader.fx" />
     <None Remove="Assets\AutoloadedEffects\Shaders\StyxGazerShader.fx" />
+    <None Remove="Assets\Gores\Meteor\MeteorGore1.png" />
+    <None Remove="Assets\Gores\Meteor\MeteorGore2.png" />
+    <None Remove="Assets\Gores\Meteor\MeteorGore3.png" />
+    <None Remove="Assets\Gores\Meteor\MeteorGore4.png" />
+    <None Remove="Assets\Gores\Meteor\MeteorGore5.png" />
     <None Remove="Assets\UI\CooldownBar.png" />
     <None Remove="Assets\UI\CooldownBarFill.png" />
     <None Remove="Content\Bosses\AbomBoss\AbomSword.png" />
@@ -39,6 +44,7 @@
     <None Remove="Content\Projectiles\Souls\MeteorEnchantMeatball.png" />
     <None Remove="Content\Projectiles\Souls\MeteorEnchantMeatballGlow.png" />
     <None Remove="Content\Projectiles\Souls\MeteorEnchantMeatballWizard.png" />
+    <None Remove="Content\Projectiles\Souls\MeteorExplosion.png" />
     <None Remove="Content\Projectiles\Souls\SpectreSpiritFlying.png" />
   </ItemGroup>
   <ItemGroup>

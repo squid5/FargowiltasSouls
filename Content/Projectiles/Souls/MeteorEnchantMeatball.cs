@@ -96,7 +96,7 @@ namespace FargowiltasSouls.Content.Projectiles.Souls
             if (FargoSoulsUtil.HostCheck)
             {
                 int i = Projectile.NewProjectile(Terraria.Entity.InheritSource(Projectile), Projectile.Center, Vector2.Zero,
-                    ModContent.ProjectileType<ObsidianExplosion>(), Projectile.originalDamage, Projectile.knockBack, Projectile.owner);
+                    ModContent.ProjectileType<MeteorExplosion>(), Projectile.originalDamage, Projectile.knockBack, Projectile.owner);
                 float scale = Projectile.scale / 2f;
                 if (i.IsWithinBounds(Main.maxProjectiles))
                 {
@@ -106,6 +106,20 @@ namespace FargowiltasSouls.Content.Projectiles.Souls
                     p.width = (int)(p.width * scale);
                     p.height = (int)(p.height * scale);
                     p.Center = p.position;
+                }
+            }
+
+            if (!Main.dedServ)
+            {
+                int gores = Force != 0 ? 10 : 5;
+                for (int j = 0; j < gores; j++)
+                {
+                    int i = j % 5;
+                    Vector2 pos = Main.rand.NextVector2FromRectangle(Projectile.Hitbox);
+                    Vector2 vel = Main.rand.NextVector2CircularEdge(1, 1) * Main.rand.NextFloat(4, 8);
+                    int type = i + 1;
+                    if (!Main.dedServ)
+                        Gore.NewGore(Projectile.GetSource_FromThis(), pos, vel, ModContent.Find<ModGore>(Mod.Name, $"MeteorGore{type}").Type, Projectile.scale);
                 }
             }
         }
