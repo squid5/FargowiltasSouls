@@ -54,6 +54,8 @@ Effects of Night Owl, Spelunker, Hunter, Shine, and Dangersense Potions
             player.AddEffect<MiningHunt>(item);
             player.AddEffect<MiningDanger>(item);
             player.AddEffect<MiningShine>(item);
+
+            player.FargoSouls().MiningImmunity = true;
         }
 
         public override void AddRecipes()
