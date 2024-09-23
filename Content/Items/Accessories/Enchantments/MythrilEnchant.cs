@@ -90,9 +90,10 @@ Bonus ends after attacking for 3 seconds and rebuilds over 5 seconds
             else
             {
                 modPlayer.MythrilTimer++;
-                if (modPlayer.MythrilTimer == modPlayer.MythrilMaxTime - 1 && player.whoAmI == Main.myPlayer)
+                if (modPlayer.MythrilTimer == modPlayer.MythrilMaxTime - 1 && player.whoAmI == Main.myPlayer && modPlayer.MythrilSoundCooldown <= 0)
                 {
                     SoundEngine.PlaySound(new SoundStyle($"{nameof(FargowiltasSouls)}/Assets/Sounds/Accessories/MythrilCharged"), player.Center);
+                    modPlayer.MythrilSoundCooldown = 90;
                     //Projectile.NewProjectile(GetSource_EffectItem(player), player.Top, Vector2.Zero, ModContent.ProjectileType<EffectVisual>(), 0, 0, player.whoAmI, (float)EffectVisual.Effects.MythrilEnchant);
                 }
             }

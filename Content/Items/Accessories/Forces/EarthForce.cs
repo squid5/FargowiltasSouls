@@ -4,6 +4,7 @@ using FargowiltasSouls.Content.Items.Accessories.Enchantments;
 using FargowiltasSouls.Content.Projectiles;
 using FargowiltasSouls.Content.UI.Elements;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
+using FargowiltasSouls.Core.ModPlayers;
 using FargowiltasSouls.Core.Toggler.Content;
 using Luminance.Core.Graphics;
 using Microsoft.Xna.Framework;
@@ -109,9 +110,14 @@ namespace FargowiltasSouls.Content.Items.Accessories.Forces
             //one below or two below because it increments by 2 so it could skip this if it was just one number
             if (farg.EarthTimer >= EarthMaxCharge -2 && farg.EarthTimer < EarthMaxCharge && !player.controlUseItem && Main.myPlayer == player.whoAmI)
             {
-                float pitch = 0;
-                if (player.HasEffect<MythrilEffect>()) pitch = -0.2f;
-                SoundEngine.PlaySound(new SoundStyle($"{nameof(FargowiltasSouls)}/Assets/Sounds/Accessories/MythrilCharged") with { Pitch = pitch}, player.Center);
+                if (farg.MythrilSoundCooldown <= 0)
+                {
+                    float pitch = 0;
+                    if (player.HasEffect<MythrilEffect>()) pitch = -0.2f;
+                    farg.MythrilSoundCooldown = 90;
+                    SoundEngine.PlaySound(new SoundStyle($"{nameof(FargowiltasSouls)}/Assets/Sounds/Accessories/MythrilCharged") with { Pitch = pitch }, player.Center);
+                }
+
                 for (int i = 0; i < 5; i++)
                 {
                     Vector2 position = player.Center + new Vector2(0, Main.rand.NextFloat(20, 40)).RotatedByRandom(MathHelper.TwoPi);

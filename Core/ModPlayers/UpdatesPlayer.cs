@@ -484,6 +484,8 @@ namespace FargowiltasSouls.Core.ModPlayers
 
             if (MythrilTimer > 0 && !Player.HasEffect<MythrilEffect>())
                 MythrilTimer--;
+            if (MythrilSoundCooldown > 0)
+                MythrilSoundCooldown--;
 
             if (TinCrit > 0 && !Player.HasEffect<TinEffect>())
                 TinCrit--;
