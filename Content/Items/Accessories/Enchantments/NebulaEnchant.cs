@@ -54,6 +54,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
     {
         public override Header ToggleHeader => Header.GetHeader<CosmoHeader>();
         public override int ToggleItemType => ModContent.ItemType<NebulaEnchant>();
+        public override bool ExtraAttackEffect => true;
 
         public override void PostUpdateEquips(Player player)
         {

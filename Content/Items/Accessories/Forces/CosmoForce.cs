@@ -31,7 +31,8 @@ namespace FargowiltasSouls.Content.Items.Accessories.Forces
             SetActive(player);
             modPlayer.WizardEnchantActive = true;
             player.AddEffect<MeteorMomentumEffect>(Item);
-            player.AddEffect<CosmosMoonEffect>(Item);
+            if (player.AddEffect<CosmoForceEffect>(Item))
+                player.AddEffect<CosmosMoonEffect>(Item);
 
             if (!player.HasEffect<CosmosMoonEffect>())
             {
@@ -61,6 +62,11 @@ namespace FargowiltasSouls.Content.Items.Accessories.Forces
             recipe.AddTile(ModContent.Find<ModTile>("Fargowiltas", "CrucibleCosmosSheet"));
             recipe.Register();
         }
+    }
+    public class CosmoForceEffect : AccessoryEffect
+    {
+        public override Header ToggleHeader => Header.GetHeader<CosmoHeader>();
+        public override int ToggleItemType => ModContent.ItemType<CosmoForce>();
     }
     public class CosmosMoonEffect : AccessoryEffect
     {
