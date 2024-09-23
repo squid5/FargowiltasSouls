@@ -35,8 +35,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Masomode
         public static void AddEffects(Player player, Item item)
         {
             player.buffImmune[BuffID.Venom] = true;
-            if (Main.getGoodWorld)
-                player.buffImmune[ModContent.BuffType<IvyVenomBuff>()] = true;
+            player.buffImmune[ModContent.BuffType<IvyVenomBuff>()] = true;
             player.buffImmune[ModContent.BuffType<SwarmingBuff>()] = true;
 
             Point pos = player.Center.ToTileCoordinates();

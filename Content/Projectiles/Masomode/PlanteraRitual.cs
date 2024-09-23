@@ -43,8 +43,7 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
 
         public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
-            if (WorldSavingSystem.MasochistModeReal)
-                target.AddBuff(ModContent.BuffType<IvyVenomBuff>(), 60 * 2);
+            target.AddBuff(ModContent.BuffType<IvyVenomBuff>(), 60 * 2);
         }
         public override bool PreDraw(ref Color lightColor)
         {
