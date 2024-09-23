@@ -2,8 +2,10 @@
 using FargowiltasSouls.Content.Projectiles;
 using FargowiltasSouls.Content.Projectiles.Masomode;
 using FargowiltasSouls.Content.Projectiles.Minions;
+using FargowiltasSouls.Content.UI.Elements;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
 using Terraria.Audio;
@@ -129,6 +131,8 @@ namespace FargowiltasSouls.Content.Items.Armor
 
             if (player.whoAmI == Main.myPlayer)
             {
+                CooldownBarManager.Activate("NekomiHoodGraze", ModContent.Request<Texture2D>("FargowiltasSouls/Content/Items/Armor/NekomiHood").Value, Color.DeepPink, () => (float)(fargoPlayer.NekomiMeter / MAX_METER), true, 0, () => fargoPlayer.NekomiSet);
+
                 if (fargoPlayer.NekomiMeter >= MAX_METER)
                     fargoPlayer.NekomiAttackReadyTimer = FargoSoulsPlayer.SuperAttackMaxWindow;
 

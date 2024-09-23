@@ -1,8 +1,10 @@
 
 using FargowiltasSouls.Content.Projectiles;
+using FargowiltasSouls.Content.UI.Elements;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using FargowiltasSouls.Core.Toggler.Content;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
 using Terraria.Audio;
@@ -53,12 +55,10 @@ namespace FargowiltasSouls.Content.Items.Accessories.Masomode
             if (fargoPlayer.Graze && player.whoAmI == Main.myPlayer && player.HasEffect<MasoGrazeRing>() && player.ownedProjectileCounts[ModContent.ProjectileType<GrazeRing>()] < 1)
                 Projectile.NewProjectile(player.GetSource_Accessory(Item), player.Center, Vector2.Zero, ModContent.ProjectileType<GrazeRing>(), 0, 0f, Main.myPlayer);
         }
-
+        public static double GrazeCap(FargoSoulsPlayer fargoPlayer) => 0.25 + (fargoPlayer.MutantEyeItem != null ? 0.25 : 0);
         public static void OnGraze(FargoSoulsPlayer fargoPlayer, int damage)
         {
-            double grazeCap = 0.25;
-            if (fargoPlayer.MutantEyeItem != null)
-                grazeCap += 0.25;
+            double grazeCap = GrazeCap(fargoPlayer);
 
             double grazeGain = 0.0125;
             grazeGain *= 0.75;
@@ -73,6 +73,8 @@ namespace FargowiltasSouls.Content.Items.Accessories.Masomode
                     fargoPlayer.StyxMeter += FargoSoulsUtil.HighestDamageTypeScaling(Main.LocalPlayer, damage) * 4; //as if gaining the damage, times SOU crit
             }
             fargoPlayer.DeviGrazeCounter = -1; //reset counter whenever successful graze
+
+            CooldownBarManager.Activate("SparklingAdorationGraze", ModContent.Request<Texture2D>("FargowiltasSouls/Content/Items/Accessories/Masomode/SparklingAdoration").Value, Color.Pink, () => (float)(fargoPlayer.DeviGrazeBonus / GrazeCap(fargoPlayer)), true, 0, () => fargoPlayer.DeviGraze, 11);
 
             if (!Main.dedServ)
             {

@@ -17,7 +17,7 @@ namespace FargowiltasSouls.Content.UI.Elements
         public const int BarWidth = 100;
         public const int BarHeight = 20;
         public const int SpaceBetweenBars = 20;
-        public static void Activate(string nameKey, Texture2D itemTexture, Color fillColor, Func<float> fillRatio, bool displayAtFull = false, int fadeDelay = 0, Func<bool> activeFunction = null)
+        public static void Activate(string nameKey, Texture2D itemTexture, Color fillColor, Func<float> fillRatio, bool displayAtFull = false, int fadeDelay = 0, Func<bool> activeFunction = null, int animationFrames = 1)
         {
             if (!SoulConfig.Instance.CooldownBars)
                 return;
@@ -43,10 +43,11 @@ namespace FargowiltasSouls.Content.UI.Elements
                 freeBar.DisplayAtFull = displayAtFull;
                 freeBar.FadeDelay = fadeDelay;
                 freeBar.ActiveFunction = activeFunction;
+                freeBar.AnimationFrames = animationFrames;
             }
             else
             {
-                UICooldownBar newBar = new(nameKey, FargoUIManager.CooldownBarTexture.Value, FargoUIManager.CooldownBarFillTexture.Value, itemTexture, fillColor, fillRatio, displayAtFull, fadeDelay, activeFunction);
+                UICooldownBar newBar = new(nameKey, FargoUIManager.CooldownBarTexture.Value, FargoUIManager.CooldownBarFillTexture.Value, itemTexture, fillColor, fillRatio, displayAtFull, fadeDelay, activeFunction, animationFrames);
                 //int nX = i / 3;
                 //int nY = i % 3;
                 int nY = i;

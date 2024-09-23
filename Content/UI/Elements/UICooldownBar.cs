@@ -19,11 +19,13 @@ namespace FargowiltasSouls.Content.UI.Elements
         public bool DisplayAtFull;
         public int FadeDelay;
         public Func<bool> ActiveFunction;
+        public int AnimationFrames;
 
         public float Opacity = 0f;
         public int FadeTimer = 0;
+        private int AnimationTimer;
 
-        public UICooldownBar(string nameKey, Texture2D barTexture, Texture2D fillTexture, Texture2D itemTexture, Color fillColor, Func<float> fillRatio, bool displayAtFull, int fadeDelay, Func<bool> activeFunction)
+        public UICooldownBar(string nameKey, Texture2D barTexture, Texture2D fillTexture, Texture2D itemTexture, Color fillColor, Func<float> fillRatio, bool displayAtFull, int fadeDelay, Func<bool> activeFunction, int animationFrames)
         {
             Active = true;
             NameKey = nameKey;
@@ -35,6 +37,7 @@ namespace FargowiltasSouls.Content.UI.Elements
             DisplayAtFull = displayAtFull;
             FadeDelay = fadeDelay;
             ActiveFunction = activeFunction;
+            AnimationFrames = animationFrames;
 
             Width.Set(CooldownBarManager.BarWidth, 0);
             Height.Set(CooldownBarManager.BarHeight, 0);
@@ -81,7 +84,16 @@ namespace FargowiltasSouls.Content.UI.Elements
 
             // item
             float itemScale = MathHelper.Lerp(1f, 34f / ItemTexture.Width, 0.75f);
-            spriteBatch.Draw(ItemTexture, position - Vector2.UnitX * style.Width / 4 - Vector2.UnitY * style.Height / 2, ItemTexture.Bounds, Color.White * opacity, 0f, Vector2.Zero, itemScale, SpriteEffects.None, 0);
+            Rectangle itemFrame = ItemTexture.Bounds;
+            if (AnimationFrames > 1)
+            {
+                AnimationTimer++;
+                AnimationTimer %= 5 * AnimationFrames;
+                int frame = AnimationTimer / 5;
+                int frameHeight = (ItemTexture.Height / AnimationFrames);
+                itemFrame = new(0, frame * frameHeight, ItemTexture.Width, frameHeight);
+            }
+            spriteBatch.Draw(ItemTexture, position - Vector2.UnitX * style.Width / 4 - Vector2.UnitY * style.Height / 2, itemFrame, Color.White * opacity, 0f, Vector2.Zero, itemScale, SpriteEffects.None, 0);
         }
     }
 }

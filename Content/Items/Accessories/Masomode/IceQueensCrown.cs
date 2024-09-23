@@ -1,8 +1,10 @@
 ﻿using FargowiltasSouls.Content.Buffs.Masomode;
 using FargowiltasSouls.Content.Projectiles;
+using FargowiltasSouls.Content.UI.Elements;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using FargowiltasSouls.Core.Toggler.Content;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
 using Terraria.Audio;
@@ -65,6 +67,8 @@ namespace FargowiltasSouls.Content.Items.Accessories.Masomode
                 Projectile.NewProjectile(fargoPlayer.Player.GetSource_Misc(""), fargoPlayer.Player.Center, Vector2.Zero, ModContent.ProjectileType<CirnoBomb>(), 0, 0f, Main.myPlayer);
             }
 
+            CooldownBarManager.Activate("IceQueenCrownGraze", ModContent.Request<Texture2D>("FargowiltasSouls/Content/Items/Accessories/Masomode/IceQueensCrown").Value, Color.Cyan, () => fargoPlayer.CirnoGrazeCounter / CIRNO_GRAZE_MAX, true, 0, () => fargoPlayer.CirnoGraze);
+
             if (!Main.dedServ)
             {
                 SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/Accessories/Graze") { Volume = 0.5f }, Main.LocalPlayer.Center);
@@ -90,6 +94,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Masomode
     {
         public override Header ToggleHeader => Header.GetHeader<HeartHeader>();
         public override int ToggleItemType => ModContent.ItemType<IceQueensCrown>();
+        public override bool MutantsPresenceAffects => true;
 
     }
 }
