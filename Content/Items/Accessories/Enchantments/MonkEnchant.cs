@@ -87,12 +87,16 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
             float speed = player.HasEffect<ShinobiDashEffect>() ? 8 : 16;
             player.velocity.X = speed * direction;
 
-            player.immune = true;
             int invul = player.HasEffect<ShinobiDashEffect>() ? 10 : 20;
             modPlayer.MonkDashing = invul;
-            player.immuneTime = Math.Max(player.immuneTime, invul);
-            player.hurtCooldowns[0] = Math.Max(player.hurtCooldowns[0], invul);
-            player.hurtCooldowns[1] = Math.Max(player.hurtCooldowns[1], invul);
+
+            if (!player.FargoSouls().MutantPresence)
+            {
+                player.immune = true;
+                player.immuneTime = Math.Max(player.immuneTime, invul);
+                player.hurtCooldowns[0] = Math.Max(player.hurtCooldowns[0], invul);
+                player.hurtCooldowns[1] = Math.Max(player.hurtCooldowns[1], invul);
+            }
             bool monkForce = modPlayer.ShinobiEnchantActive || modPlayer.ForceEffect<MonkEnchant>();
             bool shinobiForce = modPlayer.ShinobiEnchantActive && modPlayer.ForceEffect<ShinobiEnchant>();
 

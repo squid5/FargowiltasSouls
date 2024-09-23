@@ -2,6 +2,7 @@
 using FargowiltasSouls.Content.Items.Accessories.Forces;
 using FargowiltasSouls.Content.Projectiles.Souls;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
+using FargowiltasSouls.Core.ModPlayers;
 using FargowiltasSouls.Core.Toggler.Content;
 using Microsoft.Xna.Framework;
 using Terraria;
@@ -310,6 +311,8 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
         public override int ToggleItemType => ModContent.ItemType<SpectreEnchant>();
         public override void OnHurt(Player player, Player.HurtInfo info)
         {
+            if (player.FargoSouls().TerrariaSoul)
+                return;
             int spiritDamage = 200;
             if (player.FargoSouls().ForceEffect<SpectreEnchant>())
             {
