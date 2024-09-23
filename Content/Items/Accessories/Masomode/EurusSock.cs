@@ -9,12 +9,6 @@ namespace FargowiltasSouls.Content.Items.Accessories.Masomode
     {
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("Eurus Socks");
-            /* Tooltip.SetDefault(
-@"The wearer can run pretty fast"); */
-            // DisplayName.AddTranslation((int)GameCulture.CultureName.Chinese, "欧洛斯之袜");
-            // Tooltip.AddTranslation((int)GameCulture.CultureName.Chinese, @"穿戴者可跑的非常快");
-
             Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 

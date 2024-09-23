@@ -12,10 +12,6 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
-
-            // DisplayName.SetDefault("Shinobi Infiltrator Enchantment");
-
-            // Tooltip.SetDefault(tooltip);
         }
 
         public override Color nameColor => new(147, 91, 24);

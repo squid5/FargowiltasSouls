@@ -14,15 +14,6 @@ namespace FargowiltasSouls.Content.Items.Accessories.Masomode
 
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("Deerclawps");
-            /* Tooltip.SetDefault("Grants immunity to Slow and Frozen" +
-                "\nDashing leaves a trail of ice spikes" +
-                "\n'The trimmed nails of a defeated foe'"); */
-
-            //             DisplayName.AddTranslation((int)GameCulture.CultureName.Chinese, "冰鹿爪");
-            //             Tooltip.AddTranslation((int)GameCulture.CultureName.Chinese, @"免疫缓慢和冰冻
-            // 冲刺会留下一串冰刺
-            // “从被击败的敌人的脚上剪下来的指甲”");
 
             Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }

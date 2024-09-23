@@ -9,19 +9,6 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
-
-            // DisplayName.SetDefault("Angler Enchantment");
-            /* Tooltip.SetDefault(
-@"Increases fishing power
-You catch fish almost instantly
-Effects of Lavaproof Tackle Bag
-'As long as they aren't all shoes, you can go home happily'"); */
-            //             DisplayName.AddTranslation((int)GameCulture.CultureName.Chinese, "渔夫魔石");
-            //             Tooltip.AddTranslation((int)GameCulture.CultureName.Chine, 
-            // @"增加渔力
-            // 你几乎能立刻就钓到鱼
-            // 拥有渔夫渔具袋效果
-            // '只要不全是鞋子, 你就可以高高兴兴地回家'");
         }
 
         public override Color nameColor => new(113, 125, 109);

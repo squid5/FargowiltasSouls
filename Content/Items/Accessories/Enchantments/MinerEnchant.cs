@@ -12,19 +12,6 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
-
-            // DisplayName.SetDefault("Miner Enchantment");
-            /* Tooltip.SetDefault(
-@"50% increased mining speed
-Shows the location of enemies, traps, and treasures
-Effects of Night Owl, Spelunker, Hunter, Shine, and Dangersense Potions
-'The planet trembles with each swing of your pick'"); */
-            //             DisplayName.AddTranslation((int)GameCulture.CultureName.Chinese, "矿工魔石");
-            //             Tooltip.AddTranslation((int)GameCulture.CultureName.Chinese, 
-            // @"增加50%挖掘速度
-            // 高亮标记敌人、陷阱和宝藏
-            // 你会散发光芒
-            // '大地随着你的每一次挥镐而颤动'");
         }
 
         public override Color nameColor => new(95, 117, 151);

@@ -18,18 +18,6 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
         {
             base.SetStaticDefaults();
 
-            // DisplayName.SetDefault("Spectre Enchantment");
-
-            //             DisplayName.AddTranslation((int)GameCulture.CultureName.Chinese, "幽魂魔石");
-
-            // Tooltip.SetDefault(tooltip);
-
-            //             string tooltip_ch =
-            // @"伤害敌人时有几率生成幽魂珠
-            // 攻击造成暴击时有几率生成治疗珠
-            // '他们的生命力将毁灭他们自己'";
-            //             Tooltip.AddTranslation((int)GameCulture.CultureName.Chinese, tooltip_ch);
-
         }
 
         public override Color nameColor => new(172, 205, 252);

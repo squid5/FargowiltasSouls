@@ -14,22 +14,6 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
-
-            // DisplayName.SetDefault("Necro Enchantment");
-            /* Tooltip.SetDefault(
-@"Slain enemies may drop a pile of bones
-Touch a pile of bones to spawn a friendly Dungeon Guardian
-Damage scales with the defeated enemy's max HP
-Bosses will drop bones every 10% of their HP lost
-Effects of Bone Glove
-'Welcome to the bone zone'"); */
-            //             DisplayName.AddTranslation((int)GameCulture.CultureName.Chinese, "死灵魔石");
-            //             Tooltip.AddTranslation((int)GameCulture.CultureName.Chinese,
-            // @"击杀敌人时有几率爆出一摞骨头
-            // 拾取骨头时有几率生成一个地牢守卫
-            // 地牢守卫的伤害取决于被击杀的敌人的最大生命值
-            // Boss每损失10%生命值便会掉落骨头
-            // '欢迎来到骸骨领域'");
         }
 
         public override Color nameColor => new(86, 86, 67);

@@ -12,10 +12,6 @@ namespace FargowiltasSouls.Content.Items.Accessories.Souls
         {
             base.SetStaticDefaults();
 
-            // DisplayName.SetDefault("Soul of Dimensions");
-
-            // Tooltip.SetDefault(tooltip);
-
 
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(6, 30));
             ItemID.Sets.AnimatesAsSoul[Item.type] = true;

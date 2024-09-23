@@ -9,17 +9,6 @@ namespace FargowiltasSouls.Content.Items.Ammos
     {
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("Amalgamated Bullet Pouch");
-            /* Tooltip.SetDefault("Chases after your enemy\n" +
-                               "Bounces several times\n" +
-                               "Each impact causes an explosion of crystal shards\n" +
-                               "Inflicts several debuffs"); */
-            //DisplayName.AddTranslation((int)GameCulture.CultureName.Chinese, "混合子弹袋");
-            //Tooltip.AddTranslation((int)GameCulture.CultureName.Chinese,
-            //"追踪敌人\n" +
-            //"弹跳多次\n" +
-            //"每次撞击都会造成魔晶碎片爆炸\n" +
-            //"造成多种Debuff");
             Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 

@@ -10,8 +10,6 @@ namespace FargowiltasSouls.Content.Items.Placables.MusicBoxes
     {
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("Music Box (Abominationn)");
-            // Tooltip.SetDefault("Sakuzyo 'Stigma'");
 
             Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 

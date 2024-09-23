@@ -15,19 +15,6 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
         {
             base.SetStaticDefaults();
 
-            // DisplayName.SetDefault("Shroomite Enchantment");
-
-            //             DisplayName.AddTranslation((int)GameCulture.CultureName.Chinese, "蘑菇魔石");
-
-            // Tooltip.SetDefault(tooltip);
-
-            //             string tooltip_ch =
-            // @"所有攻击都会留下蘑菇尾迹
-            // 站定不动时使你进入隐身状态
-            // 处于隐身状态时攻击会留下更多蘑菇尾迹
-            // '真的是用蘑菇做的！'";
-            //             Tooltip.AddTranslation((int)GameCulture.CultureName.Chinese, tooltip_ch);
-
         }
 
         public override Color nameColor => new(0, 140, 244);

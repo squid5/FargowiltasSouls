@@ -18,18 +18,6 @@ namespace FargowiltasSouls.Content.Items.Accessories.Masomode
 
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("Ice Queen's Crown");
-            /* Tooltip.SetDefault(@"Grants immunity to Hypothermia
-Increases damage reduction by 5%
-Graze attacks to gain a bomb that will freeze almost all enemies and projectiles
-Press the Bomb key to use your freeze bomb
-'The royal symbol of a defeated foe'"); */
-            //             DisplayName.AddTranslation((int)GameCulture.CultureName.Chinese, "冰雪女王的皇冠");
-            //             Tooltip.AddTranslation((int)GameCulture.CultureName.Chinese, @"'被打败的敌人的皇家象征'
-            // 免疫冻结
-            // 增加5%伤害减免
-            // 召唤一个友善的超级圣诞雪灵");
-
             Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 

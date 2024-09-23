@@ -10,20 +10,6 @@ namespace FargowiltasSouls.Content.Items.Accessories.Essences
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
-
-            // DisplayName.SetDefault("Occultist's Essence");
-            /* Tooltip.SetDefault(
-@"18% increased summon damage
-Increases your max number of minions by 1
-Increases your max number of sentries by 1
-'This is only the beginning..'"); */
-
-            //             DisplayName.AddTranslation((int)GameCulture.CultureName.Chinese, "术士精华");
-            //             Tooltip.AddTranslation((int)GameCulture.CultureName.Chinese,
-            // @"增加18%召唤伤害
-            //             +1最大召唤栏
-            //             +1最大哨兵栏
-            //             '这只是个开始...'");
         }
 
         public override Color nameColor => new(0, 255, 255);

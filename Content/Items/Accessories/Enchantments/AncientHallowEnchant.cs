@@ -13,12 +13,6 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
-
-            // DisplayName.SetDefault("Ancient Hallowed Enchantment");
-            /* Tooltip.SetDefault(
-@"You gain a shield that can reflect projectiles
-Summons a Terraprisma familiar that scales with minion damage
-'Have you power enough to wield me?'"); */
         }
 
         public override Color nameColor => new(150, 133, 100);

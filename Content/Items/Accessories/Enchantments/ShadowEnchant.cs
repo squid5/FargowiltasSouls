@@ -15,12 +15,6 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
-
-            // DisplayName.SetDefault("Shadow Enchantment");
-            /* Tooltip.SetDefault(
-@"Two Shadow Orbs will orbit around you
-Attacking a Shadow Orb will cause it to release a burst of homing shadow energy
-'You feel your body slip into the deepest of shadows'"); */
         }
 
         public override Color nameColor => new(66, 53, 111);

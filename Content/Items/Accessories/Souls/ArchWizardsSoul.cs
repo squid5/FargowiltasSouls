@@ -10,22 +10,6 @@ namespace FargowiltasSouls.Content.Items.Accessories.Souls
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
-
-            // DisplayName.SetDefault("Arch Wizard's Soul");
-
-            //DisplayName.AddTranslation((int)GameCulture.CultureName.Chinese, "巫师之魂");
-
-
-            // Tooltip.SetDefault(tooltip);
-            //string tooltip_ch =
-            //@"增加30%魔法伤害
-            //增加20%施法速度
-            //增加15%魔法暴击率
-            //增加200点最大法力值
-            //拥有天界手铐和魔力花效果
-            //'奥术之力，合核凝一'";
-            //Tooltip.AddTranslation((int)GameCulture.CultureName.Chinese, tooltip_ch);
-
         }
         public static readonly Color ItemColor = new(255, 83, 255);
         protected override Color? nameColor => ItemColor;

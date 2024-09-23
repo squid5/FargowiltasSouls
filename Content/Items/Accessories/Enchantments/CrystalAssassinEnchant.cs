@@ -13,14 +13,6 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
-
-            // DisplayName.SetDefault("Crystal Assassin Enchantment");
-            /* Tooltip.SetDefault(
-@"Allows the ability to dash
-Use Assassin hotkey to throw a smoke bomb, use it again to teleport to it and gain the First Strike Buff
-Using the Rod of Discord will also grant this buff
-First Strike ensures your next attack hits a vital spot dealing 3x damage and reducing defense by 10
-'Now you see me, now you don’t'"); */
         }
 
         public override Color nameColor => new(36, 157, 207);
