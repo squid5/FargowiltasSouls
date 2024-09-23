@@ -3800,10 +3800,13 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
             bool killPlayer = WorldSavingSystem.MasochistModeReal && Main.player[NPC.target].HasBuff(ModContent.BuffType<TimeFrozenBuff>());
             if (killPlayer)
             {
-                if (++NPC.ai[2] > 90)
+                if (++NPC.ai[2] > 15)
                 {
                     NPC.ai[2] -= 15;
+                    int realDefDamage = NPC.defDamage;
+                    NPC.defDamage *= 10;
                     SpawnSpearTossDirectP2Attack();
+                    NPC.defDamage = realDefDamage;
                 }
             }
             else if (++NPC.ai[1] > 120)
