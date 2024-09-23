@@ -68,20 +68,20 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
         public override Header ToggleHeader => Header.GetHeader<CosmoHeader>();
         public override int ToggleItemType => ModContent.ItemType<SolarEnchant>();
         public override bool ExtraAttackEffect => true;
-
         public override void PostUpdateEquips(Player player)
         {
             FargoSoulsPlayer modPlayer = player.FargoSouls();
 
             CooldownBarManager.Activate("SolarEnchantCharge", ModContent.Request<Texture2D>("FargowiltasSouls/Content/Items/Accessories/Enchantments/SolarEnchant").Value, SolarEnchant.NameColor, 
-                () => Main.LocalPlayer.FargoSouls().SolarEnchCharge / 180, true, activeFunction: () => player.HasEffect<SolarFlareEffect>());
+                () => Main.LocalPlayer.FargoSouls().SolarEnchCharge / 240, true, activeFunction: () => player.HasEffect<SolarFlareEffect>());
 
+            player.endurance += 0.2f * modPlayer.SolarEnchCharge / 240f;
             if (player.HeldItem != null && player.HeldItem.damage > 0 && player.controlUseItem)
             {
-                if (modPlayer.SolarEnchCharge < 180)
+                if (modPlayer.SolarEnchCharge < 240)
                 {
                     modPlayer.SolarEnchCharge += 1;
-                    if (modPlayer.SolarEnchCharge == 180)
+                    if (modPlayer.SolarEnchCharge == 240)
                     {
                         SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/Accessories/ChargeSound"), player.Center);
                     }
@@ -95,7 +95,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
                     spark.Spawn();
                 }
             }
-            else if (modPlayer.SolarEnchCharge >= 180)
+            else if (modPlayer.SolarEnchCharge >= 240)
             {
                 SoundEngine.PlaySound(SoundID.DD2_BetsyFlameBreath with {Pitch = -0.6f, Volume = 0.8f}, player.Center);
 

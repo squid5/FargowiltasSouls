@@ -583,6 +583,7 @@ SolarEnchant: {
 	/* Tooltip:
 		'''
 		Build up solar charge while attacking
+		Gain damage resistance the more charge is stored, up to 20%
 		Stop attacking when fully charged to release a large solar burst
 		Solar bursts inflict the Solar Flare debuff and scale with melee damage
 		'Too hot to handle'

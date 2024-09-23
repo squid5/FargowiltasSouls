@@ -370,7 +370,7 @@ NebulaEnchant: {
 	DisplayName: Nebula Enchantment
 	Tooltip:
 		'''
-		Once every 3 seconds a projectile will be replaced with a nebula shot
+		Once every 3 seconds a projectile will be replaced with a nebula shot that deals magic damage
 		Nebula shots chase after enemies and spawns a nebula booster
 		Buff booster stacking capped at 2
 		'The pillars of creation have shined upon you'
@@ -583,8 +583,9 @@ SolarEnchant: {
 	Tooltip:
 		'''
 		Build up solar charge while attacking
+		Gain damage resistance the more charge is stored, up to 20%
 		Stop attacking when fully charged to release a large solar burst
-		Solar bursts inflict the Solar Flare debuff and scale with melee damage
+		Solar bursts inflict the Solar Flare debuff and deal melee damage
 		'Too hot to handle'
 		'''
 }
@@ -723,7 +724,7 @@ VortexEnchant: {
 	DisplayName: Vortex Enchantment
 	Tooltip:
 		'''
-		Your attacks against very distant enemies fire a piercing laser at them
+		Your attacks against very distant enemies fire a piercing laser that deals ranged damage
 		8 second cooldown
 		'Tear into reality'
 		'''
