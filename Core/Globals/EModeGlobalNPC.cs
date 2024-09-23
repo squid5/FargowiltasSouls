@@ -345,8 +345,8 @@ namespace FargowiltasSouls.Core.Globals
                         {
                             if (noBiome && NPC.downedBoss3)
                                 pool[NPCID.DarkCaster] = .02f;
-                            if (noBiome && (!pool.ContainsKey(NPCID.RockGolem) || pool[NPCID.RockGolem] < 0.1f))
-                                pool[NPCID.RockGolem] = 0.1f;
+                            if (noBiome && (!pool.ContainsKey(NPCID.RockGolem) || pool[NPCID.RockGolem] < 0.06f))
+                                pool[NPCID.RockGolem] = 0.06f;
                                 
                         }
 
