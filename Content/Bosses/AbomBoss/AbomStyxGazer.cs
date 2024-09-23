@@ -21,7 +21,7 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
         }
 
         public static int TelegraphTime => WorldSavingSystem.MasochistModeReal ? 30 : 30;
-        const int maxTime = 60;
+        public const int maxTime = 60;
 
         public override void SetDefaults()
         {
