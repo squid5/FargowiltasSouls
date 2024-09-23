@@ -1,4 +1,6 @@
+using FargowiltasSouls.Common.Graphics.Particles;
 using FargowiltasSouls.Core.Systems;
+using Luminance.Core.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -49,6 +51,7 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
 
         public override void OnKill(int timeLeft)
         {
+            /*
             int dustMax = Projectile.ai[1] >= 0 ? 50 : 25;
             float speed = Projectile.ai[1] >= 0 ? 15 : 6;
             for (int i = 0; i < dustMax; i++)
@@ -56,6 +59,15 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
                 int d = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.PurpleCrystalShard, Scale: 3.5f);
                 Main.dust[d].velocity *= speed;
                 Main.dust[d].noGravity = true;
+            }
+                        */
+            int sparkMax = Projectile.ai[1] >= 0 ? 20 : 10;
+            float speed = Projectile.ai[1] >= 0 ? 15 : 6;
+            Color purpl = new(102f / 255f, 84f / 255f, 150f / 255f);
+            for (int i = 0; i < sparkMax; i++)
+            {
+                Particle p = new SparkParticle(Projectile.Center, Main.rand.NextVector2CircularEdge(speed, speed) * Main.rand.NextFloat(0.4f, 0.7f), purpl, Main.rand.NextFloat(1f, 1.5f), 17, true, Color.White);
+                p.Spawn();
             }
 
             if (Projectile.ai[1] >= 0)
