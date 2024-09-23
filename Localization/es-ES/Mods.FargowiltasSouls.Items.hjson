@@ -1854,7 +1854,7 @@ TerrariaSoul: {
 		[i:FargowiltasSouls/LifeForce] Leave behind powerful flowers while flying and you have the effects of Hive Pack
 		[i:FargowiltasSouls/LifeForce] You reflect contact damage and your minions and sentries can crit
 		[i:FargowiltasSouls/SpiritForce] Double tap down to call an ancient tornado, healing potions restore more over time, and your whips are improved
-		[i:FargowiltasSouls/SpiritForce] If you reach zero HP you will revive with 200 HP, self-cleanse debuffs, and spawn healing spirits
+		[i:FargowiltasSouls/SpiritForce] If you reach zero HP you will revive with 300 HP and self-cleanse debuffs
 		[i:FargowiltasSouls/ShadowForce] Grants a shadow dash, and an invincible shade dash every 4 seconds, increased projectile stats based on speed
 		[i:FargowiltasSouls/ShadowForce] You fire additional weapons as support, your minions get a scythe attack, and slain enemies may drop a pile of bones
 		[i:FargowiltasSouls/WillForce] Summons a gladiator spirit, increases your healing and mount stats, and successive attacks gain bonus damage

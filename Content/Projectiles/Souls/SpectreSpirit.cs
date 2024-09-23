@@ -1,5 +1,8 @@
-﻿using FargowiltasSouls.Content.Items;
+﻿using FargowiltasSouls.Assets.ExtraTextures;
+using FargowiltasSouls.Content.Items;
+using Luminance.Core.Graphics;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
 using Terraria.Audio;
@@ -8,12 +11,14 @@ using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Content.Projectiles.Souls
 {
-    public class SpectreSpirit : ModProjectile
+    public class SpectreSpirit : ModProjectile, IPixelatedPrimitiveRenderer
     {
 
         public override void SetStaticDefaults()
         {
             Main.projFrames[Type] = 5;
+            ProjectileID.Sets.TrailCacheLength[Type] = 10;
+            ProjectileID.Sets.TrailingMode[Type] = 2;
         }
 
         public override void SetDefaults()
@@ -28,6 +33,8 @@ namespace FargowiltasSouls.Content.Projectiles.Souls
             Projectile.friendly = false;
             Projectile.light = 1f;
             Projectile.DamageType = DamageClass.Magic;
+            ProjectileID.Sets.TrailCacheLength[Type] = 10;
+            ProjectileID.Sets.TrailingMode[Type] = 2;
         }
         int TargetNPC = -1;
         bool FoundTarget = false;
@@ -51,6 +58,7 @@ namespace FargowiltasSouls.Content.Projectiles.Souls
             }
             if (FoundTarget && TargetNPC != -1)
             {
+                Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
                 NPC npc = Main.npc[TargetNPC];
                 if (npc.Alive() && npc.CanBeChasedBy()) //target is still valid
                 {
@@ -95,7 +103,9 @@ namespace FargowiltasSouls.Content.Projectiles.Souls
                         if (Projectile.Colliding(Projectile.Hitbox, Main.player[p].Hitbox))
                         {
                             player.FargoSouls().HealPlayer(20);
-                            TargetNPC = Projectile.FindTargetWithLineOfSight(1500);
+                            TargetNPC = Projectile.FindTargetWithLineOfSight(2000);
+                            if (TargetNPC.IsWithinBounds(Main.maxNPCs) && Main.npc[TargetNPC].Alive())
+                                Projectile.velocity = Projectile.DirectionTo(Main.npc[TargetNPC].Center);
                             FoundTarget = true;
                             FargoGlobalItem.OnRetrievePickup(player);
                             Projectile.friendly = true;
@@ -139,6 +149,42 @@ namespace FargowiltasSouls.Content.Projectiles.Souls
                 int d = Dust.NewDust(vector6 + vector7, 0, 0, DustID.SpectreStaff, 0f, 0f, 0, default, 1.5f);
                 Main.dust[d].noGravity = true;
                 Main.dust[d].velocity = vector7;
+            }
+        }
+
+        public override bool PreDraw(ref Color lightColor)
+        {
+            if (FoundTarget && TargetNPC != -1)
+            {
+                Texture2D movingTexture = ModContent.Request<Texture2D>(Texture + "Flying").Value;
+
+                Rectangle rectangle = new(0, 0, movingTexture.Width, movingTexture.Height);
+                Vector2 origin = rectangle.Size() / 2f;
+                SpriteEffects spriteEffects = Projectile.spriteDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+                Main.EntitySpriteDraw(movingTexture, Projectile.Center - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY), rectangle, Projectile.GetAlpha(lightColor),
+                        Projectile.rotation, origin, Projectile.scale, spriteEffects, 0);
+                return false;
+            }
+            return base.PreDraw(ref lightColor);
+        }
+
+        public float WidthFunction(float completionRatio)
+        {
+            float baseWidth = Projectile.scale * Projectile.width * 0.7f;
+            return MathHelper.SmoothStep(baseWidth, 3.5f, completionRatio);
+        }
+
+        public Color ColorFunction(float completionRatio)
+        {
+            return Color.Lerp(new(35f / 255f, 200f / 255f, 1f), Color.Transparent, completionRatio) * 0.7f;
+        }
+        public void RenderPixelatedPrimitives(SpriteBatch spriteBatch)
+        {
+            if (FoundTarget && TargetNPC != -1)
+            {
+                ManagedShader shader = ShaderManager.GetShader("FargowiltasSouls.BlobTrail");
+                FargoSoulsUtil.SetTexture1(FargosTextureRegistry.FadedStreak.Value);
+                PrimitiveRenderer.RenderTrail(Projectile.oldPos, new(WidthFunction, ColorFunction, _ => Projectile.Size * 0.5f, Pixelate: true, Shader: shader), 44);
             }
         }
     }
