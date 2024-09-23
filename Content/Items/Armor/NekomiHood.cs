@@ -131,7 +131,7 @@ namespace FargowiltasSouls.Content.Items.Armor
 
             if (player.whoAmI == Main.myPlayer)
             {
-                CooldownBarManager.Activate("NekomiHoodGraze", ModContent.Request<Texture2D>("FargowiltasSouls/Content/Items/Armor/NekomiHood").Value, Color.DeepPink, () => (float)(fargoPlayer.NekomiMeter / MAX_METER), true, 0, () => fargoPlayer.NekomiSet);
+                CooldownBarManager.Activate("NekomiHoodGraze", ModContent.Request<Texture2D>("FargowiltasSouls/Content/Items/Armor/NekomiHood").Value, Color.DeepPink, () => ((float)fargoPlayer.NekomiMeter / MAX_METER), true, 0, () => fargoPlayer.NekomiSet);
 
                 if (fargoPlayer.NekomiMeter >= MAX_METER)
                     fargoPlayer.NekomiAttackReadyTimer = FargoSoulsPlayer.SuperAttackMaxWindow;
