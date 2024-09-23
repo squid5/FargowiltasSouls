@@ -48,7 +48,7 @@ namespace FargowiltasSouls.Content.Projectiles
             Projectile.timeLeft = 60;
             Projectile.ai[0] = MoltenEffect.AuraSize(player);
         }
-        public static bool CombinedAura(Player player) => player.HasEffect<NatureEffect>() && (player.HasEffect<EbonwoodEffect>() || player.HasEffect<EbonwoodEffect>()) && player.HasEffect<TimberEffect>();
+        public static bool CombinedAura(Player player) => player.HasEffect<NatureEffect>() && player.HasEffect<MoltenEffect>() && (player.HasEffect<EbonwoodEffect>() || player.HasEffect<EbonwoodEffect>()) && player.HasEffect<TimberEffect>();
         public override bool PreDraw(ref Color lightColor)
         {
             if (!Projectile.owner.IsWithinBounds(Main.maxPlayers))

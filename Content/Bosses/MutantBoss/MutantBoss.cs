@@ -158,7 +158,7 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
         }
         public override void UpdateLifeRegen(ref int damage)
         {
-            damage /= 2;
+            damage /= 3;
             base.UpdateLifeRegen(ref damage);
         }
         public override bool CanHitPlayer(Player target, ref int CooldownSlot)

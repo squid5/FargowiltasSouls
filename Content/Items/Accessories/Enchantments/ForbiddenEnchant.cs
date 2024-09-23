@@ -69,6 +69,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
     {
         public override Header ToggleHeader => Header.GetHeader<SpiritHeader>();
         public override int ToggleItemType => ModContent.ItemType<ForbiddenEnchant>();
+        public override bool MutantsPresenceAffects => true;
         public static void ActivateForbiddenStorm(Player player)
         {
             if (player.HasEffect<ForbiddenEffect>() && !player.HasEffect<SpiritTornadoEffect>())
@@ -83,6 +84,8 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
         }
         public static void CommandForbiddenStorm(Player Player)
         {
+            if (Player.HasEffect<SpiritTornadoEffect>())
+                return;
             List<int> list = [];
             for (int i = 0; i < Main.maxProjectiles; i++)
             {
