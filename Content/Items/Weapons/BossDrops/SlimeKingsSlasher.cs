@@ -38,7 +38,7 @@ namespace FargowiltasSouls.Content.Items.Weapons.BossDrops
             Item.shoot = ModContent.ProjectileType<SlimeKingSlasherProj>();
             Item.shootSpeed = 1f;
         }
-        public override void HoldItem(Player player) //fancy momentum swing, this should be generalized and applied to other swords imo
+        public override void HoldItem(Player player)
         {
             
         }
