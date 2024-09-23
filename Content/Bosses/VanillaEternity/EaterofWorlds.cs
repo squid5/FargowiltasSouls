@@ -666,7 +666,8 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                                                 gNPC.CoilDesiredRotation = headCounter * MathHelper.TwoPi / headCount;
                                                 gNPC.CoilDesiredRotation += Main.player[npc.target].DirectionTo(npc.Center).ToRotation();
                                                 gNPC.CoilSpinDirection = spinDirection;
-                                                gNPC.CoilCenter = player.Center;
+                                                Vector2 offset = player.velocity * 20;
+                                                gNPC.CoilCenter = player.Center + offset.ClampLength(0, CoilRadius / 2);
 
                                                 Main.npc[i].netUpdate = true;
                                                 NetSync(Main.npc[i]);
