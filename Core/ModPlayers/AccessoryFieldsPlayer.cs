@@ -188,6 +188,8 @@ namespace FargowiltasSouls.Core.ModPlayers
 
         public int CritterAttackTimer;
 
+        public bool MiningImmunity;
+
         public HashSet<int> ForceEffects = [];
 
         #endregion

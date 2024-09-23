@@ -273,6 +273,8 @@ namespace FargowiltasSouls.Core.ModPlayers
 
             //            #endregion
 
+            MiningImmunity = false;
+
             //souls
             MeleeSoul = false;
             MagicSoul = false;

@@ -324,6 +324,7 @@ MinerEnchant: {
 	DisplayName: Miner Enchantment
 	Tooltip:
 		'''
+		Grants immunity to mining explosives
 		50% increased mining speed
 		Shows the location of enemies, traps, and treasures
 		Effects of Night Owl, Spelunker, Hunter, Shine, and Dangersense Potions
@@ -1881,6 +1882,7 @@ WorldShaperSoul: {
 	DisplayName: World Shaper Soul
 	Tooltip:
 		'''
+		Grants immunity to mining explosives
 		Increased block and wall placement speed by 50%
 		Near infinite block placement and mining reach
 		Mining speed tripled, plus effect of Ancient Chisel

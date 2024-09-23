@@ -1284,6 +1284,35 @@ namespace FargowiltasSouls.Content.Projectiles
             return base.CanDamage(projectile);
         }
 
+        private static List<int> MiningExplosives =
+        [
+            ProjectileID.Bomb,
+            ProjectileID.BombFish,
+            ProjectileID.BouncyBomb,
+            ProjectileID.BouncyDynamite,
+            ProjectileID.DirtBomb,
+            ProjectileID.DryBomb,
+            ProjectileID.Dynamite,
+            ProjectileID.HoneyBomb,
+            ProjectileID.LavaBomb,
+            ProjectileID.ScarabBomb,
+            ProjectileID.StickyBomb,
+            ProjectileID.DirtStickyBomb,
+            ProjectileID.StickyDynamite,
+            ProjectileID.WetBomb,
+            ProjectileID.Explosives,
+            ModContent.Find<ModProjectile>("Fargowiltas", "ShurikenProj").Type
+        ];
+
+        public override bool CanHitPlayer(Projectile projectile, Player target)
+        {
+            if (projectile.friendly && target.FargoSouls().MiningImmunity && MiningExplosives.Contains(projectile.type))
+            {
+                return false;
+            }
+            return base.CanHitPlayer(projectile, target);
+        }
+
         public override void ModifyHitNPC(Projectile projectile, NPC target, ref NPC.HitModifiers modifiers)
         {
             Player player = Main.player[projectile.owner];

@@ -150,7 +150,8 @@ namespace FargowiltasSouls.Content.Items
             ItemID.TheHorsemansBlade,
             ModContent.ItemType<TheBaronsTusk>(),
             ItemID.LucyTheAxe,
-            ModContent.ItemType<SlimeKingsSlasher>()
+            ModContent.ItemType<SlimeKingsSlasher>(),
+            ItemID.TheAxe
         ];
         public override void ModifyItemScale(Item item, Player player, ref float scale)
         {
@@ -159,7 +160,11 @@ namespace FargowiltasSouls.Content.Items
             if (!item.IsAir && ((item.IsWeapon() && !item.noMelee) || TungstenAlwaysAffects.Contains(item.type)))
             {
                 if (player.HasEffect<TungstenEffect>())
+                {
                     scale *= TungstenEffect.TungstenIncreaseWeaponSize(modPlayer);
+                    if (item.type == ItemID.TheAxe && player.name.ToLower().Contains("gonk"))
+                        scale *= 2.5f;
+                }
                 if (modPlayer.Atrophied)
                     scale *= 0.5f;
             }
