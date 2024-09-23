@@ -162,7 +162,7 @@ namespace FargowiltasSouls.Content.Projectiles.BossWeapons
 
             Projectile.timeLeft = 2;
 
-            player.itemRotation = (Projectile.velocity * Projectile.direction).ToRotation();
+            //player.itemRotation = (Projectile.velocity * Projectile.direction).ToRotation();
             player.heldProj = Projectile.whoAmI;
             player.itemTime = 2;
             player.itemAnimation = 2;
