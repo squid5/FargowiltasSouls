@@ -53,6 +53,7 @@ namespace FargowiltasSouls.Content.Items.Summons
             .AddIngredient(ItemID.Stinger)
             .AddIngredient(ItemID.ChumBucket)
             .AddTile(TileID.DemonAltar)
+            .DisableDecraft()
             .Register();
         }
     }

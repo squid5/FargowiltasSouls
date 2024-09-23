@@ -180,7 +180,7 @@ Not consumed on use"); */
             .AddIngredient(ItemID.AncientBattleArmorMaterial, 5)
             .AddIngredient(ItemID.Coral, 5)
             .AddIngredient(ItemID.LunarBar, 5)
-
+            .DisableDecraft()
             .AddTile(TileID.LunarCraftingStation)
 
             .Register();

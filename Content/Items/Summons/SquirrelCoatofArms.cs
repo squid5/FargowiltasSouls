@@ -37,6 +37,7 @@ namespace FargowiltasSouls.Content.Items.Summons
                 .AddRecipeGroup("Wood", 20)
                 .AddRecipeGroup("FargowiltasSouls:AnySquirrel")
                 .AddTile(TileID.WorkBenches)
+                .DisableDecraft()
                 .Register();
         }
     }

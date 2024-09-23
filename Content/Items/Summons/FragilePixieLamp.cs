@@ -36,6 +36,7 @@ namespace FargowiltasSouls.Content.Items.Summons
                 .AddIngredient(ItemID.SoulofLight, 2)
                 .AddIngredient(ItemID.CrystalShard, 3)
                 .AddTile(TileID.MythrilAnvil)
+                .DisableDecraft()
                 .Register();
         }
 

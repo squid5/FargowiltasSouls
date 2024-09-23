@@ -43,6 +43,7 @@ namespace FargowiltasSouls.Content.Items.Summons
                 .AddIngredient(ItemID.FossilOre, 8)
                 .AddRecipeGroup("FargowiltasSouls:AnyGem", 4)
                 .AddTile(TileID.DemonAltar)
+                .DisableDecraft()
                 .Register();
         }
 

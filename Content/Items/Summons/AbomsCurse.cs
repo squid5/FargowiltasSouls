@@ -52,6 +52,7 @@ namespace FargowiltasSouls.Content.Items.Summons
             .AddIngredient(ItemID.SnowGlobe)
             .AddIngredient(ItemID.DD2ElderCrystal)
             .AddIngredient(ItemID.LunarBar, 5)
+            .DisableDecraft()
             .AddTile(ModContent.Find<ModTile>("Fargowiltas", "CrucibleCosmosSheet"))
 
             .Register();

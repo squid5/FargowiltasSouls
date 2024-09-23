@@ -47,6 +47,7 @@ namespace FargowiltasSouls.Content.Items.Summons
                 .AddIngredient(ItemID.SoulofFlight, 5)
                 .AddIngredient(ItemID.ArmoredCavefish, 1)
                 .AddTile(TileID.MythrilAnvil)
+                .DisableDecraft()
                 .Register();
         }
 
