@@ -511,6 +511,18 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
                         }
                     }
 
+                    if (NPC.ai[1] == 120 - AbomStyxGazer.TelegraphTime)
+                    {
+                        if (NPC.ai[2] < (WorldSavingSystem.MasochistModeReal ? 7 : 5) && FargoSoulsUtil.HostCheck)
+                        {
+                            //float rotation = MathHelper.Pi * 1f * (NPC.Center.X < player.Center.X ? 1 : -1);
+                            float rotation = MathHelper.Pi * 1f * AbomStyxGazer.Direction;
+                            AbomStyxGazer.Direction *= -1;
+                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.DirectionTo(player.Center).RotatedBy(rotation * 0.6f),
+                                ModContent.ProjectileType<AbomStyxGazer>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), 0f, Main.myPlayer, NPC.whoAmI, rotation / 60 * 2);
+                        }
+                    }
+
                     if (NPC.ai[1] > 120)
                     {
                         NPC.netUpdate = true;
@@ -529,10 +541,6 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
                             float ai0 = NPC.Distance(player.Center) / 30 * 2f;
                             float ai1 = NPC.localAI[3] > 1 ? 1f : 0f;
                             Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.SafeDirectionTo(player.Center) * 30f, ModContent.ProjectileType<AbomScytheSplit>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), 0f, Main.myPlayer, ai0, ai1);
-
-                            float rotation = MathHelper.Pi * 1f * (NPC.Center.X < player.Center.X ? 1 : -1);
-                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, new Vector2(NPC.Center.X < player.Center.X ? -1f : 1f, -1f),
-                                ModContent.ProjectileType<AbomStyxGazer>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), 0f, Main.myPlayer, NPC.whoAmI, rotation / 60 * 2);
                         }
                     }
                     /*else if (NPC.ai[1] == 90)
@@ -664,7 +672,7 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
                                 {
                                     float rotation = MathHelper.Pi * 1.5f * (NPC.ai[2] % 2 == 0 ? 1 : -1);
                                     Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Normalize(NPC.velocity).RotatedBy(-rotation / 2),
-                                        ModContent.ProjectileType<AbomStyxGazer>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), 0f, Main.myPlayer, NPC.whoAmI, rotation / 60 * 2);
+                                        ModContent.ProjectileType<AbomStyxGazer>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), 0f, Main.myPlayer, NPC.whoAmI, rotation / 60 * 2, AbomStyxGazer.TelegraphTime);
                                 }
                             }
                         }
