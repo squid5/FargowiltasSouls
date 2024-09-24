@@ -330,6 +330,11 @@ LowGroundBuff: {
 	Description: No hooks, cannot stand on platforms or liquids
 }
 
+LowGroundEridanusBuff: {
+	DisplayName: Low Ground
+	Description: Cannot stand on platforms
+}
+
 MarkedforDeathBuff: {
 	DisplayName: Marked for Death
 	Description: Just don't get hit
