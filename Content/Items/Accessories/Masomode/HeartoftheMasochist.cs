@@ -34,11 +34,13 @@ namespace FargowiltasSouls.Content.Items.Accessories.Masomode
         public override void UpdateInventory(Player player)
         {
             player.FargoSouls().CanAmmoCycle = true;
+            player.AddEffect<ChalicePotionEffect>(Item);
         }
 
         public override void UpdateVanity(Player player)
         {
             player.FargoSouls().CanAmmoCycle = true;
+            player.AddEffect<ChalicePotionEffect>(Item);
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)

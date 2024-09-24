@@ -27,7 +27,14 @@ namespace FargowiltasSouls.Content.Items.Accessories.Masomode
             Item.rare = ItemRarityID.Purple;
             Item.value = Item.sellPrice(0, 8);
         }
-
+        public override void UpdateInventory(Player player)
+        {
+            player.AddEffect<ChalicePotionEffect>(Item);
+        }
+        public override void UpdateVanity(Player player)
+        {
+            player.AddEffect<ChalicePotionEffect>(Item);
+        }
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.buffImmune[ModContent.BuffType<FlippedBuff>()] = true;

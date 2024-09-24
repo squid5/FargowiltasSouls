@@ -278,7 +278,7 @@ IronEnchant: {
 	DisplayName: Iron Enchantment
 	Tooltip:
 		'''
-		Works in vanity and inventory slots
+		Works from inventory and vanity slots
 		When crafting an item, each material has a 33% chance to not be consumed
 		Works once per material type, ever
 		Does not work on Crucible of the Cosmos items
@@ -745,7 +745,7 @@ WoodEnchant: {
 		'''
 		Bestiary and banner entries complete twice as fast
 		You gain a shop discount based on bestiary completion
-		Discount effect works in vanity slots and inventory
+		Discount effect works from inventory and vanity slots
 		Current discount: {0}%
 		'Shopkeepers hate this trick'
 		Humble beginnings…
@@ -800,7 +800,7 @@ BoxofGizmos: {
 	DisplayName: Box of Gizmos
 	Tooltip:
 		'''
-		Works in your inventory
+		Works from inventory and vanity slots
 		Stand still to expose nearby treasure and enemies
 		Enemies emit light at night
 		Grants autofire to non-weapon items
@@ -939,7 +939,7 @@ TerraForce: {
 		[i:FargowiltasSouls/LeadEnchant] You take 60% less damage over time
 		[i:FargowiltasSouls/TungstenEnchant] Your swords are larger and deal 14% more damage
 		[i:FargowiltasSouls/TinEnchant] Sets Tin crit chance to 10%, increasing up to double your original crit chance or 50%
-		[i:FargowiltasSouls/IronEnchant] 50% chance to not consume each item on first craft and you attract items from a larger range (works in vanity and inventory)
+		[i:FargowiltasSouls/IronEnchant] 50% chance to not consume each item on first craft and you attract items from a larger range (works in inventory and vanity)
 		'The land lends its strength'
 		'''
 }
@@ -954,7 +954,7 @@ TimberForce: {
 		[i:FargowiltasSouls/PearlwoodEnchant] Retreiving pickups empowers you, making your crits reroll favorably for 5 seconds
 		[i:FargowiltasSouls/PearlwoodEnchant] Your attacks occasionally spawn mana stars on-hit
 		[i:FargowiltasSouls/WoodEnchant] Bestiary and banner entries complete faster
-		[i:FargowiltasSouls/WoodEnchant] You gain a shop discount based on bestiary completion (works in vanity and inventory)
+		[i:FargowiltasSouls/WoodEnchant] You gain a shop discount based on bestiary completion (works in inventory and vanity)
 		'Extremely rigid'
 		'''
 }
@@ -967,7 +967,7 @@ WillForce: {
 		[i:FargowiltasSouls/RedRidingEnchant] Successive attacks gain bonus damage, increased when empowered by the banner
 		[i:FargowiltasSouls/ValhallaKnightEnchant] Increases the effectiveness of healing sources by 25%
 		[i:FargowiltasSouls/ValhallaKnightEnchant] Improves mounts and stats while mounted, mounts have a dash
-		[i:FargowiltasSouls/GoldEnchant] Automatically sends coins to your piggy bank when picked up (works in vanity and inventory)
+		[i:FargowiltasSouls/GoldEnchant] Automatically sends coins to your piggy bank when picked up (works in inventory and vanity)
 		[i:FargowiltasSouls/PlatinumEnchant] 33% chance for enemies to drop 5x loot
 		'''
 }
@@ -1176,7 +1176,7 @@ FrigidGemstone: {
 	DisplayName: Frigid Grasp
 	Tooltip:
 		'''
-		Works in your inventory
+		Works from inventory and vanity slots
 		Right click to disable
 		Grants immunity to Frostburn and Chilled
 		Press the Frigid Spell key to cast Ice Rod
@@ -1215,7 +1215,7 @@ GalacticGlobe: {
 	Tooltip:
 		'''
 		Grants immunity to Nullification Curse, Flipped, Illuminated, Unstable, and Curse of the Moon
-		Grants the effects of most standard buff potions
+		Grants most standard potion buffs (works from inventory and vanity)
 		Increases flight time by 100%
 		'Always watching'
 		'''
@@ -1273,9 +1273,8 @@ HeartoftheMasochist: {
 		[i:FargowiltasSouls/MutantAntibodies] Submerging yourself in water refreshes your flight time, and gives improved speed and max flight time
 		[i:FargowiltasSouls/MutantAntibodies] Riding Cute Fishron gives you the Wet debuff
 		[i:FargowiltasSouls/PrecisionSeal] Hold Precision Seal key to disable dashes and double jumps, and show your hurtbox
-		[i:FargowiltasSouls/PrecisionSeal] Decreases hurtbox for projectiles, even when it isn't shown
-		[i:FargowiltasSouls/GalacticGlobe] Grants most standard potion buffs and increases flight time
-		[i:FargowiltasSouls/SaucerControlConsole] Press Ammo Cycle key to cycle ammos (works passively in inventory)
+		[i:FargowiltasSouls/PrecisionSeal] Decreases hurtbox for projectiles, even when it isn't shown and [i:FargowiltasSouls/GalacticGlobe] grants increases flight time
+		[i:FargowiltasSouls/SaucerControlConsole] Press Ammo Cycle key to cycle ammos and [i:FargowiltasSouls/GalacticGlobe] grants most standard potion buffs (works from inventory and vanity)
 		'Warm, beating, and no body needed'
 		'''
 }
@@ -1367,7 +1366,7 @@ MysticSkull: {
 	DisplayName: Mystic Skull
 	Tooltip:
 		'''
-		Works in your inventory
+		Works from inventory and vanity slots
 		Right click to disable
 		Grants immunity to Suffocation
 		Automatically use mana potions when needed
@@ -1405,7 +1404,7 @@ NymphsPerfume: {
 	Tooltip:
 		'''
 		Grants immunity to Lovestruck, Stinky, and Hexed
-		You respawn with more life, works from inventory
+		You respawn with more life (works from inventory and vanity)
 		Your attacks occasionally produce hearts
 		'The scent is somewhat overpowering'
 		'''
@@ -1497,7 +1496,7 @@ SandsofTime: {
 	DisplayName: Sands of Time
 	Tooltip:
 		'''
-		Works in your inventory
+		Works from inventory and vanity slots
 		Grants immunity to Mighty Wind and cactus damage
 		You respawn twice as fast when no boss is alive
 		Use to teleport to your last death point
@@ -1510,7 +1509,7 @@ SaucerControlConsole: {
 	Tooltip:
 		'''
 		Grants immunity to Electrified and Distorted
-		Press the Ammo Cycle key to cycle ammos (this effect works passively from inventory)
+		Press the Ammo Cycle key to cycle ammos (works from inventory and vanity)
 		Summons a friendly Mini Saucer
 		The saucer's tractor beam slows enemies hit by it
 		'Just keep it in airplane mode'
@@ -1521,9 +1520,9 @@ SecurityWallet: {
 	DisplayName: Security Wallet
 	Tooltip:
 		'''
+		Works from inventory and vanity slots
 		Grants immunity to Midas
 		Drastically improves reforges
-		Effects work from inventory
 		'Not secure against being looted off of one's corpse'
 		'''
 }
@@ -1638,7 +1637,7 @@ WyvernFeather: {
 		Grants immunity to Clipped Wings and Crippled
 		Your attacks have a 10% chance to inflict Clipped Wings on non-boss enemies
 		You periodically shed light orbs, touch them to refresh your flight time
-		Stabilizes gravity in space and in liquids, this works from inventory
+		Stabilizes gravity in space and in liquids (works from inventory and vanity)
 		'Warm to the touch'
 		'''
 }
@@ -1776,7 +1775,7 @@ MasochistSoul: {
 		[i:FargowiltasSouls/GalacticGlobe] Increases wing time by 200%, [i:FargowiltasSouls/QueenStinger] armor penetration by 50, [i:FargowiltasSouls/GalacticGlobe] and movement speed by 20%
 		[i:FargowiltasSouls/GuttedHeart] Increases max life by 100%, [i:FargowiltasSouls/MagicalBulb] life regen, [i:FargowiltasSouls/MutantAntibodies][i:FargowiltasSouls/SkullCharm][i:FargowiltasSouls/PumpkingsCape] damage for your current weapon class by 50%, and [i:FargowiltasSouls/ReinforcedPlating] damage reduction by 10%
 		[i:FargowiltasSouls/PungentEyeball] Increases spawn chance of rare enemies massively, [i:FargowiltasSouls/SinisterIcon] doubles spawnrates, makes non-boss enemies drop doubled loot, and [i:FargowiltasSouls/TimsConcoction] causes certain enemies to drop potions 
-		Grants [i:FargowiltasSouls/SlimyShield] fastfall, [i:FargowiltasSouls/ReinforcedPlating] knockback immunity, [i:FargowiltasSouls/PureHeart] immunity to biome debuffs, [i:FargowiltasSouls/GalacticGlobe] most standard potion buffs, immunity to almost all Eternity Mode debuffs, and more
+		Grants [i:FargowiltasSouls/SlimyShield] fastfall, [i:FargowiltasSouls/ReinforcedPlating] knockback immunity, [i:FargowiltasSouls/PureHeart] immunity to biome debuffs, [i:FargowiltasSouls/GalacticGlobe] most standard potion buffs (works from inventory and vanity), immunity to almost all Eternity Mode debuffs, and more
 		Press [i:FargowiltasSouls/BetsysHeart] the Special Dash key to perform an invincible dash, [i:FargowiltasSouls/PrecisionSeal] the Precision Seal key to prevent dashes and double jumps, [i:FargowiltasSouls/AgitatingLens] [i:FargowiltasSouls/FusedLens] the Debuff Install key to debuff and buff yourself
 		Press [i:FargowiltasSouls/FrigidGemstone] the Frigid Spell key to cast Ice Rod, [i:FargowiltasSouls/IceQueensCrown] the bomb key to freeze everything with enough graze, and right click to [i:FargowiltasSouls/OrdinaryCarrot] zoom and [i:FargowiltasSouls/DreadShell] [i:FargowiltasSouls/PumpkingsCape] parry for up to 200 damage
 		[i:FargowiltasSouls/Deerclawps] [i:FargowiltasSouls/LihzahrdTreasureBox] Double tap DOWN to fastfall and explode and create ice spikes on landing.
@@ -1838,7 +1837,7 @@ TerrariaSoul: {
 		[i:FargowiltasSouls/ShadowForce] Grants a shadow dash, and an invincible shade dash every 4 seconds, increased projectile stats based on speed
 		[i:FargowiltasSouls/ShadowForce] You fire additional weapons as support, your minions get a scythe attack, and slain enemies may drop a pile of bones
 		[i:FargowiltasSouls/WillForce] Summons a gladiator spirit, increases your healing and mount stats, and successive attacks gain bonus damage
-		[i:FargowiltasSouls/WillForce] Automatically sends coins to your piggy bank when picked up (works in vanity and inventory), enemies may drop extra loot
+		[i:FargowiltasSouls/WillForce] Automatically sends coins to your piggy bank when picked up (works from vanity and inventory), enemies may drop extra loot
 		[i:FargowiltasSouls/CosmoForce] Attacking occasionally launches moons at enemies that explode into Lunar Boosters
 		[i:FargowiltasSouls/CosmoForce] Increases your movement speed and acceleration, and decreases your momentum
 		'A true master of Terraria'
@@ -2131,7 +2130,7 @@ OrdinaryCarrot: {
 		Increases night vision
 		{$CommonItemTooltip.MinorStats}
 		1 minute duration
-		Right click to increase view range while in inventory
+		Right click to increase view range (works from inventory and vanity slots)
 		'Plucked from the face of a defeated foe'
 		'''
 }
@@ -3284,7 +3283,7 @@ RustedOxygenTank: {
 	DisplayName: Rusted Oxygen Tank
 	Tooltip:
 		'''
-		Works from your inventory
+		Works while in the inventory
 		Right click to disable
 		You count as wet outside water
 		Grants floaty water movement outside of liquid
@@ -3335,8 +3334,8 @@ RustedOxygenTankInactive: {
 	DisplayName: Rusted Oxygen Tank (Inactive)
 	Tooltip:
 		'''
-		Works from your inventory
-		Currently inactive, Right click to reactivate
+		Works while in the inventory
+		Effects are currently inactive, Right click to reactivate
 		You count as wet outside water
 		Grants floaty water movement outside of liquid
 		Increased movement speed while in any liquid
@@ -3349,7 +3348,7 @@ EaterLauncherJr: {
 	Tooltip:
 		'''
 		Right Click in inventory to load a Rotten Chunk for ammunition
-		Attempting to fire also loads Rotten Chunk if necessary
+		Attempting to fire also loads a Rotten Chunk if necessary
 		Each Rotten Chunk provides 100 rounds, up to 1000
 		Fires a chunk of rotted flesh
 		Increased damage to enemies in the given range

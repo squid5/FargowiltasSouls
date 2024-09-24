@@ -40,6 +40,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Souls
             BionomicCluster.PassiveEffect(player, Item);
 
             player.FargoSouls().CanAmmoCycle = true;
+            player.AddEffect<ChalicePotionEffect>(Item);
         }
 
         public override void UpdateInventory(Player player) => PassiveEffect(player, Item);
