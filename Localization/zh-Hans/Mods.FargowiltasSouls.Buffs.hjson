@@ -330,6 +330,11 @@ LowGroundBuff: {
 	Description: 钩爪被禁止，不能站在平台或液体上
 }
 
+LowGroundEridanusBuff: {
+	// DisplayName: Low Ground
+	// Description: Cannot stand on platforms
+}
+
 MarkedforDeathBuff: {
 	DisplayName: 死亡标记
 	Description: 别被打到

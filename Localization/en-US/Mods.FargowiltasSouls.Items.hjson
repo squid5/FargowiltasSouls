@@ -725,7 +725,7 @@ VortexEnchant: {
 	Tooltip:
 		'''
 		Your attacks against very distant enemies fire a piercing laser that deals ranged damage
-		8 second cooldown
+		10 second cooldown
 		'Tear into reality'
 		'''
 }

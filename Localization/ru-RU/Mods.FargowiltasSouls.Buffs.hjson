@@ -330,6 +330,11 @@ LowGroundBuff: {
 	Description: Нет крюка, не можете стоять на платформах или жидкостях
 }
 
+LowGroundEridanusBuff: {
+	// DisplayName: Low Ground
+	// Description: Cannot stand on platforms
+}
+
 MarkedforDeathBuff: {
 	DisplayName: Помеченный Смертью
 	Description: Просто не попадите под удар

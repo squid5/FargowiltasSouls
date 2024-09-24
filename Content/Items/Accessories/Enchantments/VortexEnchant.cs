@@ -91,13 +91,13 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
             if (modPlayer.VortexCD <= 0 && player.Distance(target.Hitbox.ClosestPointInRect(player.Center)) > 850)
             {
                 bool force = modPlayer.ForceEffect<VortexEnchant>();
-                int dmg = 11000;
+                int dmg = 9750;
                 if (force)
-                    dmg += 10000;
+                    dmg = 18000;
                 Vector2 velocity = player.DirectionTo(target.Center);
                 int damage = FargoSoulsUtil.HighestDamageTypeScaling(modPlayer.Player, dmg);
                 FargoSoulsUtil.NewProjectileDirectSafe(modPlayer.Player.GetSource_ItemUse(modPlayer.Player.HeldItem), player.Center, velocity, ModContent.ProjectileType<VortexLaser>(), damage, 0f, modPlayer.Player.whoAmI, 1f);
-                float cd = force ? 6f : 8f;
+                float cd = force ? 10;
                 modPlayer.VortexCD = LumUtils.SecondsToFrames(cd);
 
                 CooldownBarManager.Activate("VortexEnchantCooldown", ModContent.Request<Texture2D>("FargowiltasSouls/Content/Items/Accessories/Enchantments/VortexEnchant").Value, new(0, 242, 170), 
