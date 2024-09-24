@@ -72,7 +72,7 @@ namespace FargowiltasSouls.Content.Projectiles
 
             if (CombinedAura(player))
             {
-                DrawCombinedAura(player, Projectile.Opacity * ModContent.GetInstance<FargoClientConfig>().TransparentFriendlyProjectiles, radius);
+                DrawCombinedAura(player, Projectile.Opacity, radius);
                 return false;
             }
 
@@ -99,7 +99,7 @@ namespace FargowiltasSouls.Content.Projectiles
 
         public static void DrawCombinedAura(Player player, float opacity, float radius)
         {
-            Color darkColor = Color.Magenta;
+            Color darkColor = Color.Purple;
             Color mediumColor = Color.MediumPurple;
             Color lightColor = Color.Lerp(Color.Purple, Color.White, 0.35f);
 
