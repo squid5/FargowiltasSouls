@@ -725,7 +725,7 @@ VortexEnchant: {
 	/* Tooltip:
 		'''
 		Your attacks against very distant enemies fire a piercing laser that deals ranged damage
-		8 second cooldown
+		10 second cooldown
 		'Tear into reality'
 		''' */
 }
@@ -1090,7 +1090,7 @@ CelestialRune: {
 }
 
 ChaliceoftheMoon: {
-	// DisplayName: Chalice of the Moon
+	// DisplayName: Galactic Globe
 	/* Tooltip:
 		'''
 		[i:FargowiltasSouls/ChaliceoftheMoon] Grants immunity to Swarming, Atrophied, Jammed, Reverse Mana Flow, and Antisocial
@@ -1211,12 +1211,11 @@ FusedLens: {
 }
 
 GalacticGlobe: {
-	// DisplayName: Galactic Globe
+	// DisplayName: Chalice of the Moon
 	/* Tooltip:
 		'''
 		Grants immunity to Nullification Curse, Flipped, Illuminated, Unstable, and Curse of the Moon
-		Allows the holder to control gravity
-		Summons the true eyes of Cthulhu to protect you
+		Grants the effects of most standard buff potions
 		Increases flight time by 100%
 		'Always watching'
 		''' */
@@ -1275,7 +1274,7 @@ HeartoftheMasochist: {
 		[i:FargowiltasSouls/MutantAntibodies] Riding Cute Fishron gives you the Wet debuff
 		[i:FargowiltasSouls/PrecisionSeal] Hold Precision Seal key to disable dashes and double jumps, and show your hurtbox
 		[i:FargowiltasSouls/PrecisionSeal] Decreases hurtbox for projectiles, even when it isn't shown
-		[i:FargowiltasSouls/GalacticGlobe] Allows you to control gravity, increases flight time, and summons mini True Eyes of Cthulhu
+		[i:FargowiltasSouls/GalacticGlobe] Grants most standard potion buffs and increases flight time
 		[i:FargowiltasSouls/SaucerControlConsole] Press Ammo Cycle key to cycle ammos (works passively in inventory)
 		'Warm, beating, and no body needed'
 		''' */
@@ -1798,7 +1797,7 @@ MasochistSoul: {
 		[i:FargowiltasSouls/GalacticGlobe] Increases wing time by 200%, [i:FargowiltasSouls/QueenStinger] armor penetration by 50, [i:FargowiltasSouls/GalacticGlobe] and movement speed by 20%
 		[i:FargowiltasSouls/GuttedHeart] Increases max life by 100%, [i:FargowiltasSouls/MagicalBulb] life regen, [i:FargowiltasSouls/MutantAntibodies][i:FargowiltasSouls/SkullCharm][i:FargowiltasSouls/PumpkingsCape] damage for your current weapon class by 50%, and [i:FargowiltasSouls/ReinforcedPlating] damage reduction by 10%
 		[i:FargowiltasSouls/PungentEyeball] Increases spawn chance of rare enemies massively, [i:FargowiltasSouls/SinisterIcon] doubles spawnrates, makes non-boss enemies drop doubled loot, and [i:FargowiltasSouls/TimsConcoction] causes certain enemies to drop potions 
-		Grants [i:FargowiltasSouls/SlimyShield] fastfall, [i:FargowiltasSouls/ReinforcedPlating] knockback immunity, [i:FargowiltasSouls/PureHeart] immunity to biome debuffs, [i:FargowiltasSouls/GalacticGlobe] gravity control, immunity to almost all Eternity Mode debuffs, and more
+		Grants [i:FargowiltasSouls/SlimyShield] fastfall, [i:FargowiltasSouls/ReinforcedPlating] knockback immunity, [i:FargowiltasSouls/PureHeart] immunity to biome debuffs, [i:FargowiltasSouls/GalacticGlobe] most standard potion buffs, immunity to almost all Eternity Mode debuffs, and more
 		Press [i:FargowiltasSouls/BetsysHeart] the Special Dash key to perform an invincible dash, [i:FargowiltasSouls/PrecisionSeal] the Precision Seal key to prevent dashes and double jumps, [i:FargowiltasSouls/AgitatingLens] [i:FargowiltasSouls/FusedLens] the Debuff Install key to debuff and buff yourself
 		Press [i:FargowiltasSouls/FrigidGemstone] the Frigid Spell key to cast Ice Rod, [i:FargowiltasSouls/IceQueensCrown] the bomb key to freeze everything with enough graze, and right click to [i:FargowiltasSouls/OrdinaryCarrot] zoom and [i:FargowiltasSouls/DreadShell] [i:FargowiltasSouls/PumpkingsCape] parry for up to 200 damage
 		[i:FargowiltasSouls/Deerclawps] [i:FargowiltasSouls/LihzahrdTreasureBox] Double tap DOWN to fastfall and explode and create ice spikes on landing.

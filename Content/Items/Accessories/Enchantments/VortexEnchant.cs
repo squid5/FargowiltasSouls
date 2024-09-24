@@ -97,7 +97,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
                 Vector2 velocity = player.DirectionTo(target.Center);
                 int damage = FargoSoulsUtil.HighestDamageTypeScaling(modPlayer.Player, dmg);
                 FargoSoulsUtil.NewProjectileDirectSafe(modPlayer.Player.GetSource_ItemUse(modPlayer.Player.HeldItem), player.Center, velocity, ModContent.ProjectileType<VortexLaser>(), damage, 0f, modPlayer.Player.whoAmI, 1f);
-                float cd = force ? 10;
+                float cd = 10;
                 modPlayer.VortexCD = LumUtils.SecondsToFrames(cd);
 
                 CooldownBarManager.Activate("VortexEnchantCooldown", ModContent.Request<Texture2D>("FargowiltasSouls/Content/Items/Accessories/Enchantments/VortexEnchant").Value, new(0, 242, 170), 

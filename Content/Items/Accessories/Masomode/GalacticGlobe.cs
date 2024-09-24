@@ -2,6 +2,7 @@
 using FargowiltasSouls.Content.Buffs.Minions;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using FargowiltasSouls.Core.Toggler.Content;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -22,6 +23,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Masomode
             Item.width = 20;
             Item.height = 20;
             Item.accessory = true;
+            Item.defense = 10;
             Item.rare = ItemRarityID.Purple;
             Item.value = Item.sellPrice(0, 8);
         }
@@ -35,32 +37,52 @@ namespace FargowiltasSouls.Content.Items.Accessories.Masomode
             player.buffImmune[ModContent.BuffType<CurseoftheMoonBuff>()] = true;
             //player.buffImmune[BuffID.ChaosState] = true;
 
-            player.AddEffect<MasoGravEffect>(Item);
-            player.AddEffect<MasoTrueEyeMinion>(Item);
+            player.AddEffect<ChalicePotionEffect>(Item);
 
 
             player.FargoSouls().GravityGlobeEXItem = Item;
             player.FargoSouls().WingTimeModifier += 1f;
         }
     }
-    public class MasoGravEffect : AccessoryEffect
+    public class ChalicePotionEffect : AccessoryEffect
     {
         public override Header ToggleHeader => Header.GetHeader<HeartHeader>();
         public override int ToggleItemType => ModContent.ItemType<GalacticGlobe>();
+        public static List<int> ChaliceBuffs =
+        [
+            BuffID.Ironskin,
+            BuffID.Regeneration,
+            BuffID.Swiftness,
+            BuffID.ManaRegeneration,
+            BuffID.MagicPower,
+            BuffID.AmmoReservation,
+            BuffID.Archery,
+            BuffID.Builder,
+            BuffID.Crate,
+            BuffID.Endurance,
+            BuffID.Fishing,
+            BuffID.Gills,
+            BuffID.Lucky,
+            BuffID.Heartreach,
+            BuffID.Lifeforce,
+            BuffID.Mining,
+            BuffID.ObsidianSkin,
+            BuffID.Rage,
+            BuffID.Wrath,
+            BuffID.Sonar,
+            BuffID.Summoning,
+            BuffID.Thorns,
+            BuffID.Titan,
+            BuffID.Warmth,
+            BuffID.WaterWalking
+        ];
         public override void PostUpdateEquips(Player player)
         {
-            player.gravControl = true;
-        }
-    }
-    public class MasoTrueEyeMinion : AccessoryEffect
-    {
-        public override Header ToggleHeader => Header.GetHeader<HeartHeader>();
-        public override int ToggleItemType => ModContent.ItemType<GalacticGlobe>();
-        public override bool MinionEffect => true;
-        public override void PostUpdateEquips(Player player)
-        {
-            if (!player.HasBuff<SouloftheMasochistBuff>())
-                player.AddBuff(ModContent.BuffType<TrueEyesBuff>(), 2);
+            foreach (int buff in ChaliceBuffs)
+            {
+                int duration = buff == BuffID.Lucky ? 60 * 60 * 15 : 2;
+                player.AddBuff(buff, duration);
+            }
         }
     }
 }

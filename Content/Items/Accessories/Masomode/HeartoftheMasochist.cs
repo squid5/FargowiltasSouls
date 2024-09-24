@@ -85,8 +85,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Masomode
             player.buffImmune[ModContent.BuffType<UnstableBuff>()] = true;
             player.buffImmune[ModContent.BuffType<CurseoftheMoonBuff>()] = true;
             //player.buffImmune[BuffID.ChaosState] = true;
-            player.AddEffect<MasoGravEffect>(Item);
-            player.AddEffect<MasoTrueEyeMinion>(Item);
+            player.AddEffect<ChalicePotionEffect>(Item);
             fargoPlayer.GravityGlobeEXItem = Item;
             fargoPlayer.WingTimeModifier += 1f;
 

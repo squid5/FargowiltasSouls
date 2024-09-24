@@ -263,7 +263,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Souls
             player.buffImmune[BuffID.VortexDebuff] = true;
             //player.buffImmune[BuffID.ChaosState] = true;
             fargoPlayer.GravityGlobeEXItem = Item;
-            player.AddEffect<MasoGravEffect>(Item);
+            player.AddEffect<ChalicePotionEffect>(Item);
 
             //heart of maso
             fargoPlayer.MasochistHeart = true;

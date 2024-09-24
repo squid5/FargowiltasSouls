@@ -152,8 +152,7 @@ PrecisionSealHurtbox: 缩小碰撞箱
 PumpkingsCapeEffect: 南瓜王披肩格挡
 IceQueenGraze: 擦弹
 UfoMinionEffect: 迷你飞碟召唤物
-MasoGravEffect: 重力控制
-MasoTrueEyeMinion: 克苏鲁真眼召唤物
+// ChalicePotionEffect: Free Potion Buffs
 MutantArmorHeader: 真·突变体套装
 MasoAbom: 幽灵憎恶
 MasoRing: 幻影球召唤物

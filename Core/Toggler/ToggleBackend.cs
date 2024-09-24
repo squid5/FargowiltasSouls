@@ -187,7 +187,6 @@ namespace FargowiltasSouls.Core.Toggler
             player.SetToggleValue<CelestialRuneAttacks>(false);
 
             player.SetToggleValue<UfoMinionEffect>(false);
-            player.SetToggleValue<MasoTrueEyeMinion>(false);
 
             player.SetToggleValue<MasoAbom>(false);
 
@@ -233,6 +232,7 @@ namespace FargowiltasSouls.Core.Toggler
             player.SetToggleValue<HuntressEffect>(true);
             player.SetToggleValue<CrystalAssassinDash>(true);
             player.SetToggleValue<GladiatorBanner>(true);
+            player.SetToggleValue<ChalicePotionEffect>(true);
 
             player.SetToggleValue<EternityTin>(true);
 
