@@ -221,7 +221,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     float accel = 0.4f * speedMultiplier;
                     float decel = 0.7f * speedMultiplier;
                     float resistance = npc.velocity.Length() * accel / (35f * speedMultiplier);
-                    npc.velocity = FargoSoulsUtil.SmartAccel(npc.Center, target, npc.velocity, accel, decel);
+                    npc.velocity = FargoSoulsUtil.SmartAccel(npc.Center, target, npc.velocity, accel - resistance, decel + resistance);
                 }
 
                 if (state == 0) // Phase transition movement

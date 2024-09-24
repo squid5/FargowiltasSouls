@@ -781,7 +781,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Cosmos
                 case 1: //deathray punches, p2 only
                     targetPos = player.Center;
                     targetPos.X += 300 * (NPC.Center.X < targetPos.X ? -1 : 1);
-                    Movement(targetPos, 1.2f, 32f);
+                    Movement(targetPos, 1.2f, 32f, useAntiWobble: false);
 
                     if (NPC.ai[1] == 1)
                         SoundEngine.PlaySound(SoundID.Roar, NPC.Center);
@@ -978,7 +978,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Cosmos
                         targetPos = player.Center;
                         targetPos.X += 350 * (NPC.Center.X < targetPos.X ? -1 : 1);
                         targetPos.Y -= 700;
-                        Movement(targetPos, 1.6f, 32f);
+                        Movement(targetPos, 1.6f, 32f, useAntiWobble: false);
 
                         NPC.rotation = NPC.SafeDirectionTo(player.Center).ToRotation();
                         if (NPC.direction < 0)
@@ -1296,7 +1296,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Cosmos
                     {
                         targetPos = player.Center;
                         targetPos.X += 300 * (NPC.Center.X < targetPos.X ? -1 : 1);
-                        Movement(targetPos, 1.2f, 32f);
+                        Movement(targetPos, 1.2f, 32f, useAntiWobble: false);
 
                         if (NPC.ai[1] == 1)
                             SoundEngine.PlaySound(SoundID.Roar, NPC.Center);
@@ -1607,37 +1607,42 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Cosmos
                 epicMe = 0;
         }
 
-        private void Movement(Vector2 targetPos, float speedModifier, float cap = 12f, bool fastY = false)
+        private void Movement(Vector2 targetPos, float speedModifier, float cap = 12f, bool fastY = false, bool useAntiWobble = true)
         {
-            
-            if (NPC.Distance(targetPos) < NPC.Size.Length())
-                speedModifier /= 3f;
-            if (NPC.Center.X < targetPos.X)
+            if (useAntiWobble)
             {
-                NPC.velocity.X += speedModifier;
-                if (NPC.velocity.X < 0)
-                    NPC.velocity.X += speedModifier * 6;
+                float accel = 1f * speedModifier;
+                float decel = 1.5f * speedModifier;
+                float resistance = NPC.velocity.Length() * accel / (35f * speedModifier);
+                NPC.velocity = FargoSoulsUtil.SmartAccel(NPC.Center, targetPos, NPC.velocity, accel - resistance, decel + resistance);
             }
             else
             {
-                NPC.velocity.X -= speedModifier;
-                if (NPC.velocity.X > 0)
-                    NPC.velocity.X -= speedModifier * 6;
+                if (NPC.Center.X < targetPos.X)
+                {
+                    NPC.velocity.X += speedModifier;
+                    if (NPC.velocity.X < 0)
+                        NPC.velocity.X += speedModifier * 2;
+                }
+                else
+                {
+                    NPC.velocity.X -= speedModifier;
+                    if (NPC.velocity.X > 0)
+                        NPC.velocity.X -= speedModifier * 2;
+                }
+                if (NPC.Center.Y < targetPos.Y)
+                {
+                    NPC.velocity.Y += fastY ? speedModifier * 2 : speedModifier;
+                    if (NPC.velocity.Y < 0)
+                        NPC.velocity.Y += speedModifier * 2;
+                }
+                else
+                {
+                    NPC.velocity.Y -= fastY ? speedModifier * 2 : speedModifier;
+                    if (NPC.velocity.Y > 0)
+                        NPC.velocity.Y -= speedModifier * 2;
+                }
             }
-            if (NPC.Center.Y < targetPos.Y)
-            {
-                NPC.velocity.Y += fastY ? speedModifier * 2 : speedModifier;
-                if (NPC.velocity.Y < 0)
-                    NPC.velocity.Y += speedModifier * 6;
-            }
-            else
-            {
-                NPC.velocity.Y -= fastY ? speedModifier * 2 : speedModifier;
-                if (NPC.velocity.Y > 0)
-                    NPC.velocity.Y -= speedModifier * 6;
-            }
-            
-            //NPC.velocity = FargoSoulsUtil.SmartAccel(NPC.Center, targetPos, NPC.velocity, 1f * speedModifier, 1.5f * speedModifier);
 
             float dist = NPC.Distance(targetPos);
             if (dist == 0)
