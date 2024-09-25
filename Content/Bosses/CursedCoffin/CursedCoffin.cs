@@ -267,19 +267,23 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
                 GameShaders.Misc["LCWingShader"].Apply(oldGlow);
                 oldGlow.Draw(spriteBatch);
             }
-            for (int j = 0; j < 12; j++)
+            bool spirit = Main.npc.Any(p => p.TypeAlive<CursedSpirit>());
+            if (!spirit)
             {
-                float spinOffset = (Main.GameUpdateCount * 0.001f * j) % 12;
-                float magnitude = 3f + ((j % 5) * 3f * MathF.Sin(Main.GameUpdateCount * MathHelper.TwoPi / (10 + ((j - 6f) * 28f))));
-                Vector2 afterimageOffset = (MathHelper.TwoPi * (j + spinOffset) / 12f).ToRotationVector2() * magnitude * NPC.scale;
-                Color glowColor = GlowColor;
+                for (int j = 0; j < 12; j++)
+                {
+                    float spinOffset = (Main.GameUpdateCount * 0.001f * j) % 12;
+                    float magnitude = 3f + ((j % 5) * 3f * MathF.Sin(Main.GameUpdateCount * MathHelper.TwoPi / (10 + ((j - 6f) * 28f))));
+                    Vector2 afterimageOffset = (MathHelper.TwoPi * (j + spinOffset) / 12f).ToRotationVector2() * magnitude * NPC.scale;
+                    Color glowColor = GlowColor;
 
-                spriteBatch.Draw(bodytexture, drawPos + afterimageOffset, NPC.frame, glowColor * DrawcodeOpacity, NPC.rotation, origin, NPC.scale, spriteEffects, 0f);
+                    spriteBatch.Draw(bodytexture, drawPos + afterimageOffset, NPC.frame, glowColor * DrawcodeOpacity, NPC.rotation, origin, NPC.scale, spriteEffects, 0f);
+                }
             }
 
             spriteBatch.Draw(bodytexture, drawPos, NPC.frame, drawColor, NPC.rotation, origin, NPC.scale, spriteEffects, 0f);
 
-            if (!Main.npc.Any(p => p.TypeAlive<CursedSpirit>()))
+            if (!spirit)
             {
                 float shakeFactor = 1;
                 if (StateMachine.StateStack.Count != 0 && StateMachine.CurrentState.Identifier == BehaviorStates.PhaseTransition)

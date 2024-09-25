@@ -53,7 +53,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
             StateMachine.RegisterTransition(BehaviorStates.Opening, null, false, () => Timer == -1);
 
 			// An example of a more complex transition, where it goes from the phase 2 transition to the slam shockwave if the condition is met, and also performs additional stuff on occuring.
-			StateMachine.RegisterTransition(BehaviorStates.PhaseTransition, BehaviorStates.SlamWShockwave, false, () => Timer >= 120, () =>
+			StateMachine.RegisterTransition(BehaviorStates.PhaseTransition, BehaviorStates.SlamWShockwave, false, () => Timer >= 90, () =>
 			{
 				SoundEngine.PlaySound(PhaseTransitionSFX, NPC.Center);
 				NPC.netUpdate = true;

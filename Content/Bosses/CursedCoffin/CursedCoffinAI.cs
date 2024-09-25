@@ -218,7 +218,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 		{
 			HoverSound();
 
-			const int TransTime = 120;
+			const int TransTime = 90;
 			//NPC.velocity = -Vector2.UnitY * 5 * (1 - (Timer / (TransTime * 1.5f)));
 			NPC.velocity = (CoffinArena.Center.ToWorldCoordinates() - NPC.Center) * 0.05f;
             NPC.rotation = Main.rand.NextFloat(MathF.Tau * 0.06f * (Timer / TransTime));
