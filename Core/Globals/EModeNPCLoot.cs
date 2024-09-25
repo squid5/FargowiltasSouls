@@ -488,7 +488,6 @@ namespace FargowiltasSouls.Core.Globals
                 case NPCID.SporeBat:
                     FargoSoulsUtil.EModeDrop(npcLoot, ItemDropRule.Common(ItemID.Shroomerang, 10));
                     break;
-
             }
             #region early bird
             if (EarlyBirdEnemies.Contains(npc.type))
