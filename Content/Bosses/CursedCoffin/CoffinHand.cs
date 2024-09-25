@@ -188,12 +188,12 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
                         }
                         victim.buffImmune[ModContent.BuffType<StunnedBuff>()] = true; // cannot be stunned while grabbed, and removes stun
 
-                        if (Timer >= 60 && State != 66)
+                        if (Timer >= 25 && State != 66)
                         {
                             State = 101;
                             owner.netUpdate = true;
                             victim.AddBuff(ModContent.BuffType<CoffinTossBuff>(), 100);
-                            victim.velocity = Projectile.DirectionFrom(owner.Center) * 30;
+                            victim.velocity = Vector2.UnitX * -Projectile.HorizontalDirectionTo(owner.Center) * 30;
                             coffin.MashTimer = 15; // reset mash cap
                             break;
                         }
@@ -208,12 +208,12 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 
                             if (victim.Alive() && (Projectile.Distance(victim.Center) < 160 || victim.whoAmI != Main.myPlayer) && victim.FargoSouls().MashCounter < mashCap && !releaseAtCenter)
                             {
-                                victim.AddBuff(ModContent.BuffType<GrabbedBuff>(), 2);
+                                victim.AddBuff(ModContent.BuffType<StunnedBuff>(), 2);
                                 victim.Center = Projectile.Center;
                                 victim.fullRotation = Projectile.DirectionFrom(owner.Center).ToRotation() + MathHelper.PiOver2;
                                 victim.fullRotationOrigin = victim.Center - victim.position;
                                 if (State == 66)
-                                    Projectile.velocity = Vector2.Lerp(Projectile.velocity, Projectile.SafeDirectionTo(arenaCenter) * 15, 0.15f);
+                                    Projectile.velocity = Vector2.Lerp(Projectile.velocity, Projectile.SafeDirectionTo(arenaCenter) * 15, 0.3f);
                                 else
                                     Projectile.velocity *= 0.96f;
                             }

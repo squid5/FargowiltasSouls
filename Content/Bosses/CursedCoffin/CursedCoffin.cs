@@ -104,7 +104,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 			});
 
         }
-		public const int BaseHP = 3333;
+		public const int BaseHP = 3000;
         public override void SetDefaults()
         {
             NPC.aiStyle = -1;
@@ -148,6 +148,8 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
         {
 			if (StateMachine.StateStack.Count != 0 && StateMachine.CurrentState.Identifier == BehaviorStates.YouCantEscape)
 				modifiers.Null();
+            if (StateMachine.StateStack.Count != 0 && StateMachine.CurrentState.Identifier == BehaviorStates.PhaseTransition)
+                modifiers.FinalDamage *= 0.25f;
         }
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
         {

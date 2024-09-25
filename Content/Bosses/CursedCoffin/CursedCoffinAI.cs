@@ -218,7 +218,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 		{
 			HoverSound();
 
-			const int TransTime = 40;
+			const int TransTime = 120;
 			//NPC.velocity = -Vector2.UnitY * 5 * (1 - (Timer / (TransTime * 1.5f)));
 			NPC.velocity = (CoffinArena.Center.ToWorldCoordinates() - NPC.Center) * 0.05f;
             NPC.rotation = Main.rand.NextFloat(MathF.Tau * 0.06f * (Timer / TransTime));
@@ -344,7 +344,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 				XThetaOffset = MathF.Asin(xOffset / WaveAmpX);
 				RandomTimer = Main.rand.Next(160, 220);
 				if (!Main.npc.Any(p => p.TypeAlive<CursedSpirit>()))
-					RandomTimer -= 55;
+					RandomTimer -= 105;
 			}
 
 			if (Timer < RandomTimer && Timer >= 0)
@@ -382,7 +382,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 				{
 					Counter = 1;
 				}
-				if (NPC.velocity.Y == 0 && Counter > 0 && !NPC.noTileCollide) //when you hit tile
+				if (NPC.velocity.Y == 0 && Counter > 0 && !NPC.noTileCollide && Timer > 5) //when you hit tile
 				{
 					SoundEngine.PlaySound(SoundID.Item14, NPC.Center);
 					SoundEngine.PlaySound(SlamSFX, NPC.Center);
@@ -623,7 +623,10 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 			}
 			else
 			{
-				if (++NPC.frameCounter % 60 == 59 && Frame > 0)
+                int delay = 45;
+                if (WorldSavingSystem.MasochistModeReal)
+                    delay -= 5;
+				if (++NPC.frameCounter % delay == delay - 1 && Frame > 0)
 					Frame--;
 			}
 		}
@@ -698,9 +701,9 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 			else if (Timer < RandomStuffOpenTime + 310 && Timer >= RandomStuffOpenTime)
 			{
 				NPC.velocity.X *= 0.7f; // moves slower horizontally 
-				int shotTime = WorldSavingSystem.MasochistModeReal ? 16 : 20;
+				int shotTime = WorldSavingSystem.MasochistModeReal ? 20 : 24;
                 if (Phase < 2) // shoot more in phase 1
-                    shotTime -= 4;
+                    shotTime -= 10;
 				if (Timer % shotTime == 0)
 				{
 					RandomProj = Main.rand.Next(3) switch
@@ -724,8 +727,16 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 					{
 
 						Vector2 vel = dir;
-						vel *= Main.rand.NextFloat(0.75f, 1.25f);
-                        dir = dir.RotatedByRandom(MathHelper.PiOver2 * 0.025f);
+                        float bound = 0.25f;
+                        float rotationBound = 0.025f;
+                        if (Phase < 2)
+                        {
+                            bound = 0.3f;
+                            rotationBound = 0.029f;
+                        }
+                           
+						vel *= Main.rand.NextFloat(1 - bound, 1 + bound);
+                        dir = dir.RotatedByRandom(MathHelper.PiOver2 * rotationBound);
 
                         Vector2 offsetDir = Vector2.Normalize(dir);
                         Vector2 posOffset = offsetDir.RotatedBy(MathF.PI / 2) * Main.rand.NextFloat(-NPC.height / 3, NPC.height / 3);

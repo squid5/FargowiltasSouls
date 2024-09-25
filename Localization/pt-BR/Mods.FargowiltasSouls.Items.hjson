@@ -270,7 +270,7 @@ IronEnchant: {
 	// DisplayName: Iron Enchantment
 	/* Tooltip:
 		'''
-		Works in vanity and inventory slots
+		Works from inventory and vanity slots
 		When crafting an item, each material has a 33% chance to not be consumed
 		Works once per material type, ever
 		Does not work on Crucible of the Cosmos items
@@ -3252,7 +3252,7 @@ RustedOxygenTank: {
 	// DisplayName: Rusted Oxygen Tank
 	/* Tooltip:
 		'''
-		Works from your inventory
+		Works while in the inventory
 		Right click to disable
 		You count as wet outside water
 		Grants floaty water movement outside of liquid
@@ -3303,8 +3303,8 @@ RustedOxygenTankInactive: {
 	// DisplayName: Rusted Oxygen Tank (Inactive)
 	/* Tooltip:
 		'''
-		Works from your inventory
-		Currently inactive, Right click to reactivate
+		Works while in the inventory
+		Effects are currently inactive, Right click to reactivate
 		You count as wet outside water
 		Grants floaty water movement outside of liquid
 		Increased movement speed while in any liquid
@@ -3317,7 +3317,7 @@ EaterLauncherJr: {
 	/* Tooltip:
 		'''
 		Right Click in inventory to load a Rotten Chunk for ammunition
-		Attempting to fire also loads Rotten Chunk if necessary
+		Attempting to fire also loads a Rotten Chunk if necessary
 		Each Rotten Chunk provides 100 rounds, up to 1000
 		Fires a chunk of rotted flesh
 		Increased damage to enemies in the given range

@@ -392,7 +392,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
             }
             else
             {
-                if (coffin.Timer > 0)
+                if (coffin.Timer > 3)
                     AI3 = 0;
                 NPC.velocity *= 0.97f;
                 LerpOpacity(1f, 0.4f);
