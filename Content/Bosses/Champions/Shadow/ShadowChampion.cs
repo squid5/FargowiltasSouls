@@ -77,7 +77,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Shadow
             NPC.knockBackResist = 0f;
             NPC.lavaImmune = true;
             NPC.aiStyle = -1;
-            NPC.value = Item.buyPrice(1);
+            NPC.value = Item.buyPrice(6);
             NPC.boss = true;
 
             Music = ModLoader.TryGetMod("FargowiltasMusic", out Mod musicMod)

@@ -70,7 +70,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Terra
             NPC.knockBackResist = 0f;
             NPC.lavaImmune = true;
             NPC.aiStyle = -1;
-            NPC.value = Item.buyPrice(1);
+            NPC.value = Item.buyPrice(4, 50);
 
             NPC.boss = true;
 

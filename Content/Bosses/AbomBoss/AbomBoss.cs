@@ -91,7 +91,7 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
                 NPC.lifeMax *= 2;
             if (WorldSavingSystem.MasochistModeReal) //he's tanky enough
                 NPC.lifeMax = (int)(NPC.lifeMax * 0.9f);
-            NPC.value = Item.buyPrice(5);
+            NPC.value = Item.buyPrice(12);
             NPC.HitSound = SoundID.NPCHit57;
             NPC.noGravity = true;
             NPC.noTileCollide = true;
