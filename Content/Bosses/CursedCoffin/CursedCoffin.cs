@@ -118,7 +118,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
             NPC.lavaImmune = true;
             NPC.noGravity = true;
             NPC.noTileCollide = true;
-            NPC.HitSound = SoundID.NPCHit4; 
+            NPC.HitSound = SoundID.NPCHit54; 
             NPC.DeathSound = SoundID.NPCDeath6;
 
 			Music = MusicID.OtherworldlyBoss1;

@@ -223,6 +223,8 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 			NPC.velocity = (CoffinArena.Center.ToWorldCoordinates() - NPC.Center) * 0.05f;
             NPC.rotation = Main.rand.NextFloat(MathF.Tau * 0.06f * (Timer / TransTime));
 			SoundEngine.PlaySound(SpiritDroneSFX, NPC.Center);
+            NPC.HitSound = SoundID.NPCHit4;
+            NPC.netUpdate = true;
             if (Phase < 2)
                 Phase = 2;
 		}
