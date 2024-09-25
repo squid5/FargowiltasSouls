@@ -1,5 +1,6 @@
 ﻿using FargowiltasSouls.Content.Buffs.Souls;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
+using FargowiltasSouls.Core.ModPlayers;
 using FargowiltasSouls.Core.Toggler.Content;
 using Microsoft.Xna.Framework;
 using Terraria;
@@ -29,6 +30,14 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             AddEffects(player, Item);
+        }
+        public override void UpdateVanity(Player player)
+        {
+            player.FargoSouls().CactusImmune = true;
+        }
+        public override void UpdateInventory(Player player)
+        {
+            player.FargoSouls().CactusImmune = true;
         }
         public static void AddEffects(Player player, Item item)
         {

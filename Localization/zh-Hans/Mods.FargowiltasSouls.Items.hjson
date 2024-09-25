@@ -1230,12 +1230,12 @@ GalacticGlobe: {
 		增加100%飞行时间
 		“时刻凝视”
 		'''
-	// HoldShift: "[c/ADD8E6:< Hold Left Shift to view potion buffs >]"
+	// HoldShift: "[c/ADD8E6:Hold Left Shift to view potion buffs]"
 	/* ExpandedTooltip:
 		'''
-		Ironskin, Regeneration, Swiftness, Mana Regeneration, Magic Power, Ammo Reservation, Archery, 
-		Builder, Crate, Endurance, Fishing, Gills, Lucky, Heartreach, Lifeforce, Mining, Obsidian Skin, 
-		Rage, Wrath, Sonar, Summoning, Thorns, Titan, Warmth, Water Walking
+		[c/ADD8E6:Ironskin, Regeneration, Swiftness, Mana Regeneration, Magic Power, Ammo Reservation, Archery,] 
+		[c/ADD8E6:Builder, Crate, Endurance, Fishing, Gills, Lucky, Heartreach, Lifeforce, Mining, Obsidian Skin,] 
+		[c/ADD8E6:Rage, Wrath, Sonar, Summoning, Thorns, Titan, Warmth, Water Walking]
 		''' */
 }
 

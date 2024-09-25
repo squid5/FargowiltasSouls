@@ -1217,15 +1217,14 @@ GalacticGlobe: {
 		Grants immunity to Nullification Curse, Flipped, Illuminated, Unstable, and Curse of the Moon
 		Grants most standard potion buffs (works from inventory and vanity)
 		Increases flight time by 100%
-		Hold Left Shift to view potion buffs
 		'Always watching'
 		''' */
-	// HoldShift: "[c/ADD8E6:< Hold Left Shift to view potion buffs >]"
+	// HoldShift: "[c/ADD8E6:Hold Left Shift to view potion buffs]"
 	/* ExpandedTooltip:
 		'''
-		Ironskin, Regeneration, Swiftness, Mana Regeneration, Magic Power, Ammo Reservation, Archery, 
-		Builder, Crate, Endurance, Fishing, Gills, Lucky, Heartreach, Lifeforce, Mining, Obsidian Skin, 
-		Rage, Wrath, Sonar, Summoning, Thorns, Titan, Warmth, Water Walking
+		[c/ADD8E6:Ironskin, Regeneration, Swiftness, Mana Regeneration, Magic Power, Ammo Reservation, Archery,] 
+		[c/ADD8E6:Builder, Crate, Endurance, Fishing, Gills, Lucky, Heartreach, Lifeforce, Mining, Obsidian Skin,] 
+		[c/ADD8E6:Rage, Wrath, Sonar, Summoning, Thorns, Titan, Warmth, Water Walking]
 		''' */
 }
 

@@ -40,8 +40,9 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.Cavern
 
             if (!Main.hardMode)
             {
-                npc.lifeMax = (int)(npc.lifeMax / 2f);
-                npc.damage = (int)(npc.damage * 0.6f);
+                npc.lifeMax = (int)(npc.lifeMax / 3f);
+                npc.defense = 10;
+                npc.damage = (int)(npc.damage * 0.35f);
             }
         }
 
