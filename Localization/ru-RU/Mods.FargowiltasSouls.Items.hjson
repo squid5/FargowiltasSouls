@@ -1214,6 +1214,13 @@ GalacticGlobe: {
 		Увеличивает время полёта на 100%
 		'Всегда наблюдает'
 		'''
+	// HoldShift: "[c/ADD8E6:< Hold Left Shift to view potion buffs >]"
+	/* ExpandedTooltip:
+		'''
+		Ironskin, Regeneration, Swiftness, Mana Regeneration, Magic Power, Ammo Reservation, Archery, 
+		Builder, Crate, Endurance, Fishing, Gills, Lucky, Heartreach, Lifeforce, Mining, Obsidian Skin, 
+		Rage, Wrath, Sonar, Summoning, Thorns, Titan, Warmth, Water Walking
+		''' */
 }
 
 GelicWings: {

@@ -2,9 +2,11 @@
 using FargowiltasSouls.Content.Buffs.Minions;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using FargowiltasSouls.Core.Toggler.Content;
+using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Content.Items.Accessories.Masomode
@@ -49,6 +51,20 @@ namespace FargowiltasSouls.Content.Items.Accessories.Masomode
 
             player.FargoSouls().GravityGlobeEXItem = Item;
             player.FargoSouls().WingTimeModifier += 1f;
+        }
+        public override void SafeModifyTooltips(List<TooltipLine> tooltips)
+        {
+            if (Main.keyState.IsKeyDown(Keys.LeftShift))
+            {
+                TooltipLine line = new(Mod, "tooltip", Language.GetTextValue($"Mods.{Mod.Name}.Items.{Name}.ExpandedTooltip"));
+                tooltips.Add(line);
+            }
+
+            else
+            {
+                TooltipLine line = new(Mod, "tooltip", Language.GetTextValue($"Mods.{Mod.Name}.Items.{Name}.HoldShift"));
+                tooltips.Add(line);
+            }
         }
     }
     public class ChalicePotionEffect : AccessoryEffect
