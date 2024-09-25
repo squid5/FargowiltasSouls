@@ -176,7 +176,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Souls
             //wretched pouch
             player.buffImmune[BuffID.ShadowFlame] = true;
             player.buffImmune[ModContent.BuffType<ShadowflameBuff>()] = true;
-            player.AddEffect<WretchedPouchEffect>(Item);
+            //player.AddEffect<WretchedPouchEffect>(Item);
 
             //sands of time
             player.buffImmune[BuffID.WindPushed] = true;

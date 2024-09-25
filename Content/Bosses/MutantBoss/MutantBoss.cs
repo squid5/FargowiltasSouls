@@ -1,3 +1,4 @@
+using Fargowiltas.Common.Configs;
 using Fargowiltas.NPCs;
 using FargowiltasSouls.Assets.ExtraTextures;
 using FargowiltasSouls.Content.Buffs.Boss;
@@ -23,6 +24,7 @@ using System.IO;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.Creative;
 using Terraria.GameContent.ItemDropRules;
@@ -4025,19 +4027,52 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
 
             Main.EntitySpriteDraw(texture2D13, position, new Rectangle?(rectangle), NPC.GetAlpha(drawColor), NPC.rotation, origin2, NPC.scale, effects, 0);
 
-            Vector2 auraPosition = AuraCenter - screenPos + new Vector2(0f, NPC.gfxOffY);
+            Vector2 auraPosition = AuraCenter + new Vector2(0f, NPC.gfxOffY);
             if (ShouldDrawAura)
                 DrawAura(spriteBatch, auraPosition, AuraScale);
 
             return false;
         }
 
-        public static void DrawAura(SpriteBatch spriteBatch, Vector2 position, float auraScale)
+        public void DrawAura(SpriteBatch spriteBatch, Vector2 position, float auraScale)
         {
-            // Outer ring.
             Color outerColor = FargoSoulsUtil.AprilFools ? Color.Red : Color.CadetBlue;
             outerColor.A = 0;
-            spriteBatch.Draw(FargosTextureRegistry.SoftEdgeRing.Value, position, null, outerColor * 0.7f, 0f, FargosTextureRegistry.SoftEdgeRing.Value.Size() * 0.5f, 9.2f * auraScale, SpriteEffects.None, 0f);
+
+            Color darkColor = outerColor;
+            Color mediumColor = Color.Lerp(outerColor, Color.White, 0.75f);
+            Color lightColor2 = Color.Lerp(outerColor, Color.White, 0.5f);
+
+            Vector2 auraPos = position;
+            float radius = 2000f * AuraScale;
+            var target = Main.LocalPlayer;
+            var blackTile = TextureAssets.MagicPixel;
+            var diagonalNoise = FargosTextureRegistry.WavyNoise;
+            var maxOpacity = NPC.Opacity;
+
+            ManagedShader borderShader = ShaderManager.GetShader("FargowiltasSouls.MutantP1Aura");
+            borderShader.TrySetParameter("colorMult", 7.35f);
+            borderShader.TrySetParameter("time", Main.GlobalTimeWrappedHourly);
+            borderShader.TrySetParameter("radius", radius * auraScale);
+            borderShader.TrySetParameter("anchorPoint", auraPos);
+            borderShader.TrySetParameter("screenPosition", Main.screenPosition);
+            borderShader.TrySetParameter("screenSize", Main.ScreenSize.ToVector2());
+            borderShader.TrySetParameter("playerPosition", target.Center);
+            borderShader.TrySetParameter("maxOpacity", maxOpacity);
+            borderShader.TrySetParameter("darkColor", darkColor.ToVector4());
+            borderShader.TrySetParameter("midColor", mediumColor.ToVector4());
+            borderShader.TrySetParameter("lightColor", lightColor2.ToVector4());
+
+            spriteBatch.GraphicsDevice.Textures[1] = diagonalNoise.Value;
+
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, SamplerState.LinearWrap, DepthStencilState.None, Main.Rasterizer, borderShader.WrappedEffect, Main.GameViewMatrix.TransformationMatrix);
+            Rectangle rekt = new(Main.screenWidth / 2, Main.screenHeight / 2, Main.screenWidth, Main.screenHeight);
+            spriteBatch.Draw(blackTile.Value, rekt, null, default, 0f, blackTile.Value.Size() * 0.5f, 0, 0f);
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
+
+            //spriteBatch.Draw(FargosTextureRegistry.SoftEdgeRing.Value, position, null, outerColor * 0.7f, 0f, FargosTextureRegistry.SoftEdgeRing.Value.Size() * 0.5f, 9.2f * auraScale, SpriteEffects.None, 0f);
         }
         public static void ArenaAura(Vector2 center, float distance, bool reverse = false, int dustid = -1, Color color = default, params int[] buffs)
         {

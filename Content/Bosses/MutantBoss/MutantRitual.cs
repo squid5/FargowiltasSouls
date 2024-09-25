@@ -1,13 +1,17 @@
-﻿using FargowiltasSouls.Content.Buffs.Boss;
+﻿using FargowiltasSouls.Assets.ExtraTextures;
+using FargowiltasSouls.Content.Buffs.Boss;
 using FargowiltasSouls.Content.Buffs.Masomode;
 using FargowiltasSouls.Content.Buffs.Souls;
 using FargowiltasSouls.Content.Projectiles;
 using FargowiltasSouls.Core.Globals;
 using FargowiltasSouls.Core.Systems;
+using Luminance.Core.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using Terraria;
 using Terraria.Audio;
+using Terraria.GameContent;
 using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Content.Bosses.MutantBoss
@@ -139,6 +143,49 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
 
         public override bool PreDraw(ref Color lightColor)
         {
+            Color outerColor = FargoSoulsUtil.AprilFools ? Color.Red : Color.CadetBlue;
+            outerColor.A = 0;
+
+            Color darkColor = outerColor;
+            Color mediumColor = Color.Lerp(outerColor, Color.White, 0.75f);
+            Color lightColor2 = Color.Lerp(outerColor, Color.White, 0.5f);
+
+            Vector2 auraPos = Projectile.Center;
+
+            float leeway = Projectile.width / 2 * Projectile.scale;
+            leeway *= 0.75f;
+            float radius = threshold - leeway;
+
+            var target = Main.LocalPlayer;
+
+            var blackTile = TextureAssets.MagicPixel;
+            var diagonalNoise = FargosTextureRegistry.WavyNoise;
+
+            var maxOpacity = Projectile.Opacity;
+            float scale = Projectile.scale * 0.5f;
+
+            ManagedShader borderShader = ShaderManager.GetShader("FargowiltasSouls.MutantP2Aura");
+            borderShader.TrySetParameter("colorMult", 7.35f);
+            borderShader.TrySetParameter("time", Main.GlobalTimeWrappedHourly);
+            borderShader.TrySetParameter("radius", radius * scale);
+            borderShader.TrySetParameter("anchorPoint", auraPos);
+            borderShader.TrySetParameter("screenPosition", Main.screenPosition);
+            borderShader.TrySetParameter("screenSize", Main.ScreenSize.ToVector2());
+            borderShader.TrySetParameter("playerPosition", target.Center);
+            borderShader.TrySetParameter("maxOpacity", maxOpacity);
+            borderShader.TrySetParameter("darkColor", darkColor.ToVector4());
+            borderShader.TrySetParameter("midColor", mediumColor.ToVector4());
+            borderShader.TrySetParameter("lightColor", lightColor2.ToVector4());
+
+            Main.spriteBatch.GraphicsDevice.Textures[1] = diagonalNoise.Value;
+
+            Main.spriteBatch.End();
+            Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, SamplerState.LinearWrap, DepthStencilState.None, Main.Rasterizer, borderShader.WrappedEffect, Main.GameViewMatrix.TransformationMatrix);
+            Rectangle rekt = new(Main.screenWidth / 2, Main.screenHeight / 2, Main.screenWidth, Main.screenHeight);
+            Main.spriteBatch.Draw(blackTile.Value, rekt, null, default, 0f, blackTile.Value.Size() * 0.5f, 0, 0f);
+            Main.spriteBatch.End();
+            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
+            return false;
             Texture2D texture2D13 = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
             int num156 = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value.Height / Main.projFrames[Projectile.type]; //ypos of lower right corner of sprite to draw
             int y3 = num156 * Projectile.frame; //ypos of upper left corner of sprite to draw
