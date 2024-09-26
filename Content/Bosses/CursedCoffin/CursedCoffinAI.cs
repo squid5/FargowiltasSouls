@@ -306,7 +306,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
             ref float initialDir = ref AI2;
             ref float initialDist = ref AI3;
             HoverSound();
-            const int PrepTime = 50;
+            const int PrepTime = 90;
 
             if (++NPC.frameCounter % 10 == 9 && Frame > 0)
                 Frame--;

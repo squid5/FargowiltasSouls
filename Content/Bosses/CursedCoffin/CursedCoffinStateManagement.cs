@@ -123,7 +123,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 
             #region End-of-sequence attacks
 
-            StateMachine.RegisterTransition(BehaviorStates.SpiritGrabPunish, BehaviorStates.SlamWShockwave, false, () => Timer > 50, () =>
+            StateMachine.RegisterTransition(BehaviorStates.SpiritGrabPunish, BehaviorStates.SlamWShockwave, false, () => Timer > 90, () =>
             {
                 NPC.noTileCollide = true;
                 LockVector1 = Player.Top - Vector2.UnitY * 250;
