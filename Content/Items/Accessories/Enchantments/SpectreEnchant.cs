@@ -100,7 +100,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
                     }
                 }
 
-                if (!modPlayer.TerrariaSoul && !modPlayer.Eternity)
+                if (!player.HasEffect<SpiritTornadoEffect>() && !modPlayer.TerrariaSoul && !modPlayer.Eternity)
                     modPlayer.SpectreGhostTime = LumUtils.SecondsToFrames(5f);
 
                 string text = Language.GetTextValue($"Mods.{FargowiltasSouls.Instance.Name}.Message.Revived");

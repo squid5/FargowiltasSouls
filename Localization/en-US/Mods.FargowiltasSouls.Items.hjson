@@ -638,9 +638,9 @@ StardustEnchant: {
 	Tooltip:
 		'''
 		A stardust guardian will protect you from nearby enemies
-		Press the Freeze Key to freeze time for 5 seconds
+		Press the Freeze Key to freeze time for 6 seconds
 		While time is frozen, your minions will continue to attack
-		There is a 60 second cooldown for this effect
+		There is a 90 second cooldown for this effect
 		'The power of the Stand is yours'
 		'''
 }
@@ -825,6 +825,7 @@ CosmoForce: {
 		[i:FargowiltasSouls/SolarEnchant] [i:FargowiltasSouls/VortexEnchant] [i:FargowiltasSouls/NebulaEnchant] [i:FargowiltasSouls/StardustEnchant] Attacking generates up to 4 moons that orbit around you 
 		Stop attacking to launch them towards your cursor, exploding into Lunar Boosters
 		Picking up Lunar Boosters increases your damage, crit, life regen or damage reduction
+		[i:FargowiltasSouls/StardustEnchant] Press the Freeze Key to freeze time for 6 seconds, with a 75 second cooldown
 		[i:FargowiltasSouls/MeteorEnchant] Increases your movement speed and acceleration, and decreases your momentum
 		[i:FargowiltasSouls/WizardEnchant] Amplifies the effect of all your Enchantments
 		'Been around since the Big Bang'
@@ -1846,7 +1847,7 @@ TerrariaSoul: {
 		[i:FargowiltasSouls/WillForce] Summons a gladiator spirit, increases your healing and mount stats, and successive attacks gain bonus damage
 		[i:FargowiltasSouls/WillForce] Automatically sends coins to your piggy bank when picked up (works from vanity and inventory), enemies may drop extra loot
 		[i:FargowiltasSouls/CosmoForce] Attacking occasionally launches moons at enemies that explode into Lunar Boosters
-		[i:FargowiltasSouls/CosmoForce] Increases your movement speed and acceleration, and decreases your momentum
+		[i:FargowiltasSouls/CosmoForce] Increases your movement speed and acceleration and decreases your momentum, press the Freeze Key to freeze time for 6 seconds with a 60 second cooldown
 		'A true master of Terraria'
 		'''
 }

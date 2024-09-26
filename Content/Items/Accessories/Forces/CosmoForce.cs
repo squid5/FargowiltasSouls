@@ -31,6 +31,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Forces
             SetActive(player);
             modPlayer.WizardEnchantActive = true;
             player.AddEffect<MeteorMomentumEffect>(Item);
+            player.AddEffect<StardustEffect>(Item);
             if (player.AddEffect<CosmoForceEffect>(Item))
                 player.AddEffect<CosmosMoonEffect>(Item);
 
@@ -85,7 +86,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Forces
                     modPlayer.CosmosMoonTimer += 2;
                     if (modPlayer.CosmosMoonTimer >= LumUtils.SecondsToFrames(3) && player.whoAmI == Main.myPlayer)
                     {
-                        int moonDamage = FargoSoulsUtil.HighestDamageTypeScaling(player, 1500);
+                        int moonDamage = FargoSoulsUtil.HighestDamageTypeScaling(player, 1200);
 
                         NPC result = null;
                         float range = 1200;
@@ -119,7 +120,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Forces
                 int moonCount = player.ownedProjectileCounts[ModContent.ProjectileType<CosmosForceMoon>()];
                 if (modPlayer.CosmosMoonTimer >= LumUtils.SecondsToFrames(3) && player.whoAmI == Main.myPlayer && moonCount < 4)
                 {
-                    int moonDamage = FargoSoulsUtil.HighestDamageTypeScaling(player, 1500);
+                    int moonDamage = FargoSoulsUtil.HighestDamageTypeScaling(player, 1200);
 
                     Projectile.NewProjectileDirect(player.GetSource_EffectItem<CosmosMoonEffect>(), player.Center, Vector2.Zero, ModContent.ProjectileType<CosmosForceMoon>(), moonDamage, 1, player.whoAmI, MathHelper.Pi, ai2: modPlayer.CosmosMoonCycle);
                     modPlayer.CosmosMoonTimer = 0;

@@ -19,7 +19,7 @@ namespace FargowiltasSouls.Content.Patreon.DevAesthetic
 
         public override void SetDefaults()
         {
-            Item.damage = 366;
+            Item.damage = 399;
             Item.DamageType = DamageClass.Summon;
             Item.mana = 10;
             Item.width = 40;

@@ -65,11 +65,11 @@ namespace FargowiltasSouls.Core.ModPlayers
             {
                 if (Player.HasEffect<StardustEffect>() && !Player.HasBuff(ModContent.BuffType<TimeStopCDBuff>()))
                 {
-                    int cooldownInSeconds = 60;
+                    int cooldownInSeconds = 90;
                     if (ForceEffect<StardustEnchant>())
-                        cooldownInSeconds = 50;
+                        cooldownInSeconds = 75;
                     if (TerrariaSoul)
-                        cooldownInSeconds = 40;
+                        cooldownInSeconds = 60;
                     if (Eternity)
                         cooldownInSeconds = 30;
                     Player.ClearBuff(ModContent.BuffType<TimeFrozenBuff>());
