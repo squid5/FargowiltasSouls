@@ -1034,7 +1034,7 @@ namespace FargowiltasSouls.Core.Globals
                     break;
 
                 case NPCID.GraniteGolem:
-                    TimsConcoctionDrop(ItemDropRule.Common(ItemID.EndurancePotion, 1, 1, 3));
+                    TimsConcoctionDrop(ItemDropRule.Common(ItemID.EndurancePotion, 1, 3, 5));
                     break;
 
                 case NPCID.Shark:
