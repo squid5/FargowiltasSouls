@@ -30,7 +30,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.Cavern
 
             EModeGlobalNPC.Aura(npc, 100, BuffID.Cursed, false, 20);
             npc.dontTakeDamage = false;
-            if (!Main.player.Any(p => p.Alive() && p.direction == p.HorizontalDirectionTo(npc.Center)))
+            if (npc.HasPlayerTarget && Main.player[npc.target].Alive() && Main.player[npc.target].direction != Main.player[npc.target].HorizontalDirectionTo(npc.Center))
             {
                 npc.dontTakeDamage = true;
                 npc.velocity *= 0f;
