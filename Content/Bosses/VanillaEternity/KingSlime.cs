@@ -32,6 +32,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
         public float JumpTimer = 0;
         const int SpecialJumpTime = 60 * 15;
+        public int SpecialJumpWindupTimer;
 
         const int SummonWaves = 6;
         public float SummonCounter = SummonWaves - 1;
@@ -103,7 +104,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
             if (WorldSavingSystem.MasochistModeReal)
                 npc.position.X += npc.velocity.X * 0.2f;
-
+            FargoSoulsUtil.PrintAI(npc);
             // Attack that happens when landing
             if (LandingAttackReady)
             {
@@ -118,6 +119,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                         Particle p = new ExpandingBloomParticle(npc.Center, Vector2.Zero, Color.Blue, Vector2.One, Vector2.One * 60, 40, true, Color.Transparent);
                         SpecialJumping = true;
                         CertainAttackCooldown = 240;
+                        SpecialJumpWindupTimer = 60;
                         p.Spawn();
 
                     }
@@ -205,6 +207,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                             shootSpikes = true;
 
 
+
                         if (npc.HasValidTarget)
                         {
                             // If player is well above me, jump higher
@@ -232,7 +235,8 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                             }
 
                         }
-
+                        if (npc.ai[1] == 0) // big jump
+                            shootSpikes = false;
 
                         if (shootSpikes && FargoSoulsUtil.HostCheck)
                         {
@@ -257,6 +261,13 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
             if (npc.velocity.Y == 0) //on ground
             {
+                if (SpecialJumpWindupTimer > 0)
+                {
+                    npc.ai[0] = -999; // no jumping until this is done
+                    SpecialJumpWindupTimer--;
+                    if (SpecialJumpWindupTimer == 0)
+                        npc.ai[0] = -1; // ok now you can jump
+                }
 
             }
             else //midair
