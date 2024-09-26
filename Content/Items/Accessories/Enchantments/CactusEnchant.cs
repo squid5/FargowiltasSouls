@@ -82,7 +82,6 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
                 modPlayer.CactusProcCD = 15;
             }
         }
-
         public static void CactusProc(NPC npc, Player player)
         {
             CactusSpray(player, npc.Center);
@@ -101,7 +100,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
 
             for (int i = 0; i < numNeedles; i++)
             {
-                int p = Projectile.NewProjectile(player.GetSource_EffectItem<CactusEffect>(), player.Center, Vector2.UnitX.RotatedByRandom(MathHelper.TwoPi) * 4, ModContent.ProjectileType<CactusNeedle>(), FargoSoulsUtil.HighestDamageTypeScaling(player, dmg), 5f);
+                int p = Projectile.NewProjectile(player.GetSource_EffectItem<CactusEffect>(), position, Vector2.UnitX.RotatedByRandom(MathHelper.TwoPi) * 4, ModContent.ProjectileType<CactusNeedle>(), FargoSoulsUtil.HighestDamageTypeScaling(player, dmg), 5f);
                 if (p != Main.maxProjectiles)
                 {
                     Projectile proj = Main.projectile[p];

@@ -1206,7 +1206,7 @@ namespace FargowiltasSouls.Core.Globals
                 WoodCompletionEffect.WoodCheckDead(modPlayer, npc);
             }
 
-            if (Needled && npc.lifeMax > 1 && npc.lifeMax != int.MaxValue) //super dummy
+            if (player.HasEffect<CactusEffect>() && npc.lifeMax > 10 && !npc.townNPC && npc.lifeMax != int.MaxValue) //super dummy
             {
                 CactusEffect.CactusProc(npc, player);
             }
