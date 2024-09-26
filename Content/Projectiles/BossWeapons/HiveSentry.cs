@@ -20,7 +20,7 @@ namespace FargowiltasSouls.Content.Projectiles.BossWeapons
             Projectile.ignoreWater = true;
             Projectile.sentry = true;
             Projectile.penetrate = -1;
-            Projectile.timeLeft = 7200;
+            Projectile.timeLeft = Projectile.SentryLifeTime;
             Projectile.sentry = true;
             Projectile.DamageType = DamageClass.Summon;
         }
@@ -59,7 +59,11 @@ namespace FargowiltasSouls.Content.Projectiles.BossWeapons
                     for (int i = 0; i < 10; i++)
                     {
                         int p = Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, new Vector2(Main.rand.Next(-10, 10), Main.rand.Next(-10, 10)), owner.beeType(), owner.beeDamage(Projectile.damage), owner.beeKB(0f), Projectile.owner);
-                        Main.projectile[p].DamageType = DamageClass.Summon;
+                        if (p.IsWithinBounds(Main.maxProjectiles))
+                        {
+                            Main.projectile[p].DamageType = DamageClass.Summon;
+                            Main.projectile[p].extraUpdates += 1;
+                        }
                     }
                     for (int i = 0; i < 20; i++)
                     {
