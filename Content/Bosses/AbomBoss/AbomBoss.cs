@@ -1288,13 +1288,13 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
                         NPC.netUpdate = true;
                         NPC.velocity = Vector2.Zero;
 
-                        SoundEngine.PlaySound(SoundID.Roar, NPC.Center);
+                        //SoundEngine.PlaySound(SoundID.Roar, NPC.Center);
                         float ai0 = NPC.ai[2] == 1 ? -1 : 1;
                         ai0 *= MathHelper.ToRadians(270) / 120;
                         Vector2 vel = NPC.SafeDirectionTo(player.Center).RotatedBy(-ai0 * 60);
-                        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, vel, ModContent.ProjectileType<AbomSword>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage, 4f * 3 / 8), 0f, Main.myPlayer, ai0, NPC.whoAmI);
+                        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, vel, ModContent.ProjectileType<AbomSword>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage, 4f * 3 / 8), 0f, Main.myPlayer, ai0, NPC.whoAmI, ai2: 1);
                         if (WorldSavingSystem.MasochistModeReal)
-                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, -vel, ModContent.ProjectileType<AbomSword>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage, 4f * 3 / 8), 0f, Main.myPlayer, ai0, NPC.whoAmI);
+                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, -vel, ModContent.ProjectileType<AbomSword>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage, 4f * 3 / 8), 0f, Main.myPlayer, ai0, NPC.whoAmI, ai2: 1);
                     }
                     break;
 
@@ -1409,7 +1409,7 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
                     NPC.direction = NPC.spriteDirection = Math.Sign(NPC.ai[2] - NPC.Center.X);
 
                     ClearFrozen();
-
+                    int SpinTime = WorldSavingSystem.MasochistModeReal ? 100 : 60;
                     if (NPC.ai[1] == 0)
                     {
                         if (FargoSoulsUtil.HostCheck)
@@ -1417,14 +1417,14 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
                             float horizontalModifier = Math.Sign(NPC.ai[2] - NPC.Center.X);
                             float verticalModifier = Math.Sign(NPC.ai[3] - NPC.Center.Y);
 
-                            float ai0 = horizontalModifier * MathHelper.Pi / 60 * verticalModifier;
+                            float ai0 = horizontalModifier * MathHelper.Pi / SpinTime * verticalModifier;
                             Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.UnitX * -horizontalModifier, ModContent.ProjectileType<AbomSword>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage, 4f * 3 / 8), 0f, Main.myPlayer, ai0, NPC.whoAmI);
                             if (WorldSavingSystem.MasochistModeReal)
                                 Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, -Vector2.UnitX * -horizontalModifier, ModContent.ProjectileType<AbomSword>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage, 4f * 3 / 8), 0f, Main.myPlayer, ai0, NPC.whoAmI);
                         }
                     }
 
-                    if (++NPC.ai[1] > 60)
+                    if (++NPC.ai[1] > SpinTime)
                     {
                         NPC.netUpdate = true;
                         NPC.ai[0]++;

@@ -52,9 +52,9 @@ float4 PixelShaderFunction(float4 sampleColor : COLOR0, float2 uv : TEXCOORD0) :
     // Get the distance to the pixel from the player.
     float distToPlayer = distance(playerPosition, worldUV);
     // And get the correct opacity based on it.
-    float opacity = 0.25f;
+    float opacity = 0.4f;
     // Fade in quickly as the player approaches the pixels
-    opacity += InverseLerp(800, 500, distToPlayer);
+    opacity += InverseLerp(800, 500, distToPlayer) * 0.7;
     
     // Define the border and fade
     bool border = worldDistance < radius && opacity > 0;

@@ -72,16 +72,32 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
                 Projectile.Kill();
                 return;
             }
-            Projectile.scale = (float)Math.Sin(Projectile.localAI[0] * 3.14159274f / maxTime) * num801 * 6f;
+            Projectile.scale = (float)Math.Sin(Projectile.localAI[0] * MathF.PI / maxTime) * num801 * 3;
             if (Projectile.scale > num801)
             {
                 Projectile.scale = num801;
             }
-            float num804 = Projectile.velocity.ToRotation();
+            float rotation = Projectile.velocity.ToRotation();
             if ((abom.velocity != Vector2.Zero || abom.ai[0] == 19) && abom.ai[0] != 20)
-                num804 += Projectile.ai[0] / Projectile.MaxUpdates;
-            Projectile.rotation = num804 - 1.57079637f;
-            Projectile.velocity = num804.ToRotationVector2();
+            {
+                if (false) //(Projectile.ai[2] == 1)
+                {
+                    float totalRotation = maxTime * Projectile.ai[0] / Projectile.MaxUpdates;
+                    float dx = 1 / (maxTime);
+                    //acceleration logic from math on paper
+                    float x = Projectile.localAI[0] / (maxTime);
+                    Main.NewText(x);
+                    float rotationSpeed = totalRotation * (6 * x * x - 4 * x * x * x);
+                    rotation += rotationSpeed * dx;
+                }
+                else
+                {
+                    rotation += Projectile.ai[0] / Projectile.MaxUpdates;
+                }
+            }
+            
+            Projectile.rotation = rotation - 1.57079637f;
+            Projectile.velocity = rotation.ToRotationVector2();
             float num805 = 3f;
             float num806 = Projectile.width;
             Vector2 samplingPoint = Projectile.Center;
@@ -197,42 +213,19 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
             if (projectile.velocity == Vector2.Zero)
                 return;
 
-            Texture2D hiltTexture = ModContent.Request<Texture2D>("FargowiltasSouls/Content/Bosses/AbomBoss/AbomSword").Value;
-            Vector2 direction = projectile.velocity.SafeNormalize(Vector2.UnitY);
-            Vector2 offset = direction * projectile.scale * hiltTexture.Height / 2f;
-
-            if (drawHandle)
-            {
-                Main.spriteBatch.End();
-                Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
-
-                // glow
-                for (int j = 0; j < 12; j++)
-                {
-                    Vector2 afterimageOffset = (MathHelper.TwoPi * j / 12f).ToRotationVector2() * 6f;
-                    Color glowColor = darkColor;
-
-                    Main.EntitySpriteDraw(hiltTexture, projectile.Center + offset + afterimageOffset - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), null, glowColor,
-                        direction.ToRotation() + MathHelper.PiOver2, Vector2.UnitX * hiltTexture.Width / 2, projectile.scale, SpriteEffects.None, 0);
-                }
-                Main.spriteBatch.End();
-                Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
-
-                Main.EntitySpriteDraw(hiltTexture, projectile.Center + offset - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), null, lightColor,
-                    direction.ToRotation() + MathHelper.PiOver2, Vector2.UnitX * hiltTexture.Width / 2, projectile.scale, SpriteEffects.None, 0);
-            }
-            else
-            {
-                offset = direction;
-            }
-
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, SamplerState.LinearWrap, DepthStencilState.None, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
 
             ManagedShader shader = ShaderManager.GetShader("FargowiltasSouls.StyxGazerShader");
+            Texture2D hiltTexture = ModContent.Request<Texture2D>("FargowiltasSouls/Content/Bosses/AbomBoss/AbomSword").Value;
+
+            Vector2 direction = projectile.velocity.SafeNormalize(Vector2.UnitY);
+            Vector2 offset = direction * projectile.scale * hiltTexture.Height;
+            if (!drawHandle)
+                offset = direction;
 
             // Get the laser positions.
-            Vector2 laserStartOffset = direction * -92 * projectile.scale;
+            Vector2 laserStartOffset = direction * -176 * projectile.scale;
             Vector2 laserStart = projectile.Center + offset * 2 + laserStartOffset;
             Vector2 laserEnd = laserStart + direction * drawDistance;
 
@@ -273,6 +266,27 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
 
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
+
+            if (drawHandle)
+            {
+                Main.spriteBatch.End();
+                Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
+
+                // glow
+                for (int j = 0; j < 12; j++)
+                {
+                    Vector2 afterimageOffset = (MathHelper.TwoPi * j / 12f).ToRotationVector2() * 6f;
+                    Color glowColor = darkColor;
+
+                    Main.EntitySpriteDraw(hiltTexture, projectile.Center + offset + afterimageOffset - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), null, glowColor,
+                        direction.ToRotation() + MathHelper.PiOver2, Vector2.UnitX * hiltTexture.Width / 2, projectile.scale, SpriteEffects.None, 0);
+                }
+                Main.spriteBatch.End();
+                Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
+
+                Main.EntitySpriteDraw(hiltTexture, projectile.Center + offset - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), null, lightColor,
+                    direction.ToRotation() + MathHelper.PiOver2, Vector2.UnitX * hiltTexture.Width / 2, projectile.scale, SpriteEffects.None, 0);
+            }
         }
     }
 }
