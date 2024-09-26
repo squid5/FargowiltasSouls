@@ -105,7 +105,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
                 NPC.velocity.Y = -6;
             });
 
-            StateMachine.RegisterTransition(BehaviorStates.GrabbyHands, BehaviorStates.SlamWShockwave, false, () => Timer > 40 && Frame <= 0 && Timer > AI3 + 1, () =>
+            StateMachine.RegisterTransition(BehaviorStates.GrabbyHands, BehaviorStates.SlamWShockwave, false, () => Timer > 60 && Frame <= 0 && Timer > AI3 + 1, () =>
             {
                 NPC.noTileCollide = true;
                 LockVector1 = Player.Top - Vector2.UnitY * 250;

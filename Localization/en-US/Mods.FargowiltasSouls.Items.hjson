@@ -3527,9 +3527,9 @@ GildedSceptre: {
 	DisplayName: Gilded Sceptre
 	Tooltip:
 		'''
-			Draw a circle to activate projectiles
-			Activated projectiles chase after the nearest enemy
-			Activated projectiles deal more damage based on circle accuracy
+		Draw a circle to activate projectiles
+		Activated projectiles chase after the nearest enemy
+		Activated projectiles deal more damage based on circle accuracy
 		'''
 }
 
