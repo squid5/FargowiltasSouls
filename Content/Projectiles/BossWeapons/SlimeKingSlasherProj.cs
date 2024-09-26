@@ -37,6 +37,8 @@ namespace FargowiltasSouls.Content.Projectiles.BossWeapons
             Projectile.localNPCHitCooldown = -1;
             Projectile.penetrate = -1;
             Projectile.scale = 2f;
+
+            Projectile.ownerHitCheck = true;
         }
         public ref float ItemTime => ref Projectile.ai[0];
         public ref float FreezeTime => ref Projectile.ai[1];
@@ -46,8 +48,6 @@ namespace FargowiltasSouls.Content.Projectiles.BossWeapons
         public override bool? CanHitNPC(NPC target)
         {
             if (HitsLeft <= 0)
-                return false;
-            if (!target.noTileCollide && !Collision.CanHitLine(Projectile.Center, 0, 0, target.Center, 0, 0))
                 return false;
             return base.CanHitNPC(target);
         }
