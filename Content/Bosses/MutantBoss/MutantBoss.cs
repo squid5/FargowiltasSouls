@@ -113,7 +113,7 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
             NPC.damage = 444+44;
             NPC.defense = 255;
             NPC.value = Item.buyPrice(15);
-            NPC.lifeMax = Main.expertMode ? 7700000 : 3500000;
+            NPC.lifeMax = Main.expertMode ? 17000000 : 7700000;
             NPC.HitSound = SoundID.NPCHit57;
             NPC.noGravity = true;
             NPC.noTileCollide = true;
@@ -152,15 +152,15 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
         }
         public override void ModifyHitByItem(Player player, Item item, ref NPC.HitModifiers modifiers)
         {
-            modifiers.FinalDamage *= 0.65f;
+            //modifiers.FinalDamage *= 0.65f;
         }
         public override void ModifyHitByProjectile(Projectile projectile, ref NPC.HitModifiers modifiers)
         {
-            modifiers.FinalDamage *= 0.65f;
+            //modifiers.FinalDamage *= 0.65f;
         }
         public override void UpdateLifeRegen(ref int damage)
         {
-            damage /= 3;
+            //damage /= 3;
             base.UpdateLifeRegen(ref damage);
         }
         public override bool CanHitPlayer(Player target, ref int CooldownSlot)

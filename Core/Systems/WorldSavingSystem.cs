@@ -304,6 +304,8 @@ namespace FargowiltasSouls.Core.Systems
 
                 DownedBoss[i] = flags[bits];
             }
+
+            CoffinArenaCenter = reader.ReadVector2().ToPoint();
         }
 
         public override void NetSend(BinaryWriter writer)
@@ -348,6 +350,8 @@ namespace FargowiltasSouls.Core.Systems
                 bitsByte[bit] = DownedBoss[i];
             }
             writer.Write(bitsByte);
+
+            writer.WriteVector2(CoffinArenaCenter.ToVector2());
         }
     }
 }

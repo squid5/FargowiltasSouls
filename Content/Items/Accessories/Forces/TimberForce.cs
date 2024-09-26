@@ -43,7 +43,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Forces
             // pearlwood
             player.AddEffect<PearlwoodEffect>(Item);
             player.AddEffect<PearlwoodManaEffect>(Item);
-            player.AddEffect<PearlwoodRainbowEffect>(Item);
+            //player.AddEffect<PearlwoodRainbowEffect>(Item);
         }
 
         public override void UpdateVanity(Player player)

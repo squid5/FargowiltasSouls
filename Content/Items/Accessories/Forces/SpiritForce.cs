@@ -82,6 +82,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Forces
         }
         public override void DrawEffects(Player player, PlayerDrawSet drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright)
         {
+            /*
             if (drawInfo.shadow == 0f)
             {
                 Color color12 = player.GetImmuneAlphaPure(Lighting.GetColor((int)(drawInfo.Position.X + player.width * 0.5) / 16, (int)(drawInfo.Position.Y + player.height * 0.5) / 16, Color.White), drawInfo.shadow);
@@ -117,6 +118,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Forces
                     drawInfo.DrawDataCache.Add(value);
                 }
             }
+            */
         }
     }
 }
