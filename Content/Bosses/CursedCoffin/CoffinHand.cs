@@ -70,7 +70,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
             Projectile.velocity = -Vector2.UnitY * 5;
             Projectile.damage = 0;
             CaughtPlayer = target.whoAmI;
-            //modifiers.Null();
+            modifiers.Null();
         }
         public override bool CanHitPlayer(Player target)
         {
