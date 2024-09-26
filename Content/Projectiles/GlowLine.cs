@@ -79,7 +79,7 @@ namespace FargowiltasSouls.Content.Projectiles
             {
                 case 0: //abom flaming scythe telegraph, sticks to abom and follows his line of sight to player w/ offset
                     {
-                        color = Color.Yellow;
+                        color = Color.Orange;
                         maxTime = 30;
                         alphaModifier = 10;
 
@@ -94,7 +94,7 @@ namespace FargowiltasSouls.Content.Projectiles
 
                 case 1: //abom split sickle box telegraph, hides until after the sickles split
                     {
-                        color = Color.Yellow;
+                        color = Color.Orange;
                         maxTime = 90 + 60;
                         Projectile.rotation = Projectile.ai[1];
                         alphaModifier = 1;
@@ -126,7 +126,7 @@ namespace FargowiltasSouls.Content.Projectiles
 
                 case 3: //abom laevateinn 1&2 telegraph, swing around to where actual sword will spawn
                     {
-                        color = Color.Yellow;
+                        color = Color.Orange;
                         maxTime = 60;
                         alphaModifier = 6f;
 
@@ -148,7 +148,7 @@ namespace FargowiltasSouls.Content.Projectiles
 
                 case 4: //abom laevateinn 3 telegraph, swing around to where actual sword will spawn but slower
                     {
-                        color = Color.Yellow;
+                        color = Color.Orange;
                         maxTime = 150;
                         alphaModifier = 7f;
 

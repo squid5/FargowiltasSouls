@@ -75,7 +75,7 @@ namespace FargowiltasSouls.Content.Projectiles
                         maxTime = 200;
                         float modifier = Projectile.localAI[0] / maxTime;
                         float progress = 1 - modifier;
-                        color = Color.Yellow;                 
+                        color = Color.Orange;                 
                         Vector2 sparkDir = Vector2.UnitX.RotatedByRandom(MathHelper.TwoPi);
                         float sparkDistance = (400 * progress) * Main.rand.NextFloat(0.6f, 1.8f);
                         Vector2 sparkCenter = Projectile.Center + sparkDir * sparkDistance;
@@ -188,7 +188,7 @@ namespace FargowiltasSouls.Content.Projectiles
                     break;
 
                 case -19: //abom dash
-                    color = Color.Yellow;
+                    color = Color.Orange;
                     color.A = 0;
                     scale = 18f;
                     break;

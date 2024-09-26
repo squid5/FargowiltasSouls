@@ -74,7 +74,7 @@ namespace FargowiltasSouls.Content.Projectiles
 
                 case 3: //abom emode p2 dash telegraph
                     {
-                        color = Color.Yellow;
+                        color = Color.Orange;
                         maxTime = 180;
                         alphaModifier = 10;
                         if (Projectile.localAI[0] > maxTime / 2)
