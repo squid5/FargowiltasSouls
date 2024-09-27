@@ -173,130 +173,11 @@ namespace FargowiltasSouls
 
             //            PatreonMiscMethods.Load(this);
 
-            //On.Terraria.GameContent.ItemDropRules.Conditions.IsMasterMode.CanDrop += IsMasterModeOrEMode_CanDrop;
-            //On.Terraria.GameContent.ItemDropRules.Conditions.IsMasterMode.CanShowItemDropInUI += IsMasterModeOrEMode_CanShowItemDropInUI;
-            //On.Terraria.GameContent.ItemDropRules.DropBasedOnMasterMode.CanDrop += DropBasedOnMasterOrEMode_CanDrop;
-            //On.Terraria.GameContent.ItemDropRules.DropBasedOnMasterMode.TryDroppingItem_DropAttemptInfo_ItemDropRuleResolveAction += DropBasedOnMasterOrEMode_TryDroppingItem_DropAttemptInfo_ItemDropRuleResolveAction;
-
-
-            On_Player.CheckSpawn_Internal += LifeRevitalizer_CheckSpawn_Internal;
-            On_Player.AddBuff += AddBuff;
-            On_Player.QuickHeal_GetItemToUse += QuickHeal_GetItemToUse;
+            LoadDetours();
         }
-        private static bool LifeRevitalizer_CheckSpawn_Internal(
-            On_Player.orig_CheckSpawn_Internal orig,
-            int x, int y)
-        {
-            if (orig(x, y))
-                return true;
-
-            //Main.NewText($"{x} {y}");
-
-            int revitalizerType = ModContent.TileType<LifeRevitalizerPlaced>();
-            for (int i = -1; i <= 1; i++)
-            {
-                for (int j = -3; j <= -1; j++)
-                {
-                    int newX = x + i;
-                    int newY = y + j;
-
-                    if (!WorldGen.InWorld(newX, newY))
-                        return false;
-
-                    Tile tile = Framing.GetTileSafely(newX, newY);
-                    if (tile.TileType != revitalizerType)
-                        return false;
-                }
-            }
-
-            return true;
-        }
-
-        private void AddBuff(
-            Terraria.On_Player.orig_AddBuff orig,
-            Player self, int type, int timeToAdd, bool quiet, bool foodHack)
-        {
-            FargoSoulsPlayer modPlayer = self.FargoSouls();
-            if (Main.debuff[type]
-                && timeToAdd > 3 //dont affect auras
-                && !Main.buffNoTimeDisplay[type] //dont affect hidden time debuffs
-                && !BuffID.Sets.NurseCannotRemoveDebuff[type] //only affect debuffs that nurse can cleanse
-                && (modPlayer.ParryDebuffImmuneTime > 0
-                    || modPlayer.ImmuneToDamage
-                    || modPlayer.ShellHide
-                    || modPlayer.MonkDashing > 0
-                    || modPlayer.CobaltImmuneTimer > 0
-                    || modPlayer.TitaniumDRBuff)
-                && DebuffIDs.Contains(type))
-            {
-                return; //doing it this way so that debuffs previously had are retained, but existing debuffs also cannot be extended by reapplying
-            }
-
-            orig(self, type, timeToAdd, quiet, foodHack);
-        }
-
-        private Item QuickHeal_GetItemToUse(On_Player.orig_QuickHeal_GetItemToUse orig, Player self)
-        {
-            Item value = orig(self);
-
-            int num3 = 58;
-            if (self.useVoidBag())
-            {
-                num3 = 98;
-            }
-            for (int i = 0; i < num3; i++)
-            {
-                Item item = ((i >= 58) ? self.bank4.item[i - 58] : self.inventory[i]);
-                if (item.stack <= 0 || item.type <= ItemID.None || !item.potion || item.healLife <= 0)
-                {
-                    continue;
-                }
-                if (self.HasEffect<ShroomiteMushroomPriority>() && item.type == ItemID.Mushroom)
-                    return item;
-            }
-
-            return value;
-        }
-
-        //private static bool IsMasterModeOrEMode_CanDrop(
-        //    On.Terraria.GameContent.ItemDropRules.Conditions.IsMasterMode.orig_CanDrop orig,
-        //    Conditions.IsMasterMode self, DropAttemptInfo info)
-        //{
-        //    // Use | instead of || so orig runs no matter what.
-        //    return WorldSavingSystem.EternityMode | orig(self, info);
-        //}
-
-        //private static bool IsMasterModeOrEMode_CanShowItemDropInUI(
-        //    On.Terraria.GameContent.ItemDropRules.Conditions.IsMasterMode.orig_CanShowItemDropInUI orig,
-        //    Conditions.IsMasterMode self)
-        //{
-        //    // Use | instead of || so orig runs no matter what.
-        //    return WorldSavingSystem.EternityMode | orig(self);
-        //}
-
-        //private static bool DropBasedOnMasterOrEMode_CanDrop(
-        //    On.Terraria.GameContent.ItemDropRules.DropBasedOnMasterMode.orig_CanDrop orig,
-        //    DropBasedOnMasterMode self, DropAttemptInfo info)
-        //{
-        //    // Use | instead of || so orig runs no matter what.
-        //    return (WorldSavingSystem.EternityMode && self.ruleForMasterMode.CanDrop(info)) | orig(self, info);
-        //}
-
-        //private static ItemDropAttemptResult DropBasedOnMasterOrEMode_TryDroppingItem_DropAttemptInfo_ItemDropRuleResolveAction(
-        //    On.Terraria.GameContent.ItemDropRules.DropBasedOnMasterMode.orig_TryDroppingItem_DropAttemptInfo_ItemDropRuleResolveAction orig,
-        //    DropBasedOnMasterMode self, DropAttemptInfo info, ItemDropRuleResolveAction resolveAction)
-        //{
-        //    ItemDropAttemptResult itemDropAttemptResult = orig(self, info, resolveAction);
-        //    return WorldSavingSystem.EternityMode ? resolveAction(self.ruleForMasterMode, info) : itemDropAttemptResult;
-        //}
 
         public override void Unload()
         {
-            //On.Terraria.GameContent.ItemDropRules.Conditions.IsMasterMode.CanDrop -= IsMasterModeOrEMode_CanDrop;
-            //On.Terraria.GameContent.ItemDropRules.Conditions.IsMasterMode.CanShowItemDropInUI -= IsMasterModeOrEMode_CanShowItemDropInUI;
-            //On.Terraria.GameContent.ItemDropRules.DropBasedOnMasterMode.CanDrop -= DropBasedOnMasterOrEMode_CanDrop;
-            //On.Terraria.GameContent.ItemDropRules.DropBasedOnMasterMode.TryDroppingItem_DropAttemptInfo_ItemDropRuleResolveAction -= DropBasedOnMasterOrEMode_TryDroppingItem_DropAttemptInfo_ItemDropRuleResolveAction;
-
             //NPC.LunarShieldPowerMax = NPC.downedMoonlord ? 50 : 100;
 
             static void RestoreSprites(Dictionary<int, Asset<Texture2D>> buffer, Asset<Texture2D>[] original)
@@ -357,9 +238,7 @@ namespace FargowiltasSouls
 
             Instance = null;
 
-            On_Player.CheckSpawn_Internal -= LifeRevitalizer_CheckSpawn_Internal;
-            On_Player.AddBuff -= AddBuff;
-            On_Player.QuickHeal_GetItemToUse -= QuickHeal_GetItemToUse;
+            UnloadDetours();
         }
 
         public override object Call(params object[] args) => ModCallManager.ProcessAllModCalls(this, args); // Our mod calls can be found in ModCalls.cs.
