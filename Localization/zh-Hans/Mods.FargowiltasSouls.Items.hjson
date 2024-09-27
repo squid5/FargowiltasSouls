@@ -3616,3 +3616,8 @@ UmbraRegalia: {
 		'The dark side of a defeated foe..'
 		''' */
 }
+
+CoffinPainting: {
+	// DisplayName: Coffin Painting
+	// Tooltip: ""
+}
