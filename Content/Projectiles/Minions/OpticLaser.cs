@@ -43,8 +43,8 @@ namespace FargowiltasSouls.Content.Projectiles.Minions
             Projectile.ignoreWater = true;
             Projectile.timeLeft = 120 * (Projectile.extraUpdates + 1);
 
-            /*Projectile.usesIDStaticNPCImmunity = true;
-            Projectile.idStaticNPCHitCooldown = 10;*/
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = 10;
         }
 
         /*public override void AI()

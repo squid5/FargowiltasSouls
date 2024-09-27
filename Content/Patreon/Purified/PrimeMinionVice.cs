@@ -26,6 +26,8 @@ namespace FargowiltasSouls.Content.Patreon.Purified
             Projectile.minion = true;
             Projectile.DamageType = DamageClass.Summon;
             Projectile.tileCollide = false;
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = 10;
         }
         public override void AI()
         {
