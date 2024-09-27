@@ -1710,8 +1710,9 @@ ConjuristsSoul: {
 	Tooltip:
 		'''
 		30% increased summon damage
+		15% increased whip range
 		Increases your max number of minions by 5
-		Increases your max number of sentries by 2
+		Increases your max number of sentries by 1
 		Increased minion knockback
 		'An army at your disposal'
 		'''

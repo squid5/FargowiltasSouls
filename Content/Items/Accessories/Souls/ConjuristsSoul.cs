@@ -18,6 +18,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Souls
             player.GetDamage(DamageClass.Summon) += 0.3f;
             player.maxMinions += 5;
             player.maxTurrets += 1;
+            player.whipRangeMultiplier += 0.15f;
             player.GetKnockback(DamageClass.Summon) += 3f;
         }
 
