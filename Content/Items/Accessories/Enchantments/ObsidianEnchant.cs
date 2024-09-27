@@ -103,6 +103,9 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
                 if (player.lavaWet || modPlayer.LavaWet)
                     damage = (int)(damage * 1.3f);
 
+                if (damage > 250)
+                    damage = 250;
+
                 Projectile.NewProjectile(GetSource_EffectItem(player), target.Center, Vector2.Zero, ModContent.ProjectileType<ObsidianExplosion>(), damage, 0, player.whoAmI);
 
                 modPlayer.ObsidianCD = 40;
