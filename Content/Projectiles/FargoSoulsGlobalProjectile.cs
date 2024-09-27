@@ -1333,7 +1333,7 @@ namespace FargowiltasSouls.Content.Projectiles
 
             if (player.HasEffect<NinjaEffect>())
             {
-                float maxDamageIncrease = modPlayer.ForceEffect<NinjaEnchant>() ? 0.3f : 0.2f;
+                float maxDamageIncrease = modPlayer.ForceEffect<NinjaEnchant>() ? 0.225f : 0.15f;
                 modifiers.FinalDamage *= 1f + (maxDamageIncrease * Math.Min((projectile.extraUpdates + 1) * projectile.velocity.Length() / 40f, 1));
 
             }

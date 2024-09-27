@@ -198,7 +198,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Forces
                 if (player.HasEffect<ShadowBalls>())
                 {
                     int numBalls = 5;
-                    int dmg = 150;
+                    int dmg = 400;
 
                     int damage = FargoSoulsUtil.HighestDamageTypeScaling(player, dmg);
                     Projectile[] balls = FargoSoulsUtil.XWay(numBalls, player.GetSource_EffectItem<ShadowForceDashEffect>(), player.Center, ModContent.ProjectileType<ShadowBall>(), 6, damage, 0);
