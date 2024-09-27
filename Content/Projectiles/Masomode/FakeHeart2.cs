@@ -45,13 +45,15 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
                     Player target = FargoSoulsUtil.PlayerExists(Player.FindClosest(Projectile.Center, 0, 0));
                     if (target != null)
                     {
-                        Projectile.velocity = Projectile.SafeDirectionTo(target.Center) * 20;
+                        Projectile.velocity = Projectile.SafeDirectionTo(target.Center) * 1;
                         Projectile.netUpdate = true;
                     }
                 }
                 if (Projectile.ai[1] <= 0)
                 {
                     Projectile.rotation = Projectile.velocity.ToRotation();
+                    if (Projectile.velocity.Length() < 20)
+                        Projectile.velocity += Projectile.velocity.SafeNormalize(Vector2.Zero) * 0.5f;
                 }
             }
 
