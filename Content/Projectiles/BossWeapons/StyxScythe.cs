@@ -11,7 +11,7 @@ namespace FargowiltasSouls.Content.Projectiles.BossWeapons
 {
     public class StyxScythe : ModProjectile
     {
-        public override string Texture => "Terraria/Images/Projectile_274";
+        public override string Texture => "FargowiltasSouls/Content/Bosses/AbomBoss/AbomDeathScythe";
 
         public int rotationDirection;
 

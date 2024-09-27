@@ -383,7 +383,7 @@ NinjaEnchant: {
 	// DisplayName: Ninja Enchantment
 	/* Tooltip:
 		'''
-		Your projectiles deal more damage the faster they're moving, up to 20%
+		Your projectiles deal more damage the faster they're moving, up to 1.15x
 		Drastically increases projectile speed while you're moving slowly
 		'Wait for when the moment is right'
 		''' */

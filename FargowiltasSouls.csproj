@@ -33,6 +33,7 @@
     <None Remove="Assets\Gores\Meteor\MeteorGore5.png" />
     <None Remove="Assets\UI\CooldownBar.png" />
     <None Remove="Assets\UI\CooldownBarFill.png" />
+    <None Remove="Content\Bosses\AbomBoss\AbomDeathScythe.png" />
     <None Remove="Content\Bosses\AbomBoss\AbomSword.png" />
     <None Remove="Content\Buffs\Souls\MushroomPowerBuff.png" />
     <None Remove="Content\Items\Weapons\Challengers\SpiritLongbow.png" />

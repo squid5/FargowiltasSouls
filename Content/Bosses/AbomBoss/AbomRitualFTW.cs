@@ -9,7 +9,7 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
 {
     public class AbomRitualFTW : BaseArena
     {
-        public override string Texture => "Terraria/Images/Projectile_274";
+        public override string Texture => "FargowiltasSouls/Content/Bosses/AbomBoss/AbomDeathScythe";
 
         private const float realRotation = MathHelper.Pi / 150f;
 

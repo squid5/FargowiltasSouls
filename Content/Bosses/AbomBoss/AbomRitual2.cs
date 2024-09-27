@@ -8,7 +8,7 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
 {
     public class AbomRitual2 : ModProjectile
     {
-        public override string Texture => "Terraria/Images/Projectile_274";
+        public override string Texture => "FargowiltasSouls/Content/Bosses/AbomBoss/AbomDeathScythe";
 
         private const float PI = (float)Math.PI;
         private const float rotationPerTick = PI / 57f;
