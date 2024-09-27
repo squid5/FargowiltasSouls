@@ -36,8 +36,8 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Cosmos
             Projectile.extraUpdates = 0;
 
             Projectile.penetrate = 1;
-            Projectile.usesLocalNPCImmunity = true;
-            Projectile.localNPCHitCooldown = -1;
+            //Projectile.usesLocalNPCImmunity = true;
+            //Projectile.localNPCHitCooldown = -1;
 
             Projectile.scale = 0f;
             Projectile.Opacity = 0f;
@@ -130,6 +130,26 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Cosmos
         {
             width = height = (int)(Projectile.width / Math.Sqrt(2));
             return base.TileCollideStyle(ref width, ref height, ref fallThrough, ref hitboxCenterFrac);
+        }
+
+        public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
+        {
+            if (projHitbox.Intersects(targetHitbox))
+                return true;
+
+            Rectangle trailHitbox = projHitbox;
+            trailHitbox.X = (int)Projectile.oldPosition.X;
+            trailHitbox.Y = (int)Projectile.oldPosition.Y;
+            if (trailHitbox.Intersects(targetHitbox))
+                return true;
+
+            float dummy = 0f;
+            Vector2 end = Projectile.Center;
+            Vector2 tip = Projectile.oldPosition + Projectile.Size / 2;
+
+            if (Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), end, tip, Projectile.width / 2, ref dummy))
+                return true;
+            return false;
         }
 
         public override void OnKill(int timeLeft)
