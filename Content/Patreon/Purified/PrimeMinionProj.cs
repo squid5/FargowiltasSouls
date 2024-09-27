@@ -32,6 +32,8 @@ namespace FargowiltasSouls.Content.Patreon.Purified
             Projectile.ignoreWater = true;
             Projectile.timeLeft = 18000;
             Projectile.FargoSouls().CanSplit = false;
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = 10;
         }
 
         public override void AI()

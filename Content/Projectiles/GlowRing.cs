@@ -50,7 +50,7 @@ namespace FargowiltasSouls.Content.Projectiles
 
             switch ((int)Projectile.ai[1])
             {
-                case -26: //abom styx gazer charge up
+                case -26: //abom styx gazer charge up, unused
                     {
 
                         scale = 0;
@@ -68,7 +68,7 @@ namespace FargowiltasSouls.Content.Projectiles
                         spark.Spawn();
                     }
                     break;
-                case -25: //abom p2 dash chargeup
+                case -25: //abom p2 dash chargeup, unused
                     {   
                         //customScaleAlpha = true;
                         scale = 0;

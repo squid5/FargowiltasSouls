@@ -39,8 +39,8 @@ namespace FargowiltasSouls.Content.Projectiles.Minions
             Projectile.netImportant = true;
             Projectile.scale = .5f;
 
-            /*Projectile.usesIDStaticNPCImmunity = true;
-            Projectile.idStaticNPCHitCooldown = 10;*/
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = 10;
         }
 
         private bool spawn;
