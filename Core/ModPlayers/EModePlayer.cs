@@ -46,11 +46,14 @@ namespace FargowiltasSouls.Core.ModPlayers
 
         public int CrossNecklaceTimer;
         private int WeaponUseTimer => Player.FargoSouls().WeaponUseTimer;
-
+        public bool Respawned;
         public override void ResetEffects()
         {
             ReduceMasomodeMinionNerf = false;
             HasWhipBuff = false;
+
+            if (!LumUtils.AnyBosses())
+                Respawned = false;
         }
 
         public override void UpdateDead()
@@ -59,6 +62,8 @@ namespace FargowiltasSouls.Core.ModPlayers
 
             MasomodeMinionNerfTimer = 0;
             ShorterDebuffsTimer = 0;
+            if (WorldSavingSystem.MasochistModeReal && LumUtils.AnyBosses() && Respawned)
+                Player.respawnTimer = Player.respawnTimerMax;
         }
 
         public override void OnEnterWorld()
@@ -695,6 +700,9 @@ namespace FargowiltasSouls.Core.ModPlayers
         {
             if (WorldSavingSystem.MasochistModeReal && Player.whoAmI == Main.myPlayer)
             {
+                if (LumUtils.AnyBosses())
+                    Respawned = true;
+                /*
                 foreach (NPC npc in Main.npc.Where(npc => npc.active && (npc.boss || npc.type == NPCID.EaterofWorldsBody || npc.type == NPCID.EaterofWorldsHead || npc.type == NPCID.EaterofWorldsTail)))
                 {
                     int heal = npc.lifeMax / 10;
@@ -715,6 +723,7 @@ namespace FargowiltasSouls.Core.ModPlayers
                         netMessage.Send();
                     }
                 }
+                */
             }
 
             if (((Main.snowMoon && NPC.waveNumber < FrostMoonBosses.WAVELOCK) || (Main.pumpkinMoon && NPC.waveNumber < PumpkinMoonBosses.WAVELOCK)) && WorldSavingSystem.MasochistModeReal)
