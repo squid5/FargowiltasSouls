@@ -18,7 +18,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Essences
         {
             player.GetDamage(DamageClass.Melee) += 0.18f;
             player.GetAttackSpeed(DamageClass.Melee) += .1f;
-            player.GetCritChance(DamageClass.Melee) += 5;
+            player.GetCritChance(DamageClass.Melee) += 8;
         }
 
         public override void AddRecipes()

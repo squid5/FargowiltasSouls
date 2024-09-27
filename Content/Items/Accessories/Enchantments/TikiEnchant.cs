@@ -31,7 +31,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
         }
         public static void AddEffects(Player player, Item item)
         {
-            player.whipRangeMultiplier += player.FargoSouls().ForceEffect<TikiEnchant>() ? 1.2f : 1.1f;
+            player.whipRangeMultiplier += player.FargoSouls().ForceEffect<TikiEnchant>() ? 0.4f : 0.2f;
             player.AddEffect<TikiEffect>(item);
         }
 

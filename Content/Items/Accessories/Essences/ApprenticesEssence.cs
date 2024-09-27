@@ -17,7 +17,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Essences
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.GetDamage(DamageClass.Magic) += 0.18f;
-            player.GetCritChance(DamageClass.Magic) += 5;
+            player.GetCritChance(DamageClass.Magic) += 8;
             player.statManaMax2 += 50;
         }
 
