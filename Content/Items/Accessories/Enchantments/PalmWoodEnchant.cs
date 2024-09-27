@@ -62,7 +62,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
                 {
                     Vector2 velocity = Vector2.Normalize(target.Center - player.Center) * 10;
 
-                    int p = Projectile.NewProjectile(GetSource_EffectItem(player), player.Center, velocity, ProjectileID.SeedlerNut, (int)(hitInfo.SourceDamage * 1.5f), 2, player.whoAmI);
+                    int p = Projectile.NewProjectile(GetSource_EffectItem(player), player.Center, velocity, ProjectileID.SeedlerNut, (int)(hitInfo.SourceDamage * 1f), 2, player.whoAmI);
                     if (p != Main.maxProjectiles)
                         Main.projectile[p].DamageType = DamageClass.Summon;
 
