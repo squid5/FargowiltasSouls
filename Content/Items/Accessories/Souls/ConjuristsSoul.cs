@@ -17,7 +17,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Souls
             player.FargoSouls().SummonSoul = true;
             player.GetDamage(DamageClass.Summon) += 0.3f;
             player.maxMinions += 5;
-            player.maxTurrets += 2;
+            player.maxTurrets += 1;
             player.GetKnockback(DamageClass.Summon) += 3f;
         }
 
