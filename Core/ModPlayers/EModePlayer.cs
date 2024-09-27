@@ -46,14 +46,14 @@ namespace FargowiltasSouls.Core.ModPlayers
 
         public int CrossNecklaceTimer;
         private int WeaponUseTimer => Player.FargoSouls().WeaponUseTimer;
-        public bool Respawned;
+        public int Respawns;
         public override void ResetEffects()
         {
             ReduceMasomodeMinionNerf = false;
             HasWhipBuff = false;
 
             if (!LumUtils.AnyBosses())
-                Respawned = false;
+                Respawns = 0;
         }
 
         public override void UpdateDead()
@@ -62,7 +62,7 @@ namespace FargowiltasSouls.Core.ModPlayers
 
             MasomodeMinionNerfTimer = 0;
             ShorterDebuffsTimer = 0;
-            if (WorldSavingSystem.MasochistModeReal && LumUtils.AnyBosses() && Respawned)
+            if (WorldSavingSystem.MasochistModeReal && LumUtils.AnyBosses() && Respawns >= 2)
                 Player.respawnTimer = Player.respawnTimerMax;
         }
 
@@ -701,7 +701,7 @@ namespace FargowiltasSouls.Core.ModPlayers
             if (WorldSavingSystem.MasochistModeReal && Player.whoAmI == Main.myPlayer)
             {
                 if (LumUtils.AnyBosses())
-                    Respawned = true;
+                    Respawns++;
                 /*
                 foreach (NPC npc in Main.npc.Where(npc => npc.active && (npc.boss || npc.type == NPCID.EaterofWorldsBody || npc.type == NPCID.EaterofWorldsHead || npc.type == NPCID.EaterofWorldsTail)))
                 {
