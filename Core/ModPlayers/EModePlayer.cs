@@ -63,7 +63,7 @@ namespace FargowiltasSouls.Core.ModPlayers
             MasomodeMinionNerfTimer = 0;
             ShorterDebuffsTimer = 0;
             if (WorldSavingSystem.MasochistModeReal && LumUtils.AnyBosses() && Respawns >= 2)
-                Player.respawnTimer = Player.respawnTimerMax;
+                Player.respawnTimer = 60 * 5;
         }
 
         public override void OnEnterWorld()
