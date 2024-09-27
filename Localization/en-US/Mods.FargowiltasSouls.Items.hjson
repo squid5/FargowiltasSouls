@@ -756,8 +756,8 @@ ApprenticesEssence: {
 	DisplayName: Apprentice's Essence
 	Tooltip:
 		'''
-		20% increased magic damage
-		5% increased magic critical strike chance
+		18% increased magic damage
+		8% increased magic critical strike chance
 		Increases your maximum mana by 50
 		'This is only the beginning...'
 		'''
@@ -767,9 +767,9 @@ BarbariansEssence: {
 	DisplayName: Barbarian's Essence
 	Tooltip:
 		'''
-		20% increased melee damage
+		18% increased melee damage
 		10% increased melee speed
-		5% increased melee crit chance
+		8% increased melee critical strike chance
 		'This is only the beginning...'
 		'''
 }
@@ -778,7 +778,7 @@ OccultistsEssence: {
 	DisplayName: Occultist's Essence
 	Tooltip:
 		'''
-		20% increased summon damage
+		18% increased summon damage
 		10% increased whip range
 		Increases your max number of minions by 1
 		'This is only the beginning...'
@@ -789,9 +789,9 @@ SharpshootersEssence: {
 	DisplayName: Sharpshooter's Essence
 	Tooltip:
 		'''
-		20% increased ranged damage
+		18% increased ranged damage
 		10% chance to not consume ammo
-		5% increased ranged critical chance
+		8% increased ranged critical chance
 		'This is only the beginning...'
 		'''
 }

@@ -17,7 +17,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Essences
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.GetDamage(DamageClass.Ranged) += 0.2f;
-            player.GetCritChance(DamageClass.Ranged) += 5;
+            player.GetCritChance(DamageClass.Ranged) += 8;
             player.FargoSouls().RangedEssence = true;
         }
 
