@@ -650,7 +650,7 @@ TikiEnchant: {
 	Tooltip:
 		'''
 		Summoner whips scale with your strongest class instead
-		+10% whip range
+		+20% whip range
 		Whip your minions or projectiles to empower them for 1.2x damage on their next hit
 		'Aku Aku!'
 		'''
@@ -756,8 +756,8 @@ ApprenticesEssence: {
 	DisplayName: Apprentice's Essence
 	Tooltip:
 		'''
-		18% increased magic damage
-		5% increased magic crit
+		20% increased magic damage
+		5% increased magic critical strike chance
 		Increases your maximum mana by 50
 		'This is only the beginning...'
 		'''
@@ -767,7 +767,7 @@ BarbariansEssence: {
 	DisplayName: Barbarian's Essence
 	Tooltip:
 		'''
-		18% increased melee damage
+		20% increased melee damage
 		10% increased melee speed
 		5% increased melee crit chance
 		'This is only the beginning...'
@@ -778,9 +778,9 @@ OccultistsEssence: {
 	DisplayName: Occultist's Essence
 	Tooltip:
 		'''
-		18% increased summon damage
+		20% increased summon damage
+		10% increased whip range
 		Increases your max number of minions by 1
-		Increases your max number of sentries by 1
 		'This is only the beginning...'
 		'''
 }
@@ -789,7 +789,7 @@ SharpshootersEssence: {
 	DisplayName: Sharpshooter's Essence
 	Tooltip:
 		'''
-		18% increased ranged damage
+		20% increased ranged damage
 		10% chance to not consume ammo
 		5% increased ranged critical chance
 		'This is only the beginning...'
@@ -1671,7 +1671,7 @@ ArchWizardsSoul: {
 		'''
 		30% increased magic damage
 		20% increased spell casting speed
-		15% increased magic crit chance
+		15% increased magic critical strike chance
 		Increases your maximum mana by 200
 		Effects of Celestial Cuffs and Mana Flower
 		'Arcane to the core'

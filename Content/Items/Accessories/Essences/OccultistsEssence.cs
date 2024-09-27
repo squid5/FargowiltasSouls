@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using FargowiltasSouls.Content.Items.Accessories.Enchantments;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -16,9 +17,9 @@ namespace FargowiltasSouls.Content.Items.Accessories.Essences
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.GetDamage(DamageClass.Summon) += 0.18f;
+            player.GetDamage(DamageClass.Summon) += 0.2f;
+            player.whipRangeMultiplier += 1.1f;
             player.maxMinions += 1;
-            player.maxTurrets += 1;
         }
 
         public override void AddRecipes()
