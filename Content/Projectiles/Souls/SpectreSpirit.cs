@@ -154,6 +154,7 @@ namespace FargowiltasSouls.Content.Projectiles.Souls
 
         public override bool PreDraw(ref Color lightColor)
         {
+
             if (FoundTarget && TargetNPC != -1)
             {
                 Texture2D movingTexture = ModContent.Request<Texture2D>(Texture + "Flying").Value;
@@ -165,6 +166,8 @@ namespace FargowiltasSouls.Content.Projectiles.Souls
                         Projectile.rotation, origin, Projectile.scale, spriteEffects, 0);
                 return false;
             }
+            if (Main.myPlayer != Projectile.owner)
+                return false;
             return base.PreDraw(ref lightColor);
         }
 
@@ -180,6 +183,7 @@ namespace FargowiltasSouls.Content.Projectiles.Souls
         }
         public void RenderPixelatedPrimitives(SpriteBatch spriteBatch)
         {
+
             if (FoundTarget && TargetNPC != -1)
             {
                 ManagedShader shader = ShaderManager.GetShader("FargowiltasSouls.BlobTrail");

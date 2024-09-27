@@ -104,7 +104,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
             if (WorldSavingSystem.MasochistModeReal)
                 npc.position.X += npc.velocity.X * 0.2f;
-            FargoSoulsUtil.PrintAI(npc);
+            //FargoSoulsUtil.PrintAI(npc);
             // Attack that happens when landing
             if (LandingAttackReady)
             {
