@@ -211,14 +211,23 @@ namespace FargowiltasSouls.Core.Systems
         }
         public override void PostAddRecipes()
         {
-            foreach (Recipe recipe in Main.recipe.Where(recipe => !recipe.requiredTile.Contains(ModContent.TileType<Fargowiltas.Items.Tiles.CrucibleCosmosSheet>())))
+            foreach (Recipe recipe in Main.recipe)
             {
-                recipe.AddConsumeItemCallback(IronBonusBars);
-            }
-            //disable shimmer decraft for all enchants, forces and souls
-            foreach (Recipe recipe in Main.recipe.Where(recipe => recipe.createItem.ModItem != null && (recipe.createItem.ModItem is BaseEnchant || recipe.createItem.ModItem is BaseForce || recipe.createItem.ModItem is BaseSoul)))
-            {
-                recipe.DisableDecraft();
+                // add iron enchant bonus
+                if (!recipe.requiredTile.Contains(ModContent.TileType<Fargowiltas.Items.Tiles.CrucibleCosmosSheet>()))
+                    recipe.AddConsumeItemCallback(IronBonusBars);
+
+                //disable shimmer decrafts
+                if (recipe.createItem.ModItem != null && (recipe.createItem.ModItem is BaseEnchant || recipe.createItem.ModItem is BaseForce || recipe.createItem.ModItem is BaseSoul))
+                    recipe.DisableDecraft();
+
+                // disable pre-evil meteorite recipes
+                if (recipe.HasIngredient(ItemID.MeteoriteBar))
+                {
+                    LocalizedText desc = Language.GetText($"Mods.FargowiltasSouls.Conditions.PostEvilEternity");
+                    Condition c = new(desc, () => WorldSavingSystem.EternityMode && Condition.DownedEowOrBoc.IsMet());
+                    recipe.AddCondition(c);
+                }
             }
         }
     }
