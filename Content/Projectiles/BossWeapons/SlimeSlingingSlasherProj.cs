@@ -73,17 +73,20 @@ namespace FargowiltasSouls.Content.Projectiles.BossWeapons
             float progress = ItemTime / SwingTime;
             progress %= 1;
 
-            if (FreezeTime > 0)
-                FreezeTime--;
-            float increment = player.GetAttackSpeed(DamageClass.Melee) + player.FargoSouls().AttackSpeed - 1f;
-            ItemTime += increment * (FreezeTime <= 0 ? 1f : 0.25f);
-
             const float swingDuration = 0.2f;
             const float pauseDuration = 0.15f;
 
             const float prepEnd = 1 - (2 * swingDuration + pauseDuration);
             const float firstSwingEnd = prepEnd + swingDuration;
             const float pauseEnd = firstSwingEnd + pauseDuration;
+
+            if (FreezeTime > 0)
+                FreezeTime--;
+
+            float increment = player.GetAttackSpeed(DamageClass.Melee) + player.FargoSouls().AttackSpeed - 1f;
+            if (progress < prepEnd && FirstSwing && player.FargoSouls().SKSCancelTimer <= 0)
+                increment *= 2.5f;
+            ItemTime += increment * (FreezeTime <= 0 ? 1f : 0.25f);
 
             float maxAngle = MathHelper.PiOver2 * 1.5f;
             bool flip = false;
@@ -157,6 +160,7 @@ namespace FargowiltasSouls.Content.Projectiles.BossWeapons
             if (!player.channel && canStop)
             {
                 Projectile.Kill();
+                player.FargoSouls().SKSCancelTimer = 40;
                 return;
             }
 

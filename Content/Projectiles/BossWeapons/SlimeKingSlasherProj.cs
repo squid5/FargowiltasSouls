@@ -68,15 +68,6 @@ namespace FargowiltasSouls.Content.Projectiles.BossWeapons
             float progress = ItemTime / SwingTime;
             progress %= 1;
 
-            if (FreezeTime > 0)
-                FreezeTime--;
-
-            if (!Swinging) // reset hits
-                HitsLeft = 4;
-
-            float increment = player.GetAttackSpeed(DamageClass.Melee) + player.FargoSouls().AttackSpeed - 1f;
-            ItemTime += increment * (FreezeTime <= 0 ? 1f : 0.25f);
-
             const float swingDuration = 0.2f;
             const float pauseDuration = 0.15f;
 
@@ -84,11 +75,27 @@ namespace FargowiltasSouls.Content.Projectiles.BossWeapons
             const float firstSwingEnd = prepEnd + swingDuration;
             const float pauseEnd = firstSwingEnd + pauseDuration;
 
+            if (FreezeTime > 0)
+                FreezeTime--;
+
+            if (!Swinging) // reset hits
+                HitsLeft = 4;
+
+            float increment = player.GetAttackSpeed(DamageClass.Melee) + player.FargoSouls().AttackSpeed - 1f;
+            if (progress < prepEnd && FirstSwing && player.FargoSouls().SKSCancelTimer <= 0)
+                increment *= 2.5f;
+
+            ItemTime += increment * (FreezeTime <= 0 ? 1f : 0.25f);
+
+
             float maxAngle = MathHelper.PiOver2 * 1.5f;
             bool flip = false;
 
             if (progress < prepEnd)
             {
+                
+                float lerp = 0.2f;
+                lerp *= increment;
                 SwingRotation = MathHelper.Lerp(SwingRotation, -maxAngle, 0.2f);
                 Swinging = false;
 
@@ -149,6 +156,7 @@ namespace FargowiltasSouls.Content.Projectiles.BossWeapons
             if (!player.channel && canStop)
             {
                 Projectile.Kill();
+                player.FargoSouls().SKSCancelTimer = 40;
                 return;
             }
             Vector2 playerRotatedPoint = player.RotatedRelativePoint(player.MountedCenter, true);

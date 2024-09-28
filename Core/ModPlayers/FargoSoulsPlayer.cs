@@ -54,6 +54,7 @@ namespace FargowiltasSouls.Core.ModPlayers
         public float RustRifleTimer = 0;
 
         public int EgyptianFlailCD = 0;
+        public int SKSCancelTimer;
 
         public int RockeaterDistance = EaterLauncher.BaseDistance;
 

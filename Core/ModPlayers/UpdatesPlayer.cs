@@ -576,6 +576,8 @@ namespace FargowiltasSouls.Core.ModPlayers
                     }
                 }
             }
+            if (SKSCancelTimer > 0)
+                SKSCancelTimer--;
 
             if (ParryDebuffImmuneTime > 0)
             {
