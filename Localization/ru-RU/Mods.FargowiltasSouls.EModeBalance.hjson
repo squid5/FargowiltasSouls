@@ -9,6 +9,7 @@ RodofDiscord: Во время битвы боссов требует ваше з
 Split: Уменьшена частота разделения
 ChlorophyteBullet: Снижены скорость и длительность
 WaterBolt: Не может быть использовано до победы над Скелетроном
+// SpaceGun: Cannot be used unttil an evil boss is defeated
 DemonScythe: Снижены урон и скорость на 40% до победы над боссом зла
 HolyDodge: Активация Святой Защиты временно снижает вашу скорость атаки
 FrozenTurtleShell: Ледяная преграда слегка снижает наносимый урон

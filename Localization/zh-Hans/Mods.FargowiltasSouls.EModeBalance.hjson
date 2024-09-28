@@ -9,6 +9,7 @@ RodofDiscord: 在Boss战中，每次使用都会消耗生命
 Split: 降低分裂频率
 ChlorophyteBullet: 速度减慢，存在时间降低
 WaterBolt: 在骷髅王被击败前无法使用
+// SpaceGun: Cannot be used unttil an evil boss is defeated
 DemonScythe: 任意邪恶Boss被击败前伤害和攻速会降低40%
 HolyDodge: 神圣防护激活后，一段时间内你的攻击速度会降低
 FrozenTurtleShell: 冰盾会略微降低你的攻击伤害
