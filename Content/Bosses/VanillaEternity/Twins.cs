@@ -1046,6 +1046,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                                     dir = MathF.Sign(LockedRotation - spazmatism_Angle);
                                 }
                                 LockedRotation += dir * MathHelper.PiOver2 * (0.25f + Main.rand.NextFloat(0.2f));
+                                npc.netUpdate = true;
                             }
 
                             // lock on to spot next to player
@@ -1064,10 +1065,18 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                                 waitForReti = false;
 
                             if (ai_StateTimer < prepTime - 30 && (npc.Distance(desiredPos) > 300 || waitForReti))
+                            {
                                 ai_StateTimer--;
+                                npc.netUpdate = true;
+                            }
+                                
 
                             if (ai_StateTimer < prepTime - 30 && retinazer.ai[2] < npc.ai[2])
+                            {
                                 npc.ai[2] = retinazer.ai[2];
+                                npc.netUpdate = true;
+                            }
+                                
 
                             if (ai_StateTimer == prepTime - 25)
                             {
@@ -1082,6 +1091,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                                 ai_StateTimer = 0;
                                 LockedRotation = 0;
                                 ai_State = 2;
+                                npc.netUpdate = true;
                             }
                             return false;
                         }
