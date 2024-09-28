@@ -255,7 +255,7 @@ namespace FargowiltasSouls.Content.Items
                 type = ProjectileID.WaterGun;
                 damage = 0;
             }
-            if (!NPC.downedBoss2 && item.type == ItemID.SpaceGun)
+            if (!NPC.downedBoss2 && (item.type == ItemID.SpaceGun || item.type == ItemID.ZapinatorGray))
             {
                 type = ProjectileID.ConfettiGun;
                 damage = 0;
