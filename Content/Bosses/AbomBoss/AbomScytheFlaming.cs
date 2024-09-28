@@ -11,7 +11,6 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
 {
     public class AbomScytheFlaming : ModProjectile
     {
-        public override string Texture => "Terraria/Images/Projectile_329";
 
         public override void SetStaticDefaults()
         {

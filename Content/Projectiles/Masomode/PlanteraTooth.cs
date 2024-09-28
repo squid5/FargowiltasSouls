@@ -69,11 +69,9 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
                 Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
 
             float MaxSpeed = Projectile.ai[0];
-            if (Timer <= 20)
-            {
-                if (Projectile.velocity.Length() < MaxSpeed)
-                    Projectile.velocity *= 1.08f;
-            }
+            if (Projectile.velocity.Length() < MaxSpeed)
+                Projectile.velocity *= 1.035f;
+
             Projectile.tileCollide = Timer > 40;
             if (Projectile.velocity == Vector2.Zero)
             {
