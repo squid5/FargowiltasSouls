@@ -62,12 +62,14 @@ namespace FargowiltasSouls.Content.Items.Weapons.Challengers
             {
                 SoundEngine.PlaySound(SoundID.Item1, player.Center);
                 SoundEngine.PlaySound(SoundID.Item39, player.Center);
-                for (int i = 0; i < 3; i++)
+                if (player.whoAmI == Main.myPlayer)
                 {
-                    Vector2 vel = (Item.shootSpeed + Main.rand.Next(-2, 2)) * Vector2.Normalize(Main.MouseWorld - player.itemLocation).RotatedByRandom(MathHelper.Pi / 14);
-                    int p = Projectile.NewProjectile(player.GetSource_ItemUse(Item), player.itemLocation, vel, Item.shoot, (int)(player.ActualClassDamage(DamageClass.Melee) * Item.damage / 3f), Item.knockBack, player.whoAmI);
+                    for (int i = 0; i < 3; i++)
+                    {
+                        Vector2 vel = (Item.shootSpeed + Main.rand.Next(-2, 2)) * Vector2.Normalize(Main.MouseWorld - player.itemLocation).RotatedByRandom(MathHelper.Pi / 14);
+                        int p = Projectile.NewProjectile(player.GetSource_ItemUse(Item), player.itemLocation, vel, Item.shoot, (int)(player.ActualClassDamage(DamageClass.Melee) * Item.damage / 3f), Item.knockBack, player.whoAmI);
+                    }
                 }
-
             }
             if (Timer > 2 * player.itemAnimationMax / 3)
             {
@@ -92,7 +94,10 @@ namespace FargowiltasSouls.Content.Items.Weapons.Challengers
                 modifiers.FlatBonusDamage += 15 * Item.damage / 2.5f + (shrapnel * Item.damage / 6);
                 modifiers.SetCrit();
                 foreach (Projectile proj in embeddedShrapnel)
+                {
                     proj.ai[1] = 2;
+                    proj.netUpdate = true;
+                }
             }
         }
         //this is ripped from my own game project

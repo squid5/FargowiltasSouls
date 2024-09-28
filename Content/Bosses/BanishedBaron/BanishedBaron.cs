@@ -745,8 +745,8 @@ namespace FargowiltasSouls.Content.Bosses.BanishedBaron
             if (LockVector1 != Vector2.Zero)
             {
                 RotateTowards(LockVector1, 1.5f);
-                Movement(LockVector1, 50f, 10f);
-                //NPC.velocity = Vector2.Lerp(NPC.velocity, (LockVector1 - NPC.Center) * (Timer / 90f) * 0.4f, 0.3f);
+                //Movement(LockVector1, 50f, 10f);
+                NPC.velocity = Vector2.Lerp(NPC.velocity, (LockVector1 - NPC.Center) * (Timer / 90f) * 0.4f, 0.3f);
             }
 
             if (Timer == 60)
@@ -1711,7 +1711,7 @@ namespace FargowiltasSouls.Content.Bosses.BanishedBaron
 
                 }
                 */
-                Movement(target, 30f, 1.5f);
+                Movement(target, 30f, 2f);
                 if (Timer > 2)
                 {
                     Timer = 2;
@@ -1720,7 +1720,7 @@ namespace FargowiltasSouls.Content.Bosses.BanishedBaron
             else
             {
                 //.velocity = Vector2.Lerp(NPC.velocity, (target - NPC.Center) / 10, 0.3f);
-                Movement(target, 30f, 0.5f);
+                Movement(target, 20f, 0.75f);
             }
 
 
@@ -1812,7 +1812,7 @@ namespace FargowiltasSouls.Content.Bosses.BanishedBaron
                 if (Math.Abs(AI2) <= rotStart)
                 {
                     //NPC.velocity = Vector2.Lerp(NPC.velocity, (target - NPC.Center) / 10, 0.3f);
-                    Movement(target, 30f, 1f);
+                    Movement(target, 25f, 1.5f);
                     RotateTowards(player.Center, 1f);
                     NPC.rotation += Main.rand.NextFloat(-MathHelper.PiOver2 * 0.04f, MathHelper.PiOver2 * 0.04f);
                     if (Math.Abs(AI2) == rotStart)
@@ -1922,11 +1922,11 @@ namespace FargowiltasSouls.Content.Bosses.BanishedBaron
 
                 }
                 */
-                Movement(target, 30f, 1.5f);
+                Movement(target, 30f, 2f);
             }
             else
             {
-                Movement(target, 30f, 0.5f);
+                Movement(target, 20f, 0.75f);
                 //NPC.velocity = Vector2.Lerp(NPC.velocity, (target - NPC.Center) / 10, 0.3f);
             }
 
@@ -2049,12 +2049,12 @@ namespace FargowiltasSouls.Content.Bosses.BanishedBaron
 
                     }
                     */
-                    Movement(target, 30f, 1.5f);
+                    Movement(target, 30f, 2f);
                 }
                 else
                 {
                     //NPC.velocity = Vector2.Lerp(NPC.velocity, (target - NPC.Center) / 10, 0.3f);
-                    Movement(target, 30f, 0.5f);
+                    Movement(target, 15f, 0.25f);
                 }
             }
             RotateTowards(player.Center, 2f);
@@ -2133,7 +2133,7 @@ namespace FargowiltasSouls.Content.Bosses.BanishedBaron
 
                 }
                 */
-                Movement(target, 30f, 1.25f);
+                Movement(target, 20f, 1f);
                 RotateTowards(player.Center, 2);
             }
             else if (Timer < PositioningTime + WindupTime) //rotate with telegraph line

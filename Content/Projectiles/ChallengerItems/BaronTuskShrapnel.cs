@@ -42,6 +42,7 @@ namespace FargowiltasSouls.Content.Projectiles.ChallengerItems
                 embedOffset = Projectile.Center - target.Center;
                 Projectile.velocity = Vector2.Zero;
                 State = 1;
+                Projectile.netUpdate = true;
             }
 
         }
