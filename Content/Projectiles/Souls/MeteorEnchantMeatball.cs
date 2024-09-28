@@ -152,12 +152,16 @@ namespace FargowiltasSouls.Content.Projectiles.Souls
 
         public override bool PreDraw(ref Color lightColor)
         {
-
+            DrawMeteor(Projectile, Texture, Force != 0, ref lightColor);
+            return false;
+        }
+        public static void DrawMeteor(Projectile Projectile, string textureString, bool large, ref Color lightColor)
+        {
             Vector2 normalizedVel = Projectile.velocity.SafeNormalize(Vector2.Zero);
             //draw projectile
-            Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Type].Value;
-            if (Force != 0)
-                texture = ModContent.Request<Texture2D>(Texture + "Wizard").Value;
+            Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
+            if (large)
+                texture = ModContent.Request<Texture2D>(textureString + "Wizard").Value;
 
             int num156 = texture.Height / Main.projFrames[Projectile.type]; //ypos of lower right corner of sprite to draw
             int y3 = num156 * Projectile.frame; //ypos of upper left corner of sprite to draw
@@ -196,16 +200,14 @@ namespace FargowiltasSouls.Content.Projectiles.Souls
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
             for (int i = 0; i < 3; i++)
             {
-                Texture2D glowTexture = ModContent.Request<Texture2D>(Texture + "Glow").Value;
+                Texture2D glowTexture = ModContent.Request<Texture2D>(textureString + "Glow").Value;
                 Vector2 offset = normalizedVel * (i - 1) * 4;
-                float glowScale = 1.12f * Projectile.scale * (Force != 0 ? 1.5f : 1f);
+                float glowScale = 1.12f * Projectile.scale * (large ? 1.5f : 1f);
                 Rectangle glowRect = new(0, 0, glowTexture.Width, glowTexture.Height);
                 Main.EntitySpriteDraw(glowTexture, Projectile.Center + offset - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY), glowRect, OrangeColor with { A = 160 } * Projectile.Opacity * 0.8f, normalizedVel.ToRotation() + MathHelper.PiOver2, glowTexture.Size() / 2, glowScale, effects, 0f);
             }
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.ZoomMatrix);
-
-            return false;
         }
     }
 }
