@@ -1,4 +1,5 @@
 ﻿using FargowiltasSouls.Content.Items.Accessories.Enchantments;
+using FargowiltasSouls.Content.Items.Accessories.Essences;
 using FargowiltasSouls.Content.Items.Accessories.Forces;
 using FargowiltasSouls.Content.Items.Accessories.Souls;
 using FargowiltasSouls.Content.Items.Misc;
@@ -218,7 +219,7 @@ namespace FargowiltasSouls.Core.Systems
                     recipe.AddConsumeItemCallback(IronBonusBars);
 
                 //disable shimmer decrafts
-                if (recipe.createItem.ModItem != null && (recipe.createItem.ModItem is BaseEnchant || recipe.createItem.ModItem is BaseForce || recipe.createItem.ModItem is BaseSoul))
+                if (recipe.createItem.ModItem != null && (recipe.createItem.ModItem is BaseEnchant || recipe.createItem.ModItem is BaseForce || recipe.createItem.ModItem is BaseSoul || recipe.createItem.ModItem is BaseEssence))
                     recipe.DisableDecraft();
 
                 // disable pre-evil meteorite recipes

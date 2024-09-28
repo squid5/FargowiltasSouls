@@ -152,7 +152,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Masomode
             .AddIngredient(ModContent.ItemType<DeviatingEnergy>(), 10)
 
             .AddTile(TileID.MythrilAnvil)
-
+            .DisableDecraft()
             .Register();
         }
         public override bool CanRightClick() => true;
