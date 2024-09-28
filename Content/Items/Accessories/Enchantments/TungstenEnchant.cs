@@ -100,7 +100,9 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
             ProjAIStyleID.Yoyo,
             ProjAIStyleID.ShortSword,
             ProjAIStyleID.Flail,
-            ProjAIStyleID.SleepyOctopod
+            ProjAIStyleID.SleepyOctopod,
+            ProjAIStyleID.NightsEdge,
+            ProjAIStyleID.TrueNightsEdge
         ];
         public static List<int> TungstenNerfedProjType = 
         [

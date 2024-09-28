@@ -225,6 +225,7 @@ namespace FargowiltasSouls.Content.Projectiles
 
             if (projectile.friendly)
             {
+
                 if (Main.rand.NextBool(2) && !projectile.hostile && !projectile.trap && !projectile.npcProj && modPlayer.Jammed && projectile.CountsAsClass(DamageClass.Ranged) && projectile.type != ProjectileID.ConfettiGun)
                 {
                     for (int i = 0; i < 3; i++)
@@ -429,6 +430,10 @@ namespace FargowiltasSouls.Content.Projectiles
                 if (player.whoAmI == Main.myPlayer && modPlayer.FishSoul2)
                     SplitProj(projectile, 11, MathHelper.Pi / 3, 1);
             }
+
+            // Fix for extended sword hitboxes having a maximum range for some reason
+            if (projectile.aiStyle == ProjAIStyleID.NightsEdge)
+                projectile.ownerHitCheckDistance *= projectile.scale;
         }
 
         public static int[] NoSplit => [
