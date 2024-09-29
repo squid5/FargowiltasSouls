@@ -16,14 +16,14 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
     {
         const int TrailSaveLength = 1000;
         Vector2[] Trail = new Vector2[TrailSaveLength];
-        public int TrailLength = 250;
+        public int TrailLength = 800;
         public override void SetStaticDefaults()
         {
             //ProjectileID.Sets.TrailCacheLength[Type] = 240;
             //ProjectileID.Sets.TrailingMode[Type] = 2;
             ProjectileID.Sets.DrawScreenCheckFluff[Type] = 10000;
         }
-        const int SpriteLength = 80;
+        const int SpriteLength = 20;
         public override void SetDefaults()
         {
             Projectile.width = 30;
@@ -37,6 +37,7 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
             Projectile.light = 1;
             Projectile.scale = 1;
             Projectile.Opacity = 0;
+            Projectile.hide = true;
         }
         ref float Timer => ref Projectile.ai[0];
         ref float Target => ref Projectile.ai[1];
@@ -111,17 +112,16 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
             }
             else if (Timer < 110)
             {
+                Projectile.tileCollide = true;
                 Vector2 dir = Projectile.velocity.SafeNormalize(Vector2.Zero);
                 Projectile.velocity += dir * 1f;
                 if (Projectile.velocity.Length() > 40)
                     Projectile.velocity = dir * 40;
             }
-            else
-                Projectile.tileCollide = true;
 
             if (Timer > 50)
             {
-                TrailLength--;
+                TrailLength -= 4;
                 if (TrailLength <= 0)
                 {
                     Projectile.Kill();
@@ -139,7 +139,11 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
             }
             Timer++;
         }
-
+        public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
+        {
+            if (Projectile.hide)
+                behindNPCs.Add(index);
+        }
         public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
         {
             fallThrough = true;
@@ -147,23 +151,23 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
         }
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
+            Projectile.Center += Projectile.velocity;
             Projectile.velocity *= 0;
             return false;
         }
         public override bool PreDraw(ref Color lightColor)
         {
-            Texture2D texture = TextureAssets.Projectile[Type].Value;
-
-            Rectangle rectangle = texture.Bounds;
-            Vector2 origin = rectangle.Size() / 2f;
-            SpriteEffects spriteEffects = Projectile.spriteDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-
-            Vector2 position = Projectile.position;
+            Vector2 position = Projectile.Center;
             int index = 0;
             Vector2 difference = Trail[index + 1] - Trail[index];
             float lengthLeft = difference.Length();
 
             Texture2D spikeTexture = ModContent.Request<Texture2D>(Texture + "End").Value;
+            int height = spikeTexture.Height;
+            Rectangle rectangle = new(0, 0, spikeTexture.Width, height);
+            Vector2 origin = rectangle.Size() / 2f;
+            SpriteEffects spriteEffects = Projectile.spriteDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+
             Main.EntitySpriteDraw(spikeTexture, position - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY), rectangle, Projectile.GetAlpha(Color.White),
                 (-difference).ToRotation(), origin, Projectile.scale, spriteEffects, 0);
 
@@ -195,6 +199,11 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
                     else
                         break;
                 }
+                Texture2D texture = TextureAssets.Projectile[Type].Value;
+                int frame = i % 4;
+                height = texture.Height / 4;
+                rectangle = new(0, height * frame, texture.Width, height);
+                origin = rectangle.Size() / 2f;
                 Main.EntitySpriteDraw(texture, position - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY), rectangle, Projectile.GetAlpha(Color.White) * opacity,
                     (-difference).ToRotation(), origin, Projectile.scale, spriteEffects, 0);
             }

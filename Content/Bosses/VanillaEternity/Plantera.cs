@@ -343,6 +343,8 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                                 else
                                     MovementAvoidWalls(player.Center + offset.RotateTowards((-Vector2.UnitY).ToRotation(), 0.1f), speedMultiplier: 0.6f);
                             }
+                            else
+                                npc.velocity *= 0.9f;
 
                             float attackDuration = LumUtils.SecondsToFrames(9);
 
@@ -365,7 +367,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                                 }
                             }
 
-                            if (WorldSavingSystem.MasochistModeReal && timer == 60 * 3)
+                            if (WorldSavingSystem.MasochistModeReal && timer == 60 * 3f)
                                 Vineburst();
 
                             if (timer == 60 * 6) // redirect
@@ -406,6 +408,8 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                             if (timer >= shotStartTime)
                             {
                                 float midTime = MathHelper.Lerp(shotStartTime, endTime, 0.5f);
+                                if (WorldSavingSystem.MasochistModeReal)
+                                    midTime += 60;
                                 if (timer == (int)(midTime))
                                     Vineburst();
                                 if (WorldSavingSystem.MasochistModeReal && timer == shotStartTime + 60)
@@ -589,6 +593,8 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                                             ModContent.ProjectileType<PlanteraMushroomThing>(), FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 0f, Main.myPlayer);
                                     }
                                 }
+                                if (timer == vineSpawnTime * 5 - 110)
+                                    Vineburst();
                                 if (timer == vineSpawnTime * 5 - 60) // kill and instantly respawn ring, 1 second before attack1 starts
                                 {
                                     for (int i = 0; i < Main.maxNPCs; i++)
@@ -599,7 +605,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                                         }
                                     }
 
-                                    Vineburst();
+                                    
                                 }
                                 if (timer > vineSpawnTime * 5)
                                 {
