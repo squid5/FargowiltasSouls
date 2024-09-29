@@ -835,15 +835,18 @@ namespace FargowiltasSouls.Content.Projectiles
                 //Arkhalis and Terragrim fix to draw properly with Tungsten Enchantment
                 case ProjectileID.Arkhalis:
                 case ProjectileID.Terragrim:
-                    {
-                        FargoSoulsUtil.GenericProjectileDraw(projectile, lightColor);
-                    }
-                    return false;
                 case ProjectileID.FlowerPetal:
+                case ProjectileID.SporeCloud:
+                case ProjectileID.ChlorophyteOrb:
                     {
-                        FargoSoulsUtil.GenericProjectileDraw(projectile, lightColor);
+                        if (projectile.scale != 1)
+                        {
+                            FargoSoulsUtil.GenericProjectileDraw(projectile, lightColor);
+                            return false;
+                        }
                     }
-                    return false;
+                    break;
+                    
                 case ProjectileID.PiercingStarlight:
                     if (TungstenScale != 1)
                     {
