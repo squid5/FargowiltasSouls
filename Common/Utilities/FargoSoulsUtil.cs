@@ -18,6 +18,8 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.Graphics.Capture;
+using Terraria.GameContent.Achievements;
+using FargowiltasSouls.Content.Items.Misc;
 
 namespace FargowiltasSouls //lets everything access it without using
 {
@@ -727,6 +729,19 @@ namespace FargowiltasSouls //lets everything access it without using
             //float num3 = 0f;
             Vector2 vector6 = player.position + vector3 + vector5;
             return vector6;
+        }
+
+        public static void TileExplosion(Vector2 compareSpot, int radius)
+        {
+            Point tileCenter = compareSpot.ToTileCoordinates();
+            int minI = (int)tileCenter.X - radius;
+            int maxI = (int)tileCenter.X + radius;
+            int minJ = (int)tileCenter.Y - radius;
+            int maxJ = (int)tileCenter.Y + radius;
+
+            Projectile sampleBomb = ContentSamples.ProjectilesByType[ProjectileID.Bomb];
+            bool wallSplode = sampleBomb.ShouldWallExplode(compareSpot, radius, minI, maxI, minJ, maxJ);
+            sampleBomb.ExplodeTiles(compareSpot, radius, minI, maxI, minJ, maxJ, wallSplode);
         }
 
         public static Vector2 SmartAccel(Vector2 position, Vector2 destination, Vector2 velocity, float accel, float decel)
