@@ -163,7 +163,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
         {
             if (WorldSavingSystem.MasochistModeReal)
             {
-                target.AddBuff(BuffID.Cursed, 120);
+                target.AddBuff(BuffID.Cursed, 60);
             }
         }
         public Rectangle TopHitbox()
