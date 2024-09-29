@@ -1,4 +1,5 @@
-﻿using FargowiltasSouls.Core.AccessoryEffectSystem;
+﻿using FargowiltasSouls.Content.Items.Accessories.Forces;
+using FargowiltasSouls.Core.AccessoryEffectSystem;
 using FargowiltasSouls.Core.Toggler.Content;
 using Microsoft.Xna.Framework;
 using System.Linq;
@@ -98,6 +99,9 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
                 {
                     numExtraSlotsToUse = 2;
                 }
+
+                if (player.HasEffect<ShadowForceEffect>())
+                    numExtraSlotsToUse = 1;
 
 
                 if (player.controlUseItem)
