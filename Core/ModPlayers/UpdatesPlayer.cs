@@ -429,6 +429,9 @@ namespace FargowiltasSouls.Core.ModPlayers
             if (FlamesoftheUniverse)
                 DamageOverTime((30 + 50 + 48 + 30) / 2, true);
 
+            if (IvyVenom && !Player.venom)
+                DamageOverTime(16, true);
+
             if (Smite)
                 DamageOverTime(0, true);
 

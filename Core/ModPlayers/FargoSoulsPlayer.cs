@@ -394,6 +394,7 @@ namespace FargowiltasSouls.Core.ModPlayers
             Anticoagulation = false;
             GodEater = false;
             FlamesoftheUniverse = false;
+            IvyVenom = false;
             MutantNibble = false;
             Asocial = false;
             Kneecapped = false;
@@ -1045,6 +1046,9 @@ namespace FargowiltasSouls.Core.ModPlayers
 
                 if (Rotting)
                     damageSource = DeathByLocalization("Rotting");
+
+                if (IvyVenom)
+                    damageSource = PlayerDeathReason.ByOther(9);
 
                 if (Shadowflame)
                     damageSource = DeathByLocalization("Shadowflame");

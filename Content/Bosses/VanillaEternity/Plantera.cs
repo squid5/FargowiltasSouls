@@ -663,7 +663,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     Vector2 direction;
                     if (WorldSavingSystem.MasochistModeReal)
                     {
-                        direction = FargoSoulsUtil.PredictiveAim(npc.Center, player.Center, player.velocity, speed);
+                        direction = FargoSoulsUtil.PredictiveAim(npc.Center, player.Center, player.velocity, speed * 2);
                         direction.Normalize();
                     }
                     else
@@ -967,8 +967,8 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
         }
         public static float DR(NPC npc) => 
             npc.GetLifePercent() < 0.25f ? 0.4f // phase 3
-            : npc.GetLifePercent() < 0.5f ? 0.4f // phase 2
-            : 0; // phase 1
+            : npc.GetLifePercent() < 0.5f ? 0.1f // phase 2
+            : -0.1f; // phase 1
         public override void ModifyIncomingHit(NPC npc, ref NPC.HitModifiers modifiers)
         {
             modifiers.FinalDamage *= 1 - DR(npc);

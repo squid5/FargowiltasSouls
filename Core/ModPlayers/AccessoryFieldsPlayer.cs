@@ -329,6 +329,7 @@ namespace FargowiltasSouls.Core.ModPlayers
 
         public bool Smite;
         public bool Anticoagulation;
+        public bool IvyVenom;
         public bool GodEater;               //defense removed, endurance removed, colossal DOT
         public bool FlamesoftheUniverse;    //activates various vanilla debuffs
         public bool MutantNibble;           //moon bite effect, feral bite effect, disables lifesteal
