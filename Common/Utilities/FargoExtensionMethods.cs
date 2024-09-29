@@ -198,6 +198,8 @@ namespace FargowiltasSouls //lets everything access it without using
         public static bool FeralGloveReuse(this Player player, Item item)
             => player.autoReuseGlove && (item.CountsAsClass(DamageClass.Melee) || item.CountsAsClass(DamageClass.SummonMeleeSpeed));
 
+        public static bool CannotUseItems(this Player player) => player.CCed || player.noItems || player.FargoSouls().NoUsingItems > 0 || (player.HeldItem != null && (!ItemLoader.CanUseItem(player.HeldItem, player) || !PlayerLoader.CanUseItem(player, player.HeldItem)));
+
         public static bool CountsAsClass(this DamageClass damageClass, DamageClass intendedClass)
         {
             return damageClass == intendedClass || damageClass.GetEffectInheritance(intendedClass);

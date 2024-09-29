@@ -152,8 +152,11 @@ namespace FargowiltasSouls.Content.Projectiles.BossWeapons
                 FirstSwing = false;
             }
 
-            bool canStop = (progress > firstSwingEnd && progress < pauseEnd) || (progress < prepEnd && !FirstSwing);
-            if (!player.channel && canStop)
+            bool manualStop = (progress > firstSwingEnd && progress < pauseEnd) || (progress < prepEnd && !FirstSwing);
+            if (player.channel)
+                manualStop = false;
+            bool cancel = player.HeldItem == null || player.CannotUseItems();
+            if (cancel || manualStop)
             {
                 Projectile.Kill();
                 player.FargoSouls().SKSCancelTimer = 40;
