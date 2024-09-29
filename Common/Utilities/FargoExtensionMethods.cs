@@ -33,6 +33,20 @@ namespace FargowiltasSouls //lets everything access it without using
             itemName.Text = string.Join(" ", splitName);
             return itemName;
         }
+        public static string ArticlePrefixAdjustmentString(this string itemName, string[] localizationArticles)
+        {
+            List<string> splitName = itemName.Split(' ').ToList();
+
+            for (int i = 0; i < localizationArticles.Length; i++)
+                if (splitName.Remove(localizationArticles[i]))
+                {
+                    splitName.Insert(0, localizationArticles[i]);
+                    break;
+                }
+
+            itemName = string.Join(" ", splitName);
+            return itemName;
+        }
 
         /// <summary>
         /// Uses <see cref="Enumerable.First{TSource}(IEnumerable{TSource}, System.Func{TSource, bool})"/> to find the specified tooltip line. <br />

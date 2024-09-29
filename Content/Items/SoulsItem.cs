@@ -85,7 +85,7 @@ namespace FargowiltasSouls.Content.Items
 
                 // Call the artcle-prefix adjustment method.
                 // This automatically handles fixing item names that begin with an article.
-                itemNameLine.ArticlePrefixAdjustment(Articles.ToArray());
+                //itemNameLine.ArticlePrefixAdjustment(Articles.ToArray());
             }
 
             SafeModifyTooltips(tooltips);

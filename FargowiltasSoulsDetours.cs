@@ -1,4 +1,5 @@
-﻿using FargowiltasSouls.Content.Items.Accessories.Enchantments;
+﻿using FargowiltasSouls.Content.Items;
+using FargowiltasSouls.Content.Items.Accessories.Enchantments;
 using FargowiltasSouls.Content.Tiles;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using Microsoft.Xna.Framework;
@@ -22,6 +23,7 @@ namespace FargowiltasSouls
             On_Player.AddBuff += AddBuff;
             On_Player.QuickHeal_GetItemToUse += QuickHeal_GetItemToUse;
             On_Projectile.AI_019_Spears_GetExtensionHitbox += AI_019_Spears_GetExtensionHitbox;
+            On_Item.AffixName += AffixName;
         }
         public void UnloadDetours()
         {
@@ -29,6 +31,7 @@ namespace FargowiltasSouls
             On_Player.AddBuff -= AddBuff;
             On_Player.QuickHeal_GetItemToUse -= QuickHeal_GetItemToUse;
             On_Projectile.AI_019_Spears_GetExtensionHitbox -= AI_019_Spears_GetExtensionHitbox;
+            On_Item.AffixName -= AffixName;
         }
 
         private static bool LifeRevitalizer_CheckSpawn_Internal(
@@ -118,6 +121,16 @@ namespace FargowiltasSouls
                 extensionBox.Inflate(0, (int)(extensionBox.Height * 0.5f * (self.scale - 1)));
             }
             return ret;
+        }
+
+        public static string AffixName(On_Item.orig_AffixName orig, Item self)
+        {
+            string text = orig(self);
+            if (self.ModItem != null && self.ModItem is SoulsItem soulsItem)
+            {
+                text = text.ArticlePrefixAdjustmentString(soulsItem.Articles.ToArray());
+            }
+            return text;
         }
     }
 }
