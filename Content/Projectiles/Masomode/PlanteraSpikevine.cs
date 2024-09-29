@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System.Collections;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
@@ -105,6 +106,8 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
                 Projectile.Kill();
                 return;
             }
+            if (Timer == 60)
+                SoundEngine.PlaySound(SoundID.Item63 with { Pitch = -1f, Volume = 10 }, Projectile.Center);
             if (Timer < 60)
             {
                 Projectile.velocity *= 0.97f;
@@ -119,7 +122,7 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
                     Projectile.velocity = dir * 40;
             }
 
-            if (Timer > 50)
+            if (Timer > 30)
             {
                 TrailLength -= 4;
                 if (TrailLength <= 0)
@@ -153,6 +156,7 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
         {
             Projectile.Center += Projectile.velocity;
             Projectile.velocity *= 0;
+            SoundEngine.PlaySound(SoundID.Item49, Projectile.Center);
             return false;
         }
         public override bool PreDraw(ref Color lightColor)

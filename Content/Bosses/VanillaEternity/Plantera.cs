@@ -71,6 +71,8 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
         public bool DroppedSummon;
 
+        public static readonly SoundStyle VineGrowth = new("FargowiltasSouls/Assets/Sounds/VanillaEternity/Plantera/PlanteraVineGrowth");
+
 
         public override void SendExtraAI(NPC npc, BitWriter bitWriter, BinaryWriter binaryWriter)
         {
@@ -291,6 +293,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
                 void Vineburst()
                 {
+                    SoundEngine.PlaySound(VineGrowth with { Volume = 3 }, npc.Center);
                     if (FargoSoulsUtil.HostCheck)
                     {
                         for (int i = -2; i <= 2; i++)
@@ -307,26 +310,6 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     }
                 }
                 #endregion
-                const int scanWidth = 500;
-                bool collisionLeft = Collision.SolidTiles(npc.Center - Vector2.UnitX * scanWidth, scanWidth, npc.height);
-                bool collisionRight = Collision.SolidTiles(npc.Center, scanWidth, npc.height);
-                float playerXAvoidWalls = player.Center.X;
-                if (collisionLeft && !collisionRight)
-                    playerXAvoidWalls += 500;
-                if (!collisionLeft && collisionRight)
-                    playerXAvoidWalls -= 500;
- 
-                //repulsed by player whenever too close
-                const float minDist = 250;
-                float distance = npc.Distance(Main.player[npc.target].Center);
-                if (npc.HasValidTarget && distance < minDist)
-                {
-                    if (!(npc.ai[1] == 1f && npc.ai[2] > 2f) || npc.ai[1] == 2) // when not spinning or dg phase
-                    {
-                        float pushStrength = 1f * (1 - distance / minDist);
-                        npc.velocity -= pushStrength * npc.SafeDirectionTo(Main.player[npc.target].Center);
-                    }
-                }
 
                 #region Attacks
                 switch (state) // ATTACKS
@@ -336,7 +319,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                             ref float shotTimer = ref npc.localAI[1];
 
                             Vector2 offset = player.DirectionTo(npc.Center) * 400f;
-                            if (!LumUtils.AnyProjectiles(ModContent.ProjectileType<PlanteraSpikevine>()))
+                            if (!Main.projectile.Any(p => p.TypeAlive<PlanteraSpikevine>() && p.ai[0] < 60))
                             {
                                 if (timer < 60 * 6)
                                     MovementAvoidWalls(player.Center + offset, speedMultiplier: 0.3f);
@@ -344,7 +327,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                                     MovementAvoidWalls(player.Center + offset.RotateTowards((-Vector2.UnitY).ToRotation(), 0.1f), speedMultiplier: 0.6f);
                             }
                             else
-                                npc.velocity *= 0.9f;
+                                npc.velocity *= 0.6f;
 
                             float attackDuration = LumUtils.SecondsToFrames(9);
 
@@ -416,6 +399,8 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                                     Vineburst();
 
                                 int freq = 4;
+                                if (!WorldSavingSystem.MasochistModeReal)
+                                    freq = 6;
                                 if (timer % freq == 0)
                                 {
                                     SoundEngine.PlaySound(SoundID.NPCDeath13, npc.Center);
@@ -521,6 +506,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                                     else
                                     {
                                         repeatCheck = 0;
+                                        timer = 0;
                                         state = 3;
                                         npc.TargetClosest(false);
                                     }
@@ -540,11 +526,11 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
                                 if (timer < vineSpawnTime * 0.7f)
                                 {
-                                    Vector2 offset = player.DirectionTo(npc.Center) * 270f;
+                                    Vector2 offset = player.DirectionTo(npc.Center) * 450f;
                                     //if (offset.Y > 0)
                                     //    MovementAvoidWalls(player.Center + offset.RotateTowards(Vector2.UnitY.ToRotation(), 0.1f));
                                     //else
-                                    MovementAvoidWalls(player.Center + offset.RotateTowards((-Vector2.UnitY).ToRotation(), 0.1f));
+                                    MovementAvoidWalls(player.Center + offset.RotateTowards((-Vector2.UnitY).ToRotation(), 0.05f));
                                 }
                                 else
                                     npc.velocity *= 0.96f;
