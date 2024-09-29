@@ -1272,7 +1272,34 @@ namespace FargowiltasSouls.Content.Projectiles
                 projectile.Kill();
             }
         }
+        public override bool? Colliding(Projectile projectile, Rectangle projHitbox, Rectangle targetHitbox)
+        {
+            if (projectile.scale > 1)
+            {
+                if (projectile.type == ProjectileID.MonkStaffT1 || projectile.type == ProjectileID.MonkStaffT3)
+                {
+                    float f5 = projectile.rotation - (float)Math.PI / 4f * (float)Math.Sign(projectile.velocity.X);
+                    float collisionPoint7 = 0f;
+                    float num20 = 50f;
+                    if (projectile.type == ProjectileID.MonkStaffT1)
+                    {
+                        num20 = 65f;
+                    }
+                    if (projectile.type == ProjectileID.MonkStaffT3)
+                    {
+                        num20 = 110f;
+                    }
+                    num20 *= projectile.scale;
+                    if (Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), projectile.Center + f5.ToRotationVector2() * (0f - num20), projectile.Center + f5.ToRotationVector2() * num20, 23f * projectile.scale, ref collisionPoint7))
+                    {
+                        return true;
+                    }
+                    return false;
+                }
+            }
 
+            return base.Colliding(projectile, projHitbox, targetHitbox);
+        }
 
         public override bool TileCollideStyle(Projectile projectile, ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
         {
