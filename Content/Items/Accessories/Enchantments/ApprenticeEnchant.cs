@@ -2,6 +2,7 @@
 using FargowiltasSouls.Core.Toggler.Content;
 using Microsoft.Xna.Framework;
 using System.Linq;
+using System.Reflection;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -48,7 +49,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
             .Register();
         }
 
-        /*
+        
         public static MethodInfo ApprenticeShootMethod
         {
             get;
@@ -64,7 +65,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
             ApprenticeShootMethod.Invoke(player, args);
 ;
         }
-        */
+        
     }
     public class ApprenticeSupport : AccessoryEffect
     {
@@ -152,12 +153,16 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
                             Vector2 pos = new(player.Center.X + Main.rand.Next(-50, 50), player.Center.Y + Main.rand.Next(-50, 50));
                             Vector2 velocity = Vector2.Normalize(Main.MouseWorld - pos);
 
-                            //ApprenticeShoot(player, player.whoAmI, item2, item2.damage / 2);
+                            ApprenticeEnchant.ApprenticeShoot(player, player.whoAmI, item2, item2.damage / 2);
+                            
                             int projToShoot = item2.shoot;
                             float speed = item2.shootSpeed;
                             int damage = (int)(item2.damage * 0.75f);
                             float KnockBack = item2.knockBack;
                             int usedAmmoItemId;
+                            ApprenticeEnchant.ApprenticeShoot(player, player.whoAmI, item2, damage);
+                            modPlayer.ApprenticeItemCDs[j] = item2.useAnimation * 4;
+                            
                             if (item2.useAmmo > 0)
                             {
                                 player.PickAmmo(item2, out projToShoot, out speed, out damage, out KnockBack, out usedAmmoItemId, ItemID.Sets.gunProj[item2.type]);
@@ -182,11 +187,11 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
                                     rainbow.Kill();
                             }
 
-                            int p = Projectile.NewProjectile(player.GetSource_ItemUse(item), pos, Vector2.Normalize(velocity) * speed, projToShoot, damage, KnockBack, player.whoAmI);
-                            Projectile proj = Main.projectile[p];
+                            //int p = Projectile.NewProjectile(player.GetSource_ItemUse(item), pos, Vector2.Normalize(velocity) * speed, projToShoot, damage, KnockBack, player.whoAmI);
+                            //Projectile proj = Main.projectile[p];
 
-                            proj.noDropItem = true;
-
+                            //proj.noDropItem = true;
+                            
 
                             /*
                             int shoot = item2.shoot;
