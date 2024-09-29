@@ -928,6 +928,17 @@ namespace FargowiltasSouls.Content.Projectiles
                 default:
                     break;
             }
+
+            switch (projectile.aiStyle)
+            {
+                case ProjAIStyleID.Flail:
+                    if (projectile.ModProjectile == null && projectile.scale != 1)
+                    {
+                        FargoSoulsUtil.GenericProjectileDraw(projectile, lightColor);
+                        return false;
+                    }
+                    break;
+            }
             return base.PreDraw(projectile, ref lightColor);
         }
 
