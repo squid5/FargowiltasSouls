@@ -1102,7 +1102,7 @@ ChaliceoftheMoon: {
 		[i:FargowiltasSouls/LihzahrdTreasureBox] Double tap DOWN in the air to fastfall, creating an explosion on landing after falling a certain distance
 		[i:FargowiltasSouls/CelestialRune] You fire additional attacks depending on weapon type and erupt into Ancient Visions when injured
 		[i:FargowiltasSouls/MagicalBulb] Summons a friendly plant to fight at your side
-		'Consume it'
+		'Always watching'
 		'''
 }
 
@@ -1219,7 +1219,7 @@ GalacticGlobe: {
 		Grants immunity to Nullification Curse, Flipped, Illuminated, Unstable, and Curse of the Moon
 		Grants most standard potion buffs (works from inventory and vanity)
 		Increases flight time by 100%
-		'Always watching'
+		'Consume it'
 		'''
 	HoldShift: "[c/ADD8E6:Hold Left Shift to view potion buffs]"
 	ExpandedTooltip:
