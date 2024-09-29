@@ -71,8 +71,9 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
         }
         public static void MahoganyHookAI(Projectile projectile, FargoSoulsPlayer modPlayer)
         {
-            if (projectile.extraUpdates < 1)
-                projectile.extraUpdates = 1;
+            int cap = projectile.type == ProjectileID.QueenSlimeHook ? 4 : 1;
+            if (projectile.extraUpdates < cap)
+                projectile.extraUpdates += cap;
         }
     }
 }
