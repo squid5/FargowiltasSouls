@@ -39,6 +39,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Forces
             player.AddEffect<GladiatorBanner>(Item);
             // gold
             player.AddEffect<GoldToPiggy>(Item);
+            player.AddEffect<GoldEffect>(Item);
             // platinum
             modPlayer.PlatinumEffect = Item;
             // red riding

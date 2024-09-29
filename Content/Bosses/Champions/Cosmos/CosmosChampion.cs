@@ -740,8 +740,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Cosmos
                     }
 
                     targetPos = player.Center + NPC.DirectionFrom(player.Center) * 500;
-                    if (NPC.Distance(targetPos) > 50)
-                        Movement(targetPos, 0.8f, 32f);
+                    Movement(targetPos, 0.8f, 32f);
 
                     if (NPC.ai[1] == 0 && !(NPC.localAI[2] == 0 || !Main.expertMode))
                     {
@@ -846,8 +845,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Cosmos
                     {
                         NPC.rotation = 0;
                         targetPos = player.Center + NPC.DirectionFrom(player.Center) * 500;
-                        if (NPC.Distance(targetPos) > 50)
-                            Movement(targetPos, 0.8f, 32f);
+                        Movement(targetPos, 0.8f, 32f);
                     }
 
                     if ((!player.active || player.dead || Vector2.Distance(NPC.Center, player.Center) > 2500f)
@@ -1052,15 +1050,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Cosmos
 
                 case 7: //vortex
                     targetPos = player.Center + NPC.DirectionFrom(player.Center) * 500;
-                    if (NPC.Distance(player.Center) < 200 || NPC.Distance(player.Center) > 600)
-                    {
-                        if (NPC.Distance(targetPos) > 50)
-                            Movement(targetPos, 0.6f, 32f);
-                    }
-                    else //skid to a halt a bit
-                    {
-                        NPC.velocity *= 0.97f;
-                    }
+                    Movement(targetPos, 0.6f, 32f);
 
                     if (NPC.ai[1] == 30)
                     {
@@ -1226,8 +1216,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Cosmos
                     else //just float beside player
                     {
                         targetPos.X += 550 * (NPC.Center.X < targetPos.X ? -1 : 1);
-                        if (NPC.Distance(targetPos) > 50)
-                            Movement(targetPos, 0.8f, 24f);
+                        Movement(targetPos, 0.8f, 24f);
                     }
 
                     NPC.rotation = NPC.SafeDirectionTo(player.Center).ToRotation();
@@ -1441,7 +1430,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Cosmos
                     {
                         NPC.velocity *= 0.97f;
                     }
-                    else if (NPC.Distance(targetPos) > 50)
+                    else
                     {
                         Movement(targetPos, 0.6f, 32f);
                         NPC.position += player.velocity / 4f;

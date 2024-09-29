@@ -832,7 +832,7 @@ namespace FargowiltasSouls.Content.Projectiles
                         }
                     }
                     break;
-                //Arkhalis and Terragrim fix to draw properly with Tungsten Enchantment
+                //Fixes to draw properly with Tungsten Enchantment
                 case ProjectileID.Arkhalis:
                 case ProjectileID.Terragrim:
                 case ProjectileID.FlowerPetal:

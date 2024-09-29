@@ -243,10 +243,10 @@ GoldEnchant: {
 	/* Tooltip:
 		'''
 		Your attacks inflict Midas
-		Automatically sends coins to your piggy bank when picked up, this works passively
 		Press the Gold hotkey to be encased in a Golden Shell
 		You will not be able to move or attack, but will be immune to all damage
 		Press again to exit early
+		Automatically sends coins to your piggy bank when picked up (works in inventory and vanity)
 		'Gold makes the world go round'
 		''' */
 }
@@ -968,6 +968,7 @@ WillForce: {
 		[i:FargowiltasSouls/RedRidingEnchant] Successive attacks gain bonus damage, increased when empowered by the banner
 		[i:FargowiltasSouls/ValhallaKnightEnchant] Increases the effectiveness of healing sources by 25%
 		[i:FargowiltasSouls/ValhallaKnightEnchant] Improves mounts and stats while mounted, mounts have a dash
+		[i:FargowiltasSouls/GoldEnchant] Press the Gold hotkey to be encased in a golden shell, your attacks inflict Midas
 		[i:FargowiltasSouls/GoldEnchant] Automatically sends coins to your piggy bank when picked up (works in inventory and vanity)
 		[i:FargowiltasSouls/PlatinumEnchant] 33% chance for enemies to drop 5x loot
 		''' */
@@ -1866,8 +1867,8 @@ TerrariaSoul: {
 		[i:FargowiltasSouls/SpiritForce] If you reach zero HP you will revive with 300 HP and self-cleanse debuffs
 		[i:FargowiltasSouls/ShadowForce] Grants a shadow dash, and an invincible shade dash every 4 seconds, increased projectile stats based on speed
 		[i:FargowiltasSouls/ShadowForce] You fire additional weapons as support, your minions get a scythe attack, and slain enemies may drop a pile of bones
-		[i:FargowiltasSouls/WillForce] Summons a gladiator spirit, increases your healing and mount stats, and successive attacks gain bonus damage
-		[i:FargowiltasSouls/WillForce] Automatically sends coins to your piggy bank when picked up (works from vanity and inventory), enemies may drop extra loot
+		[i:FargowiltasSouls/WillForce] Summons a gladiator spirit, increases your healing and mount stats, and successive attacks gain bonus damage, press the Gold hotkey to encase yourself
+		[i:FargowiltasSouls/WillForce] Automatically sends coins to your piggy bank when picked up (works from vanity and inventory), enemies may drop extra loot,
 		[i:FargowiltasSouls/CosmoForce] Attacking occasionally launches moons at enemies that explode into Lunar Boosters
 		[i:FargowiltasSouls/CosmoForce] Increases your movement speed and acceleration and decreases your momentum, press the Freeze Key to freeze time for 6 seconds with a 60 second cooldown
 		'A true master of Terraria'
