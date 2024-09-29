@@ -897,7 +897,7 @@ ShadowForce: {
 		[i:FargowiltasSouls/NinjaEnchant] Increases projectile damage based on projectile speed
 		[i:FargowiltasSouls/NinjaEnchant] Increases projectile speed while moving slowly
 		[i:FargowiltasSouls/NecroEnchant] Slain enemies may drop a pile of bones
-		[i:FargowiltasSouls/DarkArtistEnchant] While attacking, fire your next 3 closest weapons' projectiles as support
+		[i:FargowiltasSouls/DarkArtistEnchant] While attacking, fire your next closest weapon's projectiles as support
 		[i:FargowiltasSouls/SpookyEnchant] All of your minions gain an extra scythe attack
 		'Dark, Darker, Yet Darker'
 		''' */

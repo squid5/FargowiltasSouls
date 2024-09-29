@@ -159,6 +159,13 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 				return false;
             return base.CanHitPlayer(target, ref cooldownSlot);
         }
+        public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo)
+        {
+            if (WorldSavingSystem.MasochistModeReal)
+            {
+                target.AddBuff(BuffID.Cursed, 120);
+            }
+        }
         public Rectangle TopHitbox()
         {
             return new((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height / 3);

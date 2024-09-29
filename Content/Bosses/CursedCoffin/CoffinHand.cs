@@ -194,7 +194,12 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
                             owner.netUpdate = true;
                             victim.AddBuff(ModContent.BuffType<CoffinTossBuff>(), 100);
                             Vector2 arenaCenter = CoffinArena.Center.ToWorldCoordinates();
-                            victim.velocity = Vector2.UnitX * Math.Sign(arenaCenter.DirectionTo(owner.Center).X) * 30;
+                            int sign = Math.Sign(arenaCenter.DirectionTo(target.Center).X);
+                            Main.NewText(sign);
+                            if (sign != 1 && sign != -1)
+                                sign = Main.rand.NextBool() ? 1 : -1;
+                            Main.NewText(sign);
+                            victim.velocity = Vector2.UnitX * sign * 30;
                             coffin.MashTimer = 15; // reset mash cap
                             break;
                         }
