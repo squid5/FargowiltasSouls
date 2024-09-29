@@ -48,7 +48,7 @@ namespace FargowiltasSouls.Content.UI.Elements
             fillRatio = MathHelper.Clamp(fillRatio, 0f, 1f);
             if (!Active || fillRatio <= 0 || (!DisplayAtFull && fillRatio >= 1) || !ActiveFunction.Invoke())
             {
-                if (++FadeTimer > FadeDelay)
+                if (++FadeTimer > FadeDelay || !ActiveFunction.Invoke())
                     Opacity -= 0.1f;
                 if (FadeTimer > FadeDelay)
                     FadeTimer = FadeDelay;
