@@ -47,6 +47,8 @@ namespace FargowiltasSouls.Core.ModPlayers
         public int CrossNecklaceTimer;
         private int WeaponUseTimer => Player.FargoSouls().WeaponUseTimer;
         public int Respawns;
+
+        public bool WaterWet => Player.wet && !Player.lavaWet && !Player.honeyWet && !Player.shimmerWet && !Player.FargoSouls().MutantAntibodies;
         public override void ResetEffects()
         {
             ReduceMasomodeMinionNerf = false;
@@ -189,7 +191,7 @@ namespace FargowiltasSouls.Core.ModPlayers
 
             if (Player.ZoneJungle)
             {
-                if (Player.wet && !Player.lavaWet && !Player.honeyWet && !fargoSoulsPlayer.MutantAntibodies)
+                if (WaterWet)
                     FargoSoulsUtil.AddDebuffFixedDuration(Player, BuffID.Poisoned, 2);
             }
 
@@ -198,8 +200,7 @@ namespace FargowiltasSouls.Core.ModPlayers
                 //if (!fargoSoulsPlayer.PureHeart && !Main.dayTime && Framing.GetTileSafely(Player.Center).WallType == WallID.None)
                 //    Player.AddBuff(BuffID.Chilled, Main.expertMode && Main.expertDebuffTime > 1 ? 1 : 2);
 
-                if (Player.wet && !Player.lavaWet && !Player.honeyWet && !fargoSoulsPlayer.MutantAntibodies
-                    && Player.chilled)
+                if (WaterWet && Player.chilled)
                 {
                     Player.AddBuff(ModContent.BuffType<HypothermiaBuff>(), 2);
                     /*
@@ -238,7 +239,7 @@ namespace FargowiltasSouls.Core.ModPlayers
             {
                 if (!fargoSoulsPlayer.PureHeart)
                     FargoSoulsUtil.AddDebuffFixedDuration(Player, BuffID.Darkness, 2);
-                if (Player.wet && !Player.lavaWet && !Player.honeyWet && !fargoSoulsPlayer.MutantAntibodies)
+                if (WaterWet)
                     FargoSoulsUtil.AddDebuffFixedDuration(Player, BuffID.CursedInferno, 2);
             }
 
@@ -246,7 +247,7 @@ namespace FargowiltasSouls.Core.ModPlayers
             {
                 if (!fargoSoulsPlayer.PureHeart)
                     FargoSoulsUtil.AddDebuffFixedDuration(Player, BuffID.Bleeding, 2);
-                if (Player.wet && !Player.lavaWet && !Player.honeyWet && !fargoSoulsPlayer.MutantAntibodies)
+                if (WaterWet)
                     FargoSoulsUtil.AddDebuffFixedDuration(Player, BuffID.Ichor, 2);
             }
 
@@ -276,7 +277,7 @@ namespace FargowiltasSouls.Core.ModPlayers
                     }
                 }
 
-                if (Player.wet && !Player.lavaWet && !Player.honeyWet && !fargoSoulsPlayer.MutantAntibodies)
+                if (WaterWet)
                     Player.AddBuff(ModContent.BuffType<SmiteBuff>(), 2);
             }
 
@@ -461,7 +462,7 @@ namespace FargowiltasSouls.Core.ModPlayers
                     Player.AddBuff(BuffID.WaterCandle, 2);
             }
 
-            if (Player.wet && !Player.lavaWet && !Player.honeyWet && !(Player.GetJumpState(ExtraJump.Flipper).Enabled || Player.gills || fargoSoulsPlayer.MutantAntibodies))
+            if (WaterWet && !(Player.GetJumpState(ExtraJump.Flipper).Enabled || Player.gills || fargoSoulsPlayer.MutantAntibodies))
                 Player.AddBuff(ModContent.BuffType<LethargicBuff>(), 2);
 
             if (currentTile != null && currentTile.TileType == TileID.Cactus && currentTile.HasUnactuatedTile && !fargoSoulsPlayer.CactusImmune)
