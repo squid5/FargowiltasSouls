@@ -80,10 +80,10 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
             int num1038 = 30;
 
             //dust!
-            int dustId = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y + 2f), Projectile.width, Projectile.height + 5, DustID.PurpleTorch, Projectile.velocity.X * 0.2f,
+            int dustId = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y + 2f), Projectile.width, Projectile.height + 5, DustID.BlueTorch, Projectile.velocity.X * 0.2f,
                 Projectile.velocity.Y * 0.2f, 100, default, 2f);
             Main.dust[dustId].noGravity = true;
-            int dustId3 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y + 2f), Projectile.width, Projectile.height + 5, DustID.PurpleTorch, Projectile.velocity.X * 0.2f,
+            int dustId3 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y + 2f), Projectile.width, Projectile.height + 5, DustID.BlueTorch, Projectile.velocity.X * 0.2f,
                 Projectile.velocity.Y * 0.2f, 100, default, 2f);
             Main.dust[dustId3].noGravity = true;
 
