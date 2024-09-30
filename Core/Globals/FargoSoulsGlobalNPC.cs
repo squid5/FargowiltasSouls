@@ -293,11 +293,15 @@ namespace FargowiltasSouls.Core.Globals
             if (BrokenArmor)
             {
                 npc.defense = originalDefense - 10;
+                if (npc.defense < 0)
+                    npc.defense = 0;
             }
 
             if (Sublimation)
             {
                 npc.defense = originalDefense - 15; //ichor 2
+                if (npc.defense < 0)
+                    npc.defense = 0;
             }
 
             if (SnowChilled)
