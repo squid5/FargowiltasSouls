@@ -34,6 +34,7 @@
     <None Remove="Assets\UI\CooldownBar.png" />
     <None Remove="Assets\UI\CooldownBarFill.png" />
     <None Remove="Content\Bosses\AbomBoss\AbomDeathScythe.png" />
+    <None Remove="Content\Bosses\AbomBoss\AbomRocket.png" />
     <None Remove="Content\Bosses\AbomBoss\AbomScytheFlaming.png" />
     <None Remove="Content\Bosses\AbomBoss\AbomSword.png" />
     <None Remove="Content\Buffs\Souls\MushroomPowerBuff.png" />

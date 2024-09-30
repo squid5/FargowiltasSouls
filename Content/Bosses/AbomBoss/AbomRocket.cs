@@ -11,7 +11,6 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
 {
     public class AbomRocket : ModProjectile
     {
-        public override string Texture => "Terraria/Images/Projectile_448";
 
         public override void SetStaticDefaults()
         {
@@ -21,14 +20,13 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
 
         public override void SetDefaults()
         {
-            Projectile.width = 12;
-            Projectile.height = 12;
+            Projectile.width = 30;
+            Projectile.height = 30;
             Projectile.aiStyle = -1;
             Projectile.hostile = true;
             Projectile.alpha = 0;
             Projectile.timeLeft = 600;
             Projectile.tileCollide = false;
-            Projectile.scale = 2.5f;
             CooldownSlot = 1;
         }
 
