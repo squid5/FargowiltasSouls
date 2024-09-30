@@ -35,13 +35,12 @@ namespace FargowiltasSouls.Content.Items.Accessories.Souls
 
 
             .AddIngredient(ItemID.Smolstar) //blade staff
-            .AddIngredient(ItemID.PirateStaff)
             .AddIngredient(ItemID.OpticStaff)
             .AddIngredient(ItemID.DeadlySphereStaff)
             .AddIngredient(ItemID.StormTigerStaff)
             .AddIngredient(ItemID.StaffoftheFrostHydra)
             .AddIngredient(ItemID.TempestStaff)
-            .AddIngredient(ItemID.RavenStaff)
+            .AddIngredient(ItemID.MaceWhip)
             .AddIngredient(ItemID.XenoStaff)
             .AddIngredient(ItemID.EmpressBlade) //terraprisma
 
