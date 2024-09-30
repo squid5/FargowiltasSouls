@@ -1748,6 +1748,18 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
+            if (NPC.IsABestiaryIconDummy)
+            {
+                Texture2D texture2D13 = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
+                Rectangle rectangle = NPC.frame;
+                Vector2 origin2 = rectangle.Size() / 2f;
+
+                SpriteEffects effects = NPC.spriteDirection < 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+
+                Main.EntitySpriteDraw(texture2D13, NPC.Center - screenPos + new Vector2(0f, NPC.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), NPC.GetAlpha(drawColor), NPC.rotation, origin2, NPC.scale, effects, 0);
+                return false;
+            }
+                
             /*Texture2D texture2D13 = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
             Rectangle rectangle = NPC.frame;
             Vector2 origin2 = rectangle.Size() / 2f;
