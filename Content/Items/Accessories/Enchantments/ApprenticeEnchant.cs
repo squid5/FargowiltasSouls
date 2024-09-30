@@ -161,7 +161,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
                             
                             int projToShoot = item2.shoot;
                             float speed = item2.shootSpeed;
-                            int damage = (int)(item2.damage * 0.75f);
+                            int damage = item2.damage;
                             float KnockBack = item2.knockBack;
                             int usedAmmoItemId;
                             ApprenticeEnchant.ApprenticeShoot(player, player.whoAmI, item2, damage);
@@ -171,6 +171,8 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
                             {
                                 player.PickAmmo(item2, out projToShoot, out speed, out damage, out KnockBack, out usedAmmoItemId, ItemID.Sets.gunProj[item2.type]);
                             }
+
+                            damage = (int)(damage * 0.75f);
 
                             if (item2.mana > 0)
                             {
