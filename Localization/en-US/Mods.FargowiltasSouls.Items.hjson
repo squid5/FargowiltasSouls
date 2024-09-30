@@ -2139,6 +2139,7 @@ OrdinaryCarrot: {
 		'''
 		Increases night vision
 		{$CommonItemTooltip.MinorStats}
+		Increases life regeneration
 		1 minute duration
 		Right click to increase view range (works from inventory and vanity slots)
 		'Plucked from the face of a defeated foe'
