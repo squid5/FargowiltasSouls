@@ -97,7 +97,8 @@ namespace FargowiltasSouls.Content.Items.Accessories.Masomode
             BuffID.Thorns,
             BuffID.Titan,
             BuffID.Warmth,
-            BuffID.WaterWalking
+            BuffID.WaterWalking,
+            BuffID.WellFed3
         ];
         public override void PostUpdateEquips(Player player)
         {
