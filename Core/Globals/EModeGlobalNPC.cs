@@ -878,6 +878,7 @@ namespace FargowiltasSouls.Core.Globals
                     break;
 
                 case NPCID.DemonEye:
+                case NPCID.DemonEye2:
                 case NPCID.DemonEyeOwl:
                 case NPCID.DemonEyeSpaceship:
                     TimsConcoctionDrop(ItemDropRule.Common(ItemID.NightOwlPotion));
