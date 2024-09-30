@@ -60,6 +60,8 @@ namespace FargowiltasSouls.Content.Items
                     return EModeChange.Nerf;
 
                 case ItemID.BrainOfConfusion:
+                    if (ModLoader.HasMod("CalamityMod"))
+                        return EModeChange.None;
                     balanceTextKeys = ["BrainOfConfusion"];
                     return EModeChange.Nerf;
 
