@@ -169,7 +169,24 @@ namespace FargowiltasSouls.Core.ModPlayers
             }
         }
 
-
+        public override void OnHitNPCWithItem(Item item, NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            if (CompOrb && CompOrbDrainCooldown <= 0 && item.DamageType != DamageClass.Magic && item.DamageType != DamageClass.Summon)
+            {
+                CompOrbDrainCooldown = 15;
+                if (Player.CheckMana(10, true, false))
+                    Player.manaRegenDelay = Player.maxRegenDelay;
+            }
+        }
+        public override void OnHitNPCWithProj(Projectile proj, NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            if (CompOrb && CompOrbDrainCooldown <= 0 && proj.DamageType != DamageClass.Magic && proj.DamageType != DamageClass.Summon)
+            {
+                CompOrbDrainCooldown = 15;
+                if (Player.CheckMana(10, true, false))
+                    Player.manaRegenDelay = Player.maxRegenDelay;
+            }
+        }
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             if (Gittle)
@@ -191,13 +208,6 @@ namespace FargowiltasSouls.Core.ModPlayers
                 {
                     target.SimpleStrikeNPC(int.MaxValue, 0, false, 0, null, false, 0, true);
                 }
-            }
-
-            if (CompOrb && CompOrbDrainCooldown <= 0)
-            {
-                CompOrbDrainCooldown = 15;
-                if (Player.CheckMana(10, true, false))
-                    Player.manaRegenDelay = Player.maxRegenDelay;
             }
         }
 
