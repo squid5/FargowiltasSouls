@@ -135,7 +135,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
 
                         if (item2 != null && item2.damage > 0 && item2.shoot > ProjectileID.None && item2.ammo <= 0 && item.type != item2.type && !item2.channel)
                         {
-                            if (!player.HasAmmo(item2) || (item2.mana > 0 && player.statMana < item2.mana) || item2.sentry || ContentSamples.ProjectilesByType[item2.shoot].minion)
+                            if (!player.HasAmmo(item2) || (item2.mana > 0 && player.statMana < item2.mana) || item2.sentry || ContentSamples.ProjectilesByType[item2.shoot].minion || !PlayerLoader.CanUseItem(player, item2) || !ItemLoader.CanUseItem(item2, player))
                             {
                                 continue;
                             }
