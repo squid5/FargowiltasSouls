@@ -1,4 +1,5 @@
-﻿using FargowiltasSouls.Content.Buffs.Masomode;
+﻿using Fargowiltas.Items.Explosives;
+using FargowiltasSouls.Content.Buffs.Masomode;
 using FargowiltasSouls.Content.Items.Accessories.Enchantments;
 using FargowiltasSouls.Content.Items.Accessories.Expert;
 using FargowiltasSouls.Content.Items.Accessories.Masomode;
@@ -148,7 +149,7 @@ namespace FargowiltasSouls.Core.ModPlayers
         {
             if (Berserked && !Player.CCed)
             {
-                if (Player.HeldItem != null && Player.HeldItem.IsWeapon())
+                if (Player.HeldItem != null && Player.HeldItem.IsWeapon() && Player.HeldItem.type != ModContent.ItemType<BoomShuriken>())
                 {
                     Player.controlUseItem = true;
                     Player.releaseUseItem = true;
