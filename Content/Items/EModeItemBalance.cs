@@ -154,7 +154,7 @@ namespace FargowiltasSouls.Content.Items
                         if (!Main.hardMode)
                         {
                             balanceTextKeys = ["Damage", "Speed"];
-                            balanceNumber = 0.66f;
+                            balanceNumber = 0.65f;
                             return EModeChange.Nerf;
                         }
                         return EModeChange.None;
