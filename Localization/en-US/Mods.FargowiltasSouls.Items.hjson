@@ -1135,7 +1135,7 @@ Deerclawps: {
 		Grants immunity to Slow and Frozen
 		Dashing leaves a trail of ice spikes
 		Double tap DOWN in the air to fastfall
-		Fastfall will create a glacial eruption on impact after falling a certain distance
+		Fastfall will create a glacial eruption on impact
 		'The trimmed nails of a defeated foe'
 		'''
 }
@@ -1324,7 +1324,7 @@ LumpOfFlesh: {
 		[i:FargowiltasSouls/DreadShell] Defense and damage reduction drastically decreased while and shortly after guarding
 		[i:FargowiltasSouls/Deerclawps] Dashing leaves a trail of blood spikes
 		[i:FargowiltasSouls/Deerclawps] Double tap DOWN in the air to fastfall
-		[i:FargowiltasSouls/Deerclawps] Fastfall will create a glacial eruption on impact after falling a certain distance
+		[i:FargowiltasSouls/Deerclawps] Fastfall will create a glacial eruption on impact
 		'It's growing'
 		'''
 }
