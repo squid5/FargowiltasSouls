@@ -50,14 +50,14 @@ namespace FargowiltasSouls.Content.Items.Accessories.Souls
             const int linesToShow = 7;
 
             string description = Language.GetTextValue("Mods.FargowiltasSouls.Items.EternitySoul.Extra.Additional");
-            description += "                                                                                                                                               "; // blankspaces for consistent box size lmao
+            description += "                                                                                                                                                       "; // blankspaces for consistent box size lmao
 
             if (Main.GameUpdateCount % 5 == 0 || EternitySoulSystem.TooltipLines == null)
             {
                 EternitySoulSystem.TooltipLines = [];
                 for (int i = 0; i < linesToShow; i++)
                 {
-                    string line = Main.rand.NextFromCollection(EternitySoulSystem.Tooltips);
+                    string line = Main.rand.NextFromCollection(EternitySoulSystem.Tooltips.Where(s => s.Length < description.Length).ToList());
                     if (EternitySoulSystem.TooltipLines.Contains(line)) // duplicate
                     {
                         i--;
