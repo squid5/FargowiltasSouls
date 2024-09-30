@@ -35,8 +35,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
             FargoSoulsPlayer modPlayer = player.FargoSouls();
 
             bool minion = player.AddEffect<AncientHallowMinion>(item);
-            int damage = modPlayer.ForceEffect<AncientHallowEnchant>() ? 600 : 350;
-            modPlayer.AddMinion(item, minion, ModContent.ProjectileType<HallowSword>(), damage, 2);
+            modPlayer.AddMinion(item, minion, ModContent.ProjectileType<HallowSword>(), 350, 2);
         }
 
         public static Color GetFairyQueenWeaponsColor(float alphaChannelMultiplier, float lerpToWhite, float rawHueOverride)
