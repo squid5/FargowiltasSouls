@@ -12,6 +12,7 @@ using FargowiltasSouls.Content.Items.Consumables;
 using FargowiltasSouls.Content.Items.Dyes;
 using FargowiltasSouls.Content.Items.Misc;
 using FargowiltasSouls.Content.NPCs.EternityModeNPCs;
+using FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.Jungle;
 using FargowiltasSouls.Content.Patreon.Volknet;
 using FargowiltasSouls.Content.Sky;
 using FargowiltasSouls.Content.Tiles;
@@ -572,7 +573,8 @@ namespace FargowiltasSouls
             SyncCanPlayMaso,
             SyncNanoCoreMode,
             //SpawnBossTryFromNPC,
-            HealNPC
+            HealNPC,
+            SyncSnatcherGrab
         }
 
         public override void HandlePacket(BinaryReader reader, int whoAmI)
@@ -756,6 +758,18 @@ namespace FargowiltasSouls
                                 if (npc.life > npc.lifeMax)
                                     npc.life = npc.lifeMax;
                                 npc.HealEffect(heal);
+                                npc.netUpdate = true;
+                            }
+                        }
+                        break;
+
+                    case PacketID.SyncSnatcherGrab: // client to server
+                        {
+                            NPC npc = FargoSoulsUtil.NPCExists(reader.ReadByte());
+                            if (npc.TryGetGlobalNPC(out Snatchers snatcher))
+                            {
+                                snatcher.BittenPlayer = reader.ReadByte();
+                                snatcher.BiteTimer = reader.ReadInt32();
                                 npc.netUpdate = true;
                             }
                         }
