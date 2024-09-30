@@ -99,8 +99,8 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                 }
             }
 
-            npc.dontTakeDamage = npc.alpha > 50;
-            if (npc.dontTakeDamage)
+            //npc.dontTakeDamage = npc.alpha > 50;
+            if (npc.alpha > 50)
                 Lighting.AddLight(npc.Center, 0.75f, 1.35f, 1.5f);
 
             if (ScytheSpawnTimer > 0)
@@ -631,7 +631,6 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             else
             {
                 npc.alpha = 0;
-                npc.dontTakeDamage = false;
             }
 
             // Drop summon
