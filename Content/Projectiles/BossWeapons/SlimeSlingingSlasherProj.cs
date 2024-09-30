@@ -17,7 +17,6 @@ namespace FargowiltasSouls.Content.Projectiles.BossWeapons
     public class SlimeSlingingSlasherProj : ModProjectile
     {
         public bool Swinging = false;
-        public bool SwingHit = false;
         public bool FirstSwing = true;
         public float SlashOpacity = 0f;
         public override string Texture => "FargowiltasSouls/Content/Items/Weapons/SwarmDrops/SlimeSlingingSlasher";
@@ -44,11 +43,18 @@ namespace FargowiltasSouls.Content.Projectiles.BossWeapons
         public ref float ItemTime => ref Projectile.ai[0];
         public ref float FreezeTime => ref Projectile.ai[1];
         public ref float SwingRotation => ref Projectile.ai[2];
+        public ref float HitsLeft => ref Projectile.localAI[2];
         public ref float ProjectileCheck => ref Projectile.localAI[0];
         public override bool? CanDamage() => Swinging ? base.CanDamage() : false;
+        public override bool? CanHitNPC(NPC target)
+        {
+            if (HitsLeft <= 0)
+                return false;
+            return base.CanHitNPC(target);
+        }
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            SwingHit = true;
+            HitsLeft--;
 
             target.AddBuff(BuffID.Slimed, 120);
             SoundEngine.PlaySound(SoundID.Item17);
@@ -82,6 +88,9 @@ namespace FargowiltasSouls.Content.Projectiles.BossWeapons
 
             if (FreezeTime > 0)
                 FreezeTime--;
+
+            if (!Swinging) // reset hits
+                HitsLeft = 4;
 
             float increment = player.GetAttackSpeed(DamageClass.Melee) + player.FargoSouls().AttackSpeed - 1f;
             if (progress < prepEnd && FirstSwing && player.FargoSouls().SKSCancelTimer <= 0)
