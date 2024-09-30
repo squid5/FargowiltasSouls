@@ -122,7 +122,7 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
             }
             //int g = Gore.NewGore(Projectile.Center, Projectile.velocity / 2, mod.GetGoreSlot("Assets/Gores/DestroyerGun/DestroyerHead"), Projectile.scale);
             // Main.gore[g].timeLeft = 20;
-            SoundEngine.PlaySound(SoundID.NPCDeath14, Projectile.Center);
+            SoundEngine.PlaySound(Projectile.ai[2] == 0 ? SoundID.NPCDeath14 : SoundID.NPCDeath1, Projectile.Center);
         }
     }
 }
