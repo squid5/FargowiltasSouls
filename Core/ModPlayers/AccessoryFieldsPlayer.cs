@@ -122,6 +122,7 @@ namespace FargowiltasSouls.Core.ModPlayers
         public int CrimsonRegenTime;
 
         public bool CanSummonForbiddenStorm = false;
+        public List<int> ForbiddenTornados = [];
         public int IcicleCount;
         public int icicleCD;
         public int GladiatorCD;

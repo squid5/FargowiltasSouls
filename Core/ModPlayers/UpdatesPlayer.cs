@@ -8,6 +8,7 @@ using FargowiltasSouls.Content.Items.Armor;
 using FargowiltasSouls.Content.Items.Consumables;
 using FargowiltasSouls.Content.Items.Weapons.Challengers;
 using FargowiltasSouls.Content.Items.Weapons.SwarmDrops;
+using FargowiltasSouls.Content.Projectiles.Souls;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using FargowiltasSouls.Core.Globals;
 using FargowiltasSouls.Core.Systems;
@@ -28,7 +29,6 @@ namespace FargowiltasSouls.Core.ModPlayers
         public override void PreUpdate()
         {
             Toggler.TryLoad();
-
 
             if (Player.CCed)
             {
@@ -120,6 +120,21 @@ namespace FargowiltasSouls.Core.ModPlayers
                     // Player.mount._data.usesHover = BaseSquireMountData.usesHover;
                 }
             }
+            ForbiddenTornados.Clear();
+            if (Player.HasEffect<ForbiddenEffect>())
+            {
+                for (int i = 0; i < Main.maxProjectiles; i++)
+                {
+                    Projectile p = Main.projectile[i];
+                    if (p.owner == Player.whoAmI && (p.TypeAlive<ForbiddenTornado>() || p.TypeAlive<SpiritTornado>()))
+                    {
+                        ForbiddenTornados.Add(p.whoAmI);
+                    }
+                        
+                }
+            }
+           
+            
         }
 
         public override void PostUpdate()

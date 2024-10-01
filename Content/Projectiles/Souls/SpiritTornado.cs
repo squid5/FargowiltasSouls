@@ -61,6 +61,7 @@ namespace FargowiltasSouls.Content.Projectiles.Souls
             Player player = Main.player[Projectile.owner];
             FargoSoulsPlayer modPlayer = player.FargoSouls();
 
+            /* Collision is done in FargoSoulsGlobalProjectile:PreAI
             if (player.HasEffect<SpiritTornadoEffect>())
             {
                 foreach (Projectile p in Main.projectile.Where(p => p.active && p.friendly && !p.hostile && p.owner == Projectile.owner && p.type != Projectile.type && p.Colliding(p.Hitbox, Projectile.Hitbox)))
@@ -68,6 +69,7 @@ namespace FargowiltasSouls.Content.Projectiles.Souls
                     p.FargoSouls().stormTimer = 240;
                 }
             };
+            */
 
             Projectile.damage = (int)(125f * (1f + player.GetDamage(DamageClass.Magic).Additive + player.GetDamage(DamageClass.Summon).Additive - 2f));
 

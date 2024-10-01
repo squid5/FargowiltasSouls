@@ -480,6 +480,16 @@ namespace FargowiltasSouls.Content.Projectiles
             {
                 spookyCD--;
             }
+            foreach (int tornadoIndex in modPlayer.ForbiddenTornados)
+            {
+                Projectile storm = Main.projectile[tornadoIndex];
+                if (storm.Alive() && projectile.active && projectile.friendly && !projectile.hostile && projectile.owner == storm.owner && projectile.type != storm.type && projectile.Colliding(projectile.Hitbox, storm.Hitbox))
+                {
+                    stormTimer = 240;
+                    Main.NewText("e");
+                }
+            }
+
             if (projectile.owner == Main.myPlayer)
             {
                 //reset tungsten size
