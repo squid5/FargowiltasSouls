@@ -323,7 +323,7 @@ namespace FargowiltasSouls.Core.ModPlayers
                         {
                             Vector2 pos = Player.Center;
                             int damage = (Main.hardMode ? 120 : 60) / 4;
-                            int p = Projectile.NewProjectile(Player.GetSource_Misc(""), pos, Vector2.Zero, ModContent.ProjectileType<LifelightEnvironmentStar>(), damage, 2f, Main.myPlayer, -90);
+                            int p = Projectile.NewProjectile(Player.GetSource_Misc(""), pos, Vector2.Zero, ModContent.ProjectileType<LifelightEnvironmentStar>(), damage, 2f, Main.myPlayer, -120);
                             if (p.IsWithinBounds(Main.maxProjectiles))
                             {
                                     

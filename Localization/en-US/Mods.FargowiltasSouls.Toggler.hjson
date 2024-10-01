@@ -53,7 +53,6 @@ LifeForceEffect: Concise Life Force
 NatureHeader: "{$Mods.FargowiltasSouls.Items.NatureForce.DisplayName}"
 ChloroMinion: Chlorophyte Leaf Crystal
 CrimsonEffect: Crimson Healing
-RainUmbrellaEffect: Rain Umbrella
 RainUmbrellaEffect: Umbrella Featherfall
 RainInnerTubeEffect: Inner Tube
 SnowEffect: Freezing Snowballs
@@ -196,8 +195,8 @@ TrawlerJump: Trawler Jump
 TrawlerGel: Volatile Gelatin
 EternityHeader: "{$Mods.FargowiltasSouls.Items.EternitySoul.DisplayName}"
 EternityTin: Eternity Crit Effect Stacking
-// the pets are no longer existing in game
 PetHeader: Pets
+// the pets are no longer existing in game
 PetDinoConfig: Dino Pet
 PetEaterConfig: Eater Pet
 PetFaceMonsterConfig: Face Monster Pet
