@@ -1,4 +1,5 @@
 ﻿using Fargowiltas.Items.Explosives;
+using FargowiltasSouls.Content.Buffs;
 using FargowiltasSouls.Content.Buffs.Masomode;
 using FargowiltasSouls.Content.Items.Accessories.Enchantments;
 using FargowiltasSouls.Content.Items.Accessories.Expert;
@@ -262,7 +263,11 @@ namespace FargowiltasSouls.Core.ModPlayers
                     DevianttHeartsCD--;
             }
 
+            if (Player.HasBuff<TwinsInstallBuff>() && !Player.HasEffect<FusedLensInstall>())
+                Player.ClearBuff(ModContent.BuffType<TwinsInstallBuff>());
 
+            if (Player.HasBuff<BerserkerInstallBuff>() && !Player.HasEffect<AgitatingLensInstall>())
+                Player.ClearBuff(ModContent.BuffType<BerserkerInstallBuff>());
 
             if ((BetsysHeartItem != null || QueenStingerItem != null))
             {
