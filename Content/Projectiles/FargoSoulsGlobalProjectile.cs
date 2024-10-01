@@ -1446,7 +1446,7 @@ namespace FargowiltasSouls.Content.Projectiles
             }
                 
 
-            if (player.HasEffect<NinjaEffect>())
+            if (player.HasEffect<NinjaDamageEffect>())
             {
                 float maxDamageIncrease = modPlayer.ForceEffect<NinjaEnchant>() ? 0.225f : 0.15f;
                 modifiers.FinalDamage *= 1f + (maxDamageIncrease * Math.Min((projectile.extraUpdates + 1) * projectile.velocity.Length() / 40f, 1));
@@ -1497,7 +1497,7 @@ namespace FargowiltasSouls.Content.Projectiles
             if (noInteractionWithNPCImmunityFrames)
                 target.immune[projectile.owner] = tempIframe;
 
-            if (Main.player[projectile.owner].HasEffect<NinjaEffect>())
+            if (Main.player[projectile.owner].HasEffect<NinjaDamageEffect>())
             {
                 const float maxKnockbackMult = 2f;
                 hit.Knockback *= (maxKnockbackMult * Math.Min((projectile.extraUpdates + 1) * projectile.velocity.Length() / 40, 1f));

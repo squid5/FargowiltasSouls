@@ -29,6 +29,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.AddEffect<NinjaEffect>(Item);
+            player.AddEffect<NinjaDamageEffect>(Item);
         }
 
         public static void NinjaSpeedSetup(FargoSoulsPlayer modPlayer, Projectile projectile, FargoSoulsGlobalProjectile globalProj)
@@ -60,5 +61,9 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
     {
         public override Header ToggleHeader => Header.GetHeader<ShadowHeader>();
         public override int ToggleItemType => ModContent.ItemType<NinjaEnchant>();
+    }
+    public class NinjaDamageEffect : AccessoryEffect
+    {
+        public override Header ToggleHeader => null;
     }
 }
