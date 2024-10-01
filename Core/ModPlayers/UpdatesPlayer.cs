@@ -472,7 +472,7 @@ namespace FargowiltasSouls.Core.ModPlayers
                     Player.lifeRegen = 0;
             }
 
-            if (Player.burned)
+            if (Player.burned && Player.HasEffect<AshWoodEffect>())
             {
                 Player.lifeRegen += 60;
                 if (Player.lifeRegen > 0)
