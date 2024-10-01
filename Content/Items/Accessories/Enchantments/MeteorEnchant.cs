@@ -1,12 +1,14 @@
 using FargowiltasSouls.Content.Projectiles.Souls;
 using FargowiltasSouls.Content.UI.Elements;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
+using FargowiltasSouls.Core.Systems;
 using FargowiltasSouls.Core.Toggler.Content;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
@@ -40,6 +42,8 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
 
         public override void AddRecipes()
         {
+            LocalizedText desc = Language.GetText($"Mods.FargowiltasSouls.Conditions.PostEvilEternity");
+            Condition c = new(desc, () => WorldSavingSystem.EternityMode && Condition.DownedEowOrBoc.IsMet());
             CreateRecipe()
 
             .AddIngredient(ItemID.MeteorHelmet)
@@ -48,7 +52,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
             .AddIngredient(ItemID.StarCannon)
             .AddIngredient(ItemID.Magiluminescence)
             .AddIngredient(ItemID.PlaceAbovetheClouds)
-
+            .AddCondition(c)
             .AddTile(TileID.DemonAltar)
             .Register();
         }
