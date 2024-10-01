@@ -370,4 +370,17 @@ namespace FargowiltasSouls
             return (int)Main.LocalPlayer.ActualClassCrit(DamageClass.Summon);
         }
     }
+    internal sealed class AttackSpeedCall : ModCall
+    {
+        public override IEnumerable<string> GetCallCommands()
+        {
+            yield return "AttackSpeed";
+            yield return "GetAttackSpeed";
+        }
+        public override IEnumerable<Type> GetInputTypes() => null;
+        protected override object SafeProcess(params object[] argsWithoutCommand)
+        {
+            return (int)Main.LocalPlayer.FargoSouls().AttackSpeed;
+        }
+    }
 }
