@@ -468,6 +468,15 @@ namespace FargowiltasSouls.Core.ModPlayers
             if (Player.onFire && Player.HasEffect<AshWoodEffect>())
             {
                 Player.lifeRegen += 8;
+                if (Player.lifeRegen > 0)
+                    Player.lifeRegen = 0;
+            }
+
+            if (Player.burned)
+            {
+                Player.lifeRegen += 60;
+                if (Player.lifeRegen > 0)
+                    Player.lifeRegen = 0;
             }
 
             if (Player.lifeRegen < 0)
