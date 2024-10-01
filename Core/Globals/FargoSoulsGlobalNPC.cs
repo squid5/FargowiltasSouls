@@ -986,8 +986,8 @@ namespace FargowiltasSouls.Core.Globals
 
             if (modPlayer.Illuminated)
             {
-                spawnRate = (int)(spawnRate / 2);
-                maxSpawns *= 2;
+                spawnRate = (int)(spawnRate / 1.5f);
+                maxSpawns = (int)(maxSpawns * 1.5f);
                 /*
                 Color light = Lighting.GetColor(player.Center.ToTileCoordinates());
                 float modifier = (light.R + light.G + light.B) / 700f;
