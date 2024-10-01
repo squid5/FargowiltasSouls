@@ -86,7 +86,8 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
             ItemID.Excalibur,
             ItemID.TrueExcalibur,
             ItemID.TerraBlade,
-            ModContent.ItemType<DecrepitAirstrikeRemote>()
+            ModContent.ItemType<DecrepitAirstrikeRemote>(),
+            ItemID.ButchersChainsaw
         ];
 
         public static void AdamantiteSplit(Projectile projectile, FargoSoulsPlayer modPlayer, int splitDegreeAngle)
