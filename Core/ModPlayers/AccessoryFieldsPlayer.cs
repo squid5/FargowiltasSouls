@@ -123,6 +123,7 @@ namespace FargowiltasSouls.Core.ModPlayers
 
         public bool CanSummonForbiddenStorm = false;
         public List<int> ForbiddenTornados = [];
+        public List<int> ShadowOrbs = [];
         public int IcicleCount;
         public int icicleCD;
         public int GladiatorCD;

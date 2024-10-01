@@ -486,7 +486,44 @@ namespace FargowiltasSouls.Content.Projectiles
                 if (storm.Alive() && projectile.active && projectile.friendly && !projectile.hostile && projectile.owner == storm.owner && projectile.type != storm.type && projectile.Colliding(projectile.Hitbox, storm.Hitbox))
                 {
                     stormTimer = 240;
-                    Main.NewText("e");
+                }
+            }
+            foreach (int orbIndex in modPlayer.ShadowOrbs)
+            {
+                Projectile orb = Main.projectile[orbIndex];
+                //wait for CD
+                if (orb.ai[0] == 0f)
+                {
+                    //detect being hit
+                    if (projectile.active && projectile.friendly && !projectile.hostile && projectile.owner == orb.owner && projectile.damage > 0
+                    && !FargoSoulsUtil.IsSummonDamage(projectile, false) && projectile.type != ModContent.ProjectileType<ShadowBall>() && projectile.Colliding(projectile.Hitbox, orb.Hitbox))
+                    {
+                        int numBalls = 5;
+                        int dmg = 25;
+
+                        if (modPlayer.AncientShadowEnchantActive)
+                        {
+                            numBalls = 7;
+                            dmg = 50;
+                        }
+
+                        int damage = FargoSoulsUtil.HighestDamageTypeScaling(player, dmg);
+                        Projectile[] balls = FargoSoulsUtil.XWay(numBalls, orb.GetSource_FromThis(), orb.Center, ModContent.ProjectileType<ShadowBall>(), 6, damage, 0);
+
+                        foreach (Projectile ball in balls)
+                        {
+                            ball.originalDamage = damage;
+                        }
+
+
+                        if (FargoSoulsUtil.CanDeleteProjectile(projectile))
+                            projectile.Kill();
+
+                        orb.ai[0] = 300;
+                        orb.netUpdate = true;
+
+                        break;
+                    }
                 }
             }
 

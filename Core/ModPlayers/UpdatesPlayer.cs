@@ -121,16 +121,22 @@ namespace FargowiltasSouls.Core.ModPlayers
                 }
             }
             ForbiddenTornados.Clear();
-            if (Player.HasEffect<ForbiddenEffect>())
+            ShadowOrbs.Clear();
+            bool forbidden = Player.HasEffect<ForbiddenEffect>();
+            bool shadow = Player.HasEffect<ShadowBalls>();
+            if (forbidden || shadow)
             {
                 for (int i = 0; i < Main.maxProjectiles; i++)
                 {
                     Projectile p = Main.projectile[i];
-                    if (p.owner == Player.whoAmI && (p.TypeAlive<ForbiddenTornado>() || p.TypeAlive<SpiritTornado>()))
+                    if (forbidden && (p.TypeAlive<ForbiddenTornado>() || p.TypeAlive<SpiritTornado>()) && p.owner == Player.whoAmI)
                     {
                         ForbiddenTornados.Add(p.whoAmI);
                     }
-                        
+                    if (shadow && p.TypeAlive<ShadowEnchantOrb>() && p.owner == Player.whoAmI)
+                    {
+                        ShadowOrbs.Add(p.whoAmI);
+                    }
                 }
             }
            
