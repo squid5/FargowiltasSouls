@@ -429,7 +429,8 @@ namespace FargowiltasSouls.Content.Items.Misc
                     ModContent.ItemType<AncientHallowEnchant>(),
                     ModContent.ItemType<ForbiddenEnchant>(),
                     ModContent.ItemType<AdamantiteEnchant>(),
-                    ModContent.ItemType<LumpOfFlesh>()
+                    ModContent.ItemType<LumpOfFlesh>(),
+                    ModContent.ItemType<ShroomiteEnchant>()
                 );
                 other += GetBuildText(ModContent.ItemType<WizardEnchant>());
                 other += $"[i:{ModContent.Find<ModItem>("Fargowiltas", "LihzahrdInstactuationBomb").Type}]";
@@ -452,7 +453,8 @@ namespace FargowiltasSouls.Content.Items.Misc
                     ModContent.ItemType<PureHeart>(),
                     ModContent.ItemType<LumpOfFlesh>(),
                     ModContent.ItemType<CrimsonEnchant>(),
-                    ModContent.ItemType<HallowEnchant>()
+                    ModContent.ItemType<HallowEnchant>(),
+                    ModContent.ItemType<ShroomiteEnchant>()
                 );
                 other += GetBuildText(ModContent.ItemType<WizardEnchant>());
                 meleeSpecific = [ModContent.ItemType<BeetleEnchant>(), ModContent.ItemType<TungstenEnchant>()];
@@ -472,7 +474,8 @@ namespace FargowiltasSouls.Content.Items.Misc
                     ModContent.ItemType<ForbiddenEnchant>(),
                     ModContent.ItemType<DarkArtistEnchant>(),
                     ModContent.ItemType<LumpOfFlesh>(),
-                    ModContent.ItemType<PumpkingsCape>()
+                    ModContent.ItemType<PumpkingsCape>(),
+                    ModContent.ItemType<ShroomiteEnchant>()
                 );
                 other += GetBuildText(ModContent.ItemType<WizardEnchant>());
                 other += GetBuildText(ModContent.ItemType<RabiesVaccine>());
@@ -493,7 +496,7 @@ namespace FargowiltasSouls.Content.Items.Misc
                     ModContent.ItemType<PureHeart>(),
                     ModContent.ItemType<DarkArtistEnchant>(),
                     ModContent.ItemType<SpectreEnchant>(),
-                    ModContent.ItemType<RainEnchant>()
+                    ModContent.ItemType<ShroomiteEnchant>()
                 );
                 other += GetBuildText(ModContent.ItemType<WizardEnchant>());
                 meleeSpecific = [ModContent.ItemType<BeetleEnchant>(), ModContent.ItemType<TungstenEnchant>()];
@@ -513,7 +516,8 @@ namespace FargowiltasSouls.Content.Items.Misc
                     ModContent.ItemType<PureHeart>(),
                     ModContent.ItemType<DarkArtistEnchant>(),
                     ModContent.ItemType<LumpOfFlesh>(),
-                    ModContent.ItemType<SpectreEnchant>()
+                    ModContent.ItemType<SpectreEnchant>(),
+                     ModContent.ItemType<ShroomiteEnchant>()
                 );
                 other += GetBuildText(ModContent.ItemType<WizardEnchant>());
                 meleeSpecific = [ModContent.ItemType<BeetleEnchant>(), ModContent.ItemType<TungstenEnchant>()];
@@ -540,7 +544,8 @@ namespace FargowiltasSouls.Content.Items.Misc
                     ModContent.ItemType<MutantAntibodies>(),
                     ModContent.ItemType<DarkArtistEnchant>(),
                     ModContent.ItemType<LumpOfFlesh>(),
-                    ModContent.ItemType<SpectreEnchant>()
+                    ModContent.ItemType<SpectreEnchant>(),
+                    ModContent.ItemType<ShroomiteEnchant>()
                 );
                 other += GetBuildText(ModContent.ItemType<WizardEnchant>());
                 meleeSpecific = [ModContent.ItemType<BeetleEnchant>(), ModContent.ItemType<TungstenEnchant>()];
