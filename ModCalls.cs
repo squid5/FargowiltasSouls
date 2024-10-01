@@ -380,7 +380,7 @@ namespace FargowiltasSouls
         public override IEnumerable<Type> GetInputTypes() => null;
         protected override object SafeProcess(params object[] argsWithoutCommand)
         {
-            return (int)Main.LocalPlayer.FargoSouls().AttackSpeed;
+            return Main.LocalPlayer.FargoSouls().AttackSpeed;
         }
     }
 }
