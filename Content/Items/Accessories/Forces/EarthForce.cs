@@ -162,6 +162,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Forces
                 if (p.Alive())
                 {
                     p.FargoSouls().HuntressProj = projectile.FargoSouls().HuntressProj;
+                    p.FargoSouls().Adamantite = true;
                 }
             }
             projectile.damage = (int)(projectile.damage * damageMult);

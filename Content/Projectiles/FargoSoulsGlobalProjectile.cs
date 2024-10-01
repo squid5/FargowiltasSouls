@@ -68,7 +68,7 @@ namespace FargowiltasSouls.Content.Projectiles
         public int ChilledTimer;
         public int NinjaSpeedup;
         public bool canUmbrellaReflect = true;
-
+        public bool Adamantite = false;
         public int HuntressProj = -1; // -1 = non weapon proj, doesnt matter if it hits
                                       //1 = marked as weapon proj
                                       //2 = has successfully hit an enemy
@@ -1274,6 +1274,11 @@ namespace FargowiltasSouls.Content.Projectiles
                 DeletionImmuneRank = 2;
                 TimeFreezeImmune = true;
                 IsAHeldProj = true;
+                if (Adamantite)
+                {
+                    projectile.Kill();
+                    return;
+                }
 
                 if (player.HeldItem.IsWeapon())
                 {
@@ -1552,7 +1557,7 @@ namespace FargowiltasSouls.Content.Projectiles
 
         void ReduceIFrames(Projectile projectile, NPC target, int iframeModifier)
         {
-            if (projectile.maxPenetrate != 1 && !projectile.usesLocalNPCImmunity)
+            if (projectile.maxPenetrate != 1 && !projectile.usesLocalNPCImmunity && !IsAHeldProj)
             {
                 //biased towards rounding down, making it a slight dps increase for compatible weapons
                 double RoundReduce(float iframes)

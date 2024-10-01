@@ -86,15 +86,13 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
             ItemID.Excalibur,
             ItemID.TrueExcalibur,
             ItemID.TerraBlade,
-            ModContent.ItemType<DecrepitAirstrikeRemote>(),
-            ItemID.ButchersChainsaw
+            ModContent.ItemType<DecrepitAirstrikeRemote>()
         ];
 
         public static void AdamantiteSplit(Projectile projectile, FargoSoulsPlayer modPlayer, int splitDegreeAngle)
         {
             bool adaForce = modPlayer.ForceEffect<AdamantiteEnchant>();
             bool isProjHoming = ProjectileID.Sets.CultistIsResistantTo[projectile.type];
-
             if (AdamIgnoreItems.Contains(modPlayer.Player.HeldItem.type))
             {
                 return;
@@ -109,10 +107,11 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
                 if (p.Alive())
                 {
                     p.FargoSouls().HuntressProj = projectile.FargoSouls().HuntressProj;
+                    p.FargoSouls().Adamantite = true;
                 }
             }
 
-            if (!adaForce)
+            if (!adaForce) 
             {
                 projectile.type = ProjectileID.None;
                 projectile.timeLeft = 0;

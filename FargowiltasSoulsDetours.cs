@@ -24,7 +24,6 @@ namespace FargowiltasSouls
             On_Player.QuickHeal_GetItemToUse += QuickHeal_GetItemToUse;
             On_Projectile.AI_019_Spears_GetExtensionHitbox += AI_019_Spears_GetExtensionHitbox;
             On_Item.AffixName += AffixName;
-            On_Player.ApplyTouchDamage
         }
         public void UnloadDetours()
         {
