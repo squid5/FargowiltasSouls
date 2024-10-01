@@ -260,6 +260,10 @@ namespace FargowiltasSouls.Content.Items
                 type = ProjectileID.ConfettiGun;
                 damage = 0;
             }
+            if (item.type == ItemID.ChlorophyteSaber)
+            {
+                velocity *= 2f;
+            }
         }
     }
 }

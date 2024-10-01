@@ -342,6 +342,11 @@ namespace FargowiltasSouls.Content.Items
                 case ItemID.SniperRifle:
                     balanceTextKeys = ["SniperRifle"];
                     return EModeChange.Buff;
+                case ItemID.ChlorophyteSaber:
+                    balanceTextKeys = ["Damage", "ChlorophyteSaber"];
+                    balanceNumber = 1.25f;
+                    return EModeChange.Buff;
+                
 
                 default:
                     return EModeChange.None;

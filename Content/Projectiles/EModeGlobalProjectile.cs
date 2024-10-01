@@ -40,7 +40,7 @@ namespace FargowiltasSouls.Content.Projectiles
 
         public static Dictionary<int, bool> IgnoreMinionNerf = [];
 
-        public bool SniperShot = false;
+        public int SourceItemType = 0;
 
         public override void Unload()
         {
@@ -232,9 +232,9 @@ namespace FargowiltasSouls.Content.Projectiles
             if (source is EntitySource_Parent parent && parent.Entity is Projectile)
                 sourceProj = parent.Entity as Projectile;
 
-            if (source is EntitySource_ItemUse itemUse && itemUse.Item.type == ItemID.SniperRifle)
+            if (source is EntitySource_ItemUse itemUse && itemUse.Item != null)
             {
-                SniperShot = true;
+                SourceItemType = itemUse.Item.type;
             }
 
             if (FargoSoulsUtil.IsSummonDamage(projectile, true, false))
@@ -1239,7 +1239,7 @@ namespace FargowiltasSouls.Content.Projectiles
                     break;
             }
 
-            if (SniperShot)
+            if (SourceItemType == ItemID.SniperRifle)
             {
                 if (projectile.owner.IsWithinBounds(Main.maxProjectiles))
                 {
@@ -1380,6 +1380,10 @@ namespace FargowiltasSouls.Content.Projectiles
                     break;
                 case ProjectileID.IceBolt: //Ice Blade projectile
                     target.AddBuff(BuffID.Frostburn, 60 * 3);
+                    break;
+                case ProjectileID.SporeCloud:
+                    if (SourceItemType == ItemID.ChlorophyteSaber)
+                        projectile.velocity *= 0.25f;
                     break;
                 default:
                     break;
