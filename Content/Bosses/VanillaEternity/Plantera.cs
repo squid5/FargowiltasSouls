@@ -112,7 +112,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
         public override void SetDefaults(NPC npc)
         {
             base.SetDefaults(npc);
-            npc.lifeMax = (int)Math.Round(npc.lifeMax * 1.65f);
+            npc.lifeMax = (int)Math.Round(npc.lifeMax * 1.7f);
         }
 
         public override bool SafePreAI(NPC npc)
@@ -953,7 +953,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
         }
         public static float DR(NPC npc) => 
             npc.GetLifePercent() < 0.25f ? 0.4f // phase 3
-            : npc.GetLifePercent() < 0.5f ? 0.1f // phase 2
+            : npc.GetLifePercent() < 0.5f ? 0.2f // phase 2
             : -0.1f; // phase 1
         public override void ModifyIncomingHit(NPC npc, ref NPC.HitModifiers modifiers)
         {
