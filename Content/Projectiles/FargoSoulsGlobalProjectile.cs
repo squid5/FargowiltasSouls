@@ -93,6 +93,9 @@ namespace FargowiltasSouls.Content.Projectiles
         public bool noInteractionWithNPCImmunityFrames;
         private int tempIframe;
 
+        public static int ApprenticeDamageCap;
+        public int DamageCap;
+
         public static List<int> ShroomiteBlacklist =
         [
             
@@ -239,7 +242,7 @@ namespace FargowiltasSouls.Content.Projectiles
                 }
 
                 //projs shot by tiki-buffed projs will also inherit the tiki buff
-                if (source is EntitySource_Parent parent && parent.Entity is Projectile sourceProj && sourceProj.FargoSouls().TikiTagged)
+                if (source is EntitySource_Parent parent && parent.Entity is Projectile sourceProj3 && sourceProj3.FargoSouls().TikiTagged)
                 {
                     //TikiTagged = true;
                 }
@@ -423,6 +426,14 @@ namespace FargowiltasSouls.Content.Projectiles
                 projectile.ArmorPenetration += projectile.damage / 2;
                 AdamantiteEffect.AdamantiteSplit(projectile, modPlayer, 1 + (int)modPlayer.AdamantiteSpread);
                 AdamModifier = modPlayer.ForceEffect<AdamantiteEnchant>() ? 3 : 2;
+            }
+
+            if (source is EntitySource_Parent parent3 && parent3.Entity is Projectile sourceProj && sourceProj.FargoSouls().DamageCap > 0)
+                DamageCap = sourceProj.FargoSouls().DamageCap;
+
+            if (ApprenticeDamageCap > 0)
+            {
+                DamageCap = ApprenticeDamageCap;
             }
 
             if (projectile.bobber && CanSplit && source is EntitySource_ItemUse)
@@ -1202,6 +1213,9 @@ namespace FargowiltasSouls.Content.Projectiles
         {
             Player player = Main.player[projectile.owner];
             FargoSoulsPlayer modPlayer = player.FargoSouls();
+
+            if (DamageCap > 0 && projectile.damage > DamageCap)
+                projectile.damage = DamageCap;
 
             if (projectile.whoAmI == player.heldProj
                 || projectile.aiStyle == ProjAIStyleID.HeldProjectile

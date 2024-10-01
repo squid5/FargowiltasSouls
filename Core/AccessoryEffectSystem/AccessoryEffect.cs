@@ -6,7 +6,6 @@ using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Core.AccessoryEffectSystem
 {
-    //Proof of concept file for an accessory effect rework
 
     /// <summary>
     /// Contains the behavior for an accessory effect. <para/>

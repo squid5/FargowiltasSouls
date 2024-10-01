@@ -1,4 +1,5 @@
 ﻿using FargowiltasSouls.Content.Items.Accessories.Forces;
+using FargowiltasSouls.Content.Projectiles;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using FargowiltasSouls.Core.Toggler.Content;
 using Microsoft.Xna.Framework;
@@ -158,23 +159,29 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
 
                             Vector2 pos = new(player.Center.X + Main.rand.Next(-50, 50), player.Center.Y + Main.rand.Next(-50, 50));
                             Vector2 velocity = Vector2.Normalize(Main.MouseWorld - pos);
-
-                            ApprenticeEnchant.ApprenticeShoot(player, player.whoAmI, item2, item2.damage / 2);
                             
                             int projToShoot = item2.shoot;
                             float speed = item2.shootSpeed;
                             int damage = item2.damage;
                             float KnockBack = item2.knockBack;
-                            int usedAmmoItemId;
+
+
+                            damage = (int)(damage * 0.75f);
+
+                            FargoSoulsGlobalProjectile.ApprenticeDamageCap = damage;
                             ApprenticeEnchant.ApprenticeShoot(player, player.whoAmI, item2, damage);
+                            FargoSoulsGlobalProjectile.ApprenticeDamageCap = 0;
+
                             modPlayer.ApprenticeItemCDs[j] = item2.useAnimation * 4;
+
                             
                             if (item2.useAmmo > 0)
                             {
-                                player.PickAmmo(item2, out projToShoot, out speed, out damage, out KnockBack, out usedAmmoItemId, ItemID.Sets.gunProj[item2.type]);
+                                player.PickAmmo(item2, out projToShoot, out speed, out damage, out KnockBack, out int usedAmmoItemId, ItemID.Sets.gunProj[item2.type]);
                             }
+                            
 
-                            damage = (int)(damage * 0.75f);
+                            //damage = (int)(damage * 0.75f);
 
                             if (item2.mana > 0)
                             {
@@ -187,7 +194,8 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
                             {
                                 item2.stack--;
                             }
-                            modPlayer.ApprenticeItemCDs[j] = item2.useAnimation * 4;
+                            
+                            //modPlayer.ApprenticeItemCDs[j] = item2.useAnimation * 4;
 
                             if (projToShoot == ProjectileID.RainbowFront || projToShoot == ProjectileID.RainbowBack) // prevent fucked up op interaction
                             {
