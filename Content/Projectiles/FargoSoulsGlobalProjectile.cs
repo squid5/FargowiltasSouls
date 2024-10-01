@@ -11,6 +11,7 @@ using FargowiltasSouls.Content.Items.Accessories.Masomode;
 using FargowiltasSouls.Content.Items.Accessories.Souls;
 using FargowiltasSouls.Content.Items.Armor;
 using FargowiltasSouls.Content.Items.Weapons.SwarmDrops;
+using FargowiltasSouls.Content.Patreon.DanielTheRobot;
 using FargowiltasSouls.Content.Projectiles.BossWeapons;
 using FargowiltasSouls.Content.Projectiles.Masomode;
 using FargowiltasSouls.Content.Projectiles.Souls;
@@ -480,49 +481,51 @@ namespace FargowiltasSouls.Content.Projectiles
             {
                 spookyCD--;
             }
-            foreach (int tornadoIndex in modPlayer.ForbiddenTornados)
+            if (projectile.active && projectile.friendly && !projectile.hostile)
             {
-                Projectile storm = Main.projectile[tornadoIndex];
-                if (storm.Alive() && projectile.active && projectile.friendly && !projectile.hostile && projectile.owner == storm.owner && projectile.type != storm.type && projectile.Colliding(projectile.Hitbox, storm.Hitbox))
+                foreach (int tornadoIndex in modPlayer.ForbiddenTornados)
                 {
-                    stormTimer = 240;
-                }
-            }
-            foreach (int orbIndex in modPlayer.ShadowOrbs)
-            {
-                Projectile orb = Main.projectile[orbIndex];
-                //wait for CD
-                if (orb.ai[0] == 0f)
-                {
-                    //detect being hit
-                    if (projectile.active && projectile.friendly && !projectile.hostile && projectile.owner == orb.owner && projectile.damage > 0
-                    && !FargoSoulsUtil.IsSummonDamage(projectile, false) && projectile.type != ModContent.ProjectileType<ShadowBall>() && projectile.Colliding(projectile.Hitbox, orb.Hitbox))
+                    Projectile storm = Main.projectile[tornadoIndex];
+                    if (storm.Alive() &&  projectile.owner == storm.owner && projectile.type != storm.type && projectile.Colliding(projectile.Hitbox, storm.Hitbox))
                     {
-                        int numBalls = 5;
-                        int dmg = 25;
-
-                        if (modPlayer.AncientShadowEnchantActive)
+                        stormTimer = 240;
+                    }
+                }
+                if (projectile.damage > 0 && !FargoSoulsUtil.IsSummonDamage(projectile, false) && projectile.type != ModContent.ProjectileType<ShadowBall>())
+                {
+                    foreach (int orbIndex in modPlayer.ShadowOrbs)
+                    {
+                        Projectile orb = Main.projectile[orbIndex];
+                        //wait for CD
+                        //detect being hit
+                        if (orb.Alive() && orb.ai[0] == 0f && projectile.owner == orb.owner && projectile.Colliding(projectile.Hitbox, orb.Hitbox))
                         {
-                            numBalls = 7;
-                            dmg = 50;
+                            int numBalls = 5;
+                            int dmg = 25;
+
+                            if (modPlayer.AncientShadowEnchantActive)
+                            {
+                                numBalls = 7;
+                                dmg = 50;
+                            }
+
+                            int damage = FargoSoulsUtil.HighestDamageTypeScaling(player, dmg);
+                            Projectile[] balls = FargoSoulsUtil.XWay(numBalls, orb.GetSource_FromThis(), orb.Center, ModContent.ProjectileType<ShadowBall>(), 6, damage, 0);
+
+                            foreach (Projectile ball in balls)
+                            {
+                                ball.originalDamage = damage;
+                            }
+
+
+                            if (FargoSoulsUtil.CanDeleteProjectile(projectile))
+                                projectile.Kill();
+
+                            orb.ai[0] = 300;
+                            orb.netUpdate = true;
+
+                            break;
                         }
-
-                        int damage = FargoSoulsUtil.HighestDamageTypeScaling(player, dmg);
-                        Projectile[] balls = FargoSoulsUtil.XWay(numBalls, orb.GetSource_FromThis(), orb.Center, ModContent.ProjectileType<ShadowBall>(), 6, damage, 0);
-
-                        foreach (Projectile ball in balls)
-                        {
-                            ball.originalDamage = damage;
-                        }
-
-
-                        if (FargoSoulsUtil.CanDeleteProjectile(projectile))
-                            projectile.Kill();
-
-                        orb.ai[0] = 300;
-                        orb.netUpdate = true;
-
-                        break;
                     }
                 }
             }
