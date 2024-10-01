@@ -66,12 +66,17 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
             {
                 player.FargoSouls().AddMinion(EffectItem(player), true, ModContent.ProjectileType<RainUmbrella>(), 0, 0);
 
-                if (!player.controlDown && !player.HasEffect<NatureEffect>())
+                if (!player.controlDown && player.HasEffect<RainFeatherfallEffect>() && !player.HasEffect<NatureEffect>())
                 {
                     player.slowFall = true;
                 }
             }
         }
+    }
+    public class RainFeatherfallEffect : AccessoryEffect
+    {
+        public override int ToggleItemType => ModContent.ItemType<RainEnchant>();
+        public override Header ToggleHeader => Header.GetHeader<NatureHeader>();
     }
     public class RainWetEffect : AccessoryEffect
     {
