@@ -92,7 +92,11 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
                 ModContent.ProjectileType<PrismaRegaliaProj>(),
                 ModContent.ProjectileType<BaronTuskShrapnel>(),
                 ModContent.ProjectileType<UmbraRegaliaProj>(),
-                ModContent.ProjectileType<SlimeKingSlasherProj>()
+                ModContent.ProjectileType<SlimeKingSlasherProj>(),
+                ProjectileID.TerraBlade2,
+                ProjectileID.TerraBlade2Shot,
+                ProjectileID.NightsEdge,
+                ProjectileID.TrueNightsEdge
         ];
         public static List<int> TungstenAlwaysAffectProjStyle =
         [
