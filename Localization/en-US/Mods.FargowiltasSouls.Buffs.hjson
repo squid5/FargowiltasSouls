@@ -771,6 +771,6 @@ WitheredWizardBuff: {
 }
 
 MushroomPowerBuff: {
-	DisplayName: Mushroom Power Buff
-	Description: Mods.FargowiltasSouls.Buffs.MushroomPowerBuff.Description
+	DisplayName: Mushroom Power
+	Description: Increased damage and critical strike chance
 }
