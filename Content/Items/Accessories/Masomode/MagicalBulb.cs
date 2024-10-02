@@ -31,6 +31,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Masomode
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             AddEffects(player, Item);
+            player.AddEffect<PlantMinionEffect>(Item);
         }
         public static void AddEffects(Player player, Item item)
         {
@@ -50,8 +51,6 @@ namespace FargowiltasSouls.Content.Items.Accessories.Masomode
             }
 
             player.FargoSouls().MagicalBulb = true;
-            player.AddEffect<PlantMinionEffect>(item);
-
         }
     }
     public class PlantMinionEffect : AccessoryEffect
