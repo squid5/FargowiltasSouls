@@ -276,7 +276,7 @@ namespace FargowiltasSouls.Content.Bosses.BanishedBaron
             }
             target.AddBuff(BuffID.Rabies, 60 * 10);
             target.FargoSouls().MaxLifeReduction += 50;
-            target.AddBuff(ModContent.BuffType<OceanicMaulBuff>(), 60 * 30);
+            target.AddBuff(ModContent.BuffType<OceanicMaulBuff>(), 60 * 20);
         }
         public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers)
         {
