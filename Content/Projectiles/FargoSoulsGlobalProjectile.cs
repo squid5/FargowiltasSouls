@@ -378,7 +378,12 @@ namespace FargowiltasSouls.Content.Projectiles
                         }
                     }
                     break;
-
+                case ProjectileID.SeedlerThorn:
+                    {
+                        if (source is EntitySource_Parent parent && parent.Entity is Projectile parentProj && parentProj.type == ProjectileID.SeedlerNut && parentProj.DamageType == DamageClass.Summon)
+                            projectile.DamageType = DamageClass.Summon;
+                    }
+                    break;
                 default:
                     break;
             }
