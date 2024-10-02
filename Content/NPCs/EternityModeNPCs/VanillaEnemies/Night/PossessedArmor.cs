@@ -78,7 +78,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.Night
         {
             base.OnKill(npc);
 
-            if (Main.rand.NextBool())
+            if (FargoSoulsUtil.HostCheck && Main.rand.NextBool())
                 FargoSoulsUtil.NewNPCEasy(npc.GetSource_FromAI(), npc.Center, NPCID.Ghost);
         }
         public override bool PreDraw(NPC npc, SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
