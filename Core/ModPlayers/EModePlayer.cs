@@ -465,7 +465,7 @@ namespace FargowiltasSouls.Core.ModPlayers
             if (WaterWet && !(Player.GetJumpState(ExtraJump.Flipper).Enabled || Player.gills || fargoSoulsPlayer.MutantAntibodies))
                 Player.AddBuff(ModContent.BuffType<LethargicBuff>(), 2);
 
-            if (currentTile != null && currentTile.TileType == TileID.Cactus && currentTile.HasUnactuatedTile && !fargoSoulsPlayer.CactusImmune)
+            if (currentTile != null && currentTile.TileType == TileID.Cactus && currentTile.HasUnactuatedTile && !fargoSoulsPlayer.CactusImmune && !Player.cactusThorns)
             {
                 int damage = 10;
                 if (WorldSavingSystem.MasochistModeReal)

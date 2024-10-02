@@ -62,7 +62,7 @@ namespace FargowiltasSouls.Content.Items
 
             if (player.whoAmI == Main.myPlayer && player.HasEffect<GoldToPiggy>())
                 modPlayer.GoldEnchMoveCoins = true;
-
+            
             if (ItemID.Sets.IsAPickup[item.type])
             {
                 OnRetrievePickup(player);
