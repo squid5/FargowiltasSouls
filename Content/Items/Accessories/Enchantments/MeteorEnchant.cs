@@ -42,8 +42,6 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
 
         public override void AddRecipes()
         {
-            LocalizedText desc = Language.GetText($"Mods.FargowiltasSouls.Conditions.PostEvilEternity");
-            Condition c = new(desc, () => WorldSavingSystem.EternityMode && Condition.DownedEowOrBoc.IsMet());
             CreateRecipe()
 
             .AddIngredient(ItemID.MeteorHelmet)
@@ -52,7 +50,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
             .AddIngredient(ItemID.StarCannon)
             .AddIngredient(ItemID.Magiluminescence)
             .AddIngredient(ItemID.PlaceAbovetheClouds)
-            .AddCondition(c)
+            .AddCondition(Condition.DownedEowOrBoc)
             .AddTile(TileID.DemonAltar)
             .Register();
         }
