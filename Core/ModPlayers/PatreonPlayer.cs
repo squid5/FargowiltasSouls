@@ -215,7 +215,7 @@ namespace FargowiltasSouls.Core.ModPlayers
         {
             if (CompOrb && item.DamageType != DamageClass.Magic && item.DamageType != DamageClass.Summon)
             {
-                modifiers.FinalDamage *= 1.25f;
+                modifiers.FinalDamage *= 1.2f;
 
                 if (Player.manaSick)
                     modifiers.FinalDamage *= Player.manaSickReduction;
@@ -237,7 +237,7 @@ namespace FargowiltasSouls.Core.ModPlayers
         {
             if (CompOrb && proj.DamageType != DamageClass.Magic && proj.DamageType != DamageClass.Summon)
             {
-                modifiers.FinalDamage *= 1.25f;
+                modifiers.FinalDamage *= 1.2f;
 
                 if (Player.manaSick)
                     modifiers.FinalDamage *= Player.manaSickReduction;
