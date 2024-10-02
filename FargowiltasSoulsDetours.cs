@@ -1,4 +1,5 @@
-﻿using FargowiltasSouls.Content.Items;
+﻿using FargowiltasSouls.Content.Bosses.VanillaEternity;
+using FargowiltasSouls.Content.Items;
 using FargowiltasSouls.Content.Items.Accessories.Enchantments;
 using FargowiltasSouls.Content.Tiles;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
@@ -11,6 +12,7 @@ using System.Threading.Tasks;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Utilities;
 
 namespace FargowiltasSouls
 {
@@ -24,6 +26,7 @@ namespace FargowiltasSouls
             On_Player.QuickHeal_GetItemToUse += QuickHeal_GetItemToUse;
             On_Projectile.AI_019_Spears_GetExtensionHitbox += AI_019_Spears_GetExtensionHitbox;
             On_Item.AffixName += AffixName;
+            On_NPCUtils.TargetClosestBetsy += TargetClosestBetsy;
         }
         public void UnloadDetours()
         {
@@ -32,6 +35,7 @@ namespace FargowiltasSouls
             On_Player.QuickHeal_GetItemToUse -= QuickHeal_GetItemToUse;
             On_Projectile.AI_019_Spears_GetExtensionHitbox -= AI_019_Spears_GetExtensionHitbox;
             On_Item.AffixName -= AffixName;
+            On_NPCUtils.TargetClosestBetsy -= TargetClosestBetsy;
         }
 
         private static bool LifeRevitalizer_CheckSpawn_Internal(
@@ -131,6 +135,15 @@ namespace FargowiltasSouls
                 text = text.ArticlePrefixAdjustmentString(soulsItem.Articles.ToArray());
             }
             return text;
+        }
+        public static void TargetClosestBetsy(On_NPCUtils.orig_TargetClosestBetsy orig, NPC searcher, bool faceTarget = true, Vector2? checkPosition = null)
+        {
+            if (searcher.TypeAlive(NPCID.DD2Betsy) && searcher.TryGetGlobalNPC(out Betsy betsy) && betsy.TargetPlayer)
+            {
+                NPCUtils.TargetClosestCommon(searcher, faceTarget, checkPosition);
+                return;
+            }
+            orig(searcher, faceTarget, checkPosition);
         }
     }
 }
