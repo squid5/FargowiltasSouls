@@ -628,8 +628,9 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
         {
             base.OnHitPlayer(npc, target, hurtInfo);
 
-            target.AddBuff(ModContent.BuffType<PurifiedBuff>(), 300);
-            target.AddBuff(ModContent.BuffType<SmiteBuff>(), 1800);
+            if (target.HasBuff<SmiteBuff>())
+                target.AddBuff(ModContent.BuffType<PurifiedBuff>(), 300);
+            target.AddBuff(ModContent.BuffType<SmiteBuff>(), 900);
         }
 
         public override void SafeModifyHitByProjectile(NPC npc, Projectile projectile, ref NPC.HitModifiers modifiers)

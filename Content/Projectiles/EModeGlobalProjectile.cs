@@ -1451,8 +1451,9 @@ namespace FargowiltasSouls.Content.Projectiles
                 case ProjectileID.HallowBossRainbowStreak:
                 case ProjectileID.HallowBossLastingRainbow:
                 case ProjectileID.HallowBossSplitShotCore:
-                    target.AddBuff(ModContent.BuffType<PurifiedBuff>(), 300);
-                    target.AddBuff(ModContent.BuffType<SmiteBuff>(), 1800);
+                    if (target.HasBuff<SmiteBuff>())
+                        target.AddBuff(ModContent.BuffType<PurifiedBuff>(), 300);
+                    target.AddBuff(ModContent.BuffType<SmiteBuff>(), 900);
                     break;
 
                 case ProjectileID.RollingCactus:
