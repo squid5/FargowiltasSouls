@@ -67,9 +67,9 @@ namespace FargowiltasSouls.Content.Items.Accessories.Masomode
                     Main.dust[d].noGravity = true;
                     Main.dust[d].velocity *= 5f;
                 }
-
-                CooldownBarManager.Activate("WretchedPouchCharge", ModContent.Request<Texture2D>("FargowiltasSouls/Content/Items/Accessories/Masomode/WretchedPouch").Value, Color.DarkMagenta, 
-                    () => modPlayer.WretchedPouchCD / (float)MaxChargeTime, true, activeFunction: () => player.HasEffect<WretchedPouchEffect>());
+                if (player.whoAmI == Main.myPlayer)
+                    CooldownBarManager.Activate("WretchedPouchCharge", ModContent.Request<Texture2D>("FargowiltasSouls/Content/Items/Accessories/Masomode/WretchedPouch").Value, Color.DarkMagenta, 
+                        () => Main.LocalPlayer.FargoSouls().WretchedPouchCD / (float)MaxChargeTime, true, activeFunction: () => player.HasEffect<WretchedPouchEffect>());
             }
             else
             {
