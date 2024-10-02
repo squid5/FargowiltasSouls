@@ -1189,10 +1189,10 @@ namespace FargowiltasSouls.Core.ModPlayers
             Player.hideMisc[1] = true;
         }
 
-        public static void Squeak(Vector2 center)
+        public static void Squeak(Vector2 center, float volume = 1f)
         {
             if (!Main.dedServ)
-                SoundEngine.PlaySound(new SoundStyle($"FargowiltasSouls/Assets/Sounds/SqueakyToy/squeak{Main.rand.Next(1, 7)}"), center);
+                SoundEngine.PlaySound(new SoundStyle($"FargowiltasSouls/Assets/Sounds/SqueakyToy/squeak{Main.rand.Next(1, 7)}") with { Volume = volume }, center);
         }
 
         private int InfestedExtraDot()

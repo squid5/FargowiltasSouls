@@ -39,7 +39,7 @@ namespace FargowiltasSouls.Core.ModPlayers
             if (SqueakyToy)
             {
                 modifiers.FinalDamage.Base = 1;
-                Squeak(target.Center);
+                Squeak(target.Center, 0.4f);
                 return;
             }
 
@@ -53,7 +53,7 @@ namespace FargowiltasSouls.Core.ModPlayers
             if (SqueakyToy)
             {
                 modifiers.SetMaxDamage(1);
-                Squeak(target.Center);
+                Squeak(target.Center, 0.4f);
                 return;
             }
 
@@ -443,7 +443,7 @@ namespace FargowiltasSouls.Core.ModPlayers
 
                 if (Main.rand.NextBool(chanceDenominator))
                 {
-                    Squeak(Player.Center);
+                    Squeak(Player.Center, 0.4f);
                     modifiers.SetMaxDamage(1);
                 }
             }
