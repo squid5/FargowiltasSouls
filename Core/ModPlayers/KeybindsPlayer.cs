@@ -73,7 +73,12 @@ namespace FargowiltasSouls.Core.ModPlayers
                     if (Eternity)
                         cooldownInSeconds = 30;
                     Player.ClearBuff(ModContent.BuffType<TimeFrozenBuff>());
-                    Player.AddBuff(ModContent.BuffType<TimeStopCDBuff>(), cooldownInSeconds * 60);
+                    for (int i = 0; i < Main.maxPlayers; i++)
+                    {
+                        if (Main.player[i] != null && Main.player[i].Alive())
+                            Main.player[i].AddBuff(ModContent.BuffType<TimeStopCDBuff>(), cooldownInSeconds * 60);
+                    }
+                    
 
                     FreezeTime = true;
                     freezeLength = StardustEffect.TIMESTOP_DURATION;
