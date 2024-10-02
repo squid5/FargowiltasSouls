@@ -161,18 +161,22 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
         }
         public override bool PreDraw(ref Color lightColor)
         {
+            bool recolor = SoulConfig.Instance.BossRecolors && WorldSavingSystem.EternityMode;
+
             Vector2 position = Projectile.Center;
             int index = 0;
             Vector2 difference = Trail[index + 1] - Trail[index];
             float lengthLeft = difference.Length();
+            string variant = recolor ? "" : "Vanilla";
+            Texture2D spikeTexture = ModContent.Request<Texture2D>(Texture + "End" + variant).Value;
+            Texture2D texture = ModContent.Request<Texture2D>(Texture + variant).Value;
 
-            Texture2D spikeTexture = ModContent.Request<Texture2D>(Texture + "End").Value;
             int height = spikeTexture.Height;
             Rectangle rectangle = new(0, 0, spikeTexture.Width, height);
             Vector2 origin = rectangle.Size() / 2f;
             SpriteEffects spriteEffects = Projectile.spriteDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-
-            Main.EntitySpriteDraw(spikeTexture, position - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY), rectangle, Projectile.GetAlpha(Color.White),
+            Color color = Lighting.GetColor(position.ToTileCoordinates());
+            Main.EntitySpriteDraw(spikeTexture, position - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY), rectangle, Projectile.GetAlpha(color),
                 (-difference).ToRotation(), origin, Projectile.scale, spriteEffects, 0);
 
             for (int i = 0; i < TrailLength; i++)
@@ -203,12 +207,13 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
                     else
                         break;
                 }
-                Texture2D texture = TextureAssets.Projectile[Type].Value;
+               
                 int frame = i % 4;
                 height = texture.Height / 4;
                 rectangle = new(0, height * frame, texture.Width, height);
                 origin = rectangle.Size() / 2f;
-                Main.EntitySpriteDraw(texture, position - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY), rectangle, Projectile.GetAlpha(Color.White) * opacity,
+                color = Lighting.GetColor(position.ToTileCoordinates());
+                Main.EntitySpriteDraw(texture, position - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY), rectangle, Projectile.GetAlpha(color) * opacity,
                     (-difference).ToRotation(), origin, Projectile.scale, spriteEffects, 0);
             }
             return false;

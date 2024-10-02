@@ -21,7 +21,8 @@ namespace FargowiltasSouls.Content.Projectiles.BossWeapons
         public override void SetDefaults()
         {
             Projectile.DefaultToWhip();
-            Projectile.WhipSettings.RangeMultiplier = 1f;
+            Projectile.WhipSettings.RangeMultiplier = 0.6f;
+            Projectile.WhipSettings.Segments = 25;
             Projectile.rotation += Projectile.ai[0];
         }
         int[] Cooldowns = new int[Main.maxProjectiles];
@@ -82,7 +83,7 @@ namespace FargowiltasSouls.Content.Projectiles.BossWeapons
             DrawLine(list);
 
 
-            Main.DrawWhip_CoolWhip(Projectile, list);
+            Main.DrawWhip_WhipBland(Projectile, list);
 
             SpriteEffects flip = Projectile.spriteDirection < 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 

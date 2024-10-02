@@ -3578,7 +3578,7 @@ UmbraRegalia: {
 		Spear hits release homing umbral crystals
 		Spear throw leaves a trail of umbral crystals in its wake
 		Fully charged spear throws deal more damage and hits release more crystals
-		'The dark side of a defeated foe..'
+		'The reward for slaughtering many...'
 		''' */
 }
 
@@ -3589,5 +3589,9 @@ CoffinPainting: {
 
 ElectricWhip: {
 	// DisplayName: Electric Whip
-	// Tooltip: ""
+	/* Tooltip:
+		'''
+		Whip your minions to fire chain lightning at a nearby enemy, up to 4 times per swing
+		'The lifeblood of a defeated foe...'
+		''' */
 }

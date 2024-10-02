@@ -16,7 +16,7 @@ namespace FargowiltasSouls.Content.Items.Weapons.BossDrops
         }
         public override void SetDefaults()
         {
-            Item.DefaultToWhip(ModContent.ProjectileType<ElectricWhipProj>(), 60, 2, 10, 60);
+            Item.DefaultToWhip(ModContent.ProjectileType<ElectricWhipProj>(), 60, 2, 7, 60);
             Item.rare = ItemRarityID.Pink;
             Item.value = 100000;
         }

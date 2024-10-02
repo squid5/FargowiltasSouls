@@ -46,6 +46,8 @@
     <None Remove="Content\Projectiles\Masomode\GolemBoulder.png" />
     <None Remove="Content\Projectiles\Masomode\PlanteraSpikevine.png" />
     <None Remove="Content\Projectiles\Masomode\PlanteraSpikevineEnd.png" />
+    <None Remove="Content\Projectiles\Masomode\PlanteraSpikevineEndVanilla.png" />
+    <None Remove="Content\Projectiles\Masomode\PlanteraSpikevineVanilla.png" />
     <None Remove="Content\Projectiles\Masomode\PlanteraTooth.png" />
     <None Remove="Content\Projectiles\Masomode\PlanteraTooth2.png" />
     <None Remove="Content\Projectiles\Masomode\PlanteraToothSmall.png" />
