@@ -597,10 +597,10 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
                                 float extendedDelay = NPC.localAI[3] > 1 ? 90 : 40;
                                 float speed = NPC.localAI[3] > 1 ? 40 : 10;
                                 float offset = NPC.ai[2] % 2 == 0 ? 0 : 0.5f;
-                                if (FargoSoulsUtil.HostCheck)
+                                if (FargoSoulsUtil.HostCheck && NPC.HasPlayerTarget)
                                 {
                                     for (int i = 0; i < max; i++)
-                                        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.SafeDirectionTo(player.Center).RotatedBy(MathHelper.TwoPi / max * (i + offset)) * speed, ModContent.ProjectileType<AbomScytheFlaming>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), 0f, Main.myPlayer, baseDelay, baseDelay + extendedDelay);
+                                        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.SafeDirectionTo(player.Center).RotatedBy(MathHelper.TwoPi / max * (i + offset)) * speed, ModContent.ProjectileType<AbomScytheFlaming>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), 0f, Main.myPlayer, baseDelay, baseDelay + extendedDelay, ai2: NPC.target);
                                 }
                                 SoundEngine.PlaySound(SoundID.ForceRoarPitched, NPC.Center);
                             }
