@@ -1697,8 +1697,7 @@ ColossusSoul: {
 	// DisplayName: Colossus Soul
 	/* Tooltip:
 		'''
-		10% damage reduction
-		Increases life regeneration by 5
+		+100 max health, +10% damage reduction, increases life regeneration by 5
 		Grants immunity to knockback, several debuffs, Shimmering, and fall damage
 		Enemies are more likely to target you
 		Effects of Brain of Confusion, Star Veil, Charm of Myths and Bee Cloak
@@ -1724,9 +1723,7 @@ DimensionSoul: {
 	// DisplayName: Soul of Dimensions
 	/* Tooltip:
 		'''
-		Increases HP by 300
-		20% damage reduction
-		Increases life regeneration by 8
+		+300 max health, +20% damage reduction, increases life regeneration by 8
 		Grants immunity to knockback and several debuffs
 		Enemies are more likely to target you
 		Allows Supersonic running and infinite flight, [c/BC5252:and disables all of your jumps (togglable)]
@@ -3634,4 +3631,9 @@ ElectricWhip: {
 		Whip your minions to fire chain lightning at a nearby enemy, up to 4 times per swing
 		'The lifeblood of a defeated foe...'
 		''' */
+}
+
+TheDestroyer: {
+	// DisplayName: The Destroyer
+	// Tooltip: ""
 }

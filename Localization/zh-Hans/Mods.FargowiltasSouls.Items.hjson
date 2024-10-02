@@ -3630,3 +3630,8 @@ ElectricWhip: {
 		'The lifeblood of a defeated foe...'
 		''' */
 }
+
+TheDestroyer: {
+	// DisplayName: The Destroyer
+	// Tooltip: ""
+}

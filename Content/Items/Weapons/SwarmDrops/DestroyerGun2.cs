@@ -1,4 +1,8 @@
-﻿using FargowiltasSouls.Content.Projectiles.Minions;
+﻿using Fargowiltas.Items.Summons.SwarmSummons.Energizers;
+using Fargowiltas.Items.Tiles;
+using FargowiltasSouls.Content.Items.Materials;
+using FargowiltasSouls.Content.Items.Weapons.BossDrops;
+using FargowiltasSouls.Content.Projectiles.Minions;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
@@ -47,11 +51,10 @@ namespace FargowiltasSouls.Content.Items.Weapons.SwarmDrops
         public override void AddRecipes()
         {
             CreateRecipe()
-            .AddIngredient(null, "DestroyerGun")
-            .AddIngredient(null, "AbomEnergy", 10)
-            .AddIngredient(ModContent.Find<ModItem>("Fargowiltas", "EnergizerDestroy"))
-            .AddTile(ModContent.Find<ModTile>("Fargowiltas", "CrucibleCosmosSheet"))
-
+            .AddIngredient<DestroyerGun>()
+            .AddIngredient<AbomEnergy>(10)
+            .AddIngredient<EnergizerDestroy>()
+            .AddTile<CrucibleCosmosSheet>()
             .Register();
         }
     }
