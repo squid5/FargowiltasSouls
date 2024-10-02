@@ -59,7 +59,6 @@ namespace FargowiltasSouls.Content.Projectiles.Souls
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             Projectile.damage = (int)(Math.Round(Projectile.damage * 0.8));
-            //CHANGE THIS SOUND EFFECT!!!!!!!!!!!!!!!!!!!!!! TOO MUCH RAINBOW GUN
             SoundEngine.PlaySound(SoundID.DD2_MonkStaffSwing, target.Center);
 
             //vanilla muramasa slash spawn logic
