@@ -88,6 +88,8 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             if (WorldSavingSystem.SwarmActive)
                 return result;
 
+            Main.LocalPlayer.buffImmune[BuffID.Frozen] = true;
+
             if (npc.ai[3] == -1f)
             {
                 //if (Fargowiltas.Instance.MasomodeEXLoaded && npc.ai[1] >= 120f && npc.ai[1] < 419f) //skip summoning ritual LMAO
