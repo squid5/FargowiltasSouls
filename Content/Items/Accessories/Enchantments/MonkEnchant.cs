@@ -1,8 +1,10 @@
 ﻿using FargowiltasSouls.Content.Projectiles.Souls;
+using FargowiltasSouls.Content.UI.Elements;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using FargowiltasSouls.Core.Systems;
 using FargowiltasSouls.Core.Toggler.Content;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
 using Terraria.ID;
@@ -109,6 +111,9 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
 
             modPlayer.DashCD = 100;
             player.dashDelay = 100;
+
+            if (player.whoAmI == Main.myPlayer)
+                CooldownBarManager.Activate("MonkDash", ModContent.Request<Texture2D>("FargowiltasSouls/Content/Items/Accessories/Enchantments/MonkEnchant").Value, Color.Red, () => (float)modPlayer.DashCD / 100f, activeFunction: () => player.HasEffect<MonkDashEffect>());
             if (player.FargoSouls().IsDashingTimer < 20)
                 player.FargoSouls().IsDashingTimer = 20;
 
