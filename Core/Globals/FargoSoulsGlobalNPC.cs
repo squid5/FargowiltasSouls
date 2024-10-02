@@ -1128,7 +1128,7 @@ namespace FargowiltasSouls.Core.Globals
                     break;
 
                 case NPCID.TheDestroyer:
-                    npcLoot.Add(BossDrop(ModContent.ItemType<DestroyerGun>()));
+                    npcLoot.Add(BossDrop(ModContent.ItemType<ElectricWhip>()));
                     break;
 
                 case NPCID.SkeletronPrime:
