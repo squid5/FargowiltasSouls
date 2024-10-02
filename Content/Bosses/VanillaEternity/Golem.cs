@@ -537,6 +537,8 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     npc.position -= Vector2.Normalize(npc.velocity) * (npc.velocity.Length() - 10);
             }
 
+            npc.chaseable = false;
+
             if (npc.ai[0] == 0f && DoAttackOnFistImpact)
             {
                 DoAttackOnFistImpact = false;
