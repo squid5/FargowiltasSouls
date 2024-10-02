@@ -165,7 +165,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
 
             if (player.ownedProjectileCounts[ModContent.ProjectileType<SpectreGhostProj>()] <= 0)
                 Projectile.NewProjectile(player.GetSource_EffectItem<SpectreEffect>(), player.Center.X, player.Center.Y, 0f, 0f, ModContent.ProjectileType<SpectreGhostProj>(), 0, 0, Main.myPlayer);
-            player.moveSpeed *= 2f;
+            player.moveSpeed *= 1.3f;
         }
 
         /*
