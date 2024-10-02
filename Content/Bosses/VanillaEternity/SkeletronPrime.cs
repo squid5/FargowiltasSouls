@@ -550,6 +550,8 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             if (npc.timeLeft < 600)
                 npc.timeLeft = 600;
 
+            npc.chaseable = false;
+
             if (npc.dontTakeDamage)
             {
                 if (npc.buffType[0] != 0)
