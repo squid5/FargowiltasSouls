@@ -92,7 +92,18 @@ namespace FargowiltasSouls.Content.Items.Accessories.Masomode
                 if (player.velocity.Y == 0)
                     Projectile.NewProjectile(player.GetSource_EffectItem<DeerclawpsEffect>(), pos, vel, type, dam, 4f, Main.myPlayer, ai0, ai1);
                 else
-                    Projectile.NewProjectile(player.GetSource_EffectItem<DeerclawpsEffect>(), pos, vel * (Main.rand.NextBool() ? 1 : -1), type, dam, 4f, Main.myPlayer, ai0, ai1 / 2);
+                {
+                    int npcID = FargoSoulsUtil.FindClosestHostileNPC(pos, 300, true, true);
+                    if (!npcID.IsWithinBounds(Main.maxNPCs))
+                        return;
+                    NPC npc = Main.npc[npcID];
+                    if (!npc.Alive())
+                        return;
+                    vel = pos.DirectionTo(npc.Center) * vel.Length();
+                    Projectile.NewProjectile(player.GetSource_EffectItem<DeerclawpsEffect>(), pos, vel.RotatedByRandom(MathHelper.PiOver2 * 0.3f), type, dam, 4f, Main.myPlayer, ai0, ai1 / 2);
+
+                }
+                    
             }
         }
     }

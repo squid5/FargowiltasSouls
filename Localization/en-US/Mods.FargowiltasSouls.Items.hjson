@@ -1133,7 +1133,7 @@ Deerclawps: {
 	Tooltip:
 		'''
 		Grants immunity to Slow and Frozen
-		Dashing leaves a trail of ice spikes
+		Dashing leaves a trail of ice spikes, pointed towards the closest enemy if airborne
 		Double tap DOWN in the air to fastfall
 		Fastfall will create a glacial eruption on impact
 		'The trimmed nails of a defeated foe'
