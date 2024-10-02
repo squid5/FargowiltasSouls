@@ -47,7 +47,9 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.Night
                     Vector2 previousPos = UsedDashPositions <= 1 ? npc.Center : DashPositions[UsedDashPositions - 2];
                     //Vector2 dir = Vector2.Lerp(npc.DirectionTo(Main.player[npc.target].Center), previousPos.DirectionTo(Main.player[npc.target].Center), 0.5f);
                     Vector2 dir = npc.DirectionTo(Main.player[npc.target].Center);
-                    DashPositions[UsedDashPositions - 1] = previousPos + dir * 45;
+                    if (Collision.CanHitLine(previousPos, 1, 1, previousPos + dir * 45, 1, 1))
+                        previousPos += dir * 45;
+                    DashPositions[UsedDashPositions - 1] = previousPos;
                 }
                 if (UsedDashPositions >= DashPositionCount && Timer % 1 == 0) // dash
                 {
