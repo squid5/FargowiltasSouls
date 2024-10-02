@@ -734,7 +734,8 @@ WizardEnchant: {
 	// DisplayName: Wizard Enchantment
 	/* Tooltip:
 		'''
-		Upgrades the enchantment directly below this accessory to its Force effect
+		Upgrades the Enchantment in the accessory slot directly below this
+		Upgraded effects are stated in the description
 		'We love casting spells'
 		''' */
 }
@@ -1101,7 +1102,6 @@ ChaliceoftheMoon: {
 		[i:FargowiltasSouls/MagicalBulb] Increases life regeneration based on how much light you receive
 		[i:FargowiltasSouls/LihzahrdTreasureBox] Double tap DOWN in the air to fastfall, creating an explosion on landing after falling a certain distance
 		[i:FargowiltasSouls/CelestialRune] You fire additional attacks depending on weapon type and erupt into Ancient Visions when injured
-		[i:FargowiltasSouls/MagicalBulb] Summons a friendly plant to fight at your side
 		'Always watching'
 		''' */
 }
@@ -1133,7 +1133,7 @@ Deerclawps: {
 	/* Tooltip:
 		'''
 		Grants immunity to Slow and Frozen
-		Dashing leaves a trail of ice spikes
+		Dashing leaves a trail of ice spikes, pointed towards the closest enemy if airborne
 		Double tap DOWN in the air to fastfall
 		Fastfall will create a glacial eruption on impact
 		'The trimmed nails of a defeated foe'
@@ -1218,6 +1218,7 @@ GalacticGlobe: {
 		'''
 		Grants immunity to Nullification Curse, Flipped, Illuminated, Unstable, and Curse of the Moon
 		Grants most standard potion buffs (works from inventory and vanity)
+		Summons the true eyes of Cthulhu to protect you
 		Increases flight time by 100%
 		'Consume it'
 		''' */
@@ -1272,7 +1273,7 @@ HeartoftheMasochist: {
 	// DisplayName: Heart of the Master
 	/* Tooltip:
 		'''
-		Grants immunity to [i:FargowiltasSouls/PumpkingsCape] Living Wasteland, [i:FargowiltasSouls/IceQueensCrown] Hypothermia, [i:FargowiltasSouls/SaucerControlConsole] Electrified, Distorted, [i:FargowiltasSouls/BetsysHeart] Oozed, Withered Weapon, Withered Armor
+		Grants immunity to [i:FargowiltasSouls/PumpkingsCape] Living Wasteland, [i:FargowiltasSouls/IceQueensCrown] Hypothermia, Frozen, [i:FargowiltasSouls/SaucerControlConsole] Electrified, Distorted, [i:FargowiltasSouls/BetsysHeart] Oozed, Withered Weapon, Withered Armor
 		[i:FargowiltasSouls/MutantAntibodies] Wet, Feral Bite, Mutant Nibble, Oceanic Maul, water debuffs, [i:FargowiltasSouls/PrecisionSeal] Smite, [i:FargowiltasSouls/GalacticGlobe] Nullification Curse, Flipped, Illuminated, Unstable, and Curse of the Moon	
 		[i:FargowiltasSouls/PumpkingsCape] [i:FargowiltasSouls/MutantAntibodies] [i:FargowiltasSouls/IceQueensCrown] Increases damage and crit chance by 10%, and damage reduction by 5%
 		[i:FargowiltasSouls/PumpkingsCape] Right Click to guard and parry attacks for up to 200 damage. Parries heal you based on damage. While guarding, gain an aura of Rotting
@@ -1292,7 +1293,7 @@ IceQueensCrown: {
 	// DisplayName: Ice Queen's Crown
 	/* Tooltip:
 		'''
-		Grants immunity to Hypothermia
+		Grants immunity to Hypothermia and Frozen
 		Increases damage reduction by 5%
 		Graze attacks to gain a bomb that will freeze almost all enemies and projectiles
 		Press the Bomb key to use your freeze bomb
@@ -1700,7 +1701,7 @@ ColossusSoul: {
 		Increases life regeneration by 5
 		Grants immunity to knockback, several debuffs, Shimmering, and fall damage
 		Enemies are more likely to target you
-		Effects of Brain of Confusion, Star Veil, and Bee Cloak
+		Effects of Brain of Confusion, Star Veil, Charm of Myths and Bee Cloak
 		Effects of Shiny Stone, Paladin's Shield, and Frozen Turtle Shell
 		'Nothing can stop you'
 		''' */

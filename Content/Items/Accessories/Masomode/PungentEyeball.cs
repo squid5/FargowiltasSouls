@@ -39,6 +39,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Masomode
     {
         public override Header ToggleHeader => Header.GetHeader<LumpofFleshHeader>();
         public override int ToggleItemType => ModContent.ItemType<PungentEyeball>();
+        public override bool MutantsPresenceAffects => true;
         public override void PostUpdateEquips(Player player)
         {
             if (player.whoAmI == Main.myPlayer)

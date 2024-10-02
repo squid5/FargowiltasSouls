@@ -14,7 +14,7 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
     {
         public override string Texture => FargoSoulsUtil.AprilFools ?
             "FargowiltasSouls/Content/Bosses/MutantBoss/MutantCrystalLeaf_April"
-            : "Terraria/Images/Projectile_226";
+            : "FargowiltasSouls/Content/NPCs/EternityModeNPCs/CrystalLeaf";
 
         public override void SetStaticDefaults()
         {

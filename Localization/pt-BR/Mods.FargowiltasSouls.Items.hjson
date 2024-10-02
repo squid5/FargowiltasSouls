@@ -709,7 +709,8 @@ WizardEnchant: {
 	// DisplayName: Wizard Enchantment
 	/* Tooltip:
 		'''
-		Upgrades the enchantment directly below this accessory to its Force effect
+		Upgrades the Enchantment in the accessory slot directly below this
+		Upgraded effects are stated in the description
 		'We love casting spells'
 		''' */
 }
