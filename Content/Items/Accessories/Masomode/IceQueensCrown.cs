@@ -36,13 +36,14 @@ namespace FargowiltasSouls.Content.Items.Accessories.Masomode
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.endurance += 0.05f;
-            player.buffImmune[ModContent.BuffType<HypothermiaBuff>()] = true;
             AddEffects(player, Item);
         }
 
         public static void AddEffects(Player player, Item item)
         {
             FargoSoulsPlayer fargoPlayer = player.FargoSouls();
+            player.buffImmune[ModContent.BuffType<HypothermiaBuff>()] = true;
+            player.buffImmune[BuffID.Frozen] = true;
             fargoPlayer.IceQueensCrown = true;
             if (player.AddEffect<IceQueenGraze>(item))
             {
