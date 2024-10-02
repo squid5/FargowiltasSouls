@@ -952,8 +952,8 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             return base.PreDraw(npc, spriteBatch, screenPos, drawColor);
         }
         public static float DR(NPC npc) => 
-            npc.GetLifePercent() < 0.25f ? 0.4f // phase 3
-            : npc.GetLifePercent() < 0.5f ? 0.2f // phase 2
+            npc.GetLifePercent() < 0.25f ? 0.55f // phase 3
+            : npc.GetLifePercent() < 0.5f ? 0.3f // phase 2
             : -0.1f; // phase 1
         public override void ModifyIncomingHit(NPC npc, ref NPC.HitModifiers modifiers)
         {
