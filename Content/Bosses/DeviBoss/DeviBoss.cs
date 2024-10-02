@@ -662,7 +662,7 @@ namespace FargowiltasSouls.Content.Bosses.DeviBoss
                                 if (WorldSavingSystem.MasochistModeReal)
                                     ai1 += 3 * Math.Abs(i);
                                 Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, spawnVel.RotatedBy(Math.PI / 7 * i),
-                                    ModContent.ProjectileType<FakeHeart2>(), damage, 0f, Main.myPlayer, 20, ai1);
+                                    ModContent.ProjectileType<FakeHeart2>(), damage, 0f, Main.myPlayer, 20, ai1, ai2: NPC.target);
                             }
                             if (Phase > 1)
                             {
@@ -670,7 +670,7 @@ namespace FargowiltasSouls.Content.Bosses.DeviBoss
                                 for (int i = -maxP2; i <= maxP2; i++)
                                 {
                                     Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, 1.5f * spawnVel.RotatedBy(Math.PI / 10 * i),
-                                        ModContent.ProjectileType<FakeHeart2>(), damage, 0f, Main.myPlayer, 20, 40 + 5 * Math.Abs(i));
+                                        ModContent.ProjectileType<FakeHeart2>(), damage, 0f, Main.myPlayer, 20, 40 + 5 * Math.Abs(i), ai2: NPC.target);
                                 }
                             }
                         }
