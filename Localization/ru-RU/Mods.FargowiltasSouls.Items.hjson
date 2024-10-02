@@ -3586,3 +3586,8 @@ CoffinPainting: {
 	// DisplayName: Coffin Painting
 	// Tooltip: ""
 }
+
+ElectricWhip: {
+	// DisplayName: Electric Whip
+	// Tooltip: ""
+}

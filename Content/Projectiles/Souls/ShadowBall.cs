@@ -22,7 +22,7 @@ namespace FargowiltasSouls.Content.Projectiles.Souls
             Projectile.height = 16;
             Projectile.aiStyle = 1;
             Projectile.friendly = true;
-            Projectile.minion = true;
+            //Projectile.minion = true;
             Projectile.penetrate = 1;
             Projectile.timeLeft = 300;
             AIType = ProjectileID.Bullet;
