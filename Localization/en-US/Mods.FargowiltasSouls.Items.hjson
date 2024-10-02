@@ -698,7 +698,7 @@ TurtleEnchant: {
 	Tooltip:
 		'''
 		100% of contact damage is reflected
-		When standing still and not attacking, you will enter your shell
+		When grounded, not pressing movement keys and not attacking, you will enter your shell
 		While in your shell, you will gain 90% damage resistance 
 		Additionally you will destroy incoming projectiles and deal 10x more thorns damage
 		The shell lasts at least 1 second and up to 20 attacks blocked
