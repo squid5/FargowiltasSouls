@@ -154,7 +154,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
                     }
                     else
                     {
-                        teleportPos.X -= 18 * direction;
+                        //teleportPos.X -= 18 * direction;
                         tryGoThroughWalls = true;
                         break;
                     }
@@ -174,7 +174,6 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
                         }
                     }
                 }
-
                 if (teleportPos.X > 50 && teleportPos.X < (double)(Main.maxTilesX * 16 - 50) && teleportPos.Y > 50 && teleportPos.Y < (double)(Main.maxTilesY * 16 - 50))
                 {
                     FargoSoulsUtil.GrossVanillaDodgeDust(player);
