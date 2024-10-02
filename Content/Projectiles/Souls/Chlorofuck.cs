@@ -110,7 +110,10 @@ namespace FargowiltasSouls.Content.Projectiles.Souls
                     num404 *= num406;
                     num405 *= num406;
                     if (Projectile.owner == Main.myPlayer)
+                    {
                         Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, new Vector2(num404, num405), ProjectileID.CrystalLeafShot, Projectile.damage, Projectile.knockBack, Projectile.owner);
+                    }
+                        
                     Projectile.ai[0] = Cooldown;
                 }
             }
