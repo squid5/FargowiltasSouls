@@ -1009,7 +1009,7 @@ AgitatingLens: {
 	Tooltip:
 		'''
 		Grants immunity to Berserked
-		While dashing or running quickly you will create a trail of demon scythes
+		While dashing or running quickly you will create a trail of demon scythes, dealing magic damage
 		Press the Debuff Install key while holding UP and DOWN to go berserk
 		When berserk, massively increased offenses, massively lowered defenses, and you cannot stop attacking or moving
 		Berserk state lasts for 8 seconds and you are stunned for 2 seconds afterwards
@@ -1578,7 +1578,7 @@ SparklingAdoration: {
 		Grants immunity to Lovestruck and Fake Hearts
 		Graze attacks to gain up to x1.25 increased damage
 		Damage bonus decreases over time and is fully lost on hit
-		Your attacks periodically summon life-draining hearts
+		Your attacks periodically summon life-draining hearts, dealing magic damage
 		'With all of your emotion!'
 		'''
 }
