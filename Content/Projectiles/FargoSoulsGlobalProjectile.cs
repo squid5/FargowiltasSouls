@@ -444,8 +444,13 @@ namespace FargowiltasSouls.Content.Projectiles
 
             if (projectile.bobber && CanSplit && source is EntitySource_ItemUse)
             {
-                if (player.whoAmI == Main.myPlayer && modPlayer.FishSoul2)
-                    SplitProj(projectile, 11, MathHelper.Pi / 3, 1);
+                int splitCount = 0;
+                if (modPlayer.FishSoul2)
+                    splitCount = 11;
+                else if (modPlayer.FishSoul1 && modPlayer.ForceEffect<AnglerEnchant>())
+                    splitCount = 6;
+                if (player.whoAmI == Main.myPlayer && splitCount > 0)
+                    SplitProj(projectile, splitCount, MathHelper.Pi / 3, 1);
             }
 
             // Fix for extended sword hitboxes having a maximum range for some reason
