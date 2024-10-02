@@ -306,7 +306,7 @@ MeteorEnchant: {
 	/* Tooltip:
 		'''
 		Increases your movement speed and acceleration, and decreases your momentum
-		Hitting an enemy occasionally drops a meteor on them
+		Hitting an enemy occasionally drops a meteor on them, dealing magic damage
 		Meteor cooldown is decreased faster the more you move around
 		'Drop a draco on 'em'
 		''' */

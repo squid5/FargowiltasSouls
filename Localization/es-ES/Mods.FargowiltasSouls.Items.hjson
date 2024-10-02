@@ -37,8 +37,8 @@ AncientShadowEnchant: {
 	/* Tooltip:
 		'''
 		Your attacks may inflict Darkness on enemies
-		Darkened enemies occasionally fire shadowflame tentacles at other enemies
-		Three Shadow Orbs will orbit around you
+		Darkened enemies occasionally fire shadowflame tentacles at other enemies, dealing magic damage
+		Three magic Shadow Orbs will orbit around you
 		'Archaic, yet functional'
 		''' */
 }
@@ -96,7 +96,7 @@ BorealWoodEnchant: {
 	// DisplayName: Boreal Wood Enchantment
 	/* Tooltip:
 		'''
-		Attacks will periodically be accompanied by several snowballs
+		Attacks will periodically be accompanied by several snowballs, dealing ranged damage
 		'The cooler wood'
 		''' */
 }
@@ -194,7 +194,7 @@ ForbiddenEnchant: {
 	// DisplayName: Forbidden Enchantment
 	/* Tooltip:
 		'''
-		Double tap down to call an ancient storm to the cursor location which scales with magic and summon damage
+		Double tap down to call an ancient storm to the cursor location, which deals magic and summon damage
 		Any projectiles shot through your storm deal 1.3x damage
 		Touch it yourself to add back missing wing time
 		Storm can be resummoned after touching the ground
@@ -219,7 +219,7 @@ FrostEnchant: {
 		'''
 		Your attacks briefly inflict Frostburn
 		Icicles will start to appear around you
-		Attacking will launch them towards the cursor
+		Attacking will launch them towards the cursor, dealing magic damage
 		When they hit an enemy they are inflicted with Frostbite and frozen solid
 		'Let's coat the world in a deep freeze'
 		''' */
@@ -229,7 +229,7 @@ GladiatorEnchant: {
 	// DisplayName: Gladiator Enchantment
 	/* Tooltip:
 		'''
-		Spears will rain down on struck enemies
+		Spears will rain down on struck enemies, dealing ranged damage
 		Double tap down to place a banner that lasts 15 seconds
 		While close to the banner, spear rain is stronger
 		Being close to the banner also grants knockback immunity, +5% damage reduction and +5% damage
@@ -314,7 +314,7 @@ MeteorEnchant: {
 	/* Tooltip:
 		'''
 		Increases your movement speed and acceleration, and decreases your momentum
-		Hitting an enemy occasionally drops a meteor on them
+		Hitting an enemy occasionally drops a meteor on them, dealing magic damage
 		Meteor cooldown is decreased faster the more you move around
 		'Drop a draco on 'em'
 		''' */
@@ -349,7 +349,7 @@ MonkEnchant: {
 		Allows the ability to dash
 		Double tap a direction
 		You are briefly immune to damage and debuffs after dashing
-		Dash through an enemy to deal massive damage
+		Dash through an enemy to deal massive melee damage
 		Dash cooldown is much longer than normal dashes
 		Lightning Aura can now crit and strikes faster
 		'Return to Monk'
@@ -405,7 +405,7 @@ ObsidianEnchant: {
 		'''
 		Grants immunity to lava
 		You have normal movement and can swim in lava
-		While standing in lava or lava wet, your attacks spawn explosions and are accompanied by balls of fire
+		While standing in lava or lava wet, your attacks spawn explosions and are accompanied by balls of fire, dealing magic damage
 		Effects of Ash Wood Enchantment
 		'The earth calls'
 		''' */
@@ -490,7 +490,7 @@ RedRidingEnchant: {
 		'''
 		Attacks ignore 10 enemy defense and deal 5 flat extra damage
 		Each successive attack ignores an additional 10 defense and deals 5 more damage
-		Upon reaching 10 stacks, spawn a rain of arrows
+		Upon reaching 10 stacks, spawn a rain of arrows, dealing ranged damage
 		The arrow type defaults to Venom or whatever is first in your inventory
 		Homing and minion attacks do not increase these bonuses
 		Missing any attack will reset these bonuses
@@ -513,7 +513,7 @@ ShadewoodEnchant: {
 	/* Tooltip:
 		'''
 		You have an aura of Bleeding
-		Enemies struck while Bleeding spew damaging blood
+		Enemies struck while Bleeding spew damaging blood, dealing melee damage
 		'Surprisingly clean'
 		''' */
 }
@@ -523,7 +523,7 @@ ShadowEnchant: {
 	/* Tooltip:
 		'''
 		Two Shadow Orbs will orbit around you
-		Attacking a Shadow Orb will cause it to release a burst of homing shadow energy
+		Attacking a Shadow Orb will cause it to release a burst of homing shadow energy, dealing magic damage
 		'You feel your body slip into the deepest of shadows'
 		''' */
 }
@@ -535,7 +535,7 @@ ShinobiEnchant: {
 		Allows the ability to teleport dash
 		Double tap a direction
 		You are briefly immune to damage and debuffs after dashing
-		Teleport through an enemy to deal massive damage
+		Teleport through an enemy to deal massive melee damage
 		Dash cooldown is longer than normal dashes
 		Dash is longer and deals more damage
 		Dash into any walls to teleport through them to the next opening
@@ -550,7 +550,7 @@ ShroomiteEnchant: {
 		'''
 		Mushrooms heal 50 HP and consuming them grants Mushroom Power for 20 seconds
 		Mushroom Power grants +20% damage and critical strike chance
-		Piercing projectiles spawn a cloud of mushrooms on their first hit, with a short cooldown
+		Piercing projectiles spawn a cloud of mushrooms on their first hit, dealing ranged damage, with a short cooldown
 		'Made with real shrooms!'
 		''' */
 }
@@ -597,7 +597,7 @@ SpectreEnchant: {
 		If you reach zero HP you will revive as a ghost with 100 HP, self-cleanse debuffs, and spawn several spirits
 		As a ghost you are immune, faster, have infinite flight and can't attack, lasting for 5 seconds
 		You will also spawn a few spirits on every hit
-		Collect the spirits to heal for 20 HP each and send them towards the nearest enemy
+		Collect the spirits to heal for 20 HP each and send them towards the nearest enemy, dealing magic damage
 		'Their lifeforce will be their undoing'
 		''' */
 }
@@ -673,7 +673,7 @@ TitaniumEnchant: {
 	// DisplayName: Titanium Enchantment
 	/* Tooltip:
 		'''
-		Attacking generates a defensive barrier of up to 20 titanium shards
+		Attacking generates a defensive barrier of up to 20 titanium shards that deal melee damage
 		When you reach the maximum amount, you gain resistance to most debuffs on hit and 10-30% damage resistance
 		Damage resistance increases the closer to the enemy you are when hit
 		Resistance effects remain for a few seconds after initial hit
@@ -698,7 +698,7 @@ TurtleEnchant: {
 	/* Tooltip:
 		'''
 		100% of contact damage is reflected
-		When standing still and not attacking, you will enter your shell
+		When grounded, not pressing movement keys and not attacking, you will enter your shell
 		While in your shell, you will gain 90% damage resistance 
 		Additionally you will destroy incoming projectiles and deal 10x more thorns damage
 		The shell lasts at least 1 second and up to 20 attacks blocked
@@ -1009,7 +1009,7 @@ AgitatingLens: {
 	/* Tooltip:
 		'''
 		Grants immunity to Berserked
-		While dashing or running quickly you will create a trail of demon scythes
+		While dashing or running quickly you will create a trail of demon scythes, dealing magic damage
 		Press the Debuff Install key while holding UP and DOWN to go berserk
 		When berserk, massively increased offenses, massively lowered defenses, and you cannot stop attacking or moving
 		Berserk state lasts for 8 seconds and you are stunned for 2 seconds afterwards
@@ -1578,7 +1578,7 @@ SparklingAdoration: {
 		Grants immunity to Lovestruck and Fake Hearts
 		Graze attacks to gain up to x1.25 increased damage
 		Damage bonus decreases over time and is fully lost on hit
-		Your attacks periodically summon life-draining hearts
+		Your attacks periodically summon life-draining hearts, dealing magic damage
 		'With all of your emotion!'
 		''' */
 }

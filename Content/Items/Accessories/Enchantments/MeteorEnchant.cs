@@ -145,11 +145,10 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
             //can retarget better at them, but dont aim meteors upwards
             Vector2 predictive = Main.rand.NextFloat(10f, 30f) * target.velocity;
             pos.X += predictive.X;
-            Vector2 targetPos = target.Center + predictive;
+            Vector2 targetPos = target.Center;
             if (pos.Y < targetPos.Y)
             {
-                Vector2 accurateVel = vel.Length() * pos.SafeDirectionTo(targetPos);
-                vel = Vector2.Lerp(vel, accurateVel, 0.9f);
+                vel = FargoSoulsUtil.PredictiveAim(pos, targetPos, target.velocity / 3, 12f);
             }
             SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/ThrowShort"), pos);
 
