@@ -93,6 +93,7 @@ namespace FargowiltasSouls.Content.Items.Misc
     #endregion
 
     #region Terraria Soul
+    /*
     public class TimberBooster : Booster // damage
     {
         public override int Frames => 6;
@@ -183,5 +184,6 @@ namespace FargowiltasSouls.Content.Items.Misc
             boosterPlayer.CosmosTimer = TerrariaDuration;
         }
     }
+    */
     #endregion
 }
