@@ -368,6 +368,8 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
         void SprayHomingBabies(NPC npc)
         {
+            if (!npc.HasPlayerTarget)
+                return;
             const int max = 30;
             float modifier = 1f - (float)npc.life / npc.lifeMax;
             modifier *= 4f / 3f; //scaling maxes at 25% life
@@ -379,7 +381,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                 float speed = Main.rand.NextFloat(3f, 9f);
                 Vector2 velocity = speed * npc.DirectionFrom(Main.player[npc.target].Center).RotatedBy(Math.PI * (Main.rand.NextDouble() - 0.5));
                 float ai1 = speed / (60f + Main.rand.NextFloat(actualNumberToSpawn * 2));
-                Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, velocity, ModContent.ProjectileType<SkeletronGuardian>(), FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage, 0.8f), 0f, Main.myPlayer, 0f, ai1);
+                Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, velocity, ModContent.ProjectileType<SkeletronGuardian>(), FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage, 0.8f), 0f, Main.myPlayer, 0f, ai1, ai2: npc.target);
             }
         }
 
