@@ -47,7 +47,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Masomode
             //player.buffImmune[BuffID.ChaosState] = true;
 
             player.AddEffect<ChalicePotionEffect>(Item);
-
+            player.AddEffect<MasoTrueEyeMinion>(Item);
 
             player.FargoSouls().GravityGlobeEXItem = Item;
             player.FargoSouls().WingTimeModifier += 1f;
@@ -107,6 +107,17 @@ namespace FargowiltasSouls.Content.Items.Accessories.Masomode
                 int duration = buff == BuffID.Lucky ? 60 * 60 * 15 : 2;
                 player.AddBuff(buff, duration);
             }
+        }
+    }
+    public class MasoTrueEyeMinion : AccessoryEffect
+    {
+        public override Header ToggleHeader => Header.GetHeader<HeartHeader>();
+        public override int ToggleItemType => ModContent.ItemType<GalacticGlobe>();
+        public override bool MinionEffect => true;
+        public override void PostUpdateEquips(Player player)
+        {
+            if (!player.HasBuff<SouloftheMasochistBuff>())
+                player.AddBuff(ModContent.BuffType<TrueEyesBuff>(), 2);
         }
     }
 }
