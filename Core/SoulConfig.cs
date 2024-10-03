@@ -51,7 +51,7 @@ namespace FargowiltasSouls.Core
 
         [Increment(1f)]
         [Range(0f, max4kY)]
-        [DefaultValue(300f)]
+        [DefaultValue(400f)]
         public float CooldownBarsY;
 
         #region maso

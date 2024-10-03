@@ -4048,6 +4048,8 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
             var target = Main.LocalPlayer;
             var blackTile = TextureAssets.MagicPixel;
             var diagonalNoise = FargosTextureRegistry.WavyNoise;
+            if (!blackTile.IsLoaded || !diagonalNoise.IsLoaded)
+                return;
             var maxOpacity = NPC.Opacity;
 
             ManagedShader borderShader = ShaderManager.GetShader("FargowiltasSouls.MutantP1Aura");

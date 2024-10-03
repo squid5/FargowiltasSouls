@@ -120,6 +120,8 @@ namespace FargowiltasSouls.Content.Projectiles.Minions
             var target = Main.LocalPlayer;
             var blackTile = TextureAssets.MagicPixel;
             var diagonalNoise = FargosTextureRegistry.WavyNoise;
+            if (!blackTile.IsLoaded || !diagonalNoise.IsLoaded)
+                return false;
             var maxOpacity = ModContent.GetInstance<FargoClientConfig>().TransparentFriendlyProjectiles;
 
             ManagedShader borderShader = ShaderManager.GetShader("FargowiltasSouls.GenericInnerAura");
