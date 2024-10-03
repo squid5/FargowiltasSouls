@@ -161,13 +161,21 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
                 else if (player.controlDown)
                     player.velocity.Y = dashSpeed * 0.7f;
             }
-                
+
+            if (player.ForceEffect<CrystalAssassinDash>() && modPlayer.CrystalDashFirstStrikeCD <= 0)
+            {
+                player.AddBuff(ModContent.BuffType<FirstStrikeBuff>(), 60);
+                modPlayer.CrystalDashFirstStrikeCD = 60 * 5;
+            }
+
+
             player.velocity.X = dashSpeed * direction;
             if (modPlayer.IsDashingTimer < 20)
                 modPlayer.IsDashingTimer = 20;
 
-            player.dashDelay = 60;
-            modPlayer.DashCD = 60;
+            int cd = player.ForceEffect<CrystalAssassinDash>() ? 30 : 60;
+            player.dashDelay = cd;
+            modPlayer.DashCD = cd;
 
             if (Main.netMode == NetmodeID.MultiplayerClient)
                 NetMessage.SendData(MessageID.PlayerControls, number: player.whoAmI);

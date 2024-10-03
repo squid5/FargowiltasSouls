@@ -563,6 +563,9 @@ namespace FargowiltasSouls.Core.ModPlayers
             if (CoyoteTime > 0)
                 CoyoteTime--;
 
+            if (CrystalDashFirstStrikeCD > 0)
+                CrystalDashFirstStrikeCD--;
+
             if (GoldEnchMoveCoins)
             {
                 ChestUI.MoveCoins(Player.inventory, Player.bank.item, ContainerTransferContext.FromUnknown(Player));
