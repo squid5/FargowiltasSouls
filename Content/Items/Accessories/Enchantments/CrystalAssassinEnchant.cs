@@ -51,7 +51,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
             player.AddEffect<CrystalAssassinDash>(item);
             player.AddEffect<CrystalDiagonalDash>(item);
         }
-
+        /*
         public static void SmokeBombKey(FargoSoulsPlayer modPlayer)
         {
             //throw smoke bomb
@@ -123,6 +123,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
                 }
             }
         }
+        */
 
         public override void AddRecipes()
         {

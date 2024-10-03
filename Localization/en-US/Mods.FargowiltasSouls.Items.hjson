@@ -163,8 +163,7 @@ CrystalAssassinEnchant: {
 		Allows the ability to dash
 		Dash cancels vertical movement and can be angled diagonally
 		Jump while dashing into ground to get a speed boost
-		Use Assassin hotkey to throw a smoke bomb, use it again to teleport to it and gain the First Strike Buff
-		Using the Rod of Discord will also grant this buff
+		Using the Rod of Discord will grant the First Strike Buff
 		First Strike ensures your next attack hits a vital spot dealing 3x damage and reducing defense by 10
 		'Reach for the summit'
 		'''

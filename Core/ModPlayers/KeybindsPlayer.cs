@@ -143,8 +143,8 @@ namespace FargowiltasSouls.Core.ModPlayers
 
             #region blocked by stuns
 
-            if (FargowiltasSouls.SmokeBombKey.JustPressed && CrystalEnchantActive && SmokeBombCD == 0)
-                CrystalAssassinEnchant.SmokeBombKey(this);
+            //if (FargowiltasSouls.SmokeBombKey.JustPressed && CrystalEnchantActive && SmokeBombCD == 0)
+            //    CrystalAssassinEnchant.SmokeBombKey(this);
 
             if (FargowiltasSouls.SpecialDashKey.JustPressed && (BetsysHeartItem != null || QueenStingerItem != null))
                 SpecialDashKey();

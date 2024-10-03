@@ -3572,7 +3572,7 @@ CoffinPainting: {
 }
 
 ElectricWhip: {
-	// DisplayName: Electric Whip
+	// DisplayName: Voltaic Lasher
 	/* Tooltip:
 		'''
 		Whip your minions to fire chain lightning at a nearby enemy, up to 4 times per swing
@@ -3586,6 +3586,6 @@ TheDestroyer: {
 		'''
 		Whip your minions to fire a laser at a nearby enemy, up to 6 times per swing
 		Every 20th swing, the destroyer breaks loose and tracks your mouse for 5 seconds
-		'The lifeblood of a defeated foe...'
+		'The reward for slaughtering many..'
 		''' */
 }
