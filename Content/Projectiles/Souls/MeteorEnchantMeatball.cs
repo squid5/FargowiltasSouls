@@ -29,9 +29,9 @@ namespace FargowiltasSouls.Content.Projectiles.Souls
             Projectile.width = 80;
             Projectile.height = 80;
             Projectile.penetrate = 1;
-            Projectile.usesIDStaticNPCImmunity = true;
-            Projectile.idStaticNPCHitCooldown = 120;
-            Projectile.FargoSouls().noInteractionWithNPCImmunityFrames = true;
+            //Projectile.usesIDStaticNPCImmunity = true;
+            //Projectile.idStaticNPCHitCooldown = 120;
+            //Projectile.FargoSouls().noInteractionWithNPCImmunityFrames = true;
             Projectile.FargoSouls().CanSplit = false;
             Projectile.extraUpdates = 2;
 
