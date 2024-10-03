@@ -153,7 +153,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
         public static void CrystalDash(Player player, int direction)
         {
             FargoSoulsPlayer modPlayer = player.FargoSouls();
-            float dashSpeed = 27f;
+            float dashSpeed = 22f;
             if (player.HasEffect<CrystalDiagonalDash>())
             {
                 player.velocity.Y *= 0;
