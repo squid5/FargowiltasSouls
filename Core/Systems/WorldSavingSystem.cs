@@ -52,6 +52,7 @@ namespace FargowiltasSouls.Core.Systems
         internal static bool downedAnyBoss;
         internal static bool[] downedBoss = new bool[Enum.GetValues(typeof(Downed)).Length];
         internal static bool wOFDroppedDeviGift2;
+        internal static bool shiftingSandEvent;
 
         public static bool EternityMode { get; set; }
 
@@ -62,6 +63,8 @@ namespace FargowiltasSouls.Core.Systems
         public static int SkipMutantP1 { get => skipMutantP1; set => skipMutantP1 = value; }
 
         public static bool WOFDroppedDeviGift2 { get => wOFDroppedDeviGift2; set => wOFDroppedDeviGift2 = value; }
+
+        public static bool ShiftingSandEvent { get => shiftingSandEvent; set => shiftingSandEvent = value; }
 
         public static bool[] DownedBoss { get => downedBoss; set => downedBoss = value; }
 
@@ -126,6 +129,7 @@ namespace FargowiltasSouls.Core.Systems
 
             DownedAnyBoss = false;
             WOFDroppedDeviGift2 = false;
+            ShiftingSandEvent = false;
 
             PlacedMutantStatue = false;
         }
@@ -182,6 +186,10 @@ namespace FargowiltasSouls.Core.Systems
 
             if (WOFDroppedDeviGift2)
                 downed.Add("WOFDroppedDeviGift2");
+
+            if (ShiftingSandEvent)
+                downed.Add("ShiftingSandEvent");
+
             if (PlacedMutantStatue)
                 downed.Add("PlacedMutantStatue");
 
@@ -234,6 +242,7 @@ namespace FargowiltasSouls.Core.Systems
             SpawnedDevi = downed.Contains("spawnedDevi");
             DownedAnyBoss = downed.Contains("downedAnyBoss");
             WOFDroppedDeviGift2 = downed.Contains("WOFDroppedDeviGift2");
+            ShiftingSandEvent = downed.Contains("ShiftingSandEvent");
             PlacedMutantStatue = downed.Contains("PlacedMutantStatue");
 
             if (downed.Contains("IronUsedList_"))
@@ -306,6 +315,7 @@ namespace FargowiltasSouls.Core.Systems
             }
 
             CoffinArenaCenter = reader.ReadVector2().ToPoint();
+            ShiftingSandEvent = reader.ReadBoolean();
         }
 
         public override void NetSend(BinaryWriter writer)
@@ -352,6 +362,7 @@ namespace FargowiltasSouls.Core.Systems
             writer.Write(bitsByte);
 
             writer.WriteVector2(CoffinArenaCenter.ToVector2());
+            writer.Write(ShiftingSandEvent);
         }
     }
 }

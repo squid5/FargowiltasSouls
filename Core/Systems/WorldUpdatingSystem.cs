@@ -1,5 +1,6 @@
 ﻿using FargowiltasSouls.Content.Bosses.CursedCoffin;
 using FargowiltasSouls.Content.WorldGeneration;
+using Luminance.Core.Graphics;
 using Microsoft.Xna.Framework;
 using System;
 using Terraria;
@@ -18,15 +19,47 @@ namespace FargowiltasSouls.Core.Systems
         {
             //NPC.LunarShieldPowerMax = NPC.downedMoonlord ? 50 : 100;
 
-            if (!downedBoss[(int)Downed.CursedCoffin] && !NPC.AnyNPCs(ModContent.NPCType<CursedCoffinInactive>()) && !NPC.AnyNPCs(ModContent.NPCType<CursedCoffin>()))
+            if (!downedBoss[(int)Downed.CursedCoffin])
             {
-                Vector2 coffinArenaCenter = CoffinArena.Center.ToWorldCoordinates();
-                for (int i = 0; i < Main.maxPlayers; i++)
+                bool noCoffin = !NPC.AnyNPCs(ModContent.NPCType<CursedCoffinInactive>()) && !NPC.AnyNPCs(ModContent.NPCType<CursedCoffin>());
+
+                if (noCoffin || !ShiftingSandEvent)
                 {
-                    Player player = Main.player[i];
-                    if (player != null && player.Alive() && Math.Abs(player.Center.X - coffinArenaCenter.X) < 2500 && Math.Abs(player.Center.Y - coffinArenaCenter.Y) < 2500)
+                    Vector2 coffinArenaCenter = CoffinArena.Center.ToWorldCoordinates();
+                    for (int i = 0; i < Main.maxPlayers; i++)
                     {
-                        int n = NPC.NewNPC(NPC.GetSource_NaturalSpawn(), (int)coffinArenaCenter.X, (int)coffinArenaCenter.Y, ModContent.NPCType<CursedCoffinInactive>());
+                        Player player = Main.player[i];
+                        if (player != null && player.Alive())
+                        {
+                            float xDif = MathF.Abs(player.Center.X - coffinArenaCenter.X);
+                            if (noCoffin && xDif < 2500 && Math.Abs(player.Center.Y - coffinArenaCenter.Y) < 2500)
+                                NPC.NewNPC(NPC.GetSource_NaturalSpawn(), (int)coffinArenaCenter.X, (int)coffinArenaCenter.Y, ModContent.NPCType<CursedCoffinInactive>());
+                            if (!ShiftingSandEvent && player.Center.Y < coffinArenaCenter.Y && xDif < CoffinArena.VectorWidth / 2)
+                            {
+                                ShiftingSandEvent = true;
+                                FargoSoulsUtil.PrintLocalization($"Mods.{Mod.Name}.Message.{Name}.ShiftingSands", Color.Goldenrod);
+                                if (Main.netMode == NetmodeID.Server)
+                                    NetMessage.SendData(MessageID.WorldData);
+                                ScreenShakeSystem.StartShake(5f, shakeStrengthDissipationIncrement: 5f / 200);
+                                
+                                for (int x = -10; x < 10; x++)
+                                {
+                                    for (int y = 0; y < 50; y++)
+                                    {
+                                        Tile t = Main.tile[x + (int)(player.Center.X / 16f), y + (int)(player.Center.Y / 16f)];
+                                        if (t.HasTile && t.TileType == TileID.Sand)
+                                        {
+                                            for (int d = 0; d < 3; d++)
+                                            {
+                                                Dust.NewDust(player.Center + Vector2.UnitX * (x * 16 - 8) + Vector2.UnitY * (y * 16 - 8), 16, 16, DustID.Sand);
+                                            }
+                                            break;
+                                        }
+                                    }
+                                }
+                                
+                            }
+                    }
                     }
                 }
             }

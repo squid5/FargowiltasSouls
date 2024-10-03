@@ -10,6 +10,7 @@ WorldUpdatingSystem: {
 	MasochistFTWWarning: Мазохист и FTW объединены! Этот режим [c/FF0000:чрезвычайно] сложный!! Продолжайте на свой страх и риск!
 	MasochistOff: Режим Мазохиста деактивирован.
 	BloodMoonCancel: Кровавая луна передумала и ушла...
+	// ShiftingSands: The sand is shifting...
 }
 
 Revived: Вы были возрождены!
