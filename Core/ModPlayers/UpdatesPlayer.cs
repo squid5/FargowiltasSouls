@@ -357,7 +357,6 @@ namespace FargowiltasSouls.Core.ModPlayers
                 Player.dashDelay = Math.Max(DashCD, Player.dashDelay);
 
             DashManager.AddDashes(Player);
-
             DashManager.ManageDashes(Player);
 
             if (LihzahrdTreasureBoxItem != null || Player.HasEffect<DeerclawpsDive>())
@@ -560,6 +559,9 @@ namespace FargowiltasSouls.Core.ModPlayers
                 IsDashingTimer--;
                 Player.dashDelay = -1;
             }
+
+            if (CoyoteTime > 0)
+                CoyoteTime--;
 
             if (GoldEnchMoveCoins)
             {

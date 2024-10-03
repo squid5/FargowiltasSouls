@@ -161,10 +161,12 @@ CrystalAssassinEnchant: {
 	/* Tooltip:
 		'''
 		Allows the ability to dash
+		Dash cancels vertical movement and can be angled diagonally
+		Jump while dashing into ground to get a speed boost
 		Use Assassin hotkey to throw a smoke bomb, use it again to teleport to it and gain the First Strike Buff
 		Using the Rod of Discord will also grant this buff
 		First Strike ensures your next attack hits a vital spot dealing 3x damage and reducing defense by 10
-		'Now you see me, now you don’t'
+		'Reach for the summit'
 		''' */
 }
 
@@ -3635,5 +3637,10 @@ ElectricWhip: {
 
 TheDestroyer: {
 	// DisplayName: The Destroyer
-	// Tooltip: ""
+	/* Tooltip:
+		'''
+		Whip your minions to fire a laser at a nearby enemy, up to 6 times per swing
+		Every 20th swing, the destroyer breaks loose and tracks your mouse for 5 seconds
+		'The lifeblood of a defeated foe...'
+		''' */
 }

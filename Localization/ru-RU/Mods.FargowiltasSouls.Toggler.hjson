@@ -75,6 +75,7 @@ ShinobiThroughWalls: Шиноби Через Стены
 SpookyEffect: Косы Жути
 NinjaEffect: Скорость Ниндзя
 CrystalAssassinDash: Рывок Хрустального Убийцы
+// CrystalDiagonalDash: Crystal Diagonal Dash
 ShadowForceDashEffect: Рывок Тени
 // ShadowForceEffect: Concise Death Force
 SpiritHeader: "{$Mods.FargowiltasSouls.Items.SpiritForce.DisplayName}"

@@ -3633,5 +3633,10 @@ ElectricWhip: {
 
 TheDestroyer: {
 	// DisplayName: The Destroyer
-	// Tooltip: ""
+	/* Tooltip:
+		'''
+		Whip your minions to fire a laser at a nearby enemy, up to 6 times per swing
+		Every 20th swing, the destroyer breaks loose and tracks your mouse for 5 seconds
+		'The lifeblood of a defeated foe...'
+		''' */
 }
