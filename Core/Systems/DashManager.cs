@@ -116,11 +116,6 @@ namespace FargowiltasSouls.Core.Systems
                             CrystalAssassinDash.WhileDashing(Player);
                         }
                         break;
-                    default:
-                        {
-                            Main.NewText("Fargo dash manager: dash not registered");
-                        }
-                        break;
                 }
             }
         }
