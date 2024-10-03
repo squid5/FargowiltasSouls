@@ -487,7 +487,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             }
             if (AttackModeTimer.IsWithinBounds(laserThreshold - telegraphTime, laserThreshold) && npc.HasPlayerTarget) // while telegraphing light show
             {
-                npc.velocity = Vector2.Lerp(npc.velocity, (Main.player[npc.target].Center - npc.Center) / 80, 0.1f);
+                npc.velocity = Vector2.Lerp(npc.velocity, (Main.player[npc.target].Center - npc.Center) / 80, 0.05f);
             }
             if (AttackModeTimer > laserThreshold && AttackModeTimer < laserThreshold + 420)
             {
