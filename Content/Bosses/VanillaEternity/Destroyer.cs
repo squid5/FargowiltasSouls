@@ -26,6 +26,8 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
     {
         public override NPCMatcher CreateMatcher() => new NPCMatcher().MatchType(NPCID.TheDestroyer);
 
+        public static readonly SoundStyle ScanSound = new SoundStyle("FargowiltasSouls/Assets/Sounds/VanillaEternity/Mechs/DestroyerScan") with { Volume = 5 };
+
         public int AttackModeTimer;
         public int CoilRadius;
         public int LaserTimer;
@@ -467,15 +469,25 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     //Main.NewText($"targetpos dist to player: {Main.player[npc.target].Distance(targetPos)}");
                 }
             }
+            int telegraphTime = 120;
 
-            if (AttackModeTimer == laserThreshold - 120) //tell for hyper dash for light show
+            if (AttackModeTimer == laserThreshold - telegraphTime) //tell for hyper dash for light show
             {
                 SecondaryAttackTimer = 0;
+                SoundEngine.PlaySound(ScanSound, npc.Center);
                 if (FargoSoulsUtil.HostCheck)
                 {
-                    Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, Vector2.Zero, ModContent.ProjectileType<GlowRingHollow>(), 0, 0f, Main.myPlayer, 9, npc.whoAmI);
-                    Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, Vector2.Zero, ModContent.ProjectileType<GlowRingHollow>(), 0, 0f, Main.myPlayer, 9, npc.whoAmI);
+                    float angle = MathHelper.Pi * 0.7f;
+                    int p = Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, npc.velocity, ModContent.ProjectileType<DestroyerScanTelegraph>(), 0, 0f, Main.myPlayer, 0, angle, 1000);
+                    if (p != Main.maxProjectiles)
+                        Main.projectile[p].timeLeft = telegraphTime;
+                    //Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, Vector2.Zero, ModContent.ProjectileType<GlowRingHollow>(), 0, 0f, Main.myPlayer, 9, npc.whoAmI);
+                    //Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, Vector2.Zero, ModContent.ProjectileType<GlowRingHollow>(), 0, 0f, Main.myPlayer, 9, npc.whoAmI);
                 }
+            }
+            if (AttackModeTimer.IsWithinBounds(laserThreshold - telegraphTime, laserThreshold) && npc.HasPlayerTarget) // while telegraphing light show
+            {
+                npc.velocity = Vector2.Lerp(npc.velocity, (Main.player[npc.target].Center - npc.Center) / 80, 0.1f);
             }
             if (AttackModeTimer > laserThreshold && AttackModeTimer < laserThreshold + 420)
             {

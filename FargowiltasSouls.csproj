@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="Assets\AutoloadedEffects\Shaders\AbomRitualBackgroundShader.fx" />
+    <None Remove="Assets\AutoloadedEffects\Shaders\DestroyerScanTelegraph.fx" />
     <None Remove="Assets\AutoloadedEffects\Shaders\GenericInnerAura.fx" />
     <None Remove="Assets\AutoloadedEffects\Shaders\MoltenEnchantShader.fx" />
     <None Remove="Assets\AutoloadedEffects\Shaders\MutantP1Aura.fx" />
