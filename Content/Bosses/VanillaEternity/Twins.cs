@@ -580,21 +580,9 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                             {
                                 if (distance > threshold * 2f)
                                 {
-                                    localPlayer.controlLeft = false;
-                                    localPlayer.controlRight = false;
-                                    localPlayer.controlUp = false;
-                                    localPlayer.controlDown = false;
-                                    localPlayer.controlUseItem = false;
-                                    localPlayer.controlUseTile = false;
-                                    localPlayer.controlJump = false;
-                                    localPlayer.controlHook = false;
-                                    if (localPlayer.grapCount > 0)
-                                        localPlayer.RemoveAllGrapplingHooks();
-                                    if (localPlayer.mount.Active)
-                                        localPlayer.mount.Dismount(localPlayer);
+                                    localPlayer.Incapacitate();
                                     localPlayer.velocity.X = 0f;
                                     localPlayer.velocity.Y = -0.4f;
-                                    localPlayer.FargoSouls().NoUsingItems = 2;
                                 }
 
                                 Vector2 movement = npc.Center - localPlayer.Center;

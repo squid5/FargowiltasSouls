@@ -200,6 +200,25 @@ namespace FargowiltasSouls //lets everything access it without using
 
         public static bool CannotUseItems(this Player player) => player.CCed || player.noItems || player.FargoSouls().NoUsingItems > 0 || (player.HeldItem != null && (!ItemLoader.CanUseItem(player.HeldItem, player) || !PlayerLoader.CanUseItem(player, player.HeldItem)));
 
+        public static void Incapacitate(this Player player, bool preventDashing = true)
+        {
+            player.controlLeft = false;
+            player.controlRight = false;
+            player.controlJump = false;
+            player.controlDown = false;
+            player.controlUseItem = false;
+            player.controlUseTile = false;
+            player.controlHook = false;
+            player.releaseHook = true;
+            if (player.grapCount > 0)
+                player.RemoveAllGrapplingHooks();
+            if (player.mount.Active)
+                player.mount.Dismount(player);
+            player.FargoSouls().NoUsingItems = 2;
+            if (player.dashDelay < 10 && preventDashing)
+                player.dashDelay = 10;
+        }
+
         public static bool CountsAsClass(this DamageClass damageClass, DamageClass intendedClass)
         {
             return damageClass == intendedClass || damageClass.GetEffectInheritance(intendedClass);
