@@ -48,6 +48,12 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEve
             target.AddBuff(BuffID.OnFire, 600);
             target.AddBuff(BuffID.Burning, 300);
         }
+        public override bool PreKill(NPC npc)
+        {
+            if (!NPC.LunarApocalypseIsUp && !NPC.downedAncientCultist)
+                return false;
+            return base.PreKill(npc);
+        }
     }
 
     public class SolarCorite : EModeNPCBehaviour
