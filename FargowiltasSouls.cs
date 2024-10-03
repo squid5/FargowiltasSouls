@@ -47,7 +47,7 @@ namespace FargowiltasSouls
 
         internal static ModKeybind FreezeKey;
         internal static ModKeybind GoldKey;
-        internal static ModKeybind SmokeBombKey;
+        //internal static ModKeybind SmokeBombKey;
         internal static ModKeybind SpecialDashKey;
         internal static ModKeybind BombKey;
         internal static ModKeybind SoulToggleKey;
@@ -105,7 +105,7 @@ namespace FargowiltasSouls
 
             FreezeKey = KeybindLoader.RegisterKeybind(this, "Freeze", "P");
             GoldKey = KeybindLoader.RegisterKeybind(this, "Gold", "O");
-            SmokeBombKey = KeybindLoader.RegisterKeybind(this, "SmokeBomb", "I");
+            //SmokeBombKey = KeybindLoader.RegisterKeybind(this, "SmokeBomb", "I");
             SpecialDashKey = KeybindLoader.RegisterKeybind(this, "SpecialDash", "C");
             BombKey = KeybindLoader.RegisterKeybind(this, "Bomb", "Z");
             SoulToggleKey = KeybindLoader.RegisterKeybind(this, "EffectToggle", ".");
@@ -223,7 +223,7 @@ namespace FargowiltasSouls
 
             FreezeKey = null;
             GoldKey = null;
-            SmokeBombKey = null;
+            //SmokeBombKey = null;
             SpecialDashKey = null;
             BombKey = null;
             SoulToggleKey = null;
