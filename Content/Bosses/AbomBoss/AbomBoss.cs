@@ -283,23 +283,19 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
                         Music = MusicLoader.GetMusicSlot(musicMod, "Assets/Music/Stigma");
                 }
 
-                if (WorldSavingSystem.EternityMode)
-                {
-                    //because this breaks the background???
-                    if (Main.GameModeInfo.IsJourneyMode && CreativePowerManager.Instance.GetPower<CreativePowers.FreezeTime>().Enabled)
-                        CreativePowerManager.Instance.GetPower<CreativePowers.FreezeTime>().SetPowerInfo(false);
+                //because this breaks the background???
+                if (Main.GameModeInfo.IsJourneyMode && CreativePowerManager.Instance.GetPower<CreativePowers.FreezeTime>().Enabled)
+                    CreativePowerManager.Instance.GetPower<CreativePowers.FreezeTime>().SetPowerInfo(false);
 
-                    if (!SkyManager.Instance["FargowiltasSouls:AbomBoss"].IsActive())
-                        SkyManager.Instance.Activate("FargowiltasSouls:AbomBoss");
+                if (!SkyManager.Instance["FargowiltasSouls:AbomBoss"].IsActive())
+                    SkyManager.Instance.Activate("FargowiltasSouls:AbomBoss");
 
-                    Main.dayTime = false;
-                    Main.time = 16200; //midnight
+                Main.dayTime = false;
+                Main.time = 16200; //midnight
 
-                    Main.raining = false; //disable rain
-                    Main.rainTime = 0;
-                    Main.maxRaining = 0;
-
-                }
+                Main.raining = false; //disable rain
+                Main.rainTime = 0;
+                Main.maxRaining = 0;
             }
 
             return base.PreAI();
