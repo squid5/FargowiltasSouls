@@ -90,9 +90,9 @@ CosmoHeader: "{$Mods.FargowiltasSouls.Items.CosmoForce.DisplayName}"
 MeteorMomentumEffect: Meteor Speed
 MeteorEffect: Meteor Strike
 MeteorTrailEffect: Meteor Spark Trail
-NebulaEffect: Nebula Boosters
+NebulaEffect: Nebula Blazes
 SolarEffect: Solar Shield & Dash
-SolarFlareEffect: Inflict Solar Flare
+SolarFlareEffect: Solar Flare
 StardustMinionEffect: Stardust Guardian
 VortexEffect: Vortex Laser
 CosmosMoonEffect: Cosmic Moons
