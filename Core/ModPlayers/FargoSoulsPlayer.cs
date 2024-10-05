@@ -1099,34 +1099,36 @@ namespace FargowiltasSouls.Core.ModPlayers
                 Player.bodyFrame.Y = Player.bodyFrame.Height * 10;
                 if (shieldTimer > 0)
                 {
-                    List<int> shaders =
-                    [
-                        GameShaders.Armor.GetShaderIdFromItemId(ItemID.ReflectiveSilverDye)
-                    ];
+                    List<int> shaders = [];
+                    if (Player.HasEffect<SilverEffect>())
+                        shaders.Add(GameShaders.Armor.GetShaderIdFromItemId(ItemID.ReflectiveSilverDye));
                     if (Player.HasEffect<DreadShellEffect>())
                         shaders.Add(GameShaders.Armor.GetShaderIdFromItemId(ItemID.BloodbathDye));
                     if (Player.HasEffect<PumpkingsCapeEffect>())
                         shaders.Add(GameShaders.Armor.GetShaderIdFromItemId(ItemID.PixieDye));
 
-                    int shader = shaders[(int)(Main.GameUpdateCount / 4 % shaders.Count)];
-                    drawInfo.cBody = shader;
-                    drawInfo.cHead = shader;
-                    drawInfo.cLegs = shader;
-                    drawInfo.cWings = shader;
-                    drawInfo.cHandOn = shader;
-                    drawInfo.cHandOff = shader;
-                    drawInfo.cShoe = shader;
-                    drawInfo.cBack = shader;
-                    drawInfo.cBackpack = shader;
-                    drawInfo.cShield = shader;
-                    drawInfo.cNeck = shader;
-                    drawInfo.cHandOn = shader;
-                    drawInfo.cHandOff = shader;
-                    drawInfo.cBalloon = shader;
-                    drawInfo.cBalloonFront = shader;
-                    drawInfo.cFace = shader;
-                    drawInfo.cFaceHead = shader;
-                    drawInfo.cFront = shader;
+                    if (shaders.Count > 0)
+                    {
+                        int shader = shaders[(int)(Main.GameUpdateCount / 4 % shaders.Count)];
+                        drawInfo.cBody = shader;
+                        drawInfo.cHead = shader;
+                        drawInfo.cLegs = shader;
+                        drawInfo.cWings = shader;
+                        drawInfo.cHandOn = shader;
+                        drawInfo.cHandOff = shader;
+                        drawInfo.cShoe = shader;
+                        drawInfo.cBack = shader;
+                        drawInfo.cBackpack = shader;
+                        drawInfo.cShield = shader;
+                        drawInfo.cNeck = shader;
+                        drawInfo.cHandOn = shader;
+                        drawInfo.cHandOff = shader;
+                        drawInfo.cBalloon = shader;
+                        drawInfo.cBalloonFront = shader;
+                        drawInfo.cFace = shader;
+                        drawInfo.cFaceHead = shader;
+                        drawInfo.cFront = shader;
+                    }
                 }
             }
         }

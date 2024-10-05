@@ -1,5 +1,6 @@
 using FargowiltasSouls.Common.Utilities;
 using FargowiltasSouls.Content.Bosses.Champions.Will;
+using FargowiltasSouls.Content.Bosses.MutantBoss;
 using FargowiltasSouls.Content.Buffs.Masomode;
 using FargowiltasSouls.Content.Items.Placables;
 using FargowiltasSouls.Content.NPCs.EternityModeNPCs;
@@ -9,10 +10,12 @@ using FargowiltasSouls.Core.Globals;
 using FargowiltasSouls.Core.NPCMatching;
 using FargowiltasSouls.Core.Systems;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.IO;
 using Terraria;
 using Terraria.Audio;
+using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -35,7 +38,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
         public bool InPhase2;
 
         public bool DroppedSummon;
-
+        public bool SubjectDR;
 
         public override void SendExtraAI(NPC npc, BitWriter bitWriter, BinaryWriter binaryWriter)
         {
@@ -164,10 +167,10 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                 NetSync(npc);
             }
 
-            if (NPC.AnyNPCs(ModContent.NPCType<RoyalSubject>()))
+            SubjectDR = NPC.AnyNPCs(ModContent.NPCType<RoyalSubject>());
+            if (SubjectDR)
             {
                 npc.HitSound = SoundID.NPCHit4;
-                npc.color = new Color(127, 127, 127);
 
                 int dustId = Dust.NewDust(npc.position, npc.width, npc.height, DustID.Stone, 0f, 0f, 100, default, 2f);
                 Main.dust[dustId].noGravity = true;
@@ -195,7 +198,6 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             else
             {
                 npc.HitSound = SoundID.NPCHit1;
-                npc.color = default;
 
                 if (InPhase2 && HiveThrowTimer % 2 == 0)
                     HiveThrowTimer++; //throw hives faster when no royal subjects alive
@@ -266,7 +268,16 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                             NetSync(npc);
 
                             if (FargoSoulsUtil.HostCheck)
-                                Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, Vector2.Zero, ModContent.ProjectileType<GlowRing>(), 0, 0f, Main.myPlayer, npc.whoAmI, npc.type);
+                            {
+                                for (int j = -1; j <= 1; j += 2)
+                                {
+                                    for (int i = -1; i <= 1; i++)
+                                    {
+                                        Vector2 dir = j * 3 * Vector2.UnitX.RotatedBy(i * MathHelper.Pi / 7);
+                                        Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center + dir, Vector2.Zero, ModContent.ProjectileType<MutantGlowything>(), 0, 0f, Main.myPlayer, dir.ToRotation(), npc.whoAmI, 1f);
+                                    }
+                                }
+                            }
 
                             if (npc.HasValidTarget)
                                 SoundEngine.PlaySound(SoundID.ForceRoarPitched, Main.player[npc.target].Center); //eoc roar
@@ -422,8 +433,8 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
         public override void ModifyIncomingHit(NPC npc, ref NPC.HitModifiers modifiers)
         {
-            if (!WorldSavingSystem.SwarmActive && NPC.AnyNPCs(ModContent.NPCType<RoyalSubject>()))
-                modifiers.FinalDamage /= 2;
+            if (!WorldSavingSystem.SwarmActive && SubjectDR)
+                modifiers.FinalDamage /= 3;
 
             base.ModifyIncomingHit(npc, ref modifiers);
         }
@@ -435,6 +446,28 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             LoadNPCSprite(recolor, npc.type);
             LoadBossHeadSprite(recolor, 14);
             LoadGoreRange(recolor, 303, 308);
+        }
+
+        public override bool PreDraw(NPC npc, SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
+            if (SubjectDR && !npc.IsABestiaryIconDummy)
+            {
+                spriteBatch.End();
+                spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.ZoomMatrix);
+
+                ArmorShaderData shader = GameShaders.Armor.GetShaderFromItemId(ItemID.ReflectiveSilverDye);
+                shader.Apply(npc, new Terraria.DataStructures.DrawData?());
+            }
+            return true;
+        }
+
+        public override void PostDraw(NPC npc, SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
+            if (SubjectDR && !npc.IsABestiaryIconDummy)
+            {
+                spriteBatch.End();
+                spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.ZoomMatrix);
+            }
         }
     }
 }

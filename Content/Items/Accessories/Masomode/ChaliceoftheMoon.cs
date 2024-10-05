@@ -1,6 +1,8 @@
 ﻿using FargowiltasSouls.Content.Buffs.Masomode;
+using FargowiltasSouls.Content.Buffs.Minions;
 using FargowiltasSouls.Content.Items.Materials;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
+using FargowiltasSouls.Core.Toggler.Content;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -75,8 +77,8 @@ namespace FargowiltasSouls.Content.Items.Accessories.Masomode
             .Register();
         }
     }
-    /*
-    public class CultistMinionEffect : AccessoryEffect
+    
+    /* public class CultistMinionEffect : AccessoryEffect
     {
         public override Header ToggleHeader => Header.GetHeader<ChaliceHeader>();
         public override int ToggleItemType => ModContent.ItemType<ChaliceoftheMoon>();
@@ -86,6 +88,5 @@ namespace FargowiltasSouls.Content.Items.Accessories.Masomode
             if (!player.HasBuff<SouloftheMasochistBuff>())
                 player.AddBuff(ModContent.BuffType<LunarCultistBuff>(), 2);
         }
-    }
-    */
+    } */
 }
