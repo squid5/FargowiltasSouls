@@ -42,3 +42,4 @@ qb dr makes it more clearly made of metal
 fixed dread/pumpkin parry making you flash colors even when you dont have silver equipped??
 golem boulders have an outline and brighter trail
 fixed an obscure golem head null ref error?????
+qb's bee swarm telegraph now indicates the safespots

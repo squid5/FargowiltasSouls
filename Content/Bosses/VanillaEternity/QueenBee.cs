@@ -1,5 +1,6 @@
 using FargowiltasSouls.Common.Utilities;
 using FargowiltasSouls.Content.Bosses.Champions.Will;
+using FargowiltasSouls.Content.Bosses.MutantBoss;
 using FargowiltasSouls.Content.Buffs.Masomode;
 using FargowiltasSouls.Content.Items.Placables;
 using FargowiltasSouls.Content.NPCs.EternityModeNPCs;
@@ -267,7 +268,16 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                             NetSync(npc);
 
                             if (FargoSoulsUtil.HostCheck)
-                                Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, Vector2.Zero, ModContent.ProjectileType<GlowRing>(), 0, 0f, Main.myPlayer, npc.whoAmI, npc.type);
+                            {
+                                for (int j = -1; j <= 1; j += 2)
+                                {
+                                    for (int i = -1; i <= 1; i++)
+                                    {
+                                        Vector2 dir = j * 3 * Vector2.UnitX.RotatedBy(i * MathHelper.Pi / 7);
+                                        Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center + dir, Vector2.Zero, ModContent.ProjectileType<MutantGlowything>(), 0, 0f, Main.myPlayer, dir.ToRotation(), npc.whoAmI, 1f);
+                                    }
+                                }
+                            }
 
                             if (npc.HasValidTarget)
                                 SoundEngine.PlaySound(SoundID.ForceRoarPitched, Main.player[npc.target].Center); //eoc roar
