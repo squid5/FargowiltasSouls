@@ -1286,7 +1286,6 @@ namespace FargowiltasSouls.Content.Projectiles
                 IsAHeldProj = true;
                 if (player.HasEffect<TungstenEffect>() && TungstenScale == 1)
                 {
-                    Main.NewText("e");
                     TungstenEffect.TungstenIncreaseProjSize(projectile, modPlayer, null);
                 }
                 if (Adamantite)
