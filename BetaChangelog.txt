@@ -37,3 +37,6 @@ maso ftw golem
 	spiky balls restored
 	360 healing restored
 globe grants cultist minion again
+qb subject dr raised 50% to 66%
+qb dr makes it more clearly made of metal
+fixed dread/pumpkin parry making you flash colors even when you dont have silver equipped??
