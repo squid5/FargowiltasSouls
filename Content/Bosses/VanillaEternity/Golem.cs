@@ -192,7 +192,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     p.AddBuff(ModContent.BuffType<LowGroundBuff>(), 2);
             }
 
-            HealPerSecond = 180; // WorldSavingSystem.MasochistModeReal ? 360 : 180;
+            HealPerSecond = WorldSavingSystem.MasochistModeReal && Main.getGoodWorld ? 360 : 180;
             if (!IsInTemple) //temple enrage, more horiz move and fast jumps
             {
                 HealPerSecond *= 2;
@@ -373,8 +373,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             }
 
             //spray spiky balls
-            /*
-            if (WorldSavingSystem.MasochistModeReal && ++SpikyBallTimer >= 900)
+            if (WorldSavingSystem.MasochistModeReal && Main.getGoodWorld && ++SpikyBallTimer >= 900)
             {
                 if (CheckTempleWalls(npc.Center))
                 {
@@ -398,7 +397,6 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     }
                 }
             }
-            */
 
             //golem's anti-air fireball spray (when player is above)
             //if (WorldSavingSystem.MasochistModeReal && ++AntiAirTimer > 240 && npc.velocity.Y == 0)
@@ -808,7 +806,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     {
                         //do nothing
                     }
-                    else if (AttackTimer < fireTime + 150 && DoDeathray)
+                    else if (AttackTimer < fireTime + 240 && DoDeathray)
                     {
                         npc.velocity.X += SweepToLeft ? -.15f : .15f;
                         bool wallCheck = Golem.CheckTempleWalls(npc.Center);

@@ -30,3 +30,9 @@ maso mutant kills you if you get timestopped right as/after final spark ends
 
 tungsten ench works on The Axe
 tungsten The Axe becomes comically large if your char name contains gonk (ily wexel)
+
+golem
+	increased max time for the pole drag, shouldn't disappear midway through before reaching end of arena anymore
+maso ftw golem
+	spiky balls restored
+	360 healing restored
