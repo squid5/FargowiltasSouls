@@ -115,6 +115,7 @@ namespace FargowiltasSouls.Content.Projectiles.Minions
             borderShader.TrySetParameter("darkColor", darkColor.ToVector4());
             borderShader.TrySetParameter("midColor", mediumColor.ToVector4());
             borderShader.TrySetParameter("lightColor", lightColor2.ToVector4());
+            borderShader.TrySetParameter("opacityAmp", 1f);
 
             Main.spriteBatch.GraphicsDevice.Textures[1] = diagonalNoise.Value;
 

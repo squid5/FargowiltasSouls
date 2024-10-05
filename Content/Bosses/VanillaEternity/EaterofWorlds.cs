@@ -1,3 +1,5 @@
+using Fargowiltas.Common.Configs;
+using FargowiltasSouls.Assets.ExtraTextures;
 using FargowiltasSouls.Content.Buffs.Masomode;
 using FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.Corruption;
 using FargowiltasSouls.Content.Projectiles.Masomode;
@@ -5,7 +7,9 @@ using FargowiltasSouls.Core.Globals;
 using FargowiltasSouls.Core.NPCMatching;
 using FargowiltasSouls.Core.Systems;
 using Humanizer;
+using Luminance.Core.Graphics;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -14,6 +18,7 @@ using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -166,6 +171,8 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
         public bool DroppedSummon;
 
         public int NoSelfDestructTimer = 15;
+
+        public float CoilBorderOpacity = 0f;
 
         public enum Attacks
         {
@@ -778,6 +785,64 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
             LoadBossHeadSprite(recolor, 2);
             LoadGoreRange(recolor, 24, 29);
+        }
+
+        public override bool PreDraw(NPC npc, SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
+            int firstEater = NPC.FindFirstNPC(npc.type);
+
+            if (npc.whoAmI == firstEater && (Attacks)Attack == Attacks.Coil)
+            {
+                if (CoilBorderOpacity < 1)
+                    CoilBorderOpacity += 0.025f;
+            }
+            else if (CoilBorderOpacity > 0)
+                CoilBorderOpacity -= 0.025f;
+
+            if (CoilBorderOpacity > 0)
+            {
+                Color darkColor = Color.Magenta;
+                Color mediumColor = Color.MediumPurple;
+                Color lightColor2 = Color.Lerp(Color.Purple, Color.White, 0.35f);
+                float greyLerp = 0.3f;
+                darkColor = Color.Lerp(darkColor, Color.SlateGray, greyLerp);
+                mediumColor = Color.Lerp(mediumColor, Color.SlateGray, greyLerp);
+                lightColor2 = Color.Lerp(lightColor2, Color.SlateGray, greyLerp);
+
+                Vector2 auraPos = CoilCenter;
+                float radius = CoilRadius;
+                var target = Main.LocalPlayer;
+                var blackTile = TextureAssets.MagicPixel;
+                var diagonalNoise = FargosTextureRegistry.SmokyNoise;
+                if (!blackTile.IsLoaded || !diagonalNoise.IsLoaded)
+                    return false;
+                var maxOpacity = CoilBorderOpacity;
+
+                ManagedShader borderShader = ShaderManager.GetShader("FargowiltasSouls.GenericInnerAura");
+                borderShader.TrySetParameter("colorMult", 7.35f);
+                borderShader.TrySetParameter("time", Main.GlobalTimeWrappedHourly);
+                borderShader.TrySetParameter("radius", radius);
+                borderShader.TrySetParameter("anchorPoint", auraPos);
+                borderShader.TrySetParameter("screenPosition", Main.screenPosition);
+                borderShader.TrySetParameter("screenSize", Main.ScreenSize.ToVector2());
+                borderShader.TrySetParameter("playerPosition", target.Center);
+                borderShader.TrySetParameter("maxOpacity", maxOpacity);
+                borderShader.TrySetParameter("darkColor", darkColor.ToVector4());
+                borderShader.TrySetParameter("midColor", mediumColor.ToVector4());
+                borderShader.TrySetParameter("lightColor", lightColor2.ToVector4());
+                borderShader.TrySetParameter("opacityAmp", 1f * CoilBorderOpacity);
+
+                Main.spriteBatch.GraphicsDevice.Textures[1] = diagonalNoise.Value;
+
+                Main.spriteBatch.End();
+                Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, SamplerState.LinearWrap, DepthStencilState.None, Main.Rasterizer, borderShader.WrappedEffect, Main.GameViewMatrix.TransformationMatrix);
+                Rectangle rekt = new(Main.screenWidth / 2, Main.screenHeight / 2, Main.screenWidth, Main.screenHeight);
+                Main.spriteBatch.Draw(blackTile.Value, rekt, null, default, 0f, blackTile.Value.Size() * 0.5f, 0, 0f);
+                Main.spriteBatch.End();
+                Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
+            }
+                
+            return base.PreDraw(npc, spriteBatch, screenPos, drawColor);
         }
     }
 

@@ -125,6 +125,7 @@ namespace FargowiltasSouls.Content.Projectiles
             borderShader.TrySetParameter("darkColor", darkColor.ToVector4());
             borderShader.TrySetParameter("midColor", mediumColor.ToVector4());
             borderShader.TrySetParameter("lightColor", lightColor.ToVector4());
+            borderShader.TrySetParameter("opacityAmp", 1f);
 
             Main.spriteBatch.GraphicsDevice.Textures[1] = diagonalNoise.Value;
 
