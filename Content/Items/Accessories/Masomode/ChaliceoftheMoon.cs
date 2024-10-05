@@ -55,7 +55,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Masomode
             player.buffImmune[ModContent.BuffType<ReverseManaFlowBuff>()] = true;
             player.buffImmune[ModContent.BuffType<AntisocialBuff>()] = true;
             fargoPlayer.MoonChalice = true;
-            player.AddEffect<CultistMinionEffect>(Item);
+            //player.AddEffect<CultistMinionEffect>(Item);
 
         }
 
@@ -78,7 +78,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Masomode
         }
     }
     
-    public class CultistMinionEffect : AccessoryEffect
+    /* public class CultistMinionEffect : AccessoryEffect
     {
         public override Header ToggleHeader => Header.GetHeader<ChaliceHeader>();
         public override int ToggleItemType => ModContent.ItemType<ChaliceoftheMoon>();
@@ -88,5 +88,5 @@ namespace FargowiltasSouls.Content.Items.Accessories.Masomode
             if (!player.HasBuff<SouloftheMasochistBuff>())
                 player.AddBuff(ModContent.BuffType<LunarCultistBuff>(), 2);
         }
-    }
+    } */
 }
