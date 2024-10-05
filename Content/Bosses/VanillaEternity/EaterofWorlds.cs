@@ -642,7 +642,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
                             // coil
                             int headCount = NPC.CountNPCS(npc.type);
-                            if (headCount > 1 || WorldSavingSystem.MasochistModeReal) // only do coil when it's split at least once
+                            if (headCount > 1) // only do coil when it's split at least once
                             {
 
                                 //initiate coil
