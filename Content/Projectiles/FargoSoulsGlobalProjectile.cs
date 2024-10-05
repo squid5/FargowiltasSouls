@@ -1284,6 +1284,11 @@ namespace FargowiltasSouls.Content.Projectiles
                 DeletionImmuneRank = 2;
                 TimeFreezeImmune = true;
                 IsAHeldProj = true;
+                if (player.HasEffect<TungstenEffect>() && TungstenScale == 1)
+                {
+                    Main.NewText("e");
+                    TungstenEffect.TungstenIncreaseProjSize(projectile, modPlayer, null);
+                }
                 if (Adamantite)
                 {
                     projectile.Kill();

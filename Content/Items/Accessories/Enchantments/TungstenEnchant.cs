@@ -93,6 +93,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
                 ModContent.ProjectileType<BaronTuskShrapnel>(),
                 ModContent.ProjectileType<UmbraRegaliaProj>(),
                 ModContent.ProjectileType<SlimeKingSlasherProj>(),
+                ModContent.ProjectileType<SlimeSlingingSlasherProj>(),
                 ProjectileID.TerraBlade2,
                 ProjectileID.TerraBlade2Shot,
                 ProjectileID.NightsEdge,
@@ -137,27 +138,29 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
 
         public static void TungstenIncreaseProjSize(Projectile projectile, FargoSoulsPlayer modPlayer, IEntitySource source)
         {
-            if (modPlayer.Player.HasEffect<TerraLightningEffect>())
-                return;
+            bool terraForce = modPlayer.Player.HasEffect<TerraLightningEffect>();
+            if (terraForce)
+                modPlayer.TungstenCD = 40;
+
             if (TungstenNeverAffectsProj(projectile))
             {
                 return;
             }
             bool canAffect = false;
             bool hasCD = true;
-            if (TungstenAlwaysAffectProj(projectile))
+            if (TungstenAlwaysAffectProj(projectile) || projectile.FargoSouls().IsAHeldProj)
             {
                 canAffect = true;
                 hasCD = false;
             }
             else if (FargoSoulsUtil.OnSpawnEnchCanAffectProjectile(projectile, false))
             {
-                if (FargoSoulsUtil.IsProjSourceItemUseReal(projectile, source))
+                if (source != null && FargoSoulsUtil.IsProjSourceItemUseReal(projectile, source))
                 {
                     if (modPlayer.TungstenCD == 0)
                         canAffect = true;
                 }
-                else if (source is EntitySource_Parent parent && parent.Entity is Projectile sourceProj)
+                else if (source != null && source is EntitySource_Parent parent && parent.Entity is Projectile sourceProj)
                 {
                     if (sourceProj.GetGlobalProjectile<FargoSoulsGlobalProjectile>().TungstenScale != 1)
                     {
@@ -176,7 +179,9 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
             {
                 bool forceEffect = modPlayer.ForceEffect<TungstenEnchant>();
                 float scale = forceEffect ? 3f : 2f;
-                if (TungstenNerfedProj(projectile))
+                if (terraForce)
+                    scale = 1.5f;
+                else if (TungstenNerfedProj(projectile))
                     scale -= (scale - 1f) / 2f;
                 projectile.position = projectile.Center;
                 projectile.scale *= scale;
@@ -203,10 +208,11 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
 
         public static void TungstenModifyDamage(Player player, ref NPC.HitModifiers modifiers)
         {
+            if (player.HasEffect<TerraLightningEffect>())
+                return;
+
             FargoSoulsPlayer modPlayer = player.FargoSouls();
-
             bool forceBuff = modPlayer.ForceEffect<TungstenEnchant>();
-
             modifiers.FinalDamage *= forceBuff ? 1.14f : 1.07f;
 
             /* fuck you tungsten enchant
