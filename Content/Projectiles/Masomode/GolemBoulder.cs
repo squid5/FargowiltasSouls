@@ -163,14 +163,14 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
 
             Color color26 = Color.Orange * Projectile.Opacity * 0.75f;
             if (recolor)
-                color26 = Color.Gray * Projectile.Opacity * 0.75f;
+                color26 = Color.LightGray * Projectile.Opacity * 0.75f;
             color26.A = 20;
 
             for (float i = 0; i < ProjectileID.Sets.TrailCacheLength[Projectile.type]; i += 0.5f)
             {
                 Color color27 = color26;
                 float fade = (float)(ProjectileID.Sets.TrailCacheLength[Projectile.type] - i) / ProjectileID.Sets.TrailCacheLength[Projectile.type];
-                color27 *= fade * fade;
+                color27 *= fade;
                 int max0 = (int)i - 1;//Math.Max((int)i - 1, 0);
                 if (max0 < 0)
                     continue;

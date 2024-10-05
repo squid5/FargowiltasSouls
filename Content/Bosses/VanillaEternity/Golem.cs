@@ -669,7 +669,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
                     if (IsInTemple) //nerf golem movement during deathray dash, provided we're in temple
                     {
-                        if (golem.HasValidTarget)
+                        if (golem != null && golem.HasValidTarget)
                         {
                             //golem.velocity.X = 0f;
 
