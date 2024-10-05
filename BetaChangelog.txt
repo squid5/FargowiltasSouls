@@ -36,3 +36,4 @@ golem
 maso ftw golem
 	spiky balls restored
 	360 healing restored
+globe grants cultist minion again

@@ -1,6 +1,8 @@
 ﻿using FargowiltasSouls.Content.Buffs.Masomode;
+using FargowiltasSouls.Content.Buffs.Minions;
 using FargowiltasSouls.Content.Items.Materials;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
+using FargowiltasSouls.Core.Toggler.Content;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -53,7 +55,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Masomode
             player.buffImmune[ModContent.BuffType<ReverseManaFlowBuff>()] = true;
             player.buffImmune[ModContent.BuffType<AntisocialBuff>()] = true;
             fargoPlayer.MoonChalice = true;
-            //player.AddEffect<CultistMinionEffect>(Item);
+            player.AddEffect<CultistMinionEffect>(Item);
 
         }
 
@@ -75,7 +77,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Masomode
             .Register();
         }
     }
-    /*
+    
     public class CultistMinionEffect : AccessoryEffect
     {
         public override Header ToggleHeader => Header.GetHeader<ChaliceHeader>();
@@ -87,5 +89,4 @@ namespace FargowiltasSouls.Content.Items.Accessories.Masomode
                 player.AddBuff(ModContent.BuffType<LunarCultistBuff>(), 2);
         }
     }
-    */
 }
