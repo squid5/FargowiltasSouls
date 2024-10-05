@@ -81,7 +81,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Forces
         public override void PostUpdateEquips(Player player)
         {
             FargoSoulsPlayer farg = player.FargoSouls();
-            bool attacking = player.HeldItem != null && player.HeldItem.damage > 0 && player.controlUseItem;
+            bool attacking =  farg.WeaponUseTimer > 0;
 
             if (!attacking && farg.EarthTimer < EarthMaxCharge)
             {
