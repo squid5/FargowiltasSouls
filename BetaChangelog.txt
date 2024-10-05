@@ -36,6 +36,7 @@ golem
 maso ftw golem
 	spiky balls restored
 	360 healing restored
+	can jump during ray attacks
 globe grants cultist minion again
 qb subject dr raised 50% to 66%
 qb dr makes it more clearly made of metal
