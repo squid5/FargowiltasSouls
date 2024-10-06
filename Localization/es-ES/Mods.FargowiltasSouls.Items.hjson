@@ -940,7 +940,7 @@ TerraForce: {
 		[i:FargowiltasSouls/CopperEnchant] [i:FargowiltasSouls/ObsidianEnchant] [i:FargowiltasSouls/LeadEnchant] Critical strikes sometimes fire a lightning bolt that explodes on hit and inflicts a stronger Lead Poisoning
 		[i:FargowiltasSouls/SilverEnchant] Right Click to guard with your shield for up to 200 damage, successful parries instantly fire a lightning bolt 
 		[i:FargowiltasSouls/LeadEnchant] You take 60% less damage over time
-		[i:FargowiltasSouls/TungstenEnchant] Your swords are larger and deal 14% more damage
+		[i:FargowiltasSouls/TungstenEnchant] Your swords are 100% larger and other held weapons 50% larger
 		[i:FargowiltasSouls/TinEnchant] Sets Tin crit chance to 10%, increasing up to double your original crit chance or 50%
 		[i:FargowiltasSouls/IronEnchant] 50% chance to not consume each item on first craft and you attract items from a larger range (works in inventory and vanity)
 		'The land lends its strength'

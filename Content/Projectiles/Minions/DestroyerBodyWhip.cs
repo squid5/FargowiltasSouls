@@ -116,6 +116,11 @@ namespace FargowiltasSouls.Content.Projectiles.Minions
                 Main.projectile[byIdentity].localAI[0] = Projectile.localAI[0] + 1f;
                 if (Main.projectile[byIdentity].type != ModContent.ProjectileType<DestroyerHeadWhip>()) Main.projectile[byIdentity].localAI[1] = Projectile.identity;
             }
+            else
+            {
+                Projectile.Kill();
+                return;
+            }
 
             if (!flag67) return;
 

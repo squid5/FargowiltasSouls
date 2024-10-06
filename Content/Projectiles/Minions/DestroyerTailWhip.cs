@@ -112,6 +112,11 @@ namespace FargowiltasSouls.Content.Projectiles.Minions
                 }
                 Main.projectile[byIdentity].localAI[0] = Projectile.localAI[0] + 1f;
             }
+            else
+            {
+                Projectile.Kill();
+                return;
+            }
 
             if (!flag67) return;
 
