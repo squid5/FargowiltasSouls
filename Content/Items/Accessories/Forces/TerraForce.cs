@@ -92,7 +92,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Forces
             FargoSoulsPlayer modPlayer = player.FargoSouls();
             if (modPlayer.TerraProcCD == 0 && player.HasEffect<CopperEffect>())
             {
-                int dmg = (int)(2500 * damageMultiplier);
+                int dmg = (int)(1500 * damageMultiplier);
                 int cdLength = 300;
 
                 // cooldown scaling from 2x to 1x depending on how recently you got hurt
