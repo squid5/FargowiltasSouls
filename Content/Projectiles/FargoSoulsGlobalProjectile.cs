@@ -31,6 +31,7 @@ using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static FargowiltasSouls.Content.Items.Accessories.Forces.TimberForce;
 
 namespace FargowiltasSouls.Content.Projectiles
 {
@@ -96,6 +97,7 @@ namespace FargowiltasSouls.Content.Projectiles
 
         public static int ApprenticeDamageCap;
         public int DamageCap;
+        public bool EnchantmentProj;
 
         public static List<int> ShroomiteBlacklist =
         [
@@ -381,7 +383,11 @@ namespace FargowiltasSouls.Content.Projectiles
                 case ProjectileID.SeedlerThorn:
                     {
                         if (source is EntitySource_Parent parent && parent.Entity is Projectile parentProj && parentProj.type == ProjectileID.SeedlerNut && parentProj.DamageType == DamageClass.Summon)
+                        {
                             projectile.DamageType = DamageClass.Summon;
+                            EnchantmentProj = true;
+                        }
+                            
                     }
                     break;
                 default:
@@ -1529,6 +1535,11 @@ namespace FargowiltasSouls.Content.Projectiles
                     }
                 }
             }
+
+            //if (projectile.type == ProjectileID.SeedlerNut && projectile.owner.IsWithinBounds(Main.maxPlayers) && EnchantmentProj && Main.player[projectile.owner].HasEffect<TimberEffect>())
+            //{
+            //    ShadewoodEffect.ShadewoodProc(Main.player[projectile.owner], target, projectile);
+            //}
 
             if (FrostFreeze)
             {

@@ -60,7 +60,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
                     return;
                 if (player.FargoSouls().PalmWoodForceCD <= 0 && Collision.CanHit(player.Center, 0, 0, target.Center, 0, 0))
                 {
-                    Vector2 velocity = Vector2.Normalize(target.Center - player.Center) * 10;
+                    Vector2 velocity = Vector2.Normalize(target.Center - player.Center) * 18;
 
                     int p = Projectile.NewProjectile(GetSource_EffectItem(player), player.Center, velocity, ProjectileID.SeedlerNut, (int)(hitInfo.SourceDamage * 1f), 2, player.whoAmI);
                     if (p != Main.maxProjectiles)
