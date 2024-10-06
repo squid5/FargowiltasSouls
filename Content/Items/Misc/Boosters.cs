@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using FargowiltasSouls.Content.Buffs.Souls;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -55,6 +56,7 @@ namespace FargowiltasSouls.Content.Items.Misc
             if (boosterPlayer.SolarTimer <= 0)
                 CombatText.NewText(boosterPlayer.Player.Hitbox, Color.Yellow, Language.GetTextValue("Mods.FargowiltasSouls.Items.SolarBooster.Activate", 15), true);
             boosterPlayer.SolarTimer = LunarDuration;
+            boosterPlayer.Player.AddBuff(ModContent.BuffType<SolarBuff>(), LunarDuration);
         }
     }
     public class VortexBooster : Booster
@@ -66,6 +68,7 @@ namespace FargowiltasSouls.Content.Items.Misc
             if (boosterPlayer.VortexTimer <= 0)
                 CombatText.NewText(boosterPlayer.Player.Hitbox, Color.LightCyan, Language.GetTextValue("Mods.FargowiltasSouls.Items.VortexBooster.Activate", 25), true);
             boosterPlayer.VortexTimer = LunarDuration;
+            boosterPlayer.Player.AddBuff(ModContent.BuffType<VortexBuff>(), LunarDuration);
         }
     }
     public class NebulaBooster : Booster
@@ -77,6 +80,7 @@ namespace FargowiltasSouls.Content.Items.Misc
             if (boosterPlayer.NebulaTimer <= 0)
                 CombatText.NewText(boosterPlayer.Player.Hitbox, Color.Magenta, Language.GetTextValue("Mods.FargowiltasSouls.Items.NebulaBooster.Activate", 5), true);
             boosterPlayer.NebulaTimer = LunarDuration;
+            boosterPlayer.Player.AddBuff(ModContent.BuffType<NebulaBuff>(), LunarDuration);
         }
     }
     public class StardustBooster : Booster
@@ -88,6 +92,7 @@ namespace FargowiltasSouls.Content.Items.Misc
             if (boosterPlayer.StardustTimer <= 0)
                 CombatText.NewText(boosterPlayer.Player.Hitbox, Color.Cyan, Language.GetTextValue("Mods.FargowiltasSouls.Items.StardustBooster.Activate", 25), true);
             boosterPlayer.StardustTimer = LunarDuration;
+            boosterPlayer.Player.AddBuff(ModContent.BuffType<StardustBuff>(), LunarDuration);
         }
     }
     #endregion
