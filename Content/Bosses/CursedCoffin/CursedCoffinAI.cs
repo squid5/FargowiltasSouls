@@ -243,7 +243,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 			}
 			else if (Timer == 20)
 			{
-                IEnumerable<Player> stunned = Main.player.Where(p => p.Alive() && p.HasBuff<StunnedBuff>());
+                IEnumerable<Player> stunned = Main.player.Where(p => p.Alive() && p.HasBuff(BuffID.Dazed));
                 if (stunned.Any())
                 {
                     SoundEngine.PlaySound(ShotSFX, NPC.Center);
@@ -251,8 +251,8 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
                     {
                         foreach (Player player in stunned)
                         {
-                            Vector2 dir = NPC.rotation.ToRotationVector2();
-                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, dir * 4, ModContent.ProjectileType<CoffinHand>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage, 0.5f), 1f, Main.myPlayer, NPC.whoAmI, 22, player.whoAmI);
+                            Vector2 dir = NPC.DirectionTo(player.Center);
+                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, dir * 1, ModContent.ProjectileType<CoffinHand>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage, 0.5f), 1f, Main.myPlayer, NPC.whoAmI, 22, player.whoAmI);
                         }
                     }
                 }
@@ -306,7 +306,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
             ref float initialDir = ref AI2;
             ref float initialDist = ref AI3;
             HoverSound();
-            const int PrepTime = 90;
+            const int PrepTime = 70;
 
             if (++NPC.frameCounter % 10 == 9 && Frame > 0)
                 Frame--;
@@ -506,6 +506,13 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
                     int leniencyTime = WorldSavingSystem.MasochistModeReal ? -30 : WorldSavingSystem.EternityMode ? -10 : Main.expertMode ? 10 : 20;
                     Vector2 center = CoffinArena.Center.ToWorldCoordinates();
                     const int ProjCount = 20;
+
+                    if (!Main.dedServ)
+                        ScreenShakeSystem.StartShake(10, shakeStrengthDissipationIncrement: 10f / 20);
+
+                    if (FargoSoulsUtil.HostCheck)
+                        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ProjectileID.DD2OgreSmash, 0, 0, Main.myPlayer);
+
                     for (int i = -1; i < ProjCount; i++)
                     {
 						Vector2 projPos = center + dir * Vector2.UnitX * (CoffinArena.Width * 8) * ((float)i / ProjCount);

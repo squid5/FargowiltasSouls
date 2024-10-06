@@ -147,6 +147,8 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
         {
             if (NPC.Opacity < 1)
                 return false;
+            if (target.HasBuff<GrabbedBuff>())
+                return false;
             Vector2 boxPos = target.position;
             Vector2 boxDim = target.Size;
             return Collides(boxPos, boxDim);
@@ -272,6 +274,10 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 
                     // dash away otherwise it's bullshit
                     NPC.velocity = -NPC.SafeDirectionTo(victim.Center) * 12;
+                    victim.immune = true;
+                    victim.immuneTime = Math.Max(victim.immuneTime, 30);
+                    victim.hurtCooldowns[0] = Math.Max(victim.hurtCooldowns[0], 30);
+                    victim.hurtCooldowns[1] = Math.Max(victim.hurtCooldowns[1], 30);
 
                     NPC.netUpdate = true;
                     Timer = 0;

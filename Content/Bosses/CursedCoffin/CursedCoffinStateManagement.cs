@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Terraria;
 using Terraria.Audio;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Content.Bosses.CursedCoffin
@@ -72,7 +73,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 			{
 				StateMachine.RegisterTransition(state, BehaviorStates.StunPunish, false, () => 
 				{
-					return Main.player.Any(p => p.Alive() && p.HasBuff<StunnedBuff>() && !p.HasBuff<GrabbedBuff>()) && !Main.projectile.Any(p => p.TypeAlive<CoffinHand>());
+					return Main.player.Any(p => p.Alive() && p.HasBuff(BuffID.Dazed) && !p.HasBuff<GrabbedBuff>()) && !Main.projectile.Any(p => p.TypeAlive<CoffinHand>());
 				});
 			}, BehaviorStates.StunPunish, BehaviorStates.PhaseTransition, BehaviorStates.YouCantEscape, BehaviorStates.SpiritGrabPunish);
 
@@ -123,7 +124,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 
             #region End-of-sequence attacks
 
-            StateMachine.RegisterTransition(BehaviorStates.SpiritGrabPunish, BehaviorStates.SlamWShockwave, false, () => Timer > 90, () =>
+            StateMachine.RegisterTransition(BehaviorStates.SpiritGrabPunish, BehaviorStates.SlamWShockwave, false, () => Timer > 70, () =>
             {
                 NPC.noTileCollide = true;
                 LockVector1 = Player.Top - Vector2.UnitY * 250;

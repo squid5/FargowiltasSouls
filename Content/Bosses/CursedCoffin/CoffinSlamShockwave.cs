@@ -95,11 +95,12 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
         }
         public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers)
         {
-            modifiers.SetMaxDamage(1);
+            modifiers.Null();
+            modifiers.Knockback *= 0;
         }
         public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
-            target.AddBuff(ModContent.BuffType<StunnedBuff>(), 60 * 2);
+            target.AddBuff(BuffID.Dazed, 60 * 2);
         }
         public override bool PreDraw(ref Color lightColor)
         {
