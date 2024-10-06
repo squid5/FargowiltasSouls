@@ -102,7 +102,7 @@ namespace FargowiltasSouls.Content.UI
         {
             LastUpdateUIGameTime = gameTime;
 
-            if (!Main.playerInventory && SoulConfig.Instance.HideTogglerWhenInventoryIsClosed)
+            if (!Main.playerInventory && ClientConfig.Instance.HideTogglerWhenInventoryIsClosed)
                 CloseSoulToggler();
             if (!Main.playerInventory)
             {
@@ -124,7 +124,7 @@ namespace FargowiltasSouls.Content.UI
         {
             TogglerUserInterface?.SetState(null);
 
-            if (SoulConfig.Instance.ToggleSearchReset)
+            if (ClientConfig.Instance.ToggleSearchReset)
             {
                 SoulToggler.SearchBar.Input = "";
 

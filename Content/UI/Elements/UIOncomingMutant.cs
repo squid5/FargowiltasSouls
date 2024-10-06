@@ -48,9 +48,9 @@ namespace FargowiltasSouls.Content.UI.Elements
 
             StayInBounds();
 
-            SoulConfig.Instance.OncomingMutantX = end.X;
-            SoulConfig.Instance.OncomingMutantY = end.Y;
-            SoulConfig.Instance.OnChanged();
+            ClientConfig.Instance.OncomingMutantX = end.X;
+            ClientConfig.Instance.OncomingMutantY = end.Y;
+            ClientConfig.Instance.OnChanged();
         }
 
         public override void Update(GameTime gameTime)
@@ -82,8 +82,8 @@ namespace FargowiltasSouls.Content.UI.Elements
             }
             else
             {
-                Left.Set(SoulConfig.Instance.OncomingMutantX, 0);
-                Top.Set(SoulConfig.Instance.OncomingMutantY, 0);
+                Left.Set(ClientConfig.Instance.OncomingMutantX, 0);
+                Top.Set(ClientConfig.Instance.OncomingMutantY, 0);
                 Recalculate();
             }
 

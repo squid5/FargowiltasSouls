@@ -53,11 +53,11 @@ namespace FargowiltasSouls.Core.AccessoryEffectSystem
                 if (!player.GetToggleValue(effect, true))
                 {
                     if (soulsItem != null)
-                        soulsItem.HasDisabledEffects = SoulConfig.Instance.ItemDisabledTooltip;
+                        soulsItem.HasDisabledEffects = ClientConfig.Instance.ItemDisabledTooltip;
                     return false;
                 }
                 if (soulsItem != null)
-                    soulsItem.HasDisabledEffects = SoulConfig.Instance.ItemDisabledTooltip && AccessoryEffects.Any(e => !player.GetToggleValue(e, true) && e.EffectItem(player) == item);
+                    soulsItem.HasDisabledEffects = ClientConfig.Instance.ItemDisabledTooltip && AccessoryEffects.Any(e => !player.GetToggleValue(e, true) && e.EffectItem(player) == item);
             }
 
             if (!effectPlayer.ActiveEffects[effect.Index])

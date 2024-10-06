@@ -106,7 +106,7 @@ namespace FargowiltasSouls.Core.ModPlayers
 
             if (PrecisionSeal)
             {
-                if (SoulConfig.Instance.PrecisionSealIsHold)
+                if (ClientConfig.Instance.PrecisionSealIsHold)
                     PrecisionSealNoDashNoJump = FargowiltasSouls.PrecisionSealKey.Current;
                 else
                 {
