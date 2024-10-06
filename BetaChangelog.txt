@@ -46,3 +46,4 @@ fixed an obscure golem head null ref error?????
 qb's bee swarm telegraph now indicates the safespots
 split config into client/server
 added a config for when crm potions are used
+cosmo force buffs are actual visible buffs now, no longer shows the stat down when they disappear
