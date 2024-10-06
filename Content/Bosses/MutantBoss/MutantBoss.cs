@@ -113,7 +113,7 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
             NPC.damage = 444+44;
             NPC.defense = 255;
             NPC.value = Item.buyPrice(15);
-            NPC.lifeMax = Main.expertMode ? 13777777 : 7700000;
+            NPC.lifeMax = Main.expertMode ? 13770000 : 7700000;
             NPC.HitSound = SoundID.NPCHit57;
             NPC.noGravity = true;
             NPC.noTileCollide = true;
