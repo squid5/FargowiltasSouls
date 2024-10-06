@@ -155,6 +155,13 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
                     }
                     break;
                 case 22: //stun punish grab
+                    {
+                        if (Projectile.velocity.Length() < 30f)
+                            Projectile.velocity *= 1.08f;
+                        if (WorldSavingSystem.EternityMode && ++Timer < 60)
+                            Projectile.velocity = Projectile.velocity.RotateTowards(Projectile.DirectionTo(target.Center).ToRotation(), 0.01f);
+                    }
+                    break;
                 case 44: // YOU CAN'T ESCAPE
                     {
                         Vector2 vectorToIdlePosition = target.Center - Projectile.Center;
