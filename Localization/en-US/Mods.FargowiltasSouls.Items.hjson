@@ -3606,7 +3606,7 @@ CoffinPainting: {
 }
 
 ElectricWhip: {
-	DisplayName: Voltaic Lasher
+	DisplayName: Voltaic Chain
 	Tooltip:
 		'''
 		Whip your minions to fire chain lightning at a nearby enemy, up to 4 times per swing
