@@ -373,7 +373,7 @@ NebulaEnchant: {
 		'''
 		Once every 3 seconds a projectile will be replaced with a nebula shot that deals magic damage
 		Nebula shots chase after enemies and spawns a nebula booster
-		Buff booster stacking capped at 2
+		Buff booster stacking capped at 2 and does not spawn mana boosters
 		'The pillars of creation have shined upon you'
 		'''
 }
