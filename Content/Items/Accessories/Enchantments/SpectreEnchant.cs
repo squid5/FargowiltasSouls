@@ -125,13 +125,13 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
             {
                 Revive(player.statLifeMax2 / 2 > 300 ? player.statLifeMax2 / 2 : 300, 10800);
                 //if (player.HasEffect<SpectreOnHitEffect>())
-                    XWay(30, player.GetSource_Misc("FossilEnchant"), player.Center, ModContent.ProjectileType<FossilBone>(), 15, spiritDamage, 0, player.whoAmI);
+                 //   XWay(30, player.GetSource_Misc("FossilEnchant"), player.Center, ModContent.ProjectileType<FossilBone>(), 15, spiritDamage, 0, player.whoAmI);
             }
             else if (modPlayer.TerrariaSoul)
             {
                 Revive(300, 14400);
                 //if (player.HasEffect<SpectreOnHitEffect>())
-                    XWay(25, player.GetSource_Misc("FossilEnchant"), player.Center, ModContent.ProjectileType<FossilBone>(), 15, spiritDamage, 0, player.whoAmI);
+                //    XWay(25, player.GetSource_Misc("FossilEnchant"), player.Center, ModContent.ProjectileType<FossilBone>(), 15, spiritDamage, 0, player.whoAmI);
             }
             else
             {
