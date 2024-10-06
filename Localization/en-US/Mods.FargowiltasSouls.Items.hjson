@@ -196,7 +196,7 @@ ForbiddenEnchant: {
 	Tooltip:
 		'''
 		Double tap down to call an ancient storm to the cursor location, which deals magic and summon damage
-		Any projectiles shot through your storm deal 1.3x damage
+		Any projectiles shot through your storm deal 1.2x damage
 		Touch it yourself to add back missing wing time
 		Storm can be resummoned after touching the ground
 		'Walk like an Egyptian'
@@ -924,7 +924,7 @@ SpiritForce: {
 	Tooltip:
 		'''
 		[i:FargowiltasSouls/ForbiddenEnchant] Double tap down to call an ancient tornado that scales with magic and summon damage
-		[i:FargowiltasSouls/ForbiddenEnchant] Any projectiles shot through your tornado deal 1.6x damage
+		[i:FargowiltasSouls/ForbiddenEnchant] Any projectiles shot through your tornado deal 1.4x damage
 		[i:FargowiltasSouls/AncientHallowEnchant] The tornado tracks your mouse slightly 
 		[i:FargowiltasSouls/HallowEnchant] Healing potions restore more health but take effect over time
 		[i:FargowiltasSouls/SpectreEnchant] If you reach zero HP you will revive with 200 HP, self-cleanse debuffs, and spawn healing spirits
