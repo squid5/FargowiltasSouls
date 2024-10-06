@@ -47,3 +47,11 @@ qb's bee swarm telegraph now indicates the safespots
 split config into client/server
 added a config for when crm potions are used
 cosmo force buffs are actual visible buffs now, no longer shows the stat down when they disappear
+The Destroyer (remote)
+	buffed length 5 -> 15
+	buffed mouse homing speed a lot
+	fixed it locking out your global iframes even though it uses static
+the destroyer damage 1200 -> 1500
+omni staff damage 1000 -> 1300
+	uses 2 slots per summon (1 slot per minion)
+unleashed ocean 90 -> 120
