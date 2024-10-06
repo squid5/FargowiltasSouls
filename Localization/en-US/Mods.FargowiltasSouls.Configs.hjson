@@ -21,8 +21,13 @@ ClientConfig: {
 		Tooltip: ""
 	}
 
+	RainbowHealThreshold: {
+		Label: "[i:FargowiltasSouls/ConcentratedRainbowMatter] Automatic Heal Threshold"
+		Tooltip: ""
+	}
+
 	PrecisionSealIsHold: {
-		Label: Precision Seal Key must be held
+		Label: "[i:FargowiltasSouls/PrecisionSeal] Precision Seal Key must be held"
 		Tooltip: If false, precision mode is instead toggled with the key.
 	}
 

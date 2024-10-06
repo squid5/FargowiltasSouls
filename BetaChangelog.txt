@@ -45,3 +45,4 @@ golem boulders have an outline and brighter trail
 fixed an obscure golem head null ref error?????
 qb's bee swarm telegraph now indicates the safespots
 split config into client/server
+added a config for when crm potions are used

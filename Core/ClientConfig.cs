@@ -46,6 +46,11 @@ namespace FargowiltasSouls.Core
 
         [Header("Maso")]
 
+        [Increment(1)]
+        [Range(0, 100)]
+        [DefaultValue(50)]
+        public int RainbowHealThreshold;
+
         [DefaultValue(true)]
         public bool PrecisionSealIsHold;
 
