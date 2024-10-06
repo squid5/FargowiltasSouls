@@ -80,12 +80,12 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
 
                 if (Projectile.ai[1] > 1)
                 {
-                    if (!(Projectile.ai[1] == 4 && Projectile.timeLeft < System.Math.Abs(Projectile.localAI[1]) + 5))
-                        Projectile.rotation = Projectile.rotation.AngleLerp(mutant.SafeDirectionTo(Main.player[mutant.target].Center + Main.player[mutant.target].velocity * 30).ToRotation(), 0.2f);
+                    Projectile.rotation = mutant.SafeDirectionTo(Main.player[mutant.target].Center + Main.player[mutant.target].velocity * 30).ToRotation();
                 }
                 else
                 {
-                    Projectile.rotation = mutant.SafeDirectionTo(Main.player[mutant.target].Center).ToRotation();
+                    if (!(Projectile.ai[1] == 4 && Projectile.timeLeft < System.Math.Abs(Projectile.localAI[1]) + 5))
+                        Projectile.rotation = Projectile.rotation.AngleLerp(mutant.SafeDirectionTo(Main.player[mutant.target].Center).ToRotation(), 0.2f);
                 }
             }
             else
