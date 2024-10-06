@@ -158,7 +158,8 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
             Vector2 positionOffset = Vector2.Zero;
             float windupFraction = 0.5f;
             float extensionFraction;
-            if (!WorldSavingSystem.MasochistModeReal)
+            //dont do it for predictive aim
+            if (!WorldSavingSystem.MasochistModeReal && Projectile.ai[1] <= 1)
             {
                 if (timeFraction > windupFraction) // rear back
                 {
