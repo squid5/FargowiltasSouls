@@ -112,6 +112,8 @@ namespace FargowiltasSouls.Content.Projectiles.Souls
                     int damage = Projectile.damage;
                     if (player.ForceEffect<ChloroMinion>())
                         damage = (int)(damage * 1.7f);
+                    if (player.HasEffect<NatureEffect>())
+                        damage *= 10;
                     if (Projectile.owner == Main.myPlayer)
                     {
                         Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, new Vector2(num404, num405), ProjectileID.CrystalLeafShot, damage, Projectile.knockBack, Projectile.owner);
