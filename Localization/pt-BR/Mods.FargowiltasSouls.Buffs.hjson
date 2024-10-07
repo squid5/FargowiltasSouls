@@ -774,3 +774,23 @@ MushroomPowerBuff: {
 	// DisplayName: Mushroom Power
 	// Description: Increased damage and critical strike chance
 }
+
+SolarBuff: {
+	// DisplayName: Solar Buff
+	// Description: Increased damage reduction
+}
+
+VortexBuff: {
+	// DisplayName: Vortex Buff
+	// Description: Increased critical strike chance
+}
+
+NebulaBuff: {
+	// DisplayName: Nebula Buff
+	// Description: Increased life regeneration
+}
+
+StardustBuff: {
+	// DisplayName: Stardust Buff
+	// Description: Increased damage
+}

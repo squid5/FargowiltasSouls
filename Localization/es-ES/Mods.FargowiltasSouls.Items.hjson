@@ -196,7 +196,7 @@ ForbiddenEnchant: {
 	/* Tooltip:
 		'''
 		Double tap down to call an ancient storm to the cursor location, which deals magic and summon damage
-		Any projectiles shot through your storm deal 1.3x damage
+		Any projectiles shot through your storm deal 1.2x damage
 		Touch it yourself to add back missing wing time
 		Storm can be resummoned after touching the ground
 		'Walk like an Egyptian'
@@ -373,7 +373,7 @@ NebulaEnchant: {
 		'''
 		Once every 3 seconds a projectile will be replaced with a nebula shot that deals magic damage
 		Nebula shots chase after enemies and spawns a nebula booster
-		Buff booster stacking capped at 2
+		Buff booster stacking capped at 2 and does not spawn mana boosters
 		'The pillars of creation have shined upon you'
 		''' */
 }
@@ -924,10 +924,10 @@ SpiritForce: {
 	/* Tooltip:
 		'''
 		[i:FargowiltasSouls/ForbiddenEnchant] Double tap down to call an ancient tornado that scales with magic and summon damage
-		[i:FargowiltasSouls/ForbiddenEnchant] Any projectiles shot through your tornado deal 1.6x damage
+		[i:FargowiltasSouls/ForbiddenEnchant] Any projectiles shot through your tornado deal 1.4x damage
 		[i:FargowiltasSouls/AncientHallowEnchant] The tornado tracks your mouse slightly 
 		[i:FargowiltasSouls/HallowEnchant] Healing potions restore more health but take effect over time
-		[i:FargowiltasSouls/SpectreEnchant] If you reach zero HP you will revive with 200 HP, self-cleanse debuffs, and spawn healing spirits
+		[i:FargowiltasSouls/SpectreEnchant] If you reach zero HP you will revive with 200 HP and self-cleanse debuffs
 		[i:FargowiltasSouls/TikiEnchant] Increased whip range, whips scale with any class, and empower your projectiles they hit
 		'Ascend from this mortal realm'
 		''' */
@@ -1892,7 +1892,6 @@ UniverseSoul: {
 	// DisplayName: Soul of the Universe
 	/* Tooltip:
 		'''
-		Does not stack with downgrades
 		50% increased damage for your current weapon class
 		25% increased critical chance for your current weapon class
 		25% increased attack speed
@@ -2911,7 +2910,7 @@ HellZone: {
 		Uses bones for ammo
 		80% chance to not consume ammo
 		Left click attack inflicts Hellfire
-		Right click to fire a skull that marks enemies for death
+		Right click to fire a skull that marks enemies
 		Marked enemies take 5x damage over time from Hellfire
 		'The reward for slaughtering many...'
 		''' */
@@ -3627,7 +3626,7 @@ CoffinPainting: {
 }
 
 ElectricWhip: {
-	// DisplayName: Voltaic Lasher
+	// DisplayName: Voltaic Chain
 	/* Tooltip:
 		'''
 		Whip your minions to fire chain lightning at a nearby enemy, up to 4 times per swing
