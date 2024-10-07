@@ -51,7 +51,4 @@ The Destroyer (remote)
 	buffed length 5 -> 15
 	buffed mouse homing speed a lot
 	fixed it locking out your global iframes even though it uses static
-the destroyer damage 1200 -> 1500
-omni staff damage 1000 -> 1300
-	uses 2 slots per summon (1 slot per minion)
-unleashed ocean 90 -> 120
+reverted mutant tier summon damage buffs

@@ -18,7 +18,7 @@ namespace FargowiltasSouls.Content.Patreon.DemonKing
 
         public override void SetDefaults()
         {
-            Item.damage = 120;
+            Item.damage = 90;
             Item.DamageType = DamageClass.Summon;
             Item.mana = 10;
             Item.width = 26;
