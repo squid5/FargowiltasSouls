@@ -55,3 +55,4 @@ adjusted damage stat on destroyer, omni staff, unleashed ocean
 removed useless check for mutant presence that silently strips betsy dash iframes???? please dont restore this
 universe soul can stack with materials again
 regurg and landslide have tooltips
+diffractor 577 -> 650
