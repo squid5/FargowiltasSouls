@@ -479,6 +479,10 @@ namespace FargowiltasSouls.Content.Projectiles
             ProjectileID.Celeb2Weapon,
             ProjectileID.Xenopopper
         ];
+        public static bool NoLiveUpdateHeldProj(Projectile projectile)
+        {
+            return ProjectileID.Sets.IsAWhip[projectile.type];
+        }
         public override bool PreAI(Projectile projectile)
         {
             bool retVal = true;
@@ -487,7 +491,7 @@ namespace FargowiltasSouls.Content.Projectiles
             counter++;
 
             //doing it here in case the proj's AI() sets custom weapon damage, so it can override this
-            if (IsAHeldProj)
+            if (IsAHeldProj && !NoLiveUpdateHeldProj(projectile))
             {
                 projectile.damage = player.GetWeaponDamage(player.HeldItem);
                 projectile.CritChance = player.GetWeaponCrit(player.HeldItem);
