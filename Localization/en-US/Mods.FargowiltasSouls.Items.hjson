@@ -2859,7 +2859,12 @@ EaterLauncher: {
 
 FleshCannon: {
 	DisplayName: The Regurgitator
-	Tooltip: "'The enslaved face of a defeated foe...'"
+	Tooltip:
+		'''
+		Grows a Hungry when firing
+		Hungry deals much more damage when fully charged
+		'The enslaved face of a defeated foe...'
+		'''
 }
 
 GeminiGlaives: {
@@ -2874,7 +2879,12 @@ GeminiGlaives: {
 
 GolemTome2: {
 	DisplayName: The Landslide
-	Tooltip: "'The reward for slaughtering many...'"
+	Tooltip:
+		'''
+		Deals more damage when firing many heads at once
+		Automatically fires weak heads when fully charged
+		'The reward for slaughtering many...'
+		'''
 }
 
 GuardianTome: {
