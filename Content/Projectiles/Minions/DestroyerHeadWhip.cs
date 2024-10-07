@@ -119,7 +119,7 @@ namespace FargowiltasSouls.Content.Projectiles.Minions
             {
                 Projectile.localAI[0] = 1;
 
-                float modifier = 5;
+                float modifier = 15;
 
                 if (Projectile.owner == Main.myPlayer)
                 {
@@ -140,26 +140,24 @@ namespace FargowiltasSouls.Content.Projectiles.Minions
             Projectile.spriteDirection = Projectile.velocity.X > 0f ? 1 : -1;
 
             const int aislotHomingCooldown = 0;
-            const int homingDelay = 30;
+            const int homingDelay = 10;
             float desiredFlySpeedInPixelsPerFrame = 40 + modifier * 4;
-            float amountOfFramesToLerpBy = 30 + 30 - modifier * 6; // minimum of 1, please keep in full numbers even though it's a float!
 
             Projectile.ai[aislotHomingCooldown]++;
             if (Projectile.ai[aislotHomingCooldown] > homingDelay)
             {
                 Projectile.ai[aislotHomingCooldown] = homingDelay; //cap this value 
 
-                if (Projectile.Distance(mousePos) > 50)
+                if (Projectile.Distance(mousePos) > 16 * 5)
                 {
                     Vector2 desiredVelocity = Projectile.SafeDirectionTo(mousePos) * desiredFlySpeedInPixelsPerFrame;
-                    Projectile.velocity = Vector2.Lerp(Projectile.velocity, desiredVelocity, 1f / amountOfFramesToLerpBy);
+                    Projectile.velocity = Vector2.Lerp(Projectile.velocity, desiredVelocity, 0.04f);
                 }
             }
         }
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            target.immune[Projectile.owner] = 6;
             target.AddBuff(ModContent.BuffType<LightningRodBuff>(), Main.rand.Next(300, 1200));
         }
 

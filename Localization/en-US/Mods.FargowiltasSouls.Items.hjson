@@ -1871,7 +1871,6 @@ UniverseSoul: {
 	DisplayName: Soul of the Universe
 	Tooltip:
 		'''
-		Does not stack with downgrades
 		50% increased damage for your current weapon class
 		25% increased critical chance for your current weapon class
 		25% increased attack speed
@@ -3606,7 +3605,7 @@ CoffinPainting: {
 }
 
 ElectricWhip: {
-	DisplayName: Voltaic Lasher
+	DisplayName: Voltaic Chain
 	Tooltip:
 		'''
 		Whip your minions to fire chain lightning at a nearby enemy, up to 4 times per swing

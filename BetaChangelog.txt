@@ -47,3 +47,10 @@ qb's bee swarm telegraph now indicates the safespots
 split config into client/server
 added a config for when crm potions are used
 cosmo force buffs are actual visible buffs now, no longer shows the stat down when they disappear
+The Destroyer (remote)
+	buffed length 5 -> 15
+	buffed mouse homing speed a lot
+	fixed it locking out your global iframes even though it uses static
+adjusted damage stat on destroyer, omni staff, unleashed ocean
+removed useless check for mutant presence that silently strips betsy dash iframes???? please dont restore this
+universe soul can stack with materials again
