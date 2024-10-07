@@ -1871,7 +1871,6 @@ UniverseSoul: {
 	DisplayName: Soul of the Universe
 	Tooltip:
 		'''
-		Does not stack with downgrades
 		50% increased damage for your current weapon class
 		25% increased critical chance for your current weapon class
 		25% increased attack speed
@@ -2915,7 +2914,7 @@ OpticStaffEX: {
 	Tooltip:
 		'''
 		Summons the real twins to fight for you
-		Needs 2 minion slots
+		Needs 3 minion slots
 		'The reward for slaughtering many...''
 		'''
 }

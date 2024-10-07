@@ -51,4 +51,6 @@ The Destroyer (remote)
 	buffed length 5 -> 15
 	buffed mouse homing speed a lot
 	fixed it locking out your global iframes even though it uses static
-reverted mutant tier summon damage buffs
+adjusted damage stat on destroyer, omni staff, unleashed ocean
+removed useless check for mutant presence that silently strips betsy dash iframes???? please dont restore this
+universe soul can stack with materials again

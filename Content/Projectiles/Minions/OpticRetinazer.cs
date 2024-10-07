@@ -30,7 +30,7 @@ namespace FargowiltasSouls.Content.Projectiles.Minions
             Projectile.friendly = true;
             Projectile.DamageType = DamageClass.Summon;
             Projectile.minion = true;
-            Projectile.minionSlots = 1f;
+            Projectile.minionSlots = 1.5f;
             Projectile.penetrate = -1;
             Projectile.tileCollide = false;
             Projectile.ignoreWater = true;

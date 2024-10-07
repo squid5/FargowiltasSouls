@@ -15,12 +15,12 @@ namespace FargowiltasSouls.Content.Items.Weapons.SwarmDrops
         public override void SetStaticDefaults()
         {
             Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
-            ItemID.Sets.StaffMinionSlotsRequired[Item.type] = 2;
+            ItemID.Sets.StaffMinionSlotsRequired[Item.type] = 3;
         }
 
         public override void SetDefaults()
         {
-            Item.damage = 1000;
+            Item.damage = 1450;
             Item.mana = 10;
             Item.DamageType = DamageClass.Summon;
             Item.width = 24;
