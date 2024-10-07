@@ -21,11 +21,11 @@ namespace FargowiltasSouls.Content.Items.Accessories.Souls
         {
             //reduce ammo consume
             player.FargoSouls().RangedSoul = true;
-            player.GetDamage(DamageClass.Ranged) += 0.3f;
-            player.GetCritChance(DamageClass.Ranged) += 15;
+            player.GetDamage(DamageClass.Ranged) += 0.22f;
+            player.GetCritChance(DamageClass.Ranged) += 10;
 
             //add new effects
-
+            player.magicQuiver = true;
         }
 
         public override void AddRecipes()

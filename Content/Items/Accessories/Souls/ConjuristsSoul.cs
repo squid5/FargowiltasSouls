@@ -13,7 +13,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Souls
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.FargoSouls().SummonSoul = true;
-            player.GetDamage(DamageClass.Summon) += 0.3f;
+            player.GetDamage(DamageClass.Summon) += 0.22f;
             player.maxMinions += 5;
             player.maxTurrets += 1;
             player.whipRangeMultiplier += 0.15f;

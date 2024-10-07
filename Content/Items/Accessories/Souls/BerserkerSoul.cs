@@ -25,8 +25,8 @@ namespace FargowiltasSouls.Content.Items.Accessories.Souls
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.GetDamage(DamageClass.Melee) += 0.3f;
-            player.GetCritChance(DamageClass.Melee) += 15;
+            player.GetDamage(DamageClass.Melee) += 0.22f;
+            player.GetCritChance(DamageClass.Melee) += 10;
 
             player.AddEffect<MeleeSpeedEffect>(Item);
 

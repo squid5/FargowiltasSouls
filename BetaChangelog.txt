@@ -56,3 +56,5 @@ removed useless check for mutant presence that silently strips betsy dash iframe
 universe soul can stack with materials again
 regurg and landslide have tooltips
 diffractor 577 -> 650
+fixed sniper soul not containing magic quiver effect
+nerfed all class souls, 30% dmg 15% crit -> 22% dmg 10% crit
