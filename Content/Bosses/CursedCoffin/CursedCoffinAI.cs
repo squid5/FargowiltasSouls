@@ -120,11 +120,12 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
                 {
                     for (int x = -3; x < 3; x += 2)
                     {
-                        for (int y = 0; y < 30; y++)
+                        for (int y = 0; y < 10; y++)
                         {
                             Vector2 projPos = p.Center + Vector2.UnitX * x * 16 + Vector2.UnitY * -y * 16;
                             Point tile = projPos.ToTileCoordinates();
-                            if (WorldGen.SolidTile(tile))
+                            Point tileUnder = projPos.ToTileCoordinates() + (Vector2.UnitY * 1).ToPoint();
+                            if (WorldGen.SolidTile(tile) && !WorldGen.SolidTile(tileUnder))
                             {
                                 Projectile.NewProjectile(NPC.GetSource_FromThis(), projPos, Vector2.Zero,
                                     ModContent.ProjectileType<FallingSandstone>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage), 0f, Main.myPlayer, Main.rand.Next(40, 60));
