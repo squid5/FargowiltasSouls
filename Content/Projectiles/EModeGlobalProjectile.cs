@@ -1648,6 +1648,8 @@ namespace FargowiltasSouls.Content.Projectiles
                 case ProjectileID.GreekFire3:
                     if (Main.hardMode)
                         target.AddBuff(ModContent.BuffType<ShadowflameBuff>(), 180);
+                    else
+                        target.AddBuff(BuffID.OnFire3, 180);
                     break;
 
                 case ProjectileID.VortexAcid:
