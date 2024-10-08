@@ -61,6 +61,7 @@ namespace FargowiltasSouls.Core.ModPlayers
         public int The22Incident;
 
         public bool SpawnedCoffinGhost = false;
+        public bool Grappled = false;
 
         public float LockedMana = 0;
 
@@ -240,8 +241,6 @@ namespace FargowiltasSouls.Core.ModPlayers
             //            #region enchantments 
             PetsActive = true;
             //CrimsonRegen = false;
-            if (!LifeForceActive)
-                LifeBeetleDuration = 0;
             LifeForceActive = false;
             MinionCrits = false;
             FirstStrike = false;
@@ -377,6 +376,8 @@ namespace FargowiltasSouls.Core.ModPlayers
             GelicWingsItem = null;
             ConcentratedRainbowMatter = false;
 
+            Ambrosia = false;
+
             //debuffs
             Hexed = false;
             Unstable = false;
@@ -472,6 +473,9 @@ namespace FargowiltasSouls.Core.ModPlayers
             if (!Mash && MashCounter > 0)
                 MashCounter--;
             Mash = false;
+
+            if (Player.grapCount <= 0)
+                Grappled = false;
 
         }
         public override void OnRespawn()
@@ -664,7 +668,7 @@ namespace FargowiltasSouls.Core.ModPlayers
                 {
                     MythrilEffect.CalcMythrilAttackSpeed(this, item);
                 }
-
+                
                 float originalAttackSpeed = AttackSpeed;
                 float originalUseTime = useTime / AttackSpeed;
                 if (UseTimeDebt > 1f)

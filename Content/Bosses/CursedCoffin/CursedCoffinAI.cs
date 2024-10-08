@@ -18,52 +18,52 @@ using Luminance.Common.StateMachines;
 namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 {
     public partial class CursedCoffin : ModNPC
-	{
-		#region Variables
-		public const int RandomStuffOpenTime = 60;
+    {
+        #region Variables
+        public const int RandomStuffOpenTime = 60;
 
 
-		public static readonly SoundStyle PhaseTransitionSFX = new("FargowiltasSouls/Assets/Sounds/Challengers/Coffin/CoffinPhaseTransition");
-		public static readonly SoundStyle SlamSFX = new("FargowiltasSouls/Assets/Sounds/Challengers/Coffin/CoffinSlam") { Volume = 0.5f, PitchVariance = 0.3f };
-		public static readonly SoundStyle SpiritDroneSFX = new("FargowiltasSouls/Assets/Sounds/Challengers/Coffin/CoffinSpiritDrone") { MaxInstances = 1, SoundLimitBehavior = SoundLimitBehavior.IgnoreNew, Volume = 0.2f };
-		public static readonly SoundStyle BigShotSFX = new("FargowiltasSouls/Assets/Sounds/Challengers/Coffin/CoffinBigShot") { Volume = 0.6f, PitchVariance = 0.3f };
-		public static readonly SoundStyle ShotSFX = new("FargowiltasSouls/Assets/Sounds/Challengers/Coffin/CoffinShot") { Volume = 0.3f, PitchVariance = 0.3f };
-		public static readonly SoundStyle SoulShotSFX = new("FargowiltasSouls/Assets/Sounds/Challengers/Coffin/CoffinSoulShot") { Volume = 0.3f, PitchVariance = 0.3f };
-		public static readonly SoundStyle HandChargeSFX = new("FargowiltasSouls/Assets/Sounds/Challengers/Coffin/CoffinHandCharge");
+        public static readonly SoundStyle PhaseTransitionSFX = new("FargowiltasSouls/Assets/Sounds/Challengers/Coffin/CoffinPhaseTransition");
+        public static readonly SoundStyle SlamSFX = new("FargowiltasSouls/Assets/Sounds/Challengers/Coffin/CoffinSlam") { Volume = 0.5f, PitchVariance = 0.3f };
+        public static readonly SoundStyle SpiritDroneSFX = new("FargowiltasSouls/Assets/Sounds/Challengers/Coffin/CoffinSpiritDrone") { MaxInstances = 1, SoundLimitBehavior = SoundLimitBehavior.IgnoreNew, Volume = 0.2f };
+        public static readonly SoundStyle BigShotSFX = new("FargowiltasSouls/Assets/Sounds/Challengers/Coffin/CoffinBigShot") { Volume = 0.6f, PitchVariance = 0.3f };
+        public static readonly SoundStyle ShotSFX = new("FargowiltasSouls/Assets/Sounds/Challengers/Coffin/CoffinShot") { Volume = 0.3f, PitchVariance = 0.3f };
+        public static readonly SoundStyle SoulShotSFX = new("FargowiltasSouls/Assets/Sounds/Challengers/Coffin/CoffinSoulShot") { Volume = 0.3f, PitchVariance = 0.3f };
+        public static readonly SoundStyle HandChargeSFX = new("FargowiltasSouls/Assets/Sounds/Challengers/Coffin/CoffinHandCharge");
 
-		public enum BehaviorStates
-		{
-			Opening,
-			PhaseTransition,
-			StunPunish,
-			SpiritGrabPunish,
-			HoveringForSlam,
-			SlamWShockwave,
-			WavyShotCircle,
-			WavyShotSlam,
-			GrabbyHands,
-			RandomStuff,
-			YouCantEscape,
+        public enum BehaviorStates
+        {
+            Opening,
+            PhaseTransition,
+            StunPunish,
+            SpiritGrabPunish,
+            HoveringForSlam,
+            SlamWShockwave,
+            WavyShotCircle,
+            WavyShotSlam,
+            GrabbyHands,
+            RandomStuff,
+            YouCantEscape,
 
-			// For the state machine.
-			Count
-		}
+            // For the state machine.
+            Count
+        }
 
-		private readonly List<BehaviorStates> Attacks =
+        private readonly List<BehaviorStates> Attacks =
         [
             BehaviorStates.HoveringForSlam,
-			BehaviorStates.WavyShotCircle,
-			BehaviorStates.GrabbyHands,
+            BehaviorStates.WavyShotCircle,
+            BehaviorStates.GrabbyHands,
             BehaviorStates.RandomStuff
-		];
+        ];
 
-		public Player Player => Main.player[NPC.target];
+        public Player Player => Main.player[NPC.target];
 
-		#endregion
-		#region AI
-		public override void OnSpawn(IEntitySource source)
-		{
-			Targeting();
+        #endregion
+        #region AI
+        public override void OnSpawn(IEntitySource source)
+        {
+            Targeting();
             /*
 			Player player = Main.player[NPC.target];
 			if (player.Alive())
@@ -73,28 +73,28 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 				NPC.velocity = new Vector2(0, 0.25f);
 			}
             */
-		}
-		public override bool? CanFallThroughPlatforms() => NPC.noTileCollide || (Player.Top.Y > NPC.Bottom.Y + 30) ? true : null;
-		public override void AI()
-		{
-			//Defaults
-			NPC.defense = NPC.defDefense;
-			if (Main.npc.Any(p => p.TypeAlive<CursedSpirit>()))
-				NPC.defense += 15;
-			NPC.rotation = 0;
+        }
+        public override bool? CanFallThroughPlatforms() => NPC.noTileCollide || (Player.Top.Y > NPC.Bottom.Y + 30) ? true : null;
+        public override void AI()
+        {
+            //Defaults
+            NPC.defense = NPC.defDefense;
+            if (Main.npc.Any(p => p.TypeAlive<CursedSpirit>()))
+                NPC.defense += 15;
+            NPC.rotation = 0;
 
-			// Pushaway collision (solid object)
-			// this is jank
-			Player localPlayer = Main.LocalPlayer;
-			Vector2 nextCenter = localPlayer.Center + localPlayer.velocity;
-			Rectangle nextFrameHitbox = new((int)(nextCenter.X - localPlayer.Hitbox.Width / 2), (int)(nextCenter.Y - localPlayer.Hitbox.Height / 2), localPlayer.Hitbox.Width, localPlayer.Hitbox.Height);
-			if (nextFrameHitbox.Intersects(NPC.Hitbox))
-			{
-				if (!localPlayer.Hitbox.Intersects(NPC.Hitbox))
-				{
+            // Pushaway collision (solid object)
+            // this is jank
+            Player localPlayer = Main.LocalPlayer;
+            Vector2 nextCenter = localPlayer.Center + localPlayer.velocity;
+            Rectangle nextFrameHitbox = new((int)(nextCenter.X - localPlayer.Hitbox.Width / 2), (int)(nextCenter.Y - localPlayer.Hitbox.Height / 2), localPlayer.Hitbox.Width, localPlayer.Hitbox.Height);
+            if (nextFrameHitbox.Intersects(NPC.Hitbox))
+            {
+                if (!localPlayer.Hitbox.Intersects(NPC.Hitbox))
+                {
                     localPlayer.velocity.X /= 2;
                     localPlayer.position.X -= Math.Sign(localPlayer.Center.X - NPC.Center.X) * 8;
-					/*
+                    /*
                     Main.LocalPlayer.position -= Main.LocalPlayer.velocity;
                     Main.LocalPlayer.velocity = Vector2.Zero;
 					*/
@@ -112,6 +112,29 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 				*/
             }
 
+            // Anti-hook technology
+            IEnumerable<Player> hookedPlayers = Main.player.Where(p => p.Alive() && p.FargoSouls().Grappled);
+            if (hookedPlayers.Any() && Main.GameUpdateCount % 20 == 0)
+            {
+                foreach (Player p in hookedPlayers)
+                {
+                    for (int x = -3; x < 3; x += 2)
+                    {
+                        for (int y = 0; y < 10; y++)
+                        {
+                            Vector2 projPos = p.Center + Vector2.UnitX * x * 16 + Vector2.UnitY * -y * 16;
+                            Point tile = projPos.ToTileCoordinates();
+                            Point tileUnder = projPos.ToTileCoordinates() + (Vector2.UnitY * 1).ToPoint();
+                            if (WorldGen.SolidTile(tile) && !WorldGen.SolidTile(tileUnder))
+                            {
+                                Projectile.NewProjectile(NPC.GetSource_FromThis(), projPos, Vector2.Zero,
+                                    ModContent.ProjectileType<FallingSandstone>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage), 0f, Main.myPlayer, Main.rand.Next(40, 60));
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
             // Arena stuff
             Vector2 arenaCenter = CoffinArena.Center.ToWorldCoordinates();
             float distanceX = Math.Abs(localPlayer.Center.X - arenaCenter.X);

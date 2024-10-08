@@ -53,7 +53,6 @@ namespace FargowiltasSouls.Core.ModPlayers
         public int CosmosMoonTimer;
         public int CosmosMoonCycle;
         public bool LifeForceActive;
-        public int LifeBeetleDuration;
         public float AuraSizeBonus;
         public int TerrariaSoulProcCD;
 
@@ -314,6 +313,8 @@ namespace FargowiltasSouls.Core.ModPlayers
         public Item GelicWingsItem;
         public bool ConcentratedRainbowMatter;
 
+        // buffs
+        public bool Ambrosia;
 
         //debuffs
         public bool Hexed;

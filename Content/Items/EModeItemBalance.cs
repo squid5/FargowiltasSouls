@@ -489,6 +489,10 @@ namespace FargowiltasSouls.Content.Items
             {
                 ItemBalance(tooltips, EModeChange.Neutral, "DefensePrefix" + (Main.hardMode ? "_HM" : ""));
             }
+            if (item.prefix >= PrefixID.Wild && item.prefix <= PrefixID.Violent)
+            {
+                ItemBalance(tooltips, EModeChange.Neutral, "ViolentPrefix");
+            }
             //else if (item.CountsAsClass(DamageClass.Summon))
             //{
             //    if (!(EModeGlobalProjectile.IgnoreMinionNerf.TryGetValue(item.shoot, out bool ignoreNerf) && ignoreNerf))

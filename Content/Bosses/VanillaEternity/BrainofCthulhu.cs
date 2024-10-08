@@ -38,6 +38,8 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
         public bool ManuallyDrawing;
         public bool KnockbackImmune;
 
+        public float GlowOpacity = 0f;
+
         public override void SendExtraAI(NPC npc, BitWriter bitWriter, BinaryWriter binaryWriter)
         {
             base.SendExtraAI(npc, bitWriter, binaryWriter);
@@ -118,18 +120,31 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
             if (EnteredPhase2)
             {
-                int confusionThreshold = WorldSavingSystem.MasochistModeReal ? 240 : 300;
+                int confusionThreshold = 400;
                 int confusionThreshold2 = confusionThreshold - 60;
-
                 // Fade dash
                 float cloneTime = 50;
                 int dashTime = 60;
                 ref float teleportTimer = ref npc.localAI[1];
-                bool noFadeDash = ConfusionTimer.IsWithinBounds(confusionThreshold2 - 90, confusionThreshold2) || (npc.HasPlayerTarget && !Main.player[npc.target].HasBuff(BuffID.Confused));
-                if (teleportTimer >= cloneTime && teleportTimer <= 60 && !noFadeDash)
+                bool confused = npc.HasPlayerTarget && Main.player[npc.target].HasBuff(BuffID.Confused);
+                bool noFadeDash = ConfusionTimer.IsWithinBounds(confusionThreshold2 - 60, confusionThreshold2);
+                //if (npc.life > npc.lifeMax / 2 && !WorldSavingSystem.MasochistModeReal && !(npc.HasPlayerTarget && !Main.player[npc.target].HasBuff(BuffID.Confused)))
+                //    noFadeDash = false;
+                if (teleportTimer >= cloneTime - 25 && !noFadeDash)
                 {
                     if (CloneFade < 1)
                         CloneFade += 0.05f;
+                }
+                else
+                {
+                    CloneFade = 0;
+                }
+                if (teleportTimer >= cloneTime && teleportTimer <= 60 && !noFadeDash)
+                {
+                    if (!confused)
+                    {
+                        ConfusionTimer++;
+                    }
                     if (ClonefadeDashTimer < dashTime && npc.HasPlayerTarget)
                     {
                         KnockbackImmune = true;
@@ -152,7 +167,6 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                         npc.Center = stayAwayFromHere + npc.DirectionFrom(stayAwayFromHere) * safeRange;
 
                     ClonefadeDashTimer = 0;
-                    CloneFade = 0;
                     KnockbackImmune = false;
                 }
                     
@@ -212,8 +226,12 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     KnockbackImmune = false;
                     // no teleporting
                     teleportTimer = 2;
-                    ClonefadeDashTimer = 0;
-                    CloneFade = 0;
+                    if (!(npc.life > npc.lifeMax / 2 && !WorldSavingSystem.MasochistModeReal))
+                    {
+                        ClonefadeDashTimer = 0;
+                        CloneFade = 0;
+                    }
+
                     if (!Main.player[npc.target].HasBuff(BuffID.Confused))
                     {
                         if (npc.HasPlayerTarget)
@@ -347,6 +365,11 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                         return false;
                     }
                 }
+                if (IllusionTimer == 60)
+                {
+                    npc.localAI[1] = 120;
+                    npc.ai[0] = -1;
+                }
             }
             else if (!npc.dontTakeDamage)
             {
@@ -399,9 +422,31 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                 Vector2 halfSize = new(texture.Width() / 2, texture.Height() / Main.npcFrameCount[npc.type] / 2);
                 float num35 = 50f * npc.scale;
                 float num36 = Main.NPCAddHeight(npc);
-                spriteBatch.Draw(texture.Value, new Vector2(npc.position.X - screenPos.X + (float)(npc.width / 2) - (float)TextureAssets.Npc[npc.type].Width() * npc.scale / 2f + halfSize.X * npc.scale, npc.position.Y - screenPos.Y + (float)npc.height - (float)texture.Height() * npc.scale / (float)Main.npcFrameCount[npc.type] + 4f + halfSize.Y * npc.scale + num36 + num35 + npc.gfxOffY), npc.frame, color, npc.rotation, halfSize, npc.scale, effects, 0f);
+
+                Vector2 drawPos = new(npc.position.X - screenPos.X + (float)(npc.width / 2) - (float)TextureAssets.Npc[npc.type].Width() * npc.scale / 2f + halfSize.X * npc.scale, 
+                    npc.position.Y - screenPos.Y + (float)npc.height - (float)texture.Height() * npc.scale / (float)Main.npcFrameCount[npc.type] + 4f + halfSize.Y * npc.scale + num36 + num35 + npc.gfxOffY);
+
+                // glow
+                Main.spriteBatch.End();
+                Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
+                if (GlowOpacity < 1)
+                    GlowOpacity += 0.1f;
+                Color glowColor = Color.DarkRed * GlowOpacity;
+                for (int i = 0; i < 12; i++)
+                {
+                    Vector2 afterimageOffset = (MathHelper.TwoPi * i / 12f).ToRotationVector2() * 6f;
+
+                    spriteBatch.Draw(texture.Value, drawPos + afterimageOffset, npc.frame, glowColor, npc.rotation, halfSize, npc.scale, effects, 0f);
+                }
+                Main.spriteBatch.End();
+                Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.ZoomMatrix);
+                spriteBatch.Draw(texture.Value, drawPos, npc.frame, color, npc.rotation, halfSize, npc.scale, effects, 0f);
                 //Main.EntitySpriteDraw(texture, npc.Center - screenPos + new Vector2(0f, npc.gfxOffY + Main.NPCAddHeight(npc)), npc.frame, color, npc.rotation, npc.frame.Size() / 2, npc.scale, effects, 0);
                 return true;
+            }
+            else
+            {
+                GlowOpacity = 0;
             }
             return base.PreDraw(npc, spriteBatch, screenPos, drawColor);
         }

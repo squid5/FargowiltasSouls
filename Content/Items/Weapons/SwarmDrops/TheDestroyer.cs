@@ -23,7 +23,7 @@ namespace FargowiltasSouls.Content.Items.Weapons.SwarmDrops
         }
         public override void SetDefaults()
         {
-            Item.DefaultToWhip(ModContent.ProjectileType<TheDestroyerProj>(), 1500, 20, 9, 60);
+            Item.DefaultToWhip(ModContent.ProjectileType<TheDestroyerProj>(), 1110, 20, 9, 60);
             Item.rare = ItemRarityID.Purple;
             Item.value = Item.sellPrice(0, 25);
         }

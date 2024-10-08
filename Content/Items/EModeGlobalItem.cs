@@ -25,6 +25,7 @@ namespace FargowiltasSouls.Content.Items
         {
             On_Player.GrantPrefixBenefits -= EModePrefixChanges;
         }
+        const float newViolentBaseAttackSpeed = 0.005f;
         private static void EModePrefixChanges(On_Player.orig_GrantPrefixBenefits orig, Player self, Item item)
         {
             orig(self, item);
@@ -37,6 +38,12 @@ namespace FargowiltasSouls.Content.Items
                     self.statDefense -= 1;
                 }
                 self.statLifeMax2 += 5;
+            }
+            if (item.prefix >= PrefixID.Wild && item.prefix <= PrefixID.Violent)
+            {
+                int prefixMultiplier = item.prefix - PrefixID.Wild + 1;
+                self.GetAttackSpeed(DamageClass.Melee) -= 0.01f * prefixMultiplier;
+                self.FargoSouls().AttackSpeed += newViolentBaseAttackSpeed * prefixMultiplier;
             }
         }
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
@@ -62,6 +69,18 @@ namespace FargowiltasSouls.Content.Items
                         }
 
                         tooltip.Text += "\n" + Language.GetTextValue("Mods.FargowiltasSouls.Items.Extra.DefensePrefixMaxLife", life);
+                    }
+                }
+            }
+            if (item.prefix >= PrefixID.Wild && item.prefix <= PrefixID.Violent)
+            {
+                foreach (TooltipLine tooltip in tooltips)
+                {
+                    if (tooltip.Name == "PrefixAccMeleeSpeed")
+                    {
+                        int prefixMultiplier = item.prefix - PrefixID.Wild + 1;
+                        float attackSpeed = (float)System.Math.Round(newViolentBaseAttackSpeed * prefixMultiplier * 100, 1);
+                        tooltip.Text = Language.GetTextValue("Mods.FargowiltasSouls.Items.Extra.ViolentPrefix", attackSpeed);
                     }
                 }
             }

@@ -608,8 +608,6 @@ namespace FargowiltasSouls.Content.Items
                     #region mediocre
 
                     case PrefixID.Hasty:
-                    case PrefixID.Intrepid:
-
                     case PrefixID.Intense:
                     case PrefixID.Frenzying:
                     case PrefixID.Dangerous:
