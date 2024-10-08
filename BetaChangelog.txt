@@ -58,3 +58,13 @@ regurg and landslide have tooltips
 diffractor 577 -> 650
 fixed sniper soul not containing magic quiver effect
 nerfed all class souls, 30% dmg 15% crit -> 22% dmg 10% crit
+emode violent rework, now gives all class attack speed
+intrepid (3% melee/1.5% aspd) is allowed by sec wallet
+rebalanced mutant tier summoner
+demise buff
+umbra buff
+FINALLY fixed all right click weapons not having autofire (lmk if any still lack it)
+umbra draws behind other projs
+fixed umbra not actually doing more damage in m2
+umbra can "overcharge" (silently keeps gaining damage while charging after max charge)
+refactor to whips ignoring the held proj damage fix

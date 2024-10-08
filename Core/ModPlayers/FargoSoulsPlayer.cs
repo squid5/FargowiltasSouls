@@ -664,7 +664,7 @@ namespace FargowiltasSouls.Core.ModPlayers
                 {
                     MythrilEffect.CalcMythrilAttackSpeed(this, item);
                 }
-
+                
                 float originalAttackSpeed = AttackSpeed;
                 float originalUseTime = useTime / AttackSpeed;
                 if (UseTimeDebt > 1f)
