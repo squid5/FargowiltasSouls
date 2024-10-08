@@ -61,6 +61,7 @@ namespace FargowiltasSouls.Core.ModPlayers
         public int The22Incident;
 
         public bool SpawnedCoffinGhost = false;
+        public bool Grappled = false;
 
         public float LockedMana = 0;
 
@@ -472,6 +473,9 @@ namespace FargowiltasSouls.Core.ModPlayers
             if (!Mash && MashCounter > 0)
                 MashCounter--;
             Mash = false;
+
+            if (Player.grapCount <= 0)
+                Grappled = false;
 
         }
         public override void OnRespawn()

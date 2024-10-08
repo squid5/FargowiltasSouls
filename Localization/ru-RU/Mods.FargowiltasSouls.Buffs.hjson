@@ -797,5 +797,5 @@ StardustBuff: {
 
 AmbrosiaBuff: {
 	// DisplayName: Ambrosia Buff
-	// Description: Mods.FargowiltasSouls.Buffs.AmbrosiaBuff.Description
+	// Description: +30% damage, +30% melee speed, +20% damage reduction, +5 life regeneration
 }

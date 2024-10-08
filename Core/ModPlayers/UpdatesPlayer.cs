@@ -650,6 +650,8 @@ namespace FargowiltasSouls.Core.ModPlayers
             if (HealTimer > 0)
                 HealTimer--;
 
+            if (Player.grapCount > 0)
+                Grappled = true;
 
             if (LowGround)
             {
