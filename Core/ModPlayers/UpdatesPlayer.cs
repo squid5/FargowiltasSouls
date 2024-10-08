@@ -398,6 +398,8 @@ namespace FargowiltasSouls.Core.ModPlayers
         {
             if (UsingAnkh)
                 Player.lifeRegen += 3;
+            if (Ambrosia)
+                Player.lifeRegen += 5;
         }
         public override void UpdateBadLifeRegen()
         {
@@ -503,10 +505,6 @@ namespace FargowiltasSouls.Core.ModPlayers
 
             if (CosmosMoonTimer > 0) // naturally degrades
                 CosmosMoonTimer--;
-
-            if (LifeBeetleDuration > 0)
-                LifeBeetleDuration--;
-
 
             if (VortexCD > 0)
                 VortexCD--;

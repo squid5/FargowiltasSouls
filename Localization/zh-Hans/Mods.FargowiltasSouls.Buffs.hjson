@@ -794,3 +794,8 @@ StardustBuff: {
 	// DisplayName: Stardust Buff
 	// Description: Increased damage
 }
+
+AmbrosiaBuff: {
+	// DisplayName: Ambrosia Buff
+	// Description: Mods.FargowiltasSouls.Buffs.AmbrosiaBuff.Description
+}

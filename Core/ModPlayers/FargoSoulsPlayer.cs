@@ -240,8 +240,6 @@ namespace FargowiltasSouls.Core.ModPlayers
             //            #region enchantments 
             PetsActive = true;
             //CrimsonRegen = false;
-            if (!LifeForceActive)
-                LifeBeetleDuration = 0;
             LifeForceActive = false;
             MinionCrits = false;
             FirstStrike = false;
@@ -376,6 +374,8 @@ namespace FargowiltasSouls.Core.ModPlayers
             PrecisionSeal = false;
             GelicWingsItem = null;
             ConcentratedRainbowMatter = false;
+
+            Ambrosia = false;
 
             //debuffs
             Hexed = false;

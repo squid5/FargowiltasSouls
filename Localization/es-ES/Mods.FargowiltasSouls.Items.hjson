@@ -863,7 +863,8 @@ LifeForce: {
 		'''
 		[i:FargowiltasSouls/BeeEnchant] Grants powerful wings
 		[i:FargowiltasSouls/BeeEnchant] Leave behind powerful flowers while flying
-		[i:FargowiltasSouls/BeetleEnchant] [i:FargowiltasSouls/PumpkinEnchant] The flowers heal you, spawn a burst of bees, grant you full Beetle Might and Honey, and refresh your flight time when touched
+		[i:FargowiltasSouls/PumpkinEnchant] The flowers heal you, spawn a burst of bees, grant the Ambrosia buff, and refresh your flight time when touched
+		[i:FargowiltasSouls/BeetleEnchant] The Ambrosia buff provides +30% damage, melee speed, +20% damage reduction, and 5 life regeneration
 		[i:FargowiltasSouls/TurtleEnchant] 500% of contact damage is reflected
 		[i:FargowiltasSouls/SpiderEnchant] Your minions and sentries can crit for 1.5x damage
 		[i:FargowiltasSouls/BeeEnchant] Effects of Hive Pack
@@ -1672,9 +1673,9 @@ ArchWizardsSoul: {
 	// DisplayName: Arch Wizard's Soul
 	/* Tooltip:
 		'''
-		30% increased magic damage
+		22% increased magic damage
 		20% increased spell casting speed
-		15% increased magic critical strike chance
+		10% increased magic critical strike chance
 		Increases your maximum mana by 200
 		Effects of Celestial Cuffs and Mana Flower
 		'Arcane to the core'
@@ -1685,9 +1686,9 @@ BerserkerSoul: {
 	// DisplayName: Berserker's Soul
 	/* Tooltip:
 		'''
-		30% increased melee damage
+		22% increased melee damage
 		20% increased melee speed
-		15% increased melee crit chance
+		10% increased melee crit chance
 		Increased melee knockback
 		Effects of the Fire Gauntlet, Yoyo Bag, and Celestial Shell
 		'None shall live to tell the tale'
@@ -1711,7 +1712,7 @@ ConjuristsSoul: {
 	// DisplayName: Conjurist's Soul
 	/* Tooltip:
 		'''
-		30% increased summon damage
+		22% increased summon damage
 		15% increased whip range
 		Increases your max number of minions by 5
 		Increases your max number of sentries by 1
@@ -1823,10 +1824,10 @@ SnipersSoul: {
 	// DisplayName: Sniper's Soul
 	/* Tooltip:
 		'''
-		30% increased ranged damage
+		22% increased ranged damage
 		20% chance to not consume ammo
-		15% increased ranged critical chance
-		Effects of Sniper Scope
+		10% increased ranged critical chance
+		Effects of Sniper Scope and Magic Quiver
 		'Ready, aim, fire'
 		''' */
 }
@@ -2880,7 +2881,12 @@ EaterLauncher: {
 
 FleshCannon: {
 	// DisplayName: The Regurgitator
-	// Tooltip: "'The enslaved face of a defeated foe...'"
+	/* Tooltip:
+		'''
+		Grows a Hungry when firing
+		Hungry deals much more damage when fully charged
+		'The enslaved face of a defeated foe...'
+		''' */
 }
 
 GeminiGlaives: {
@@ -2895,7 +2901,12 @@ GeminiGlaives: {
 
 GolemTome2: {
 	// DisplayName: The Landslide
-	// Tooltip: "'The reward for slaughtering many...'"
+	/* Tooltip:
+		'''
+		Deals more damage when firing many heads at once
+		Automatically fires weak heads when fully charged
+		'The reward for slaughtering many...'
+		''' */
 }
 
 GuardianTome: {
