@@ -14,6 +14,7 @@ using FargowiltasSouls.Content.Items.Weapons.SwarmDrops;
 using FargowiltasSouls.Content.Patreon.DanielTheRobot;
 using FargowiltasSouls.Content.Projectiles.BossWeapons;
 using FargowiltasSouls.Content.Projectiles.Masomode;
+using FargowiltasSouls.Content.Projectiles.Minions;
 using FargowiltasSouls.Content.Projectiles.Souls;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using FargowiltasSouls.Core.Globals;
@@ -98,6 +99,7 @@ namespace FargowiltasSouls.Content.Projectiles
         public static int ApprenticeDamageCap;
         public int DamageCap;
         public bool EnchantmentProj;
+        public bool LiveUpdateHeldProj = true;
 
         public static List<int> ShroomiteBlacklist =
         [
@@ -123,6 +125,9 @@ namespace FargowiltasSouls.Content.Projectiles
 
         public override void SetDefaults(Projectile projectile)
         {
+            if (ProjectileID.Sets.IsAWhip[projectile.type])
+                LiveUpdateHeldProj = false; // so that whips can lose damage as they hit enemies
+
             switch (projectile.type)
             {
                 case ProjectileID.FinalFractal:
@@ -479,10 +484,6 @@ namespace FargowiltasSouls.Content.Projectiles
             ProjectileID.Celeb2Weapon,
             ProjectileID.Xenopopper
         ];
-        public static bool NoLiveUpdateHeldProj(Projectile projectile)
-        {
-            return ProjectileID.Sets.IsAWhip[projectile.type];
-        }
         public override bool PreAI(Projectile projectile)
         {
             bool retVal = true;
@@ -491,7 +492,7 @@ namespace FargowiltasSouls.Content.Projectiles
             counter++;
 
             //doing it here in case the proj's AI() sets custom weapon damage, so it can override this
-            if (IsAHeldProj && !NoLiveUpdateHeldProj(projectile))
+            if (IsAHeldProj && LiveUpdateHeldProj)
             {
                 projectile.damage = player.GetWeaponDamage(player.HeldItem);
                 projectile.CritChance = player.GetWeaponCrit(player.HeldItem);

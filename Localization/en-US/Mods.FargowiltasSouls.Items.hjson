@@ -3602,10 +3602,9 @@ UmbraRegalia: {
 	Tooltip:
 		'''
 		Left Click to rapidly stab with the spear
-		Hold Right Click to wind up and release to throw the spear
-		Spear hits release homing umbral crystals
-		Spear throw leaves a trail of umbral crystals in its wake
-		Fully charged spear throws deal more damage and hits release more crystals
+		Hold Right Click to charge a spear toss
+		Becomes stronger when fully charged
+		Can continue to gain damage for a while after full charge
 		'The reward for slaughtering many...'
 		'''
 }
