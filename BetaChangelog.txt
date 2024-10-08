@@ -69,3 +69,4 @@ fixed umbra not actually doing more damage in m2
 umbra can "overcharge" (silently keeps gaining damage while charging after max charge)
 refactor to whips ignoring the held proj damage fix
 starfury -20% dmg
+reworked formula for anti-snapshotting held proj stats. compatible with whips and umbra now
