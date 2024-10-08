@@ -18,6 +18,21 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.BloodMoo
             NPCID.CrimsonPenguin
         );
 
+        public override void AI(NPC npc)
+        {
+            base.AI(npc);
+
+            if (npc.type == NPCID.CorruptPenguin || npc.type == NPCID.CrimsonPenguin)
+            {
+                Main.NewText(npc.waterMovementSpeed);
+                if (npc.wet)
+                {
+                    
+                    
+                }
+            }
+        }
+
         public override void OnHitPlayer(NPC npc, Player target, Player.HurtInfo hurtInfo)
         {
             base.OnHitPlayer(npc, target, hurtInfo);
