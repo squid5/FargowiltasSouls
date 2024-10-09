@@ -77,6 +77,11 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.Cavern
         {
             Player player = Main.player[npc.target];
 
+            if (!(npc.type == NPCID.Mimic || npc.type == NPCID.PresentMimic || npc.type == NPCID.IceMimic))
+            {
+                return true;
+            }
+
             if (player.active && player.Center.Distance(npc.Center) > 600)
             {
                 npc.ai[0] = 0f;
