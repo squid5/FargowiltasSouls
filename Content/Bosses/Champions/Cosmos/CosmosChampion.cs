@@ -1914,8 +1914,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Cosmos
             {
                 glowColor *= NPC.Opacity;
 
-                spriteBatch.End();
-                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.ZoomMatrix);
+                spriteBatch.UseBlendState(BlendState.Additive);
             }
 
             if (NPC.localAI[2] != 0 || Animation == -4f)
@@ -1941,8 +1940,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Cosmos
 
             if (!NPC.IsABestiaryIconDummy)
             {
-                spriteBatch.End();
-                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.ZoomMatrix);
+                spriteBatch.UseBlendState(BlendState.NonPremultiplied);
             }
 
             Main.EntitySpriteDraw(npcTex, drawPos + new Vector2(0f, NPC.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), NPC.GetAlpha(drawColor), NPC.rotation, origin2, NPC.scale, effects, 0);
@@ -1951,13 +1949,11 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Cosmos
             {
                 Main.EntitySpriteDraw(npcGlow2, drawPos + new Vector2(0f, NPC.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), glowColor, NPC.rotation, origin2, NPC.scale, effects, 0);
 
-                spriteBatch.End();
-                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.ZoomMatrix);
+                spriteBatch.UseBlendState(BlendState.Additive);
 
                 Main.EntitySpriteDraw(npcGlow2, drawPos + new Vector2(0f, NPC.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), glowColor, NPC.rotation, origin2, NPC.scale, effects, 0);
 
-                spriteBatch.End();
-                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.ZoomMatrix);
+                spriteBatch.ResetToDefault();
             }
             return false;
         }

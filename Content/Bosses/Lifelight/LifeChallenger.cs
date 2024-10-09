@@ -2665,7 +2665,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
             if (ChunkDistance > 20)
             {
 
-                spriteBatch.End(); spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.ZoomMatrix);
+                spriteBatch.UseBlendState(BlendState.Additive);
 
 
                 Texture2D star = ModContent.Request<Texture2D>("FargowiltasSouls/Assets/Effects/LifeStar", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
@@ -2685,7 +2685,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                 starDraw.Draw(spriteBatch);
 
 
-                spriteBatch.End(); spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.ZoomMatrix);
+                spriteBatch.ResetToDefault();
             }
             foreach (Vector4 chunk in chunklist.Where(pos => pos.Z > 0))
             {
