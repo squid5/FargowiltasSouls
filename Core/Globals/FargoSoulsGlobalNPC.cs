@@ -14,6 +14,7 @@ using FargowiltasSouls.Content.Projectiles.ChallengerItems;
 using FargowiltasSouls.Content.Projectiles.Masomode;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using FargowiltasSouls.Core.ItemDropRules;
+using FargowiltasSouls.Core.ModPlayers;
 using FargowiltasSouls.Core.Systems;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -926,24 +927,11 @@ namespace FargowiltasSouls.Core.Globals
                     damage = 6;
             }
 
-            if (modPlayer.Player.HasEffect<OrichalcumEffect>() && npc.lifeRegen < 0)
+            float dotMultiplier = DoTMultiplier(npc, modPlayer.Player);
+            if (dotMultiplier != 1 && npc.lifeRegen < 0)
             {
-                OrichalcumEffect.OriDotModifier(npc, modPlayer, ref damage);
-            }
-            if (modPlayer.Player.HasEffect<EarthForceEffect>() && npc.lifeRegen < 0)
-            {
-                npc.lifeRegen *= 4;
-                damage *= 4;
-                if (npc.daybreak)
-                {
-                    npc.lifeRegen /= 2;
-                    damage /= 2;
-                }
-            }
-            if (MagicalCurse && npc.lifeRegen < 0)
-            {
-                npc.lifeRegen *= 2;
-                damage *= 2;
+                npc.lifeRegen = (int)(npc.lifeRegen * dotMultiplier);
+                damage = (int)(damage * dotMultiplier);
             }
 
             if (TimeFrozen && npc.life == 1)
@@ -952,7 +940,27 @@ namespace FargowiltasSouls.Core.Globals
                     npc.lifeRegen = 0;
             }
         }
+        public static float DoTMultiplier(NPC npc, Player player)
+        {
+            float multiplier = 1;
+            if (npc.lifeRegen >= 0)
+                return multiplier;
 
+            if (player.HasEffect<OrichalcumEffect>())
+                multiplier += OrichalcumEffect.OriDotModifier(npc, player.FargoSouls()) - 1;
+
+            if (player.HasEffect<EarthForceEffect>())
+                multiplier += 3;
+
+            if (npc.FargoSouls().MagicalCurse)
+                multiplier += 1;
+
+            //half as effective if daybreak applied
+            if (npc.daybreak && multiplier > 1)
+                multiplier -= (multiplier - 1) / 2;
+
+            return multiplier;
+        }
         private int InfestedExtraDot(NPC npc)
         {
             int buffIndex = npc.FindBuffIndex(ModContent.BuffType<InfestedBuff>());

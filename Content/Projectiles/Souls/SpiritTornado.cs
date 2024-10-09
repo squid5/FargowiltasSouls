@@ -213,8 +213,7 @@ namespace FargowiltasSouls.Content.Projectiles.Souls
 
         public override bool PreDraw(ref Color lightColor)
         {
-            Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.ZoomMatrix);
+            Main.spriteBatch.UseBlendState(BlendState.Additive);
 
             float halfheight = 220;
             float density = 50f;
@@ -238,8 +237,7 @@ namespace FargowiltasSouls.Content.Projectiles.Souls
                     0);
             }
 
-            Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.ZoomMatrix);
+            Main.spriteBatch.ResetToDefault();
 
             return false;
         }

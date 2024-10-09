@@ -427,8 +427,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     npc.position.Y - screenPos.Y + (float)npc.height - (float)texture.Height() * npc.scale / (float)Main.npcFrameCount[npc.type] + 4f + halfSize.Y * npc.scale + num36 + num35 + npc.gfxOffY);
 
                 // glow
-                Main.spriteBatch.End();
-                Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
+                Main.spriteBatch.UseBlendState(BlendState.Additive);
                 if (GlowOpacity < 1)
                     GlowOpacity += 0.1f;
                 Color glowColor = Color.DarkRed * GlowOpacity;
@@ -438,8 +437,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
                     spriteBatch.Draw(texture.Value, drawPos + afterimageOffset, npc.frame, glowColor, npc.rotation, halfSize, npc.scale, effects, 0f);
                 }
-                Main.spriteBatch.End();
-                Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.ZoomMatrix);
+                Main.spriteBatch.ResetToDefault();
                 spriteBatch.Draw(texture.Value, drawPos, npc.frame, color, npc.rotation, halfSize, npc.scale, effects, 0f);
                 //Main.EntitySpriteDraw(texture, npc.Center - screenPos + new Vector2(0f, npc.gfxOffY + Main.NPCAddHeight(npc)), npc.frame, color, npc.rotation, npc.frame.Size() / 2, npc.scale, effects, 0);
                 return true;
