@@ -259,6 +259,12 @@ namespace FargowiltasSouls.Core.Globals
 
             bool bossCanSpawn = WorldSavingSystem.MasochistModeReal && !spawnInfo.Player.HasEffect<SinisterIconEffect>() && !LumUtils.AnyBosses();
 
+
+            //TEST
+            pool[NPCID.Mimic] = 10f;
+
+
+
             //MASOCHIST MODE
             if (WorldSavingSystem.EternityMode)
             {
