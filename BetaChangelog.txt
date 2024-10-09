@@ -70,3 +70,8 @@ umbra can "overcharge" (silently keeps gaining damage while charging after max c
 refactor to whips ignoring the held proj damage fix
 starfury -20% dmg
 reworked formula for anti-snapshotting held proj stats. compatible with whips and umbra now
+spider ench buffs
+	1.5x crits -> 2x
+	gives +10% crit inherently
+	wizard gives 15% more crit
+life force minion crits are also x2 now (they weren't before)
