@@ -53,7 +53,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.Dungeon
                 directionCounter = 600;
             }
 
-
+             
 
 
             //other enemies it passes through
