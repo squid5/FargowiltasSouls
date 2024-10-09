@@ -1,6 +1,7 @@
 ﻿using FargowiltasSouls.Content.Buffs.Masomode;
 using FargowiltasSouls.Core.Globals;
 using FargowiltasSouls.Core.NPCMatching;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -13,25 +14,8 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.BloodMoo
             NPCID.CorruptBunny,
             NPCID.CrimsonBunny,
             NPCID.CorruptGoldfish,
-            NPCID.CrimsonGoldfish,
-            NPCID.CorruptPenguin,
-            NPCID.CrimsonPenguin
+            NPCID.CrimsonGoldfish
         );
-
-        public override void AI(NPC npc)
-        {
-            base.AI(npc);
-
-            if (npc.type == NPCID.CorruptPenguin || npc.type == NPCID.CrimsonPenguin)
-            {
-                Main.NewText(npc.waterMovementSpeed);
-                if (npc.wet)
-                {
-                    
-                    
-                }
-            }
-        }
 
         public override void OnHitPlayer(NPC npc, Player target, Player.HurtInfo hurtInfo)
         {

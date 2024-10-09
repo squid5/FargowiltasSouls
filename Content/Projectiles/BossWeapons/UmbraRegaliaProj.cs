@@ -38,7 +38,6 @@ namespace FargowiltasSouls.Content.Projectiles.BossWeapons
             Projectile.hide = true;
 
             Projectile.FargoSouls().NinjaCanSpeedup = false;
-            Projectile.FargoSouls().LiveUpdateHeldProj = false; // because it scales damage when thrown
         }
         public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
         {
@@ -281,10 +280,11 @@ namespace FargowiltasSouls.Content.Projectiles.BossWeapons
             {
                 for (int j = 0; j < 16; j++)
                 {
-                    float offsetDistance = 4f * (Projectile.localAI[1] / maxCharge);
+                    float offsetDistance = 4f * Math.Min(1f, Projectile.localAI[1] / maxCharge);
                     Vector2 afterimageOffset = (MathHelper.TwoPi * j / 12f).ToRotationVector2() * offsetDistance;
                     Color glowColor = Color.DarkRed * 0.3f;
-                    Main.spriteBatch.Draw(texture2D13, pos + afterimageOffset, null, glowColor, Projectile.rotation, origin2, Projectile.scale, effects, 0f);
+                    float scale = Projectile.scale * ((Main.mouseTextColor / 200f - 0.35f) * 0.2f + 0.9f);
+                    Main.spriteBatch.Draw(texture2D13, pos + afterimageOffset, null, glowColor, Projectile.rotation, origin2, scale, effects, 0f);
                 }
             }
 

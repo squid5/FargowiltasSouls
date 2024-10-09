@@ -99,7 +99,8 @@ namespace FargowiltasSouls.Content.Projectiles
         public static int ApprenticeDamageCap;
         public int DamageCap;
         public bool EnchantmentProj;
-        public bool LiveUpdateHeldProj = true;
+        public float HeldProjMemorizedDamage;
+        public float HeldProjMemorizedCrit;
 
         public static List<int> ShroomiteBlacklist =
         [
@@ -125,9 +126,6 @@ namespace FargowiltasSouls.Content.Projectiles
 
         public override void SetDefaults(Projectile projectile)
         {
-            if (ProjectileID.Sets.IsAWhip[projectile.type])
-                LiveUpdateHeldProj = false; // so that whips can lose damage as they hit enemies
-
             switch (projectile.type)
             {
                 case ProjectileID.FinalFractal:
@@ -491,11 +489,23 @@ namespace FargowiltasSouls.Content.Projectiles
             FargoSoulsPlayer modPlayer = player.FargoSouls();
             counter++;
 
-            //doing it here in case the proj's AI() sets custom weapon damage, so it can override this
-            if (IsAHeldProj && LiveUpdateHeldProj)
+            if (IsAHeldProj)
             {
-                projectile.damage = player.GetWeaponDamage(player.HeldItem);
-                projectile.CritChance = player.GetWeaponCrit(player.HeldItem);
+                //doing it this janky way so that it takes the relative item stat difference, and applies it to itself
+                //this way if proj modifies its own damage, that isn't overridden
+                //e.g. whips doing less damage after each hit
+                //the actual base damage of the weapon sometimes ends up 1 less than what is shown. idk why. nobody should miss it??
+                //player.gettotaldamage makes no sense btw fuck tmod
+                int weaponDamage = player.GetWeaponDamage(player.HeldItem);
+                int weaponCrit = player.GetWeaponCrit(player.HeldItem);
+                if (HeldProjMemorizedDamage == 0)
+                    HeldProjMemorizedDamage = weaponDamage;
+                if (HeldProjMemorizedCrit == 0)
+                    HeldProjMemorizedCrit = weaponCrit;
+                projectile.damage = (int)Math.Round(projectile.damage * weaponDamage / HeldProjMemorizedDamage, 0, MidpointRounding.ToEven);
+                projectile.CritChance = (int)Math.Round(projectile.CritChance * weaponCrit / HeldProjMemorizedCrit, 0, MidpointRounding.ToEven);
+                HeldProjMemorizedDamage = weaponDamage;
+                HeldProjMemorizedCrit = weaponCrit;
             }
 
             if (spookyCD > 0)

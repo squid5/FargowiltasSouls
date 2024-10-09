@@ -106,6 +106,11 @@ namespace FargowiltasSouls.Content.Items
                     balanceTextKeys = ["CoinGun"];
                     return EModeChange.Nerf;
 
+                case ItemID.Starfury:
+                    balanceTextKeys = ["Damage"];
+                    balanceNumber = 0.8f;
+                    return EModeChange.Nerf;
+
                 case ItemID.StarCannon:
                     balanceTextKeys = ["Damage"];
                     balanceNumber = 0.6f;
