@@ -41,7 +41,12 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies
             NPCID.Grebe2,
             NPCID.Dolphin,
             NPCID.Seagull,
-            NPCID.Seagull2
+            NPCID.Seagull2,
+            NPCID.Penguin,
+            NPCID.PenguinBlack,
+            NPCID.CorruptPenguin,
+            NPCID.CrimsonPenguin
+
         );
 
         public override void OnFirstTick(NPC npc)
