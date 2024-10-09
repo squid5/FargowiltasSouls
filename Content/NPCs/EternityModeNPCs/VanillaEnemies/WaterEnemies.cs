@@ -45,7 +45,8 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies
             NPCID.Penguin,
             NPCID.PenguinBlack,
             NPCID.CorruptPenguin,
-            NPCID.CrimsonPenguin
+            NPCID.CrimsonPenguin,
+            NPCID.CreatureFromTheDeep
 
         );
 

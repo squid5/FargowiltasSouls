@@ -14,36 +14,8 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.BloodMoo
             NPCID.CorruptBunny,
             NPCID.CrimsonBunny,
             NPCID.CorruptGoldfish,
-            NPCID.CrimsonGoldfish,
-            NPCID.CorruptPenguin,
-            NPCID.CrimsonPenguin
+            NPCID.CrimsonGoldfish
         );
-
-        public override void AI(NPC npc)
-        {
-            base.AI(npc);
-
-            if (npc.type == NPCID.CorruptPenguin || npc.type == NPCID.CrimsonPenguin)
-            {
-                //npc.waterMovementSpeed = 2.5f;
-
-                if (npc.wet)
-                {
-                    npc.AddBuff(BuffID.Wet, 180);
-                }
-
-                if (npc.wet || npc.HasBuff(BuffID.Wet))
-                {
-                    float speedToAdd = 1.5f;
-                    Vector2 newPos = npc.position + npc.velocity * speedToAdd;
-
-                    if (!Collision.SolidCollision(newPos, npc.width, npc.height))
-                        npc.position = newPos;
-
-                    
-                }
-            }
-        }
 
         public override void OnHitPlayer(NPC npc, Player target, Player.HurtInfo hurtInfo)
         {
