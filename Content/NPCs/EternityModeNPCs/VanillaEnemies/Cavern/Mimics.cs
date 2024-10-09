@@ -72,7 +72,6 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.Cavern
             }
         }
 
-
         public override bool SafePreAI(NPC npc)
         {
             Player player = Main.player[npc.target];
