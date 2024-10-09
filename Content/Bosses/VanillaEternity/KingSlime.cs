@@ -73,19 +73,20 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                 {
                     for (int i = 0; i < Slimes; i++)
                     {
-                        int x = (int)(npc.position.X + (float)Main.rand.Next(npc.width - 32));
-                        int y = (int)(npc.position.Y + (float)Main.rand.Next(npc.height - 32));
+                        int x = (int)(npc.position.X + Main.rand.NextFloat(npc.width - 32));
+                        int y = (int)(npc.position.Y + Main.rand.NextFloat(npc.height - 32));
                         int type = ModContent.NPCType<SlimeSwarm>();
                         int slime = NPC.NewNPC(npc.GetSource_FromThis(), x, y, type);
                         if (slime.IsWithinBounds(Main.maxNPCs))
                         {
                             Main.npc[slime].SetDefaults(type);
-                            Main.npc[slime].velocity.X = (float)Main.rand.Next(-15, 16) * 0.1f;
-                            Main.npc[slime].velocity.Y = (float)Main.rand.Next(-30, 1) * 0.1f;
+                            Main.npc[slime].velocity.X = Main.rand.NextFloat(-15, 16) * 0.1f;
+                            Main.npc[slime].velocity.Y = Main.rand.NextFloat(-30, -15) * 0.3f;
 
                             if (npc.HasValidTarget)
                             {
                                 Main.npc[slime].ai[0] = Math.Sign(player.Center.X - npc.Center.X);
+                                Main.npc[slime].velocity.X = Main.rand.NextFloat(10, 16) * 0.4f * -npc.HorizontalDirectionTo(player.Center);
                             }
 
                             //Main.npc[slime].ai[0] = -1000 * Main.rand.Next(3);

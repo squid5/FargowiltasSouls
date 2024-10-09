@@ -137,7 +137,7 @@ namespace FargowiltasSouls.Core.ModPlayers
                     {
                         if (SlimyShieldItem != null)
                         {
-                            SoundEngine.PlaySound(SoundID.Item21, Player.Center);
+                            SoundEngine.PlaySound(SoundID.Item21 with { Volume = 0.5f }, Player.Center);
                             Vector2 mouse = Main.MouseWorld;
                             int damage = 8;
                             if (SupremeDeathbringerFairy)
