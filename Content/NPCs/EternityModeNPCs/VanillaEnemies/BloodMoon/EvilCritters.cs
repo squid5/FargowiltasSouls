@@ -1,6 +1,7 @@
 ﻿using FargowiltasSouls.Content.Buffs.Masomode;
 using FargowiltasSouls.Core.Globals;
 using FargowiltasSouls.Core.NPCMatching;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -24,10 +25,21 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.BloodMoo
 
             if (npc.type == NPCID.CorruptPenguin || npc.type == NPCID.CrimsonPenguin)
             {
-                Main.NewText(npc.waterMovementSpeed);
+                //npc.waterMovementSpeed = 2.5f;
+
                 if (npc.wet)
                 {
-                    
+                    npc.AddBuff(BuffID.Wet, 180);
+                }
+
+                if (npc.wet || npc.HasBuff(BuffID.Wet))
+                {
+                    float speedToAdd = 1.5f;
+                    Vector2 newPos = npc.position + npc.velocity * speedToAdd;
+
+                    if (!Collision.SolidCollision(newPos, npc.width, npc.height))
+                        npc.position = newPos;
+
                     
                 }
             }
