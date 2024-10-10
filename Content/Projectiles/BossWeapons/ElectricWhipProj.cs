@@ -91,5 +91,11 @@ namespace FargowiltasSouls.Content.Projectiles.BossWeapons
 
             return false;
         }
+
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            // Whip damage falloff
+            Projectile.damage = (int)(Projectile.damage * 0.7);
+        }
     }
 }

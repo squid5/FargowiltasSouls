@@ -67,11 +67,14 @@ namespace FargowiltasSouls.Content.Projectiles.ChallengerItems
                         () => 1 - (float)modPlayer.EgyptianFlailCD / EgyptianFlail.maxCooldown, activeFunction: () => player.HeldItem != null && player.HeldItem.type == ModContent.ItemType<EgyptianFlail>());
                 }
             }
+
+            // Whip damage falloff
+            Projectile.damage = (int)(Projectile.damage * 0.7);
         }
 
         public override bool PreDraw(ref Color lightColor)
         {
-            List<Vector2> list = new List<Vector2>();
+            List<Vector2> list = [];
             Projectile.FillWhipControlPoints(Projectile, list);
 
             DrawLine(list);
