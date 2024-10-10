@@ -482,6 +482,7 @@ RainEnchant: {
 		It will break after blocking 200 damage
 		While active you have featherfall
 		Grants immunity to Wet and all attacks inflict Wet
+		Grants immunity to lightning strikes in Eternity Mode (Works from inventory and vanity)
 		Effects of Inner Tube
 		'Come again some other day'
 		'''
