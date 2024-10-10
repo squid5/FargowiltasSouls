@@ -48,7 +48,7 @@ ApprenticeEnchant: {
 	Tooltip:
 		'''
 		While attacking, fire your next closest weapon's projectile as support
-		The support weapon will fire 1/4 as often as they would normally and deal 75% damage
+		The support weapon will fire 1/8 as often as they would normally
 		Only works on hotbar weapons
 		Consumables are consumed, mana is spent, and ammo is selected
 		Flameburst field of view and range are dramatically increased
@@ -173,7 +173,9 @@ DarkArtistEnchant: {
 	DisplayName: Dark Artist Enchantment
 	Tooltip:
 		'''
-		While attacking, fire your next 2 closest weapons' projectiles as support
+		While attacking, fire your next closest weapon's projectile as support
+		The support weapon will fire 1/6 as often as they would normally
+		Only works on hotbar weapons
 		Summons a Flameburst minion that will also fire while you attack
 		Greatly enhances Flameburst effectiveness
 		'The shadows hold more than they seem'

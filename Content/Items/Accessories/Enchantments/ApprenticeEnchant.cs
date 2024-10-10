@@ -94,18 +94,6 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
             if (player.controlUseItem)
             {
                 int numExtraSlotsToUse = 1;
-                if (modPlayer.DarkArtistEnchantActive && forceEffect)
-                {
-                    numExtraSlotsToUse = 3;
-                }
-                else if (modPlayer.DarkArtistEnchantActive || forceEffect)
-                {
-                    numExtraSlotsToUse = 2;
-                }
-
-                if (player.HasEffect<ShadowForceEffect>())
-                    numExtraSlotsToUse = 1;
-
 
                 if (player.controlUseItem)
                 {
@@ -165,14 +153,26 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
                             int damage = item2.damage;
                             float KnockBack = item2.knockBack;
 
-
-                            damage = (int)(damage * 0.75f);
+                            //damage = (int)(damage * 0.75f);
 
                             FargoSoulsGlobalProjectile.ApprenticeDamageCap = damage;
                             ApprenticeEnchant.ApprenticeShoot(player, player.whoAmI, item2, damage);
                             FargoSoulsGlobalProjectile.ApprenticeDamageCap = 0;
 
-                            modPlayer.ApprenticeItemCDs[j] = item2.useAnimation * 4;
+                            int divisor = 8;
+                            if (modPlayer.DarkArtistEnchantActive && forceEffect)
+                            {
+                                divisor = 4;
+                            }
+                            else if (modPlayer.DarkArtistEnchantActive || forceEffect)
+                            {
+                                divisor = 6;
+                            }
+
+                            if (player.HasEffect<ShadowForceEffect>())
+                                divisor = 6;
+
+                            modPlayer.ApprenticeItemCDs[j] = item2.useAnimation * divisor;
 
                             
                             if (item2.useAmmo > 0)
