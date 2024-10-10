@@ -44,6 +44,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Forces
             // Ashadow
             player.AddEffect<ShadowBalls>(Item);
             // CrystalAssassin-Shinobi
+            player.AddEffect<CrystalDiagonalDash>(Item);
             if (player.HasEffect<ShadowForceEffect>())
                 player.AddEffect<ShadowForceDashEffect>(Item);
             // Spooky
@@ -171,6 +172,14 @@ namespace FargowiltasSouls.Content.Items.Accessories.Forces
 
             FargoSoulsPlayer modPlayer = player.FargoSouls();
             float dashSpeed = 25f;
+            if (player.HasEffect<CrystalDiagonalDash>())
+            {
+                player.velocity.Y *= 0;
+                if (player.controlUp)
+                    player.velocity.Y = dashSpeed * -0.5f;
+                else if (player.controlDown)
+                    player.velocity.Y = dashSpeed * 0.7f;
+            }
             player.velocity.X = dashSpeed * dir;
             if (modPlayer.IsDashingTimer < 30)
                 modPlayer.IsDashingTimer = 30;
