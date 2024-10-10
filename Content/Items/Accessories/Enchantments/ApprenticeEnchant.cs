@@ -159,18 +159,18 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
                             ApprenticeEnchant.ApprenticeShoot(player, player.whoAmI, item2, damage);
                             FargoSoulsGlobalProjectile.ApprenticeDamageCap = 0;
 
-                            int divisor = 8;
+                            int divisor = 7;
                             if (modPlayer.DarkArtistEnchantActive && forceEffect)
                             {
-                                divisor = 4;
+                                divisor = 3;
                             }
                             else if (modPlayer.DarkArtistEnchantActive || forceEffect)
                             {
-                                divisor = 6;
+                                divisor = 5;
                             }
 
                             if (player.HasEffect<ShadowForceEffect>())
-                                divisor = 6;
+                                divisor = 5;
 
                             modPlayer.ApprenticeItemCDs[j] = item2.useAnimation * divisor;
 
