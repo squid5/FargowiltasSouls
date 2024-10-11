@@ -69,6 +69,8 @@ namespace FargowiltasSouls
 
         internal static Dictionary<int, int> ModProjDict = [];
 
+        public static bool DrawingTooltips = false;
+
         internal struct TextureBuffer
         {
             public static readonly Dictionary<int, Asset<Texture2D>> NPC = [];

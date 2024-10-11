@@ -262,6 +262,7 @@ HallowEnchant: {
 		Using a healing potion creates a shockwave that repels nearby enemy projectiles
 		'Hit me with your best shot'
 		'''
+	OverTime: over time
 }
 
 HuntressEnchant: {

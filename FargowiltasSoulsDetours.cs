@@ -20,13 +20,13 @@ namespace FargowiltasSouls
     {
         public void LoadDetours()
         {
-
             On_Player.CheckSpawn_Internal += LifeRevitalizer_CheckSpawn_Internal;
             On_Player.AddBuff += AddBuff;
             On_Player.QuickHeal_GetItemToUse += QuickHeal_GetItemToUse;
             On_Projectile.AI_019_Spears_GetExtensionHitbox += AI_019_Spears_GetExtensionHitbox;
             On_Item.AffixName += AffixName;
             On_NPCUtils.TargetClosestBetsy += TargetClosestBetsy;
+            On_Main.MouseText_DrawItemTooltip_GetLinesInfo += MouseText_DrawItemTooltip_GetLinesInfo;
         }
         public void UnloadDetours()
         {
@@ -36,6 +36,7 @@ namespace FargowiltasSouls
             On_Projectile.AI_019_Spears_GetExtensionHitbox -= AI_019_Spears_GetExtensionHitbox;
             On_Item.AffixName -= AffixName;
             On_NPCUtils.TargetClosestBetsy -= TargetClosestBetsy;
+            On_Main.MouseText_DrawItemTooltip_GetLinesInfo -= MouseText_DrawItemTooltip_GetLinesInfo;
         }
 
         private static bool LifeRevitalizer_CheckSpawn_Internal(
@@ -144,6 +145,12 @@ namespace FargowiltasSouls
                 return;
             }
             orig(searcher, faceTarget, checkPosition);
+        }
+        public static void MouseText_DrawItemTooltip_GetLinesInfo(On_Main.orig_MouseText_DrawItemTooltip_GetLinesInfo orig, Item item, ref int yoyoLogo, ref int researchLine, float oldKB, ref int numLines, string[] toolTipLine, bool[] preFixLine, bool[] badPreFixLine, string[] toolTipNames, out int prefixlineIndex)
+        {
+            DrawingTooltips = true;
+            orig(item, ref yoyoLogo, ref researchLine, oldKB, ref numLines, toolTipLine, preFixLine, badPreFixLine, toolTipNames, out prefixlineIndex);
+            DrawingTooltips = false;
         }
     }
 }

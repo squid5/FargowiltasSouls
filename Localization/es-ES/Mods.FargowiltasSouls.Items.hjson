@@ -61,7 +61,7 @@ AshWoodEnchant: {
 	/* Tooltip:
 		'''
 		Fire debuffs don't damage you
-		While afflicted with any debuff, attacks are accompanied by balls of fire that deal magic damage
+		While afflicted with any (non-Potion/Mana Sickness) debuff, attacks are accompanied by balls of fire that deal magic damage
 		Grants immunity to Oiled
 		Reduces damage from touching lava
 		'"You're telling me this isn't wood?"'
@@ -262,6 +262,7 @@ HallowEnchant: {
 		Using a healing potion creates a shockwave that repels nearby enemy projectiles
 		'Hit me with your best shot'
 		''' */
+	// OverTime: over time
 }
 
 HuntressEnchant: {
@@ -578,8 +579,7 @@ SnowEnchant: {
 		'''
 		Your attacks briefly inflict Frostburn
 		Snowballs will start to appear around you
-		Attacking will launch them towards the cursor
-		When they hit an enemy they are inflicted with Frostbite and frozen solid
+		Attacking will launch them towards the cursor, dealing magic damage
 		'It's Burning Cold Outside'
 		''' */
 }

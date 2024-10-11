@@ -17,6 +17,7 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 using Terraria.Localization;
+using Terraria.Map;
 using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Content.Items
@@ -582,6 +583,17 @@ namespace FargowiltasSouls.Content.Items
             if (item.type == ItemID.PiercingStarlight)
                 tooltips.Add(new TooltipLine(Mod, "StarlightTungsten", Language.GetTextValue("Mods.FargowiltasSouls.Items.Extra.StarlightTungsten")));
 
+            if (Main.LocalPlayer.HasEffect<HallowEffect>())
+            {
+                foreach (var tooltip in tooltips)
+                {
+                    if (tooltip.Name == "HealLife")
+                    {
+                        tooltip.Text = "[i:FargowiltasSouls/HallowEnchant] " + tooltip.Text;
+                        tooltip.Text += $" {Language.GetTextValue("Mods.FargowiltasSouls.Items.HallowEnchant.OverTime")}";
+                    }
+                }
+            }
             /*if (Array.IndexOf(Summon, item.type) > -1)
             {
                 TooltipLine helperLine = new TooltipLine(mod, "help", "Right click to convert");

@@ -1362,7 +1362,15 @@ namespace FargowiltasSouls.Core.ModPlayers
 
             if (Player.HasEffect<HallowEffect>())
             {
-                healValue = 0;
+                
+                if (FargowiltasSouls.DrawingTooltips)
+                {
+                    float mult = Player.ForceEffect<HallowEffect>() ? 1.7f : 1.4f;
+                    healValue = (int)(healValue * mult);
+                }
+                    
+                else
+                    healValue = 0;
             }
         }
 

@@ -257,6 +257,7 @@ HallowEnchant: {
 		使用治疗药水时会产生冲击波，可击退附近的敌对弹幕
 		《Hit me with your best shot》
 		'''
+	// OverTime: over time
 }
 
 HuntressEnchant: {
