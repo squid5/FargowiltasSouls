@@ -148,6 +148,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
                             int p = Projectile.NewProjectile(GetSource_EffectItem(player), proj.Center, vel, attackType, FargoSoulsUtil.HighestDamageTypeScaling(player, dmg), 1f, player.whoAmI);
                             if (p != Main.maxProjectiles)
                             {
+                                Main.projectile[p].DamageType = DamageClass.Magic;
                                 Main.projectile[p].FargoSouls().CanSplit = false;
                                 if (player.HasEffect<FrostEffect>() || player.ForceEffect<SnowEffect>())
                                     Main.projectile[p].FargoSouls().FrostFreeze = true;

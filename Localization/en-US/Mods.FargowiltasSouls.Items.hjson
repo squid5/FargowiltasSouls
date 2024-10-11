@@ -578,7 +578,7 @@ SnowEnchant: {
 		'''
 		Your attacks briefly inflict Frostburn
 		Snowballs will start to appear around you
-		Attacking will launch them towards the cursor
+		Attacking will launch them towards the cursor, dealing magic damage
 		'It's Burning Cold Outside'
 		'''
 }
