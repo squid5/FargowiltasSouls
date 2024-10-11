@@ -143,7 +143,11 @@ namespace FargowiltasSouls.Content.Items
                 }
                 if (player.HasEffect<HallowEffect>())
                 {
-                    modPlayer.HallowHealTime = 6 * modPlayer.GetHealMultiplier(item.healLife);
+                    int hallowIndex = ModContent.GetInstance<HallowEffect>().Index;
+                    // Hallow needs to disabled so it doesn't set GetHealLife to 0
+                    player.AccessoryEffects().ActiveEffects[hallowIndex] = false;
+                    modPlayer.HallowHealTime = 6 * player.GetHealLife(item);
+                    player.AccessoryEffects().ActiveEffects[hallowIndex] = true;
                     HallowEffect.HealRepel(player);
                 }
                 modPlayer.StatLifePrevious += modPlayer.GetHealMultiplier(item.healLife);
