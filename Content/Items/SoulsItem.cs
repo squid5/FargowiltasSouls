@@ -88,13 +88,14 @@ namespace FargowiltasSouls.Content.Items
                 // This automatically handles fixing item names that begin with an article.
                 //itemNameLine.ArticlePrefixAdjustment(Articles.ToArray());
             }
-            string vanityText = Language.GetTextValue($"Mods.{Mod.Name}.Items.{Name}.VanityTooltip");
-            if (!vanityText.Contains($"Mods.{Mod.Name}.Items."))
+
+            string vanityKey = $"Mods.{Mod.Name}.Items.{Name}.VanityTooltip";
+            if (Language.Exists(vanityKey))
             {
                 if (tooltips.FindIndex(line => line.Name == "SocialDesc") is int socialIndex && socialIndex != -1)
                 {
                     tooltips.RemoveAt(socialIndex);
-                    tooltips.Insert(socialIndex, new TooltipLine(Mod, "SoulsVanityTooltip", vanityText));
+                    tooltips.Insert(socialIndex, new TooltipLine(Mod, "SoulsVanityTooltip", Language.GetTextValue(vanityKey)));
                 }
             }
 
