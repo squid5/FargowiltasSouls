@@ -87,11 +87,18 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
             {
                 modPlayer.AshwoodCD = modPlayer.ForceEffect<AshWoodEnchant>() ? 15 : player.HasEffect<ObsidianProcEffect>() ? 20 : 30;
 
+                int cap = 60;
+                int effectItemType = EffectItem(player).type;
+                int ashwood = ModContent.ItemType<AshWoodEnchant>();
+                int obsidian = ModContent.ItemType<ObsidianEnchant>();
+                if (!player.ForceEffect<AshWoodFireballs>() && (effectItemType == ashwood || effectItemType == obsidian))
+                    cap = 30;
+
                 int fireballDamage = damage;
                 Vector2 vel = Vector2.Normalize(Main.MouseWorld - player.Center) * 17f;
                 vel = vel.RotatedByRandom(Math.PI / 10);
                 if (!modPlayer.TerrariaSoul)
-                    fireballDamage = Math.Min(fireballDamage, FargoSoulsUtil.HighestDamageTypeScaling(player, 60));
+                    fireballDamage = Math.Min(fireballDamage, FargoSoulsUtil.HighestDamageTypeScaling(player, cap));
                 if (burning)
                     fireballDamage = (int)(fireballDamage * 1.3f);
 
