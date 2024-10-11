@@ -184,28 +184,43 @@ namespace FargowiltasSouls.Core.ModPlayers
             {
                 Color light = Lighting.GetColor(Player.Center.ToTileCoordinates());
                 float lightLevel = light.R + light.G + light.B;
-                /*
+                
                 // underground deerclops hands
                 if (Player.ZoneRockLayerHeight && !NPC.downedDeerclops && !Player.ZoneHallow)
                 {
                     if (lightLevel < 500)
                     {
                         LightLevelCounter++;
-                        if (LightLevelCounter > LumUtils.SecondsToFrames(10) && Main.rand.NextBool(300))
+                        Main.NewText(LightLevelCounter / (60 * 15f));
+                        if (LightLevelCounter > LumUtils.SecondsToFrames(20) && Main.rand.NextBool(600))
                         {
-                            Vector2 pos = Player.Center + Vector2.UnitX * (Main.rand.NextBool() ? 1 : -1) * 200 - Vector2.UnitY * 90;
-                            int damage = (Main.hardMode ? 120 : 60) / 4;
-                            int p = Projectile.NewProjectile(Player.GetSource_Misc(""), pos, pos.DirectionTo(Player.Center) * 0f, ModContent.ProjectileType<DeerclopsDarknessHand>(), damage, 2f, Main.myPlayer);
-                            if (p.IsWithinBounds(Main.maxProjectiles))
+                            Vector2 pos = Player.Center + Vector2.UnitX.RotatedByRandom(MathHelper.TwoPi) * 270;
+                            bool failed = false;
+                            for (int i = 0; i < 200; i++) // try to find a dark spot
                             {
-                                Main.projectile[p].light = 1f;
+                                pos = Player.Center + Vector2.UnitX.RotatedByRandom(MathHelper.TwoPi) * 270;
+                                Color lightAtPos = Lighting.GetColor(pos.ToTileCoordinates());
+                                float lightLevelAtPos = lightAtPos.R + lightAtPos.G + lightAtPos.B;
+                                if (lightLevelAtPos < 500)
+                                    break;
+                                if (i == 199) // failed
+                                    failed = true;
                             }
-                            Lighting.AddLight(pos, 1f, 1f, 1f);
-                            LightLevelCounter = 0;
+                            if (!failed)
+                            {
+                                int damage = (Main.hardMode ? 120 : 60) / 4;
+                                int p = Projectile.NewProjectile(Player.GetSource_Misc(""), pos, pos.DirectionTo(Player.Center) * 0f, ModContent.ProjectileType<DeerclopsDarknessHand>(), damage, 2f, Main.myPlayer);
+                                if (p.IsWithinBounds(Main.maxProjectiles))
+                                {
+                                    Main.projectile[p].light = 1f;
+                                }
+                                Lighting.AddLight(pos, 1f, 1f, 1f);
+                                LightLevelCounter = 0;
+                            }
                         }
                     }
                 }
-                */
+                
                 // hallow lifelight sparks
                 if (Player.ZoneHallow && Player.ZoneRockLayerHeight && !WorldSavingSystem.DownedBoss[(int)WorldSavingSystem.Downed.Lifelight])
                 {
