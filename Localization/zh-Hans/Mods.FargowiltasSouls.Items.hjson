@@ -1077,6 +1077,15 @@ BionomicCluster: {
 		    [i:FargowiltasSouls/WyvernFeather]在太空和液体中恢复正常重力作用
 		“由上千普通敌人融合而成”
 		'''
+	/* VanityTooltip:
+		'''
+		Grants immunity to [i:FargowiltasSouls/SandsofTime] Mighty Wind, cactus damage, [i:FargowiltasSouls/MysticSkull] Suffocation, [i:FargowiltasSouls/FrigidGemstone] Chilled, [i:FargowiltasSouls/SqueakyToy] and Guilty
+		[i:FargowiltasSouls/WyvernFeather] Stabilizes gravity in space and in liquid, [i:FargowiltasSouls/OrdinaryCarrot] improves your nightvision, [i:FargowiltasSouls/SecurityWallet] and drastically improves reforges
+		[i:FargowiltasSouls/ConcentratedRainbowMatter] Automatically uses healing & [i:FargowiltasSouls/MysticSkull] mana potions when needed and increases pickup range for mana stars
+		[i:FargowiltasSouls/NymphsPerfume] You respawn with more life [i:FargowiltasSouls/SandsofTime] and when no boss is alive, respawn faster
+		[i:FargowiltasSouls/FrigidGemstone] Press the Frigid Spell key to cast Ice Rod
+		[i:FargowiltasSouls/OrdinaryCarrot] Press right click to zoom in
+		''' */
 }
 
 BionomicClusterInactive: {
@@ -1143,6 +1152,7 @@ ConcentratedRainbowMatter: {
 		召唤一个彩虹史莱姆宝宝
 		“遇上彩虹，吃定彩虹！”
 		'''
+	// VanityTooltip: Automatically use healing potions when needed
 }
 
 DarkenedHeart: {
