@@ -133,7 +133,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
                 if (modPlayer.IcicleCount >= 1 && player.controlUseItem && player.HeldItem.IsWeapon() && player.HeldItem.createTile == -1 && player.HeldItem.createWall == -1 && player.HeldItem.ammo == AmmoID.None)
                 {
 
-                    int dmg = modPlayer.ForceEffect<FrostEnchant>() ? 100 : (player.HasEffect<FrostEffect>() ? 50 : 20);
+                    int dmg = modPlayer.ForceEffect<FrostEnchant>() ? 100 : (player.HasEffect<FrostEffect>() ? 50 : 30);
 
                     for (int i = 0; i < Main.maxProjectiles; i++)
                     {
@@ -149,7 +149,8 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
                             if (p != Main.maxProjectiles)
                             {
                                 Main.projectile[p].FargoSouls().CanSplit = false;
-                                Main.projectile[p].FargoSouls().FrostFreeze = true;
+                                if (player.HasEffect<FrostEffect>() || player.ForceEffect<SnowEffect>())
+                                    Main.projectile[p].FargoSouls().FrostFreeze = true;
                             }
 
                             proj.Kill();

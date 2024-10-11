@@ -579,7 +579,6 @@ SnowEnchant: {
 		Your attacks briefly inflict Frostburn
 		Snowballs will start to appear around you
 		Attacking will launch them towards the cursor
-		When they hit an enemy they are inflicted with Frostbite and frozen solid
 		'It's Burning Cold Outside'
 		'''
 }
