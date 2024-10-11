@@ -110,6 +110,7 @@ CactusEnchant: {
 		使你免受永恒模式的仙人掌伤害
 		“多汁解渴！”
 		'''
+	// VanityTooltip: Grants immunity to cactus damage in Eternity Mode
 }
 
 ChlorophyteEnchant: {
@@ -284,6 +285,13 @@ IronEnchant: {
 		物品的吸附范围扩大
 		“趁热打铁”
 		'''
+	/* VanityTooltip:
+		'''
+		When crafting an item, each material has a 33% chance to not be consumed
+		Works once per material type, ever
+		Does not work on Crucible of the Cosmos items
+		You attract items from a larger range
+		''' */
 }
 
 JungleEnchant: {
@@ -478,6 +486,7 @@ RainEnchant: {
 		拥有浮游圈的效果
 		“改日再来”
 		'''
+	// VanityTooltip: Grants immunity to lightning strikes in Eternity Mode
 }
 
 RedRidingEnchant: {
@@ -697,6 +706,7 @@ TurtleEnchant: {
 		使你免受永恒模式的仙人掌伤害
 		“你突然有一种想躲进壳里的冲动”
 		'''
+	// VanityTooltip: Grants immunity to cactus damage in Eternity Mode
 }
 
 ValhallaKnightEnchant: {
@@ -797,6 +807,12 @@ BoxofGizmos: {
 		敌怪在夜晚会发光
 		使非武器物品获得自动使用的效果
 		'''
+	/* VanityTooltip:
+		'''
+		Stand still to expose nearby treasure and enemies
+		Enemies emit light at night
+		Grants autofire to non-weapon items
+		''' */
 }
 
 UniverseCore: {
@@ -946,6 +962,7 @@ TerraForce: {
 		[i:FargowiltasSouls/AshWoodEnchant] 玩家攻击时会附带火球
 		“大地赐予它力量”
 		'''
+	// VanityTooltip: "[i:FargowiltasSouls/IronEnchant] 50% chance to not consume each item on first craft and you attract items from a larger range"
 }
 
 TimberForce: {
@@ -976,6 +993,7 @@ WillForce: {
 		[i:FargowiltasSouls/ValhallaKnightEnchant] 提升坐骑的各项数据，坐骑可以进行冲刺
 		“坚不可摧的决心”
 		'''
+	// VanityTooltip: "[i:FargowiltasSouls/GoldEnchant] Automatically sends coins to your piggy bank when picked up"
 }
 
 AbominableWand: {
@@ -1195,6 +1213,12 @@ FrigidGemstone: {
 		你的冰块会造成霜冻减益
 		“一块古老的魔法冰碎片”
 		'''
+	/* VanityTooltip:
+		'''
+		Grants immunity to Frostburn and Chilled
+		Press the Frigid Spell key to cast Ice Rod
+		Your ice blocks inflict Frostburn
+		''' */
 }
 
 FrigidGemstoneInactive: {
@@ -1232,12 +1256,14 @@ GalacticGlobe: {
 		增加100%飞行时间
 		“时刻凝视”
 		'''
+	// VanityTooltip: Grants most standard potion and station buffs
 	// HoldShift: "[c/ADD8E6:Hold Left Shift to view potion buffs]"
 	/* ExpandedTooltip:
 		'''
 		[c/ADD8E6:Ironskin, Regeneration, Swiftness, Mana Regeneration, Magic Power, Ammo Reservation, Archery,] 
 		[c/ADD8E6:Builder, Crate, Endurance, Fishing, Gills, Lucky, Heartreach, Lifeforce, Mining, Obsidian Skin,] 
-		[c/ADD8E6:Rage, Wrath, Sonar, Summoning, Thorns, Titan, Warmth, Water Walking, Exquisitely Stuffed]
+		[c/ADD8E6:Rage, Wrath, Sonar, Summoning, Thorns, Titan, Warmth, Water Walking, Exquisitely Stuffed,]
+		[c/ADD8E6:Sharpened, Ammo Box, Clairvoyance, Bewitched, Wartable, Honey]
 		''' */
 }
 
@@ -1298,6 +1324,7 @@ HeartoftheMasochist: {
 		[i:FargowiltasSouls/GalacticGlobe]可以控制重力，增加100%飞行时间，召唤友善的克苏鲁真眼
 		“它还在跳动，很暖和，但没人想要”
 		'''
+	// VanityTooltip: "[i:FargowiltasSouls/SaucerControlConsole] Press Ammo Cycle key to cycle ammos and [i:FargowiltasSouls/GalacticGlobe] grants most standard potion buffs"
 }
 
 IceQueensCrown: {
@@ -1395,6 +1422,12 @@ MysticSkull: {
 		扩大魔力星的拾取范围
 		“被打败敌人的喃喃自语的脑袋”
 		'''
+	/* VanityTooltip:
+		'''
+		Grants immunity to Suffocation
+		Automatically use mana potions when needed
+		Increases pickup range for mana stars
+		''' */
 }
 
 MysticSkullInactive: {
@@ -1430,6 +1463,7 @@ NymphsPerfume: {
 		你的攻击偶尔会生成心
 		“气味有点太浓了”
 		'''
+	// VanityTooltip: You respawn with more life
 }
 
 PrecisionSeal: {
@@ -1525,6 +1559,12 @@ SandsofTime: {
 		使用以传送到你上一次死亡的地点
 		“无论你做什么，都不要丢下它”
 		'''
+	/* VanityTooltip:
+		'''
+		Grants immunity to Mighty Wind and cactus damage
+		You respawn twice as fast when no boss is alive
+		Use to teleport to your last death point
+		''' */
 }
 
 SaucerControlConsole: {
@@ -1537,6 +1577,7 @@ SaucerControlConsole: {
 		飞碟的死亡射线会减慢被击中敌人的速度
 		“请保持飞行模式”
 		'''
+	// VanityTooltip: Press the Ammo Cycle key to cycle ammos
 }
 
 SecurityWallet: {
@@ -1548,6 +1589,11 @@ SecurityWallet: {
 		放置在背包中即可生效
 		“无法完美保护尸体上的财物”
 		'''
+	/* VanityTooltip:
+		'''
+		Grants immunity to Midas
+		Drastically improves reforges
+		''' */
 }
 
 SinisterIcon: {
@@ -1666,6 +1712,7 @@ WyvernFeather: {
 		在太空和液体中恢复正常重力作用，在物品栏中同样生效
 		“摸起来很暖和”
 		'''
+	// VanityTooltip: Stabilizes gravity in space and in liquids
 }
 
 ZephyrBoots: {
@@ -1818,6 +1865,7 @@ MasochistSoul: {
 		[i:FargowiltasSouls/SaucerControlConsole]迷你飞碟、[i:FargowiltasSouls/MagicalBulb]世纪之花和[i:FargowiltasSouls/GalacticGlobe]克苏鲁真眼为你而战
 		“拥抱精通，拥抱永恒”
 		'''
+	// VanityTooltip: "[i:FargowiltasSouls/GalacticGlobe] Grants most standard potion and station buffs"
 }
 
 SnipersSoul: {
@@ -2164,6 +2212,7 @@ OrdinaryCarrot: {
 		放在物品栏中时，右键点击可以增加视野
 		“从被打败的敌人的脸上拔下来的”
 		'''
+	// VanityTooltip: Right click to increase view range
 }
 
 RabiesShot: {

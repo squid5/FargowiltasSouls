@@ -110,6 +110,7 @@ CactusEnchant: {
 		Grants immunity to cactus damage in Eternity Mode (Works from inventory and vanity)
 		'It's the quenchiest!'
 		'''
+	VanityTooltip: Grants immunity to cactus damage in Eternity Mode
 }
 
 ChlorophyteEnchant: {
@@ -288,6 +289,13 @@ IronEnchant: {
 		Does not work on Crucible of the Cosmos items
 		You attract items from a larger range
 		'Strike while the iron is hot'
+		'''
+	VanityTooltip:
+		'''
+		When crafting an item, each material has a 33% chance to not be consumed
+		Works once per material type, ever
+		Does not work on Crucible of the Cosmos items
+		You attract items from a larger range
 		'''
 }
 
@@ -489,6 +497,7 @@ RainEnchant: {
 		Effects of Inner Tube
 		'Come again some other day'
 		'''
+	VanityTooltip: Grants immunity to lightning strikes in Eternity Mode
 }
 
 RedRidingEnchant: {
@@ -713,6 +722,7 @@ TurtleEnchant: {
 		Grants immunity to cactus damage in Eternity Mode (Works from inventory and vanity)
 		'You suddenly have the urge to hide in a shell'
 		'''
+	VanityTooltip: Grants immunity to cactus damage in Eternity Mode
 }
 
 ValhallaKnightEnchant: {
@@ -809,6 +819,12 @@ BoxofGizmos: {
 	Tooltip:
 		'''
 		Works from inventory and vanity slots
+		Stand still to expose nearby treasure and enemies
+		Enemies emit light at night
+		Grants autofire to non-weapon items
+		'''
+	VanityTooltip:
+		'''
 		Stand still to expose nearby treasure and enemies
 		Enemies emit light at night
 		Grants autofire to non-weapon items
@@ -953,6 +969,7 @@ TerraForce: {
 		[i:FargowiltasSouls/IronEnchant] 50% chance to not consume each item on first craft and you attract items from a larger range (works in inventory and vanity)
 		'The land lends its strength'
 		'''
+	VanityTooltip: "[i:FargowiltasSouls/IronEnchant] 50% chance to not consume each item on first craft and you attract items from a larger range"
 }
 
 TimberForce: {
@@ -982,6 +999,7 @@ WillForce: {
 		[i:FargowiltasSouls/GoldEnchant] Automatically sends coins to your piggy bank when picked up (works in inventory and vanity)
 		[i:FargowiltasSouls/PlatinumEnchant] 33% chance for enemies to drop 5x loot
 		'''
+	VanityTooltip: "[i:FargowiltasSouls/GoldEnchant] Automatically sends coins to your piggy bank when picked up"
 }
 
 AbominableWand: {
@@ -1194,6 +1212,12 @@ FrigidGemstone: {
 		Your ice blocks inflict Frostburn
 		'A torn off limb composed of ancient ice'
 		'''
+	VanityTooltip:
+		'''
+		Grants immunity to Frostburn and Chilled
+		Press the Frigid Spell key to cast Ice Rod
+		Your ice blocks inflict Frostburn
+		'''
 }
 
 FrigidGemstoneInactive: {
@@ -1231,6 +1255,7 @@ GalacticGlobe: {
 		Increases flight time by 100%
 		'Consume it'
 		'''
+	VanityTooltip: Grants most standard potion and station buffs
 	HoldShift: "[c/ADD8E6:Hold Left Shift to view potion buffs]"
 	ExpandedTooltip:
 		'''
@@ -1297,6 +1322,7 @@ HeartoftheMasochist: {
 		[i:FargowiltasSouls/SaucerControlConsole] Press Ammo Cycle key to cycle ammos and [i:FargowiltasSouls/GalacticGlobe] grants most standard potion buffs (works from inventory and vanity)
 		'Warm, beating, and no body needed'
 		'''
+	VanityTooltip: "[i:FargowiltasSouls/SaucerControlConsole] Press Ammo Cycle key to cycle ammos and [i:FargowiltasSouls/GalacticGlobe] grants most standard potion buffs"
 }
 
 IceQueensCrown: {
@@ -1393,6 +1419,12 @@ MysticSkull: {
 		Increases pickup range for mana stars
 		'The quietly muttering head of a defeated foe'
 		'''
+	VanityTooltip:
+		'''
+		Grants immunity to Suffocation
+		Automatically use mana potions when needed
+		Increases pickup range for mana stars
+		'''
 }
 
 MysticSkullInactive: {
@@ -1428,6 +1460,7 @@ NymphsPerfume: {
 		Your attacks occasionally produce hearts
 		'The scent is somewhat overpowering'
 		'''
+	VanityTooltip: You respawn with more life
 }
 
 PrecisionSeal: {
@@ -1522,6 +1555,12 @@ SandsofTime: {
 		Use to teleport to your last death point
 		'Whatever you do, don't drop it'
 		'''
+	VanityTooltip:
+		'''
+		Grants immunity to Mighty Wind and cactus damage
+		You respawn twice as fast when no boss is alive
+		Use to teleport to your last death point
+		'''
 }
 
 SaucerControlConsole: {
@@ -1534,6 +1573,7 @@ SaucerControlConsole: {
 		The saucer's tractor beam slows enemies hit by it
 		'Just keep it in airplane mode'
 		'''
+	VanityTooltip: Press the Ammo Cycle key to cycle ammos
 }
 
 SecurityWallet: {
@@ -1544,6 +1584,11 @@ SecurityWallet: {
 		Grants immunity to Midas
 		Drastically improves reforges
 		'Not secure against being looted off of one's corpse'
+		'''
+	VanityTooltip:
+		'''
+		Grants immunity to Midas
+		Drastically improves reforges
 		'''
 }
 
@@ -1660,6 +1705,7 @@ WyvernFeather: {
 		Stabilizes gravity in space and in liquids (works from inventory and vanity)
 		'Warm to the touch'
 		'''
+	VanityTooltip: Stabilizes gravity in space and in liquids
 }
 
 ZephyrBoots: {
@@ -1793,7 +1839,7 @@ MasochistSoul: {
 		[i:FargowiltasSouls/GalacticGlobe] Increases wing time by 200%, [i:FargowiltasSouls/QueenStinger] armor penetration by 50, [i:FargowiltasSouls/GalacticGlobe] and movement speed by 20%
 		[i:FargowiltasSouls/GuttedHeart] Increases max life by 100%, [i:FargowiltasSouls/MagicalBulb] life regen, [i:FargowiltasSouls/MutantAntibodies][i:FargowiltasSouls/SkullCharm][i:FargowiltasSouls/PumpkingsCape] damage for your current weapon class by 50%, and [i:FargowiltasSouls/ReinforcedPlating] damage reduction by 10%
 		[i:FargowiltasSouls/PungentEyeball] Increases spawn chance of rare enemies massively, [i:FargowiltasSouls/SinisterIcon] doubles spawnrates, makes non-boss enemies drop doubled loot, and [i:FargowiltasSouls/TimsConcoction] causes certain enemies to drop potions 
-		Grants [i:FargowiltasSouls/SlimyShield] fastfall, [i:FargowiltasSouls/ReinforcedPlating] knockback immunity, [i:FargowiltasSouls/PureHeart] immunity to biome debuffs, [i:FargowiltasSouls/GalacticGlobe] most standard potion buffs (works from inventory and vanity), immunity to almost all Eternity Mode debuffs, and more
+		Grants [i:FargowiltasSouls/SlimyShield] fastfall, [i:FargowiltasSouls/ReinforcedPlating] knockback immunity, [i:FargowiltasSouls/PureHeart] immunity to biome debuffs, [i:FargowiltasSouls/GalacticGlobe] most standard potion and station buffs (works from inventory and vanity), immunity to almost all Eternity Mode debuffs, and more
 		Press [i:FargowiltasSouls/BetsysHeart] the Special Dash key to perform an invincible dash, [i:FargowiltasSouls/PrecisionSeal] the Precision Seal key to prevent dashes and double jumps, [i:FargowiltasSouls/AgitatingLens] [i:FargowiltasSouls/FusedLens] the Debuff Install key to debuff and buff yourself
 		Press [i:FargowiltasSouls/FrigidGemstone] the Frigid Spell key to cast Ice Rod, [i:FargowiltasSouls/IceQueensCrown] the bomb key to freeze everything with enough graze, and right click to [i:FargowiltasSouls/OrdinaryCarrot] zoom and [i:FargowiltasSouls/DreadShell] [i:FargowiltasSouls/PumpkingsCape] parry for up to 200 damage
 		[i:FargowiltasSouls/Deerclawps] [i:FargowiltasSouls/LihzahrdTreasureBox] Double tap DOWN to fastfall and explode and create ice spikes on landing.
@@ -1805,6 +1851,7 @@ MasochistSoul: {
 		[i:FargowiltasSouls/SandsofTime] Use to teleport to your last death point
 		'Embrace mastery, embrace eternity'
 		'''
+	VanityTooltip: "[i:FargowiltasSouls/GalacticGlobe] Grants most standard potion and station buffs"
 }
 
 SnipersSoul: {
@@ -2152,6 +2199,7 @@ OrdinaryCarrot: {
 		Right click to increase view range (works from inventory and vanity slots)
 		'Plucked from the face of a defeated foe'
 		'''
+	VanityTooltip: Right click to increase view range
 }
 
 RabiesShot: {
