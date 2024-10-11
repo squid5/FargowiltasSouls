@@ -86,6 +86,8 @@ namespace FargowiltasSouls.Core.ModPlayers
         public bool IsInADashState
             => (Player.dashDelay == -1 || IsDashingTimer > 0) && Player.grapCount <= 0;
 
+        public bool BossAliveLastFrame = false;
+
         public override void SaveData(TagCompound tag)
         {
             var playerData = new List<string>();

@@ -1008,10 +1008,20 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                 modifiers.FinalDamage *= 0.75f;
             if (projectile.type == ModContent.ProjectileType<DecrepitAirstrikeNuke>() || projectile.type == ModContent.ProjectileType<DecrepitAirstrikeNukeSplinter>())
                 modifiers.FinalDamage *= 0.7f;
+
+            if (projectile.type == ProjectileID.MonkStaffT1 || projectile.type == ProjectileID.MonkStaffT1Explosion) // sleepy
+                modifiers.FinalDamage *= 0.3f;
+
+            if (projectile.FargoSouls().IsAHeldProj)
+                modifiers.FinalDamage *= 0.4f;
+        }
+        public override void SafeModifyHitByItem(NPC npc, Player player, Item item, ref NPC.HitModifiers modifiers)
+        {
+            modifiers.FinalDamage *= 0.4f;
         }
         public override void SafeOnHitByProjectile(NPC npc, Projectile projectile, NPC.HitInfo hit, int damageDone)
         {
-            if (!FargoSoulsUtil.IsSummonDamage(projectile) && projectile.damage > 5)
+            if (!FargoSoulsUtil.IsSummonDamage(projectile) && !projectile.FargoSouls().IsAHeldProj && projectile.damage > 5)
                 projectile.damage = (int)Math.Min(projectile.damage - 1, projectile.damage * 0.75);
         }
 

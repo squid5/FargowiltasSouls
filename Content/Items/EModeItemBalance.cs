@@ -182,11 +182,12 @@ namespace FargowiltasSouls.Content.Items
                         return EModeChange.None;
                     }
 
-
+                    /*
                 case ItemID.FetidBaghnakhs:
                     balanceTextKeys = ["Speed"];
                     balanceNumber = 0.75f;
                     return EModeChange.Nerf;
+                    */
 
                 case ItemID.MoonlordTurretStaff:
                     balanceTextKeys = ["Damage"];
@@ -231,6 +232,31 @@ namespace FargowiltasSouls.Content.Items
                     balanceNumber = 1.2f;
                     return EModeChange.Buff;
 
+                case ItemID.MonkStaffT2: //ghastly glaive
+                    balanceTextKeys = ["Damage"];
+                    balanceNumber = 1.55f;
+                    return EModeChange.Buff;
+
+                case ItemID.MonkStaffT1: // sleepy octopod
+                    balanceTextKeys = ["Damage"];
+                    balanceNumber = 1.7f;
+                    return EModeChange.Buff;
+
+                case ItemID.MonkStaffT3: //sky dragon fury
+                    balanceTextKeys = ["Damage"];
+                    balanceNumber = 1.4f;
+                    return EModeChange.Buff;
+
+                case ItemID.BookStaff: // tome of inf wisdom
+                    balanceTextKeys = ["Damage"];
+                    balanceNumber = 1.1f;
+                    return EModeChange.Buff;
+
+                case ItemID.DD2SquireDemonSword: // brand of inferno
+                    balanceTextKeys = ["Damage"];
+                    balanceNumber = 1.2f;
+                    return EModeChange.Buff;
+
                 case ItemID.PumpkinMoonMedallion:
                     balanceNumber = PumpkinMoonBosses.WAVELOCK;
                     if (WorldSavingSystem.MasochistModeReal)
@@ -259,6 +285,7 @@ namespace FargowiltasSouls.Content.Items
                 case ItemID.CrossNecklace:
                     balanceTextKeys = ["CrossNecklaceNerf"];
                     return EModeChange.Nerf;
+
                 case ItemID.StarCloak:
                 case ItemID.StarVeil:
                 case ItemID.BeeCloak:
@@ -347,12 +374,12 @@ namespace FargowiltasSouls.Content.Items
                 case ItemID.SniperRifle:
                     balanceTextKeys = ["SniperRifle"];
                     return EModeChange.Buff;
+
                 case ItemID.ChlorophyteSaber:
                     balanceTextKeys = ["Damage", "ChlorophyteSaber"];
                     balanceNumber = 1.25f;
-                    return EModeChange.Buff;
-                
 
+                    return EModeChange.Buff;
                 default:
                     return EModeChange.None;
             }
