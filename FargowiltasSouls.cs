@@ -31,6 +31,7 @@ using System.IO;
 using System.Linq;
 using Terraria;
 using Terraria.Chat;
+using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.Graphics.Effects;
 using Terraria.Graphics.Shaders;
@@ -578,7 +579,8 @@ namespace FargowiltasSouls
             //SpawnBossTryFromNPC,
             HealNPC,
             SyncSnatcherGrab,
-            SyncTuskRip
+            SyncTuskRip,
+            DropMutantGift
         }
 
         public override void HandlePacket(BinaryReader reader, int whoAmI)
@@ -789,6 +791,13 @@ namespace FargowiltasSouls
                                 proj.ai[1] = 2;
                                 proj.netUpdate = true;
                             }
+                        }
+                        break;
+                    case PacketID.DropMutantGift:
+                        {
+                            int i = reader.ReadInt32();
+                            int j = reader.ReadInt32();
+                            Item.NewItem(new EntitySource_TileBreak(i, j - 1), i * 16, j * 16, 48, 48, ModContent.ItemType<Content.Items.Masochist>());
                         }
                         break;
 
