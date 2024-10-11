@@ -1226,7 +1226,7 @@ GalacticGlobe: {
 	Tooltip:
 		'''
 		Grants immunity to Nullification Curse, Flipped, Illuminated, Unstable, and Curse of the Moon
-		Grants most standard potion buffs (works from inventory and vanity)
+		Grants most standard potion and station buffs (works from inventory and vanity)
 		Summons the true eyes of Cthulhu to protect you
 		Increases flight time by 100%
 		'Consume it'
@@ -1236,7 +1236,8 @@ GalacticGlobe: {
 		'''
 		[c/ADD8E6:Ironskin, Regeneration, Swiftness, Mana Regeneration, Magic Power, Ammo Reservation, Archery,] 
 		[c/ADD8E6:Builder, Crate, Endurance, Fishing, Gills, Lucky, Heartreach, Lifeforce, Mining, Obsidian Skin,] 
-		[c/ADD8E6:Rage, Wrath, Sonar, Summoning, Thorns, Titan, Warmth, Water Walking, Exquisitely Stuffed]
+		[c/ADD8E6:Rage, Wrath, Sonar, Summoning, Thorns, Titan, Warmth, Water Walking, Exquisitely Stuffed,]
+		[c/ADD8E6:Sharpened, Ammo Box, Clairvoyance, Bewitched, Wartable, Honey]
 		'''
 }
 
