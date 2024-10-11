@@ -98,7 +98,8 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
             {
                 int damage = baseDamage;
                 FargoSoulsPlayer modPlayer = player.FargoSouls();
-                damage = Math.Min(damage, FargoSoulsUtil.HighestDamageTypeScaling(player, 200));
+                int cap = player.ForceEffect<ObsidianProcEffect>() ? 200 : 50;
+                damage = Math.Min(damage, FargoSoulsUtil.HighestDamageTypeScaling(player, cap));
 
                 if (player.lavaWet || modPlayer.LavaWet)
                     damage = (int)(damage * 1.3f);
@@ -108,7 +109,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
 
                 Projectile.NewProjectile(GetSource_EffectItem(player), target.Center, Vector2.Zero, ModContent.ProjectileType<ObsidianExplosion>(), damage, 0, player.whoAmI);
 
-                modPlayer.ObsidianCD = 40;
+                modPlayer.ObsidianCD = 50;
             }
         }
     }
