@@ -182,11 +182,12 @@ namespace FargowiltasSouls.Content.Items
                         return EModeChange.None;
                     }
 
-
+                    /*
                 case ItemID.FetidBaghnakhs:
                     balanceTextKeys = ["Speed"];
                     balanceNumber = 0.75f;
                     return EModeChange.Nerf;
+                    */
 
                 case ItemID.MoonlordTurretStaff:
                     balanceTextKeys = ["Damage"];
