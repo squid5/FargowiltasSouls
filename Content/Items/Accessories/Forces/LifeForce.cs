@@ -96,7 +96,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Forces
     }
     public class LifeForceEffect : AccessoryEffect
     {
-        public override Header ToggleHeader => Header.GetHeader<LifeHeader>();
-        public override int ToggleItemType => ModContent.ItemType<LifeForce>();
+        public override Header ToggleHeader => null;
+        //public override int ToggleItemType => ModContent.ItemType<LifeForce>();
     }
 }

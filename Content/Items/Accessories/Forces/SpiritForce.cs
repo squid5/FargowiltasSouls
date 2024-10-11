@@ -56,8 +56,8 @@ namespace FargowiltasSouls.Content.Items.Accessories.Forces
     }
     public class SpiritTornadoEffect : AccessoryEffect
     {
-        public override Header ToggleHeader => Header.GetHeader<SpiritHeader>();
-        public override int ToggleItemType => ModContent.ItemType<SpiritForce>();
+        public override Header ToggleHeader => null;
+        //public override int ToggleItemType => ModContent.ItemType<SpiritForce>();
 
         public static void ActivateSpiritStorm(Player player)
         {

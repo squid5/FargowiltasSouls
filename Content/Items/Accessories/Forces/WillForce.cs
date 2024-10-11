@@ -69,9 +69,8 @@ namespace FargowiltasSouls.Content.Items.Accessories.Forces
     }
     public class WillEffect : AccessoryEffect
     {
-        public override Header ToggleHeader => Header.GetHeader<WillHeader>();
-        public override int ToggleItemType => ModContent.ItemType<WillForce>();
-        public override bool MinionEffect => false;
+        public override Header ToggleHeader => null;
+        //public override int ToggleItemType => ModContent.ItemType<WillForce>();
        
     }
 }
