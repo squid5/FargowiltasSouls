@@ -61,7 +61,16 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
             if (modPlayer.ObsidianCD > 0)
                 modPlayer.ObsidianCD--;
 
-            if (modPlayer.ForceEffect<ObsidianEnchant>() || player.lavaWet || modPlayer.LavaWet)
+            bool triggerFromDebuffs = false;
+            if (modPlayer.ForceEffect<ObsidianEnchant>())
+            {
+                for (int i = 0; i < Player.MaxBuffs; i++)
+                {
+                    if (player.buffType[i] > 0 && Main.debuff[player.buffType[i]])
+                        triggerFromDebuffs = true;
+                }
+            }
+            if (triggerFromDebuffs || player.lavaWet || modPlayer.LavaWet)
             {
                 player.AddEffect<ObsidianProcEffect>(item);
             }

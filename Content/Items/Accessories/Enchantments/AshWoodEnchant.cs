@@ -82,10 +82,15 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
             if (player.HasEffect<TerraLightningEffect>())
                 return;
             FargoSoulsPlayer modPlayer = player.FargoSouls();
-            bool burning = (player.onFire || player.onFire2 || player.onFire3);
-            if (modPlayer.AshwoodCD <= 0 && (burning || player.HasEffect<ObsidianProcEffect>()))
+            bool debuffed = false;
+            for (int i = 0; i < Player.MaxBuffs; i++)
             {
-                modPlayer.AshwoodCD = modPlayer.ForceEffect<AshWoodEnchant>() ? 15 : player.HasEffect<ObsidianProcEffect>() ? 20 : 30;
+                if (player.buffType[i] > 0 && Main.debuff[player.buffType[i]])
+                    debuffed = true;
+            }
+            if (modPlayer.AshwoodCD <= 0 && (debuffed || player.HasEffect<ObsidianProcEffect>()))
+            {
+                modPlayer.AshwoodCD = modPlayer.ForceEffect<AshWoodEnchant>() ? 20 : player.HasEffect<ObsidianProcEffect>() ? 25 : 35;
 
                 int cap = 60;
                 int effectItemType = EffectItem(player).type;
@@ -99,8 +104,6 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
                 vel = vel.RotatedByRandom(Math.PI / 10);
                 if (!modPlayer.TerrariaSoul)
                     fireballDamage = Math.Min(fireballDamage, FargoSoulsUtil.HighestDamageTypeScaling(player, cap));
-                if (burning)
-                    fireballDamage = (int)(fireballDamage * 1.3f);
 
                 if (player.whoAmI == Main.myPlayer)
                     Projectile.NewProjectile(GetSource_EffectItem(player), player.Center, vel, ProjectileID.BallofFire, fireballDamage, 1, Main.myPlayer);
