@@ -191,7 +191,6 @@ namespace FargowiltasSouls.Core.ModPlayers
                     if (lightLevel < 500)
                     {
                         LightLevelCounter++;
-                        Main.NewText(LightLevelCounter / (60 * 15f));
                         if (LightLevelCounter > LumUtils.SecondsToFrames(20) && Main.rand.NextBool(600))
                         {
                             Vector2 pos = Player.Center + Vector2.UnitX.RotatedByRandom(MathHelper.TwoPi) * 270;
