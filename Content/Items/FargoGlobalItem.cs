@@ -25,10 +25,11 @@ namespace FargowiltasSouls.Content.Items
     {
         public override void SetDefaults(Item item)
         {
-            if (item.type == ItemID.Acorn || item.type == ItemID.Bone)
-            {
-                item.ammo = item.type;
-            }
+            if (item.type is ItemID.Acorn or ItemID.GemTreeAmberSeed or ItemID.GemTreeAmethystSeed or ItemID.GemTreeDiamondSeed or ItemID.GemTreeEmeraldSeed or ItemID.GemTreeRubySeed or ItemID.GemTreeSapphireSeed or ItemID.GemTreeTopazSeed)
+                item.ammo = ItemID.Acorn;
+
+            if (item.type == ItemID.Bone)
+                item.ammo = ItemID.Bone;
         }
         public override void UpdateAccessory(Item item, Player player, bool hideVisual)
         {
@@ -79,6 +80,31 @@ namespace FargowiltasSouls.Content.Items
         {
             //if (weapon.CountsAsClass(DamageClass.Ranged) && player.FargoSouls().Jammed)
                 //type = ProjectileID.ConfettiGun;
+
+            switch (ammo.type)
+            {
+                case ItemID.GemTreeAmethystSeed:
+                    damage.Flat += 1;
+                    break;
+                case ItemID.GemTreeTopazSeed:
+                    damage.Flat += 2; 
+                    break;
+                case ItemID.GemTreeSapphireSeed:
+                    damage.Flat += 3;
+                    break;
+                case ItemID.GemTreeEmeraldSeed:
+                    damage.Flat += 4;
+                    break;
+                case ItemID.GemTreeRubySeed:
+                    damage.Flat += 5;
+                    break;
+                case ItemID.GemTreeAmberSeed:
+                    damage.Flat += 6;
+                    break;
+                case ItemID.GemTreeDiamondSeed:
+                    damage.Flat += 7;
+                    break;
+            }
 
             //coin gun is broken as fucking shit codingwise so i'm fixing it
             if (weapon.type == ItemID.CoinGun)
