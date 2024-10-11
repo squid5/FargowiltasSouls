@@ -101,6 +101,7 @@ namespace FargowiltasSouls.Content.Projectiles
         public bool EnchantmentProj;
         public float HeldProjMemorizedDamage;
         public float HeldProjMemorizedCrit;
+        public bool Reflected;
 
         public static List<int> ShroomiteBlacklist =
         [
@@ -224,6 +225,16 @@ namespace FargowiltasSouls.Content.Projectiles
             if (WorldGen.generatingWorld)
             {
                 return;
+            }
+
+            if (source is EntitySource_Parent parentReflected && parentReflected.Entity is Projectile parentReflectedProj && parentReflectedProj.FargoSouls().Reflected)
+            {
+                projectile.hostile = false;
+                projectile.friendly = true;
+                Reflected = true;
+                projectile.owner = parentReflectedProj.owner;
+                projectile.DamageType = parentReflectedProj.DamageType;
+                projectile.netUpdate = true;
             }
             //not doing this causes player array index error during worldgen in some cases maybe??
             if (projectile.owner < 0 || projectile.owner >= Main.maxPlayers)

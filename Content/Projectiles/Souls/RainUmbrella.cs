@@ -132,6 +132,7 @@ namespace FargowiltasSouls.Content.Projectiles.Souls
                     }
 
                     // Set ownership
+                    x.FargoSouls().Reflected = true;
                     x.hostile = false;
                     x.friendly = true;
                     x.owner = player.whoAmI;
