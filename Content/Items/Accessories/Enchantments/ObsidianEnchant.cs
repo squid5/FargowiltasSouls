@@ -113,6 +113,8 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
 
                 if (player.lavaWet || modPlayer.LavaWet)
                     damage = (int)(damage * 1.3f);
+                if (!player.ForceEffect<ObsidianProcEffect>())
+                    damage = (int)(damage * 0.875f);
 
                 if (damage > 250)
                     damage = 250;
