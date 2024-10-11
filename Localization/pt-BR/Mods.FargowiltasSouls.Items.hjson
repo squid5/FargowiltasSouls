@@ -3154,7 +3154,7 @@ AnglerEnchant: {
 
 LifelightBag: {
 	// DisplayName: Treasure Bag (Lifelight)
-	// Tooltip: Right click to open
+	// Tooltip: Right Click to open
 }
 
 LifelightMasterPet: {
@@ -3307,7 +3307,7 @@ DecrepitAirstrikeRemote: {
 
 BanishedBaronBag: {
 	// DisplayName: Treasure Bag (Banished Baron)
-	// Tooltip: Right click to open
+	// Tooltip: Right Click to open
 }
 
 RustedOxygenTank: {
