@@ -3662,7 +3662,7 @@ SpiritLongbow: {
 
 CursedCoffinBag: {
 	// DisplayName: Treasure Bag (Cursed Coffin)
-	// Tooltip: ""
+	// Tooltip: Right Click to open
 }
 
 CursedCoffinRelic: {
