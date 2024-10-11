@@ -135,7 +135,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
             TinHurt(player);
         }
         //reset crit
-        public static void TinHurt(Player player)
+        public static void TinHurt(Player player, bool fullReset = false)
         {
             FargoSoulsPlayer modPlayer = player.FargoSouls();
             float oldCrit = modPlayer.TinCrit;
@@ -156,6 +156,8 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
             {
                 modPlayer.TinCrit = 5;
             }
+            if (fullReset)
+                modPlayer.TinCrit = 0;
 
             double diff = Math.Round(oldCrit - modPlayer.TinCrit, 1);
             if (diff > 0)

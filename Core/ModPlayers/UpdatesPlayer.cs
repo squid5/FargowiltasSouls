@@ -187,6 +187,16 @@ namespace FargowiltasSouls.Core.ModPlayers
         }
         public override void PostUpdateEquips()
         {
+            if (LumUtils.AnyBosses())
+            {
+                if (!BossAliveLastFrame)
+                {
+                    BossAliveLastFrame = true;
+                    TinEffect.TinHurt(Player, true);
+                }
+            }
+            else
+                BossAliveLastFrame = false;
             if (Graze && NekomiSet)
             {
                 GrazeRadius *= DeviGraze || CirnoGraze ? 1.5f : 0.75f;
