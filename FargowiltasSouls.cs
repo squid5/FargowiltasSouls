@@ -14,6 +14,7 @@ using FargowiltasSouls.Content.Items.Misc;
 using FargowiltasSouls.Content.NPCs.EternityModeNPCs;
 using FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.Jungle;
 using FargowiltasSouls.Content.Patreon.Volknet;
+using FargowiltasSouls.Content.Projectiles.ChallengerItems;
 using FargowiltasSouls.Content.Sky;
 using FargowiltasSouls.Content.Tiles;
 using FargowiltasSouls.Content.UI;
@@ -576,7 +577,8 @@ namespace FargowiltasSouls
             SyncNanoCoreMode,
             //SpawnBossTryFromNPC,
             HealNPC,
-            SyncSnatcherGrab
+            SyncSnatcherGrab,
+            SyncTuskRip
         }
 
         public override void HandlePacket(BinaryReader reader, int whoAmI)
@@ -773,6 +775,19 @@ namespace FargowiltasSouls
                                 snatcher.BittenPlayer = reader.ReadByte();
                                 snatcher.BiteTimer = reader.ReadInt32();
                                 npc.netUpdate = true;
+                            }
+                        }
+                        break;
+
+                    case PacketID.SyncTuskRip: // client to server
+                        {
+                            NPC target = FargoSoulsUtil.NPCExists(reader.ReadByte());
+                            Player player = FargoSoulsUtil.PlayerExists(reader.ReadByte());
+                            IEnumerable<Projectile> embeddedShrapnel = Main.projectile.Where(p => p.TypeAlive<BaronTuskShrapnel>() && p.owner == player.whoAmI && p.As<BaronTuskShrapnel>().EmbeddedNPC == target);
+                            foreach (Projectile proj in embeddedShrapnel)
+                            {
+                                proj.ai[1] = 2;
+                                proj.netUpdate = true;
                             }
                         }
                         break;
