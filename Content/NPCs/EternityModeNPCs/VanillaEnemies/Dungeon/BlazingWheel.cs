@@ -31,7 +31,6 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.Dungeon
             if ((npc.collideX || npc.collideY) && ++Counter >= 10)
             {
                 Counter = 0;
-                //Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center.X, npc.position.Y, Main.rand.Next(-3, 4), Main.rand.Next(-4, 0), ProjectileID.BlowupSmoke, FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage, 0.8f), 0f, Main.myPlayer);
 
                 int num151 = Main.rand.Next(15, 20);
                 for (int num152 = 0; num152 < num151; num152++)

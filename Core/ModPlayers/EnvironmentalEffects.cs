@@ -128,6 +128,26 @@ namespace FargowiltasSouls.Core.ModPlayers
                     FargoSoulsUtil.AddDebuffFixedDuration(Player, BuffID.BrokenArmor, 2);
             }*/
 
+            if (Player.ZoneDesert && Player.ZoneOverworldHeight && !fargoSoulsPlayer.PureHeart)
+            {
+                if (Main.dayTime)
+                {
+                    if (!Player.wet && !hasUmbrella())
+                    {
+                        FargoSoulsUtil.AddDebuffFixedDuration(Player, BuffID.Weak, 2);
+                    }
+                    
+                }
+                else
+                {
+                    if (!ItemID.Sets.Torches[Player.HeldItem.type])
+                    {
+                        FargoSoulsUtil.AddDebuffFixedDuration(Player, BuffID.Chilled, 2);
+                    }
+                    
+                }
+            }
+
             if (Player.ZoneCorrupt)
             {
                 if (!fargoSoulsPlayer.PureHeart)
@@ -242,9 +262,7 @@ namespace FargowiltasSouls.Core.ModPlayers
 
                 // rain lightning
                 if (Main.raining && (Player.ZoneOverworldHeight)
-                && Player.HeldItem.type != ItemID.Umbrella && Player.HeldItem.type != ItemID.TragicUmbrella
-                && Player.armor[0].type != ItemID.UmbrellaHat && Player.armor[0].type != ItemID.Eyebrella
-                && !Player.HasEffect<RainUmbrellaEffect>())
+                && !hasUmbrella())
                 {
                     if (currentTile.WallType == WallID.None)
                     {
@@ -402,6 +420,14 @@ namespace FargowiltasSouls.Core.ModPlayers
             }
 
 
+        }
+
+
+        private bool hasUmbrella()
+        {
+            return Player.HeldItem.type == ItemID.Umbrella || Player.HeldItem.type == ItemID.TragicUmbrella
+                || Player.armor[0].type == ItemID.UmbrellaHat || Player.armor[0].type == ItemID.Eyebrella
+                || !Player.HasEffect<RainUmbrellaEffect>();
         }
 
     }
