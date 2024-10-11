@@ -51,6 +51,13 @@ namespace FargowiltasSouls.Content.Projectiles.BossWeapons
                 return false;
             return base.CanHitNPC(target);
         }
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+        {
+            if (target.onFire || target.onFire2 || target.onFire3)
+            {
+                modifiers.FinalDamage *= 1.2f;
+            }
+        }
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             HitsLeft--;
