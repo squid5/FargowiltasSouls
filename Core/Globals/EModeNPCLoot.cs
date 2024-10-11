@@ -463,6 +463,12 @@ namespace FargowiltasSouls.Core.Globals
                         FargoSoulsUtil.AddEarlyBirdDrop(npcLoot, ItemDropRule.Common(ItemID.SnowGlobe));
                     }
                     break;
+                case NPCID.GraniteGolem:
+                case NPCID.GraniteFlyer:
+                    {
+                        FargoSoulsUtil.EModeDrop(npcLoot, ItemDropRule.Common(ItemID.Geode, 10, 1, 3));
+                    }
+                    break;
                 case NPCID.RockGolem:
                     {
                         FargoSoulsUtil.EModeDrop(npcLoot, ItemDropRule.Common(ItemID.CopperOre, 3, 10, 30));
