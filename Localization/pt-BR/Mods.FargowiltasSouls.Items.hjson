@@ -541,6 +541,7 @@ ShroomiteEnchant: {
 		Durante o modo sorrateiro, mais cogumelos surgirão
 		'Feito com cogumelos de verdade!'
 		'''
+	// AndMushroomPower: and grants the Mushroom Power buff
 }
 
 SilverEnchant: {

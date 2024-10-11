@@ -548,6 +548,7 @@ ShroomiteEnchant: {
 		处于隐身状态时，攻击会产生更多蘑菇
 		“是用真的蘑菇做的！”
 		'''
+	// AndMushroomPower: and grants the Mushroom Power buff
 }
 
 SilverEnchant: {

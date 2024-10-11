@@ -583,14 +583,27 @@ namespace FargowiltasSouls.Content.Items
             if (item.type == ItemID.PiercingStarlight)
                 tooltips.Add(new TooltipLine(Mod, "StarlightTungsten", Language.GetTextValue("Mods.FargowiltasSouls.Items.Extra.StarlightTungsten")));
 
-            if (Main.LocalPlayer.HasEffect<HallowEffect>())
+            if (item.potion || item.healLife > 0)
             {
-                foreach (var tooltip in tooltips)
+                bool hallow = Main.LocalPlayer.HasEffect<HallowEffect>();
+                bool shroomite = Main.LocalPlayer.HasEffect<ShroomiteHealEffect>() && item.type == ItemID.Mushroom;
+                if (hallow || (shroomite))
                 {
-                    if (tooltip.Name == "HealLife")
+                    foreach (var tooltip in tooltips)
                     {
-                        tooltip.Text = "[i:FargowiltasSouls/HallowEnchant] " + tooltip.Text;
-                        tooltip.Text += $" {Language.GetTextValue("Mods.FargowiltasSouls.Items.HallowEnchant.OverTime")}";
+                        if (tooltip.Name == "HealLife")
+                        {
+                            if (hallow)
+                            {
+                                tooltip.Text = "[i:FargowiltasSouls/HallowEnchant] " + tooltip.Text;
+                                tooltip.Text += $" {Language.GetTextValue("Mods.FargowiltasSouls.Items.HallowEnchant.OverTime")}";
+                            }
+                            if (shroomite)
+                            {
+                                tooltip.Text = "[i:FargowiltasSouls/ShroomiteEnchant] " + tooltip.Text;
+                                tooltip.Text += $" {Language.GetTextValue("Mods.FargowiltasSouls.Items.ShroomiteEnchant.AndMushroomPower")}";
+                            }
+                        }
                     }
                 }
             }

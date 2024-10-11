@@ -555,6 +555,7 @@ ShroomiteEnchant: {
 		Пока вы в скрытности, оружия будут оставлять больше грибов
 		'Сделано из настоящих грибов!'
 		'''
+	// AndMushroomPower: and grants the Mushroom Power buff
 }
 
 SilverEnchant: {

@@ -560,6 +560,7 @@ ShroomiteEnchant: {
 		Piercing projectiles spawn a cloud of mushrooms on their first hit, dealing ranged damage, with a short cooldown
 		'Made with real shrooms!'
 		''' */
+	// AndMushroomPower: and grants the Mushroom Power buff
 }
 
 SilverEnchant: {
