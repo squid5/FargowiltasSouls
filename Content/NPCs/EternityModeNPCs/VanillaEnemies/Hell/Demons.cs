@@ -94,10 +94,15 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.Hell
 
         public override void UpdateLifeRegen(NPC npc, ref int damage)
         {
+            if (npc.lifeRegen >= 0)
+                return;
             base.UpdateLifeRegen(npc, ref damage);
 
             if (npc.type == NPCID.VoodooDemon && npc.onFire)
+            {
                 damage /= 2;
+                npc.lifeRegen /= 2;
+            }
         }
 
         public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)

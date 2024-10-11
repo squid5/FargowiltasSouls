@@ -438,7 +438,16 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
             base.ModifyIncomingHit(npc, ref modifiers);
         }
-
+        public override void UpdateLifeRegen(NPC npc, ref int damage)
+        {
+            if (npc.lifeRegen >= 0)
+                return;
+            if (!WorldSavingSystem.SwarmActive && SubjectDR)
+            {
+                npc.lifeRegen /= 2;
+                damage /= 2;
+            }
+        }
         public override void LoadSprites(NPC npc, bool recolor)
         {
             base.LoadSprites(npc, recolor);

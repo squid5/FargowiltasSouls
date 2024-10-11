@@ -97,9 +97,15 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
         }
         public override void UpdateLifeRegen(NPC npc, ref int damage)
         {
+            if (npc.lifeRegen >= 0)
+                return;
+            npc.lifeRegen /= 3;
             damage /= 3;
             if (UseMassDefense)
+            {
                 damage /= 10;
+                npc.lifeRegen /= 10;
+            }
         }
 
         public override void SafeModifyHitByItem(NPC npc, Player player, Item item, ref NPC.HitModifiers modifiers)
