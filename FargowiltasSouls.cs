@@ -798,6 +798,8 @@ namespace FargowiltasSouls
                             int i = reader.ReadInt32();
                             int j = reader.ReadInt32();
                             Item.NewItem(new EntitySource_TileBreak(i, j - 1), i * 16, j * 16, 48, 48, ModContent.ItemType<Content.Items.Masochist>());
+                            Item.NewItem(new EntitySource_TileBreak(i, j - 1), i * 16, j * 16, 48, 48, ModContent.ItemType<Content.Items.Placables.MutantStatue>());
+                            WorldGen.KillTile(i, j);
                         }
                         break;
 

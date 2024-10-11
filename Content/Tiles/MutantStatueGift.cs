@@ -60,7 +60,10 @@ namespace FargowiltasSouls.Content.Tiles
             j += 2;
 
             if (Main.netMode == NetmodeID.SinglePlayer)
+            {
                 Item.NewItem(new EntitySource_TileBreak(i, j - 1), i * 16, j * 16, 48, 48, ModContent.ItemType<Items.Masochist>());
+                WorldGen.PlaceTile(i, j, ModContent.TileType<MutantStatue>());
+            }
             else
             {
                 ModPacket packet = Mod.GetPacket();
@@ -71,7 +74,7 @@ namespace FargowiltasSouls.Content.Tiles
                 packet.Send();
             }
 
-            WorldGen.PlaceTile(i, j, ModContent.TileType<MutantStatue>());
+            
         }
         public override void NumDust(int i, int j, bool fail, ref int num)
         {
