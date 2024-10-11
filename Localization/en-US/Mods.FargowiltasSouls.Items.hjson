@@ -1080,6 +1080,15 @@ BionomicCluster: {
 		    [i:FargowiltasSouls/OrdinaryCarrot] Press right click to zoom in
 		'The amalgamate born of a thousand common enemies'
 		'''
+	VanityTooltip:
+		'''
+		Grants immunity to [i:FargowiltasSouls/SandsofTime] Mighty Wind, cactus damage, [i:FargowiltasSouls/MysticSkull] Suffocation, [i:FargowiltasSouls/FrigidGemstone] Chilled, [i:FargowiltasSouls/SqueakyToy] and Guilty
+		[i:FargowiltasSouls/WyvernFeather] Stabilizes gravity in space and in liquid, [i:FargowiltasSouls/OrdinaryCarrot] improves your nightvision, [i:FargowiltasSouls/SecurityWallet] and drastically improves reforges
+		[i:FargowiltasSouls/ConcentratedRainbowMatter] Automatically uses healing & [i:FargowiltasSouls/MysticSkull] mana potions when needed and increases pickup range for mana stars
+		[i:FargowiltasSouls/NymphsPerfume] You respawn with more life [i:FargowiltasSouls/SandsofTime] and when no boss is alive, respawn faster
+		[i:FargowiltasSouls/FrigidGemstone] Press the Frigid Spell key to cast Ice Rod
+		[i:FargowiltasSouls/OrdinaryCarrot] Press right click to zoom in
+		'''
 }
 
 BionomicClusterInactive: {
@@ -1100,7 +1109,7 @@ BionomicClusterInactive: {
 		[c/00FFFF:Following effects are currently disabled in inventory (right click to enable):]
 		    Grants immunity to [i:FargowiltasSouls/SandsofTime] Mighty Wind, cactus damage, [i:FargowiltasSouls/MysticSkull] Suffocation, [i:FargowiltasSouls/FrigidGemstone] Chilled, [i:FargowiltasSouls/SqueakyToy] and Guilty
 		    [i:FargowiltasSouls/WyvernFeather] Stabilizes gravity in space and in liquid, [i:FargowiltasSouls/OrdinaryCarrot] improves your nightvision, [i:FargowiltasSouls/SecurityWallet] and drastically improves reforges
-		    [i:FargowiltasSouls/ConcentratedRainbowMatter] Automatically uses healing & [i:FargowiltasSouls/MysticSkull] mana potions when needed and increases pickup range for mana stars
+		    [i:FargowiltasSouls/ConcentratedRainbowMatter] Automatically use healing & [i:FargowiltasSouls/MysticSkull] mana potions when needed and increases pickup range for mana stars
 		    [i:FargowiltasSouls/NymphsPerfume] You respawn with more life [i:FargowiltasSouls/SandsofTime] and when no boss is alive, respawn faster
 		    [i:FargowiltasSouls/FrigidGemstone] Press the Frigid Spell key to cast Ice Rod
 		    [i:FargowiltasSouls/OrdinaryCarrot] Press right click to zoom in
@@ -1138,10 +1147,11 @@ ConcentratedRainbowMatter: {
 	Tooltip:
 		'''
 		Grants immunity to Flames of the Cosmos
-		Automatically use healing potions when needed
 		Summons a baby rainbow slime to fight for you
+		Automatically use healing potions when needed (Works from inventory and vanity)
 		'Taste the rainbow'
 		'''
+	VanityTooltip: Automatically use healing potions when needed
 }
 
 DarkenedHeart: {
