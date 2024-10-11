@@ -38,8 +38,16 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
             player.AddEffect<RainUmbrellaEffect>(item);
             player.AddEffect<RainInnerTubeEffect>(item);
             player.AddEffect<RainWetEffect>(item);
+            player.AddEffect<LightningImmunity>(item);
         }
-
+        public override void UpdateVanity(Player player)
+        {
+            player.AddEffect<LightningImmunity>(Item);
+        }
+        public override void UpdateInventory(Player player)
+        {
+            player.AddEffect<LightningImmunity>(Item);
+        }
         public override void AddRecipes()
         {
             CreateRecipe()
@@ -95,5 +103,9 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
             player.hasFloatingTube = true;
             player.canFloatInWater = true;
         }
+    }
+    public class LightningImmunity : AccessoryEffect
+    {
+        public override Header ToggleHeader => null;
     }
 }

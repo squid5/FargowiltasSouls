@@ -47,7 +47,7 @@ ApprenticeEnchant: {
 	/* Tooltip:
 		'''
 		While attacking, fire your next closest weapon's projectile as support
-		The support weapon will fire 1/4 as often as they would normally and deal 75% damage
+		The support weapon will fire 1/7 as often as they would normally
 		Only works on hotbar weapons
 		Consumables are consumed, mana is spent, and ammo is selected
 		Flameburst field of view and range are dramatically increased
@@ -60,7 +60,7 @@ AshWoodEnchant: {
 	/* Tooltip:
 		'''
 		Fire debuffs don't damage you
-		While you're burning, attacks are accompanied by balls of fire
+		While afflicted with any (non-Potion/Mana Sickness) debuff, attacks are accompanied by balls of fire that deal magic damage
 		Grants immunity to Oiled
 		Reduces damage from touching lava
 		'"You're telling me this isn't wood?"'
@@ -108,6 +108,7 @@ CactusEnchant: {
 		Inimigos explodirão em agulhas na morte se eles forem atingidos com suas agulhas
 		'Não tem nada igual, é!'
 		'''
+	// VanityTooltip: Grants immunity to cactus damage in Eternity Mode
 }
 
 ChlorophyteEnchant: {
@@ -170,7 +171,9 @@ DarkArtistEnchant: {
 	// DisplayName: Dark Artist Enchantment
 	/* Tooltip:
 		'''
-		While attacking, fire your next 2 closest weapons' projectiles as support
+		While attacking, fire your next closest weapon's projectile as support
+		The support weapon will fire 1/5 as often as they would normally
+		Only works on hotbar weapons
 		Summons a Flameburst minion that will also fire while you attack
 		Greatly enhances Flameburst effectiveness
 		'The shadows hold more than they seem'
@@ -253,6 +256,7 @@ HallowEnchant: {
 		Using a healing potion creates a shockwave that repels nearby enemy projectiles
 		'Hit me with your best shot'
 		''' */
+	// OverTime: over time
 }
 
 HuntressEnchant: {
@@ -276,6 +280,13 @@ IronEnchant: {
 		Does not work on Crucible of the Cosmos items
 		You attract items from a larger range
 		'Strike while the iron is hot'
+		''' */
+	/* VanityTooltip:
+		'''
+		When crafting an item, each material has a 33% chance to not be consumed
+		Works once per material type, ever
+		Does not work on Crucible of the Cosmos items
+		You attract items from a larger range
 		''' */
 }
 
@@ -466,9 +477,11 @@ RainEnchant: {
 		It will break after blocking 200 damage
 		While active you have featherfall
 		Grants immunity to Wet and all attacks inflict Wet
+		Grants immunity to lightning strikes in Eternity Mode (Works from inventory and vanity)
 		Effects of Inner Tube
 		'Come again some other day'
 		''' */
+	// VanityTooltip: Grants immunity to lightning strikes in Eternity Mode
 }
 
 RedRidingEnchant: {
@@ -537,6 +550,7 @@ ShroomiteEnchant: {
 		Durante o modo sorrateiro, mais cogumelos surgirão
 		'Feito com cogumelos de verdade!'
 		'''
+	// AndMushroomPower: and grants the Mushroom Power buff
 }
 
 SilverEnchant: {
@@ -680,6 +694,7 @@ TurtleEnchant: {
 		Inimigos explodirão em agulhas na morte se eles forem atingidos com suas agulhas
 		'De repente, você tem vontade de se esconder em um casco'
 		'''
+	// VanityTooltip: Grants immunity to cactus damage in Eternity Mode
 }
 
 ValhallaKnightEnchant: {
@@ -781,6 +796,12 @@ BoxofGizmos: {
 		Oferece disparo automático a todos os itens
 		Reduz a velocidade de uso dos itens afetados em 20%
 		'''
+	/* VanityTooltip:
+		'''
+		Stand still to expose nearby treasure and enemies
+		Enemies emit light at night
+		Grants autofire to non-weapon items
+		''' */
 }
 
 UniverseCore: {
@@ -928,6 +949,7 @@ TerraForce: {
 		[i:5516] Oferece imunidade a fogo e lava
 		'A terra empresta sua força'
 		'''
+	// VanityTooltip: "[i:FargowiltasSouls/IronEnchant] 50% chance to not consume each item on first craft and you attract items from a larger range"
 }
 
 TimberForce: {
@@ -957,6 +979,7 @@ WillForce: {
 		[i:5543] Aumenta a eficiência de fontes de cura em 50%
 		'Uma mente de determinação inquebrável'
 		'''
+	// VanityTooltip: "[i:FargowiltasSouls/GoldEnchant] Automatically sends coins to your piggy bank when picked up"
 }
 
 AbominableWand: {
@@ -1169,6 +1192,12 @@ FrigidGemstone: {
 		Aperte a tecla Feitiço Frígido para lançar Bastão de Gelo
 		'Um fragmento de gelo mágico antigo'
 		'''
+	/* VanityTooltip:
+		'''
+		Grants immunity to Frostburn and Chilled
+		Press the Frigid Spell key to cast Ice Rod
+		Your ice blocks inflict Frostburn
+		''' */
 }
 
 FrigidGemstoneInactive: {
@@ -1207,12 +1236,14 @@ GalacticGlobe: {
 		Aumenta o tempo de voo em 100%
 		'Sempre observando'
 		'''
+	// VanityTooltip: Grants most standard potion and station buffs
 	// HoldShift: "[c/ADD8E6:Hold Left Shift to view potion buffs]"
 	/* ExpandedTooltip:
 		'''
 		[c/ADD8E6:Ironskin, Regeneration, Swiftness, Mana Regeneration, Magic Power, Ammo Reservation, Archery,] 
 		[c/ADD8E6:Builder, Crate, Endurance, Fishing, Gills, Lucky, Heartreach, Lifeforce, Mining, Obsidian Skin,] 
-		[c/ADD8E6:Rage, Wrath, Sonar, Summoning, Thorns, Titan, Warmth, Water Walking, Exquisitely Stuffed]
+		[c/ADD8E6:Rage, Wrath, Sonar, Summoning, Thorns, Titan, Warmth, Water Walking, Exquisitely Stuffed,]
+		[c/ADD8E6:Sharpened, Ammo Box, Clairvoyance, Bewitched, Wartable, Honey]
 		''' */
 }
 
@@ -1273,6 +1304,7 @@ HeartoftheMasochist: {
 		Invoca um Mini Disco Voador e verdadeiros olhos de Cthulhu amigáveis
 		'Quente, batendo e sem necessidade de um corpo'
 		'''
+	// VanityTooltip: "[i:FargowiltasSouls/SaucerControlConsole] Press Ammo Cycle key to cycle ammos and [i:FargowiltasSouls/GalacticGlobe] grants most standard potion buffs"
 }
 
 IceQueensCrown: {
@@ -1365,6 +1397,12 @@ MysticSkull: {
 		Aumenta o alcance de coleta das estrelas de mana
 		'A cabeça de um inimigo derrotado que quietamente murmura'
 		'''
+	/* VanityTooltip:
+		'''
+		Grants immunity to Suffocation
+		Automatically use mana potions when needed
+		Increases pickup range for mana stars
+		''' */
 }
 
 MysticSkullInactive: {
@@ -1400,6 +1438,7 @@ NymphsPerfume: {
 		Seus ataques ocasionalmente produzem corações
 		'O cheiro é um pouco avassalador'
 		'''
+	// VanityTooltip: You respawn with more life
 }
 
 PrecisionSeal: {
@@ -1491,6 +1530,12 @@ SandsofTime: {
 		Use para teleportar-se para o seu último ponto de morte
 		'Faça o que fizer, não derrube-o'
 		'''
+	/* VanityTooltip:
+		'''
+		Grants immunity to Mighty Wind and cactus damage
+		You respawn twice as fast when no boss is alive
+		Use to teleport to your last death point
+		''' */
 }
 
 SaucerControlConsole: {
@@ -1503,6 +1548,7 @@ SaucerControlConsole: {
 		O raio trator do disco voador desacelera inimigos atingidos por ele
 		'Basta mantê-lo no modo avião'
 		'''
+	// VanityTooltip: Press the Ammo Cycle key to cycle ammos
 }
 
 SecurityWallet: {
@@ -1513,6 +1559,11 @@ SecurityWallet: {
 		Melhora consideravelmente as reforjas
 		'Não está segura de ser saqueada do corpo de alguém'
 		'''
+	/* VanityTooltip:
+		'''
+		Grants immunity to Midas
+		Drastically improves reforges
+		''' */
 }
 
 SinisterIcon: {
@@ -1632,6 +1683,7 @@ WyvernFeather: {
 		Seus ataques têm 10% de chance de infligir Asas Cortadas em inimigos não-chefes
 		'Morno ao toque'
 		'''
+	// VanityTooltip: Stabilizes gravity in space and in liquids
 }
 
 ZephyrBoots: {
@@ -1780,6 +1832,7 @@ MasochistSoul: {
 		Invoca a ajuda de todos os chefes do Modo Eternidade para o seu lado
 		'Aceite a maestria, aceite a eternidade'
 		'''
+	// VanityTooltip: "[i:FargowiltasSouls/GalacticGlobe] Grants most standard potion and station buffs"
 }
 
 SnipersSoul: {
@@ -2129,6 +2182,7 @@ OrdinaryCarrot: {
 		Clique com o botão direito para aumentar o alcance de visualização enquanto estiver no inventário
 		'Arrancado do rosto de um inimigo derrotado'
 		'''
+	// VanityTooltip: Right click to increase view range
 }
 
 RabiesShot: {
@@ -3100,7 +3154,7 @@ AnglerEnchant: {
 
 LifelightBag: {
 	// DisplayName: Treasure Bag (Lifelight)
-	// Tooltip: Right click to open
+	// Tooltip: Right Click to open
 }
 
 LifelightMasterPet: {
@@ -3253,7 +3307,7 @@ DecrepitAirstrikeRemote: {
 
 BanishedBaronBag: {
 	// DisplayName: Treasure Bag (Banished Baron)
-	// Tooltip: Right click to open
+	// Tooltip: Right Click to open
 }
 
 RustedOxygenTank: {
@@ -3392,7 +3446,7 @@ RazorContainer: {
 	/* Tooltip:
 		'''
 		Spawns a razor blade that hovers around your cursor
-		Hit it with a sword to send it flying
+		Hit it with a standard broadsword to send it flying
 		While flying it always critically strikes and has increased armor penetration
 		'Some yellow fur is still stuck at the bottom' 
 		''' */
@@ -3541,7 +3595,7 @@ SpiritLongbow: {
 
 CursedCoffinBag: {
 	// DisplayName: Treasure Bag (Cursed Coffin)
-	// Tooltip: ""
+	// Tooltip: Right Click to open
 }
 
 CursedCoffinRelic: {

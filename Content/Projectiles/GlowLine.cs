@@ -332,7 +332,7 @@ namespace FargowiltasSouls.Content.Projectiles
                             Projectile.localAI[0] = Main.rand.NextFloat(0.9f, 1.1f);
 
                         color = npc.ai[2] == 0 ? Color.Cyan : Color.Blue;
-                        if (!WorldSavingSystem.EternityMode && SoulConfig.Instance.BossRecolors)
+                        if (!(WorldSavingSystem.EternityMode && SoulConfig.Instance.BossRecolors))
                             color = npc.ai[2] == 0 ? Color.DarkRed : Color.OrangeRed;
                         Projectile.Center = npc.Center;
 
@@ -474,6 +474,8 @@ namespace FargowiltasSouls.Content.Projectiles
                 case 16: //destroyer blue laser line up true telegraph
                     {
                         color = Color.SkyBlue;
+                        if (!(WorldSavingSystem.EternityMode && SoulConfig.Instance.BossRecolors))
+                            color = Color.DarkRed;
                         maxTime = 30;
                         alphaModifier = -1;
                         Projectile.Opacity = Math.Clamp(1f - (float)counter / maxTime, 0f, 1f);

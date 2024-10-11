@@ -616,7 +616,7 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
                     {
                         if (NPC.localAI[3] > 1) //emode modified tells
                         {
-                            if (NPC.ai[1] == 30)
+                            if (NPC.ai[1] == 30 && WorldSavingSystem.EternityMode)
                                 Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<GlowRingHollow>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), 0f, Main.myPlayer, 3, NPC.whoAmI);
                             else if (NPC.ai[1] == 210)
                             {

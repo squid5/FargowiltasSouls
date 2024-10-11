@@ -111,6 +111,7 @@ CactusEnchant: {
 		Даёт иммунитет к урону от кактусов в Режиме Вечность
 		'Самый охладительный!' 
 		'''
+	// VanityTooltip: Grants immunity to cactus damage in Eternity Mode
 }
 
 ChlorophyteEnchant: {
@@ -262,6 +263,7 @@ HallowEnchant: {
 		При использовании зелья исцеления создаётся ударная волна, отталкивающая вражеские выстрелы
 		'Ударь по мне всем, что у тебя есть'
 		'''
+	// OverTime: over time
 }
 
 HuntressEnchant: {
@@ -288,6 +290,13 @@ IronEnchant: {
 		Вы подбираете предметы с большего расстояния
 		'Куй железо, пока горячо'
 		'''
+	/* VanityTooltip:
+		'''
+		When crafting an item, each material has a 33% chance to not be consumed
+		Works once per material type, ever
+		Does not work on Crucible of the Cosmos items
+		You attract items from a larger range
+		''' */
 }
 
 JungleEnchant: {
@@ -483,6 +492,7 @@ RainEnchant: {
 		Эффекты Воздушной Камеры
 		'К нам ты завтра приходи'
 		'''
+	// VanityTooltip: Grants immunity to lightning strikes in Eternity Mode
 }
 
 RedRidingEnchant: {
@@ -554,6 +564,7 @@ ShroomiteEnchant: {
 		Пока вы в скрытности, оружия будут оставлять больше грибов
 		'Сделано из настоящих грибов!'
 		'''
+	// AndMushroomPower: and grants the Mushroom Power buff
 }
 
 SilverEnchant: {
@@ -701,6 +712,7 @@ TurtleEnchant: {
 		Даёт иммунитет к урону от кактусов в режиме Вечность
 		'У вас резко появилось желание спрятаться в панцирь'
 		'''
+	// VanityTooltip: Grants immunity to cactus damage in Eternity Mode
 }
 
 ValhallaKnightEnchant: {
@@ -800,6 +812,12 @@ BoxofGizmos: {
 		Стойте неподвижно, чтобы подсветить ближайшие сокровища и врагов
 		Дайт возможность авто-атаки предметам, не относящимся к оружию
 		'''
+	/* VanityTooltip:
+		'''
+		Stand still to expose nearby treasure and enemies
+		Enemies emit light at night
+		Grants autofire to non-weapon items
+		''' */
 }
 
 UniverseCore: {
@@ -932,6 +950,7 @@ TerraForce: {
 		Шанс 50% не потратить предмет при первом создании, также вы притягиваете предметы с большего расстояния (работает в инвентаре и слотах украшений)
 		'Земля делится своей силой'
 		'''
+	// VanityTooltip: "[i:FargowiltasSouls/IronEnchant] 50% chance to not consume each item on first craft and you attract items from a larger range"
 }
 
 TimberForce: {
@@ -963,6 +982,7 @@ WillForce: {
 		У врагов есть 33% шанс оставить в 5 раз больше добычи
 		'Разум несокрушимой решимости'
 		'''
+	// VanityTooltip: "[i:FargowiltasSouls/GoldEnchant] Automatically sends coins to your piggy bank when picked up"
 }
 
 AbominableWand: {
@@ -1177,6 +1197,12 @@ FrigidGemstone: {
 		Ваши ледяные блоки накладывают Ледяной Ожог
 		'Осколок древнего магического льда'
 		'''
+	/* VanityTooltip:
+		'''
+		Grants immunity to Frostburn and Chilled
+		Press the Frigid Spell key to cast Ice Rod
+		Your ice blocks inflict Frostburn
+		''' */
 }
 
 FrigidGemstoneInactive: {
@@ -1214,12 +1240,14 @@ GalacticGlobe: {
 		Увеличивает время полёта на 100%
 		'Всегда наблюдает'
 		'''
+	// VanityTooltip: Grants most standard potion and station buffs
 	// HoldShift: "[c/ADD8E6:Hold Left Shift to view potion buffs]"
 	/* ExpandedTooltip:
 		'''
 		[c/ADD8E6:Ironskin, Regeneration, Swiftness, Mana Regeneration, Magic Power, Ammo Reservation, Archery,] 
 		[c/ADD8E6:Builder, Crate, Endurance, Fishing, Gills, Lucky, Heartreach, Lifeforce, Mining, Obsidian Skin,] 
-		[c/ADD8E6:Rage, Wrath, Sonar, Summoning, Thorns, Titan, Warmth, Water Walking, Exquisitely Stuffed]
+		[c/ADD8E6:Rage, Wrath, Sonar, Summoning, Thorns, Titan, Warmth, Water Walking, Exquisitely Stuffed,]
+		[c/ADD8E6:Sharpened, Ammo Box, Clairvoyance, Bewitched, Wartable, Honey]
 		''' */
 }
 
@@ -1280,6 +1308,7 @@ HeartoftheMasochist: {
 		[i:FargowiltasSouls/SaucerControlConsole] Нажмите клавишу Смены Боеприпасов, чтобы переключить используемые боеприпасы (работает пассивно из инвентаря)
 		'Тёплое, бьётся, и не нуждается в теле'
 		'''
+	// VanityTooltip: "[i:FargowiltasSouls/SaucerControlConsole] Press Ammo Cycle key to cycle ammos and [i:FargowiltasSouls/GalacticGlobe] grants most standard potion buffs"
 }
 
 IceQueensCrown: {
@@ -1376,6 +1405,12 @@ MysticSkull: {
 		Увеличивает дальность подбора звёзд маны
 		'Тихо бормочущая голова побеждённого врага'
 		'''
+	/* VanityTooltip:
+		'''
+		Grants immunity to Suffocation
+		Automatically use mana potions when needed
+		Increases pickup range for mana stars
+		''' */
 }
 
 MysticSkullInactive: {
@@ -1411,6 +1446,7 @@ NymphsPerfume: {
 		Ваши атаки периодически создают сердца
 		'Запах довольно резкий'
 		'''
+	// VanityTooltip: You respawn with more life
 }
 
 PrecisionSeal: {
@@ -1506,6 +1542,12 @@ SandsofTime: {
 		Используйте, чтобы телепортироваться к месту вашей последней смерти
 		'Что бы ты не делал, не урони их'
 		'''
+	/* VanityTooltip:
+		'''
+		Grants immunity to Mighty Wind and cactus damage
+		You respawn twice as fast when no boss is alive
+		Use to teleport to your last death point
+		''' */
 }
 
 SaucerControlConsole: {
@@ -1518,6 +1560,7 @@ SaucerControlConsole: {
 		Притягивающие лучи тарелки замедляют врагов при попадании
 		'Просто оставь её в режиме полёта'
 		'''
+	// VanityTooltip: Press the Ammo Cycle key to cycle ammos
 }
 
 SecurityWallet: {
@@ -1529,6 +1572,11 @@ SecurityWallet: {
 		Эффект работает из инвентаря
 		'Не защищает от воровства с вашего трупа'
 		'''
+	/* VanityTooltip:
+		'''
+		Grants immunity to Midas
+		Drastically improves reforges
+		''' */
 }
 
 SinisterIcon: {
@@ -1646,6 +1694,7 @@ WyvernFeather: {
 		Стабилизирует гравитацию в космосе и жидкостях, работает из инвентаря
 		'Тёплое на ощупь'
 		'''
+	// VanityTooltip: Stabilizes gravity in space and in liquids
 }
 
 ZephyrBoots: {
@@ -1792,6 +1841,7 @@ MasochistSoul: {
 		[i:FargowiltasSouls/SandsofTime] Используйте, чтобы телепортироваться к месту вашей последней смерти
 		'Прими власть, прими вечность'
 		'''
+	// VanityTooltip: "[i:FargowiltasSouls/GalacticGlobe] Grants most standard potion and station buffs"
 }
 
 SnipersSoul: {
@@ -2130,6 +2180,7 @@ OrdinaryCarrot: {
 		Нажмите ПКМ, чтобы увеличить дальность обзора, пока находится в инвентаре
 		'Сорвано с лица побеждённого врага'
 		'''
+	// VanityTooltip: Right click to increase view range
 }
 
 RabiesShot: {
@@ -3557,7 +3608,7 @@ SpiritLongbow: {
 
 CursedCoffinBag: {
 	// DisplayName: Treasure Bag (Cursed Coffin)
-	// Tooltip: ""
+	// Tooltip: Right Click to open
 }
 
 CursedCoffinRelic: {

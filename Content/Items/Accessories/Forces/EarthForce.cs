@@ -65,8 +65,8 @@ namespace FargowiltasSouls.Content.Items.Accessories.Forces
     }
     public class EarthForceEffect : AccessoryEffect
     {
-        public override Header ToggleHeader => Header.GetHeader<EarthHeader>();
-        public override int ToggleItemType => ModContent.ItemType<EarthForce>();
+        public override Header ToggleHeader => null;
+        //public override int ToggleItemType => ModContent.ItemType<EarthForce>();
 
         //modify this number and equation to balance out the timer stuff
         public static int EarthMaxCharge = 400;

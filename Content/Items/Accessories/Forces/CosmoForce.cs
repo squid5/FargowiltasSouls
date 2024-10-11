@@ -128,7 +128,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Forces
     }
     public class CosmoForceEffect : AccessoryEffect
     {
-        public override Header ToggleHeader => Header.GetHeader<CosmoHeader>();
-        public override int ToggleItemType => ModContent.ItemType<CosmoForce>();
+        public override Header ToggleHeader => null;
+        //public override int ToggleItemType => ModContent.ItemType<CosmoForce>();
     }
 }

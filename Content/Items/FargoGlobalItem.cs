@@ -17,6 +17,7 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 using Terraria.Localization;
+using Terraria.Map;
 using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Content.Items
@@ -25,10 +26,11 @@ namespace FargowiltasSouls.Content.Items
     {
         public override void SetDefaults(Item item)
         {
-            if (item.type == ItemID.Acorn || item.type == ItemID.Bone)
-            {
-                item.ammo = item.type;
-            }
+            if (item.type is ItemID.Acorn or ItemID.GemTreeAmberSeed or ItemID.GemTreeAmethystSeed or ItemID.GemTreeDiamondSeed or ItemID.GemTreeEmeraldSeed or ItemID.GemTreeRubySeed or ItemID.GemTreeSapphireSeed or ItemID.GemTreeTopazSeed)
+                item.ammo = ItemID.Acorn;
+
+            if (item.type == ItemID.Bone)
+                item.ammo = ItemID.Bone;
         }
         public override void UpdateAccessory(Item item, Player player, bool hideVisual)
         {
@@ -80,6 +82,31 @@ namespace FargowiltasSouls.Content.Items
             //if (weapon.CountsAsClass(DamageClass.Ranged) && player.FargoSouls().Jammed)
                 //type = ProjectileID.ConfettiGun;
 
+            switch (ammo.type)
+            {
+                case ItemID.GemTreeAmethystSeed:
+                    damage.Flat += 1;
+                    break;
+                case ItemID.GemTreeTopazSeed:
+                    damage.Flat += 2; 
+                    break;
+                case ItemID.GemTreeSapphireSeed:
+                    damage.Flat += 3;
+                    break;
+                case ItemID.GemTreeEmeraldSeed:
+                    damage.Flat += 4;
+                    break;
+                case ItemID.GemTreeRubySeed:
+                    damage.Flat += 5;
+                    break;
+                case ItemID.GemTreeAmberSeed:
+                    damage.Flat += 6;
+                    break;
+                case ItemID.GemTreeDiamondSeed:
+                    damage.Flat += 7;
+                    break;
+            }
+
             //coin gun is broken as fucking shit codingwise so i'm fixing it
             if (weapon.type == ItemID.CoinGun)
             {
@@ -117,7 +144,11 @@ namespace FargowiltasSouls.Content.Items
                 }
                 if (player.HasEffect<HallowEffect>())
                 {
-                    modPlayer.HallowHealTime = 6 * modPlayer.GetHealMultiplier(item.healLife);
+                    int hallowIndex = ModContent.GetInstance<HallowEffect>().Index;
+                    // Hallow needs to disabled so it doesn't set GetHealLife to 0
+                    player.AccessoryEffects().ActiveEffects[hallowIndex] = false;
+                    modPlayer.HallowHealTime = 6 * player.GetHealLife(item);
+                    player.AccessoryEffects().ActiveEffects[hallowIndex] = true;
                     HallowEffect.HealRepel(player);
                 }
                 modPlayer.StatLifePrevious += modPlayer.GetHealMultiplier(item.healLife);
@@ -552,6 +583,30 @@ namespace FargowiltasSouls.Content.Items
             if (item.type == ItemID.PiercingStarlight)
                 tooltips.Add(new TooltipLine(Mod, "StarlightTungsten", Language.GetTextValue("Mods.FargowiltasSouls.Items.Extra.StarlightTungsten")));
 
+            if (item.potion || item.healLife > 0)
+            {
+                bool hallow = Main.LocalPlayer.HasEffect<HallowEffect>();
+                bool shroomite = Main.LocalPlayer.HasEffect<ShroomiteHealEffect>() && item.type == ItemID.Mushroom;
+                if (hallow || (shroomite))
+                {
+                    foreach (var tooltip in tooltips)
+                    {
+                        if (tooltip.Name == "HealLife")
+                        {
+                            if (hallow)
+                            {
+                                tooltip.Text = "[i:FargowiltasSouls/HallowEnchant] " + tooltip.Text;
+                                tooltip.Text += $" {Language.GetTextValue("Mods.FargowiltasSouls.Items.HallowEnchant.OverTime")}";
+                            }
+                            if (shroomite)
+                            {
+                                tooltip.Text = "[i:FargowiltasSouls/ShroomiteEnchant] " + tooltip.Text;
+                                tooltip.Text += $" {Language.GetTextValue("Mods.FargowiltasSouls.Items.ShroomiteEnchant.AndMushroomPower")}";
+                            }
+                        }
+                    }
+                }
+            }
             /*if (Array.IndexOf(Summon, item.type) > -1)
             {
                 TooltipLine helperLine = new TooltipLine(mod, "help", "Right click to convert");

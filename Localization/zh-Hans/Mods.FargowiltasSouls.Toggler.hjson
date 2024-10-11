@@ -75,7 +75,7 @@ ShinobiThroughWalls: 渗透忍者 穿墙冲刺
 SpookyEffect: 阴森 镰刀攻击
 NinjaEffect: 忍者 弹幕速度
 CrystalAssassinDash: 水晶刺客冲刺
-// CrystalDiagonalDash: Crystal Diagonal Dash
+// CrystalDiagonalDash: Diagonal Dash
 // ShadowForceDashEffect: Shadow Dash
 // ShadowForceEffect: Concise Death Force
 SpiritHeader: "{$Mods.FargowiltasSouls.Items.SpiritForce.DisplayName}"

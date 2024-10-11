@@ -73,6 +73,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Masomode
         public override int ToggleItemType => ModContent.ItemType<GalacticGlobe>();
         public static List<int> ChaliceBuffs =
         [
+            // potions
             BuffID.Ironskin,
             BuffID.Regeneration,
             BuffID.Swiftness,
@@ -98,7 +99,14 @@ namespace FargowiltasSouls.Content.Items.Accessories.Masomode
             BuffID.Titan,
             BuffID.Warmth,
             BuffID.WaterWalking,
-            BuffID.WellFed3
+            BuffID.WellFed3,
+            // buff stations
+            BuffID.Sharpened,
+            BuffID.AmmoBox,
+            BuffID.Clairvoyance,
+            BuffID.Bewitched,
+            BuffID.WarTable,
+            BuffID.Honey
         ];
         public override void PostUpdateEquips(Player player)
         {

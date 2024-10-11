@@ -647,7 +647,10 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Life
         public override void UpdateLifeRegen(ref int damage)
         {
             if (NPC.lifeRegen < 0)
+            {
                 NPC.lifeRegen /= 2;
+                damage /= 2;
+            }
         }
 
         public override void FindFrame(int frameHeight)

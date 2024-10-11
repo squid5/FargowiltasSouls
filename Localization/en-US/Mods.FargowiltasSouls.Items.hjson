@@ -14,7 +14,7 @@ AncientCobaltEnchant: {
 	DisplayName: Ancient Cobalt Enchantment
 	Tooltip:
 		'''
-		Grants an explosion jump that inflicts Oiled
+		Grants an explosion jump that inflicts Oiled and grants brief invulnerability
 		'Ancient Kobold'
 		'''
 }
@@ -48,7 +48,7 @@ ApprenticeEnchant: {
 	Tooltip:
 		'''
 		While attacking, fire your next closest weapon's projectile as support
-		The support weapon will fire 1/4 as often as they would normally and deal 75% damage
+		The support weapon will fire 1/7 as often as they would normally
 		Only works on hotbar weapons
 		Consumables are consumed, mana is spent, and ammo is selected
 		Flameburst field of view and range are dramatically increased
@@ -61,7 +61,7 @@ AshWoodEnchant: {
 	Tooltip:
 		'''
 		Fire debuffs don't damage you
-		While you're burning, attacks are accompanied by balls of fire
+		While afflicted with any (non-Potion/Mana Sickness) debuff, attacks are accompanied by balls of fire that deal magic damage
 		Grants immunity to Oiled
 		Reduces damage from touching lava
 		'"You're telling me this isn't wood?"'
@@ -110,6 +110,7 @@ CactusEnchant: {
 		Grants immunity to cactus damage in Eternity Mode (Works from inventory and vanity)
 		'It's the quenchiest!'
 		'''
+	VanityTooltip: Grants immunity to cactus damage in Eternity Mode
 }
 
 ChlorophyteEnchant: {
@@ -173,7 +174,9 @@ DarkArtistEnchant: {
 	DisplayName: Dark Artist Enchantment
 	Tooltip:
 		'''
-		While attacking, fire your next 2 closest weapons' projectiles as support
+		While attacking, fire your next closest weapon's projectile as support
+		The support weapon will fire 1/5 as often as they would normally
+		Only works on hotbar weapons
 		Summons a Flameburst minion that will also fire while you attack
 		Greatly enhances Flameburst effectiveness
 		'The shadows hold more than they seem'
@@ -260,6 +263,7 @@ HallowEnchant: {
 		Using a healing potion creates a shockwave that repels nearby enemy projectiles
 		'Hit me with your best shot'
 		'''
+	OverTime: over time
 }
 
 HuntressEnchant: {
@@ -285,6 +289,13 @@ IronEnchant: {
 		Does not work on Crucible of the Cosmos items
 		You attract items from a larger range
 		'Strike while the iron is hot'
+		'''
+	VanityTooltip:
+		'''
+		When crafting an item, each material has a 33% chance to not be consumed
+		Works once per material type, ever
+		Does not work on Crucible of the Cosmos items
+		You attract items from a larger range
 		'''
 }
 
@@ -406,8 +417,10 @@ ObsidianEnchant: {
 		'''
 		Grants immunity to lava
 		You have normal movement and can swim in lava
-		While standing in lava or lava wet, your attacks spawn explosions and are accompanied by balls of fire, dealing magic damage
-		Effects of Ash Wood Enchantment
+		While standing in lava or lava wet, your attacks spawn explosions
+		While afflicted with any debuff or standing in lava, attacks are accompanied by balls of fire that deal magic damage
+		Fire debuffs don't damage you
+		Grants immunity to Oiled
 		'The earth calls'
 		'''
 }
@@ -480,9 +493,11 @@ RainEnchant: {
 		It will break after blocking 200 damage
 		While active you have featherfall
 		Grants immunity to Wet and all attacks inflict Wet
+		Grants immunity to lightning strikes in Eternity Mode (Works from inventory and vanity)
 		Effects of Inner Tube
 		'Come again some other day'
 		'''
+	VanityTooltip: Grants immunity to lightning strikes in Eternity Mode
 }
 
 RedRidingEnchant: {
@@ -554,6 +569,7 @@ ShroomiteEnchant: {
 		Piercing projectiles spawn a cloud of mushrooms on their first hit, dealing ranged damage, with a short cooldown
 		'Made with real shrooms!'
 		'''
+	AndMushroomPower: and grants the Mushroom Power buff
 }
 
 SilverEnchant: {
@@ -573,8 +589,7 @@ SnowEnchant: {
 		'''
 		Your attacks briefly inflict Frostburn
 		Snowballs will start to appear around you
-		Attacking will launch them towards the cursor
-		When they hit an enemy they are inflicted with Frostbite and frozen solid
+		Attacking will launch them towards the cursor, dealing magic damage
 		'It's Burning Cold Outside'
 		'''
 }
@@ -707,6 +722,7 @@ TurtleEnchant: {
 		Grants immunity to cactus damage in Eternity Mode (Works from inventory and vanity)
 		'You suddenly have the urge to hide in a shell'
 		'''
+	VanityTooltip: Grants immunity to cactus damage in Eternity Mode
 }
 
 ValhallaKnightEnchant: {
@@ -803,6 +819,12 @@ BoxofGizmos: {
 	Tooltip:
 		'''
 		Works from inventory and vanity slots
+		Stand still to expose nearby treasure and enemies
+		Enemies emit light at night
+		Grants autofire to non-weapon items
+		'''
+	VanityTooltip:
+		'''
 		Stand still to expose nearby treasure and enemies
 		Enemies emit light at night
 		Grants autofire to non-weapon items
@@ -947,6 +969,7 @@ TerraForce: {
 		[i:FargowiltasSouls/IronEnchant] 50% chance to not consume each item on first craft and you attract items from a larger range (works in inventory and vanity)
 		'The land lends its strength'
 		'''
+	VanityTooltip: "[i:FargowiltasSouls/IronEnchant] 50% chance to not consume each item on first craft and you attract items from a larger range"
 }
 
 TimberForce: {
@@ -976,6 +999,7 @@ WillForce: {
 		[i:FargowiltasSouls/GoldEnchant] Automatically sends coins to your piggy bank when picked up (works in inventory and vanity)
 		[i:FargowiltasSouls/PlatinumEnchant] 33% chance for enemies to drop 5x loot
 		'''
+	VanityTooltip: "[i:FargowiltasSouls/GoldEnchant] Automatically sends coins to your piggy bank when picked up"
 }
 
 AbominableWand: {
@@ -1056,6 +1080,15 @@ BionomicCluster: {
 		    [i:FargowiltasSouls/OrdinaryCarrot] Press right click to zoom in
 		'The amalgamate born of a thousand common enemies'
 		'''
+	VanityTooltip:
+		'''
+		Grants immunity to [i:FargowiltasSouls/SandsofTime] Mighty Wind, cactus damage, [i:FargowiltasSouls/MysticSkull] Suffocation, [i:FargowiltasSouls/FrigidGemstone] Chilled, [i:FargowiltasSouls/SqueakyToy] and Guilty
+		[i:FargowiltasSouls/WyvernFeather] Stabilizes gravity in space and in liquid, [i:FargowiltasSouls/OrdinaryCarrot] improves your nightvision, [i:FargowiltasSouls/SecurityWallet] and drastically improves reforges
+		[i:FargowiltasSouls/ConcentratedRainbowMatter] Automatically uses healing & [i:FargowiltasSouls/MysticSkull] mana potions when needed and increases pickup range for mana stars
+		[i:FargowiltasSouls/NymphsPerfume] You respawn with more life [i:FargowiltasSouls/SandsofTime] and when no boss is alive, respawn faster
+		[i:FargowiltasSouls/FrigidGemstone] Press the Frigid Spell key to cast Ice Rod
+		[i:FargowiltasSouls/OrdinaryCarrot] Press right click to zoom in
+		'''
 }
 
 BionomicClusterInactive: {
@@ -1076,7 +1109,7 @@ BionomicClusterInactive: {
 		[c/00FFFF:Following effects are currently disabled in inventory (right click to enable):]
 		    Grants immunity to [i:FargowiltasSouls/SandsofTime] Mighty Wind, cactus damage, [i:FargowiltasSouls/MysticSkull] Suffocation, [i:FargowiltasSouls/FrigidGemstone] Chilled, [i:FargowiltasSouls/SqueakyToy] and Guilty
 		    [i:FargowiltasSouls/WyvernFeather] Stabilizes gravity in space and in liquid, [i:FargowiltasSouls/OrdinaryCarrot] improves your nightvision, [i:FargowiltasSouls/SecurityWallet] and drastically improves reforges
-		    [i:FargowiltasSouls/ConcentratedRainbowMatter] Automatically uses healing & [i:FargowiltasSouls/MysticSkull] mana potions when needed and increases pickup range for mana stars
+		    [i:FargowiltasSouls/ConcentratedRainbowMatter] Automatically use healing & [i:FargowiltasSouls/MysticSkull] mana potions when needed and increases pickup range for mana stars
 		    [i:FargowiltasSouls/NymphsPerfume] You respawn with more life [i:FargowiltasSouls/SandsofTime] and when no boss is alive, respawn faster
 		    [i:FargowiltasSouls/FrigidGemstone] Press the Frigid Spell key to cast Ice Rod
 		    [i:FargowiltasSouls/OrdinaryCarrot] Press right click to zoom in
@@ -1114,10 +1147,11 @@ ConcentratedRainbowMatter: {
 	Tooltip:
 		'''
 		Grants immunity to Flames of the Cosmos
-		Automatically use healing potions when needed
 		Summons a baby rainbow slime to fight for you
+		Automatically use healing potions when needed (Works from inventory and vanity)
 		'Taste the rainbow'
 		'''
+	VanityTooltip: Automatically use healing potions when needed
 }
 
 DarkenedHeart: {
@@ -1188,6 +1222,12 @@ FrigidGemstone: {
 		Your ice blocks inflict Frostburn
 		'A torn off limb composed of ancient ice'
 		'''
+	VanityTooltip:
+		'''
+		Grants immunity to Frostburn and Chilled
+		Press the Frigid Spell key to cast Ice Rod
+		Your ice blocks inflict Frostburn
+		'''
 }
 
 FrigidGemstoneInactive: {
@@ -1220,17 +1260,19 @@ GalacticGlobe: {
 	Tooltip:
 		'''
 		Grants immunity to Nullification Curse, Flipped, Illuminated, Unstable, and Curse of the Moon
-		Grants most standard potion buffs (works from inventory and vanity)
+		Grants most standard potion and station buffs (works from inventory and vanity)
 		Summons the true eyes of Cthulhu to protect you
 		Increases flight time by 100%
 		'Consume it'
 		'''
+	VanityTooltip: Grants most standard potion and station buffs
 	HoldShift: "[c/ADD8E6:Hold Left Shift to view potion buffs]"
 	ExpandedTooltip:
 		'''
 		[c/ADD8E6:Ironskin, Regeneration, Swiftness, Mana Regeneration, Magic Power, Ammo Reservation, Archery,] 
 		[c/ADD8E6:Builder, Crate, Endurance, Fishing, Gills, Lucky, Heartreach, Lifeforce, Mining, Obsidian Skin,] 
-		[c/ADD8E6:Rage, Wrath, Sonar, Summoning, Thorns, Titan, Warmth, Water Walking, Exquisitely Stuffed]
+		[c/ADD8E6:Rage, Wrath, Sonar, Summoning, Thorns, Titan, Warmth, Water Walking, Exquisitely Stuffed,]
+		[c/ADD8E6:Sharpened, Ammo Box, Clairvoyance, Bewitched, Wartable, Honey]
 		'''
 }
 
@@ -1290,6 +1332,7 @@ HeartoftheMasochist: {
 		[i:FargowiltasSouls/SaucerControlConsole] Press Ammo Cycle key to cycle ammos and [i:FargowiltasSouls/GalacticGlobe] grants most standard potion buffs (works from inventory and vanity)
 		'Warm, beating, and no body needed'
 		'''
+	VanityTooltip: "[i:FargowiltasSouls/SaucerControlConsole] Press Ammo Cycle key to cycle ammos and [i:FargowiltasSouls/GalacticGlobe] grants most standard potion buffs"
 }
 
 IceQueensCrown: {
@@ -1386,6 +1429,12 @@ MysticSkull: {
 		Increases pickup range for mana stars
 		'The quietly muttering head of a defeated foe'
 		'''
+	VanityTooltip:
+		'''
+		Grants immunity to Suffocation
+		Automatically use mana potions when needed
+		Increases pickup range for mana stars
+		'''
 }
 
 MysticSkullInactive: {
@@ -1421,6 +1470,7 @@ NymphsPerfume: {
 		Your attacks occasionally produce hearts
 		'The scent is somewhat overpowering'
 		'''
+	VanityTooltip: You respawn with more life
 }
 
 PrecisionSeal: {
@@ -1515,6 +1565,12 @@ SandsofTime: {
 		Use to teleport to your last death point
 		'Whatever you do, don't drop it'
 		'''
+	VanityTooltip:
+		'''
+		Grants immunity to Mighty Wind and cactus damage
+		You respawn twice as fast when no boss is alive
+		Use to teleport to your last death point
+		'''
 }
 
 SaucerControlConsole: {
@@ -1527,6 +1583,7 @@ SaucerControlConsole: {
 		The saucer's tractor beam slows enemies hit by it
 		'Just keep it in airplane mode'
 		'''
+	VanityTooltip: Press the Ammo Cycle key to cycle ammos
 }
 
 SecurityWallet: {
@@ -1537,6 +1594,11 @@ SecurityWallet: {
 		Grants immunity to Midas
 		Drastically improves reforges
 		'Not secure against being looted off of one's corpse'
+		'''
+	VanityTooltip:
+		'''
+		Grants immunity to Midas
+		Drastically improves reforges
 		'''
 }
 
@@ -1653,6 +1715,7 @@ WyvernFeather: {
 		Stabilizes gravity in space and in liquids (works from inventory and vanity)
 		'Warm to the touch'
 		'''
+	VanityTooltip: Stabilizes gravity in space and in liquids
 }
 
 ZephyrBoots: {
@@ -1786,7 +1849,7 @@ MasochistSoul: {
 		[i:FargowiltasSouls/GalacticGlobe] Increases wing time by 200%, [i:FargowiltasSouls/QueenStinger] armor penetration by 50, [i:FargowiltasSouls/GalacticGlobe] and movement speed by 20%
 		[i:FargowiltasSouls/GuttedHeart] Increases max life by 100%, [i:FargowiltasSouls/MagicalBulb] life regen, [i:FargowiltasSouls/MutantAntibodies][i:FargowiltasSouls/SkullCharm][i:FargowiltasSouls/PumpkingsCape] damage for your current weapon class by 50%, and [i:FargowiltasSouls/ReinforcedPlating] damage reduction by 10%
 		[i:FargowiltasSouls/PungentEyeball] Increases spawn chance of rare enemies massively, [i:FargowiltasSouls/SinisterIcon] doubles spawnrates, makes non-boss enemies drop doubled loot, and [i:FargowiltasSouls/TimsConcoction] causes certain enemies to drop potions 
-		Grants [i:FargowiltasSouls/SlimyShield] fastfall, [i:FargowiltasSouls/ReinforcedPlating] knockback immunity, [i:FargowiltasSouls/PureHeart] immunity to biome debuffs, [i:FargowiltasSouls/GalacticGlobe] most standard potion buffs (works from inventory and vanity), immunity to almost all Eternity Mode debuffs, and more
+		Grants [i:FargowiltasSouls/SlimyShield] fastfall, [i:FargowiltasSouls/ReinforcedPlating] knockback immunity, [i:FargowiltasSouls/PureHeart] immunity to biome debuffs, [i:FargowiltasSouls/GalacticGlobe] most standard potion and station buffs (works from inventory and vanity), immunity to almost all Eternity Mode debuffs, and more
 		Press [i:FargowiltasSouls/BetsysHeart] the Special Dash key to perform an invincible dash, [i:FargowiltasSouls/PrecisionSeal] the Precision Seal key to prevent dashes and double jumps, [i:FargowiltasSouls/AgitatingLens] [i:FargowiltasSouls/FusedLens] the Debuff Install key to debuff and buff yourself
 		Press [i:FargowiltasSouls/FrigidGemstone] the Frigid Spell key to cast Ice Rod, [i:FargowiltasSouls/IceQueensCrown] the bomb key to freeze everything with enough graze, and right click to [i:FargowiltasSouls/OrdinaryCarrot] zoom and [i:FargowiltasSouls/DreadShell] [i:FargowiltasSouls/PumpkingsCape] parry for up to 200 damage
 		[i:FargowiltasSouls/Deerclawps] [i:FargowiltasSouls/LihzahrdTreasureBox] Double tap DOWN to fastfall and explode and create ice spikes on landing.
@@ -1798,6 +1861,7 @@ MasochistSoul: {
 		[i:FargowiltasSouls/SandsofTime] Use to teleport to your last death point
 		'Embrace mastery, embrace eternity'
 		'''
+	VanityTooltip: "[i:FargowiltasSouls/GalacticGlobe] Grants most standard potion and station buffs"
 }
 
 SnipersSoul: {
@@ -2074,27 +2138,27 @@ StyxLeggings: {
 
 AbomBag: {
 	DisplayName: Treasure Bag (Abominationn)
-	Tooltip: Right click to open
+	Tooltip: Right Click to open
 }
 
 CosmosBag: {
 	DisplayName: Treasure Bag (Eridanus)
-	Tooltip: Right click to open
+	Tooltip: Right Click to open
 }
 
 DeviBag: {
 	DisplayName: Treasure Bag (Deviantt)
-	Tooltip: Right click to open
+	Tooltip: Right Click to open
 }
 
 MutantBag: {
 	DisplayName: Treasure Bag (Mutant)
-	Tooltip: Right click to open
+	Tooltip: Right Click to open
 }
 
 TrojanSquirrelBag: {
 	DisplayName: Treasure Bag (Trojan Squirrel)
-	Tooltip: Right click to open
+	Tooltip: Right Click to open
 }
 
 DeerSinew: {
@@ -2145,6 +2209,7 @@ OrdinaryCarrot: {
 		Right click to increase view range (works from inventory and vanity slots)
 		'Plucked from the face of a defeated foe'
 		'''
+	VanityTooltip: Right click to increase view range
 }
 
 RabiesShot: {
@@ -3149,7 +3214,7 @@ AnglerEnchant: {
 
 LifelightBag: {
 	DisplayName: Treasure Bag (Lifelight)
-	Tooltip: Right click to open
+	Tooltip: Right Click to open
 }
 
 LifelightMasterPet: {
@@ -3298,7 +3363,7 @@ DecrepitAirstrikeRemote: {
 
 BanishedBaronBag: {
 	DisplayName: Treasure Bag (Banished Baron)
-	Tooltip: Right click to open
+	Tooltip: Right Click to open
 }
 
 RustedOxygenTank: {
@@ -3437,7 +3502,7 @@ RazorContainer: {
 	Tooltip:
 		'''
 		Spawns a razor blade that hovers around your cursor
-		Hit it with a sword to send it flying
+		Hit it with a standard broadsword to send it flying
 		While flying it always critically strikes and has increased armor penetration
 		'Some yellow fur is still stuck at the bottom' 
 		'''
@@ -3586,7 +3651,7 @@ SpiritLongbow: {
 
 CursedCoffinBag: {
 	DisplayName: Treasure Bag (Cursed Coffin)
-	Tooltip: ""
+	Tooltip: Right Click to open
 }
 
 CursedCoffinRelic: {

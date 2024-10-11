@@ -961,7 +961,11 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
         }
         public override void UpdateLifeRegen(NPC npc, ref int damage)
         {
-            npc.lifeRegen = (int)Math.Round(npc.lifeRegen * (1 - DR(npc)));
+            if (npc.lifeRegen >= 0)
+                return;
+            float markiplier = 1 - DR(npc);
+            npc.lifeRegen = (int)Math.Round(npc.lifeRegen * markiplier);
+            damage = (int)Math.Round(damage * markiplier);
         }
 
         public override void LoadSprites(NPC npc, bool recolor)

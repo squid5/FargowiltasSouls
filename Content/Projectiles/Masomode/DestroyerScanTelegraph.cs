@@ -1,6 +1,8 @@
 ﻿using Fargowiltas.Common.Configs;
 using FargowiltasSouls.Assets.ExtraTextures;
 using FargowiltasSouls.Content.Bosses.Lifelight;
+using FargowiltasSouls.Core.Systems;
+using FargowiltasSouls.Core;
 using Luminance.Core.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -83,7 +85,10 @@ namespace FargowiltasSouls.Content.Projectiles
 
         public override bool PreDraw(ref Color lightColor)
         {
+            bool recolor = SoulConfig.Instance.BossRecolors && WorldSavingSystem.EternityMode;
             Color color = Color.DeepSkyBlue;
+            if (!recolor)
+                color = Color.Red;
 
             Vector2 pos = Projectile.Center;
             float timeLerp = Projectile.timeLeft / maxTime;

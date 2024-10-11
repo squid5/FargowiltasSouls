@@ -69,8 +69,8 @@ namespace FargowiltasSouls.Content.Items.Accessories.Forces
     }
     public class TerraLightningEffect : AccessoryEffect
     {
-        public override Header ToggleHeader => Header.GetHeader<TerraHeader>();
-        public override int ToggleItemType => ModContent.ItemType<TerraForce>();
+        public override Header ToggleHeader => null;
+        //public override int ToggleItemType => ModContent.ItemType<TerraForce>();
         
         public override void PostUpdateEquips(Player player)
         {

@@ -115,7 +115,7 @@ namespace FargowiltasSouls.Content.Projectiles.BossWeapons
             Rectangle rectangle = new(0, y3, texture2D13.Width, num156);
             Vector2 origin2 = rectangle.Size() / 2f;
 
-            Color color26 = Color.Fuchsia;
+            Color color26 = lightColor;
             color26 = Projectile.GetAlpha(color26);
             color26.A = (byte)Projectile.alpha;
 
@@ -129,7 +129,7 @@ namespace FargowiltasSouls.Content.Projectiles.BossWeapons
                 if (i >= 5)
                     lerpamount = 0.8f;
 
-                Color color27 = Color.Lerp(Color.Fuchsia, Color.Black, lerpamount) * 0.75f * 0.5f;
+                Color color27 = lightColor * 0.75f * 0.5f;
                 color27 *= (float)(ProjectileID.Sets.TrailCacheLength[Projectile.type] - i) / ProjectileID.Sets.TrailCacheLength[Projectile.type];
                 float scale = Projectile.scale * (ProjectileID.Sets.TrailCacheLength[Projectile.type] - i) / ProjectileID.Sets.TrailCacheLength[Projectile.type];
                 Vector2 value4 = Projectile.oldPos[i];

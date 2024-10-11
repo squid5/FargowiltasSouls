@@ -959,7 +959,7 @@ namespace FargowiltasSouls.Core.ModPlayers
                 Item potion = Player.QuickHeal_GetItemToUse();
                 if (potion != null)
                 {
-                    int heal = GetHealMultiplier(potion.healLife);
+                    int heal = Player.GetHealLife(potion); //GetHealMultiplier(potion.healLife);
                     float threshold = ClientConfig.Instance.RainbowHealThreshold / 100f;
                     if (Player.statLife < Player.statLifeMax2 * threshold && //heal when low
                         //Player.statLife < Player.statLifeMax2 - heal && //only heal when full benefit (no wasted overheal)
@@ -1362,7 +1362,15 @@ namespace FargowiltasSouls.Core.ModPlayers
 
             if (Player.HasEffect<HallowEffect>())
             {
-                healValue = 0;
+                
+                if (FargowiltasSouls.DrawingTooltips)
+                {
+                    float mult = Player.ForceEffect<HallowEffect>() ? 1.7f : 1.4f;
+                    healValue = (int)(healValue * mult);
+                }
+                    
+                else
+                    healValue = 0;
             }
         }
 
