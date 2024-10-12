@@ -227,14 +227,27 @@ namespace FargowiltasSouls.Core.ModPlayers
                             }
                             if (!failed)
                             {
-                                int damage = (Main.hardMode ? 120 : 60) / 4;
-                                int p = Projectile.NewProjectile(Player.GetSource_Misc(""), pos, pos.DirectionTo(Player.Center) * 0f, ModContent.ProjectileType<DeerclopsDarknessHand>(), damage, 2f, Main.myPlayer);
-                                if (p.IsWithinBounds(Main.maxProjectiles))
+                                LightLevelCounter = 0;
+
+                                int projType = ModContent.ProjectileType<DeerclopsDarknessHand>();
+                                if (Main.netMode != NetmodeID.SinglePlayer)
                                 {
-                                    Main.projectile[p].light = 1f;
+                                    var netMessage = Mod.GetPacket();
+                                    netMessage.Write((byte)FargowiltasSouls.PacketID.RequestEnvironmentalProjectile);
+                                    netMessage.Write(projType);
+                                    netMessage.WriteVector2(pos);
+                                    netMessage.Send();
+                                }
+                                else
+                                {
+                                    int damage = (Main.hardMode ? 120 : 60) / 4;
+                                    int p = Projectile.NewProjectile(Terraria.Entity.GetSource_NaturalSpawn(), pos, Vector2.Zero, projType, damage, 2f, Main.myPlayer);
+                                    if (p.IsWithinBounds(Main.maxProjectiles))
+                                    {
+                                        Main.projectile[p].light = 1f;
+                                    }
                                 }
                                 Lighting.AddLight(pos, 1f, 1f, 1f);
-                                LightLevelCounter = 0;
                             }
                         }
                     }
@@ -248,14 +261,22 @@ namespace FargowiltasSouls.Core.ModPlayers
                         LightLevelCounter++;
                         if (LightLevelCounter > LumUtils.SecondsToFrames(10) && Main.rand.NextBool(300))
                         {
-                            Vector2 pos = Player.Center;
-                            int damage = (Main.hardMode ? 120 : 60) / 4;
-                            int p = Projectile.NewProjectile(Player.GetSource_Misc(""), pos, Vector2.Zero, ModContent.ProjectileType<LifelightEnvironmentStar>(), damage, 2f, Main.myPlayer, -120);
-                            if (p.IsWithinBounds(Main.maxProjectiles))
-                            {
-
-                            }
                             LightLevelCounter = 0;
+                            Vector2 pos = Player.Center;
+                            int projType = ModContent.ProjectileType<LifelightEnvironmentStar>();
+                            if (Main.netMode != NetmodeID.SinglePlayer)
+                            {
+                                var netMessage = Mod.GetPacket();
+                                netMessage.Write((byte)FargowiltasSouls.PacketID.RequestEnvironmentalProjectile);
+                                netMessage.Write(projType);
+                                netMessage.WriteVector2(pos);
+                                netMessage.Send();
+                            }
+                            else
+                            {
+                                int damage = (Main.hardMode ? 120 : 60) / 4;
+                                Projectile.NewProjectile(Terraria.Entity.GetSource_NaturalSpawn(), pos, Vector2.Zero, projType, damage, 2f, Main.myPlayer, -120);
+                            }
                         }
                     }
                 }
@@ -318,13 +339,24 @@ namespace FargowiltasSouls.Core.ModPlayers
                                 //for (int index = 0; index < 10 && !WorldGen.SolidTile(tileCoordinates.X, tileCoordinates.Y) && tileCoordinates.Y > 10; ++index) 
                                 //    tileCoordinates.Y -= 1;
 
-
                                 float ai1 = Player.Center.Y;
-                                int damage = (Main.hardMode ? 120 : 60) / 4;
-                                Projectile.NewProjectile(Player.GetSource_Misc(""), tileCoordinates.X * 16 + 8, (tileCoordinates.Y * 16 + 17) - 900, 0f, 0f, ModContent.ProjectileType<RainLightning>(), damage, 2f, Main.myPlayer,
-                                    Vector2.UnitY.ToRotation(), ai1);
-
                                 LightningCounter = 0;
+                                int projType = ModContent.ProjectileType<RainLightning>();
+                                Vector2 pos = new(tileCoordinates.X * 16 + 8, tileCoordinates.Y * 16 + 17 - 900);
+                                if (Main.netMode != NetmodeID.SinglePlayer)
+                                {
+                                    var netMessage = Mod.GetPacket();
+                                    netMessage.Write((byte)FargowiltasSouls.PacketID.RequestEnvironmentalProjectile);
+                                    netMessage.Write(projType);
+                                    netMessage.WriteVector2(pos);
+                                    netMessage.Write(ai1);
+                                    netMessage.Send();
+                                }
+                                else
+                                {
+                                    int damage = (Main.hardMode ? 120 : 60) / 4;
+                                    Projectile.NewProjectile(Terraria.Entity.GetSource_NaturalSpawn(), pos, Vector2.Zero, projType, damage, 2f, Main.myPlayer, Vector2.UnitY.ToRotation(), ai1);
+                                }
                             }
                         }
                     }
