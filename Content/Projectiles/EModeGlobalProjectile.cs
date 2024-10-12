@@ -1421,6 +1421,9 @@ namespace FargowiltasSouls.Content.Projectiles
                     break;
 
                 case ProjectileID.InsanityShadowHostile:
+                    if (WorldSavingSystem.MasochistModeReal && Main.getGoodWorld)
+                        Deerclops.SpawnFreezeHands(projectile, target);
+                    goto case ProjectileID.DeerclopsIceSpike;
                 case ProjectileID.DeerclopsIceSpike:
                 case ProjectileID.DeerclopsRangedProjectile:
                     target.AddBuff(BuffID.Frostburn, 90);

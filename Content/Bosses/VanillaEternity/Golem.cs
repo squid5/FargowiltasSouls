@@ -240,10 +240,11 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                                 StompAttackCounter++;
 
                             Vector2 spawnPos = new(npc.position.X, npc.Center.Y); //floor geysers
-                            spawnPos.X -= npc.width * 7;
+                            int originalNpcWidth = (int)Math.Round(npc.width / npc.scale);
+                            spawnPos.X -= (int)(originalNpcWidth * 7);
                             for (int i = 0; i < 6; i++)
                             {
-                                int tilePosX = (int)spawnPos.X / 16 + npc.width * i * 3 / 16;
+                                int tilePosX = (int)spawnPos.X / 16 + originalNpcWidth * i * 3 / 16;
                                 int tilePosY = (int)spawnPos.Y / 16;// + 1;
 
                                 if (FargoSoulsUtil.HostCheck)
@@ -253,7 +254,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                             spawnPos = npc.Center;
                             for (int i = -3; i <= 3; i++) //ceiling geysers
                             {
-                                int tilePosX = (int)spawnPos.X / 16 + npc.width * i * 3 / 16;
+                                int tilePosX = (int)spawnPos.X / 16 + originalNpcWidth * i * 3 / 16;
                                 int tilePosY = (int)spawnPos.Y / 16;// + 1;
 
                                 if (FargoSoulsUtil.HostCheck)
@@ -314,10 +315,11 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     else //outside temple
                     {
                         Vector2 spawnPos = new(npc.position.X, npc.Center.Y);
-                        spawnPos.X -= npc.width * 7;
+                        int originalNpcWidth = (int)Math.Round(npc.width / npc.scale);
+                        spawnPos.X -= originalNpcWidth * 7;
                         for (int i = 0; i < 6; i++)
                         {
-                            int tilePosX = (int)spawnPos.X / 16 + npc.width * i * 3 / 16;
+                            int tilePosX = (int)spawnPos.X / 16 + originalNpcWidth * i * 3 / 16;
                             int tilePosY = (int)spawnPos.Y / 16;// + 1;
 
                             for (int j = 0; j < 100; j++)

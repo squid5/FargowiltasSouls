@@ -75,3 +75,12 @@ spider ench buffs
 	gives +10% crit inherently
 	wizard gives 15% more crit
 life force minion crits are also x2 now (they weren't before)
+
+standardized maso golem fist explosion size
+fixed ftw golem size affecting geyser spacing
+maso ftw deerclops shadow hands trigger mash qte
+maso ks has balls
+maso abom doesn't troll toll you with his arena anymore
+twinrangs has autofire m2
+changed how plantera dicer mines spin while growing
+randomized blazing wheel patrol slightly
