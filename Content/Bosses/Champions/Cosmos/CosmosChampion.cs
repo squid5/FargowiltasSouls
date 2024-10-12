@@ -1,4 +1,5 @@
 ﻿using Fargowiltas.NPCs;
+using FargowiltasSouls.Assets.Sounds;
 using FargowiltasSouls.Content.Bosses.MutantBoss;
 using FargowiltasSouls.Content.Buffs.Masomode;
 using FargowiltasSouls.Content.Buffs.Souls;
@@ -483,7 +484,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Cosmos
                             if (FargoSoulsUtil.HostCheck)
                             {
                                 if (!Main.dedServ)
-                                    SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/Thunder") { Volume = 0.8f, Pitch = 0.5f }, NPC.Center);
+                                    SoundEngine.PlaySound(FargosSoundRegistry.Thunder with { Volume = 0.8f, Pitch = 0.5f }, NPC.Center);
                                 const int max = 16;
                                 for (int i = 0; i < max; i++)
                                 {
@@ -1467,7 +1468,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Cosmos
                         NPC.localAI[0] = Main.rand.NextFloat(2 * (float)Math.PI);
 
                         if (!Main.dedServ)
-                            SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/Accessories/ZaWarudo"), player.Center);
+                            SoundEngine.PlaySound(FargosSoundRegistry.ZaWarudo, player.Center);
 
                         //if (FargoSoulsUtil.HostCheck) Projectile.NewProjectile(npc.GetSource_FromThis(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<GlowRing>(), 0, 0f, Main.myPlayer, NPC.whoAmI, -18);
 
