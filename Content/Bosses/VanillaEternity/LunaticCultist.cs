@@ -75,7 +75,16 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
         {
             if (npc.ai[3] == -1f && FargoSoulsUtil.IsSummonDamage(projectile) && !ProjectileID.Sets.IsAWhip[projectile.type])
                 return false;
-
+            if (npc.ai[3] == -1f && Main.netMode != NetmodeID.SinglePlayer) // during ritual, only nearby players can hit
+            {
+                if (!projectile.owner.IsWithinBounds(Main.maxPlayers))
+                    return null;
+                Player player = Main.player[projectile.owner];
+                if (!player.Alive())
+                    return false;
+                if (player.Distance(npc.Center) > 300)
+                    return false;
+            }
             return base.CanBeHitByProjectile(npc, projectile);
         }
 
@@ -409,8 +418,17 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
         {
             if (FargoSoulsUtil.IsSummonDamage(projectile) && !ProjectileID.Sets.IsAWhip[projectile.type])
                 return false;
-
-            return base.CanBeHitByProjectile(npc, projectile);
+            if (Main.netMode != NetmodeID.SinglePlayer)
+            {
+                if (!projectile.owner.IsWithinBounds(Main.maxPlayers))
+                    return null;
+                Player player = Main.player[projectile.owner];
+                if (!player.Alive())
+                    return false;
+                if (player.Distance(npc.Center) > 300)
+                    return false;
+            }
+            return null;
         }
 
         public override bool SafePreAI(NPC npc)
@@ -462,7 +480,6 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
             return result;
         }
-
         public override void HitEffect(NPC npc, NPC.HitInfo hit)
         {
             base.HitEffect(npc, hit);
