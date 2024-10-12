@@ -99,11 +99,11 @@ namespace FargowiltasSouls.Core.Systems
             double worldSizeXMod = (double)Main.maxTilesX / 4200.0;
             DunesBiome dunesBiome = GenVars.configuration.CreateBiome<DunesBiome>();
             bool success = false;
-            for (int i = 0; i < 10000; i++)
+            for (int i = 0; i < 1000; i++)
             {
                 Point dunePoint = Point.Zero;
                 int huh = 0; // what's up with this variable. it's very strange.
-                for (int j = 0; j < 10000; j++)
+                for (int j = 0; j < 1000; j++)
                 {
                     dunePoint = WorldGen.RandomWorldPoint(0, 500, 0, 500);
                     bool nearJungle = Math.Abs(dunePoint.X - GenVars.jungleOriginX) < (int)(600.0 * worldSizeXMod);
@@ -144,8 +144,8 @@ namespace FargowiltasSouls.Core.Systems
                 }
                    
             }
-            if (!success)
-                throw new Exception("Fargo's Souls: Pyramid position could not be correctly designated. Post a bug report in Fargo's Mods Discord and provide this world's seed and your modlist.");
+            //if (!success)
+            //    throw new Exception("Fargo's Souls: Pyramid position could not be correctly designated. Post a bug report in Fargo's Mods Discord and provide this world's seed and your modlist.");
 
         }
         // Rummages through the world until it finds a valid spot for a Pyramid

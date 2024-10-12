@@ -230,13 +230,16 @@ namespace FargowiltasSouls.Core.ModPlayers
                                 LightLevelCounter = 0;
 
                                 int projType = ModContent.ProjectileType<DeerclopsDarknessHand>();
-                                if (Main.netMode != NetmodeID.SinglePlayer)
+                                if (Main.netMode == NetmodeID.MultiplayerClient)
                                 {
-                                    var netMessage = Mod.GetPacket();
-                                    netMessage.Write((byte)FargowiltasSouls.PacketID.RequestEnvironmentalProjectile);
-                                    netMessage.Write(projType);
-                                    netMessage.WriteVector2(pos);
-                                    netMessage.Send();
+                                    if (Player.whoAmI == Main.myPlayer)
+                                    {
+                                        var netMessage = Mod.GetPacket();
+                                        netMessage.Write((byte)FargowiltasSouls.PacketID.RequestEnvironmentalProjectile);
+                                        netMessage.Write(projType);
+                                        netMessage.WriteVector2(pos);
+                                        netMessage.Send();
+                                    }
                                 }
                                 else
                                 {
@@ -264,13 +267,16 @@ namespace FargowiltasSouls.Core.ModPlayers
                             LightLevelCounter = 0;
                             Vector2 pos = Player.Center;
                             int projType = ModContent.ProjectileType<LifelightEnvironmentStar>();
-                            if (Main.netMode != NetmodeID.SinglePlayer)
+                            if (Main.netMode == NetmodeID.MultiplayerClient)
                             {
-                                var netMessage = Mod.GetPacket();
-                                netMessage.Write((byte)FargowiltasSouls.PacketID.RequestEnvironmentalProjectile);
-                                netMessage.Write(projType);
-                                netMessage.WriteVector2(pos);
-                                netMessage.Send();
+                                if (Player.whoAmI == Main.myPlayer)
+                                {
+                                    var netMessage = Mod.GetPacket();
+                                    netMessage.Write((byte)FargowiltasSouls.PacketID.RequestEnvironmentalProjectile);
+                                    netMessage.Write(projType);
+                                    netMessage.WriteVector2(pos);
+                                    netMessage.Send();
+                                ]
                             }
                             else
                             {
@@ -343,14 +349,17 @@ namespace FargowiltasSouls.Core.ModPlayers
                                 LightningCounter = 0;
                                 int projType = ModContent.ProjectileType<RainLightning>();
                                 Vector2 pos = new(tileCoordinates.X * 16 + 8, tileCoordinates.Y * 16 + 17 - 900);
-                                if (Main.netMode != NetmodeID.SinglePlayer)
+                                if (Main.netMode == NetmodeID.MultiplayerClient)
                                 {
-                                    var netMessage = Mod.GetPacket();
-                                    netMessage.Write((byte)FargowiltasSouls.PacketID.RequestEnvironmentalProjectile);
-                                    netMessage.Write(projType);
-                                    netMessage.WriteVector2(pos);
-                                    netMessage.Write(ai1);
-                                    netMessage.Send();
+                                    if (Player.whoAmI == Main.myPlayer)
+                                    {
+                                        var netMessage = Mod.GetPacket();
+                                        netMessage.Write((byte)FargowiltasSouls.PacketID.RequestEnvironmentalProjectile);
+                                        netMessage.Write(projType);
+                                        netMessage.WriteVector2(pos);
+                                        netMessage.Write(ai1);
+                                        netMessage.Send();
+                                    }
                                 }
                                 else
                                 {
@@ -459,7 +468,7 @@ namespace FargowiltasSouls.Core.ModPlayers
         {
             return Player.HeldItem.type == ItemID.Umbrella || Player.HeldItem.type == ItemID.TragicUmbrella
                 || Player.armor[0].type == ItemID.UmbrellaHat || Player.armor[0].type == ItemID.Eyebrella
-                || !Player.HasEffect<RainUmbrellaEffect>();
+                || Player.HasEffect<RainUmbrellaEffect>();
         }
 
     }
