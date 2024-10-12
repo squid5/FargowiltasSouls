@@ -73,12 +73,12 @@ namespace FargowiltasSouls.Content.Projectiles
             float radius = Projectile.ai[0];
             var target = Main.LocalPlayer;
             var blackTile = TextureAssets.MagicPixel;
-            var diagonalNoise = FargosTextureRegistry.WavyNoise;
+            var diagonalNoise = FargosTextureRegistry.HoneycombNoise;
             if (!blackTile.IsLoaded || !diagonalNoise.IsLoaded)
                 return false;
             var maxOpacity = Projectile.Opacity * ModContent.GetInstance<FargoClientConfig>().TransparentFriendlyProjectiles;
 
-            ManagedShader borderShader = ShaderManager.GetShader("FargowiltasSouls.GenericInnerAura");
+            ManagedShader borderShader = ShaderManager.GetShader("FargowiltasSouls.PungentAuraShader");
             borderShader.TrySetParameter("colorMult", 7.35f);
             borderShader.TrySetParameter("time", Main.GlobalTimeWrappedHourly);
             borderShader.TrySetParameter("radius", radius);

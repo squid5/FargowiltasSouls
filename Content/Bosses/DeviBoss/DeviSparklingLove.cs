@@ -110,6 +110,7 @@ namespace FargowiltasSouls.Content.Bosses.DeviBoss
 
                 if (!Main.dedServ && Main.LocalPlayer.active)
                     ScreenShakeSystem.StartShake(10, shakeStrengthDissipationIncrement: 10f / 30);
+                SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/Siblings/Deviantt/DeviSwing"), Projectile.Center);
 
                 if (FargoSoulsUtil.HostCheck)
                 {
