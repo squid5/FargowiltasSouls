@@ -276,7 +276,7 @@ namespace FargowiltasSouls.Core.ModPlayers
                                     netMessage.Write(projType);
                                     netMessage.WriteVector2(pos);
                                     netMessage.Send();
-                                ]
+                                }
                             }
                             else
                             {
@@ -462,8 +462,6 @@ namespace FargowiltasSouls.Core.ModPlayers
 
 
         }
-
-
         private bool hasUmbrella()
         {
             return Player.HeldItem.type == ItemID.Umbrella || Player.HeldItem.type == ItemID.TragicUmbrella
