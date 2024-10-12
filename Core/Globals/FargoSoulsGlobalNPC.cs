@@ -1,4 +1,5 @@
 using Fargowiltas.NPCs;
+using FargowiltasSouls.Common.Graphics.Particles;
 using FargowiltasSouls.Content.Buffs.Masomode;
 using FargowiltasSouls.Content.Buffs.Souls;
 using FargowiltasSouls.Content.Items.Accessories.Enchantments;
@@ -16,18 +17,21 @@ using FargowiltasSouls.Core.AccessoryEffectSystem;
 using FargowiltasSouls.Core.ItemDropRules;
 using FargowiltasSouls.Core.ModPlayers;
 using FargowiltasSouls.Core.Systems;
+using Luminance.Core.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static FargowiltasSouls.Content.Items.Accessories.Forces.TimberForce;
+using static tModPorter.ProgressUpdate;
 
 namespace FargowiltasSouls.Core.Globals
 {
@@ -629,13 +633,17 @@ namespace FargowiltasSouls.Core.Globals
 
             if (PungentGazeTime > 0)
             {
-                if (Main.rand.NextBool())
+                if (Main.rand.NextBool(3))
                 {
                     float ratio = (float)PungentGazeTime / PungentGazeBuff.MAX_TIME;
-                    int d = Dust.NewDust(npc.Center, 0, 0, DustID.GemRuby, npc.velocity.X * 0.2f, npc.velocity.Y * 0.2f, 0, Color.White);
-                    Main.dust[d].scale = MathHelper.Lerp(0.5f, 3f, ratio);
-                    Main.dust[d].velocity *= Main.dust[d].scale;
-                    Main.dust[d].noGravity = true;
+                    Vector2 sparkDir = Vector2.UnitX.RotatedByRandom(MathHelper.TwoPi);
+                    float sparkDistance = 20 * Main.rand.NextFloat(0.6f, 1.3f);
+                    Vector2 sparkCenter = npc.Center + sparkDir * sparkDistance * 2;
+                    float sparkTime = 15;
+                    Vector2 sparkVel = (npc.Center - sparkCenter) / sparkTime;
+                    float sparkScale = MathHelper.Lerp(0.25f, 1.5f,ratio);
+                    Particle spark = new SmallSparkle(npc.Center, sparkVel, Color.Red, sparkScale, (int)sparkTime);
+                    spark.Spawn();
                 }
             }
             if (DeathMarked)
