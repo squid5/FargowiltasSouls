@@ -913,7 +913,7 @@ namespace FargowiltasSouls.Content.Projectiles
                             int cult = -1;
                             for (int i = 0; i < Main.maxNPCs; i++)
                             {
-                                if (Main.npc[i].active && Main.npc[i].type == NPCID.CultistBoss && Main.npc[i].ai[2] == projectile.whoAmI)
+                                if (Main.npc[i].active && Main.npc[i].type == NPCID.CultistBoss && Main.npc[i].ai[2] == projectile.identity)
                                 {
                                     cult = i;
                                     break;
