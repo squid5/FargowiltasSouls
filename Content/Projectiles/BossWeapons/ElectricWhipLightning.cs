@@ -109,7 +109,10 @@ namespace FargowiltasSouls.Content.Projectiles.BossWeapons
             Projectile.position -= Projectile.velocity;
 
         }
-
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            target.AddBuff(BuffID.Electrified, 120);
+        }
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D lightningTexture = TextureAssets.Projectile[Type].Value;

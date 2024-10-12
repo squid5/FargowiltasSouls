@@ -3685,7 +3685,7 @@ ElectricWhip: {
 	DisplayName: Voltaic Chain
 	Tooltip:
 		'''
-		Whip your minions to fire chain lightning at a nearby enemy, up to 4 times per swing
+		Whip enemies to fire chain lightning from nearby minions, up to 4 times per swing
 		'The lifeblood of a defeated foe...'
 		'''
 }

@@ -27,32 +27,6 @@ namespace FargowiltasSouls.Content.Projectiles.BossWeapons
         }
         int[] Cooldowns = new int[Main.maxProjectiles];
         public ref float LightningCounter => ref Projectile.ai[2];
-        public override bool PreAI()
-        {
-            if (LightningCounter < 4)
-            {
-                for (int i = 0; i < Main.maxProjectiles; i++)
-                {
-                    if (Cooldowns[i] > 0)
-                        Cooldowns[i]--;
-                    Projectile p = Main.projectile[i];
-                    if (p.Alive() && p.minion && p.owner == Projectile.owner && Cooldowns[p.whoAmI] <= 0 && Projectile.Colliding(Projectile.Hitbox, p.Hitbox))
-                    {
-                        NPC target = Projectile.FindTargetWithinRange(150, true);
-                        //Projectile otherMinion = Main.projectile.Where(p2 => p2.Alive() && p2.whoAmI != p.whoAmI && p2.minion && Cooldowns[p2.whoAmI] <= 0 && p2.owner == Projectile.owner).OrderBy(x => x.Distance(Projectile.Center)).FirstOrDefault();
-                        if (target != null)
-                        {
-                            SoundEngine.PlaySound(SoundID.DD2_LightningAuraZap, Projectile.Center);
-                            if (FargoSoulsUtil.HostCheck)
-                                Projectile.NewProjectile(Projectile.InheritSource(Projectile), p.Center, p.DirectionTo(target.Center), ModContent.ProjectileType<ElectricWhipLightning>(), Projectile.originalDamage / 3, Projectile.knockBack, Projectile.owner, ai2: p.Distance(target.Center));
-                            Cooldowns[p.whoAmI] = /*Cooldowns[otherMinion.whoAmI] = */45;
-                            LightningCounter++;
-                        }
-                    }
-                }
-            }
-            return base.PreAI();
-        }
         private void DrawLine(List<Vector2> list)
         {
             Texture2D texture = TextureAssets.FishingLine.Value;
@@ -96,6 +70,27 @@ namespace FargowiltasSouls.Content.Projectiles.BossWeapons
         {
             // Whip damage falloff
             Projectile.damage = (int)(Projectile.damage * 0.7);
+
+            // Lightning
+            if (LightningCounter < 4)
+            {
+                for (int i = 0; i < Main.maxProjectiles; i++)
+                {
+                    if (Cooldowns[i] > 0)
+                        Cooldowns[i]--;
+                    Projectile p = Main.projectile[i];
+                    if (p.Alive() && p.minion && p.owner == Projectile.owner && Cooldowns[p.whoAmI] <= 0 && p.Distance(target.Center) < 300)
+                    {
+                        SoundEngine.PlaySound(SoundID.DD2_LightningAuraZap, Projectile.Center);
+                        if (FargoSoulsUtil.HostCheck)
+                            Projectile.NewProjectile(Projectile.InheritSource(Projectile), p.Center, p.DirectionTo(target.Center), ModContent.ProjectileType<ElectricWhipLightning>(), Projectile.originalDamage / 3, Projectile.knockBack, Projectile.owner, ai2: p.Distance(target.Center));
+                        Cooldowns[p.whoAmI] = /*Cooldowns[otherMinion.whoAmI] = */45;
+                        LightningCounter++;
+                        if (LightningCounter >= 4)
+                            return;
+                    }
+                }
+            }
         }
     }
 }
