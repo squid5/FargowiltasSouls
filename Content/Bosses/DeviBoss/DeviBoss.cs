@@ -887,27 +887,35 @@ namespace FargowiltasSouls.Content.Bosses.DeviBoss
 
 
                 int threshold = WorldSavingSystem.MasochistModeReal ? 400 : 450;
-                EModeGlobalNPC.Aura(NPC, threshold, true, -1, Color.GreenYellow);//, ModContent.BuffType<HexedBuff>(), ModContent.BuffType<CrippledBuff>(), BuffID.Dazed, BuffID.OgreSpit);
-                EModeGlobalNPC.Aura(NPC, WorldSavingSystem.MasochistModeReal ? 200 : 150, false, -1, default, ModContent.BuffType<HexedBuff>(), ModContent.BuffType<CrippledBuff>(), BuffID.Dazed, BuffID.OgreSpit);
 
                 Player localPlayer = Main.LocalPlayer;
+
+                if (NPC.target == localPlayer.whoAmI) // only for target
+                {
+                    EModeGlobalNPC.Aura(NPC, threshold, true, -1, Color.GreenYellow);//, ModContent.BuffType<HexedBuff>(), ModContent.BuffType<CrippledBuff>(), BuffID.Dazed, BuffID.OgreSpit);
+                    EModeGlobalNPC.Aura(NPC, WorldSavingSystem.MasochistModeReal ? 200 : 150, false, -1, default, ModContent.BuffType<HexedBuff>(), ModContent.BuffType<CrippledBuff>(), BuffID.Dazed, BuffID.OgreSpit);
+                }
+
                 float distance = localPlayer.Distance(NPC.Center);
                 if (localPlayer.active && !localPlayer.dead && !localPlayer.ghost) //pull into arena
                 {
                     if (distance > threshold && distance < threshold * 4f)
                     {
-                        if (distance > threshold * 2f)
+                        if (NPC.target == localPlayer.whoAmI)
                         {
-                            player.Incapacitate();
-                            localPlayer.velocity.X = 0f;
-                            localPlayer.velocity.Y = -0.4f;
-                        }
+                            if (distance > threshold * 2f)
+                            {
+                                player.Incapacitate();
+                                localPlayer.velocity.X = 0f;
+                                localPlayer.velocity.Y = -0.4f;
+                            }
 
-                        Vector2 movement = NPC.Center - localPlayer.Center;
-                        float difference = movement.Length() - threshold;
-                        movement.Normalize();
-                        movement *= difference < 17f ? difference : 17f;
-                        localPlayer.position += movement;
+                            Vector2 movement = NPC.Center - localPlayer.Center;
+                            float difference = movement.Length() - threshold;
+                            movement.Normalize();
+                            movement *= difference < 17f ? difference : 17f;
+                            localPlayer.position += movement;
+                        }
 
                         for (int i = 0; i < 10; i++)
                         {
