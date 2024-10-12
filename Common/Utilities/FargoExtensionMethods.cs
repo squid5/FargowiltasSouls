@@ -215,6 +215,11 @@ namespace FargowiltasSouls //lets everything access it without using
             if (player.mount.Active)
                 player.mount.Dismount(player);
             player.FargoSouls().NoUsingItems = 2;
+            for (int i = 0; i < 4; i++)
+            {
+                player.doubleTapCardinalTimer[i] = 0;
+                player.holdDownCardinalTimer[i] = 0;
+            }
             if (player.dashDelay < 10 && preventDashing)
                 player.dashDelay = 10;
         }
