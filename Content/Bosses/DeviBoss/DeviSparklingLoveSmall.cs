@@ -70,7 +70,7 @@ namespace FargowiltasSouls.Content.Bosses.DeviBoss
                     Main.dust[d].velocity *= 4.5f;
                     Main.dust[d].noGravity = true;
                 }
-                SoundEngine.PlaySound(SoundID.Item1, Projectile.Center);
+                SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/Siblings/Deviantt/DeviSwing"), Projectile.Center);
             }
 
             Projectile.direction = Projectile.spriteDirection = Math.Sign(Projectile.ai[1]);
