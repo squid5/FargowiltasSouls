@@ -1,7 +1,9 @@
 ﻿using FargowiltasSouls.Core.NPCMatching;
 using Microsoft.Xna.Framework;
+using System.IO;
 using Terraria;
 using Terraria.ID;
+using Terraria.ModLoader.IO;
 
 namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.Dungeon
 {
@@ -20,8 +22,17 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.Dungeon
             npc.defense = 25;
         }
 
-        private int dropCounter = 0;
         private int directionCounter = 600;
+
+        public override void SendExtraAI(NPC npc, BitWriter bitWriter, BinaryWriter binaryWriter)
+        {
+            binaryWriter.Write(directionCounter);
+        }
+
+        public override void ReceiveExtraAI(NPC npc, BitReader bitReader, BinaryReader binaryReader)
+        {
+            directionCounter = binaryReader.ReadInt32();
+        }
 
         public override void AI(NPC npc)
         {
@@ -46,10 +57,10 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.Dungeon
                 }
             }
 
-            if (directionCounter-- == 0)
+            if (--directionCounter <= 0)
             {
                 npc.direction = -npc.direction;
-                directionCounter = 600;
+                directionCounter = Main.rand.Next(300, 900);
             }
 
                

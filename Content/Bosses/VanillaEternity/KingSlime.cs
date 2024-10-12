@@ -148,8 +148,8 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                                 }
                                 */
 
-                                /*
-                                if (npc.HasValidTarget)
+                                
+                                if (WorldSavingSystem.MasochistModeReal && npc.HasValidTarget)
                                 {
                                     SoundEngine.PlaySound(SoundID.Item21, player.Center);
                                     if (FargoSoulsUtil.HostCheck)
@@ -167,7 +167,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                                         }
                                     }
                                 }
-                                */
+                                
                             }
                         }
                     }
