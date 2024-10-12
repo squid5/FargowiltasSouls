@@ -84,3 +84,4 @@ maso abom doesn't troll toll you with his arena anymore
 twinrangs has autofire m2
 changed how plantera dicer mines spin while growing
 randomized blazing wheel patrol slightly
+tweaked check for purified on lizard altar
