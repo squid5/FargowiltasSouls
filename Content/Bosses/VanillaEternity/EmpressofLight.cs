@@ -166,6 +166,8 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
                         npc.position -= npc.velocity / (npc.ai[3] == 0 ? 2 : 4); //move slower
                     }
+                    if (npc.ai[1] < 90)
+                        PullNonTargets(npc, npc.Center, 600);
                     break;
 
                 case 7: //sword walls, ends at ai1=260
@@ -300,7 +302,6 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
         private void SwordCircle(NPC npc, float stop)
         {
             int startDelay = 60;
-
             if (AttackTimer == 0)
             {
                 SoundEngine.PlaySound(SoundID.Item161, npc.HasValidTarget ? Main.player[npc.target].Center : npc.Center);
@@ -316,6 +317,11 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             const float radius = 600;
             if (Main.player[npc.target].Distance(targetPos) > radius)
                 targetPos = Main.player[npc.target].Center + Main.player[npc.target].SafeDirectionTo(targetPos) * radius;
+
+            if (AttackTimer < startDelay + 30)
+            {
+                PullNonTargets(npc, targetPos, radius);
+            }
 
             if (AttackTimer % 90 == 30) //rapid fire sound effect
                 SoundEngine.PlaySound(SoundID.Item164, Main.player[npc.target].Center);
@@ -617,6 +623,41 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                             float ai1 = (npc.ai[1] - 40f) / 50f;
                             Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, Vector2.Zero, ProjectileID.FairyQueenLance, FargoSoulsUtil.ScaledProjectileDamage(BaseProjDmg(npc), 1.5f), 0f, Main.myPlayer, ai0, ai1);
                         }
+                    }
+                }
+            }
+        }
+
+        private void PullNonTargets(NPC npc, Vector2 center, float radius)
+        {
+            if (npc.target == Main.myPlayer)
+                return;
+            float distance = center.Distance(Main.LocalPlayer.Center);
+            float threshold = radius;
+            Player player = Main.LocalPlayer;
+            if (player.active && !player.dead && !player.ghost) //pull into arena
+            {
+                if (distance > threshold && distance < threshold * 4f)
+                {
+                    if (distance > threshold * 2f)
+                    {
+                        player.Incapacitate();
+                        player.velocity.X = 0f;
+                        player.velocity.Y = -0.4f;
+                    }
+
+                    Vector2 movement = center - player.Center;
+                    float difference = movement.Length() - threshold;
+                    movement.Normalize();
+                    movement *= difference < 28f ? difference : 28f;
+                    player.position += movement;
+
+                    for (int i = 0; i < 10; i++)
+                    {
+                        int DustType = Main.rand.NextFromList(DustID.RainbowTorch);
+                        int d = Dust.NewDust(player.position, player.width, player.height, DustType, 0f, 0f, 0, default, 1.25f);
+                        Main.dust[d].noGravity = true;
+                        Main.dust[d].velocity *= 5f;
                     }
                 }
             }
