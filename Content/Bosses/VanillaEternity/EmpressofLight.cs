@@ -637,9 +637,9 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             Player player = Main.LocalPlayer;
             if (player.active && !player.dead && !player.ghost) //pull into arena
             {
-                if (distance > threshold && distance < threshold * 4f)
+                if (distance > threshold && distance < 3500)
                 {
-                    if (distance > threshold * 2f)
+                    if (distance > 1500)
                     {
                         player.Incapacitate();
                         player.velocity.X = 0f;
@@ -649,7 +649,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     Vector2 movement = center - player.Center;
                     float difference = movement.Length() - threshold;
                     movement.Normalize();
-                    movement *= difference < 28f ? difference : 28f;
+                    movement *= difference < 32f ? difference : 32f;
                     player.position += movement;
 
                     for (int i = 0; i < 10; i++)
