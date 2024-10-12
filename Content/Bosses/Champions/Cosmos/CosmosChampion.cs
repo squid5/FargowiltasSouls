@@ -906,6 +906,8 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Cosmos
                         }
 
                         int threshold = 70; //NPC.localAI[2] == 0 ? 70 : 50;
+                        if (WorldSavingSystem.MasochistModeReal)
+                            threshold = 50;
                         if (++NPC.ai[2] <= threshold)
                         {
                             targetPos = player.Center;
@@ -1224,6 +1226,11 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Cosmos
                         NPC.rotation += (float)Math.PI;
 
                     if (NPC.ai[1] == 30 && FargoSoulsUtil.HostCheck)
+                    {
+                        Projectile.NewProjectile(NPC.GetSource_FromThis(), player.Center, Vector2.Zero, ModContent.ProjectileType<CosmosReticle>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), 0f, Main.myPlayer, NPC.whoAmI);
+                    }
+
+                    if (WorldSavingSystem.MasochistModeReal && NPC.ai[1] == 60 && FargoSoulsUtil.HostCheck)
                     {
                         Projectile.NewProjectile(NPC.GetSource_FromThis(), player.Center, Vector2.Zero, ModContent.ProjectileType<CosmosReticle>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), 0f, Main.myPlayer, NPC.whoAmI);
                     }
