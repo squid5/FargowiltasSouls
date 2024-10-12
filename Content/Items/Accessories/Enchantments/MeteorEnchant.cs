@@ -1,3 +1,4 @@
+using FargowiltasSouls.Assets.Sounds;
 using FargowiltasSouls.Content.Projectiles.Souls;
 using FargowiltasSouls.Content.UI.Elements;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
@@ -148,7 +149,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
             {
                 vel = FargoSoulsUtil.PredictiveAim(pos, targetPos, target.velocity / 3, 12f);
             }
-            SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/ThrowShort"), pos);
+            SoundEngine.PlaySound(FargosSoundRegistry.ThrowShort, pos);
 
             int force = forceEffect ? 1 : 0;
             int i = Projectile.NewProjectile(GetSource_EffectItem(player), pos, vel, ModContent.ProjectileType<MeteorEnchantMeatball>(), FargoSoulsUtil.HighestDamageTypeScaling(player, damage), 0.5f, player.whoAmI, force);

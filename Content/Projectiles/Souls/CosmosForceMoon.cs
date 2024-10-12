@@ -1,3 +1,4 @@
+using FargowiltasSouls.Assets.Sounds;
 using FargowiltasSouls.Content.Items.Misc;
 using FargowiltasSouls.Content.Projectiles;
 using Luminance.Core.Graphics;
@@ -103,7 +104,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Cosmos
                     State = 1;
                     if (Main.myPlayer == player.whoAmI)
                     {
-                        SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/ThrowShort"), Projectile.Center);
+                        SoundEngine.PlaySound(FargosSoundRegistry.ThrowShort, Projectile.Center);
                         Projectile.velocity = Projectile.DirectionTo(Main.MouseWorld) * 2;
                         Projectile.netUpdate = true;
                         NetMessage.SendData(MessageID.SyncProjectile, -1, -1, null, Projectile.whoAmI);
