@@ -354,7 +354,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     velX = -maxSpeed;
 
 
-                for (int i = 0; i < 10; i++) //dust
+                /*for (int i = 0; i < 10; i++) //dust
                 {
                     Vector2 dustPos = new Vector2(2000 * npc.direction, 0f).RotatedBy(Math.PI / 3 * (-0.5 + Main.rand.NextDouble()));
                     int d = Dust.NewDust(npc.Center + dustPos, 0, 0, DustID.Torch);
@@ -364,6 +364,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     Main.dust[d].noGravity = true;
                     Main.dust[d].noLight = true;
                 }
+                */
 
                 if (++TongueTimer > 15)
                 {
