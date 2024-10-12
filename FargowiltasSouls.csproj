@@ -22,11 +22,15 @@
     <None Remove="Assets\AutoloadedEffects\Shaders\AbomRitualBackgroundShader.fx" />
     <None Remove="Assets\AutoloadedEffects\Shaders\DestroyerScanTelegraph.fx" />
     <None Remove="Assets\AutoloadedEffects\Shaders\GenericInnerAura.fx" />
+    <None Remove="Assets\AutoloadedEffects\Shaders\MoltenEnchantShader - Copy (2).fx" />
     <None Remove="Assets\AutoloadedEffects\Shaders\MoltenEnchantShader.fx" />
     <None Remove="Assets\AutoloadedEffects\Shaders\MutantP1Aura.fx" />
     <None Remove="Assets\AutoloadedEffects\Shaders\MutantP2Aura.fx" />
+    <None Remove="Assets\AutoloadedEffects\Shaders\PungentAuraShader.fx" />
     <None Remove="Assets\AutoloadedEffects\Shaders\SolarEnchantShader.fx" />
     <None Remove="Assets\AutoloadedEffects\Shaders\StyxGazerShader.fx" />
+    <None Remove="Assets\AutoloadedEffects\Shaders\TwinsAuraShader.fx" />
+    <None Remove="Assets\AutoloadedEffects\Shaders\WoFAuraShader.fx" />
     <None Remove="Assets\Gores\Meteor\MeteorGore1.png" />
     <None Remove="Assets\Gores\Meteor\MeteorGore2.png" />
     <None Remove="Assets\Gores\Meteor\MeteorGore3.png" />
