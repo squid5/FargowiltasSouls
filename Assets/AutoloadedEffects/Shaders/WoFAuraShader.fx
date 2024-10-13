@@ -32,9 +32,9 @@ float4 PixelShaderFunction(float4 sampleColor : COLOR0, float2 uv : TEXCOORD0) :
     
     float2 noiseUV = pixelatedUV - (anchorPoint / screenSize);
     float xDir = -sign(worldUV.x - anchorPoint.x);
-    float2 vec1 = float2(0.56 * xDir, 0.6);
-    float2 vec2 = float2(0.3 * xDir, -0.7);
-    float2 vec3 = float2(0.8 * xDir, 0.9);
+    float2 vec1 = float2(0.56 * xDir, 0.5);
+    float2 vec2 = float2(0.3 * xDir, -0.55);
+    float2 vec3 = float2(0.8 * xDir, 0);
     
     // Textures
     float noiseMesh1 = tex2D(diagonalNoise, frac(noiseUV * 1.46  + vec1 * adjustedTime)).g;
