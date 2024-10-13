@@ -846,9 +846,9 @@ CosmoForce: {
 	DisplayName: Force of Cosmos
 	Tooltip:
 		'''
-		[i:FargowiltasSouls/SolarEnchant] [i:FargowiltasSouls/VortexEnchant] [i:FargowiltasSouls/NebulaEnchant] [i:FargowiltasSouls/StardustEnchant] Attacking generates up to 4 moons that orbit around you 
-		Stop attacking to launch them towards your cursor, exploding into Lunar Boosters
-		Picking up Lunar Boosters increases your damage, crit, life regen or damage reduction
+		[i:FargowiltasSouls/SolarEnchant] Attacking generates up to 4 moons that orbit around you 
+		[i:FargowiltasSouls/VortexEnchant] Stop attacking to launch them towards your cursor, exploding into Lunar Boosters
+		[i:FargowiltasSouls/NebulaEnchant] Picking up Lunar Boosters increases your damage, crit, life regen or damage reduction
 		[i:FargowiltasSouls/StardustEnchant] Press the Freeze Key to freeze time for 6 seconds, with a 75 second cooldown
 		[i:FargowiltasSouls/MeteorEnchant] Increases your movement speed and acceleration, and decreases your momentum
 		[i:FargowiltasSouls/WizardEnchant] Amplifies the effect of all your Enchantments
@@ -916,7 +916,7 @@ ShadowForce: {
 	DisplayName: Force of Death
 	Tooltip:
 		'''
-		[i:FargowiltasSouls/CrystalAssassinEnchant] Grants a shadow dash
+		[i:FargowiltasSouls/CrystalAssassinEnchant] Grants a shadow dash that cancels vertical movement and can be angled diagonally
 		[i:FargowiltasSouls/ShinobiEnchant] Every 4 seconds, your next dash will envolope you in shade, making you invincible during the dash
 		[i:FargowiltasSouls/ShinobiEnchant] Dashing through an enemy with the shade dash damages them and inflicts Marked for Death 
 		[i:FargowiltasSouls/AncientShadowEnchant] Dashing fires a burst of shadowflame projectiles around you

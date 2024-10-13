@@ -28,6 +28,8 @@
     <None Remove="Assets\AutoloadedEffects\Shaders\MutantP1Aura.fx" />
     <None Remove="Assets\AutoloadedEffects\Shaders\MutantP2Aura.fx" />
     <None Remove="Assets\AutoloadedEffects\Shaders\PungentAuraShader.fx" />
+    <None Remove="Assets\AutoloadedEffects\Shaders\RockeaterInnerAura.fx" />
+    <None Remove="Assets\AutoloadedEffects\Shaders\RockeaterOuterAura.fx" />
     <None Remove="Assets\AutoloadedEffects\Shaders\SolarEnchantShader.fx" />
     <None Remove="Assets\AutoloadedEffects\Shaders\StyxGazerShader.fx" />
     <None Remove="Assets\AutoloadedEffects\Shaders\TwinsAuraShader.fx" />

@@ -1,5 +1,6 @@
 ﻿using Fargowiltas.Items.Summons.SwarmSummons.Energizers;
 using FargowiltasSouls.Content.Items.Weapons.BossDrops;
+using FargowiltasSouls.Content.Projectiles;
 using FargowiltasSouls.Content.Projectiles.BossWeapons;
 using Microsoft.Xna.Framework;
 using System;
@@ -73,6 +74,10 @@ namespace FargowiltasSouls.Content.Items.Weapons.SwarmDrops
         }
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
+            int aura = ModContent.ProjectileType<RockeaterAuraProj>();
+            if (player.ownedProjectileCounts[aura] <= 0)
+                Projectile.NewProjectile(source, player.Center, player.velocity, aura, 0, 0);
+
             if (player.altFunctionUse == 2)
             {
                 player.FargoSouls().RockeaterDistance = IncreasedDistance;
@@ -89,8 +94,10 @@ namespace FargowiltasSouls.Content.Items.Weapons.SwarmDrops
         }
         public override void HoldItem(Player player)
         {
+            /*
             if (player.itemTime > 0)
             {
+                
                 for (int i = 0; i < 10; i++)
                 {
                     Vector2 offset = new();
@@ -122,7 +129,7 @@ namespace FargowiltasSouls.Content.Items.Weapons.SwarmDrops
                     dust2.scale = 1f;
                 }
             }
-
+            */
         }
 
 

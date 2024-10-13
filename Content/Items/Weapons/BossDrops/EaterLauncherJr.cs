@@ -1,4 +1,5 @@
-﻿using FargowiltasSouls.Content.Projectiles.BossWeapons;
+﻿using FargowiltasSouls.Content.Projectiles;
+using FargowiltasSouls.Content.Projectiles.BossWeapons;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -77,6 +78,9 @@ namespace FargowiltasSouls.Content.Items.Weapons.BossDrops
         }
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
+            int aura = ModContent.ProjectileType<RockeaterAuraProj>();
+            if (player.ownedProjectileCounts[aura] <= 0)
+                Projectile.NewProjectile(source, player.Center, player.velocity, aura, 0, 0);
             if (Charge <= 0)
                 LoadChunk(player);
             Charge--;
@@ -91,6 +95,7 @@ namespace FargowiltasSouls.Content.Items.Weapons.BossDrops
 
         public override void HoldItem(Player player)
         {
+            /*
             if (player.itemTime > 0)
             {
                 for (int i = 0; i < 10; i++)
@@ -124,7 +129,7 @@ namespace FargowiltasSouls.Content.Items.Weapons.BossDrops
                     dust2.scale = 1f;
                 }
             }
-
+            */
         }
 
 
