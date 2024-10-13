@@ -329,7 +329,11 @@ namespace FargowiltasSouls.Content.Projectiles
                         }
 
                         if (counter == 0)
+                        {
                             Projectile.localAI[0] = Main.rand.NextFloat(0.9f, 1.1f);
+                            Projectile.netUpdate = true;
+                        }
+                            
 
                         color = npc.ai[2] == 0 ? Color.Cyan : Color.Blue;
                         if (!(WorldSavingSystem.EternityMode && SoulConfig.Instance.BossRecolors))
