@@ -52,6 +52,8 @@ float4 PixelShaderFunction(float4 sampleColor : COLOR0, float2 uv : TEXCOORD0) :
     {
         colorMult = InverseLerp(radius * 0.98, radius, worldDistance);
     }
+
+        
         
     opacity = clamp(opacity, 0, maxOpacity);
     
@@ -77,16 +79,13 @@ float4 PixelShaderFunction(float4 sampleColor : COLOR0, float2 uv : TEXCOORD0) :
     }
     opacity /= pow(abs(textureMesh), 0.6);
 
-    /*float4 white = float4(1, 1, 1, 1);
+    float4 white = float4(1, 1, 1, 1);
     float4 yellow = float4(0.97, 0.91, 0.27, 1);
-    if (worldDistance < radius * 1.2)
-    {
-        color = lerp(color, colorLerp, InverseLerp(radius * 1.2, radius * 0.5, worldDistance));
-    }
-      */  
+       
     if (!border)
     {
-        colorMult += 0.05;
+        colorLerp = colorLerp / split;
+        color = lerp(yellow, white, colorLerp);
     }
 
     return color * colorMult * opacity;
