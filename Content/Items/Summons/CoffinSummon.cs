@@ -65,6 +65,7 @@ namespace FargowiltasSouls.Content.Items.Summons
                 {
                     if (Main.npc[n].ModNPC is CursedCoffin coffin)
                         coffin.LockVector1 = coffinArenaCenter;
+                    Main.npc[n].netUpdate = true;
                 }
                 return true;
             }
@@ -81,6 +82,7 @@ namespace FargowiltasSouls.Content.Items.Summons
                     if (npc.ModNPC is CursedCoffin coffin)
                         coffin.LockVector1 = npc.Center + Vector2.UnitY * 16;
                     npc.velocity.Y = -8f;
+                    npc.netUpdate = true;
                 }
             }
             return true;

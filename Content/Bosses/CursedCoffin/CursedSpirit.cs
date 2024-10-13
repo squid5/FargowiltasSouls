@@ -129,8 +129,6 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 
                 BittenPlayer = target.whoAmI;
                 BiteTimer = 360;
-                if (Main.netMode == NetmodeID.Server)
-                    NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, NPC.whoAmI);
 
                 NPC owner = FargoSoulsUtil.NPCExists(Owner, ModContent.NPCType<CursedCoffin>());
                 if (owner.TypeAlive<CursedCoffin>())
@@ -138,9 +136,15 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
                     // Forces Coffin to enter grab punish state
                     owner.As<CursedCoffin>().ForceGrabPunish = 1;
                     owner.netUpdate = true;
-                    if (Main.netMode == NetmodeID.Server)
-                        NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, owner.whoAmI);
                 }
+
+                // remember that this is target client side; we sync to server
+                var netMessage = Mod.GetPacket();
+                netMessage.Write((byte)FargowiltasSouls.PacketID.SyncCursedSpiritGrab);
+                netMessage.Write((byte)NPC.whoAmI);
+                netMessage.Write((byte)BittenPlayer);
+                netMessage.Write(BiteTimer);
+                netMessage.Send();
             }
         }
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
@@ -259,7 +263,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
                 // being held
                 Player victim = Main.player[BittenPlayer];
                 if (BiteTimer > 0 && victim.active && !victim.ghost && !victim.dead
-                    && (NPC.Distance(victim.Center) < 160 || victim.whoAmI != Main.myPlayer)
+                    && (NPC.Distance(victim.Center) < 160)
                     && victim.FargoSouls().MashCounter < 20)
                 {
                     victim.AddBuff(ModContent.BuffType<GrabbedBuff>(), 2);
@@ -285,6 +289,12 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 
                     if (Main.netMode == NetmodeID.Server)
                         NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, NPC.whoAmI);
+
+                    var netMessage = Mod.GetPacket();
+                    netMessage.Write((byte)FargowiltasSouls.PacketID.SyncCursedSpiritRelease);
+                    netMessage.Write((byte)NPC.whoAmI);
+                    netMessage.Write((byte)victim.whoAmI);
+                    netMessage.Send();
                 }
                 return;
             }

@@ -192,14 +192,12 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
             writer.Write7BitEncodedInt(LastAttackChoice);
             writer.Write7BitEncodedInt(Phase);
             writer.Write(Timer);
+            writer.WriteVector2(LockVector1);
 
-            // 1. Write the number of states on the stack.
-            writer.Write(StateMachine.StateStack.Count);
-
-            // 2. Write the state IDs as ints to the stack in the order they are on the stack.
-			var stackArray = StateMachine.StateStack.ToArray();
-			for (int i = 0; i < StateMachine.StateStack.Count; i++)
-				writer.Write((int)stackArray[i].Identifier);
+            var stateStack = (StateMachine?.StateStack ?? new()).ToList();
+            writer.Write(stateStack.Count);
+            for (int i = stateStack.Count - 1; i >= 0; i--)
+                writer.Write((byte)stateStack[i].Identifier);
 		}
 
 		public override void ReceiveExtraAI(BinaryReader reader)
@@ -211,14 +209,13 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 			LastAttackChoice = reader.Read7BitEncodedInt();
             Phase = reader.Read7BitEncodedInt();
 			Timer = reader.ReadSingle();
+            LockVector1 = reader.ReadVector2();
 
-			// 1. Read the number of states that should be added to the stack and were written.
-			int stackCount = reader.ReadInt32();
-			// Clear the stack in preperation for pushing the written states to it.
 			StateMachine.StateStack.Clear();
-			// 2. Read the state IDs and push them to the stack.
-			for (int i = 0; i < stackCount; i++)
-				StateMachine.StateStack.Push(StateMachine.StateRegistry[(BehaviorStates)reader.ReadInt32()]);
+
+            int stateStackCount = reader.ReadInt32();
+            for (int i = 0; i < stateStackCount; i++)
+                StateMachine.StateStack.Push(StateMachine.StateRegistry[(BehaviorStates)reader.ReadByte()]);
 		}
 		#endregion
 

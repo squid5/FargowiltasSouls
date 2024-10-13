@@ -15,6 +15,8 @@ using Luminance.Core.Graphics;
 using FargowiltasSouls.Content.Buffs.Masomode;
 using Luminance.Common.StateMachines;
 using FargowiltasSouls.Assets.Sounds;
+using Terraria.Chat;
+using Terraria.Localization;
 
 namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 {
@@ -78,6 +80,16 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
         public override bool? CanFallThroughPlatforms() => NPC.noTileCollide || (Player.Top.Y > NPC.Bottom.Y + 30) ? true : null;
         public override void AI()
         {
+            /*
+            var stack = StateMachine.StateStack.ToArray();
+            string states = "";
+            foreach (var state in stack)
+                states += " " + state.Identifier;
+            if (Main.netMode == NetmodeID.Server)
+                ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(states), Color.White);
+            else
+                Main.NewText(states);
+            */
             //Defaults
             NPC.defense = NPC.defDefense;
             if (Main.npc.Any(p => p.TypeAlive<CursedSpirit>()))
@@ -611,7 +623,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 				foreach (Projectile hand in Main.projectile.Where(p => p.TypeAlive<CoffinHand>() && p.ai[0] == NPC.whoAmI && p.ai[1] == 1))
 				{
 					SoundEngine.PlaySound(HandChargeSFX, hand.Center);
-					hand.ai[1] = 2;
+					hand.ai[1] = 10;
 					hand.netUpdate = true;
 				}
 			}
@@ -627,27 +639,10 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 				if (FargoSoulsUtil.HostCheck)
 				{
 					Vector2 dir = NPC.rotation.ToRotationVector2();
-					int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, dir * 4, ModContent.ProjectileType<CoffinHand>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage, 0.5f), 1f, Main.myPlayer, NPC.whoAmI, 1);
-					if (p.IsWithinBounds(Main.maxProjectiles))
-					{
-						Main.projectile[p].localAI[1] = 1;
-						Main.projectile[p].netUpdate = true;
-					}
-                    p = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, dir * 4, ModContent.ProjectileType<CoffinHand>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage, 0.5f), 1f, Main.myPlayer, NPC.whoAmI, 1);
-                    if (p.IsWithinBounds(Main.maxProjectiles))
-                    {
-                        Main.projectile[p].localAI[1] = -1;
-                        Main.projectile[p].netUpdate = true;
-                    }
+					int p = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, dir * 4, ModContent.ProjectileType<CoffinHand>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage, 0.5f), 1f, Main.myPlayer, NPC.whoAmI, 0.98f);
+                    p = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, dir * 4, ModContent.ProjectileType<CoffinHand>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage, 0.5f), 1f, Main.myPlayer, NPC.whoAmI, -0.98f);
                     if (WorldSavingSystem.EternityMode)
-					{
-						p = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, (NPC.rotation + MathHelper.PiOver2).ToRotationVector2() * 4, ModContent.ProjectileType<CoffinHand>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage, 0.5f), 1f, Main.myPlayer, NPC.whoAmI, 1);
-                        if (p.IsWithinBounds(Main.maxProjectiles))
-                        {
-                            Main.projectile[p].localAI[1] = Main.rand.NextBool() ? 1.5f : -1.5f;
-                            Main.projectile[p].netUpdate = true;
-                        }
-                    }
+						p = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, (NPC.rotation + MathHelper.PiOver2).ToRotationVector2() * 4, ModContent.ProjectileType<CoffinHand>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage, 0.5f), 1f, Main.myPlayer, NPC.whoAmI, Main.rand.NextBool() ? 1.5f : -1.5f);
                 }
 			}
 			else
