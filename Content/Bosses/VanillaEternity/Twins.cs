@@ -1,4 +1,5 @@
 using FargowiltasSouls.Assets.ExtraTextures;
+using FargowiltasSouls.Assets.Sounds;
 using FargowiltasSouls.Common.Graphics.Particles;
 using FargowiltasSouls.Common.Utilities;
 using FargowiltasSouls.Content.Buffs.Masomode;
@@ -641,7 +642,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                                     if (FargoSoulsUtil.HostCheck)
                                         Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, Vector2.Zero, ModContent.ProjectileType<GlowRing>(), 0, 0f, Main.myPlayer, npc.whoAmI, npc.type);
 
-                                    SoundEngine.PlaySound(SoundID.ForceRoarPitched, npc.Center); //eoc roar
+                                    SoundEngine.PlaySound(FargosSoundRegistry.TwinsWarning with {Volume = 2f}, npc.Center); 
                                 }
 
                                 if (Main.netMode == NetmodeID.Server)
@@ -656,6 +657,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                             //if (--npc.ai[2] > 295f) npc.ai[2] = 295f;
                             npc.ai[3] -= (npc.ai[0] - 4f) / 120f * rotationInterval * (StoredDirectionToPlayer ? 1f : -1f);
                             npc.rotation = -npc.ai[3];
+
 
                             if (npc.ai[0] == 35f)
                             {
@@ -778,8 +780,8 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
             return base.CheckDead(npc);
         }
-
-        public override bool PreDraw(NPC npc, SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        // twin aura, couldnt get it to work -midnight.
+        /*public override bool PreDraw(NPC npc, SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Vector2 AuraPosition = npc.Center;
             if (ShouldDrawAura)
@@ -823,7 +825,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
         }
-
+        */
         public override void LoadSprites(NPC npc, bool recolor)
         {
             base.LoadSprites(npc, recolor);

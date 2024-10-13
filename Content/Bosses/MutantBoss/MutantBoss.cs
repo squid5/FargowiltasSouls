@@ -1,6 +1,7 @@
 using Fargowiltas.Common.Configs;
 using Fargowiltas.NPCs;
 using FargowiltasSouls.Assets.ExtraTextures;
+using FargowiltasSouls.Assets.Sounds;
 using FargowiltasSouls.Content.Buffs.Boss;
 using FargowiltasSouls.Content.Buffs.Masomode;
 using FargowiltasSouls.Content.Buffs.Souls;
@@ -1173,8 +1174,11 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
                     return;
                 NPC.ai[3] = 1;
                 if (FargoSoulsUtil.HostCheck)
+                {
                     Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<MutantSpearSpin>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), 0f, Main.myPlayer, NPC.whoAmI, 240); // 250);
-                TelegraphSound = SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/Siblings/Mutant/MutantUnpredictive") with {Volume = 2f}, NPC.Center);
+                    TelegraphSound = SoundEngine.PlaySound(FargosSoundRegistry.MutantUnpredictive with {Volume = 2f}, NPC.Center);
+                }
+                    
 
                 EdgyBossText(GFBQuote(4));
             }
@@ -1701,8 +1705,11 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
                 NPC.ai[3] = 1;
                 //NPC.velocity = NPC.DirectionFrom(player.Center) * NPC.velocity.Length();
                 if (FargoSoulsUtil.HostCheck)
+                {
                     Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<MutantSpearSpin>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), 0f, Main.myPlayer, NPC.whoAmI, 180); // + 60);
-                TelegraphSound = SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/Siblings/Mutant/MutantPredictive") with { Volume = 4f }, NPC.Center);
+                    TelegraphSound = SoundEngine.PlaySound(FargosSoundRegistry.MutantPredictive with { Volume = 8f }, NPC.Center);
+                }
+                    
                 EdgyBossText(GFBQuote(9));
             }
 
@@ -2071,8 +2078,11 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
                 NPC.ai[3] = 1;
                 //NPC.velocity = NPC.DirectionFrom(player.Center) * NPC.velocity.Length();
                 if (FargoSoulsUtil.HostCheck)
+                {
                     Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<MutantSpearSpin>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), 0f, Main.myPlayer, NPC.whoAmI, 180);// + (WorldSavingSystem.MasochistMode ? 10 : 20));
-                TelegraphSound = SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/Siblings/Mutant/MutantUnpredictive") with { Volume = 2f }, NPC.Center);
+                    TelegraphSound = SoundEngine.PlaySound(FargosSoundRegistry.MutantUnpredictive with { Volume = 2f }, NPC.Center);
+                }
+                    
                 EdgyBossText(GFBQuote(14));
             }
 

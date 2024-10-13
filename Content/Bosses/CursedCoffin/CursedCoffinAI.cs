@@ -14,6 +14,7 @@ using FargowiltasSouls.Content.WorldGeneration;
 using Luminance.Core.Graphics;
 using FargowiltasSouls.Content.Buffs.Masomode;
 using Luminance.Common.StateMachines;
+using FargowiltasSouls.Assets.Sounds;
 
 namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 {
@@ -23,13 +24,13 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
         public const int RandomStuffOpenTime = 60;
 
 
-        public static readonly SoundStyle PhaseTransitionSFX = new("FargowiltasSouls/Assets/Sounds/Challengers/Coffin/CoffinPhaseTransition");
-        public static readonly SoundStyle SlamSFX = new("FargowiltasSouls/Assets/Sounds/Challengers/Coffin/CoffinSlam") { Volume = 0.5f, PitchVariance = 0.3f };
-        public static readonly SoundStyle SpiritDroneSFX = new("FargowiltasSouls/Assets/Sounds/Challengers/Coffin/CoffinSpiritDrone") { MaxInstances = 1, SoundLimitBehavior = SoundLimitBehavior.IgnoreNew, Volume = 0.2f };
-        public static readonly SoundStyle BigShotSFX = new("FargowiltasSouls/Assets/Sounds/Challengers/Coffin/CoffinBigShot") { Volume = 0.6f, PitchVariance = 0.3f };
-        public static readonly SoundStyle ShotSFX = new("FargowiltasSouls/Assets/Sounds/Challengers/Coffin/CoffinShot") { Volume = 0.3f, PitchVariance = 0.3f };
-        public static readonly SoundStyle SoulShotSFX = new("FargowiltasSouls/Assets/Sounds/Challengers/Coffin/CoffinSoulShot") { Volume = 0.3f, PitchVariance = 0.3f };
-        public static readonly SoundStyle HandChargeSFX = new("FargowiltasSouls/Assets/Sounds/Challengers/Coffin/CoffinHandCharge");
+        public static readonly SoundStyle PhaseTransitionSFX = FargosSoundRegistry.CoffinPhaseTransition;
+        public static readonly SoundStyle SlamSFX = FargosSoundRegistry.CoffinSlam with { Volume = 0.5f, PitchVariance = 0.3f };
+        public static readonly SoundStyle SpiritDroneSFX = FargosSoundRegistry.CoffinSpiritDrone with { MaxInstances = 1, SoundLimitBehavior = SoundLimitBehavior.IgnoreNew, Volume = 0.2f };
+        public static readonly SoundStyle BigShotSFX = FargosSoundRegistry.CoffinBigShot with { Volume = 0.6f, PitchVariance = 0.3f };
+        public static readonly SoundStyle ShotSFX = FargosSoundRegistry.CoffinShot with { Volume = 0.3f, PitchVariance = 0.3f };
+        public static readonly SoundStyle SoulShotSFX = FargosSoundRegistry.CoffinSoulShot with { Volume = 0.3f, PitchVariance = 0.3f };
+        public static readonly SoundStyle HandChargeSFX = FargosSoundRegistry.CoffinHandCharge;
 
         public enum BehaviorStates
         {

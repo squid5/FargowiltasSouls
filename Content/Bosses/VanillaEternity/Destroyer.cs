@@ -1,3 +1,4 @@
+using FargowiltasSouls.Assets.Sounds;
 using FargowiltasSouls.Common.Utilities;
 using FargowiltasSouls.Content.Buffs.Masomode;
 using FargowiltasSouls.Content.Buffs.Souls;
@@ -26,7 +27,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
     {
         public override NPCMatcher CreateMatcher() => new NPCMatcher().MatchType(NPCID.TheDestroyer);
 
-        public static readonly SoundStyle ScanSound = new SoundStyle("FargowiltasSouls/Assets/Sounds/VanillaEternity/Mechs/DestroyerScan") with { Volume = 5 };
+        public static readonly SoundStyle ScanSound = FargosSoundRegistry.DestroyerScan with { Volume = 5 };
 
         public int AttackModeTimer;
         public int CoilRadius;
