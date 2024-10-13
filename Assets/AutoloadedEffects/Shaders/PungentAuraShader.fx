@@ -54,7 +54,7 @@ float4 PixelShaderFunction(float4 sampleColor : COLOR0, float2 uv : TEXCOORD0) :
         colorMult = InverseLerp(radius * 0.45, radius, worldDistance);
     else
     {
-        colorMult = InverseLerp(radius * 1.21, radius, worldDistance);
+        colorMult = InverseLerp(radius * 1.41, radius, worldDistance);
     }
         
     opacity = clamp(opacity, 0, maxOpacity);
