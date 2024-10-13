@@ -82,16 +82,14 @@ namespace FargowiltasSouls.Content.Projectiles.Souls
                     Player hitPlayer = Main.player[i];
                     if (hitPlayer.Alive() && hitPlayer.Hitbox.Intersects(Projectile.Hitbox))
                     {
-                        int heal = 25;
-
-                        if (modPlayer.ForceEffect<PumpkinEnchant>())
+                        if (Main.myPlayer == hitPlayer.whoAmI)
                         {
-                            heal *= 2;
+                            int heal = 25;
+                            if (modPlayer.ForceEffect<PumpkinEnchant>())
+                                heal *= 2;
+                            FargoGlobalItem.OnRetrievePickup(hitPlayer);
+                            hitPlayer.FargoSouls().HealPlayer(heal);
                         }
-
-                        FargoGlobalItem.OnRetrievePickup(hitPlayer);
-
-                        hitPlayer.FargoSouls().HealPlayer(heal);
                         SoundEngine.PlaySound(SoundID.Item2, hitPlayer.Center);
                         Projectile.Kill();
                     }
