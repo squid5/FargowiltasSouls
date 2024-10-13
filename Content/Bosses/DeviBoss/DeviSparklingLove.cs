@@ -1,4 +1,5 @@
-﻿using FargowiltasSouls.Content.Projectiles;
+﻿using FargowiltasSouls.Assets.Sounds;
+using FargowiltasSouls.Content.Projectiles;
 using FargowiltasSouls.Core.Systems;
 using Luminance.Core.Graphics;
 using Microsoft.Xna.Framework;
@@ -110,7 +111,7 @@ namespace FargowiltasSouls.Content.Bosses.DeviBoss
 
                 if (!Main.dedServ && Main.LocalPlayer.active)
                     ScreenShakeSystem.StartShake(10, shakeStrengthDissipationIncrement: 10f / 30);
-                SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/Siblings/Deviantt/DeviSwing"), Projectile.Center);
+                SoundEngine.PlaySound(FargosSoundRegistry.DeviSwing, Projectile.Center);
 
                 if (FargoSoulsUtil.HostCheck)
                 {
