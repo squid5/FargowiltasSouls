@@ -1707,7 +1707,7 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
                 if (FargoSoulsUtil.HostCheck)
                 {
                     Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<MutantSpearSpin>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), 0f, Main.myPlayer, NPC.whoAmI, 180); // + 60);
-                    TelegraphSound = SoundEngine.PlaySound(FargosSoundRegistry.MutantPredictive with { Volume = 4f }, NPC.Center);
+                    TelegraphSound = SoundEngine.PlaySound(FargosSoundRegistry.MutantPredictive with { Volume = 8f }, NPC.Center);
                 }
                     
                 EdgyBossText(GFBQuote(9));
