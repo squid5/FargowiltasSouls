@@ -27,10 +27,16 @@ namespace FargowiltasSouls.Content.Items
         public override void SetDefaults(Item item)
         {
             if (item.type is ItemID.Acorn or ItemID.GemTreeAmberSeed or ItemID.GemTreeAmethystSeed or ItemID.GemTreeDiamondSeed or ItemID.GemTreeEmeraldSeed or ItemID.GemTreeRubySeed or ItemID.GemTreeSapphireSeed or ItemID.GemTreeTopazSeed)
+            {
                 item.ammo = ItemID.Acorn;
+                item.notAmmo = true;
+            }
 
             if (item.type == ItemID.Bone)
+            {
                 item.ammo = ItemID.Bone;
+                item.notAmmo = true;
+            }
         }
         public override void UpdateAccessory(Item item, Player player, bool hideVisual)
         {
