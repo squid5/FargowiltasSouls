@@ -4,8 +4,6 @@ float colorMult;
 float time;
 float maxOpacity;
 float radius;
-float2 arcAngle;
-float arcWidth;
 
 float2 screenPosition;
 float2 screenSize;
@@ -25,8 +23,6 @@ float4 PixelShaderFunction(float4 sampleColor : COLOR0, float2 uv : TEXCOORD0) :
     float2 provUV = anchorPoint / screenSize;
     float worldDistance = distance(worldUV, anchorPoint);
     
-    float2 direction = worldUV - anchorPoint;
-    float angleDiff = abs(acos(dot(direction, arcAngle) / (length(direction) * length(arcAngle))));
     float adjustedTime = time * 0.6;
     
     
@@ -47,21 +43,16 @@ float4 PixelShaderFunction(float4 sampleColor : COLOR0, float2 uv : TEXCOORD0) :
     float noiseMesh3 = tex2D(diagonalNoise, frac(noiseUV * 1.57 + vec3 * adjustedTime)).g;
     
     float textureMesh = noiseMesh1 * 0.3 + noiseMesh2 * 0.3 + noiseMesh3 * 0.3;
-    
     float opacity = maxOpacity;
-   
     
     // Thresholds
-    bool border = worldDistance < radius && opacity > 0 && angleDiff < arcWidth;
+    bool border = worldDistance < radius && opacity > 0;
     float colorMult = 1;
-    if (border)
-    {
-        colorMult = InverseLerp(radius, radius * 0.6f, worldDistance);
-        colorMult *= InverseLerp(arcWidth, arcWidth * 0.8f, angleDiff);
-    }
+    if (border) 
+        colorMult = InverseLerp(radius * 0.9, radius, worldDistance);
     else
     {
-        colorMult = 0;
+        colorMult = InverseLerp(radius * 1.1, radius, worldDistance);
     }
         
     opacity = clamp(opacity, 0, maxOpacity);

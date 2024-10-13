@@ -199,7 +199,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                 double angle = Main.rand.NextDouble() * 2d * Math.PI;
                 offset.X += (float)(Math.Sin(angle) * 600);
                 offset.Y += (float)(Math.Cos(angle) * 600);
-                Dust dust = Main.dust[Dust.NewDust(pivot + offset - new Vector2(4, 4), 0, 0, DustID.Clentaminator_Purple, 0, 0, 100, Color.White, 1f)];
+                Dust dust = Main.dust[Dust.NewDust(pivot + offset - new Vector2(4, 4), 0, 0, DustID.Clentaminator_Blue, 0, 0, 100, Color.White, 1f)];
                 dust.velocity = Vector2.Zero;
                 if (Main.rand.NextBool(3))
                     dust.velocity += Vector2.Normalize(offset) * 5f;
@@ -220,7 +220,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
                     for (int i = 0; i < 20; i++)
                     {
-                        int d = Dust.NewDust(target.position, target.width, target.height, DustID.Clentaminator_Purple, 0f, 0f, 0, default, 2f);
+                        int d = Dust.NewDust(target.position, target.width, target.height, DustID.Clentaminator_Blue, 0f, 0f, 0, default, 2f);
                         Main.dust[d].noGravity = true;
                         Main.dust[d].velocity *= 5f;
                     }
@@ -297,7 +297,8 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     npc.netUpdate = true;
                     NetSync(npc);
 
-                    SoundEngine.PlaySound(SoundID.Roar, Main.player[npc.target].Center);
+                    //SoundEngine.PlaySound(SoundID.Roar, Main.player[npc.target].Center);
+                    SoundEngine.PlaySound(ScanSound with { Pitch = -0.5f, Volume = 2f }, Main.player[npc.target].Center);
                     if (npc.life < npc.lifeMax / 10)
                         SoundEngine.PlaySound(SoundID.ForceRoarPitched, Main.player[npc.target].Center); //eoc roar
 
@@ -343,7 +344,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                 }
                 else if (AttackModeTimer == P2_COIL_BEGIN_TIME - 120) //telegraph with roar
                 {
-                    SoundEngine.PlaySound(SoundID.Roar, Main.player[npc.target].Center);
+                    SoundEngine.PlaySound(ScanSound with { Pitch = 0.5f, Volume = 2f }, Main.player[npc.target].Center);
                     if (FargoSoulsUtil.HostCheck)
                     {
                         Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, Vector2.Zero, ModContent.ProjectileType<GlowRingHollow>(), 0, 0f, Main.myPlayer, 6, npc.whoAmI);
@@ -454,6 +455,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     if (maxStarsInOneWave > 6)
                         maxStarsInOneWave = 6;
                     //Main.NewText($"{Counter3} {maxStarModifier} {maxStarsInOneWave} {maxMechElectricOrbIntervals}");
+                    SoundEngine.PlaySound(MechElectricOrb.ShotSound with { Volume = 0.5f, MaxInstances = 4 }, Main.player[npc.target].position);
                     for (int i = -maxStarsInOneWave; i <= maxStarsInOneWave; i++)
                     {
                         Vector2 offset = segment.SafeDirectionTo(targetPos).RotatedBy(MathHelper.PiOver2);
@@ -475,7 +477,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             if (AttackModeTimer == laserThreshold - telegraphTime) //tell for hyper dash for light show
             {
                 SecondaryAttackTimer = 0;
-                SoundEngine.PlaySound(ScanSound, npc.Center);
+                SoundEngine.PlaySound(ScanSound with { Volume = 2f }, npc.Center);
                 if (FargoSoulsUtil.HostCheck)
                 {
                     float angle = MathHelper.Pi * 0.7f;
@@ -684,7 +686,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     AttackModeTimer = P2_COIL_BEGIN_TIME;
                     npc.netUpdate = true;
                     if (npc.HasPlayerTarget)
-                        SoundEngine.PlaySound(SoundID.Roar, Main.player[npc.target].Center);
+                        SoundEngine.PlaySound(ScanSound with { Pitch = 1f, Volume = 2f }, Main.player[npc.target].Center);
                 }
             }
             else

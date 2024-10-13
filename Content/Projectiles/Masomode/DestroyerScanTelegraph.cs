@@ -91,13 +91,13 @@ namespace FargowiltasSouls.Content.Projectiles
                 color = Color.Red;
 
             Vector2 pos = Projectile.Center;
-            float timeLerp = Projectile.timeLeft / maxTime;
+            float timeLerp = MathF.Pow(Projectile.timeLeft / maxTime, 0.5f);
             float radius = 500 + 500 * timeLerp;
             float arcAngle = Projectile.rotation;
             float arcWidth = ArcAngle * timeLerp;
 
             var blackTile = TextureAssets.MagicPixel;
-            var noise = FargosTextureRegistry.TurbulentNoise;
+            var noise = FargosTextureRegistry.Techno1Noise;
             if (!blackTile.IsLoaded || !noise.IsLoaded)
             {
                 return false;
