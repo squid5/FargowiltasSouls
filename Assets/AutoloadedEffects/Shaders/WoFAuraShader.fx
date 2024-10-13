@@ -58,9 +58,9 @@ float4 PixelShaderFunction(float4 sampleColor : COLOR0, float2 uv : TEXCOORD0) :
     if (colorMult == 1 && (opacity == 0 || worldDistance > radius))
         return sampleColor;
     
-    float4 darkColor = float4(0.96, 0.34, 0.04, 1);
-    float4 midColor = float4(0.98, 0.38, 0.12, 1);
-    float4 lightColor = float4(1, 1, 1, 1);
+    float4 darkColor = float4(0.96, 0.34, 0.04, 1); //red
+    float4 midColor = float4(0.98, 0.38, 0.12, 1); //yellow
+    float4 lightColor = float4(1, 1, 1, 1); //white
     
     float colorLerp = pow(colorMult, 4);
     float4 color;

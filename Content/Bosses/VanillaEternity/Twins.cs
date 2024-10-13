@@ -644,6 +644,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                             npc.ai[3] -= (npc.ai[0] - 4f) / 120f * rotationInterval * (StoredDirectionToPlayer ? 1f : -1f);
                             npc.rotation = -npc.ai[3];
 
+
                             if (npc.ai[0] == 35f)
                             {
                                 if (FargoSoulsUtil.HostCheck)
@@ -765,8 +766,8 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
             return base.CheckDead(npc);
         }
-
-        public override bool PreDraw(NPC npc, SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        // twin aura, couldnt get it to work -midnight.
+        /*public override bool PreDraw(NPC npc, SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Vector2 AuraPosition = npc.Center;
             DrawAura(npc, spriteBatch, AuraPosition);
@@ -778,7 +779,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             Color mediumColor = Color.Red;
             Color lightColor2 = Color.Lerp(Color.IndianRed, Color.White, 0.35f);
             Vector2 auraPos = npc.Center;
-            float radius = AuraRadiusCounter;
+            float radius = 400;
             var blackTile = TextureAssets.MagicPixel;
             var diagonalNoise = FargosTextureRegistry.SmokyNoise;
             if (!blackTile.IsLoaded || !diagonalNoise.IsLoaded)
@@ -803,7 +804,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
         }
-
+        */
         public override void LoadSprites(NPC npc, bool recolor)
         {
             base.LoadSprites(npc, recolor);
