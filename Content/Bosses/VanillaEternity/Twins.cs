@@ -1,4 +1,5 @@
 using FargowiltasSouls.Assets.ExtraTextures;
+using FargowiltasSouls.Assets.Sounds;
 using FargowiltasSouls.Common.Graphics.Particles;
 using FargowiltasSouls.Common.Utilities;
 using FargowiltasSouls.Content.Buffs.Masomode;
@@ -628,7 +629,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                                     if (FargoSoulsUtil.HostCheck)
                                         Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, Vector2.Zero, ModContent.ProjectileType<GlowRing>(), 0, 0f, Main.myPlayer, npc.whoAmI, npc.type);
 
-                                    SoundEngine.PlaySound(SoundID.ForceRoarPitched, npc.Center); //eoc roar
+                                    SoundEngine.PlaySound(FargosSoundRegistry.TwinsWarning with {Volume = 2f}, npc.Center); 
                                 }
 
                                 if (Main.netMode == NetmodeID.Server)

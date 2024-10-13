@@ -12,7 +12,6 @@ namespace FargowiltasSouls.Assets.Sounds
         public const string SoundsPath = "FargowiltasSouls/Assets/Sounds/";
 
         public static readonly SoundStyle ThrowShort = new(SoundsPath + "ThrowShort");
-        public static readonly SoundStyle RetinazerDeathray = new(SoundsPath + "VanillaEternity/Mechs/RetinazerDeathray");
         public static readonly SoundStyle ReticleBeep = new(SoundsPath + "ReticleBeep");
         public static readonly SoundStyle ReticleLockOn = new(SoundsPath + "ReticleLockOn");
         public static readonly SoundStyle StyxGazer = new(SoundsPath + "Siblings/Abominationn/StyxGazer");
@@ -55,5 +54,12 @@ namespace FargowiltasSouls.Assets.Sounds
         public static readonly SoundStyle MutantPredictive = new(SoundsPath + "Siblings/Mutant/MutantPredictive");
 
         // Abominationn
+
+        // Mechs
+        public static readonly SoundStyle RetinazerDeathray = new(SoundsPath + "VanillaEternity/Mechs/RetinazerDeathray");
+        public static readonly SoundStyle TwinsWarning = new(SoundsPath + "VanillaEternity/Mechs/TwinsWarning");
+        public static readonly SoundStyle DestroyerScan = new(SoundsPath + "VanillaEternity/Mechs/DestroyerScan");
+        public static readonly SoundStyle ElectricOrbHum = new(SoundsPath + "VanillaEternity/Mechs/ElectricOrbHum");
+        public static readonly SoundStyle ElectricOrbShot = new(SoundsPath + "VanillaEternity/Mechs/ElectricOrbShot");
     }
 }
