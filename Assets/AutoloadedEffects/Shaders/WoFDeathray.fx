@@ -45,39 +45,42 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
     float4 color = input.Color;
     float2 coords = input.TextureCoordinates;
     
-	coords.y = (coords.y - 0.5) / input.TextureCoordinates.z + 0.5;
+    float y = sin(10 * globalTime - 5.2 * coords.x) * 0.2;
     
- 
-    float y = sin(15 * globalTime - 5.2 * coords.x) * 0.2;
-    
-    // Get the pixel of the fade map. What coords.x is being multiplied by determines
-    // how many times the uImage1 is copied to cover the entirety of the prim. 2, 2
-	float4 fadeMapColor = tex2D(uImage1, float2(frac(coords.x * 2 - globalTime * 4), coords.y));
-    
-    // Use the red value for the opacity, as the provided image *should* be grayscale.
-    float opacity = fadeMapColor.r;
-    // Lerp between the base color, and the provided color based on the opacity of the fademap.
-    float4 changedColor = lerp(float4(mainColor, 1), color, 0.1);
-    float4 colorCorrected = lerp(color, changedColor, fadeMapColor.r);
-    
-    // Fade out at the top and bottom of the streak.
-    if (coords.y < 0.2)
-        opacity *= pow(coords.y / 0.4, 3);
-    if (coords.y > 0.8)
-        opacity *= pow(1 - (coords.y - 0.8) / 0.8, 3);
+	coords.y = (coords.y - 0.05) / input.TextureCoordinates.z + 0.5;
     
     float widthScale = float((y + (1 - coords.x * 0.25)) / 2);
     
     if (coords.x < 0.07)
         widthScale /= pow(coords.x / 0.07, 1);
-    coords.y = ((coords.y - 0.5) * clamp(widthScale, 0, 2)) + 0.5;
-
     
-    // Fade out at the end of the streak.
+    coords.y = ((coords.y - 0.5) * clamp(widthScale, 0, 2)) + 0.5;
+    
+    
+    
+    // Get the pixel of the fade map. What coords.x is being multiplied by determines
+    // how many times the uImage1 is copied to cover the entirety of the prim. 2, 2
+	float4 fadeMapColor = tex2D(uImage1, float2(frac(coords.x * 0.2 - globalTime * 0.4), coords.y));
+    
+    // Use the red value for the opacity, as the provided image *should* be grayscale.
+    float opacity = fadeMapColor.r;
+    // Lerp between the base color, and the provided color based on the opacity of the fademap.
+    float4 changedColor = lerp(float4(mainColor, 1), color, 0.5f);
+    float4 colorCorrected = lerp(color, changedColor, fadeMapColor.r);
+    
+    
+    // Fade out at the top and bottom of the streak.
+    /*if (coords.y < 0.2)
+        opacity *= 0.33;
+    if (coords.y > 0.8)
+        opacity *= 0.33;
+    
+    /* Fade out at the end of the streak.
     if (coords.x < 0.07)
         opacity *= pow(coords.x / 0.07, 6);
     if (coords.x > 0.95)
         opacity *= pow(1 - (coords.x - 0.95) / 0.05, 6);
+    */
     
     return colorCorrected * opacity * 2;
 }

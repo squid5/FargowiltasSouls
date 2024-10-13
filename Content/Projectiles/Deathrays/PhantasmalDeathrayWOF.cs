@@ -58,7 +58,7 @@ namespace FargowiltasSouls.Content.Projectiles.Deathrays
             float maxScale = 1f;
             if (WorldSavingSystem.MasochistModeReal)
             {
-                maxScale = 5f/*Main.rand.NextFloat(2.5f, 5f)*/;
+                maxScale = 5f;
                 FargoSoulsUtil.ScreenshakeRumble(6);
             }
             else
@@ -172,7 +172,7 @@ namespace FargowiltasSouls.Content.Projectiles.Deathrays
         
         public override bool PreDraw(ref Color lightColor) => false;
 
-        public float WidthFunction(float _) => Projectile.width * Projectile.scale;
+        public float WidthFunction(float _) => Projectile.width * Projectile.scale * (WorldSavingSystem.masochistModeReal? 0.7f : 1.3f);
 
         public static Color ColorFunction(float _)
         {
@@ -196,15 +196,16 @@ namespace FargowiltasSouls.Content.Projectiles.Deathrays
             for (int i = 0; i < baseDrawPoints.Length; i++)
                 baseDrawPoints[i] = Vector2.Lerp(initialDrawPoint, laserEnd, i / (float)(baseDrawPoints.Length - 1f));
 
+            
             // Set shader parameters.
             shader.TrySetParameter("mainColor", new Color(240, 220, 240, 0));
-            FargoSoulsUtil.SetTexture1(FargosTextureRegistry.GenericStreak.Value);
-            shader.TrySetParameter("stretchAmount", 2);
+            FargoSoulsUtil.SetTexture1(FargosTextureRegistry.DeviInnerStreak.Value);
+            shader.TrySetParameter("stretchAmount", 0.25);
             shader.TrySetParameter("scrollSpeed", 2f);
             shader.TrySetParameter("uColorFadeScaler", 0.8f);
             shader.TrySetParameter("useFadeIn", true);
 
-            PrimitiveRenderer.RenderTrail(baseDrawPoints, new(WidthFunction, ColorFunction, Pixelate: true, Shader: shader), 10);
+            PrimitiveRenderer.RenderTrail(baseDrawPoints, new(WidthFunction, ColorFunction, Pixelate: true, Shader: shader), WorldSavingSystem.masochistModeReal? 40 : 30);
         }
         
     }
