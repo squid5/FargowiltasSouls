@@ -1,4 +1,5 @@
-﻿using FargowiltasSouls.Content.Bosses.VanillaEternity;
+﻿using FargowiltasSouls.Assets.Sounds;
+using FargowiltasSouls.Content.Bosses.VanillaEternity;
 using FargowiltasSouls.Core.Systems;
 using Microsoft.Xna.Framework;
 using System;
@@ -44,11 +45,6 @@ namespace FargowiltasSouls.Content.Projectiles.Deathrays
             if (Projectile.velocity.HasNaNs() || Projectile.velocity == Vector2.Zero)
             {
                 Projectile.velocity = -Vector2.UnitY;
-            }
-            if (Projectile.localAI[0] == 0f)
-            {
-                if (!Main.dedServ)
-                    SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/VanillaEternity/Mechs/RetinazerDeathray") with { Volume = 1.5f }, Projectile.Center);
             }
             float maxScale = 1f;
             if (WorldSavingSystem.MasochistModeReal)

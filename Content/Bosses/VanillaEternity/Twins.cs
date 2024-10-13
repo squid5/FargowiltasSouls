@@ -527,7 +527,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                         //npc.ai[0] = 4f;
                         npc.ai[0] = 604f; //initiate spin immediately
                         npc.netUpdate = true;
-                        SoundEngine.PlaySound(SoundID.Roar, npc.Center);
+                        //SoundEngine.PlaySound(SoundID.Roar, npc.Center);
 
                         ShouldDrawAura = true;
 
@@ -642,7 +642,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                                     if (FargoSoulsUtil.HostCheck)
                                         Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, Vector2.Zero, ModContent.ProjectileType<GlowRing>(), 0, 0f, Main.myPlayer, npc.whoAmI, npc.type);
 
-                                    SoundEngine.PlaySound(FargosSoundRegistry.TwinsWarning with {Volume = 2f}, npc.Center); 
+                                    SoundEngine.PlaySound(FargosSoundRegistry.TwinsWarning with {Volume = 4f }, npc.Center); 
                                 }
 
                                 if (Main.netMode == NetmodeID.Server)
@@ -669,6 +669,8 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
                             if (npc.ai[0] >= 155f) //FIRE LASER
                             {
+                                if (!Main.dedServ)
+                                    SoundEngine.PlaySound(FargosSoundRegistry.RetinazerDeathray with { Volume = 5f }, npc.Center);
                                 if (FargoSoulsUtil.HostCheck)
                                 {
                                     Vector2 speed = Vector2.UnitX.RotatedBy(npc.rotation);
@@ -780,8 +782,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
             return base.CheckDead(npc);
         }
-        // twin aura, couldnt get it to work -midnight.
-        /*public override bool PreDraw(NPC npc, SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        public override bool PreDraw(NPC npc, SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Vector2 AuraPosition = npc.Center;
             if (ShouldDrawAura)
@@ -825,7 +826,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
         }
-        */
+        
         public override void LoadSprites(NPC npc, bool recolor)
         {
             base.LoadSprites(npc, recolor);
