@@ -1,23 +1,23 @@
-﻿using System;
-using System.IO;
+﻿using FargowiltasSouls.Content.Buffs.Masomode;
+using FargowiltasSouls.Content.Buffs.Souls;
+using FargowiltasSouls.Content.Items.BossBags;
+using FargowiltasSouls.Content.Items.Placables.Relics;
+using FargowiltasSouls.Content.Items.Placables.Trophies;
+using FargowiltasSouls.Content.Items.Weapons.Challengers;
+using FargowiltasSouls.Core.Systems;
+using Microsoft.CodeAnalysis;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using System;
+using System.IO;
+using System.Linq;
 using Terraria;
+using Terraria.DataStructures;
+using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.ItemDropRules;
+using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.DataStructures;
-using FargowiltasSouls.Content.Buffs.Masomode;
-using Terraria.GameContent.Bestiary;
-using Microsoft.Xna.Framework.Graphics;
-using Terraria.Graphics.Shaders;
-using FargowiltasSouls.Core.Systems;
-using FargowiltasSouls.Content.Buffs.Souls;
-using Microsoft.CodeAnalysis;
-using System.Linq;
-using FargowiltasSouls.Content.Items.Weapons.Challengers;
-using Terraria.GameContent.ItemDropRules;
-using FargowiltasSouls.Content.Items.BossBags;
-using FargowiltasSouls.Content.Items.Placables.Trophies;
-using FargowiltasSouls.Content.Items.Placables.Relics;
 
 namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 {
@@ -196,7 +196,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
             // 1. Write the number of states on the stack.
             writer.Write(StateMachine.StateStack.Count);
 
-			// 2. Write the state IDs as ints to the stack in the order they are on the stack. Also write the timers.
+            // 2. Write the state IDs as ints to the stack in the order they are on the stack.
 			var stackArray = StateMachine.StateStack.ToArray();
 			for (int i = 0; i < StateMachine.StateStack.Count; i++)
 				writer.Write((int)stackArray[i].Identifier);
