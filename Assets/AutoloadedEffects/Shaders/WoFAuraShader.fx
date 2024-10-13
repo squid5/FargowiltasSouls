@@ -22,7 +22,7 @@ float4 PixelShaderFunction(float4 sampleColor : COLOR0, float2 uv : TEXCOORD0) :
     float2 worldUV = screenPosition + screenSize * uv;
     float2 provUV = anchorPoint / screenSize;
     float worldDistance = distance(worldUV, anchorPoint);
-    float adjustedTime = time * 0.23;
+    float adjustedTime = time * 0.17;
     
     // Pixelate the uvs
     float2 pixelatedUV = worldUV / screenSize;
@@ -31,62 +31,56 @@ float4 PixelShaderFunction(float4 sampleColor : COLOR0, float2 uv : TEXCOORD0) :
     pixelatedUV.y -= worldUV.y % (1 / (screenSize.y / 2) * 2);
     
     float2 noiseUV = pixelatedUV - (anchorPoint / screenSize);
-    float2 vec1 = float2(0.56, 1.2);
-    float2 vec2 = float2(-0.3, -0.9);
-    float2 vec3 = float2(0.8, 0.3);
+    float xDir = -sign(worldUV.x - anchorPoint.x);
+    float2 vec1 = float2(0.56 * xDir, 0.6);
+    float2 vec2 = float2(0.3 * xDir, -0.7);
+    float2 vec3 = float2(0.8 * xDir, 0.9);
     
     // Textures
     float noiseMesh1 = tex2D(diagonalNoise, frac(noiseUV * 1.46  + vec1 * adjustedTime)).g;
     float noiseMesh2 = tex2D(diagonalNoise, frac(noiseUV * 1.57 + vec2 * adjustedTime)).g;
     float noiseMesh3 = tex2D(diagonalNoise, frac(noiseUV * 1.57 + vec3 * adjustedTime)).g;
-    float textureMesh = noiseMesh1 * 0.1 + noiseMesh2 * 0.2 + noiseMesh3 * 0.3;
+    float textureMesh = noiseMesh1 * 0.3 + noiseMesh2 * 0.3 + noiseMesh3 * 0.3;
     
-    float opacity = 0.51;
+    float opacity = 0.88;
     
     // Thresholds
     bool border = worldDistance > radius && opacity > 0;
     float colorMult = 1;
     if (border) 
-        colorMult = InverseLerp(radius * 1.8, radius, worldDistance);
+        colorMult = InverseLerp(radius * 1.3, radius, worldDistance);
     else
     {
-        colorMult = InverseLerp(radius * 0.98, radius, worldDistance);
+        colorMult = InverseLerp(radius * 0.985, radius, worldDistance);
     }
-
-        
-        
+    
     opacity = clamp(opacity, 0, maxOpacity);
     
     if (colorMult == 1 && (opacity == 0 || worldDistance > radius))
         return sampleColor;
     
     float4 darkColor = float4(0.96, 0.34, 0.04, 1); //red
-    float4 midColor = float4(0.98, 0.38, 0.12, 1); //yellow
+    float4 midColor = float4(0.98, 0.95, 0.53, 1); //yellow
     float4 lightColor = float4(1, 1, 1, 1); //white
     
-    float colorLerp = pow(colorMult, 4);
+    float colorLerp = pow(colorMult, 3);
+    //colorLerp = lerp(colorLerp, colorLerp * textureMesh + 0.3, 0.2);
     float4 color;
-    float split = 0.6;
+    float split = 0.9;
+    //if (!border)
+    //    colorLerp = split + (1 - split) * colorLerp;
     if (colorLerp < split)
     {
-        colorLerp = colorLerp / split;
+        colorLerp = pow(colorLerp / split, 4);
         color = lerp(darkColor, midColor, colorLerp);
     }
     else
     {
-        colorLerp = pow((colorLerp - split) / (1 - split), 3);
-        color = lerp(midColor, midColor, colorLerp);
+        colorLerp = pow((colorLerp - split) / (1 - split), 7);
+        color = lerp(midColor, lightColor, colorLerp);
     }
-    opacity /= pow(abs(textureMesh), 0.6);
-
-    float4 white = float4(1, 1, 1, 1);
-    float4 yellow = float4(0.97, 0.91, 0.27, 1);
-       
-    if (!border)
-    {
-        colorLerp = colorLerp / split;
-        color = lerp(yellow, white, colorLerp);
-    }
+    color *= pow(abs(textureMesh), 0.25);
+    color *= 1.4;
 
     return color * colorMult * opacity;
 }

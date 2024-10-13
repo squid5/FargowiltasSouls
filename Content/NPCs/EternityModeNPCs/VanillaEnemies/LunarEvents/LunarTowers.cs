@@ -34,7 +34,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEve
         public int AttackTimer;
         public int HealCounter;
         public int AuraSync;
-        public bool SpawnedDuringLunarEvent;
+        public bool SpawnedDuringLunarEvent = true;
 
         public int Attack = 0;
         public int OldAttack = 0;
@@ -104,7 +104,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEve
             {
                 base.AI(npc);
             }
-            if (!WorldSavingSystem.EternityMode || !NPC.LunarApocalypseIsUp)
+            if (!WorldSavingSystem.EternityMode || !SpawnedDuringLunarEvent)
             {
                 return;
             }
@@ -122,6 +122,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEve
                 npc.defDamage += 150;
                 npc.netUpdate = true;
                 npc.buffImmune[ModContent.BuffType<ClippedWingsBuff>()] = true;
+                npc.netUpdate = true;
             }
 
             //fix the funny where solar pillar rockets down when killed mid-dive attack
@@ -170,6 +171,9 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEve
                 AttackTimer++;
                 npc.defense = npc.defDefense;
             }
+            if (ShieldStrength <= 0)
+                npc.dontTakeDamage = false;
+
             if (npc.dontTakeDamage)
             {
                 AuraSize = 5000;
@@ -205,6 +209,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEve
                             }
                         }
                         ShieldStrength = 0;
+                        npc.netUpdate = true;
                     }
                 }
                 if (npc.life < npc.lifeMax)
@@ -299,6 +304,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEve
                 Attack = (int)Vortex.LunarTowerVortex.Attacks.VortexVortex;
             }
             AttackTimer = 0;
+            npc.netUpdate = true;
             NetSync(npc);
         }
         public void EndAttack(NPC npc)

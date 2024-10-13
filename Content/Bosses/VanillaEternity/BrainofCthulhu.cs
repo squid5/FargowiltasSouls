@@ -147,6 +147,9 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     }
                     if (ClonefadeDashTimer < dashTime && npc.HasPlayerTarget)
                     {
+                        if (ClonefadeDashTimer == 0)
+                            npc.netUpdate = true;
+
                         KnockbackImmune = true;
                         ClonefadeDashTimer++;
                         teleportTimer = cloneTime + 5;
@@ -156,6 +159,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     else
                     {
                         teleportTimer = 60;
+                        npc.netUpdate = true;
                     }
                        
                 }
@@ -340,6 +344,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                         IllusionTimer -= 2;
                     if (WorldSavingSystem.MasochistModeReal)
                         IllusionTimer -= 2;
+                    npc.netUpdate = true;
 
                     if (FargoSoulsUtil.HostCheck)
                     {
@@ -416,7 +421,6 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                 Asset<Texture2D> texture = TextureAssets.Npc[npc.type];
                 ManuallyDrawing = true;
                 Color color = npc.GetAlpha(drawColor);
-                ManuallyDrawing = false;
                 SpriteEffects effects = npc.spriteDirection < 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
                 Vector2 halfSize = new(texture.Width() / 2, texture.Height() / Main.npcFrameCount[npc.type] / 2);
@@ -430,7 +434,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                 Main.spriteBatch.UseBlendState(BlendState.Additive);
                 if (GlowOpacity < 1)
                     GlowOpacity += 0.1f;
-                Color glowColor = Color.DarkRed * GlowOpacity;
+                Color glowColor = npc.GetAlpha(Color.DarkRed) * GlowOpacity;
                 for (int i = 0; i < 12; i++)
                 {
                     Vector2 afterimageOffset = (MathHelper.TwoPi * i / 12f).ToRotationVector2() * 6f;
@@ -439,6 +443,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                 }
                 Main.spriteBatch.ResetToDefault();
                 spriteBatch.Draw(texture.Value, drawPos, npc.frame, color, npc.rotation, halfSize, npc.scale, effects, 0f);
+                ManuallyDrawing = false;
                 //Main.EntitySpriteDraw(texture, npc.Center - screenPos + new Vector2(0f, npc.gfxOffY + Main.NPCAddHeight(npc)), npc.frame, color, npc.rotation, npc.frame.Size() / 2, npc.scale, effects, 0);
                 return true;
             }
