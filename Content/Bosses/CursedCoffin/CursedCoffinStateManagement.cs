@@ -73,7 +73,9 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 			{
 				StateMachine.RegisterTransition(state, BehaviorStates.StunPunish, false, () => 
 				{
-					return Main.player.Any(p => p.Alive() && p.HasBuff(BuffID.Dazed) && !p.HasBuff<GrabbedBuff>()) && !Main.projectile.Any(p => p.TypeAlive<CoffinHand>());
+                    if (Main.netMode == NetmodeID.MultiplayerClient)
+                        return false;
+                    return Main.player.Any(p => p.Alive() && p.HasBuff(BuffID.Dazed) && !p.HasBuff<GrabbedBuff>()) && !Main.projectile.Any(p => p.TypeAlive<CoffinHand>());
 				});
 			}, BehaviorStates.StunPunish, BehaviorStates.PhaseTransition, BehaviorStates.YouCantEscape, BehaviorStates.SpiritGrabPunish);
 
@@ -82,6 +84,8 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
             {
                 StateMachine.RegisterTransition(state, BehaviorStates.YouCantEscape, false, () =>
                 {
+                    if (Main.netMode == NetmodeID.MultiplayerClient)
+                        return false;
 					return Main.player.Any(p => p.Alive() && !CoffinArena.PaddedRectangle.Contains(p.Center.ToTileCoordinates()) && !p.HasBuff<GrabbedBuff>());
                 });
             }, BehaviorStates.StunPunish, BehaviorStates.PhaseTransition, BehaviorStates.YouCantEscape, BehaviorStates.SpiritGrabPunish);
@@ -115,12 +119,6 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
                 if (NPC.velocity.X.NonZeroSign() != NPC.HorizontalDirectionTo(Player.Center))
                     NPC.velocity.X = 0;
             });
-
-            // Ghost spawn transition
-            StateMachine.ApplyToAllStatesExcept((state) =>
-            {
-                StateMachine.RegisterTransition(state, BehaviorStates.PhaseTransition, false, () => AttackCounter == 3 && !Main.npc.Any(p => p.TypeAlive<CursedSpirit>()));
-            }, BehaviorStates.PhaseTransition);
 
             #region End-of-sequence attacks
 
@@ -219,6 +217,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
             // if it returns anything other than the provided state.
             StateMachine.AddTransitionStateHijack(originalState =>
             {
+                NPC.netUpdate = true;
                 if (Phase < 3 && Enraged)
                 {
                     StateMachine.StateStack.Clear();

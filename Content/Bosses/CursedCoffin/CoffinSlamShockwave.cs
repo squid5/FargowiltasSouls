@@ -119,7 +119,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
             Main.spriteBatch.UseBlendState(BlendState.Additive);
             for (int i = 0; i < ProjectileID.Sets.TrailCacheLength[Type]; i++)
             {
-                Color oldColor = lightColor;
+                Color oldColor = Color.White;
                 oldColor *= 0.5f;
                 oldColor *= (float)(ProjectileID.Sets.TrailCacheLength[Projectile.type] - i) / ProjectileID.Sets.TrailCacheLength[Projectile.type];
                 Vector2 oldPos = Projectile.oldPos[i] + Projectile.Size / 2 + Vector2.UnitY * 10;
@@ -128,7 +128,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
                     oldRot, origin, scale, spriteEffects, 0);
             }
             Main.spriteBatch.ResetToDefault();
-            Main.EntitySpriteDraw(texture, drawPos - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY), rectangle, Projectile.GetAlpha(lightColor),
+            Main.EntitySpriteDraw(texture, drawPos - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY), rectangle, Projectile.GetAlpha(Color.White),
                     rotation, origin, scale, spriteEffects, 0);
 
             return false;

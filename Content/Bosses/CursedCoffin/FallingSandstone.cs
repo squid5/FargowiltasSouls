@@ -74,5 +74,6 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
             if (Projectile.hide)
                 behindNPCsAndTiles.Add(index);
         }
+        public override Color? GetAlpha(Color lightColor) => Color.White * Projectile.Opacity;
     }
 }
