@@ -41,6 +41,17 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
         public bool Resist;
         public int RespawnTimer;
 
+        public bool ShouldDrawAura = false;
+        public float AuraOpacity = 0f;
+
+        public float AuraRadius()
+        {
+            float radius = 2000 - 1200 * AuraRadiusCounter / 180f;
+            if (WorldSavingSystem.MasochistModeReal)
+                radius *= 0.75f;
+            return radius;
+        }
+
         public override void SendExtraAI(NPC npc, BitWriter bitWriter, BinaryWriter binaryWriter)
         {
             binaryWriter.Write7BitEncodedInt(LaserSide);
@@ -48,6 +59,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             binaryWriter.Write7BitEncodedInt(AuraRadiusCounter);
             binaryWriter.Write7BitEncodedInt(MechElectricOrbTimer);
             bitWriter.WriteBit(StoredDirectionToPlayer);
+            bitWriter.WriteBit(ShouldDrawAura);
             binaryWriter.Write(LockedRotation);
         }
 
@@ -58,6 +70,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             AuraRadiusCounter = binaryReader.Read7BitEncodedInt();
             MechElectricOrbTimer = binaryReader.Read7BitEncodedInt();
             StoredDirectionToPlayer = bitReader.ReadBit();
+            ShouldDrawAura = bitReader.ReadBit();
             LockedRotation = binaryReader.ReadSingle();
         }
 
@@ -515,8 +528,10 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                         npc.netUpdate = true;
                         SoundEngine.PlaySound(SoundID.Roar, npc.Center);
 
-                        if (FargoSoulsUtil.HostCheck)
-                            Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, Vector2.Zero, ModContent.ProjectileType<GlowRingHollow>(), 0, 0f, Main.myPlayer, 11, npc.whoAmI);
+                        ShouldDrawAura = true;
+
+                        //if (FargoSoulsUtil.HostCheck)
+                        //    Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, Vector2.Zero, ModContent.ProjectileType<GlowRingHollow>(), 0, 0f, Main.myPlayer, 11, npc.whoAmI);
                     }
                 }
                 else //in phase 3
@@ -566,9 +581,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                             AuraRadiusCounter = 180;
                     }
 
-                    float auraDistance = 2000 - 1200 * AuraRadiusCounter / 180f;
-                    if (WorldSavingSystem.MasochistModeReal)
-                        auraDistance *= 0.75f;
+                    float auraDistance = AuraRadius();
                     if (auraDistance < 2000 - 1)
                     {
                         EModeGlobalNPC.Aura(npc, auraDistance, true, -1, default, ModContent.BuffType<OiledBuff>());
@@ -769,39 +782,46 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
         public override bool PreDraw(NPC npc, SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Vector2 AuraPosition = npc.Center;
-            DrawAura(npc, spriteBatch, AuraPosition);
+            if (ShouldDrawAura)
+                DrawAura(npc, spriteBatch, AuraPosition);
             return true;
         }
         public void DrawAura(NPC npc, SpriteBatch spriteBatch, Vector2 position)
         {
+            if (AuraOpacity < 1f)
+                AuraOpacity += 0.05f;
+
             Color darkColor = Color.DarkRed;
             Color mediumColor = Color.Red;
             Color lightColor2 = Color.Lerp(Color.IndianRed, Color.White, 0.35f);
-            Vector2 auraPos = npc.Center;
-            float radius = AuraRadiusCounter;
+            Vector2 auraPos = position;
+            float radius = AuraRadius();
             var blackTile = TextureAssets.MagicPixel;
-            var diagonalNoise = FargosTextureRegistry.SmokyNoise;
+            var diagonalNoise = FargosTextureRegistry.Techno1Noise;
             if (!blackTile.IsLoaded || !diagonalNoise.IsLoaded)
                 return;
-            var maxOpacity = npc.Opacity;
+            var maxOpacity = npc.Opacity * AuraOpacity;
 
             ManagedShader borderShader = ShaderManager.GetShader("FargowiltasSouls.TwinsAuraShader");
-            borderShader.TrySetParameter("colorMult", 7.35f);
+            borderShader.TrySetParameter("colorMult", 7.35f); 
             borderShader.TrySetParameter("time", Main.GlobalTimeWrappedHourly);
             borderShader.TrySetParameter("radius", radius);
             borderShader.TrySetParameter("anchorPoint", auraPos);
             borderShader.TrySetParameter("screenPosition", Main.screenPosition);
             borderShader.TrySetParameter("screenSize", Main.ScreenSize.ToVector2());
             borderShader.TrySetParameter("maxOpacity", maxOpacity);
+            borderShader.TrySetParameter("darkColor", darkColor.ToVector4());
+            borderShader.TrySetParameter("midColor", mediumColor.ToVector4());
+            borderShader.TrySetParameter("lightColor", lightColor2.ToVector4());
 
-            Main.spriteBatch.GraphicsDevice.Textures[1] = diagonalNoise.Value;
+            spriteBatch.GraphicsDevice.Textures[1] = diagonalNoise.Value;
 
-            Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, SamplerState.LinearWrap, DepthStencilState.None, Main.Rasterizer, borderShader.WrappedEffect, Main.GameViewMatrix.TransformationMatrix);
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, SamplerState.LinearWrap, DepthStencilState.None, Main.Rasterizer, borderShader.WrappedEffect, Main.GameViewMatrix.TransformationMatrix);
             Rectangle rekt = new(Main.screenWidth / 2, Main.screenHeight / 2, Main.screenWidth, Main.screenHeight);
-            Main.spriteBatch.Draw(blackTile.Value, rekt, null, default, 0f, blackTile.Value.Size() * 0.5f, 0, 0f);
-            Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
+            spriteBatch.Draw(blackTile.Value, rekt, null, default, 0f, blackTile.Value.Size() * 0.5f, 0, 0f);
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
         }
 
         public override void LoadSprites(NPC npc, bool recolor)

@@ -31,6 +31,7 @@
     <None Remove="Assets\AutoloadedEffects\Shaders\StyxGazerShader.fx" />
     <None Remove="Assets\AutoloadedEffects\Shaders\TwinsAuraShader.fx" />
     <None Remove="Assets\AutoloadedEffects\Shaders\WoFAuraShader.fx" />
+    <None Remove="Assets\ExtraTextures\Noise\Techno1Noise.png" />
     <None Remove="Assets\Gores\Meteor\MeteorGore1.png" />
     <None Remove="Assets\Gores\Meteor\MeteorGore2.png" />
     <None Remove="Assets\Gores\Meteor\MeteorGore3.png" />
@@ -68,7 +69,6 @@
     <None Remove="Content\Projectiles\Souls\SpectreSpiritFlying.png" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Assets\ExtraTextures\Noise\" />
     <Folder Include="Assets\Sounds\VanillaEternity\KingSlime\" />
     <Folder Include="Content\WorldGen\" />
   </ItemGroup>

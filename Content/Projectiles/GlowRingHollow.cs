@@ -221,6 +221,10 @@ namespace FargowiltasSouls.Content.Projectiles
 
                 case 11: //retinazer aura
                     {
+                        // replaced!
+                        Projectile.Kill();
+                        return;
+
                         color = Color.Red;
 
                         if (Projectile.localAI[0] > maxTime / 2) //NEVER fade normally

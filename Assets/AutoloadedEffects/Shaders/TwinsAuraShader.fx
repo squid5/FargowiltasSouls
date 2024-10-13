@@ -8,7 +8,6 @@ float radius;
 float2 screenPosition;
 float2 screenSize;
 float2 anchorPoint;
-float2 playerPosition;
 
 float4 darkColor;
 float4 midColor;
@@ -38,6 +37,7 @@ float4 PixelShaderFunction(float4 sampleColor : COLOR0, float2 uv : TEXCOORD0) :
     float2 vec1 = float2(0.56, 1.2);
     float2 vec2 = float2(-0.3, -0.9);
     float2 vec3 = float2(0.8, 0.3);
+    
     
     // Textures
     float noiseMesh1 = tex2D(diagonalNoise, frac(noiseUV * 1.46  + vec1 * adjustedTime)).g;
