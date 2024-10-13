@@ -2,6 +2,7 @@
 global using FargowiltasSouls.Core.Toggler;
 global using Luminance.Common.Utilities;
 global using LumUtils = Luminance.Common.Utilities.Utilities;
+using FargowiltasSouls.Content.Bosses.CursedCoffin;
 using FargowiltasSouls.Content.Bosses.VanillaEternity;
 using FargowiltasSouls.Content.Buffs.Boss;
 using FargowiltasSouls.Content.Buffs.Masomode;
@@ -580,6 +581,8 @@ namespace FargowiltasSouls
             //SpawnBossTryFromNPC,
             HealNPC,
             SyncSnatcherGrab,
+            SyncCursedSpiritGrab,
+            SyncCursedSpiritRelease,
             SyncTuskRip,
             DropMutantGift,
             RequestEnvironmentalProjectile
@@ -782,6 +785,52 @@ namespace FargowiltasSouls
                             }
                         }
                         break;
+                    case PacketID.SyncCursedSpiritGrab: // client to server
+                        {
+                            NPC npc = FargoSoulsUtil.NPCExists(reader.ReadByte());
+                            if (npc.ModNPC is CursedSpirit spirit)
+                            {
+                                spirit.BittenPlayer = reader.ReadByte();
+                                spirit.BiteTimer = reader.ReadInt32();
+                                npc.netUpdate = true;
+
+                                NPC owner = FargoSoulsUtil.NPCExists(spirit.Owner, ModContent.NPCType<CursedCoffin>());
+                                if (owner.TypeAlive<CursedCoffin>())
+                                {
+                                    // Forces Coffin to enter grab punish state
+                                    owner.As<CursedCoffin>().ForceGrabPunish = 1;
+                                    owner.netUpdate = true;
+                                }
+                            }
+                        }
+                        break;
+
+                    case PacketID.SyncCursedSpiritRelease: // client to server
+                        {
+                            NPC npc = FargoSoulsUtil.NPCExists(reader.ReadByte());
+                            if (npc.ModNPC is CursedSpirit spirit)
+                            {
+                                Player victim = Main.player[reader.ReadByte()];
+                                spirit.BittenPlayer = -1;
+                                spirit.BiteTimer = -90; //cooldown
+
+                                // dash away otherwise it's bullshit
+                                npc.velocity = -npc.SafeDirectionTo(victim.Center) * 12;
+                                victim.immune = true;
+                                victim.immuneTime = Math.Max(victim.immuneTime, 30);
+                                victim.hurtCooldowns[0] = Math.Max(victim.hurtCooldowns[0], 30);
+                                victim.hurtCooldowns[1] = Math.Max(victim.hurtCooldowns[1], 30);
+
+                                npc.netUpdate = true;
+                                spirit.Timer = 0;
+                                spirit.AI3 = 0;
+
+                                if (Main.netMode == NetmodeID.Server)
+                                    NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, npc.whoAmI);
+                            }
+                        }
+                        break;
+
 
                     case PacketID.SyncTuskRip: // client to server
                         {
