@@ -1,4 +1,5 @@
 ﻿
+using FargowiltasSouls.Assets.Sounds;
 using FargowiltasSouls.Common.Graphics.Particles;
 using FargowiltasSouls.Content.Buffs.Boss;
 using FargowiltasSouls.Content.Buffs.Masomode;
@@ -790,7 +791,7 @@ namespace FargowiltasSouls.Content.Bosses.BanishedBaron
 
             if (Timer == 1)
             {
-                SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/Challengers/Baron/BaronHit"), NPC.Center);
+                SoundEngine.PlaySound(FargosSoundRegistry.BaronHit, NPC.Center);
 
                 HitPlayer = false;
                 LockVector1 = Vector2.UnitX * Math.Sign(player.Center.X - NPC.Center.X); //register for rotation animation
@@ -2141,7 +2142,7 @@ namespace FargowiltasSouls.Content.Bosses.BanishedBaron
                 NPC.velocity *= 0.8f;
                 if (Timer == PositioningTime)
                 {
-                    SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/Challengers/Baron/BaronLaserTelegraph") with { Volume = 1.25f }, NPC.Center);
+                    SoundEngine.PlaySound(FargosSoundRegistry.BaronLaserTelegraph with { Volume = 1.25f }, NPC.Center);
                     AI3 = Main.rand.NextBool() ? 1 : -1; //sign for rotation
                     LockVector1 = (player.Center - NPC.Center).RotatedBy(AI3 * MaxRot);
                     if (FargoSoulsUtil.HostCheck)
@@ -2176,7 +2177,7 @@ namespace FargowiltasSouls.Content.Bosses.BanishedBaron
 
                     AI4 = FargoSoulsUtil.RotationDifference(NPC.rotation.ToRotationVector2(), (player.Center - NPC.Center)); //cache rotation direction towards player
 
-                    SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/Challengers/Baron/BaronLaserSound_Slow") with { Pitch = -0.2f }, NPC.Center);
+                    SoundEngine.PlaySound(FargosSoundRegistry.BaronLaserSoundSlow with { Pitch = -0.2f }, NPC.Center);
                     if (FargoSoulsUtil.HostCheck)
                     {
                         Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.rotation.ToRotationVector2(), ModContent.ProjectileType<BaronDeathray>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), 0f, Main.myPlayer, ai0: NPC.whoAmI, ai2: AttackTime);

@@ -1,6 +1,7 @@
 ﻿
 
 using FargowiltasSouls.Assets.ExtraTextures;
+using FargowiltasSouls.Assets.Sounds;
 using FargowiltasSouls.Content.Projectiles.Deathrays;
 using FargowiltasSouls.Core.Systems;
 using Luminance.Core.Graphics;
@@ -61,8 +62,8 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
             {
                 if (!Main.dedServ)
                 {
-                    SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/Siblings/Abominationn/StyxGazer") with { Volume = 1.5f }, Projectile.Center);
-                    SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/VanillaEternity/Mechs/RetinazerDeathray"), Projectile.Center);
+                    SoundEngine.PlaySound(FargosSoundRegistry.StyxGazer with { Volume = 1.5f }, Projectile.Center);
+                    SoundEngine.PlaySound(FargosSoundRegistry.RetinazerDeathray, Projectile.Center);
                 }
             }
             float num801 = 1f;
