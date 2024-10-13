@@ -559,6 +559,8 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                                         diveNPC.velocity += Main.player[diveNPC.target].DirectionTo(diveNPC.Center) * 22f;
                                         diveNPC.GetGlobalNPC<EaterofWorldsHead>().SpecialAITimer = CoilDiveTime;
                                         SoundEngine.PlaySound(SoundID.ForceRoarPitched, diveNPC.Center);
+                                        diveNPC.netUpdate = true;
+                                        NetSync(diveNPC);
                                     }
                                 }
                                 
@@ -657,13 +659,12 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                             int headCount = NPC.CountNPCS(npc.type);
                             if (headCount > 1) // only do coil when it's split at least once
                             {
-
                                 //initiate coil
-                                if (SpecialCountdownTimer > 350 && FargoSoulsUtil.HostCheck && Attack == (int)Attacks.Normal)
+                                if (SpecialCountdownTimer > 350 && Attack == (int)Attacks.Normal)
                                 {
-                                    if (npc.HasValidTarget && npc.Distance(Main.player[npc.target].Center) < 2400)
+                                    SoundEngine.PlaySound(SoundID.ForceRoarPitched, Main.player[npc.target].Center);
+                                    if (FargoSoulsUtil.HostCheck && npc.HasValidTarget && npc.Distance(Main.player[npc.target].Center) < 2400)
                                     {
-                                        SoundEngine.PlaySound(SoundID.ForceRoarPitched, Main.player[npc.target].Center);
                                         FargoSoulsUtil.ClearHostileProjectiles(2);
 
                                         Attack = (int)Attacks.Coil;
