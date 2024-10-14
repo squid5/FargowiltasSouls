@@ -45,16 +45,17 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
     float4 color = input.Color;
     float2 coords = input.TextureCoordinates;
     
-    float y = sin(10 * globalTime - 5.2 * coords.x) * 0.2;
+    float y = pow(0.07, globalTime) * (coords.x * 0.4);
+    //sin(12.5 * globalTime - 12.2 * coords.x) * 0.4;
     
-	coords.y = (coords.y - 0.05) / input.TextureCoordinates.z + 0.5;
+	coords.y = (coords.y - 0.5) / input.TextureCoordinates.z + 0.5;
     
-    float widthScale = float((y + (1 - coords.x * 0.25)) / 2);
+    float widthScale = float((y + (1 - coords.x * 0.05)) / 3.5);
     
-    if (coords.x < 0.07)
-        widthScale /= pow(coords.x / 0.07, 1);
+    if (coords.x < 0.06)
+        widthScale /= pow(coords.x / 0.06, 2);
     
-    coords.y = ((coords.y - 0.5) * clamp(widthScale, 0, 2)) + 0.5; 
+    coords.y = ((coords.y - clamp(0.48, 0.45, 0.49)) * clamp(widthScale, 0, 2)) + 0.5;
     
     
     // Get the pixel of the fade map. What coords.x is being multiplied by determines

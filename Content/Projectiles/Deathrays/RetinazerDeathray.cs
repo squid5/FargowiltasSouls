@@ -1,24 +1,34 @@
-﻿using FargowiltasSouls.Assets.Sounds;
+﻿using FargowiltasSouls.Assets.ExtraTextures;
+using FargowiltasSouls.Assets.Sounds;
 using FargowiltasSouls.Content.Bosses.VanillaEternity;
 using FargowiltasSouls.Core.Systems;
+using Luminance.Core.Graphics;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 
 namespace FargowiltasSouls.Content.Projectiles.Deathrays
 {
-    public class RetinazerDeathray : BaseDeathray
+    public class RetinazerDeathray : BaseDeathray, IPixelatedPrimitiveRenderer
     {
-        public RetinazerDeathray() : base(240, sheeting: TextureSheeting.Vertical) { }
+        public RetinazerDeathray() : base(240/*, sheeting: TextureSheeting.Vertical*/) { }
 
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
 
             // DisplayName.SetDefault("Blazing Deathray");
-            Main.projFrames[Projectile.type] = 4;
+            //Main.projFrames[Projectile.type] = 4;
+        }
+
+        public override void SetDefaults()
+        {
+            Projectile.hide = true;
+            base.SetDefaults();
         }
 
         public override void AI()
@@ -49,7 +59,7 @@ namespace FargowiltasSouls.Content.Projectiles.Deathrays
             float maxScale = 1f;
             if (WorldSavingSystem.MasochistModeReal)
             {
-                maxScale = Main.rand.NextFloat(2.5f, 5f);
+                maxScale = 5f;
                 FargoSoulsUtil.ScreenshakeRumble(6);
             }
             Projectile.localAI[0] += 1f;
@@ -111,21 +121,67 @@ namespace FargowiltasSouls.Content.Projectiles.Deathrays
             //DelegateMethods.v3_1 = new Vector3(0.3f, 0.65f, 0.7f);
             //Utils.PlotTileLine(Projectile.Center, Projectile.Center + Projectile.velocity * Projectile.localAI[1], (float)Projectile.width * Projectile.scale, new Utils.PerLinePoint(DelegateMethods.CastLight));
 
-            if (++Projectile.frameCounter > 2)
+            /*if (++Projectile.frameCounter > 2)
             {
                 Projectile.frameCounter = 0;
                 if (++Projectile.frame >= Main.projFrames[Projectile.type])
                     Projectile.frame = 0;
-            }
+            }*/
         }
 
-        public override Color? GetAlpha(Color lightColor) => new Color(255, 100, 100, 100) * 0.95f;
+        //public override Color? GetAlpha(Color lightColor) => new Color(255, 100, 100, 100) * 0.95f;
 
         public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
             target.AddBuff(BuffID.Burning, 300);
             target.AddBuff(BuffID.OnFire, 300);
             target.AddBuff(BuffID.Ichor, 300);
+        }
+        public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
+        {
+            if (Projectile.hide)
+                behindNPCs.Add(index);
+        }
+
+        public override bool PreDraw(ref Color lightColor) => false;
+
+        public float WidthFunction(float _) => Projectile.width * Projectile.scale * (WorldSavingSystem.masochistModeReal ? 0.7f : 1.3f);
+
+        public static Color ColorFunction(float _)
+        {
+            Color color = Color.Orange; //new(232, 140, 240);
+            color.A = 0;
+            return color;
+        }
+        public void RenderPixelatedPrimitives(SpriteBatch spriteBatch)
+        {
+            if (Projectile.hide)
+                return;
+
+            ManagedShader shader = ShaderManager.GetShader("FargowiltasSouls.RetinazerDeathray");
+
+            // Get the laser end position.
+            Vector2 laserEnd = Projectile.Center + Projectile.velocity.SafeNormalize(Vector2.UnitY) * Projectile.localAI[1] * 1.5f;
+
+            // Create 8 points that span across the draw distance from the projectile center.
+            Vector2 initialDrawPoint = Projectile.Center - Projectile.velocity * 15f;
+            Vector2[] baseDrawPoints = new Vector2[8];
+            for (int i = 0; i < baseDrawPoints.Length; i++)
+                baseDrawPoints[i] = Vector2.Lerp(initialDrawPoint, laserEnd, i / (float)(baseDrawPoints.Length - 1f));
+            //var diagonalNoise = FargosTextureRegistry.Techno1Noise;
+
+            // Set shader parameters.
+            shader.TrySetParameter("mainColor", new Color(240, 220, 240, 0));
+            FargoSoulsUtil.SetTexture1(FargosTextureRegistry.DeviInnerStreak.Value);
+            //FargoSoulsUtil.SetTexture2(FargosTextureRegistry.FadedStreak.Value);
+            shader.TrySetParameter("stretchAmount", 0.5);
+            shader.TrySetParameter("scrollSpeed", 4f);
+            shader.TrySetParameter("uColorFadeScaler", 0.8f);
+            shader.TrySetParameter("useFadeIn", true);
+
+            //spriteBatch.GraphicsDevice.Textures[2] = diagonalNoise.Value;
+
+            PrimitiveRenderer.RenderTrail(baseDrawPoints, new(WidthFunction, ColorFunction, Pixelate: true, Shader: shader), WorldSavingSystem.masochistModeReal ? 30 : 35);
         }
     }
 }
