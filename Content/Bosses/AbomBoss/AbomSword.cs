@@ -151,9 +151,9 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
                     }
                     // spark visuals
                     const float sparks = 60;
-                    for (int i = 0; i < sparks; i++)
+                    for (int i = 2; i < sparks; i++)
                     {
-                        if (Main.rand.NextBool(12))
+                        if (Main.rand.NextBool(6))
                         {
                             float lerper = i + Main.rand.NextFloat(-0.7f, 0.7f);
                             Vector2 spawnPos = Projectile.Center + lerper * Projectile.velocity * 3000f / sparks;
@@ -165,9 +165,9 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
                         }
                     }
                     const float smoke = 20;
-                    for (int i = 0; i < smoke; i++)
+                    for (int i = 2; i < smoke; i++)
                     {
-                        if (Main.rand.NextBool(12))
+                        if (Main.rand.NextBool(10))
                         {
                             float lerper = i + Main.rand.NextFloat(-0.7f, 0.7f);
                             Vector2 spawnPos = Projectile.Center + lerper * Projectile.velocity * 3000f / smoke;
