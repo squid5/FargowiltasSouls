@@ -266,7 +266,7 @@ namespace FargowiltasSouls.Content.Projectiles
 
                 case 9: //reti telegraph
                     {
-                        color = Color.Red;
+                        color = Color.DarkOrange;
                         maxTime = 120;
                         alphaModifier = 2;
 
