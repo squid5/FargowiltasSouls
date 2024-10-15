@@ -84,6 +84,30 @@ namespace FargowiltasSouls.Core.ModPlayers
 
             if (Player.ZoneJungle)
             {
+                //Main.NewText(Main.rainTime + " " + Main.maxRain + " " );
+                //Main.NewText(Main.windSpeedTarget + " " + Main.windSpeedCurrent);
+
+                if (!fargoSoulsPlayer.PureHeart && Player.ZoneOverworldHeight && Main.maxRaining < 0.9f && Main.windSpeedCurrent < 0.8f && Main.rand.NextBool(600))
+                {
+                    //rain
+                    int day = 86400;
+                    int hour = day / 24;
+                    Main.rainTime = hour * 4;
+                    Main.raining = true;
+                    Main.maxRaining = Main.cloudAlpha = Math.Min(Main.maxRaining + 0.05f, 0.9f);
+                    //wind
+                    Main.windSpeedTarget = Main.windSpeedCurrent = Math.Min( Main.windSpeedCurrent + 0.05f, 0.8f);
+
+                    if (Main.netMode == NetmodeID.Server)
+                    {
+                        NetMessage.SendData(MessageID.WorldData);
+                        Main.SyncRain();
+                    }
+
+                    //Main.NewText("storm increased..");
+                }
+
+
                 if (WaterWet && !waterEffectImmune)
                     FargoSoulsUtil.AddDebuffFixedDuration(Player, BuffID.Poisoned, 2);
             }
@@ -128,24 +152,11 @@ namespace FargowiltasSouls.Core.ModPlayers
                     FargoSoulsUtil.AddDebuffFixedDuration(Player, BuffID.BrokenArmor, 2);
             }*/
 
-            if (Player.ZoneDesert && Player.ZoneOverworldHeight && !fargoSoulsPlayer.PureHeart)
+            
+
+            if (Player.ZoneMarble)
             {
-                if (Main.dayTime)
-                {
-                    if (!Player.wet && !hasUmbrella())
-                    {
-                        FargoSoulsUtil.AddDebuffFixedDuration(Player, BuffID.Weak, 2);
-                    }
-                    
-                }
-                else
-                {
-                    if (!ItemID.Sets.Torches[Player.HeldItem.type])
-                    {
-                        FargoSoulsUtil.AddDebuffFixedDuration(Player, BuffID.Chilled, 2);
-                    }
-                    
-                }
+                //Main.NewText("ech");
             }
 
             if (Player.ZoneCorrupt)
@@ -153,7 +164,7 @@ namespace FargowiltasSouls.Core.ModPlayers
                 if (!fargoSoulsPlayer.PureHeart)
                     FargoSoulsUtil.AddDebuffFixedDuration(Player, BuffID.Darkness, 2);
                 if (WaterWet && !waterEffectImmune)
-                    FargoSoulsUtil.AddDebuffFixedDuration(Player, BuffID.CursedInferno, 2);
+                    FargoSoulsUtil.AddDebuffFixedDuration(Player, BuffID.CursedInferno, 120);
             }
 
             if (Player.ZoneCrimson)
@@ -161,7 +172,7 @@ namespace FargowiltasSouls.Core.ModPlayers
                 if (!fargoSoulsPlayer.PureHeart)
                     FargoSoulsUtil.AddDebuffFixedDuration(Player, BuffID.Bleeding, 2);
                 if (WaterWet && !waterEffectImmune)
-                    FargoSoulsUtil.AddDebuffFixedDuration(Player, BuffID.Ichor, 2);
+                    FargoSoulsUtil.AddDebuffFixedDuration(Player, BuffID.Ichor, 300);
             }
 
             if (Player.ZoneHallow)
@@ -199,9 +210,33 @@ namespace FargowiltasSouls.Core.ModPlayers
             tileCenter.Y /= 16;
             Tile currentTile = Framing.GetTileSafely((int)tileCenter.X, (int)tileCenter.Y);
 
+            
+
 
             if (!fargoSoulsPlayer.PureHeart) // Pure Heart-affected biome debuffs
             {
+                //desert
+                if (Player.ZoneDesert && Player.ZoneOverworldHeight && currentTile.WallType == WallID.None)
+                {
+                    if (Main.dayTime)
+                    {
+                        if (!Player.wet && !hasUmbrella())
+                        {
+                            FargoSoulsUtil.AddDebuffFixedDuration(Player, BuffID.Weak, 2);
+                        }
+                    }
+                    else
+                    {
+                        if (!ItemID.Sets.Torches[Player.HeldItem.type])
+                        {
+                            FargoSoulsUtil.AddDebuffFixedDuration(Player, BuffID.Chilled, 2);
+                        }
+                    }
+                }
+
+
+
+
                 Color light = Lighting.GetColor(Player.Center.ToTileCoordinates());
                 float lightLevel = light.R + light.G + light.B;
                 
