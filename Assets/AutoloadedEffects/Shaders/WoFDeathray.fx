@@ -52,7 +52,7 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
     float widthScale = float((y + (1 - coords.x * 0.25)) / 2);
     
     if (coords.x < 0.07)
-        widthScale /= pow(coords.x / 0.07, 1);
+        widthScale /= pow(coords.x / 0.07, 0.5);
     
     coords.y = ((coords.y - 0.5) * clamp(widthScale, 0, 2)) + 0.5; 
     

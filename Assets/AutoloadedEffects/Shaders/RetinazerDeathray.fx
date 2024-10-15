@@ -44,6 +44,7 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
     // This can also be copy pasted along with the above.
     float4 color = input.Color;
     float2 coords = input.TextureCoordinates;
+
     
     float y = pow(0.07, globalTime) * (coords.x * 0.4);
     //sin(12.5 * globalTime - 12.2 * coords.x) * 0.4;
@@ -53,7 +54,8 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
     float widthScale = float((y + (1 - coords.x * 0.05)) / 3.5);
     
     if (coords.x < 0.06)
-        widthScale /= pow(coords.x / 0.06, 2);
+        widthScale /= pow(coords.x / 0.06, 0.5);
+
     
     coords.y = ((coords.y - clamp(0.48, 0.45, 0.49)) * clamp(widthScale, 0, 2)) + 0.5;
     
@@ -68,19 +70,6 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
     float4 changedColor = lerp(float4(mainColor, 1), color, 0.5f);
     float4 colorCorrected = lerp(color, changedColor, fadeMapColor.r);
     
-    
-     //Fade out at the top and bottom of the streak.
-    if (coords.y < 0.2)
-        opacity *= 0.33;
-    if (coords.y > 0.8)
-        opacity *= 0.33;
-    
-     //Fade out at the end of the streak.
-    /*if (coords.x < 0.07)
-        opacity *= pow(coords.x / 0.07, 6);
-    if (coords.x > 0.95)
-        opacity *= pow(1 - (coords.x - 0.95) / 0.05, 6);
-    */
     
     return colorCorrected * opacity * 2;
 }

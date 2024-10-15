@@ -41,7 +41,7 @@ namespace FargowiltasSouls.Content.Projectiles.Deathrays
             NPC npc = FargoSoulsUtil.NPCExists(Projectile.ai[1], NPCID.Retinazer);
             if (npc != null)
             {
-                Vector2 offset = new Vector2(npc.width - 24, 0).RotatedBy(npc.rotation + 1.57079633);
+                Vector2 offset = new Vector2(npc.width - 24, 0.5f).RotatedBy(npc.rotation + 1.57079633);
                 Projectile.Center = npc.Center + offset;
 
                 if (npc.GetGlobalNPC<Retinazer>().DeathrayState >= 3 && Projectile.localAI[0] < maxTime - 30)
@@ -145,7 +145,7 @@ namespace FargowiltasSouls.Content.Projectiles.Deathrays
 
         public override bool PreDraw(ref Color lightColor) => false;
 
-        public float WidthFunction(float _) => Projectile.width * Projectile.scale * (WorldSavingSystem.masochistModeReal ? 0.7f : 1.3f);
+        public float WidthFunction(float _) => Projectile.width * Projectile.scale * (WorldSavingSystem.masochistModeReal ? 0.5f : 1.5f);
 
         public static Color ColorFunction(float _)
         {
@@ -168,20 +168,16 @@ namespace FargowiltasSouls.Content.Projectiles.Deathrays
             Vector2[] baseDrawPoints = new Vector2[8];
             for (int i = 0; i < baseDrawPoints.Length; i++)
                 baseDrawPoints[i] = Vector2.Lerp(initialDrawPoint, laserEnd, i / (float)(baseDrawPoints.Length - 1f));
-            //var diagonalNoise = FargosTextureRegistry.Techno1Noise;
 
             // Set shader parameters.
             shader.TrySetParameter("mainColor", new Color(240, 220, 240, 0));
             FargoSoulsUtil.SetTexture1(FargosTextureRegistry.DeviInnerStreak.Value);
-            //FargoSoulsUtil.SetTexture2(FargosTextureRegistry.FadedStreak.Value);
             shader.TrySetParameter("stretchAmount", 0.5);
             shader.TrySetParameter("scrollSpeed", 4f);
             shader.TrySetParameter("uColorFadeScaler", 0.8f);
             shader.TrySetParameter("useFadeIn", true);
 
-            //spriteBatch.GraphicsDevice.Textures[2] = diagonalNoise.Value;
-
-            PrimitiveRenderer.RenderTrail(baseDrawPoints, new(WidthFunction, ColorFunction, Pixelate: true, Shader: shader), WorldSavingSystem.masochistModeReal ? 30 : 35);
+            PrimitiveRenderer.RenderTrail(baseDrawPoints, new(WidthFunction, ColorFunction, Pixelate: true, Shader: shader), WorldSavingSystem.masochistModeReal ? 500 : 100);
         }
     }
 }
