@@ -173,7 +173,50 @@ namespace FargowiltasSouls.Core.ModPlayers
                     FargoSoulsUtil.AddDebuffFixedDuration(Player, BuffID.BrokenArmor, 2);
             }*/
 
-            
+            if (Player.ZoneMeteor)
+            {
+                //10x star rate
+                Star.starfallBoost = 10;
+                //manually spawn day stars during day
+                if (Main.dayTime)
+                {
+                    int starProj = ModContent.ProjectileType<FallenStarDay>();
+
+                    for (int m = 0; m < Main.dayRate; m++)
+                    {
+                        double num7 = (double)Main.maxTilesX / 4200.0;
+                        num7 *= (double)Star.starfallBoost;
+                        if (!((double)Main.rand.Next(8000) < 10.0 * num7))
+                        {
+                            continue;
+                        }
+                        int num8 = 12;
+
+                        int randDist = Main.rand.Next(1, 200);
+                        float posX = Player.position.X + (float)Main.rand.Next(-randDist, randDist + 1);
+                        float posY = Main.rand.Next((int)((double)Main.maxTilesY * 0.05));
+                        posY *= 16;
+                        Vector2 position = new Vector2(posX, posY);
+                        int num11 = -1;//whether or not star travels towards the player
+
+                        if (!Collision.SolidCollision(position, 16, 16))
+                        {
+                            //Main.NewText("star spawn");
+
+                            float speedX = Main.rand.Next(-100, 101);
+                            float speedY = Main.rand.Next(200) + 100;
+                            float num16 = (float)Math.Sqrt(speedX * speedX + speedY * speedY);
+                            num16 = (float)num8 / num16;
+                            speedX *= num16;
+                            speedY *= num16;
+                            Projectile.NewProjectile(Terraria.Entity.GetSource_NaturalSpawn(), position.X, position.Y, speedX, speedY, starProj, 100, 0f, Main.myPlayer, 0f, num11);
+                        }
+                    }
+                }
+
+
+                
+            }
 
             if (Player.ZoneMarble)
             {

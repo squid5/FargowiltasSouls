@@ -1,5 +1,6 @@
 ﻿using FargowiltasSouls.Content.Bosses.MutantBoss;
 using FargowiltasSouls.Content.Buffs.Masomode;
+using FargowiltasSouls.Content.Buffs.Souls;
 using FargowiltasSouls.Content.Items.Accessories.Masomode;
 using FargowiltasSouls.Content.Items.Placables;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
@@ -160,7 +161,16 @@ namespace FargowiltasSouls.Core.Globals
                     if (Main.player[npc.target].ZoneJungle)
                         npc.AddBuff(BuffID.Poisoned, 2, true);
                 }
+
+
+
+                //if (!npc.boss && !npc.friendly && Main.SceneMetrics.EnoughTilesForSnow)
+                //{
+                //    npc.AddBuff(ModContent.BuffType<FrozenBuff>(), 3600);
+                //}
             }
+
+            
 
             return true;
         }
