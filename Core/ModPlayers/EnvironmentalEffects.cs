@@ -84,28 +84,49 @@ namespace FargowiltasSouls.Core.ModPlayers
 
             if (Player.ZoneJungle)
             {
-                //Main.NewText(Main.rainTime + " " + Main.maxRain + " " );
-                //Main.NewText(Main.windSpeedTarget + " " + Main.windSpeedCurrent);
-
-                if (!fargoSoulsPlayer.PureHeart && Player.ZoneOverworldHeight && Main.maxRaining < 0.9f && Main.windSpeedCurrent < 0.8f && Main.rand.NextBool(600))
+                if (!fargoSoulsPlayer.PureHeart && Player.ZoneOverworldHeight)
                 {
-                    //rain
                     int day = 86400;
                     int hour = day / 24;
-                    Main.rainTime = hour * 4;
-                    Main.raining = true;
-                    Main.maxRaining = Main.cloudAlpha = Math.Min(Main.maxRaining + 0.05f, 0.9f);
-                    //wind
-                    Main.windSpeedTarget = Main.windSpeedCurrent = Math.Min( Main.windSpeedCurrent + 0.05f, 0.8f);
 
-                    if (Main.netMode == NetmodeID.Server)
+                    //rain increases if alredy raining
+                    if (Main.IsItRaining)
                     {
-                        NetMessage.SendData(MessageID.WorldData);
-                        Main.SyncRain();
-                    }
+                        if (Main.maxRaining < 0.9f && Main.windSpeedCurrent < 0.8f && Main.rand.NextBool(600))
+                        {
+                            //rain
+                            Main.raining = true;
+                            Main.maxRaining = Main.cloudAlpha = Math.Min(Main.maxRaining + 0.02f, 0.9f);
+                            //wind
+                            Main.windSpeedTarget = Main.windSpeedCurrent = Math.Min(Main.windSpeedCurrent + 0.02f, 0.8f);
 
-                    //Main.NewText("storm increased..");
+                            if (Main.netMode == NetmodeID.Server)
+                            {
+                                NetMessage.SendData(MessageID.WorldData);
+                                Main.SyncRain();
+                            }
+
+                            //Main.NewText("storm increased.." + Main.maxRaining);
+                        }
+                    }
+                    //rain increased chnce to start
+                    else if(WorldUpdatingSystem.rainCD == 0)
+                    {
+                        if (Main.rand.NextBool(7200))
+                        {
+                            //rain
+                            Main.rainTime = hour * 4;
+                            Main.raining = true;
+                            Main.maxRaining = Main.cloudAlpha = 0.02f;
+
+                            //Main.NewText("rain started");
+
+                            WorldUpdatingSystem.rainCD = 43200;//1/2 day cooldown
+                        }
+                    }
                 }
+
+                
 
 
                 if (WaterWet && !waterEffectImmune)
