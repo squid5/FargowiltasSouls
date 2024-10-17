@@ -176,7 +176,7 @@ namespace FargowiltasSouls.Core.ModPlayers
             if (Player.ZoneMeteor)
             {
                 //10x star rate
-                Star.starfallBoost = 10;
+                Star.starfallBoost = 5;
                 //manually spawn day stars during day
                 if (Main.dayTime)
                 {
