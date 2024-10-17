@@ -22,8 +22,15 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.Hell
         {
             base.OnFirstTick(npc);
 
+            int hordeAmt = Main.rand.Next(5) + 1;
+
+            if (npc.type == NPCID.RedDevil)
+            {
+                hordeAmt = 2;
+            }
+
             if (Main.hardMode && Main.rand.NextBool(4) && npc.FargoSouls().CanHordeSplit)
-                EModeGlobalNPC.Horde(npc, Main.rand.Next(5) + 1);
+                EModeGlobalNPC.Horde(npc, hordeAmt);
         }
 
         public override void AI(NPC npc)
