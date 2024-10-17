@@ -868,6 +868,8 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                     float increment = maxSpeed / 100f;
                     if (!phaseTransition)
                         increment = maxSpeed / 35f;
+                    if (WorldSavingSystem.MasochistModeReal)
+                        increment *= 1.2f;
                     rotspeed += increment;
                 }
                 else
