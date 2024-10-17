@@ -1,5 +1,7 @@
 ﻿using FargowiltasSouls.Core.Globals;
 using FargowiltasSouls.Core.NPCMatching;
+using FargowiltasSouls.Core.Systems;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent.ItemDropRules;
@@ -58,7 +60,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.Hell
 
             if (npc.type == NPCID.VoodooDemon) //can ignite itself to burn up its doll
             {
-                const int dollBurningTime = 720;
+                const int dollBurningTime = 600;
 
                 if (npc.lavaWet && npc.HasValidTarget
                     && (npc.Distance(Main.player[npc.target].Center) < 450 || Collision.CanHitLine(npc.Center, 0, 0, Main.player[npc.target].Center, 0, 0)))
@@ -74,7 +76,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.Hell
 
                     for (int i = 0; i < 3; i++) //NOTICE ME
                     {
-                        int d = Dust.NewDust(npc.position, npc.width, npc.height, DustID.Torch, 0f, 0f, 0, default, (float)Counter / dollBurningTime * 5f);
+                        int d = Dust.NewDust(npc.position, npc.width, npc.height, DustID.Torch, 0f, 0f, 0, default, (float)Counter / dollBurningTime * 3f);
                         Main.dust[d].noGravity = !Main.rand.NextBool(5);
                         Main.dust[d].noLight = true;
                         Main.dust[d].velocity *= Main.rand.NextFloat(12f);
@@ -90,8 +92,22 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.Hell
                             Main.npc[guide].SimpleStrikeNPC(int.MaxValue, 0, false, 0, null, false, 0, true);
 
                             int p = npc.HasPlayerTarget ? npc.target : npc.FindClosestPlayer();
-                            if (p != -1 && !FargoSoulsUtil.BossIsAlive(ref EModeGlobalNPC.wallBoss, NPCID.WallofFlesh))
-                                NPC.SpawnWOF(Main.player[npc.target].Center);
+                            if (p != -1)
+                            {
+                                for (int i = 0; i < 8; i++)
+                                {
+                                    int npcType = Main.rand.NextBool() ? NPCID.LeechHead : NPCID.TheHungryII; 
+
+                                    FargoSoulsUtil.NewNPCEasy(npc.GetSource_FromAI(), npc.Center, npcType,
+                                        velocity: new Vector2(Main.rand.NextFloat(-5, 5) * 2, Main.rand.NextFloat(-5, 5) * 2));
+                                }
+
+                                if (WorldSavingSystem.MasochistModeReal && !FargoSoulsUtil.BossIsAlive(ref EModeGlobalNPC.wallBoss, NPCID.WallofFlesh))
+                                {
+                                    NPC.SpawnWOF(Main.player[npc.target].Center);
+                                }
+                            }
+                                
 
                         }
                     }

@@ -26,8 +26,6 @@ namespace FargowiltasSouls.Content.Items.Materials
             int spawnItem = player.QuickSpawnItem(Item.GetSource_FromThis(), ItemID.FallenStar, Item.stack);
             Main.item[spawnItem].beingGrabbed = true;
 
-            //player.PutItemInInventoryFromItemUsage(ItemID.FallenStar);
-            
             return false;
         }
 

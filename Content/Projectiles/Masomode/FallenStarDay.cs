@@ -111,12 +111,7 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
             }
 
 
-
-
-
             int itemDrop = Item.NewItem(Projectile.GetSource_DropAsItem(), (int)Projectile.position.X, (int)Projectile.position.Y, Projectile.width, Projectile.height,ModContent.ItemType<FallenStarDayItem>());
-
-            //Main.NewText(itemDrop + " " + Projectile.noDropItem);
 
             if (Main.netMode == 1 && itemDrop >= 0)
             {
