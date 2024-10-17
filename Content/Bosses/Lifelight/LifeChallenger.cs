@@ -1105,7 +1105,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                 if (AI_Timer < 30)
                 {
                     if (NPC.Distance(Player.Center) > 350)
-                        FlyingState(0.7f, false, Player.Center);
+                        FlyingState(0.3f, false, Player.Center);
 
                 }
                 if (WorldSavingSystem.MasochistModeReal)
@@ -1374,31 +1374,37 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
             FlyingState(0.55f, false, desiredPos);
 
             //new homing swords:
-
-            if (AI_Timer >= 70 && AI_Timer % 70 == 0 && AI_Timer <= 420)
+            const int endTime = 470;
+            if (AI_Timer == 70)
             {
                 SoundEngine.PlaySound(SoundID.Item71, NPC.Center);
-                int randSide = AI_Timer % 140 == 0 ? 1 : -1;
-                float randRot = Main.rand.NextFloat(-MathHelper.Pi / 6, MathHelper.Pi / 6);
-                Vector2 offset1 = (NPC.SafeDirectionTo(Player.Center) * 10f).RotatedBy(MathHelper.PiOver2 * randSide + randRot);
-                if (FargoSoulsUtil.HostCheck)
-                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, -offset1, ModContent.ProjectileType<JevilScar>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), 3f, Main.myPlayer, 0f, NPC.whoAmI);
-
+                int swords = WorldSavingSystem.MasochistModeReal ? 6 : WorldSavingSystem.EternityMode ? 4 : 2;
+                for (int i = 0; i < swords; i++)
+                {
+                    int randSide = i % 2 == 0 ? 1 : -1;
+                    float randRot = Main.rand.NextFloat(-MathHelper.Pi / 6, MathHelper.Pi / 6);
+                    //float extraVel = i;
+                    Vector2 offset1 = (NPC.SafeDirectionTo(Player.Center) * (6f + 3f * i)).RotatedBy(MathHelper.PiOver2 * randSide + randRot);
+                    if (FargoSoulsUtil.HostCheck)
+                        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, -offset1, ModContent.ProjectileType<JevilScar>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), 3f, Main.myPlayer, 0, ai1: NPC.target);
+                }
+                /*
                 if (WorldSavingSystem.EternityMode && !PhaseOne && AI_Timer >= 70 * 4) // chance to interrupt in emode
                 {
-                    if (Main.rand.NextBool(3))
-                        AI_Timer = 481;
+                    if (Main.rand.NextBool(4))
+                        AI_Timer = endTime + 1;
                 }
+                */
             }
             float extraTime = PhaseOne || !WorldSavingSystem.EternityMode ? 100 : -20;
-            if (AI_Timer > 480 + extraTime)
+            if (AI_Timer > endTime + extraTime)
             {
                 foreach (Projectile p in Main.projectile)
                 {
                     if (p.type == ModContent.ProjectileType<JevilScar>())
                     {
                         float extra = PhaseOne || !WorldSavingSystem.EternityMode ? 0 : 50;
-                        p.ai[0] = 1200 - extra;
+                        p.localAI[0] = 1200 - extra;
                     }
                 }
                 Flying = true;
@@ -2950,7 +2956,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                     State = (int)Main.rand.NextFromCollection(doableStates);
                     LastAttack[i] = State;
 
-                    //State = (int)States.RuneSpear;
+                    State = (int)States.LifeBlades;
                 }
             }
         }
