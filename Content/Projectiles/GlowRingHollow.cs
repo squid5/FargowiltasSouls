@@ -3,6 +3,7 @@ using FargowiltasSouls.Assets.ExtraTextures;
 using FargowiltasSouls.Content.Bosses.AbomBoss;
 using FargowiltasSouls.Content.Bosses.Champions.Life;
 using FargowiltasSouls.Content.Bosses.Champions.Terra;
+using FargowiltasSouls.Content.Bosses.Lifelight;
 using FargowiltasSouls.Content.Bosses.VanillaEternity;
 using FargowiltasSouls.Content.Projectiles.ChallengerItems;
 using FargowiltasSouls.Core;
@@ -224,32 +225,17 @@ namespace FargowiltasSouls.Content.Projectiles
                     }
                     break;
 
-                case 11: //retinazer aura
+                case 11: //lifelight crystalline tell
                     {
-                        // replaced!
-                        Projectile.Kill();
-                        return;
-
-                        color = Color.Red;
-
-                        if (Projectile.localAI[0] > maxTime / 2) //NEVER fade normally
-                            Projectile.localAI[0] = maxTime / 2;
-
-                        NPC npc = FargoSoulsUtil.NPCExists(Projectile.ai[1], NPCID.Retinazer);
+                        color = Color.DeepPink;
+                        maxTime = 30;
+                        alphaModifier = 3;
+                        NPC npc = FargoSoulsUtil.NPCExists(Projectile.ai[2], ModContent.NPCType<LifeChallenger>());
                         if (npc != null)
                         {
                             Projectile.Center = npc.Center;
-                            radius = 2000 - 1200 * npc.GetGlobalNPC<Retinazer>().AuraRadiusCounter / 180f;
-                            if (WorldSavingSystem.MasochistModeReal)
-                                radius *= 0.75f;
-                            if (radius == 2000)
-                                Projectile.localAI[0] = -1;
                         }
-                        else
-                        {
-                            Projectile.Kill();
-                            return;
-                        }
+                        radius = Projectile.ai[1] * (float)Math.Sqrt(Math.Sin(Math.PI / 2 * Projectile.localAI[0] / maxTime));
                     }
                     break;
 

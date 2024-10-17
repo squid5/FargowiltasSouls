@@ -2237,68 +2237,49 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                 RuneFormationTimer = 0;
             }
 
-            if (NPC.Distance(Player.Center) > 2000)
-            {
-                FlyingState(1.5f);
-            }
+            Vector2 desiredPos = Player.Center + Player.DirectionTo(NPC.Center) * 320;
+            float speed = 0.25f;
+            if (NPC.Distance(Player.Center) > 800)
+                speed = 0.5f;
+            FlyingState(speed, false, desiredPos);
 
-            NPC.velocity = Vector2.Zero;
-            Flying = false;
-            DoAura = true;
-
-            float knockBack = 3f;
-            float rad = AI_Timer * 5.721237f * (MathHelper.Pi / 180.0f);
-
-            float dustdist = 1200;
-            if (!WorldSavingSystem.MasochistModeReal)
+            if (AI_Timer <= 240f)
             {
-                float distanceToPlayer = NPC.Distance(Player.Center);
-                distanceToPlayer += 240;
-                dustdist = Math.Max(dustdist, distanceToPlayer); //take higher of these values
-                dustdist = Math.Min(dustdist, 2400); //capped at this value
-            }
-            Vector2 offset = dustdist * rad.ToRotationVector2();
-            if (WorldSavingSystem.MasochistModeReal)
-                offset = offset.RotatedByRandom(MathHelper.TwoPi * 0.01f);
-            Vector2 DustV = NPC.Center + offset;
-            if (SlurpTimer >= 2f && AI_Timer <= 300f)
-            {
-                if (FargoSoulsUtil.HostCheck)
+                if (AI_Timer % 12 == 0)
                 {
-                    Projectile.NewProjectile(NPC.GetSource_FromThis(), DustV, Vector2.Zero, ModContent.ProjectileType<LifeSlurp>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), knockBack, Main.myPlayer, 0, NPC.whoAmI);
-                }
-
-                SlurpTimer = 0f;
-            }
-            SlurpTimer += 1f;
-            if (AI_Timer < 300f)
-            {
-                if (BurpTimer > 15f)
-                {
-                    SoundEngine.PlaySound(SoundID.Item101, DustV);
-
-                    if (WorldSavingSystem.MasochistModeReal && AI_Timer % 2 == 0) //extra projectiles in maso
+                    Vector2 predictedPos = Player.Center + Player.velocity * 120;
+                    float distance = MathF.Max(NPC.Distance(Player.Center), NPC.Distance(Player.Center + Player.velocity * 45));
+                    Vector2 crystalPos = NPC.Center + NPC.DirectionTo(predictedPos) * (distance + 350) + Main.rand.NextVector2CircularEdge(90f, 90f) * Main.rand.NextFloat(0.9f, 1f);
+                    SoundEngine.PlaySound(SoundID.Item101, crystalPos);
+                    if (FargoSoulsUtil.HostCheck)
                     {
-                        SoundEngine.PlaySound(SoundID.Item12, NPC.Center);
-
-                        float ProjectileSpeed = 10f;
-                        float knockBack2 = 3f;
-                        Vector2 shootatPlayer = NPC.SafeDirectionTo(Player.Center) * ProjectileSpeed;
-                        if (FargoSoulsUtil.HostCheck)
-                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, shootatPlayer, ModContent.ProjectileType<LifeWave>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), knockBack2, Main.myPlayer);
-
-                        //for (int i = -2; i <= 2; i++)
-                        //{
-                        //    if (FargoSoulsUtil.HostCheck)
-                        //        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, 0.9f * NPC.SafeDirectionTo(Player.Center).RotatedBy(MathHelper.ToRadians(3) * i), ModContent.ProjectileType<LifeSplittingProjSmall>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), 0f, Main.myPlayer, -60, 2f);
-                        //}
+                        Projectile.NewProjectile(NPC.GetSource_FromThis(), crystalPos, Vector2.Zero, ModContent.ProjectileType<LifeSlurp>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), 3f, Main.myPlayer, 0, NPC.whoAmI);
                     }
-                    BurpTimer = 0f;
                 }
-                BurpTimer += 1f;
             }
-            int endTime = WorldSavingSystem.EternityMode ? 600 : 360;
+            if (AI_Timer > 240f && AI_Timer < 360 && AI_Timer % 40 == 0)
+            {
+                SoundEngine.PlaySound(SoundID.Item43 with { Volume = 1f, MaxInstances = 10 }, NPC.Center);
+                if (FargoSoulsUtil.HostCheck)
+                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<GlowRingHollow>(), 0, 0f, Main.myPlayer, 11, 100, ai2: NPC.whoAmI);
+            }
+            if (AI_Timer == 360) // burst
+            {
+                int count = 0;
+                for (int i = 0; i < Main.maxProjectiles; i++)
+                {
+                    Projectile p = Main.projectile[i];
+                    if (p.TypeAlive<LifeSlurp>() && p.As<LifeSlurp>().lifelight.whoAmI == NPC.whoAmI)
+                    {
+                        p.ai[1] = 1000 - count * 2;
+                        p.ai[2] = count;
+                        count++;
+                    }
+                }
+            }
+            int endTime = 430;
 
+            /*
             if (AI_Timer > 300f && AI_Timer < endTime)
             {
                 if (BurpTimer > 15f)
@@ -2314,6 +2295,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                 SlurpTimer -= 0.5f;
                 BurpTimer -= 0.5f;
             }
+            */
 
             if (AI_Timer >= endTime)
             {
@@ -2958,7 +2940,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                     State = (int)Main.rand.NextFromCollection(doableStates);
                     LastAttack[i] = State;
 
-                    //State = (int)States.LifeBlades;
+                    //State = (int)States.CrystallineCongregation;
                 }
             }
         }
