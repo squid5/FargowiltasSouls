@@ -135,7 +135,10 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                     if (!WorldSavingSystem.EternityMode)
                         Projectile.Kill();
                     vectorToIdlePosition.Normalize();
-                    vectorToIdlePosition = vectorToIdlePosition.RotatedBy(MathF.Sin(MathF.PI * Projectile.ai[2] * 0.16f) * 0.6f);
+                    float amplitude = 0.6f;
+                    if (!WorldSavingSystem.EternityMode)
+                        amplitude = 1f;
+                    vectorToIdlePosition = vectorToIdlePosition.RotatedBy(MathF.Sin(MathF.PI * Projectile.ai[2] * 0.16f) * amplitude);
                     vectorToIdlePosition *= 15;
                     Projectile.velocity = vectorToIdlePosition;
                     chosenDirection = true;

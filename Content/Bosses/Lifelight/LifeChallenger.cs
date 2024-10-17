@@ -2245,9 +2245,15 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
 
             if (AI_Timer <= 240f)
             {
-                if (AI_Timer % 12 == 0)
+                float delay = 12f;
+                if (WorldSavingSystem.MasochistModeReal)
+                    delay = 10f;
+                if (AI_Timer % delay == 0)
                 {
-                    Vector2 predictedPos = Player.Center + Player.velocity * 120;
+                    float predict = 120;
+                    if (WorldSavingSystem.MasochistModeReal)
+                        predict = 160;
+                    Vector2 predictedPos = Player.Center + Player.velocity * predict;
                     float distance = MathF.Max(NPC.Distance(Player.Center), NPC.Distance(Player.Center + Player.velocity * 45));
                     Vector2 crystalPos = NPC.Center + NPC.DirectionTo(predictedPos) * (distance + 350) + Main.rand.NextVector2CircularEdge(90f, 90f) * Main.rand.NextFloat(0.9f, 1f);
                     SoundEngine.PlaySound(SoundID.Item101, crystalPos);
