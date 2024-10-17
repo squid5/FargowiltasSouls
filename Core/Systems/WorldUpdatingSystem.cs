@@ -13,6 +13,8 @@ namespace FargowiltasSouls.Core.Systems
 {
     public class WorldUpdatingSystem : ModSystem
     {
+        public static int rainCD;
+
         public override void PreUpdateNPCs() => SwarmActive = FargowiltasSouls.MutantMod is Mod fargo && (bool)fargo.Call("SwarmActive");
 
         public override void PostUpdateWorld()
@@ -167,6 +169,11 @@ namespace FargowiltasSouls.Core.Systems
                     NetMessage.SendData(MessageID.WorldData);
                 if (!Main.dedServ)
                     SoundEngine.PlaySound(SoundID.Roar, Main.LocalPlayer.Center);
+            }
+
+            if (rainCD > 0)
+            {
+                rainCD--;
             }
 
             //Main.NewText(BuilderMode);

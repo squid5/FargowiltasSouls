@@ -3701,3 +3701,8 @@ TheDestroyer: {
 		'The reward for slaughtering many..'
 		''' */
 }
+
+FallenStarDayItem: {
+	// DisplayName: Fallen Star
+	// Tooltip: ""
+}

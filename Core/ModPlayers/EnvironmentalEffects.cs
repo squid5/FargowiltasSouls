@@ -84,6 +84,51 @@ namespace FargowiltasSouls.Core.ModPlayers
 
             if (Player.ZoneJungle)
             {
+                if (!fargoSoulsPlayer.PureHeart && Player.ZoneOverworldHeight)
+                {
+                    int day = 86400;
+                    int hour = day / 24;
+
+                    //rain increases if alredy raining
+                    if (Main.IsItRaining)
+                    {
+                        if (Main.maxRaining < 0.9f && Main.windSpeedCurrent < 0.8f && Main.rand.NextBool(600))
+                        {
+                            //rain
+                            Main.raining = true;
+                            Main.maxRaining = Main.cloudAlpha = Math.Min(Main.maxRaining + 0.02f, 0.9f);
+                            //wind
+                            Main.windSpeedTarget = Main.windSpeedCurrent = Math.Min(Main.windSpeedCurrent + 0.02f, 0.8f);
+
+                            if (Main.netMode == NetmodeID.Server)
+                            {
+                                NetMessage.SendData(MessageID.WorldData);
+                                Main.SyncRain();
+                            }
+
+                            //Main.NewText("storm increased.." + Main.maxRaining);
+                        }
+                    }
+                    //rain increased chnce to start
+                    else if(WorldUpdatingSystem.rainCD == 0)
+                    {
+                        if (Main.rand.NextBool(7200))
+                        {
+                            //rain
+                            Main.rainTime = hour * 4;
+                            Main.raining = true;
+                            Main.maxRaining = Main.cloudAlpha = 0.02f;
+
+                            //Main.NewText("rain started");
+
+                            WorldUpdatingSystem.rainCD = 43200;//1/2 day cooldown
+                        }
+                    }
+                }
+
+                
+
+
                 if (WaterWet && !waterEffectImmune)
                     FargoSoulsUtil.AddDebuffFixedDuration(Player, BuffID.Poisoned, 2);
             }
@@ -128,24 +173,54 @@ namespace FargowiltasSouls.Core.ModPlayers
                     FargoSoulsUtil.AddDebuffFixedDuration(Player, BuffID.BrokenArmor, 2);
             }*/
 
-            if (Player.ZoneDesert && Player.ZoneOverworldHeight && !fargoSoulsPlayer.PureHeart)
+            if (Player.ZoneMeteor)
             {
+                //10x star rate
+                Star.starfallBoost = 10;
+                //manually spawn day stars during day
                 if (Main.dayTime)
                 {
-                    if (!Player.wet && !hasUmbrella())
+                    int starProj = ModContent.ProjectileType<FallenStarDay>();
+
+                    for (int m = 0; m < Main.dayRate; m++)
                     {
-                        FargoSoulsUtil.AddDebuffFixedDuration(Player, BuffID.Weak, 2);
+                        double num7 = (double)Main.maxTilesX / 4200.0;
+                        num7 *= (double)Star.starfallBoost;
+                        if (!((double)Main.rand.Next(8000) < 10.0 * num7))
+                        {
+                            continue;
+                        }
+                        int num8 = 12;
+
+                        int randDist = Main.rand.Next(1, 200);
+                        float posX = Player.position.X + (float)Main.rand.Next(-randDist, randDist + 1);
+                        float posY = Main.rand.Next((int)((double)Main.maxTilesY * 0.05));
+                        posY *= 16;
+                        Vector2 position = new Vector2(posX, posY);
+                        int num11 = -1;//whether or not star travels towards the player
+
+                        if (!Collision.SolidCollision(position, 16, 16))
+                        {
+                            //Main.NewText("star spawn");
+
+                            float speedX = Main.rand.Next(-100, 101);
+                            float speedY = Main.rand.Next(200) + 100;
+                            float num16 = (float)Math.Sqrt(speedX * speedX + speedY * speedY);
+                            num16 = (float)num8 / num16;
+                            speedX *= num16;
+                            speedY *= num16;
+                            Projectile.NewProjectile(Terraria.Entity.GetSource_NaturalSpawn(), position.X, position.Y, speedX, speedY, starProj, 100, 0f, Main.myPlayer, 0f, num11);
+                        }
                     }
-                    
                 }
-                else
-                {
-                    if (!ItemID.Sets.Torches[Player.HeldItem.type])
-                    {
-                        FargoSoulsUtil.AddDebuffFixedDuration(Player, BuffID.Chilled, 2);
-                    }
-                    
-                }
+
+
+                
+            }
+
+            if (Player.ZoneMarble)
+            {
+                //Main.NewText("ech");
             }
 
             if (Player.ZoneCorrupt)
@@ -153,7 +228,7 @@ namespace FargowiltasSouls.Core.ModPlayers
                 if (!fargoSoulsPlayer.PureHeart)
                     FargoSoulsUtil.AddDebuffFixedDuration(Player, BuffID.Darkness, 2);
                 if (WaterWet && !waterEffectImmune)
-                    FargoSoulsUtil.AddDebuffFixedDuration(Player, BuffID.CursedInferno, 2);
+                    FargoSoulsUtil.AddDebuffFixedDuration(Player, BuffID.CursedInferno, 120);
             }
 
             if (Player.ZoneCrimson)
@@ -161,7 +236,7 @@ namespace FargowiltasSouls.Core.ModPlayers
                 if (!fargoSoulsPlayer.PureHeart)
                     FargoSoulsUtil.AddDebuffFixedDuration(Player, BuffID.Bleeding, 2);
                 if (WaterWet && !waterEffectImmune)
-                    FargoSoulsUtil.AddDebuffFixedDuration(Player, BuffID.Ichor, 2);
+                    FargoSoulsUtil.AddDebuffFixedDuration(Player, BuffID.Ichor, 300);
             }
 
             if (Player.ZoneHallow)
@@ -199,9 +274,33 @@ namespace FargowiltasSouls.Core.ModPlayers
             tileCenter.Y /= 16;
             Tile currentTile = Framing.GetTileSafely((int)tileCenter.X, (int)tileCenter.Y);
 
+            
+
 
             if (!fargoSoulsPlayer.PureHeart) // Pure Heart-affected biome debuffs
             {
+                //desert
+                if (Player.ZoneDesert && Player.ZoneOverworldHeight && currentTile.WallType == WallID.None)
+                {
+                    if (Main.dayTime)
+                    {
+                        if (!Player.wet && !hasUmbrella())
+                        {
+                            FargoSoulsUtil.AddDebuffFixedDuration(Player, BuffID.Weak, 2);
+                        }
+                    }
+                    else
+                    {
+                        if (!ItemID.Sets.Torches[Player.HeldItem.type])
+                        {
+                            FargoSoulsUtil.AddDebuffFixedDuration(Player, BuffID.Chilled, 2);
+                        }
+                    }
+                }
+
+
+
+
                 Color light = Lighting.GetColor(Player.Center.ToTileCoordinates());
                 float lightLevel = light.R + light.G + light.B;
                 

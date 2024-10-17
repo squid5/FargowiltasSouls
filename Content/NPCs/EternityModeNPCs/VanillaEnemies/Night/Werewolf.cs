@@ -55,6 +55,17 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.Night
             return base.SafePreAI(npc);
         }
 
+        public override void OnHitNPC(NPC npc, NPC target, NPC.HitInfo hit)
+        {
+            base.OnHitNPC(npc, target, hit);
+
+            if (target.townNPC && (hit.InstantKill || target.life < hit.Damage))
+            {
+                target.Transform(npc.type);
+                //SoundEngine.PlaySound(SoundID.);
+            }
+        }
+
         public override void OnHitPlayer(NPC npc, Player target, Player.HurtInfo hurtInfo)
         {
             base.OnHitPlayer(npc, target, hurtInfo);
