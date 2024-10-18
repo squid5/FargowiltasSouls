@@ -18,6 +18,7 @@ namespace FargowiltasSouls.Assets.Sounds
         public static readonly SoundStyle Thunder = new(SoundsPath + "Thunder");
         public static readonly SoundStyle ZaWarudo = new(SoundsPath + "Accessories/ZaWarudo");
         public static readonly SoundStyle Zombie104 = new(SoundsPath + "Zombie_104");
+        public static readonly SoundStyle GenericDeathray = new(SoundsPath + "GenericDeathray");
 
         // Baron
         public static readonly SoundStyle BaronLaserTelegraph = new(SoundsPath + "Challengers/Baron/BaronLaserTelegraph");
@@ -52,14 +53,17 @@ namespace FargowiltasSouls.Assets.Sounds
         // Mutant
         public static readonly SoundStyle MutantUnpredictive = new(SoundsPath + "Siblings/Mutant/MutantUnpredictive");
         public static readonly SoundStyle MutantPredictive = new(SoundsPath + "Siblings/Mutant/MutantPredictive");
+        public static readonly SoundStyle PenetratorThrow = new(SoundsPath + "Siblings/Mutant/PenetratorThrow");
+        public static readonly SoundStyle PenetratorExplosion = new(SoundsPath + "Siblings/Mutant/PenetratorExplosion");
 
         // Abominationn
 
         // Mechs
-        public static readonly SoundStyle RetinazerDeathray = new(SoundsPath + "VanillaEternity/Mechs/RetinazerDeathray");
+
         public static readonly SoundStyle TwinsWarning = new(SoundsPath + "VanillaEternity/Mechs/TwinsWarning");
         public static readonly SoundStyle DestroyerScan = new(SoundsPath + "VanillaEternity/Mechs/DestroyerScan");
         public static readonly SoundStyle ElectricOrbHum = new(SoundsPath + "VanillaEternity/Mechs/ElectricOrbHum");
         public static readonly SoundStyle ElectricOrbShot = new(SoundsPath + "VanillaEternity/Mechs/ElectricOrbShot");
+        //public static readonly SoundStyle TwinsDeathray = new(SoundsPath + "VanillaEternity/Mechs/TwinsDeathray");
     }
 }

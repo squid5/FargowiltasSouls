@@ -1,4 +1,5 @@
-﻿using FargowiltasSouls.Content.Buffs.Boss;
+﻿using FargowiltasSouls.Assets.Sounds;
+using FargowiltasSouls.Content.Buffs.Boss;
 using FargowiltasSouls.Content.Buffs.Masomode;
 using FargowiltasSouls.Core.Systems;
 using Microsoft.Xna.Framework;
@@ -116,7 +117,7 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
             if (Projectile.localAI[1] == 0f)
             {
                 Projectile.localAI[1] = 1f;
-                SoundEngine.PlaySound(SoundID.Item1, Projectile.Center);
+                SoundEngine.PlaySound(WorldSavingSystem.masochistModeReal ? FargosSoundRegistry.PenetratorExplosion : FargosSoundRegistry.PenetratorThrow, Projectile.Center);
             }
 
             NPC mutant = Main.npc[(int)Projectile.ai[0]];

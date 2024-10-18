@@ -64,7 +64,7 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
                 if (!Main.dedServ)
                 {
                     SoundEngine.PlaySound(FargosSoundRegistry.StyxGazer with { Volume = 1.5f }, Projectile.Center);
-                    SoundEngine.PlaySound(FargosSoundRegistry.RetinazerDeathray, Projectile.Center);
+                    SoundEngine.PlaySound(FargosSoundRegistry.GenericDeathray, Projectile.Center);
                 }
             }
             float num801 = 1f;
