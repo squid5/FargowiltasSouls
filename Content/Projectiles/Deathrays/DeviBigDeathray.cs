@@ -230,7 +230,7 @@ namespace FargowiltasSouls.Content.Projectiles.Deathrays
 
         }
 
-        public float RingWidthFunction(float trailInterpolant) => Projectile.scale * 5;
+        public float RingWidthFunction(float trailInterpolant) => Projectile.scale * 4;
 
         public static Color RingColorFunction(float trailInterpolant)
         {

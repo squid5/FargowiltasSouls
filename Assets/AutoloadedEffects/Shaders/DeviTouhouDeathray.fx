@@ -55,8 +55,8 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 
     float widthScale = float((y + (1 - coords.x * 0.25)) / 2);
     
-    if (coords.x < 0.07)
-        widthScale /= pow(coords.x / 0.07, 1);
+    if (coords.x < 0.13)
+        widthScale /= pow(coords.x / 0.13, 0.61);
     
     coords.y = ((coords.y - 0.5) * clamp(widthScale, 0, 2)) + 0.5;
     // <-
@@ -84,7 +84,7 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
     
     //// Fade out at the top and bottom of the streak.
     if (coords.x < 0.05)
-        finalOpacity *= pow(coords.x / 0.05, 2);
+        finalOpacity *= pow(coords.x / 0.05, 3);
     if (coords.x > 0.8)
         finalOpacity *= pow(1 - (coords.x - 0.8) / 0.2, 3);
     
