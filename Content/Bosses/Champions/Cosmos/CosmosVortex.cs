@@ -142,6 +142,9 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Cosmos
                     Suck();
 
                     int lightningTime = WorldSavingSystem.EternityMode && Projectile.ai[1] != 1f ? 6 : 15;
+                    if (WorldSavingSystem.MasochistModeReal)
+                        lightningTime = WorldSavingSystem.EternityMode && Projectile.ai[1] != 1f ? 5 : 8;
+
                     if (Projectile.localAI[0] % lightningTime == 0) //shoot lightning out, rotate 48 degrees per second by default
                     {
                         //Projectile.localAI[0] = 0;
