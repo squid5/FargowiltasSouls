@@ -50,7 +50,7 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
             if (Projectile.localAI[0] == 0f)
             {
                 if (!Main.dedServ)
-                    SoundEngine.PlaySound(FargosSoundRegistry.RetinazerDeathray, Projectile.Center);
+                    SoundEngine.PlaySound(FargosSoundRegistry.GenericDeathray, Projectile.Center);
                 spawnPos = Projectile.Center;
             }
             else //vibrate beam

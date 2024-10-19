@@ -670,7 +670,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                             if (npc.ai[0] >= 155f) //FIRE LASER
                             {
                                 if (!Main.dedServ)
-                                    SoundEngine.PlaySound(FargosSoundRegistry.RetinazerDeathray with { Volume = 5f }, npc.Center);
+                                    SoundEngine.PlaySound(FargosSoundRegistry.GenericDeathray with { Volume = 2f }, npc.Center);
                                 if (FargoSoulsUtil.HostCheck)
                                 {
                                     Vector2 speed = Vector2.UnitX.RotatedBy(npc.rotation);
