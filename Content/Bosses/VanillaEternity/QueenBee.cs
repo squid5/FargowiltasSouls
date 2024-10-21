@@ -158,7 +158,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             if (!InPhase2 && npc.life < npc.lifeMax / 2) //enable new attack and roar below 50%
             {
                 InPhase2 = true;
-                SoundEngine.PlaySound(SoundID.Roar, npc.Center);
+                SoundEngine.PlaySound(SoundID.Zombie125, npc.Center);
 
                 if (WorldSavingSystem.MasochistModeReal)
                     SpawnedRoyalSubjectWave1 = false; //do this again
@@ -280,7 +280,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                             }
 
                             if (npc.HasValidTarget)
-                                SoundEngine.PlaySound(SoundID.ForceRoarPitched, Main.player[npc.target].Center); //eoc roar
+                                SoundEngine.PlaySound(SoundID.Zombie125, Main.player[npc.target].Center); //eoc roar
 
                             if (WorldSavingSystem.MasochistModeReal)
                                 BeeSwarmTimer += 30;

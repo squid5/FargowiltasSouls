@@ -2,6 +2,7 @@ using FargowiltasSouls.Common.Utilities;
 using FargowiltasSouls.Content.Buffs.Masomode;
 using FargowiltasSouls.Content.Projectiles;
 using FargowiltasSouls.Content.Projectiles.Masomode;
+using FargowiltasSouls.Core;
 using FargowiltasSouls.Core.Globals;
 using FargowiltasSouls.Core.NPCMatching;
 using FargowiltasSouls.Core.Systems;
@@ -19,6 +20,8 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
     public class EyeofCthulhu : EModeNPCBehaviour
     {
         public override NPCMatcher CreateMatcher() => new NPCMatcher().MatchType(NPCID.EyeofCthulhu);
+
+        public bool recolor = SoulConfig.Instance.BossRecolors && WorldSavingSystem.EternityMode;
 
         public int AITimer;
         public int ScytheSpawnTimer;
@@ -266,7 +269,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
                         for (int i = 0; i < 3; i++)
                         {
-                            int d = Dust.NewDust(npc.position, npc.width, npc.height, DustID.Vortex, 0f, 0f, 0, default, 1.5f);
+                            int d = Dust.NewDust(npc.position, npc.width, npc.height, recolor? DustID.Vortex : DustID.BloodWater, 0f, 0f, 0, default, 1.5f);
                             Main.dust[d].noGravity = true;
                             Main.dust[d].noLight = true;
                             Main.dust[d].velocity *= 4f;
@@ -437,7 +440,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                         {
                             for (int i = 0; i < 3; i++)
                             {
-                                int d = Dust.NewDust(npc.position, npc.width, npc.height, DustID.Vortex, 0f, 0f, 0, default, 1.5f);
+                                int d = Dust.NewDust(npc.position, npc.width, npc.height, recolor ? DustID.Vortex : DustID.BloodWater, 0f, 0f, 0, default, 1.5f);
                                 Main.dust[d].noGravity = true;
                                 Main.dust[d].noLight = true;
                                 Main.dust[d].velocity *= 4f;
@@ -474,7 +477,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     npc.alpha += 4;
                     for (int i = 0; i < 3; i++)
                     {
-                        int d = Dust.NewDust(npc.position, npc.width, npc.height, DustID.Vortex, 0f, 0f, 0, default, 1.5f);
+                        int d = Dust.NewDust(npc.position, npc.width, npc.height, recolor ? DustID.Vortex : DustID.BloodWater, 0f, 0f, 0, default, 1.5f);
                         Main.dust[d].noGravity = true;
                         Main.dust[d].noLight = true;
                         Main.dust[d].velocity *= 4f;
@@ -499,7 +502,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                         npc.alpha += 4;
                         for (int i = 0; i < 3; i++)
                         {
-                            int d = Dust.NewDust(npc.position, npc.width, npc.height, DustID.Vortex, 0f, 0f, 0, default, 1.5f);
+                            int d = Dust.NewDust(npc.position, npc.width, npc.height, recolor ? DustID.Vortex : DustID.BloodWater, 0f, 0f, 0, default, 1.5f);
                             Main.dust[d].noGravity = true;
                             Main.dust[d].noLight = true;
                             Main.dust[d].velocity *= 4f;
@@ -591,7 +594,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                             npc.position -= npc.velocity / 2;
                             for (int i = 0; i < 3; i++)
                             {
-                                int d = Dust.NewDust(npc.position, npc.width, npc.height, DustID.Vortex, 0f, 0f, 0, default, 1.5f);
+                                int d = Dust.NewDust(npc.position, npc.width, npc.height, recolor ? DustID.Vortex : DustID.BloodWater, 0f, 0f, 0, default, 1.5f);
                                 Main.dust[d].noGravity = true;
                                 Main.dust[d].noLight = true;
                                 Main.dust[d].velocity *= 4f;

@@ -53,8 +53,9 @@
 // NatureHeader: "{$Mods.FargowiltasSouls.Items.NatureForce.DisplayName}"
 // ChloroMinion: Chlorophyte Leaf Crystal
 // CrimsonEffect: Crimson Healing
-// RainUmbrellaEffect: Umbrella Featherfall
+// RainUmbrellaEffect: Umbrella Shield
 // RainInnerTubeEffect: Inner Tube
+// RainFeatherfallEffect: Umbrella Featherfall
 // SnowEffect: Freezing Snowballs
 // JungleJump: Jungle Jump and Spores
 // JungleDashEffect: Jungle Dash
@@ -153,6 +154,7 @@
 // IceQueenGraze: Graze
 // UfoMinionEffect: Saucer Minion
 // ChalicePotionEffect: Free Potion Buffs
+// MasoTrueEyeMinion: True Eye Minions
 MutantArmorHeader: Verdadeira Armadura do Mutant
 // MasoAbom: Abominationn Minion
 // MasoRing: Phantasmal Ring Minion
