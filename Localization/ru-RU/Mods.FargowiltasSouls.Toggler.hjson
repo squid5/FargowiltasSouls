@@ -55,6 +55,7 @@ ChloroMinion: Кристальный Лист Хлорофита
 CrimsonEffect: Лечение Багрянца
 RainUmbrellaEffect: Зонт Дождя
 RainInnerTubeEffect: Воздушная Камера
+// RainFeatherfallEffect: Umbrella Featherfall
 SnowEffect: Замораживающие Снежки
 JungleJump: Прыжок и Споры Джунглей
 JungleDashEffect: Рывок Джунглей
@@ -153,6 +154,7 @@ PumpkingsCapeEffect: Парирование Плаща Тыквенного Ко
 IceQueenGraze: Грэйз
 UfoMinionEffect: Прислужник Тарелка
 // ChalicePotionEffect: Free Potion Buffs
+// MasoTrueEyeMinion: True Eye Minions
 MutantArmorHeader: Истинная Броня Мутанта
 MasoAbom: Прислужник Выродокк
 MasoRing: Прислужник Фантазматическое Кольцо
