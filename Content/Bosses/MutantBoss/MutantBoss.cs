@@ -1492,7 +1492,12 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
                     ScreenShakeSystem.StartShake(10, shakeStrengthDissipationIncrement: 10f / 30);
 
                 //moon chain explosions
+                int explosions = 0;
                 if (WorldSavingSystem.EternityMode && AttackChoice != 9 || WorldSavingSystem.MasochistModeReal)
+                    explosions = 8;
+                else if (WorldSavingSystem.EternityMode)
+                    explosions = 5;
+                if (explosions > 0)
                 {
                     if (!Main.dedServ)
                         SoundEngine.PlaySound(SoundID.Thunder with { Pitch = -0.5f }, NPC.Center);
@@ -1505,7 +1510,7 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
                     Vector2 spawnPos = NPC.Center + length * offset;
                     Vector2 baseDirection = player.DirectionFrom(spawnPos);
 
-                    const int max = 8; //spread
+                    int max = explosions; //spread
                     for (int i = 0; i < max; i++)
                     {
                         Vector2 angle = baseDirection.RotatedBy(MathHelper.TwoPi / max * i);
