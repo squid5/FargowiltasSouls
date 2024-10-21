@@ -492,7 +492,11 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
                     {
                         Main.LocalPlayer.AddBuff(ModContent.BuffType<GoldenStasisCDBuff>(), 2);
                         if (WorldSavingSystem.MasochistModeReal)
+                        {
                             Main.LocalPlayer.AddBuff(ModContent.BuffType<TimeStopCDBuff>(), 2);
+                            Main.LocalPlayer.AddBuff(ModContent.BuffType<MutantDesperationBuff>(), 2);
+                        }
+                            
                     }
                     //if (FargowiltasSouls.Instance.CalamityLoaded)
                     //{

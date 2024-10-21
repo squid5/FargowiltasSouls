@@ -433,6 +433,9 @@ namespace FargowiltasSouls.Core.ModPlayers
             if (DeathMarked)
                 modifiers.SourceDamage *= 1.5f;
 
+            if (MutantDesperation)
+                modifiers.SourceDamage *= 2f;
+
             if (Player.whoAmI == Main.myPlayer && !noDodge && Player.HasEffect<SqueakEffect>())
             {
                 int chanceDenominator = 10;

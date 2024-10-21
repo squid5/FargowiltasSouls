@@ -367,6 +367,7 @@ namespace FargowiltasSouls.Core.ModPlayers
         public bool HadMutantPresence;
         public bool MutantPresence;
         public bool MutantPresenceBuffer;
+        public bool MutantDesperation;
         public int PresenceTogglerTimer;
         public bool MutantFang;
         public bool DevianttPresence;

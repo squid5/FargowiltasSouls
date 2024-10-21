@@ -2233,7 +2233,7 @@ namespace FargowiltasSouls.Content.Bosses.BanishedBaron
             AI2 = 0;
             AI3 = 0;
         }
-        void RandomizeState() //it's done this way so it cycles between attacks in a random order: for increased variety
+        void RandomizeState() // cycles between attacks in a random order: for increased variety
         {
             int index;
             if (availablestates.Count < 1)

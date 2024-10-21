@@ -423,6 +423,7 @@ namespace FargowiltasSouls.Core.ModPlayers
             }
             MutantPresenceBuffer = false;
             HadMutantPresence = MutantPresence;
+            MutantDesperation = false;
             MutantFang = false;
             DevianttPresence = false;
             Swarming = false;
