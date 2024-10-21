@@ -66,7 +66,11 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                 if (++HealCounter >= 75)
                 {
                     HealCounter = Main.rand.Next(30);
-                    CombatText.NewText(npc.Hitbox, CombatText.HealLife, HealPerSecond);
+                    if (HealPerSecond != 9999)
+                    {
+                        CombatText.NewText(npc.Hitbox, CombatText.HealLife, HealPerSecond);
+                    }
+                                        
                 }
             }
             return base.SafePreAI(npc);
