@@ -309,7 +309,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.Cavern
         {
             base.AI(npc);
 
-            if (npc.type == NPCID.Mimic || npc.type == NPCID.PresentMimic)
+            if (npc.type == NPCID.Mimic || npc.type == NPCID.PresentMimic || npc.type == NPCID.IceMimic)
             {
                 npc.dontTakeDamage = false;
                 if (npc.justHit && Main.hardMode)

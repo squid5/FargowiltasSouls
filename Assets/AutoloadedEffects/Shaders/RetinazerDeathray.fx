@@ -2,6 +2,7 @@
 sampler uImage1 : register(s1);
 sampler uImage2 : register(s2);
 
+
 float globalTime;
 float3 mainColor;
 matrix uWorldViewProjection;
@@ -53,8 +54,8 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
     
     float widthScale = float((y + (1 - coords.x * 0.05)) / 3.5);
     
-    if (coords.x < 0.06)
-        widthScale /= pow(coords.x / 0.06, 0.5);
+    if (coords.x < 0.2)
+        widthScale /= pow(coords.x / 0.2, 0.7);
 
     
     coords.y = ((coords.y - clamp(0.48, 0.45, 0.49)) * clamp(widthScale, 0, 2)) + 0.5;

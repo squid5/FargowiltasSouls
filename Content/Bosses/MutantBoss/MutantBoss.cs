@@ -770,7 +770,7 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
 
         bool Phase2Check()
         {
-            if (Main.expertMode && NPC.life < NPC.lifeMax / 2)
+            if (Main.expertMode && NPC.life < NPC.lifeMax * (2f / 3))
             {
                 if (FargoSoulsUtil.HostCheck)
                 {

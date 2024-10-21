@@ -1,5 +1,6 @@
 using Fargowiltas.NPCs;
 using FargowiltasSouls.Assets.ExtraTextures;
+using FargowiltasSouls.Assets.Sounds;
 using FargowiltasSouls.Content.Buffs.Masomode;
 using FargowiltasSouls.Content.Items.Accessories.Masomode;
 using FargowiltasSouls.Content.Items.BossBags;
@@ -1888,7 +1889,7 @@ namespace FargowiltasSouls.Content.Bosses.DeviBoss
                     //targetPos.Y -= 200;
                     NPC.velocity = (targetPos - NPC.Center) / 30;
                     NPC.netUpdate = true;
-
+                    SoundEngine.PlaySound(FargosSoundRegistry.DeviSwing, NPC.Center);
                     NPC.direction = NPC.spriteDirection = Math.Sign(SubTimer);
 
                     if (!WorldSavingSystem.MasochistModeReal && Math.Sign(targetPos.X - NPC.Center.X) != Math.Sign(SubTimer))

@@ -57,7 +57,7 @@ namespace FargowiltasSouls.Content.Projectiles
                 Projectile.localAI[1] = Projectile.ai[1] + 1;
 
                 //SoundEngine.PlaySound(SoundID.Zombie20, Projectile.Center);
-                SoundEngine.PlaySound(SoundID.ForceRoarPitched, Projectile.Center);
+                //SoundEngine.PlaySound(SoundID.ForceRoarPitched, Projectile.Center);
 
                 /*switch ((int)Projectile.ai[1])
                 {

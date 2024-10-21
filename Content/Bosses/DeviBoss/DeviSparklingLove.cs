@@ -89,6 +89,7 @@ namespace FargowiltasSouls.Content.Bosses.DeviBoss
                             Projectile.NewProjectile(Terraria.Entity.InheritSource(Projectile), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<GlowRing>(), 0, 0f, Main.myPlayer, -1, -16 + scaleCounter);
 
                         SoundEngine.PlaySound(SoundID.Item92, Projectile.Center);
+                        
                     }
                 }
 
@@ -111,7 +112,9 @@ namespace FargowiltasSouls.Content.Bosses.DeviBoss
 
                 if (!Main.dedServ && Main.LocalPlayer.active)
                     ScreenShakeSystem.StartShake(10, shakeStrengthDissipationIncrement: 10f / 30);
-                SoundEngine.PlaySound(FargosSoundRegistry.DeviSwing, Projectile.Center);
+                
+                    
+                
 
                 if (FargoSoulsUtil.HostCheck)
                 {
