@@ -89,9 +89,6 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
             EModeGlobalNPC.deerBoss = npc.whoAmI;
 
-            if (WorldSavingSystem.SwarmActive)
-                return result;
-
             const int MaxBerserkTime = 600;
 
             BerserkSpeedupTimer -= 1;

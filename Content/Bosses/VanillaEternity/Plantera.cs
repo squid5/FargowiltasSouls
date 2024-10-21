@@ -121,9 +121,6 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
             IsVenomEnraged = false;
 
-            if (WorldSavingSystem.SwarmActive)
-                return result;
-
             if (!EnteredPhase3 && (!npc.HasValidTarget || npc.Distance(Main.player[npc.target].Center) > 3000))
             {
                 npc.velocity.Y++;
@@ -991,9 +988,6 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
         {
             bool result = base.SafePreAI(npc);
 
-            if (WorldSavingSystem.SwarmActive)
-                return result;
-
             npc.damage = 0;
             npc.defDamage = 0;
 
@@ -1069,9 +1063,6 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
         public override bool SafePreAI(NPC npc)
         {
             bool result = base.SafePreAI(npc);
-
-            if (WorldSavingSystem.SwarmActive)
-                return result;
 
             NPC plantera = FargoSoulsUtil.NPCExists(NPC.plantBoss, NPCID.Plantera);
             if (plantera != null)

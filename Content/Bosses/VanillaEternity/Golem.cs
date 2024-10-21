@@ -57,7 +57,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
         public override bool SafePreAI(NPC npc)
         {
-            if (!WorldSavingSystem.SwarmActive && !npc.dontTakeDamage && HealPerSecond != 0)
+            if (!npc.dontTakeDamage && HealPerSecond != 0)
             {
                 npc.life += HealPerSecond / 60; //healing stuff
                 if (npc.life > npc.lifeMax)
@@ -171,9 +171,6 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
         {
             bool result = base.SafePreAI(npc);
             NPC.golemBoss = npc.whoAmI;
-
-            if (WorldSavingSystem.SwarmActive)
-                return result;
 
             /*if (npc.ai[0] == 0f && npc.velocity.Y == 0f) //manipulating golem jump ai
             {
@@ -520,8 +517,6 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
         public override bool SafePreAI(NPC npc)
         {
             bool result = base.SafePreAI(npc);
-            if (WorldSavingSystem.SwarmActive)
-                return result;
 
             if (npc.HasValidTarget && Golem.CheckTempleWalls(Main.player[npc.target].Center))
             {
@@ -643,8 +638,6 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             bool result = base.SafePreAI(npc);
             if (npc.damage < 165)
                 npc.damage = 165;
-            if (WorldSavingSystem.SwarmActive)
-                return result;
 
             NPC golem = FargoSoulsUtil.NPCExists(NPC.golemBoss, NPCID.Golem);
             if (npc.type == NPCID.GolemHead)

@@ -184,9 +184,6 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
             Resist = false;
 
-            if (WorldSavingSystem.SwarmActive)
-                return true;
-
             if (!npc.HasValidTarget || !Main.player[npc.target].active || Main.player[npc.target].dead)
             {
                 npc.TargetClosest();
@@ -762,7 +759,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
         public override bool CheckDead(NPC npc)
         {
-            if (WorldSavingSystem.SwarmActive || WorldSavingSystem.MasochistModeReal)
+            if (WorldSavingSystem.MasochistModeReal)
                 return base.CheckDead(npc);
 
             if (FargoSoulsUtil.BossIsAlive(ref EModeGlobalNPC.spazBoss, NPCID.Spazmatism) && Main.npc[EModeGlobalNPC.spazBoss].life > 1) //spaz still active
@@ -893,9 +890,6 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             EModeGlobalNPC.spazBoss = npc.whoAmI;
 
             Resist = false;
-
-            if (WorldSavingSystem.SwarmActive)
-                return true;
 
             if (!npc.HasValidTarget || !Main.player[npc.target].active || Main.player[npc.target].dead)
             {
@@ -1477,7 +1471,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
         public override bool CheckDead(NPC npc)
         {
-            if (WorldSavingSystem.SwarmActive || WorldSavingSystem.MasochistModeReal)
+            if ( WorldSavingSystem.MasochistModeReal)
                 return base.CheckDead(npc);
 
             if (FargoSoulsUtil.BossIsAlive(ref EModeGlobalNPC.retiBoss, NPCID.Retinazer) && Main.npc[EModeGlobalNPC.retiBoss].life > 1) //reti still active

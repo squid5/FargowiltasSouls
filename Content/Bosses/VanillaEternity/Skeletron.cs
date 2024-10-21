@@ -70,7 +70,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
         public override void OnSpawn(NPC npc, IEntitySource source)
         {
-            if (WorldSavingSystem.SwarmActive || !WorldSavingSystem.EternityMode)
+            if (!WorldSavingSystem.EternityMode)
                 return;
             SpawnGrace = 60 * 4;
         }
@@ -104,9 +104,6 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             bool result = base.SafePreAI(npc);
 
             EModeGlobalNPC.skeleBoss = npc.whoAmI;
-
-            if (WorldSavingSystem.SwarmActive)
-                return result;
 
             if (SpawnGrace > 0)
                 SpawnGrace--;
@@ -446,7 +443,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             }
         }
 
-        static bool ArmDR(NPC npc) => !WorldSavingSystem.SwarmActive && Main.npc.Any(n => n.active && n.type == NPCID.SkeletronHand && n.ai[1] == npc.whoAmI);
+        static bool ArmDR(NPC npc) => Main.npc.Any(n => n.active && n.type == NPCID.SkeletronHand && n.ai[1] == npc.whoAmI);
         static float GetDR(NPC npc)
         {
             if (ArmDR(npc))
@@ -471,7 +468,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
         public override bool CheckDead(NPC npc)
         {
-            if (npc.ai[1] != 2f && !WorldSavingSystem.SwarmActive)
+            if (npc.ai[1] != 2f)
             {
                 SoundEngine.PlaySound(SoundID.Roar, npc.Center);
 
@@ -571,10 +568,6 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
         public override bool SafePreAI(NPC npc)
         {
             bool result = base.SafePreAI(npc);
-            
-
-            if (WorldSavingSystem.SwarmActive)
-                return result;
 
             NPC head = FargoSoulsUtil.NPCExists(npc.ai[1], NPCID.SkeletronHead);
             if (head == null)
@@ -656,7 +649,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
         }
         public override void SafePostAI(NPC npc)
         {
-            if (WorldSavingSystem.SwarmActive || Main.dayTime)
+            if (Main.dayTime)
                 return;
 
             NPC head = FargoSoulsUtil.NPCExists(npc.ai[1], NPCID.SkeletronHead);

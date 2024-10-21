@@ -36,6 +36,9 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
             Projectile.extraUpdates = 0;
             Projectile.timeLeft = 360 * (Projectile.extraUpdates + 1);
 
+            if (WorldSavingSystem.SwarmActive)
+                Projectile.extraUpdates = 1;
+
             Projectile.hide = true;
 
             Projectile.FargoSouls().DeletionImmuneRank = 1;

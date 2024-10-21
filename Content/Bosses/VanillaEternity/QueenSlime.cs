@@ -224,8 +224,6 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
         {
             EModeGlobalNPC.queenSlimeBoss = npc.whoAmI;
 
-            if (WorldSavingSystem.SwarmActive)
-                return true;
             void TrySpawnMinions(ref bool check, double threshold)
             {
                 if (!check && npc.life < npc.lifeMax * threshold)

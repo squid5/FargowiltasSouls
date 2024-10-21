@@ -216,9 +216,6 @@ namespace FargowiltasSouls.Content.Projectiles
 
         private static bool NonSwarmFight(Projectile projectile, params int[] types)
         {
-            if (WorldSavingSystem.SwarmActive)
-                return false;
-
             NPC npc = projectile.GetSourceNPC();
             return projectile.GetSourceNPC() is NPC && types.Contains(npc.type);
         }
@@ -275,8 +272,6 @@ namespace FargowiltasSouls.Content.Projectiles
                     break;
 
                 case ProjectileID.DeerclopsIceSpike: //note to future self: these are all mp compatible apparently?
-                    if (WorldSavingSystem.SwarmActive)
-                        break;
 
                     if (WorldSavingSystem.MasochistModeReal)
                         projectile.ai[0] -= 20;
@@ -552,8 +547,6 @@ namespace FargowiltasSouls.Content.Projectiles
                     break;
 
                 case ProjectileID.InsanityShadowHostile:
-                    if (WorldSavingSystem.SwarmActive)
-                        break;
 
                     if (Main.player[projectile.owner].ownedProjectileCounts[projectile.type] >= 4)
                     {
@@ -575,7 +568,7 @@ namespace FargowiltasSouls.Content.Projectiles
                     break;
 
                 case ProjectileID.DeerclopsIceSpike:
-                    if (!WorldSavingSystem.SwarmActive && counter == 2f && projectile.hostile && projectile.ai[1] > 1.3f) //only larger spikes
+                    if (counter == 2f && projectile.hostile && projectile.ai[1] > 1.3f) //only larger spikes
                     {
                         float ai1 = 1.3f;
                         if (projectile.ai[1] > 1.35f)
@@ -612,16 +605,13 @@ namespace FargowiltasSouls.Content.Projectiles
                         break;
                     }
 
-                    if (!WorldSavingSystem.SwarmActive)
-                    {
-                        if (Math.Abs(MathHelper.WrapAngle(projectile.velocity.ToRotation() - projectile.localAI[1])) > MathHelper.Pi * 0.9f)
-                            EModeCanHurt = true;
+                    if (Math.Abs(MathHelper.WrapAngle(projectile.velocity.ToRotation() - projectile.localAI[1])) > MathHelper.Pi * 0.9f)
+                        EModeCanHurt = true;
 
-                        projectile.extraUpdates = EModeCanHurt ? 1 : 3;
+                    projectile.extraUpdates = EModeCanHurt ? 1 : 3;
 
-                        if (projectile.localAI[0] == 1f)
-                            projectile.velocity = projectile.velocity.RotatedBy(-projectile.ai[0] * 2f);
-                    }
+                    if (projectile.localAI[0] == 1f)
+                        projectile.velocity = projectile.velocity.RotatedBy(-projectile.ai[0] * 2f);
 
                     if (altBehaviour)
                     {
@@ -632,7 +622,7 @@ namespace FargowiltasSouls.Content.Projectiles
 
                 case ProjectileID.HallowBossRainbowStreak:
                     if (!EModeCanHurt)
-                        EModeCanHurt = WorldSavingSystem.SwarmActive || projectile.timeLeft < 100;
+                        EModeCanHurt = projectile.timeLeft < 100;
                     break;
 
                 case ProjectileID.FairyQueenLance:
@@ -668,7 +658,7 @@ namespace FargowiltasSouls.Content.Projectiles
                     break;
 
                 case ProjectileID.FairyQueenSunDance:
-                    if (!WorldSavingSystem.SwarmActive)
+                    if (true)
                     {
                         NPC npc = FargoSoulsUtil.NPCExists(projectile.ai[1], NPCID.HallowBoss);
                         if (npc != null)
@@ -834,7 +824,7 @@ namespace FargowiltasSouls.Content.Projectiles
                     break;
 
                 case ProjectileID.CultistRitual:
-                    if (!WorldSavingSystem.SwarmActive)
+                    if (true)
                     {
                         NPC npc = FargoSoulsUtil.NPCExists(projectile.ai[1], NPCID.CultistBoss);
                         if (npc != null && npc.ai[3] == -1f && npc.ai[0] == 5)
@@ -957,7 +947,7 @@ namespace FargowiltasSouls.Content.Projectiles
                     break;
 
                 case ProjectileID.MoonLeech:
-                    if (projectile.ai[0] > 0f && !WorldSavingSystem.SwarmActive)
+                    if (projectile.ai[0] > 0f)
                     {
                         Vector2 distance = Main.player[(int)projectile.ai[1]].Center - projectile.Center - projectile.velocity;
                         if (distance != Vector2.Zero)
@@ -997,7 +987,7 @@ namespace FargowiltasSouls.Content.Projectiles
                     break;
 
                 case ProjectileID.PhantasmalSphere:
-                    if (!WorldSavingSystem.SwarmActive && !(WorldSavingSystem.MasochistModeReal && Main.getGoodWorld))
+                    if (!(WorldSavingSystem.MasochistModeReal && Main.getGoodWorld))
                     {
                         EModeCanHurt = projectile.alpha == 0;
 
@@ -1049,8 +1039,7 @@ namespace FargowiltasSouls.Content.Projectiles
                 case ProjectileID.BombSkeletronPrime: //needs to be set every tick
                     if (sourceNPC is NPC && sourceNPC.type == NPCID.UndeadMiner)
                         projectile.damage = sourceNPC.damage / 2;
-                    if (!WorldSavingSystem.SwarmActive)
-                        projectile.damage = 40;
+                    projectile.damage = 40;
                     break;
 
                 case ProjectileID.DD2BetsyFireball: //when spawned, also spawn a phoenix
@@ -1118,8 +1107,6 @@ namespace FargowiltasSouls.Content.Projectiles
                     break;
 
                 case ProjectileID.QueenSlimeGelAttack:
-                    if (WorldSavingSystem.SwarmActive)
-                        break;
 
                     if (!WorldSavingSystem.MasochistModeReal)
                     {
@@ -1162,7 +1149,7 @@ namespace FargowiltasSouls.Content.Projectiles
                     break;
 
                 case ProjectileID.QueenSlimeMinionPinkBall:
-                    if (!WorldSavingSystem.MasochistModeReal && !WorldSavingSystem.SwarmActive)
+                    if (!WorldSavingSystem.MasochistModeReal)
                     {
                         float ratio = Math.Max(0, 1f - counter / 60f / projectile.MaxUpdates);
                         projectile.position -= projectile.velocity * ratio; //accel startup

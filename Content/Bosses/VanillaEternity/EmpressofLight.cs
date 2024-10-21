@@ -72,9 +72,6 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
         {
             EModeGlobalNPC.empressBoss = npc.whoAmI;
 
-            if (WorldSavingSystem.SwarmActive)
-                return base.SafePreAI(npc);
-
             if (Main.LocalPlayer.active && !Main.LocalPlayer.dead && !Main.LocalPlayer.ghost)
                 Main.LocalPlayer.AddBuff(ModContent.BuffType<PurgedBuff>(), 2);
 

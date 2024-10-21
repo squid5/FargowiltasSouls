@@ -39,6 +39,9 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
             Projectile.scale = 1;
             Projectile.Opacity = 0;
             Projectile.hide = true;
+
+            if (WorldSavingSystem.SwarmActive)
+                Projectile.extraUpdates = 1;
         }
         ref float Timer => ref Projectile.ai[0];
         ref float Target => ref Projectile.ai[1];

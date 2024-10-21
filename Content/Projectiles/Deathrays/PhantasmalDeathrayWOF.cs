@@ -16,7 +16,7 @@ namespace FargowiltasSouls.Content.Projectiles.Deathrays
     public class PhantasmalDeathrayWOF : BaseDeathray, IPixelatedPrimitiveRenderer
     {
         public override string Texture => "FargowiltasSouls/Content/Projectiles/Deathrays/PhantasmalDeathrayWOF";
-        public PhantasmalDeathrayWOF() : base(90) { }
+        public PhantasmalDeathrayWOF() : base(WorldSavingSystem.SwarmActive ? 45 : 90) { }
 
         public override void SetStaticDefaults()
         {

@@ -82,9 +82,6 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
             EModeGlobalNPC.primeBoss = npc.whoAmI;
 
-            if (WorldSavingSystem.SwarmActive)
-                return result;
-
             if (npc.ai[1] == 3) //despawn faster
             {
                 if (npc.timeLeft > 60)
@@ -381,7 +378,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
         public override bool CheckDead(NPC npc)
         {
-            if (npc.ai[1] != 2f && !WorldSavingSystem.SwarmActive)
+            if (npc.ai[1] != 2f)
             {
                 SoundEngine.PlaySound(SoundID.Roar, npc.Center);
                 npc.life = npc.lifeMax / 630;
@@ -507,9 +504,6 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
         {
             if (NoContactDamageTimer > 0)
                 NoContactDamageTimer--;
-
-            if (WorldSavingSystem.SwarmActive)
-                return true;
 
             NPC head = FargoSoulsUtil.NPCExists(npc.ai[1], NPCID.SkeletronPrime);
             if (head == null)

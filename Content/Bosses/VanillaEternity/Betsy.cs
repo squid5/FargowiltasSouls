@@ -66,9 +66,6 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
         {
             EModeGlobalNPC.betsyBoss = npc.whoAmI;
 
-            if (WorldSavingSystem.SwarmActive)
-                return true;
-
             TargetPlayer = true;
 
             //npc.boss = npc.HasPlayerTarget || !DD2Event.Ongoing; //allow players to respawn in mp if everyone is dead during event

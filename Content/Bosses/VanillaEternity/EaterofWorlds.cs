@@ -80,8 +80,6 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
         public override bool CheckDead(NPC npc)
         {
-            if (WorldSavingSystem.SwarmActive)
-                return base.CheckDead(npc);
 
             int count = 0;
             for (int i = 0; i < Main.maxNPCs; i++)
@@ -239,9 +237,6 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
         {
             EModeGlobalNPC.eaterBoss = npc.whoAmI;
             FargoSoulsGlobalNPC.boss = npc.whoAmI;
-
-            if (WorldSavingSystem.SwarmActive)
-                return true;
 
             if (!npc.HasValidTarget || npc.Distance(Main.player[npc.target].Center) > 3000)
             {

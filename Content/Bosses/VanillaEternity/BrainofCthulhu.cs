@@ -87,8 +87,6 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
         public override bool SafePreAI(NPC npc)
         {
             EModeGlobalNPC.brainBoss = npc.whoAmI;
-            if (WorldSavingSystem.SwarmActive)
-                return base.SafePreAI(npc);
 
             if (Main.LocalPlayer.active && Main.LocalPlayer.Eternity().ShorterDebuffsTimer < 2)
                 Main.LocalPlayer.Eternity().ShorterDebuffsTimer = 2;
@@ -532,9 +530,6 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
         public override bool SafePreAI(NPC npc)
         {
             bool result = base.SafePreAI(npc);
-
-            if (WorldSavingSystem.SwarmActive)
-                return result;
 
             if (--IchorAttackTimer < 0)
             {

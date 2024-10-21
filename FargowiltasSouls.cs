@@ -2,6 +2,7 @@
 global using FargowiltasSouls.Core.Toggler;
 global using Luminance.Common.Utilities;
 global using LumUtils = Luminance.Common.Utilities.Utilities;
+using Fargowiltas;
 using FargowiltasSouls.Content.Bosses.CursedCoffin;
 using FargowiltasSouls.Content.Bosses.VanillaEternity;
 using FargowiltasSouls.Content.Buffs.Boss;
@@ -453,6 +454,12 @@ namespace FargowiltasSouls
 
                     ModContent.BuffType<TimeFrozenBuff>()
                 ];
+
+                const int k = 1000;
+                FargoSets.NPCs.SwarmHealth[ModContent.NPCType<RoyalSubject>()] = 30 * k;
+                FargoSets.NPCs.SwarmHealth[ModContent.NPCType<GelatinSubject>()] = 10 * k;
+                FargoSets.NPCs.SwarmHealth[ModContent.NPCType<CrystalLeaf>()] = 80 * k;
+
                 BossChecklistCompatibility();
 
                 //Mod bossHealthBar = ModLoader.GetMod("FKBossHealthBar");

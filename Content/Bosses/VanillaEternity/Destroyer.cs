@@ -3,6 +3,7 @@ using FargowiltasSouls.Common.Utilities;
 using FargowiltasSouls.Content.Buffs.Masomode;
 using FargowiltasSouls.Content.Buffs.Souls;
 using FargowiltasSouls.Content.Projectiles;
+using FargowiltasSouls.Content.Projectiles.BossWeapons;
 using FargowiltasSouls.Content.Projectiles.ChallengerItems;
 using FargowiltasSouls.Content.Projectiles.Masomode;
 using FargowiltasSouls.Core;
@@ -675,8 +676,6 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
         {
             EModeGlobalNPC.destroyBoss = npc.whoAmI;
 
-            if (WorldSavingSystem.SwarmActive)
-                return true;
 
             if (!InPhase2)
             {
@@ -826,9 +825,6 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
         public override bool SafePreAI(NPC npc)
         {
             bool result = base.SafePreAI(npc);
-
-            if (WorldSavingSystem.SwarmActive)
-                return result;
 
             NPC destroyer = FargoSoulsUtil.NPCExists(npc.realLife, NPCID.TheDestroyer);
 
@@ -1017,6 +1013,10 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
             if (projectile.FargoSouls().IsAHeldProj)
                 modifiers.FinalDamage *= 0.4f;
+
+            if (WorldSavingSystem.SwarmActive)
+                if (projectile.type == ModContent.ProjectileType<StyxGazer>() || projectile.type == ModContent.ProjectileType<StyxSickle>())
+                    modifiers.FinalDamage *= 0.001f;
         }
         public override void SafeModifyHitByItem(NPC npc, Player player, Item item, ref NPC.HitModifiers modifiers)
         {
@@ -1090,8 +1090,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
         public override bool CanHitPlayer(NPC npc, Player target, ref int CooldownSlot)
         {
-            return WorldSavingSystem.SwarmActive
-                || !FargoSoulsUtil.BossIsAlive(ref EModeGlobalNPC.destroyBoss, NPCID.TheDestroyer)
+            return !FargoSoulsUtil.BossIsAlive(ref EModeGlobalNPC.destroyBoss, NPCID.TheDestroyer)
                 || (WorldSavingSystem.MasochistModeReal && Main.getGoodWorld);
         }
 
@@ -1109,7 +1108,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
         {
             bool result = base.SafePreAI(npc);
 
-            if (WorldSavingSystem.SwarmActive || !FargoSoulsUtil.BossIsAlive(ref EModeGlobalNPC.destroyBoss, NPCID.TheDestroyer))
+            if (!FargoSoulsUtil.BossIsAlive(ref EModeGlobalNPC.destroyBoss, NPCID.TheDestroyer))
                 return result;
 
             //bool isCoiling = Main.npc[EModeGlobalNPC.destroyBoss].GetGlobalNPC<Destroyer>().IsCoiling;

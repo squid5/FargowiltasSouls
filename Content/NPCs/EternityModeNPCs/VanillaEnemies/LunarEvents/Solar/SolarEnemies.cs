@@ -129,7 +129,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEve
         {
             base.AI(npc);
 
-            if (IsCultistProjectile && !WorldSavingSystem.SwarmActive && !WorldSavingSystem.MasochistModeReal)
+            if (IsCultistProjectile && !WorldSavingSystem.MasochistModeReal)
                 npc.position += npc.velocity * Math.Min(0.5f, ++Timer / 60f - 1f);
         }
     }

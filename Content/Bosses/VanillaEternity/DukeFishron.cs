@@ -102,9 +102,6 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
             EModeGlobalNPC.fishBoss = npc.whoAmI;
 
-            if (WorldSavingSystem.SwarmActive)
-                return result;
-
             void SpawnRazorbladeRing(int max, float speed, int damage, float rotationModifier, bool reduceTimeleft = false)
             {
                 if (Main.netMode == NetmodeID.MultiplayerClient)
@@ -845,8 +842,6 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
         public override bool CheckDead(NPC npc)
         {
-            if (WorldSavingSystem.SwarmActive)
-                return base.CheckDead(npc);
 
             if (npc.ai[0] <= 9)
             {

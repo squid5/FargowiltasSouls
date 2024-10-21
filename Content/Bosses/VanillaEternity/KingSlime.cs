@@ -44,10 +44,6 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
             ref float teleportTimer = ref npc.ai[2];
 
-
-            if (WorldSavingSystem.SwarmActive)
-                return true;
-
             if (CertainAttackCooldown > 0)
                 CertainAttackCooldown--;
 

@@ -84,9 +84,6 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
             EModeGlobalNPC.beeBoss = npc.whoAmI;
 
-            if (WorldSavingSystem.SwarmActive)
-                return result;
-
             if (npc.ai[0] == 2 && npc.HasValidTarget)
             {
                 float lerp = Math.Min(++npc.ai[1] / 3000f, 1f);
@@ -433,7 +430,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
         public override void ModifyIncomingHit(NPC npc, ref NPC.HitModifiers modifiers)
         {
-            if (!WorldSavingSystem.SwarmActive && SubjectDR)
+            if (SubjectDR)
                 modifiers.FinalDamage /= 3;
 
             base.ModifyIncomingHit(npc, ref modifiers);
@@ -442,7 +439,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
         {
             if (npc.lifeRegen >= 0)
                 return;
-            if (!WorldSavingSystem.SwarmActive && SubjectDR)
+            if (SubjectDR)
             {
                 npc.lifeRegen /= 2;
                 damage /= 2;

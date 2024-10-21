@@ -101,8 +101,6 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
             EModeGlobalNPC.wallBoss = npc.whoAmI;
 
-            if (WorldSavingSystem.SwarmActive)
-                return result;
             if (!MadeEyeInvul && npc.ai[3] == 0f) //when spawned in, make one eye invul
             {
                 for (int i = 0; i < Main.maxNPCs; i++) //not in on-spawn because need vanilla ai to spawn eyes first
@@ -523,7 +521,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             ref float ai_State = ref npc.ai[2];
 
             NPC mouth = FargoSoulsUtil.NPCExists(npc.realLife, NPCID.WallofFlesh);
-            if (WorldSavingSystem.SwarmActive || RepeatingAI || mouth == null)
+            if (RepeatingAI || mouth == null)
                 return true;
 
             if (PreventAttacks > 0)
@@ -789,9 +787,6 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
         public override void AI(NPC npc)
         {
             base.AI(npc);
-
-            if (WorldSavingSystem.SwarmActive)
-                return;
 
             NPC wall = FargoSoulsUtil.NPCExists(EModeGlobalNPC.wallBoss, NPCID.WallofFlesh);
             if (npc.HasValidTarget && npc.Distance(Main.player[npc.target].Center) < 200 && wall != null

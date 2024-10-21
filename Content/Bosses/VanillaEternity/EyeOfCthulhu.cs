@@ -81,9 +81,6 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             ref float ai_Timer = ref npc.ai[2];
             EModeGlobalNPC.eyeBoss = npc.whoAmI;
 
-            if (WorldSavingSystem.SwarmActive)
-                return true;
-
             void SpawnServants()
             {
                 if (npc.life <= npc.lifeMax * 0.65 && NPC.CountNPCS(NPCID.ServantofCthulhu) < 9 && FargoSoulsUtil.HostCheck)
