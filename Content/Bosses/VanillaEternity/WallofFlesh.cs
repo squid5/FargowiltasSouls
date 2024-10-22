@@ -1,5 +1,6 @@
 using Fargowiltas.Common.Configs;
 using FargowiltasSouls.Assets.ExtraTextures;
+using FargowiltasSouls.Assets.Sounds;
 using FargowiltasSouls.Common.Graphics.Particles;
 using FargowiltasSouls.Common.Utilities;
 using FargowiltasSouls.Content.Buffs.Masomode;
@@ -137,7 +138,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                         DidGrowl = true;
                         if (!Main.dedServ)
                         {
-                            SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/VanillaEternity/WallofFlesh/WoFSuck"),
+                            SoundEngine.PlaySound(FargosSoundRegistry.WoFSuck,
                                 npc.HasValidTarget && Main.player[npc.target].ZoneUnderworldHeight ? Main.player[npc.target].Center : npc.Center);
                         }
                     }
@@ -230,7 +231,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
                 if (!Main.dedServ)
                 {
-                    SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/VanillaEternity/WallofFlesh/WoFScreech"),
+                    SoundEngine.PlaySound(FargosSoundRegistry.WoFScreech,
                         npc.HasValidTarget && Main.player[npc.target].ZoneUnderworldHeight ? Main.player[npc.target].Center : npc.Center);
 
                     if (Main.LocalPlayer.active)
@@ -288,7 +289,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
                 if (!Main.dedServ)
                 {
-                    SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/VanillaEternity/WallofFlesh/WoFScreech"),
+                    SoundEngine.PlaySound(FargosSoundRegistry.WoFScreech,
                         npc.HasValidTarget && Main.player[npc.target].ZoneUnderworldHeight ? Main.player[npc.target].Center : npc.Center);
 
                     if (Main.LocalPlayer.active)
@@ -318,7 +319,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
                     if (!Main.dedServ)
                     {
-                        SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/VanillaEternity/WallofFlesh/WoFGrowl") { Volume = 1.5f },
+                        SoundEngine.PlaySound(FargosSoundRegistry.WoFGrowl with { Volume = 1.5f },
                             npc.HasValidTarget && Main.player[npc.target].ZoneUnderworldHeight ? Main.player[npc.target].Center : npc.Center);
 
                         if (Main.LocalPlayer.active)
