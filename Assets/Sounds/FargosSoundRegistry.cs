@@ -65,5 +65,10 @@ namespace FargowiltasSouls.Assets.Sounds
         public static readonly SoundStyle ElectricOrbHum = new(SoundsPath + "VanillaEternity/Mechs/ElectricOrbHum");
         public static readonly SoundStyle ElectricOrbShot = new(SoundsPath + "VanillaEternity/Mechs/ElectricOrbShot");
         //public static readonly SoundStyle TwinsDeathray = new(SoundsPath + "VanillaEternity/Mechs/TwinsDeathray");
+
+        // WoF
+        public static readonly SoundStyle WoFSuck = new(SoundsPath + "VanillaEternity/WallofFlesh/WoFSuck");
+        public static readonly SoundStyle WoFScreech = new(SoundsPath + "VanillaEternity/WallofFlesh/WoFScreech");
+        public static readonly SoundStyle WoFGrowl = new(SoundsPath + "VanillaEternity/WallofFlesh/WoFGrowl");
     }
 }
