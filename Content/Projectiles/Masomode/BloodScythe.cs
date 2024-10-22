@@ -1,4 +1,5 @@
 ﻿using FargowiltasSouls.Assets.ExtraTextures;
+using FargowiltasSouls.Common.Graphics.Particles;
 using FargowiltasSouls.Content.Buffs.Masomode;
 using FargowiltasSouls.Core;
 using FargowiltasSouls.Core.Systems;
@@ -56,6 +57,12 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
             float velrando = Main.rand.Next(20, 31) / 10;
             Main.dust[d].velocity = Projectile.velocity / velrando;
             Main.dust[d].noGravity = true;
+            Main.dust[d].scale = 1.2f;
+
+            if (!Projectile.active)
+            {
+                Main.dust[d].scale = 0f;
+            }
             //}
 
             if (Projectile.timeLeft < 180)
@@ -91,12 +98,29 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
             Texture2D glowTexture = ModContent.Request<Texture2D>("FargowiltasSouls/Content/Projectiles/GlowRing").Value;
 
             Vector2 glowDrawPosition = Projectile.Center + Projectile.velocity / 10f;
+            glowDrawPosition += Main.rand.NextVector2Circular(5, 5);
 
             Main.EntitySpriteDraw(glowTexture, glowDrawPosition - Main.screenPosition, null, SoulConfig.Instance.BossRecolors && WorldSavingSystem.EternityMode ? Color.Teal : Color.DarkRed, Projectile.rotation, glowTexture.Size() * 0.5f, Projectile.scale * 0.8f, SpriteEffects.None, 0);
             FargoSoulsUtil.GenericProjectileDraw(Projectile, lightColor, texture: texture);
             return false;
         }
 
+        public override void OnKill(int timeLeft)
+        {
+            /*Particle p = new SparkParticle(Projectile.Center, Main.rand.NextVector2Circular(5, 5), recolor? Color.White : Color.Red, 1f, 25, false, null);
+            p.Spawn();
+            p.Spawn();
+            p.Spawn();*/
+            for (int i = 0; i < 4; i++)
+            {
+            int d = Dust.NewDust(Projectile.Center, 0, 0, DustID.SnowSpray, 0f, 0f, 150);
+            Main.dust[d].velocity = Main.rand.NextVector2Circular(5,5);
+            Main.dust[d].noGravity = true;
+            Main.dust[d].scale = 2f;
+            Main.dust[d].color = Color.White;
+            }
+            base.OnKill(timeLeft);
+        }
 
         public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {

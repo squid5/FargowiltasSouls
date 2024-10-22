@@ -2,6 +2,7 @@ using Fargowiltas.Common.Configs;
 using Fargowiltas.NPCs;
 using FargowiltasSouls.Assets.ExtraTextures;
 using FargowiltasSouls.Assets.Sounds;
+using FargowiltasSouls.Content.BossBars;
 using FargowiltasSouls.Content.Buffs.Boss;
 using FargowiltasSouls.Content.Buffs.Masomode;
 using FargowiltasSouls.Content.Buffs.Souls;
@@ -128,6 +129,7 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
             NPC.aiStyle = -1;
             NPC.netAlways = true;
             NPC.timeLeft = NPC.activeTime * 30;
+            NPC.BossBar = ModContent.GetInstance<MutantBossBar>();
             if (WorldSavingSystem.AngryMutant)
             {
                 NPC.damage *= 17;
