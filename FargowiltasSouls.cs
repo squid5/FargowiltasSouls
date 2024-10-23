@@ -456,7 +456,7 @@ namespace FargowiltasSouls
                 ];
 
                 const int k = 1000;
-                FargoSets.NPCs.SwarmHealth[ModContent.NPCType<RoyalSubject>()] = 30 * k;
+                FargoSets.NPCs.SwarmHealth[ModContent.NPCType<RoyalSubject>()] = 14 * k;
                 FargoSets.NPCs.SwarmHealth[ModContent.NPCType<GelatinSubject>()] = 10 * k;
                 FargoSets.NPCs.SwarmHealth[ModContent.NPCType<CrystalLeaf>()] = 80 * k;
 
