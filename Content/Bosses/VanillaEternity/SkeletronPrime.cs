@@ -384,6 +384,8 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                 npc.life = npc.lifeMax / 630;
                 if (npc.life < 100)
                     npc.life = 100;
+                if (WorldSavingSystem.SwarmActive && npc.life > 666)
+                    npc.life = 666;
                 npc.defDefense = 9999;
                 npc.defense = 9999;
                 npc.defDamage *= 13;

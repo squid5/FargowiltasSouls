@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.Metrics;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -39,9 +40,6 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
             Projectile.scale = 1;
             Projectile.Opacity = 0;
             Projectile.hide = true;
-
-            if (WorldSavingSystem.SwarmActive)
-                Projectile.extraUpdates = 1;
         }
         ref float Timer => ref Projectile.ai[0];
         ref float Target => ref Projectile.ai[1];
@@ -144,6 +142,12 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
                 }
             }
             Timer++;
+            if (WorldSavingSystem.SwarmActive && Main.GameUpdateCount % 2 == 0)
+            {
+                Timer++;
+                if (Timer == 61)
+                    SoundEngine.PlaySound(SoundID.Item63 with { Pitch = -1f, Volume = 10 }, Projectile.Center);
+            }
         }
         public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
         {

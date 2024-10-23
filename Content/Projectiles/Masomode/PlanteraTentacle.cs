@@ -36,9 +36,6 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
             Projectile.extraUpdates = 0;
             Projectile.timeLeft = 360 * (Projectile.extraUpdates + 1);
 
-            if (WorldSavingSystem.SwarmActive)
-                Projectile.extraUpdates = 1;
-
             Projectile.hide = true;
 
             Projectile.FargoSouls().DeletionImmuneRank = 1;
@@ -62,7 +59,7 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
         }
 
         private int counter;
-        private const int attackTime = 150;
+        private int attackTime = 150;
 
         public override void AI()
         {
@@ -78,6 +75,10 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
             Projectile.localAI[1] = npc.Center.Y;
 
             counter++;
+            if (WorldSavingSystem.SwarmActive)
+            {
+                attackTime = 100;
+            }
             if (Projectile.velocity == Vector2.Zero)
             {
                 Projectile.frame = 0;
