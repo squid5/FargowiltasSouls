@@ -129,7 +129,7 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
             NPC.aiStyle = -1;
             NPC.netAlways = true;
             NPC.timeLeft = NPC.activeTime * 30;
-            NPC.BossBar = ModContent.GetInstance<MutantBossBar>();
+            //NPC.BossBar = ModContent.GetInstance<MutantBossBar>();
             if (WorldSavingSystem.AngryMutant)
             {
                 NPC.damage *= 17;

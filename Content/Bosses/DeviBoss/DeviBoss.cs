@@ -1,6 +1,7 @@
 using Fargowiltas.NPCs;
 using FargowiltasSouls.Assets.ExtraTextures;
 using FargowiltasSouls.Assets.Sounds;
+using FargowiltasSouls.Content.BossBars;
 using FargowiltasSouls.Content.Buffs.Masomode;
 using FargowiltasSouls.Content.Items.Accessories.Masomode;
 using FargowiltasSouls.Content.Items.BossBags;
@@ -137,6 +138,7 @@ namespace FargowiltasSouls.Content.Bosses.DeviBoss
             NPC.aiStyle = -1;
             NPC.netAlways = true;
             NPC.timeLeft = NPC.activeTime * 30;
+            //NPC.BossBar = ModContent.GetInstance<DevianttBossBar>();
 
             Music = ModLoader.TryGetMod("FargowiltasMusic", out Mod musicMod)
                 ? MusicLoader.GetMusicSlot(musicMod, (musicMod.Version >= Version.Parse("0.1.4")) ? "Assets/Music/Strawberry_Sparkly_Sunrise" : "Assets/Music/LexusCyanixs") : MusicID.OtherworldlyHallow;
