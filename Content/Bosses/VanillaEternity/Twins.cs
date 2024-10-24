@@ -654,7 +654,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                             //if (--npc.ai[2] > 295f) npc.ai[2] = 295f;
                             npc.ai[3] -= (npc.ai[0] - 4f) / 120f * rotationInterval * (StoredDirectionToPlayer ? 1f : -1f);
                             npc.rotation = -npc.ai[3];
-
+                            
 
                             if (npc.ai[0] == 35f)
                             {
@@ -667,7 +667,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                             if (npc.ai[0] >= 155f) //FIRE LASER
                             {
                                 if (!Main.dedServ)
-                                    SoundEngine.PlaySound(FargosSoundRegistry.GenericDeathray with { Volume = 2f }, npc.Center);
+                                    SoundEngine.PlaySound(FargosSoundRegistry.TwinsDeathray with { Volume = 2f }, npc.Center);
                                 if (FargoSoulsUtil.HostCheck)
                                 {
                                     Vector2 speed = Vector2.UnitX.RotatedBy(npc.rotation);
@@ -783,7 +783,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
         {
             Vector2 AuraPosition = npc.Center;
             if (ShouldDrawAura)
-                DrawAura(npc, spriteBatch, AuraPosition);
+                DrawAura(npc, spriteBatch, AuraPosition);          
             return true;
         }
         public void DrawAura(NPC npc, SpriteBatch spriteBatch, Vector2 position)

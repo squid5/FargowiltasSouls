@@ -41,7 +41,7 @@ namespace FargowiltasSouls.Content.Projectiles.Deathrays
             NPC npc = FargoSoulsUtil.NPCExists(Projectile.ai[1], NPCID.Retinazer);
             if (npc != null)
             {
-                Vector2 offset = new Vector2(npc.width - 24, 0.5f).RotatedBy(npc.rotation + 1.57079633);
+                Vector2 offset = new Vector2(npc.width - 24, 0.5f).RotatedBy(npc.rotation + 1.57079637);
                 Projectile.Center = npc.Center + offset;
 
                 if (npc.GetGlobalNPC<Retinazer>().DeathrayState >= 3 && Projectile.localAI[0] < maxTime - 30)
@@ -149,7 +149,7 @@ namespace FargowiltasSouls.Content.Projectiles.Deathrays
 
         public static Color ColorFunction(float _)
         {
-            Color color = Color.Orange; //new(232, 140, 240);
+            Color color = Color.Lerp(Color.OrangeRed, Color.Orange, 2f); //new(232, 140, 240);
             color.A = 0;
             return color;
         }

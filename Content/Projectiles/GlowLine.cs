@@ -273,7 +273,7 @@ namespace FargowiltasSouls.Content.Projectiles
                         NPC npc = FargoSoulsUtil.NPCExists(Projectile.ai[1], NPCID.Retinazer);
                         if (npc != null)
                         {
-                            Vector2 offset = new Vector2(npc.width - 24, 0).RotatedBy(npc.rotation + 1.57079633);
+                            Vector2 offset = new Vector2(npc.width - 24, 0).RotatedBy(npc.rotation + MathHelper.PiOver2);
                             Projectile.Center = npc.Center + offset;
                             Projectile.rotation = npc.rotation + MathHelper.PiOver2;
                         }
