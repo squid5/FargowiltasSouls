@@ -173,6 +173,8 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                             }
 
                             npc.alpha += 5;
+                            if (WorldSavingSystem.SwarmActive)
+                                npc.alpha -= 2;
                             if (npc.alpha > 255)
                             {
                                 npc.alpha = 255;
