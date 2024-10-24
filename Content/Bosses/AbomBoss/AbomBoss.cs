@@ -107,7 +107,7 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
             NPC.aiStyle = -1;
             NPC.netAlways = true;
             NPC.timeLeft = NPC.activeTime * 30;
-            //NPC.BossBar = ModContent.GetInstance<AbominationnBossBar>();
+            NPC.BossBar = ModContent.GetInstance<AbominationnBossBar>();
 
             Music = MusicID.OtherworldlyPlantera;
             bool foundMod = ModLoader.TryGetMod("FargowiltasMusic", out Mod musicMod);
