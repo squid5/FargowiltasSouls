@@ -106,7 +106,7 @@ namespace FargowiltasSouls.Content.Projectiles.Souls
             Main.spriteBatch.ResetToDefault();
 
             Main.EntitySpriteDraw(texture, drawPosition, rectangle, color, Projectile.rotation, origin2, Projectile.scale, SpriteEffects.None, 0);
-            return base.PreDraw(ref lightColor);
+            return false;
         }
     }
 }
