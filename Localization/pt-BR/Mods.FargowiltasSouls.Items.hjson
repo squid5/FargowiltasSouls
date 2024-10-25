@@ -2854,7 +2854,7 @@ BigBrainBuster: {
 		'''
 		Repeated summons increase the size and damage of the minion
 		This caps at 16 slots
-		'The reward for a mighty rematch...'
+		'The reward for a mighty rematch..'
 		''' */
 }
 
@@ -2969,7 +2969,7 @@ TheBigSting: {
 		Uses darts for ammo
 		Scales with your bee damage and knockback increases
 		66% chance to not consume ammo
-		'The reward for a mighty rematch...'
+		'The reward for a mighty rematch..'
 		''' */
 }
 
