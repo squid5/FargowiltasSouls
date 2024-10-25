@@ -764,7 +764,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
 
             //for a starting time, make it fade in, then make it spin faster and faster up to a max speed
             const int fadeintime = 10;
-            int endTime = 60 * 3;
+            int endTime = 60 * 4;
             if (WorldSavingSystem.EternityMode)
                 endTime += 60;
             if (WorldSavingSystem.MasochistModeReal)
@@ -1036,8 +1036,12 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
             NPC.localAI[1] = BodyRotation;
             NPC.localAI[2] = RuneCount;
 
-            const int ExpandTime = 175;
+            int ExpandTime = 120;
+            if (!PhaseOne)
+                ExpandTime = 120;
             int AttackDuration = 5; //change this depending on phase
+            if (!PhaseOne)
+                AttackDuration = 30;
 
             if (NPC.Distance(Player.Center) > 2000)
                 FlyingState(1.5f);
@@ -1106,10 +1110,13 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                 }
                 if (AI_Timer < 30)
                 {
-                    if (NPC.Distance(Player.Center) > 350)
-                        FlyingState(0.3f, false, Player.Center);
+                    if (NPC.Distance(Player.Center) > 250)
+                        FlyingState(0.3f, false, Player.Center + Player.DirectionTo(NPC.Center) * 250);
 
                 }
+                float expandlerp = AI_Timer / ExpandTime;
+                RuneDistance = MathHelper.SmoothStep(DefaultRuneDistance, 1000, MathF.Pow(expandlerp, 2));
+                /*
                 if (WorldSavingSystem.MasochistModeReal)
                 {
                     RuneDistance = Math.Min((float)(100 + Math.Pow(AI_Timer / 5, 2)), 1200);
@@ -1118,6 +1125,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                 {
                     RuneDistance = (float)(100 + Math.Pow(AI_Timer / 5, 2));
                 }
+                */
                 RPS += 0.0005f;
             }
             if (!PhaseOne) // p2 shots
@@ -1142,7 +1150,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
 
                 if (AI_Timer >= ExpandTime - 60 && AI_Timer <= ExpandTime + AttackDuration + 30)
                 {
-                    if (AI_Timer % 12 == 0)
+                    if (AI_Timer % 24 == 0)
                     {
                         SoundEngine.PlaySound(SoundID.Item12, NPC.Center);
                         if (FargoSoulsUtil.HostCheck)
@@ -1162,6 +1170,8 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
             if (AI_Timer >= ExpandTime + AttackDuration) //retract
             {
                 HitPlayer = false; //stop dealing contact damage (anti-cheese)
+                RuneDistance = MathHelper.SmoothStep(1000, DefaultRuneDistance, (AI_Timer - ExpandTime - AttackDuration) / ExpandTime);
+                /*
                 if (WorldSavingSystem.MasochistModeReal)
                 {
                     RuneDistance = Math.Min((float)(DefaultRuneDistance + Math.Pow((ExpandTime - (AI_Timer - ExpandTime - AttackDuration)) / 5, 2)), 1200);
@@ -1170,6 +1180,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                 {
                     RuneDistance = (float)(DefaultRuneDistance + Math.Pow((ExpandTime - (AI_Timer - ExpandTime - AttackDuration)) / 5, 2));
                 }
+                */
                 RPS -= 0.0005f;
             }
             if (AI_Timer >= ExpandTime + AttackDuration + ExpandTime)
@@ -1376,7 +1387,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
             FlyingState(0.55f, false, desiredPos);
 
             //new homing swords:
-            const int endTime = 470;
+            const int endTime = 487;
             if (AI_Timer == 70)
             {
                 SoundEngine.PlaySound(SoundID.Item71, NPC.Center);
@@ -1479,7 +1490,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                     }
                 }
             }
-            float end = WorldSavingSystem.EternityMode ? 200f : 220f;
+            float end = WorldSavingSystem.EternityMode ? 170f : 200f;
 
             if (AI_Timer >= end - 30)
             {
@@ -1919,38 +1930,44 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                     }
                 }
                 */
+
+                if (FargoSoulsUtil.HostCheck)
+                {
+                    Vector2 shootdown = new(0f, 10f);
+                    SoundEngine.PlaySound(SoundID.DD2_WitherBeastCrystalImpact, NPC.Center);
+                    const int shards = 15;
+                    for (int k = 0; k <= shards; k++)
+                    {
+                        Vector2 vel = Vector2.UnitY * NPC.velocity.Y;
+                        vel += shootdown / 2;
+                        vel *= 0.6f;
+                        float frac = ((float)k / shards);
+                        float maxAccel = 0.5f;
+                        float accel = -maxAccel + (maxAccel * 2 * frac);
+
+                        float yaccel = 1.2f + 0.008f * MathF.Pow(MathF.Abs(k - (float)(shards / 2f)), 2f);
+
+                        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, vel, ModContent.ProjectileType<LifeNeggravProj>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), 3f, Main.myPlayer, ai1: yaccel, ai2: accel);
+
+                        int j = k - 1;
+                        float shards2 = shards - 1;
+                        frac = ((float)j / shards2);
+
+                        float maxAccel2 = 0.35f;
+                        float accel2 = -maxAccel2 + (maxAccel2 * 2 * frac);
+                        yaccel = 1.2f + 0.008f * MathF.Pow(MathF.Abs(j - (float)(shards2 / 2f)), 2f);
+                        if (k >= shards - 1)
+                            continue;
+
+                        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, vel, ModContent.ProjectileType<LifeNeggravProj>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), 3f, Main.myPlayer, ai1: 0.9f * yaccel, ai2: accel2);
+                    }
+                    SoundEngine.PlaySound(SoundID.DD2_WitherBeastCrystalImpact, NPC.Center);
+                }
             }
             if (AI_Timer >= StartTime)
             {
                 HitPlayer = true;
-                NPC.velocity = NPC.velocity * 0.96f;
-            }
-            if (AI_Timer == StartTime + 30 && FargoSoulsUtil.HostCheck)
-            {
-                float knockBack4 = 3f;
-                Vector2 shootdown2 = new(0f, 10f);
-                SoundEngine.PlaySound(SoundID.DD2_WitherBeastCrystalImpact, NPC.Center);
-                for (int k = 0; k <= 15; k++)
-                {
-                    double rotationrad3 = MathHelper.ToRadians(-90 + k * 12);
-                    Vector2 shootoffset3 = shootdown2.RotatedBy(rotationrad3);
-                    shootoffset3.X *= 2f;
-
-                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, shootoffset3, ModContent.ProjectileType<LifeNeggravProj>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), knockBack4, Main.myPlayer);
-                }
-            }
-            if (AI_Timer == StartTime + 45 && FargoSoulsUtil.HostCheck)
-            {
-                float knockBack3 = 3f;
-                Vector2 shootdown = new(0f, 10f);
-                SoundEngine.PlaySound(SoundID.DD2_WitherBeastCrystalImpact, NPC.Center);
-                for (int j = 0; j <= 15; j++)
-                {
-                    double rotationrad2 = MathHelper.ToRadians(-90 + j * 10);
-                    Vector2 shootoffset2 = shootdown.RotatedBy(rotationrad2);
-                    shootoffset2.X *= 2f;
-                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, shootoffset2, ModContent.ProjectileType<LifeNeggravProj>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), knockBack3, Main.myPlayer);
-                }
+                NPC.velocity *= 0.96f;
             }
             if (AI_Timer == StartTime + 50 && PlungeCount < 1f && WorldSavingSystem.MasochistModeReal && !PhaseOne)
             {
@@ -2237,11 +2254,13 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                 RuneFormationTimer = 0;
             }
 
-            Vector2 desiredPos = Player.Center + Player.DirectionTo(NPC.Center) * 320;
-            float speed = 0.25f;
+            Vector2 desiredPos = Player.Center + Player.DirectionTo(NPC.Center) * 360;
+            float speed = 0.5f;
             if (NPC.Distance(Player.Center) > 800)
-                speed = 0.5f;
+                speed = 1f;
             FlyingState(speed, false, desiredPos);
+            if (AI_Timer > 240f)
+                speed *= 0.4f;
 
             if (AI_Timer <= 240f)
             {
@@ -2250,12 +2269,15 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                     delay = 10f;
                 if (AI_Timer % delay == 0)
                 {
-                    float predict = 120;
+                    float predict = 160;
                     if (WorldSavingSystem.MasochistModeReal)
-                        predict = 160;
+                        predict = 200;
                     Vector2 predictedPos = Player.Center + Player.velocity * predict;
                     float distance = MathF.Max(NPC.Distance(Player.Center), NPC.Distance(Player.Center + Player.velocity * 45));
-                    Vector2 crystalPos = NPC.Center + NPC.DirectionTo(predictedPos) * (distance + 350) + Main.rand.NextVector2CircularEdge(90f, 90f) * Main.rand.NextFloat(0.9f, 1f);
+                    Vector2 dir = NPC.DirectionTo(predictedPos);
+                    //float dif = FargoSoulsUtil.RotationDifference(dir, NPC.DirectionTo(Player.Center));
+                    //dir = dir.RotatedBy(-Math.Sign(dif) * MathHelper.PiOver2 * 0.1f);
+                    Vector2 crystalPos = NPC.Center + dir * (distance + 350) + Main.rand.NextVector2Circular(90f, 90f);
                     SoundEngine.PlaySound(SoundID.Item101, crystalPos);
                     if (FargoSoulsUtil.HostCheck)
                     {
@@ -2946,7 +2968,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                     State = (int)Main.rand.NextFromCollection(doableStates);
                     LastAttack[i] = State;
 
-                    //State = (int)States.CrystallineCongregation;
+                    //State = (int)States.RuneExpand;
                 }
             }
         }

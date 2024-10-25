@@ -622,8 +622,8 @@ SpiderEnchant: {
 	// DisplayName: Spider Enchantment
 	/* Tooltip:
 		'''
-		Your minions and sentries can crit
-		10% increased summon critical strike chance
+		Your summon weapons can crit
+		+10% summon critical strike chance
 		'Arachnophobia is punishable by arachnid induced death'
 		''' */
 }

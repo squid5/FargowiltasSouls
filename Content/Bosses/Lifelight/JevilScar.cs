@@ -139,7 +139,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                 }
                 dir = dir.RotatedBy(MathHelper.PiOver2 * 0.6f * i);
                 */
-                Vector2 desiredPos = target.Center + dir * 300f;
+                Vector2 desiredPos = target.Center + dir * 270f;
                 Projectile.velocity = FargoSoulsUtil.SmartAccel(Projectile.Center, desiredPos, Projectile.velocity, 1.4f, 1.4f);
             }
             else // telegraphing new dash
@@ -149,6 +149,15 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                 rotspeed = 0;
                 float desiredRot = Projectile.DirectionTo(target.Center).ToRotation() + MathHelper.PiOver4;
                 Projectile.rotation = MathHelper.Lerp(Projectile.rotation, desiredRot, 6f / TelegraphTime);
+
+                int rearbackTime = 25;
+                if (CycleTime - Timer < rearbackTime)
+                {
+                    float modifier = (Timer - (CycleTime - rearbackTime)) / (float)rearbackTime;
+                    modifier = 1 - modifier;
+                    Projectile.velocity -= Projectile.DirectionTo(target.Center) * 1.2f * modifier;
+                }
+                
 
                 //Vector2 desiredPos = target.Center + target.DirectionTo(Projectile.Center) * 300f;
                 //Projectile.velocity = FargoSoulsUtil.SmartAccel(Projectile.Center, desiredPos, Projectile.velocity, 2f, 2f);
