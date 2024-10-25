@@ -11,7 +11,7 @@ namespace FargowiltasSouls.Content.Items.Weapons.SwarmDrops
         {
             Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
             // DisplayName.SetDefault("Diffractor Blaster");
-            // Tooltip.SetDefault("'The reward for slaughtering many...'");
+            // Tooltip.SetDefault("'The reward for a mighty rematch...'");
             //DisplayName.AddTranslation((int)GameCulture.CultureName.Chinese, "暗星炮");
             //Tooltip.AddTranslation((int)GameCulture.CultureName.Chinese, "'由一个被击败的敌人的武器改装而来..'");
         }

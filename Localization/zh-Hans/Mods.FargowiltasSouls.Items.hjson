@@ -3674,7 +3674,7 @@ UmbraRegalia: {
 		Hold Right Click to charge a spear toss
 		Becomes stronger when fully charged
 		Can continue to gain damage for a while after full charge
-		'The reward for slaughtering many...'
+		'The reward for a mighty rematch...'
 		''' */
 }
 
@@ -3698,7 +3698,7 @@ TheDestroyer: {
 		'''
 		Whip your minions to fire a laser at a nearby enemy, up to 6 times per swing
 		Every 20th swing, the destroyer breaks loose and tracks your mouse for 5 seconds
-		'The reward for slaughtering many..'
+		'The reward for a mighty rematch..'
 		''' */
 }
 
