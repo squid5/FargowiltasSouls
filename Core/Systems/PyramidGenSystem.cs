@@ -19,6 +19,8 @@ namespace FargowiltasSouls.Core.Systems
             On_WorldGen.Pyramid += OnPyramidGen;
             On_WorldGen.PlaceTile += OnPlaceTile;
             On_WorldGen.CanKillTile_int_int_refBoolean += OnCanKillTile;
+            On_Player.PickWall += OnPickWall;
+            On_WorldGen.KillWall += OnKillWall;
         }
         public override void Unload()
         {
@@ -55,6 +57,18 @@ namespace FargowiltasSouls.Core.Systems
             if (FargoGlobalTile.SolidTile(x, y) && CoffinProtectionActive(x, y))
                 ret = false;
             return ret;
+        }
+        public static void OnPickWall(On_Player.orig_PickWall orig, Player player, int x, int y, int damage)
+        {
+            if (CoffinProtectionActive(x, y))
+                return;
+            orig(player, x, y, damage);
+        }
+        public static void OnKillWall(On_WorldGen.orig_KillWall orig, int i, int j, bool fail = false)
+        {
+            if (CoffinProtectionActive(i, j))
+                return;
+            orig(i, j, fail);
         }
         // Tile protection with this is done in FargoGlobalTile.
         public static bool CoffinProtectionActive(int x, int y) => !WorldGen.generatingWorld && !WorldSavingSystem.downedBoss[(int)WorldSavingSystem.Downed.CursedCoffin] && CoffinArena.PaddedRectangle.Contains(x, y);
