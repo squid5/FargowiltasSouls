@@ -36,7 +36,18 @@ namespace FargowiltasSouls.Content.UI.Elements
             IconHighlight.OnLeftClick += IconHighlight_OnClick;
             Icon.Append(IconHighlight);
 
-            OncomingMutant = new UIOncomingMutant(FargoUIManager.OncomingMutantTexture.Value, FargoUIManager.OncomingMutantAuraTexture.Value, Language.GetTextValue("Mods.FargowiltasSouls.UI.EternityEnabled"), Language.GetTextValue("Mods.FargowiltasSouls.UI.MasochistEnabled"));
+            OncomingMutant = new UIOncomingMutant(FargoUIManager.OncomingMutantTexture.Value, 
+                FargoUIManager.OncomingMutantAuraTexture.Value, 
+                FargoUIManager.OncomingMutantntTexture.Value, 
+                Language.GetTextValue("Mods.FargowiltasSouls.UI.EternityEnabled"), 
+                Language.GetTextValue("Mods.FargowiltasSouls.UI.MasochistEnabled"), 
+                Language.GetTextValue("Mods.FargowiltasSouls.UI.EternityDisabled"), 
+                Language.GetTextValue("Mods.FargowiltasSouls.UI.RightClickToggle"),
+                Language.GetTextValue("Mods.FargowiltasSouls.UI.HoldShift"),
+                Language.GetTextValue("Mods.FargowiltasSouls.UI.ExpandedEternity"),
+                Language.GetTextValue("Mods.FargowiltasSouls.UI.ExpandedMasochist"),
+                Language.GetTextValue("Mods.FargowiltasSouls.UI.ExpandedFeatures")
+                );
             OncomingMutant.Left.Set(610, 0);
             OncomingMutant.Top.Set(250, 0);
             Append(OncomingMutant);

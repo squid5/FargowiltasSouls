@@ -55,6 +55,8 @@ namespace FargowiltasSouls.Content.UI
 
         public static Asset<Texture2D> OncomingMutantAuraTexture { get; private set; }
 
+        public static Asset<Texture2D> OncomingMutantntTexture { get; private set; }
+
         public static Asset<Texture2D> CooldownBarTexture { get; private set; }
 
         public static Asset<Texture2D> CooldownBarFillTexture { get; private set; }
@@ -78,6 +80,7 @@ namespace FargowiltasSouls.Content.UI
                 ReloadButtonTexture = ModContent.Request<Texture2D>("FargowiltasSouls/Assets/UI/ReloadButton", AssetRequestMode.ImmediateLoad);
                 OncomingMutantTexture = ModContent.Request<Texture2D>("FargowiltasSouls/Assets/UI/OncomingMutant", AssetRequestMode.ImmediateLoad);
                 OncomingMutantAuraTexture = ModContent.Request<Texture2D>("FargowiltasSouls/Assets/UI/OncomingMutantAura", AssetRequestMode.ImmediateLoad);
+                OncomingMutantntTexture = ModContent.Request<Texture2D>("FargowiltasSouls/Assets/UI/OncomingMutantnt", AssetRequestMode.ImmediateLoad);
                 CooldownBarTexture = ModContent.Request<Texture2D>("FargowiltasSouls/Assets/UI/CooldownBar", AssetRequestMode.ImmediateLoad);
                 CooldownBarFillTexture = ModContent.Request<Texture2D>("FargowiltasSouls/Assets/UI/CooldownBarFill", AssetRequestMode.ImmediateLoad);
 

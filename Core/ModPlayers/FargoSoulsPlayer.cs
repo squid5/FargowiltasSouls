@@ -70,6 +70,7 @@ namespace FargowiltasSouls.Core.ModPlayers
         public bool Toggler_ExtraAttacksDisabled = false;
         public bool Toggler_MinionsDisabled = false;
         public int ToggleRebuildCooldown = 0;
+        public int EmodeToggleCooldown = 0;
         public bool UsingAnkh => Player.HeldItem.type == ModContent.ItemType<AccursedAnkh>() && Player.ItemAnimationActive;
         public bool ImmuneToDamage => 
             BetsyDashing ||

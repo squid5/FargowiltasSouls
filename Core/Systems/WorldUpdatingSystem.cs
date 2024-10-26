@@ -148,7 +148,7 @@ namespace FargowiltasSouls.Core.Systems
                     }
                 }
 
-                if (!MasochistModeReal && EternityMode && ((FargoSoulsUtil.WorldIsMaster() && CanPlayMaso) || Main.zenithWorld) && !LumUtils.AnyBosses())
+                if (!MasochistModeReal && EternityMode && CanActuallyPlayMaso && !LumUtils.AnyBosses())
                 {
                     MasochistModeReal = true;
                     FargoSoulsUtil.PrintLocalization($"Mods.{Mod.Name}.Message.{Name}.MasochistOn{(Main.zenithWorld ? "Zenith" : "")}", new Color(51, 255, 191, 0));
@@ -161,7 +161,7 @@ namespace FargowiltasSouls.Core.Systems
                 }
             }
 
-            if (MasochistModeReal && !(EternityMode && ((FargoSoulsUtil.WorldIsMaster() && CanPlayMaso) || Main.zenithWorld)))
+            if (MasochistModeReal && !(EternityMode && CanActuallyPlayMaso))
             {
                 MasochistModeReal = false;
                 FargoSoulsUtil.PrintLocalization($"Mods.{Mod.Name}.Message.{Name}.MasochistOff", new Color(51, 255, 191, 0));
@@ -294,5 +294,7 @@ namespace FargowiltasSouls.Core.Systems
 
             #endregion
         }
+
+        public static bool CanActuallyPlayMaso => (FargoSoulsUtil.WorldIsMaster() && CanPlayMaso) || Main.zenithWorld;
     }
 }

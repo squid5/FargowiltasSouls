@@ -513,6 +513,9 @@ namespace FargowiltasSouls.Core.ModPlayers
             if (ToggleRebuildCooldown > 0)
                 ToggleRebuildCooldown--;
 
+            if (EmodeToggleCooldown > 0)
+                EmodeToggleCooldown--;
+
             if (CosmosMoonTimer > 0) // naturally degrades
                 CosmosMoonTimer--;
 

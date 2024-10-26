@@ -19,6 +19,9 @@
     <None Remove="Folders to Port\**" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="Assets\UI\OncomingMutantnt.png" />
+  </ItemGroup>
+  <ItemGroup>
     <Folder Include="Assets\Sounds\VanillaEternity\KingSlime\" />
     <Folder Include="Content\WorldGen\" />
   </ItemGroup>
