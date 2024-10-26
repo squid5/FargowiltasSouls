@@ -805,6 +805,6 @@ AmbrosiaBuff: {
 }
 
 MutantDesperationBuff: {
-	DisplayName: Mutant Desperation Buff
-	Description: Mods.FargowiltasSouls.Buffs.MutantDesperationBuff.Description
+	DisplayName: Phantasmal Fury
+	Description: His final stand. You take double damage!
 }
