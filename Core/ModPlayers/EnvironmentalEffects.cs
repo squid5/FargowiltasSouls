@@ -176,11 +176,6 @@ namespace FargowiltasSouls.Core.ModPlayers
                     Player.AddBuff(BuffID.WaterCandle, 2);
                 }
                     
-                
-
-
-
-
                 //boss environs??
                 //deerclops
                 if (!NPC.downedDeerclops && Player.ZoneRockLayerHeight)
@@ -333,7 +328,7 @@ namespace FargowiltasSouls.Core.ModPlayers
             {
                 if (Main.dayTime)
                 {
-                    if (!Player.wet && !hasUmbrella())
+                    if (!Player.wet && Main.IsItRaining && !hasUmbrella())
                     {
                         FargoSoulsUtil.AddDebuffFixedDuration(Player, BuffID.Weak, 2);
                     }
