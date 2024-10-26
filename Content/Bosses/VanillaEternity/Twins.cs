@@ -9,14 +9,18 @@ using FargowiltasSouls.Content.Projectiles.Masomode;
 using FargowiltasSouls.Core.Globals;
 using FargowiltasSouls.Core.NPCMatching;
 using FargowiltasSouls.Core.Systems;
+using Luminance.Assets;
 using Luminance.Core.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.IO;
+using System.Threading;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.GameContent;
+using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
@@ -783,7 +787,25 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
         {
             Vector2 AuraPosition = npc.Center;
             if (ShouldDrawAura)
-                DrawAura(npc, spriteBatch, AuraPosition);          
+                DrawAura(npc, spriteBatch, AuraPosition);
+
+            Vector2 offset = new Vector2(npc.width - 24, 0).RotatedBy(npc.rotation + 1.57079637);
+            Vector2 position = npc.Center + offset;
+            Texture2D flare = MiscTexturesRegistry.BloomFlare.Value;
+            float flarescale = Main.rand.NextFloat(0.1f, 0.15f);
+            
+
+            if (npc.GetGlobalNPC<Retinazer>().DeathrayState == 2)
+            {
+                Main.spriteBatch.Draw(flare, position - Main.screenPosition, null, Color.Red with {A= 0}, Main.GlobalTimeWrappedHourly * -2f, flare.Size() * 0.5f, flarescale, 0, 0f);
+                Main.spriteBatch.Draw(flare, position - Main.screenPosition, null, Color.Red with {A = 0}, Main.GlobalTimeWrappedHourly * 2f, flare.Size() * 0.5f, flarescale, 0, 0f);
+                Main.spriteBatch.End();
+                Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.ZoomMatrix);
+
+            }
+            
+            
+                
             return true;
         }
         public void DrawAura(NPC npc, SpriteBatch spriteBatch, Vector2 position)
