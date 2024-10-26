@@ -560,73 +560,38 @@ namespace FargowiltasSouls.Core.ModPlayers
 
         private void DeerclopsHands()
         {
-            if (!Player.ZoneHallow)
-            {
-                Color light = Lighting.GetColor(Player.Center.ToTileCoordinates());
-                float lightLevel = light.R + light.G + light.B;
+            if (Player.ZoneHallow)
+                return;
 
-                if (lightLevel < 500)
-                {
-                    LightLevelCounter++;
-                    if (LightLevelCounter > LumUtils.SecondsToFrames(20) && Main.rand.NextBool(600))
-                    {
-                        Vector2 pos = Player.Center + Vector2.UnitX.RotatedByRandom(MathHelper.TwoPi) * 270;
-                        bool failed = false;
-                        for (int i = 0; i < 200; i++) // try to find a dark spot
-                        {
-                            pos = Player.Center + Vector2.UnitX.RotatedByRandom(MathHelper.TwoPi) * 270;
-                            Color lightAtPos = Lighting.GetColor(pos.ToTileCoordinates());
-                            float lightLevelAtPos = lightAtPos.R + lightAtPos.G + lightAtPos.B;
-                            if (lightLevelAtPos < 500)
-                                break;
-                            if (i == 199) // failed
-                                failed = true;
-                        }
-                        if (!failed)
-                        {
-                            LightLevelCounter = 0;
+            if (Player.townNPCs >= 2f)
+                return;
 
-                            int projType = ModContent.ProjectileType<DeerclopsDarknessHand>();
-                            if (Main.netMode == NetmodeID.MultiplayerClient)
-                            {
-                                if (Player.whoAmI == Main.myPlayer)
-                                {
-                                    var netMessage = Mod.GetPacket();
-                                    netMessage.Write((byte)FargowiltasSouls.PacketID.RequestEnvironmentalProjectile);
-                                    netMessage.Write(projType);
-                                    netMessage.WriteVector2(pos);
-                                    netMessage.Send();
-                                }
-                            }
-                            else
-                            {
-                                int damage = (Main.hardMode ? 120 : 60) / 4;
-                                int p = Projectile.NewProjectile(Terraria.Entity.GetSource_NaturalSpawn(), pos, Vector2.Zero, projType, damage, 2f, Main.myPlayer);
-                                if (p.IsWithinBounds(Main.maxProjectiles))
-                                {
-                                    Main.projectile[p].light = 1f;
-                                }
-                            }
-                            Lighting.AddLight(pos, 1f, 1f, 1f);
-                        }
-                    }
-                }
-            }
-        }
-
-        private void LifelightSparkles()
-        {
             Color light = Lighting.GetColor(Player.Center.ToTileCoordinates());
             float lightLevel = light.R + light.G + light.B;
 
-            if (lightLevel > 500)
+            if (lightLevel >= 500)
+                return;
+
+            LightLevelCounter++;
+            if (LightLevelCounter > LumUtils.SecondsToFrames(20) && Main.rand.NextBool(600))
             {
-                LightLevelCounter++;
-                if (LightLevelCounter > LumUtils.SecondsToFrames(10) && Main.rand.NextBool(300))
+                Vector2 pos = Player.Center + Vector2.UnitX.RotatedByRandom(MathHelper.TwoPi) * 270;
+                bool failed = false;
+                for (int i = 0; i < 200; i++) // try to find a dark spot
+                {
+                    pos = Player.Center + Vector2.UnitX.RotatedByRandom(MathHelper.TwoPi) * 270;
+                    Color lightAtPos = Lighting.GetColor(pos.ToTileCoordinates());
+                    float lightLevelAtPos = lightAtPos.R + lightAtPos.G + lightAtPos.B;
+                    if (lightLevelAtPos < 500)
+                        break;
+                    if (i == 199) // failed
+                        failed = true;
+                }
+                if (!failed)
                 {
                     LightLevelCounter = 0;
-                    Vector2 pos = Player.Center;
-                    int projType = ModContent.ProjectileType<LifelightEnvironmentStar>();
+
+                    int projType = ModContent.ProjectileType<DeerclopsDarknessHand>();
                     if (Main.netMode == NetmodeID.MultiplayerClient)
                     {
                         if (Player.whoAmI == Main.myPlayer)
@@ -641,8 +606,49 @@ namespace FargowiltasSouls.Core.ModPlayers
                     else
                     {
                         int damage = (Main.hardMode ? 120 : 60) / 4;
-                        Projectile.NewProjectile(Terraria.Entity.GetSource_NaturalSpawn(), pos, Vector2.Zero, projType, damage, 2f, Main.myPlayer, -120);
+                        int p = Projectile.NewProjectile(Terraria.Entity.GetSource_NaturalSpawn(), pos, Vector2.Zero, projType, damage, 2f, Main.myPlayer);
+                        if (p.IsWithinBounds(Main.maxProjectiles))
+                        {
+                            Main.projectile[p].light = 1f;
+                        }
                     }
+                    Lighting.AddLight(pos, 1f, 1f, 1f);
+                }
+            }
+        }
+
+        private void LifelightSparkles()
+        {
+            if (Player.townNPCs >= 2f)
+                return;
+
+            Color light = Lighting.GetColor(Player.Center.ToTileCoordinates());
+            float lightLevel = light.R + light.G + light.B;
+
+            if (lightLevel < 500)
+                return;
+
+            LightLevelCounter++;
+            if (LightLevelCounter > LumUtils.SecondsToFrames(10) && Main.rand.NextBool(300))
+            {
+                LightLevelCounter = 0;
+                Vector2 pos = Player.Center;
+                int projType = ModContent.ProjectileType<LifelightEnvironmentStar>();
+                if (Main.netMode == NetmodeID.MultiplayerClient)
+                {
+                    if (Player.whoAmI == Main.myPlayer)
+                    {
+                        var netMessage = Mod.GetPacket();
+                        netMessage.Write((byte)FargowiltasSouls.PacketID.RequestEnvironmentalProjectile);
+                        netMessage.Write(projType);
+                        netMessage.WriteVector2(pos);
+                        netMessage.Send();
+                    }
+                }
+                else
+                {
+                    int damage = (Main.hardMode ? 120 : 60) / 4;
+                    Projectile.NewProjectile(Terraria.Entity.GetSource_NaturalSpawn(), pos, Vector2.Zero, projType, damage, 2f, Main.myPlayer, -120);
                 }
             }
         }
