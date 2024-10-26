@@ -94,7 +94,8 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
             NPC.defense = NPC.defDefense;
             if (Main.npc.Any(p => p.TypeAlive<CursedSpirit>()))
                 NPC.defense += 15;
-            NPC.rotation = 0;
+            if (StateMachine.CurrentState.Identifier != BehaviorStates.RandomStuff)
+                NPC.rotation = 0;
 
             // Pushaway collision (solid object)
             // this is jank
@@ -699,32 +700,42 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 				return velX * Vector2.UnitX + velY * Vector2.UnitY;
 			}
 
-
-			Vector2 dir = CalculateAngle();
-			NPC.rotation = Vector2.Lerp(NPC.rotation.ToRotationVector2(), dir, Timer / 35).ToRotation();
-
-            float angle = NPC.rotation % MathF.Tau;
-            float incline = MathF.Abs(MathF.Sin(angle));
-            float angledHeight = (int)(MathHelper.Lerp(NPC.height, NPC.width, incline) * NPC.scale);
-
             HoverSound();
-			Vector2 desiredPos = 
-				CoffinArena.Center.ToWorldCoordinates() + 
-				Vector2.UnitY * ((CoffinArena.Height * 8) - (angledHeight)) + 
-				Vector2.UnitX * Math.Sign(NPC.Center.X - Player.Center.X) * (CoffinArena.Width * 8 - (NPC.width * 1.5f));
-			CoffinArena.ClampWithinArena(desiredPos, NPC);
-			Movement(desiredPos, 0.1f, 20, 5, 0.08f, 20);
+
+            Vector2 dir = CalculateAngle();
+
+            void Position()
+            {
+                
+                NPC.rotation = Vector2.Lerp(NPC.rotation.ToRotationVector2(), dir, 0.25f).ToRotation();
+                float angle = NPC.rotation % MathF.Tau;
+                float incline = MathF.Abs(MathF.Sin(angle));
+                float angledHeight = (int)(MathHelper.Lerp(NPC.height, NPC.width, incline) * NPC.scale);
+                Vector2 desiredPos =
+                    CoffinArena.Center.ToWorldCoordinates() +
+                    Vector2.UnitY * ((CoffinArena.Height * 8) - (angledHeight)) +
+                    Vector2.UnitX * Math.Sign(NPC.Center.X - Player.Center.X) * (CoffinArena.Width * 8 - (NPC.width * 1.5f));
+                CoffinArena.ClampWithinArena(desiredPos, NPC);
+                Movement(desiredPos, 0.1f, 20, 5, 0.08f, 20);
+            }
+
 
 			int frameTime = (int)MathF.Floor(RandomStuffOpenTime / Main.npcFrameCount[Type]);
 			if (Timer < RandomStuffOpenTime)
 			{
+                Position();
 				if (++NPC.frameCounter % frameTime == frameTime - 1)
 					if (Frame < Main.npcFrameCount[Type] - 1)
 						Frame++;
-			}
+
+                
+            }
 			else if (Timer < RandomStuffOpenTime + 310 && Timer >= RandomStuffOpenTime)
 			{
-				NPC.velocity.X *= 0.7f; // moves slower horizontally 
+                Position();
+                NPC.rotation = Vector2.Lerp(NPC.rotation.ToRotationVector2(), dir, Timer / 35).ToRotation();
+
+                NPC.velocity.X *= 0.7f; // moves slower horizontally 
 				int shotTime = WorldSavingSystem.MasochistModeReal ? 20 : 24;
                 if (Phase < 2) // shoot more in phase 1
                     shotTime -= 10;
@@ -775,9 +786,8 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 				NPC.velocity *= 0.96f;
 				if (++NPC.frameCounter % 30 == 29 && Frame > 0)
 					Frame--;
-				if (Frame > 0)
-					NPC.rotation *= 0.9f;
-			}
+                NPC.rotation *= 0.95f;
+            }
 		}
 		#endregion
 
