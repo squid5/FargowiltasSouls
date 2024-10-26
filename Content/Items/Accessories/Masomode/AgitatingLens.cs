@@ -44,7 +44,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Masomode
         public override void PostUpdateEquips(Player player)
         {
             FargoSoulsPlayer modPlayer = player.FargoSouls();
-            if (modPlayer.AgitatingLensCD++ > 15)
+            if (modPlayer.AgitatingLensCD++ > 30)
             {
                 modPlayer.AgitatingLensCD = 0;
                 if ((Math.Abs(player.velocity.X) >= 5 || Math.Abs(player.velocity.Y) >= 5) && player.whoAmI == Main.myPlayer)
