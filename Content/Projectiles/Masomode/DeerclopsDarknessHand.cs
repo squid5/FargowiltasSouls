@@ -132,10 +132,10 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
 
         public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
-            target.AddBuff(BuffID.Frostburn, 90);
-            if (WorldSavingSystem.MasochistModeReal)
-                target.AddBuff(ModContent.BuffType<MarkedforDeathBuff>(), 900);
-            target.AddBuff(ModContent.BuffType<HypothermiaBuff>(), 1200);
+            //target.AddBuff(BuffID.Frostburn, 90);
+            //if (WorldSavingSystem.MasochistModeReal)
+            //    target.AddBuff(ModContent.BuffType<MarkedforDeathBuff>(), 900);
+            //target.AddBuff(ModContent.BuffType<HypothermiaBuff>(), 1200);
         }
 
         //public override Color? GetAlpha(Color lightColor)
