@@ -7,6 +7,7 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using Luminance.Core.Graphics;
 using FargowiltasSouls.Assets.ExtraTextures;
+using Terraria.Audio;
 
 namespace FargowiltasSouls.Content.Projectiles.Masomode
 {
@@ -20,7 +21,7 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
         }
         public override Color? GetAlpha(Color lightColor)
         {
-            return Color.Red;
+            return Color.Red * Projectile.Opacity;
         }
         /*public float WidthFunction(float completionRatio)
         {
@@ -57,6 +58,35 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
             Projectile.FargoSouls().noInteractionWithNPCImmunityFrames = true;
 
             FargowiltasSouls.MutantMod.Call("LowRenderProj", Projectile);
+
+            Projectile.Opacity = 0.4f;
+            Projectile.aiStyle = 0;
+        }
+
+        public override void AI()
+        {
+            Projectile.rotation += (float)Projectile.direction * 0.8f;
+            Projectile.ai[0] += 1f;
+            if (!(Projectile.ai[0] < 30f))
+            {
+                if (Projectile.ai[0] < 100f)
+                {
+                    Projectile.velocity *= 1.06f;
+                }
+                else
+                {
+                    Projectile.ai[0] = 200f;
+                }
+            }
+
+            Vector2 offset = new Vector2(0, -20).RotatedBy(Projectile.rotation);
+            offset = offset.RotatedByRandom(MathHelper.Pi / 6);
+            int d = Dust.NewDust(Projectile.Center, 0, 0, DustID.BloodWater, 0f, 0f, 150);
+            Main.dust[d].position += offset;
+            float velrando = Main.rand.Next(20, 31) / 10;
+            Main.dust[d].velocity = Projectile.velocity / velrando;
+            Main.dust[d].noGravity = true;
+            Main.dust[d].scale = 1.2f;
         }
     }
 }

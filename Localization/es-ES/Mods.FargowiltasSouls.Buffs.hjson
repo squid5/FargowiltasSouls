@@ -240,7 +240,11 @@ FlippedBuff: {
 
 HallowIlluminatedBuff: {
 	// DisplayName: Illuminated
-	// Description: Increased brightness and spawn rate, damage increased in bright areas
+	/* Description:
+		'''
+		Increased brightness and spawn rate
+		Damage taken and dealt increased in bright areas
+		''' */
 }
 
 FusedBuff: {
