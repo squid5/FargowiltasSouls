@@ -1322,7 +1322,14 @@ namespace FargowiltasSouls.Content.Projectiles
                 }
                 if (Adamantite)
                 {
-                    projectile.Kill();
+                    if (Main.projectile.Any(p => p.TypeAlive(projectile.type) && p.owner == projectile.owner && p.whoAmI != projectile.whoAmI))// && !ProjectileID.Sets.IsAWhip[projectile.type] && projectile.aiStyle != ProjAIStyleID.Yoyo)
+                    {
+                        projectile.Kill();
+                        projectile.active = false;
+                    }
+                        
+                    projectile.damage = player.GetWeaponDamage(player.HeldItem);
+                    projectile.CritChance = player.GetWeaponCrit(player.HeldItem);
                     return;
                 }
 
