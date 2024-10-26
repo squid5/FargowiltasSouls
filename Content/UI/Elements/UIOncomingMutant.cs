@@ -178,7 +178,8 @@ namespace FargowiltasSouls.Content.UI.Elements
                 else if (WorldSavingSystem.EternityMode)
                     text = $"[c/00FFFF:{text}]";
 
-                text += $"\n[c/787878:{TextRightClick}]";
+                if (!LumUtils.AnyBosses())
+                    text += $"\n[c/787878:{TextRightClick}]";
                 
 
                 if (Main.keyState.IsKeyDown(Keys.LeftShift))

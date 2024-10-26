@@ -6,7 +6,7 @@ MasochistEnabled: Включен Режим Мазохиста
 // HoldShift: Hold Shift to read more
 /* ExpandedEternity:
 	'''
-	[c/00FFFF:A new mode above Expert for vanilla veterans. The intended Fargo experience.]
+	[c/00FFFF:A new mode above Expert for Terraria veterans. The intended Fargo experience.]
 	World must be in Expert Mode or above
 	Enables Masochist Mode if world is in Master Mode and you've defeated the final Eternity boss in any world
 	''' */
@@ -18,7 +18,7 @@ MasochistEnabled: Включен Режим Мазохиста
 	''' */
 /* ExpandedFeatures:
 	'''
-	Features include:
+	Eternity features include:
 
 	-Reworks bosses and enemies, making them stronger
 	-Enables Master Mode drops

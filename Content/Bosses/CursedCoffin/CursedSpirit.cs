@@ -138,13 +138,16 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
                     owner.netUpdate = true;
                 }
 
-                // remember that this is target client side; we sync to server
-                var netMessage = Mod.GetPacket();
-                netMessage.Write((byte)FargowiltasSouls.PacketID.SyncCursedSpiritGrab);
-                netMessage.Write((byte)NPC.whoAmI);
-                netMessage.Write((byte)BittenPlayer);
-                netMessage.Write(BiteTimer);
-                netMessage.Send();
+                if (Main.netMode != NetmodeID.SinglePlayer)
+                {
+                    // remember that this is target client side; we sync to server
+                    var netMessage = Mod.GetPacket();
+                    netMessage.Write((byte)FargowiltasSouls.PacketID.SyncCursedSpiritGrab);
+                    netMessage.Write((byte)NPC.whoAmI);
+                    netMessage.Write((byte)BittenPlayer);
+                    netMessage.Write(BiteTimer);
+                    netMessage.Send();
+                }
             }
         }
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
@@ -290,11 +293,14 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
                     if (Main.netMode == NetmodeID.Server)
                         NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, NPC.whoAmI);
 
-                    var netMessage = Mod.GetPacket();
-                    netMessage.Write((byte)FargowiltasSouls.PacketID.SyncCursedSpiritRelease);
-                    netMessage.Write((byte)NPC.whoAmI);
-                    netMessage.Write((byte)victim.whoAmI);
-                    netMessage.Send();
+                    if (Main.netMode != NetmodeID.SinglePlayer)
+                    {
+                        var netMessage = Mod.GetPacket();
+                        netMessage.Write((byte)FargowiltasSouls.PacketID.SyncCursedSpiritRelease);
+                        netMessage.Write((byte)NPC.whoAmI);
+                        netMessage.Write((byte)victim.whoAmI);
+                        netMessage.Send();
+                    }
                 }
                 return;
             }
