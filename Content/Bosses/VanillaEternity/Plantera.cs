@@ -246,7 +246,12 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     Vector2 offset = player.DirectionTo(npc.Center) * 400f;
                     MovementAvoidWalls(player.Center + offset, speedMultiplier: 0.5f);
 
-                    if (timer > 60)
+                    if (timer == 50)
+                        Vineburst();
+                    if (timer >= 46)
+                        npc.velocity *= 0.8f;
+
+                    if (timer > 140)
                     {
                         timer = 0;
                         state = 1;

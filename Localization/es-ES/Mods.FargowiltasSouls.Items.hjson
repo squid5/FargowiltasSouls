@@ -1137,7 +1137,7 @@ ChaliceoftheMoon: {
 		[i:FargowiltasSouls/MagicalBulb] Press the Magical Cleanse key to cure yourself of most debuffs and amplify damage over time effects for nearby enemies by 2x for a duration
 		[i:FargowiltasSouls/MagicalBulb] Increases life regeneration based on how much light you receive
 		[i:FargowiltasSouls/LihzahrdTreasureBox] Double tap DOWN in the air to fastfall, creating an explosion on landing after falling a certain distance
-		[i:FargowiltasSouls/CelestialRune] You fire additional attacks depending on weapon type and erupt into Ancient Visions when injured
+		[i:FargowiltasSouls/CelestialRune] You fire additional attacks depending on weapon type
 		'Always watching'
 		''' */
 }
