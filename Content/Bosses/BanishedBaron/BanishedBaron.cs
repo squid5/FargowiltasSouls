@@ -325,9 +325,6 @@ namespace FargowiltasSouls.Content.Bosses.BanishedBaron
             //Unused: 8-10
             //P2 Normal fly loop: 11-16 (Anim 0)
             //P2 Open mouth: 17-18 (Anim 1)
-            bool ftw = Main.getGoodWorld;
-            if (ftw)
-                Phase = 0;
 
             double fpf = 60 / (10 * AnimationSpeed); //  60/fps
             int StartFrame = 0;
