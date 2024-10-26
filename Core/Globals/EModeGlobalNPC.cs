@@ -198,7 +198,6 @@ namespace FargowiltasSouls.Core.Globals
                 }
             }
         }
-
         public override void EditSpawnRate(Player player, ref int spawnRate, ref int maxSpawns)
         {
             if (WorldSavingSystem.EternityMode)
@@ -1507,7 +1506,20 @@ namespace FargowiltasSouls.Core.Globals
                 }
             }
         }*/
-
+        public override bool CanHitPlayer(NPC npc, Player target, ref int cooldownSlot)
+        {
+            bool ret = base.CanHitPlayer(npc, target, ref cooldownSlot);
+            if (!WorldSavingSystem.EternityMode)
+                return ret;
+            if (npc.type is NPCID.Sharkron or NPCID.Sharkron2)
+            {
+                int halfwidth = npc.width / 2;
+                Vector2 dir = npc.velocity.SafeNormalize(Vector2.Zero);
+                if (!Collision.CheckAABBvLineCollision(target.position, target.Size, npc.Center - dir * halfwidth, npc.Center + dir * halfwidth))
+                    return false;
+            }
+            return ret;
+        }
         public static void CustomReflect(NPC npc, int dustID, int ratio = 1)
         {
             float distance = 2f * 16;
