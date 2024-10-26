@@ -52,10 +52,13 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
     
 	coords.y = (coords.y - 0.5) / input.TextureCoordinates.z + 0.5;
     
-    float widthScale = float((y + (1 - coords.x * 0.05)) / 3.5);
+    float widthScale = float((y + (1 - coords.x * 0.05)) / 2.8);
     
-    if (coords.x < 0.2)
-        widthScale /= pow(coords.x / 0.2, 0.7);
+    if (coords.x < 0.09)
+        widthScale /= pow(coords.x / 0.09, 0.7);
+    
+    if (coords.x < 0.02)
+        widthScale /= pow(coords.x / 0.02, 10);
 
     
     coords.y = ((coords.y - clamp(0.48, 0.45, 0.49)) * clamp(widthScale, 0, 2)) + 0.5;
@@ -63,7 +66,7 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
     
     // Get the pixel of the fade map. What coords.x is being multiplied by determines
     // how many times the uImage1 is copied to cover the entirety of the prim. 2, 2
-	float4 fadeMapColor = tex2D(uImage1, float2(frac(coords.x * 0.2 - globalTime * 0.4), coords.y));
+	float4 fadeMapColor = tex2D(uImage1, float2(frac(coords.x * 0.8 - globalTime * 0.6), coords.y));
     
     // Use the red value for the opacity, as the provided image *should* be grayscale.
     float opacity = fadeMapColor.r;

@@ -266,14 +266,14 @@ namespace FargowiltasSouls.Content.Projectiles
 
                 case 9: //reti telegraph
                     {
-                        color = Color.DarkOrange;
+                        color = Color.Red;
                         maxTime = 120;
                         alphaModifier = 2;
 
                         NPC npc = FargoSoulsUtil.NPCExists(Projectile.ai[1], NPCID.Retinazer);
                         if (npc != null)
                         {
-                            Vector2 offset = new Vector2(npc.width - 24, 0).RotatedBy(npc.rotation + MathHelper.PiOver2);
+                            Vector2 offset = new Vector2(npc.width - 24, 0).RotatedBy(npc.rotation + 1.57079637);
                             Projectile.Center = npc.Center + offset;
                             Projectile.rotation = npc.rotation + MathHelper.PiOver2;
                         }
