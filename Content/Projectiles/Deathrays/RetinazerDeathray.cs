@@ -2,6 +2,7 @@
 using FargowiltasSouls.Assets.Sounds;
 using FargowiltasSouls.Content.Bosses.VanillaEternity;
 using FargowiltasSouls.Core.Systems;
+using Luminance.Assets;
 using Luminance.Core.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -28,6 +29,7 @@ namespace FargowiltasSouls.Content.Projectiles.Deathrays
         public override void SetDefaults()
         {
             Projectile.hide = true;
+            Projectile.tileCollide = false;
             base.SetDefaults();
         }
 
@@ -149,7 +151,7 @@ namespace FargowiltasSouls.Content.Projectiles.Deathrays
 
         public static Color ColorFunction(float _)
         {
-            Color color = Color.Lerp(Color.OrangeRed, Color.Orange, 2f); //new(232, 140, 240);
+            Color color = Color.Red;
             color.A = 0;
             return color;
         }
