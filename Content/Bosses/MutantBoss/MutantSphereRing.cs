@@ -114,7 +114,8 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
 
         void TryTimeStop()
         {
-            /*
+            if (!Main.getGoodWorld)
+                return;
             if (Projectile.hostile && !Projectile.friendly 
                 && Main.LocalPlayer.active && !Main.LocalPlayer.dead && !Main.LocalPlayer.ghost
                 && FargoSoulsUtil.BossIsAlive(ref EModeGlobalNPC.mutantBoss, ModContent.NPCType<MutantBoss>()))
@@ -129,7 +130,7 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
                     Main.LocalPlayer.AddBuff(ModContent.BuffType<TimeFrozenBuff>(), 300);
                 }
             }
-            */
+            
         }
 
         public override void OnHitPlayer(Player target, Player.HurtInfo info)
