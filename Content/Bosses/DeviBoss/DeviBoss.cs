@@ -2175,7 +2175,7 @@ namespace FargowiltasSouls.Content.Bosses.DeviBoss
 
                     Vector2 speed = Main.rand.NextFloat(1, 2) * Vector2.UnitX.RotatedByRandom(Math.PI * 2);
                     float ai1 = 30 + Main.rand.Next(30);
-                    Projectile.NewProjectile(NPC.GetSource_FromThis(), player.Center, speed, ModContent.ProjectileType<HostileHealingHeart>(), hitInfo.Damage, 0f, Main.myPlayer, NPC.whoAmI, ai1);
+                    Projectile.NewProjectile(NPC.GetSource_FromThis(), player.Center, speed, ModContent.ProjectileType<HostileHealingHeart>(), hitInfo.Damage / 2, 0f, Main.myPlayer, NPC.whoAmI, ai1);
 
                     hitInfo.Null();
                 };
