@@ -3,6 +3,7 @@ using FargowiltasSouls.Content.Items;
 using FargowiltasSouls.Content.Items.Accessories.Enchantments;
 using FargowiltasSouls.Content.Tiles;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
+using FargowiltasSouls.Core.Systems;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -27,6 +28,7 @@ namespace FargowiltasSouls
             On_Item.AffixName += AffixName;
             On_NPCUtils.TargetClosestBetsy += TargetClosestBetsy;
             On_Main.MouseText_DrawItemTooltip_GetLinesInfo += MouseText_DrawItemTooltip_GetLinesInfo;
+            On_Player.HorsemansBlade_SpawnPumpkin += HorsemansBlade_SpawnPumpkin;
         }
         public void UnloadDetours()
         {
@@ -151,6 +153,13 @@ namespace FargowiltasSouls
             DrawingTooltips = true;
             orig(item, ref yoyoLogo, ref researchLine, oldKB, ref numLines, toolTipLine, preFixLine, badPreFixLine, toolTipNames, out prefixlineIndex);
             DrawingTooltips = false;
+        }
+        public static void HorsemansBlade_SpawnPumpkin(On_Player.orig_HorsemansBlade_SpawnPumpkin orig, Player self, int npcIndex, int dmg, float kb)
+        {
+            NPC npc = Main.npc[npcIndex];
+            if (npc.type is NPCID.GolemFistLeft or NPCID.GolemFistRight && WorldSavingSystem.EternityMode  && npc.TryGetGlobalNPC(out GolemFist golemFist) && golemFist.RunEmodeAI)
+                return;
+            orig(self, npcIndex, dmg, kb);
         }
     }
 }
