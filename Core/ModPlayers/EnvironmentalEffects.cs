@@ -512,7 +512,7 @@ namespace FargowiltasSouls.Core.ModPlayers
                     immunity = true;
 
                 bool inLiquid = Collision.DrownCollision(Player.position, Player.width, Player.height, Player.gravDir);
-                if (!inLiquid || immunity)
+                if (!inLiquid && !immunity)
                 {
                     Player.breath -= 3;
                     if (++MasomodeSpaceBreathTimer > 10)
