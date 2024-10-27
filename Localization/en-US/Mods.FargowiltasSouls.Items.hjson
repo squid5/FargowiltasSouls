@@ -610,7 +610,7 @@ SpectreEnchant: {
 	Tooltip:
 		'''
 		If you reach zero HP you will revive as a ghost with 100 HP, self-cleanse debuffs, and spawn several spirits
-		As a ghost you are immune, faster, have infinite flight and can't attack, lasting for 5 seconds
+		As a ghost you are immune, faster, have infinite wing time and can't attack, lasting for 5 seconds
 		You will also spawn a few spirits on every hit
 		Collect the spirits to heal for 20 HP each and send them towards the nearest enemy, dealing magic damage
 		'Their lifeforce will be their undoing'
