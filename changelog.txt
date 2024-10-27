@@ -1,3 +1,104 @@
 NEW UPDATE - V {ModVersion}
 
-Updated Chinese localization
+Major features:
+
+PostML accessory/toggle overhaul:
+-Reworked all Forces. They now have new combined effects, rather than a scattering of small effects from the components. 
+-Soul of the Universe: Attack speed bonus 50% -> 25%, class damage 66% -> 50%
+-Soul of the Master: Removed most minion summons and several other cluttery effects
+-Flight Mastery Soul now has a toggle that disables all jump effects
+-Removed gravity control from Flight Mastery Soul
+-Removed Sniper Scope zoom effect
+Renamed Champion of Shadow and Shadow Force to Champion of Death and Force of Death, renamed Terra Force to Force of Terra
+
+Reworked Pearlwood Enchantment:
+-Picking up any consumable pickup fires a star at a nearby enemy and empowers you
+-While empowered, your critical strikes reroll favorably
+-Your attacks occasionally spawn mana stars on-hit
+
+Reworked Meteor Enchantment:
+-Occasionally drops a massive meteor on enemies
+-Moving around quickly makes the meteor cooldown decrease faster
+-Still provides traction effect
+
+Trojan Squirrel:
+Tweaked snowball attack timing and speed
+
+Deviantt:
+-Reworked Masochist axe swing attack; no longer has +pattern deathrays, instead attacks faster and swings twice. Deathrays remain on FTW seed
+-Now leaves a trail of fewer, bigger Devil Scythes (from Red Devils) during axe dashes, instead of Moth Dust
+-Small falling hearts now summon heart pillars instead of deathrays in Masochist Mode aswell
+-Hammer attack can no longer hit while telegraphing, before actually swinging the hammers
+-Small deathrays now quickly expand in length instead of instantly appearing at full length, but deathray hearts explode slightly faster to compensate
+
+Lifelight:
+-Fully reworked boss AI and attacks
+-New sound effects
+
+Mutant:
+-Mutant's Presence disables much fewer effects
+-Buffed health massively to compensate
+-New visuals for border arenas
+-New sound effects and some new sprites
+-Pillar fragments now have a glow
+
+ETERNITY MODE:
+-----
+Eye of Cthulhu:
+-Nerfed phase 3 in Masochist Mode
+
+Eater of Worlds:
+-Added new attack
+-Resprited
+
+Brain of Cthulhu:
+-Reworked most of Phase 2
+-Made Creepers tankier
+-Resprited
+
+King Slime:
+
+Wall of Flesh:
+-Reduced HP:
+--Eternity HP 2.2x -> 2x
+--Master Eternity+ HP x0.9
+-Lowered desperation attack cycling speed
+-Lowed Masochist maximum speed
+-Reduced duration of Masochist laser burning debuff
+-Masochist reticle chains inflicting Tongued is now FTW exclusive, instead they grab the player
+-Masochist deathray inflicting Unstable is now FTW only, instead it massively propels the player
+
+Plantera: 
+-Reworked large parts of Phase 3
+
+Lunatic Cultist:
+-No longer inflicts Frozen
+-Pillar fragments now have a glow
+-Multiplayer sync fixes
+
+Other Eternity changes:
+Reworked Orichalcum melee weapons: Deals up to double damage to enemies taking damage over time, scaling with amount
+Cobalt melee weapon explosions now scale with source damage rather than final damage; this means they can no longer double crit or double-dip on other similar effects
+Reduced Cobalt/Mythril/Orichalcum/Palladium sword speed buff 1.5x -> 1.25x
+Greatly reduced Parrot spawn rates
+-----
+
+Other changes:
+Attack speed bonuses grant their bonus split across frames rather than rounding down the bonus
+Tons of resprites
+
+Lightslinger: Bomb cannot split with Adamantite Enchantment and similar effects, slightly decreased bomb shot damage
+
+Nekomi Armor:
+-Reduced defense from 7|11|7 to 6|10|6
+-Reduced time of regen gained from consuming hearts
+-Slightly reduced super axe damage
+
+
+Other minor tweaks:
+Eternity rain deals less damage to Town NPCs
+
+Bugfixes:
+
+
+Renamed
