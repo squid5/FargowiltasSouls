@@ -2713,7 +2713,7 @@ LeashOfCthulhu: {
 
 RefractorBlaster: {
 	DisplayName: Refractor Blaster
-	Tooltip: 
+	Tooltip:
 		'''
 		Fires two angled spreads of lasers
 		Lasers deal less damage right after being fired

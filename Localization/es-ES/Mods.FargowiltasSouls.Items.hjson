@@ -2734,7 +2734,12 @@ LeashOfCthulhu: {
 
 RefractorBlaster: {
 	// DisplayName: Refractor Blaster
-	// Tooltip: "'Modified from the arm of a defeated foe..'"
+	/* Tooltip:
+		'''
+		Fires two angled spreads of lasers
+		Lasers deal less damage right after being fired
+		'Modified from the arm of a defeated foe..'"
+		''' */
 }
 
 RockSlide: {

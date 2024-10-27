@@ -561,12 +561,20 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
         public override bool? DrawHealthBar(NPC npc, byte hbPosition, ref float scale, ref Vector2 position) => false;
 
+        public override void ModifyHitByAnything(NPC npc, Player player, ref NPC.HitModifiers modifiers)
+        {
+            modifiers.Null();
+        }
         public override void SafeOnHitByProjectile(NPC npc, Projectile projectile, NPC.HitInfo hit, int damageDone)
         {
             base.SafeOnHitByProjectile(npc, projectile, hit, damageDone);
 
             if (WorldSavingSystem.MasochistModeReal && projectile.maxPenetrate != 1 && FargoSoulsUtil.CanDeleteProjectile(projectile))
                 projectile.timeLeft = 0;
+        }
+        public override void OnHitByAnything(NPC npc, Player player, NPC.HitInfo hit, int damageDone)
+        {
+            hit.Null();
         }
     }
 
