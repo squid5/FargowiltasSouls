@@ -60,8 +60,8 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
         public override int ToggleItemType => ModContent.ItemType<ShroomiteEnchant>();
         public override void PostUpdateEquips(Player player)
         {
-            if (!player.FargoSouls().TerrariaSoul)
-                player.shroomiteStealth = true;
+            //if (!player.FargoSouls().TerrariaSoul)
+            //    player.shroomiteStealth = true;
         }
     }
     public class ShroomiteMushroomPriority : AccessoryEffect
