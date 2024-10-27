@@ -1,5 +1,6 @@
 ﻿using FargowiltasSouls.Content.Buffs.Souls;
 using Microsoft.Xna.Framework;
+using System.Reflection;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -38,10 +39,19 @@ namespace FargowiltasSouls.Content.Items.Misc
         {
             grabRange += 100;
         }
+        public static MethodInfo PullItem_PickupMethod
+        {
+            get;
+            set;
+        }
+        public override void Load()
+        {
+            PullItem_PickupMethod = typeof(Player).GetMethod("PullItem_Pickup", LumUtils.UniversalBindingFlags);
+        }
         public override bool GrabStyle(Player player)
         {
             object[] args = [Item, 12f, 5];
-            typeof(Player).GetMethod("PullItem_Pickup", LumUtils.UniversalBindingFlags).Invoke(player, args);
+            PullItem_PickupMethod.Invoke(player, args);
             return true;
         }
         public override Color? GetAlpha(Color lightColor)
