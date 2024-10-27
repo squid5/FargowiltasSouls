@@ -33,8 +33,10 @@ namespace FargowiltasSouls.Content.Items.Accessories.Masomode
             player.buffImmune[ModContent.BuffType<Buffs.Masomode.DefenselessBuff>()] = true;
             player.buffImmune[ModContent.BuffType<Buffs.Masomode.NanoInjectionBuff>()] = true;
             player.buffImmune[ModContent.BuffType<Buffs.Masomode.LightningRodBuff>()] = true;
+            FargoSoulsPlayer modPlayer = player.FargoSouls();
 
-            player.FargoSouls().FusedLens = true;
+            modPlayer.FusedLens = true;
+            modPlayer.DubiousCircuitry = true;
             player.AddEffect<FusedLensInstall>(Item);
             if (player.onFire2)
                 player.FargoSouls().AttackSpeed += 0.15f;

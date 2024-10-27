@@ -239,6 +239,7 @@ namespace FargowiltasSouls.Core.ModPlayers
         public int WyvernBallsCD;
         public bool FusedLens;
         public bool FusedLensCanDebuff;
+        public bool DubiousCircuitry;
         public bool Supercharged;
         public bool Probes;
         public bool MagicalBulb;

@@ -217,6 +217,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Souls
             player.buffImmune[BuffID.CursedInferno] = true;
             player.buffImmune[BuffID.Ichor] = true;
             fargoPlayer.FusedLens = true;
+            fargoPlayer.DubiousCircuitry = true;
             player.AddEffect<FusedLensInstall>(Item);
             player.AddEffect<GroundStickDR>(Item);
             player.noKnockback = true;

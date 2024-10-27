@@ -328,6 +328,7 @@ namespace FargowiltasSouls.Core.ModPlayers
             CrystalSkullMinion = false;
             FusedLens = false;
             FusedLensCanDebuff = false;
+            DubiousCircuitry = false;
             Supercharged = false;
             Probes = false;
             MagicalBulb = false;
