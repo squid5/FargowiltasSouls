@@ -3,6 +3,8 @@ global using FargowiltasSouls.Core.Toggler;
 global using Luminance.Common.Utilities;
 global using LumUtils = Luminance.Common.Utilities.Utilities;
 using Fargowiltas;
+using Fargowiltas.NPCs;
+using Fargowiltas.Projectiles;
 using FargowiltasSouls.Content.Bosses.CursedCoffin;
 using FargowiltasSouls.Content.Bosses.VanillaEternity;
 using FargowiltasSouls.Content.Buffs.Boss;
@@ -33,6 +35,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Terraria;
+using Terraria.Audio;
 using Terraria.Chat;
 using Terraria.DataStructures;
 using Terraria.GameContent;
@@ -592,7 +595,8 @@ namespace FargowiltasSouls
             SyncCursedSpiritRelease,
             SyncTuskRip,
             DropMutantGift,
-            RequestEnvironmentalProjectile
+            RequestEnvironmentalProjectile,
+            ToggleEternityMode,
         }
 
         public override void HandlePacket(BinaryReader reader, int whoAmI)
@@ -884,6 +888,42 @@ namespace FargowiltasSouls
                                     float ai1 = reader.ReadSingle();
                                     int damage = (Main.hardMode ? 120 : 60) / 4;
                                     Projectile.NewProjectile(Terraria.Entity.GetSource_NaturalSpawn(), pos, Vector2.Zero, type, damage, 2f, Main.myPlayer, Vector2.UnitY.ToRotation(), ai1);
+                                }
+                            }
+                        }
+                        break;
+
+                    case PacketID.ToggleEternityMode:
+                        {
+                            Player player = FargoSoulsUtil.PlayerExists(reader.ReadByte());
+                            if (Main.netMode == NetmodeID.Server)
+                            {
+                                if (FargoSoulsUtil.WorldIsExpertOrHarder())
+                                {
+                                    if (!LumUtils.AnyBosses())
+                                    {
+                                        WorldSavingSystem.ShouldBeEternityMode = !WorldSavingSystem.ShouldBeEternityMode;
+
+                                        int deviType = ModContent.NPCType<Deviantt>();
+                                        if (FargoSoulsUtil.HostCheck && WorldSavingSystem.ShouldBeEternityMode && !WorldSavingSystem.SpawnedDevi && !NPC.AnyNPCs(deviType))
+                                        {
+                                            WorldSavingSystem.SpawnedDevi = true;
+
+                                            Vector2 spawnPos = (Main.zenithWorld || Main.remixWorld) ? player.Center : player.Center - 1000 * Vector2.UnitY;
+                                            Projectile.NewProjectile(player.GetSource_Misc(""), spawnPos, Vector2.Zero, ModContent.ProjectileType<SpawnProj>(), 0, 0, Main.myPlayer, deviType);
+
+                                            FargoSoulsUtil.PrintLocalization("Announcement.HasAwoken", new Color(175, 75, 255), Language.GetTextValue("Mods.Fargowiltas.NPCs.Deviantt.DisplayName"));
+                                        }
+
+                                        SoundEngine.PlaySound(SoundID.Roar, player.Center);
+
+                                        if (Main.netMode == NetmodeID.Server)
+                                            NetMessage.SendData(MessageID.WorldData); //sync world
+                                    }
+                                }
+                                else
+                                {
+                                    FargoSoulsUtil.PrintLocalization($"Mods.FargowiltasSouls.Items.Masochist.WrongDifficulty", new Color(175, 75, 255));
                                 }
                             }
                         }

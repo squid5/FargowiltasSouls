@@ -101,32 +101,45 @@ namespace FargowiltasSouls.Content.UI.Elements
             if (Main.LocalPlayer.FargoSouls().EmodeToggleCooldown <= 0 && !dragging && conditions && ContainsPoint(Main.MouseScreen) && Main.mouseRight && PlayerInput.MouseInfoOld.RightButton == ButtonState.Released)
             {
                 Main.LocalPlayer.FargoSouls().EmodeToggleCooldown = 15;
-                if (FargoSoulsUtil.WorldIsExpertOrHarder())
+                if (Main.netMode == NetmodeID.SinglePlayer)
                 {
-                    if (!LumUtils.AnyBosses())
+                    if (FargoSoulsUtil.WorldIsExpertOrHarder())
                     {
-                        WorldSavingSystem.ShouldBeEternityMode = !WorldSavingSystem.ShouldBeEternityMode;
-
-                        int deviType = ModContent.NPCType<Deviantt>();
-                        if (FargoSoulsUtil.HostCheck && WorldSavingSystem.ShouldBeEternityMode && !WorldSavingSystem.SpawnedDevi && !NPC.AnyNPCs(deviType))
+                        if (!LumUtils.AnyBosses())
                         {
-                            WorldSavingSystem.SpawnedDevi = true;
+                            WorldSavingSystem.ShouldBeEternityMode = !WorldSavingSystem.ShouldBeEternityMode;
 
-                            Vector2 spawnPos = (Main.zenithWorld || Main.remixWorld) ? Main.LocalPlayer.Center : Main.LocalPlayer.Center - 1000 * Vector2.UnitY;
-                            Projectile.NewProjectile(Main.LocalPlayer.GetSource_Misc(""), spawnPos, Vector2.Zero, ModContent.ProjectileType<SpawnProj>(), 0, 0, Main.myPlayer, deviType);
+                            int deviType = ModContent.NPCType<Deviantt>();
+                            if (FargoSoulsUtil.HostCheck && WorldSavingSystem.ShouldBeEternityMode && !WorldSavingSystem.SpawnedDevi && !NPC.AnyNPCs(deviType))
+                            {
+                                WorldSavingSystem.SpawnedDevi = true;
 
-                            FargoSoulsUtil.PrintLocalization("Announcement.HasAwoken", new Color(175, 75, 255), Language.GetTextValue("Mods.Fargowiltas.NPCs.Deviantt.DisplayName"));
+                                Vector2 spawnPos = (Main.zenithWorld || Main.remixWorld) ? Main.LocalPlayer.Center : Main.LocalPlayer.Center - 1000 * Vector2.UnitY;
+                                Projectile.NewProjectile(Main.LocalPlayer.GetSource_Misc(""), spawnPos, Vector2.Zero, ModContent.ProjectileType<SpawnProj>(), 0, 0, Main.myPlayer, deviType);
+
+                                FargoSoulsUtil.PrintLocalization("Announcement.HasAwoken", new Color(175, 75, 255), Language.GetTextValue("Mods.Fargowiltas.NPCs.Deviantt.DisplayName"));
+                            }
+
+                            SoundEngine.PlaySound(SoundID.Roar, Main.LocalPlayer.Center);
+
+                            if (Main.netMode == NetmodeID.Server)
+                                NetMessage.SendData(MessageID.WorldData); //sync world
                         }
-
-                        SoundEngine.PlaySound(SoundID.Roar, Main.LocalPlayer.Center);
-
-                        if (Main.netMode == NetmodeID.Server)
-                            NetMessage.SendData(MessageID.WorldData); //sync world
+                    }
+                    else
+                    {
+                        if (FargoSoulsUtil.WorldIsExpertOrHarder())
+                            if (!LumUtils.AnyBosses())
+                                SoundEngine.PlaySound(SoundID.Roar, Main.LocalPlayer.Center);
+                        FargoSoulsUtil.PrintLocalization($"Mods.FargowiltasSouls.Items.Masochist.WrongDifficulty", new Color(175, 75, 255));
                     }
                 }
                 else
                 {
-                    FargoSoulsUtil.PrintLocalization($"Mods.FargowiltasSouls.Items.Masochist.WrongDifficulty", new Color(175, 75, 255));
+                    var netMessage = FargowiltasSouls.Instance.GetPacket();
+                    netMessage.Write((byte)FargowiltasSouls.PacketID.ToggleEternityMode);
+                    netMessage.Write((byte)Main.LocalPlayer.whoAmI);
+                    netMessage.Send();
                 }
                 
             }
