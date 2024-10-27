@@ -1,4 +1,5 @@
 using FargowiltasSouls.Content.Bosses.CursedCoffin;
+using FargowiltasSouls.Content.Bosses.MutantBoss;
 using FargowiltasSouls.Content.Buffs;
 using FargowiltasSouls.Content.Buffs.Boss;
 using FargowiltasSouls.Content.Buffs.Masomode;
@@ -13,6 +14,7 @@ using FargowiltasSouls.Content.Items.Weapons.SwarmDrops;
 using FargowiltasSouls.Content.Projectiles;
 using FargowiltasSouls.Content.UI.Elements;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
+using FargowiltasSouls.Core.Globals;
 using FargowiltasSouls.Core.Systems;
 using Microsoft.Xna.Framework;
 using System;
@@ -482,6 +484,9 @@ namespace FargowiltasSouls.Core.ModPlayers
 
             if (Player.grapCount <= 0)
                 Grappled = false;
+
+            if (!FargoSoulsUtil.BossIsAlive(ref EModeGlobalNPC.mutantBoss, ModContent.NPCType<MutantBoss>()) && !EModeGlobalNPC.mutantBoss.IsWithinBounds(Main.maxNPCs))
+                The22Incident = 0;
 
         }
         public override void OnRespawn()
