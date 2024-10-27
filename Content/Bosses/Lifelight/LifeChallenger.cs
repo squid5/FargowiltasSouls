@@ -3161,7 +3161,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                     State = (int)Main.rand.NextFromCollection(doableStates);
                     LastAttack[i] = State;
 
-                    State = (int)States.Plunge;
+                    //State = (int)States.Plunge;
                 }
             }
         }
