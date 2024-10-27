@@ -120,11 +120,14 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
             if (EaterofWorldsHead.HaveSpawnDR > 0)
                 modifiers.FinalDamage /= projectile.numHits + 1;
+
+            if (projectile.FargoSouls().IsAHeldProj)
+                modifiers.FinalDamage *= 0.6f;
         }
 
         public override void SafeOnHitByProjectile(NPC npc, Projectile projectile, NPC.HitInfo hit, int damageDone)
         {
-            if (!FargoSoulsUtil.IsSummonDamage(projectile) && projectile.damage > 5)
+            if (!FargoSoulsUtil.IsSummonDamage(projectile) && projectile.damage > 5 && !projectile.FargoSouls().IsAHeldProj)
                 projectile.damage = (int)Math.Min(projectile.damage - 1, projectile.damage * 0.8);
 
             base.SafeOnHitByProjectile(npc, projectile, hit, damageDone);
