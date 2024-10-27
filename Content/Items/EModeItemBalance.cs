@@ -378,7 +378,11 @@ namespace FargowiltasSouls.Content.Items
                 case ItemID.ChlorophyteSaber:
                     balanceTextKeys = ["Damage", "ChlorophyteSaber"];
                     balanceNumber = 1.25f;
+                    return EModeChange.Buff;
 
+                case ItemID.Gladius:
+                    balanceTextKeys = ["Damage"];
+                    balanceNumber = 1.25f;
                     return EModeChange.Buff;
                 default:
                     return EModeChange.None;
