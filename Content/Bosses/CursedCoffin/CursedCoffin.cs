@@ -254,7 +254,16 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
 		{
 			if (NPC.IsABestiaryIconDummy)
-				return true;
+            {
+                if (Main.getGoodWorld)
+                {
+                    Texture2D whitecoffin = ModContent.Request<Texture2D>(Texture + "_FTW").Value;
+                    spriteBatch.Draw(whitecoffin, NPC.position - screenPos, null, NPC.GetAlpha(drawColor), 0f, Vector2.Zero, NPC.scale, SpriteEffects.None, 0f);
+                    return false;
+                }
+                return true;
+            }
+				
             if (DrawcodeOpacity < 1f)
                 DrawcodeOpacity += 0.025f;
 

@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="Assets\UI\OncomingMutantnt.png" />
+    <None Remove="Content\Bosses\CursedCoffin\CursedCoffin_FTW.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Assets\Sounds\VanillaEternity\KingSlime\" />
