@@ -1935,7 +1935,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                 }
                 */
 
-                if (FargoSoulsUtil.HostCheck)
+                if (FargoSoulsUtil.HostCheck && WorldSavingSystem.EternityMode)
                 {
                     Vector2 shootdown = new(0f, 10f);
                     SoundEngine.PlaySound(SoundID.DD2_WitherBeastCrystalImpact, NPC.Center);
@@ -1944,14 +1944,16 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                     {
                         Vector2 vel = Vector2.UnitY * NPC.velocity.Y;
                         vel += shootdown / 2;
-                        vel *= 0.6f;
+                        vel *= 0.65f;
                         float frac = ((float)k / shards);
                         float maxAccel = 0.5f;
                         float accel = -maxAccel + (maxAccel * 2 * frac);
 
                         float yaccel = 1.2f + 0.008f * MathF.Pow(MathF.Abs(k - (float)(shards / 2f)), 2f);
 
-                        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, vel, ModContent.ProjectileType<LifeNeggravProj>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), 3f, Main.myPlayer, ai1: yaccel, ai2: accel);
+                        float speedMod = 0.7f;
+
+                        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, vel * speedMod, ModContent.ProjectileType<LifeNeggravProj>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), 3f, Main.myPlayer, ai1: yaccel * speedMod, ai2: accel * speedMod);
 
                         int j = k - 1;
                         float shards2 = shards - 1;
@@ -1963,7 +1965,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                         if (k >= shards - 1)
                             continue;
 
-                        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, vel, ModContent.ProjectileType<LifeNeggravProj>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), 3f, Main.myPlayer, ai1: 0.9f * yaccel, ai2: accel2);
+                        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, vel * speedMod, ModContent.ProjectileType<LifeNeggravProj>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), 3f, Main.myPlayer, ai1: 0.9f * yaccel * speedMod, ai2: accel2 * speedMod);
                     }
                     SoundEngine.PlaySound(SoundID.DD2_WitherBeastCrystalImpact, NPC.Center);
                 }
@@ -3159,7 +3161,7 @@ namespace FargowiltasSouls.Content.Bosses.Lifelight
                     State = (int)Main.rand.NextFromCollection(doableStates);
                     LastAttack[i] = State;
 
-                    //State = (int)States.RuneExpand;
+                    State = (int)States.Plunge;
                 }
             }
         }
