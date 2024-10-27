@@ -18,7 +18,7 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
     {
         public override string Texture => "FargowiltasSouls/Content/Projectiles/Masomode/BloodScytheVanilla1";
 
-        public bool recolor = SoulConfig.Instance.BossRecolors && WorldSavingSystem.EternityMode;
+        public bool recolor => SoulConfig.Instance.BossRecolors && WorldSavingSystem.EternityMode && Projectile.ai[2] != 1;
         public override void SetStaticDefaults()
         {
             ProjectileID.Sets.TrailingMode[Type] = 1;
@@ -52,7 +52,7 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
             //{
             Vector2 offset = new Vector2(0, -20).RotatedBy(Projectile.rotation);
             offset = offset.RotatedByRandom(MathHelper.Pi / 6);
-            int d = Dust.NewDust(Projectile.Center, 0, 0, recolor? DustID.Vortex : DustID.BloodWater, 0f, 0f, 150);
+            int d = Dust.NewDust(Projectile.Center, 0, 0, recolor ? DustID.Vortex : DustID.BloodWater, 0f, 0f, 150);
             Main.dust[d].position += offset;
             float velrando = Main.rand.Next(20, 31) / 10;
             Main.dust[d].velocity = Projectile.velocity / velrando;
