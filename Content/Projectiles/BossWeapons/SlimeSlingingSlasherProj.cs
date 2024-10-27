@@ -112,6 +112,8 @@ namespace FargowiltasSouls.Content.Projectiles.BossWeapons
                 if (animProgress < 0.2f && !FirstSwing)
                     flip = true;
                 Projectile.ResetLocalNPCHitImmunity();
+                Projectile.damage = player.GetWeaponDamage(player.HeldItem);
+                Projectile.CritChance = player.GetWeaponCrit(player.HeldItem);
             }
             else if (progress < firstSwingEnd)
             {
@@ -143,6 +145,8 @@ namespace FargowiltasSouls.Content.Projectiles.BossWeapons
                     flip = true;
                 Swinging = false;
                 Projectile.ResetLocalNPCHitImmunity();
+                Projectile.damage = player.GetWeaponDamage(player.HeldItem);
+                Projectile.CritChance = player.GetWeaponCrit(player.HeldItem);
             }
             else
             {
