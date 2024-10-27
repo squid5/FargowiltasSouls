@@ -29,7 +29,7 @@ namespace FargowiltasSouls.Content.Items.Misc
         public abstract void PickupEffect(BoosterPlayer boosterPlayer);
         public override bool OnPickup(Player player)
         {
-            //SoundEngine.PlaySound(SoundID.Grab, Item.position);
+            SoundEngine.PlaySound(SoundID.Grab, Item.position);
             PickupEffect(player.GetModPlayer<BoosterPlayer>());
             return false;
         }
