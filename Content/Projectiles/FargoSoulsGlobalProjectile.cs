@@ -941,6 +941,7 @@ namespace FargowiltasSouls.Content.Projectiles
                 case ProjectileID.FlowerPetal:
                 case ProjectileID.SporeCloud:
                 case ProjectileID.ChlorophyteOrb:
+                case ProjectileID.PaladinsHammerFriendly:
                     {
                         if (projectile.scale != 1)
                         {
