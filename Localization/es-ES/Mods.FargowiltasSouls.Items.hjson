@@ -118,7 +118,6 @@ ChlorophyteEnchant: {
 	/* Tooltip:
 		'''
 		Summons a ring of leaf crystals to shoot at nearby enemies
-		Grants a double spore jump
 		While using wings, spores will continuously spawn
 		Allows the ability to dash slightly
 		Double tap a direction
@@ -851,7 +850,7 @@ CosmoForce: {
 		[i:FargowiltasSouls/NebulaEnchant] Picking up Lunar Boosters increases your damage, crit, life regen or damage reduction
 		[i:FargowiltasSouls/StardustEnchant] Press the Freeze Key to freeze time for 6 seconds, with a 75 second cooldown
 		[i:FargowiltasSouls/MeteorEnchant] Increases your movement speed and acceleration, and decreases your momentum
-		[i:FargowiltasSouls/WizardEnchant] Amplifies the effect of all your Enchantments
+		[i:FargowiltasSouls/WizardEnchant] Upgrades the effects of all your Enchantments
 		'Been around since the Big Bang'
 		''' */
 }

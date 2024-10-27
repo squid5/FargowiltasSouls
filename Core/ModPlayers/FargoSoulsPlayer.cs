@@ -1469,7 +1469,7 @@ namespace FargowiltasSouls.Core.ModPlayers
             hurtbox.Y -= hurtbox.Height / 2;
             return hurtbox;
         }
-        public bool ForceEffect(ModItem modItem)
+        public bool ForceEffect(ModItem modItem, bool allowPaused = false)
         {
             bool CheckForces(int type)
             {
@@ -1480,8 +1480,6 @@ namespace FargowiltasSouls.Core.ModPlayers
             }
             bool CheckWizard(int type)
             {
-                if (ForceEffects.Contains(ModContent.ItemType<CosmoForce>()))
-                    return true;
                 if (WizardedItem != null && !WizardedItem.IsAir && WizardedItem.type == type)
                     return true;
                 return (BaseEnchant.CraftsInto[type] > 0 && CheckWizard(BaseEnchant.CraftsInto[type]));
@@ -1489,7 +1487,10 @@ namespace FargowiltasSouls.Core.ModPlayers
             if (TerrariaSoul)
                 return true;
 
-            if (Main.gamePaused || modItem == null || modItem.Item == null || modItem.Item.IsAir)
+            if (ForceEffects.Contains(ModContent.ItemType<CosmoForce>()))
+                return true;
+
+            if ((Main.gamePaused && !allowPaused) || modItem == null || modItem.Item == null || modItem.Item.IsAir)
                 return false;
 
             if (modItem is BaseEnchant)
@@ -1503,14 +1504,14 @@ namespace FargowiltasSouls.Core.ModPlayers
 
             return false;
         }
-        public bool ForceEffect<T>() where T : BaseEnchant => ForceEffect(ModContent.GetInstance<T>());
-        public bool ForceEffect(int? enchType)
+        public bool ForceEffect<T>(bool allowPaused = false) where T : BaseEnchant => ForceEffect(ModContent.GetInstance<T>(), allowPaused);
+        public bool ForceEffect(int? enchType, bool allowPaused = false)
         {
             if (enchType == null || enchType <= 0)
                 return false;
 
             ModItem item = ModContent.GetModItem((int)enchType);
-            return item != null && ForceEffect(item);
+            return item != null && ForceEffect(item, allowPaused);
         }
         public override void PreSavePlayer()
         {

@@ -14,6 +14,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
     public abstract class BaseEnchant : SoulsItem
     {
         public abstract Color nameColor { get; }
+        public bool IsAccessory = false;
         public string wizardEffect()
         {
             string key = $"Mods.{Mod.Name}.WizardEffect.{Name.Replace("Enchantment", "").Replace("Enchant", "")}";
@@ -88,7 +89,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
             Player player = Main.LocalPlayer;
             FargoSoulsPlayer modPlayer = player.FargoSouls();
 
-            if (modPlayer.WizardedItem == Item)
+            if (modPlayer.ForceEffect(this, true) && player.FargoSouls().EquippedEnchants.Contains(this))
             {
                 for (int j = 0; j < 12; j++)
                 {
