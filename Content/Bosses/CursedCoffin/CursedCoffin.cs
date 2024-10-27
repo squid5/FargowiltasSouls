@@ -121,8 +121,10 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
             NPC.HitSound = SoundID.NPCHit54; 
             NPC.DeathSound = SoundID.NPCDeath6;
 
-			Music = MusicID.OtherworldlyBoss1;
-			SceneEffectPriority = SceneEffectPriority.BossLow;
+            Music = ModLoader.TryGetMod("FargowiltasMusic", out Mod _)
+                ? MusicLoader.GetMusicSlot(Mod, "Assets/Sounds/Silent") : MusicID.OtherworldlyBoss1;
+
+            SceneEffectPriority = SceneEffectPriority.BossLow;
 
 			NPC.value = Item.buyPrice(0, 2);
 

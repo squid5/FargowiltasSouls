@@ -237,7 +237,14 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 								Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Bottom - Vector2.UnitY * 50, vel, ModContent.ProjectileType<CoffinSlamShockwave>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.damage, 0.1f), 1f, Main.myPlayer);
 							}
 						}
-					}
+
+                        if (ModLoader.TryGetMod("FargowiltasMusic", out Mod musicMod) && musicMod.Version >= Version.Parse("0.1.6"))
+                        {
+                            Music = MusicLoader.GetMusicSlot(musicMod, "Assets/Music/ShiftingSands");
+                            if (Main.musicFade[Music] < 0.5f)
+                                Main.musicFade[Music] = 0.5f;
+                        }
+                    }
 				}
 				if (NPC.Center.Y >= LockVector1.Y + 800) //only go so far
 				{
@@ -260,7 +267,13 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
             NPC.netUpdate = true;
             if (Phase < 2)
                 Phase = 2;
-		}
+            /*
+            if (ModLoader.TryGetMod("FargowiltasMusic", out Mod musicMod) && musicMod.Version >= Version.Parse("0.1.6"))
+            {
+                Music = MusicLoader.GetMusicSlot(musicMod, "Assets/Music/ShiftingSandsP2");
+            }
+            */
+        }
 
 		[AutoloadAsBehavior<EntityAIState<BehaviorStates>, BehaviorStates>(BehaviorStates.StunPunish)]
 		public void StunPunish()
