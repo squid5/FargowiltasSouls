@@ -178,13 +178,13 @@ namespace FargowiltasSouls.Core.ModPlayers
                     
                 //boss environs??
                 //deerclops
-                if (!NPC.downedDeerclops && Player.ZoneRockLayerHeight)
+                if (!NPC.downedDeerclops && Player.ZoneRockLayerHeight && !LumUtils.AnyBosses())
                 {
                     DeerclopsHands();
                 }
 
                 // hallow lifelight sparks
-                if (!WorldSavingSystem.DownedBoss[(int)WorldSavingSystem.Downed.Lifelight] && Player.ZoneHallow && Player.ZoneRockLayerHeight)
+                if (!WorldSavingSystem.DownedBoss[(int)WorldSavingSystem.Downed.Lifelight] && Player.ZoneHallow && Player.ZoneRockLayerHeight && !LumUtils.AnyBosses())
                 {
                     LifelightSparkles();
                 }
