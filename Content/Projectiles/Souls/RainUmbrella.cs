@@ -1,7 +1,9 @@
 ﻿using FargowiltasSouls.Content.Buffs.Souls;
 using FargowiltasSouls.Content.Items.Accessories.Enchantments;
+using FargowiltasSouls.Content.UI.Elements;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Linq;
 using Terraria;
@@ -114,6 +116,9 @@ namespace FargowiltasSouls.Content.Projectiles.Souls
                     }
                 }
             }
+
+            if (player.whoAmI == Main.myPlayer)
+                CooldownBarManager.Activate("RainUmbrellaHealth", ModContent.Request<Texture2D>("FargowiltasSouls/Content/Items/Accessories/Enchantments/RainEnchant").Value, Color.Yellow, () => (float)reflectHP / getReflectHP(Main.LocalPlayer), true, 0, () => Projectile.Alive());
 
             Main.projectile.Where(x => x.active && x.hostile && x.damage > 0 && Vector2.Distance(x.Center, Projectile.Center) <= focusRadius + Math.Min(x.width, x.height) / 2 && ProjectileLoader.CanDamage(x) != false && ProjectileLoader.CanHitPlayer(x, player) && FargoSoulsUtil.CanDeleteProjectile(x)).ToList().ForEach(x =>
             {
