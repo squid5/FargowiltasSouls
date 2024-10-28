@@ -2715,7 +2715,7 @@ RefractorBlaster: {
 		'''
 		Fires two angled spreads of lasers
 		Lasers deal less damage right after being fired
-		'Modified from the arm of a defeated foe..'"
+		'Modified from the arm of a defeated foe..'
 		'''
 }
 
