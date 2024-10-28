@@ -335,7 +335,7 @@ namespace FargowiltasSouls.Core.ModPlayers
                 }
                 else
                 {
-                    if (!Player.resistCold && !ItemID.Sets.Torches[Player.HeldItem.type])
+                    if (!Player.resistCold && !Player.HasBuff(BuffID.Campfire) && !ItemID.Sets.Torches[Player.HeldItem.type])
                     {
                         FargoSoulsUtil.AddDebuffFixedDuration(Player, BuffID.Chilled, 2);
                     }
