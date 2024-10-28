@@ -48,7 +48,7 @@ namespace FargowiltasSouls.Content.Projectiles.Souls
             }
 
             Projectile.netUpdate = true;
-            Projectile.Opacity = player.HasEffect<NatureEffect>() ? 0 : 1;
+            Projectile.Opacity = player.HasEffect<NatureEffect>() ? 0.4f : 1;
 
             float num395 = Main.mouseTextColor / 200f - 0.35f;
             num395 *= 0.2f;
