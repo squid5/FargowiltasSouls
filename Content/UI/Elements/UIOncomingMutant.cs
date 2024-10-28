@@ -37,6 +37,8 @@ namespace FargowiltasSouls.Content.UI.Elements
 
         public int ToggleCooldown;
 
+        public bool Hovering = false;
+
         public UIOncomingMutant(Texture2D tex, Texture2D auraTex, Texture2D emptyTex, string textEMode, string textMaso, string textDisabled, string textRightClick, 
             string textHoldShift, string textExpandedEternity, string textExpandedMaso, string textExpandedFeatures)
         {
@@ -77,7 +79,6 @@ namespace FargowiltasSouls.Content.UI.Elements
             ClientConfig.Instance.OncomingMutantY = end.Y;
             ClientConfig.Instance.OnChanged();
         }
-
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime); // don't remove.
@@ -87,8 +88,13 @@ namespace FargowiltasSouls.Content.UI.Elements
             // Checking ContainsPoint and then setting mouseInterface to true is very common. This causes clicks on this UIElement to not cause the player to use current items. 
             if (ContainsPoint(Main.MouseScreen) && conditions)
             {
+                if (!Hovering)
+                    SoundEngine.PlaySound(SoundID.MenuTick);
+                Hovering = true;
                 Main.LocalPlayer.mouseInterface = true;
             }
+            else
+                Hovering = false;
 
             if (!dragging && conditions && ContainsPoint(Main.MouseScreen) && Main.mouseLeft && PlayerInput.MouseInfoOld.LeftButton == ButtonState.Released)
             {
