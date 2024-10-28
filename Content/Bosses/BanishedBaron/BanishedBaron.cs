@@ -1,4 +1,5 @@
 ﻿
+using FargowiltasSouls.Assets.Sounds;
 using FargowiltasSouls.Common.Graphics.Particles;
 using FargowiltasSouls.Content.Buffs.Boss;
 using FargowiltasSouls.Content.Buffs.Masomode;
@@ -34,9 +35,6 @@ namespace FargowiltasSouls.Content.Bosses.BanishedBaron
     public class BanishedBaron : ModNPC
     {
         Player player => Main.player[NPC.target];
-
-        public static readonly SoundStyle BaronRoar = new("FargowiltasSouls/Assets/Sounds/Challengers/Baron/BaronRoar");
-        public static readonly SoundStyle BaronYell = new("FargowiltasSouls/Assets/Sounds/Challengers/Baron/BaronYell");
 
         #region Variables
         public enum StateEnum //ALL states
@@ -276,7 +274,7 @@ namespace FargowiltasSouls.Content.Bosses.BanishedBaron
             }
             target.AddBuff(BuffID.Rabies, 60 * 10);
             target.FargoSouls().MaxLifeReduction += 50;
-            target.AddBuff(ModContent.BuffType<OceanicMaulBuff>(), 60 * 30);
+            target.AddBuff(ModContent.BuffType<OceanicMaulBuff>(), 60 * 20);
         }
         public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers)
         {
@@ -327,6 +325,7 @@ namespace FargowiltasSouls.Content.Bosses.BanishedBaron
             //Unused: 8-10
             //P2 Normal fly loop: 11-16 (Anim 0)
             //P2 Open mouth: 17-18 (Anim 1)
+
             double fpf = 60 / (10 * AnimationSpeed); //  60/fps
             int StartFrame = 0;
             int EndFrame = 5;
@@ -376,7 +375,7 @@ namespace FargowiltasSouls.Content.Bosses.BanishedBaron
         }
         public override void OnKill()
         {
-            NPC.SetEventFlagCleared(ref WorldSavingSystem.downedBoss[(int)WorldSavingSystem.Downed.BanishedBaron], -1);
+            NPC.SetEventFlagCleared(ref WorldSavingSystem.DownedBoss[(int)WorldSavingSystem.Downed.BanishedBaron], -1);
         }
         public override void BossLoot(ref string name, ref int potionType)
         {
@@ -501,6 +500,7 @@ namespace FargowiltasSouls.Content.Bosses.BanishedBaron
             }
             else if (Main.getGoodWorld)
             {
+                HitPlayer = true;
                 if (NPC.aiStyle == -1)
                 {
                     //ftw desperation: literally become fishron
@@ -740,6 +740,7 @@ namespace FargowiltasSouls.Content.Bosses.BanishedBaron
             if (LockVector1 != Vector2.Zero)
             {
                 RotateTowards(LockVector1, 1.5f);
+                //Movement(LockVector1, 50f, 10f);
                 NPC.velocity = Vector2.Lerp(NPC.velocity, (LockVector1 - NPC.Center) * (Timer / 90f) * 0.4f, 0.3f);
             }
 
@@ -784,11 +785,11 @@ namespace FargowiltasSouls.Content.Bosses.BanishedBaron
 
             if (Timer == 1)
             {
-                SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/Challengers/Baron/BaronHit"), NPC.Center);
+                SoundEngine.PlaySound(FargosSoundRegistry.BaronHit, NPC.Center);
 
                 HitPlayer = false;
                 LockVector1 = Vector2.UnitX * Math.Sign(player.Center.X - NPC.Center.X); //register for rotation animation
-
+                Music = ModLoader.TryGetMod("FargowiltasMusic", out Mod musicMod) ? MusicLoader.GetMusicSlot(musicMod, "Assets/Music/Baron2") : MusicID.Boss2;
             }
             if (Timer == 45)
             {
@@ -826,11 +827,9 @@ namespace FargowiltasSouls.Content.Bosses.BanishedBaron
             if (Timer == transTime)
             {
                 NPC.velocity = NPC.rotation.ToRotationVector2() * 20;
-                SoundEngine.PlaySound(BaronYell, NPC.Center);
+                SoundEngine.PlaySound(FargosSoundRegistry.BaronYell, NPC.Center);
                 Phase = 2;
                 FargoSoulsUtil.ClearHostileProjectiles(2, NPC.whoAmI);
-
-                Music = ModLoader.TryGetMod("FargowiltasMusic", out Mod musicMod) ? MusicLoader.GetMusicSlot(musicMod, "Assets/Music/Baron2") : MusicID.Boss2;
 
             }
             if (Timer > transTime)
@@ -1003,7 +1002,8 @@ namespace FargowiltasSouls.Content.Bosses.BanishedBaron
                 float inertia = AI3 >= 0 ? 20f : 10f;
                 vectorToIdlePosition.Normalize();
                 vectorToIdlePosition *= speed;
-                NPC.velocity = Vector2.Lerp(NPC.velocity, (NPC.velocity * (inertia - 1f) + vectorToIdlePosition) / inertia, 0.3f);
+                //NPC.velocity = Vector2.Lerp(NPC.velocity, (NPC.velocity * (inertia - 1f) + vectorToIdlePosition) / inertia, 0.3f);
+                Movement(LockVector1, 30f, 1.3f);
                 if (NPC.velocity == Vector2.Zero)
                 {
                     NPC.velocity.X = -0.15f;
@@ -1086,15 +1086,17 @@ namespace FargowiltasSouls.Content.Bosses.BanishedBaron
             if (Timer < 33)
             {
                 Vector2 desiredPos = Vector2.UnitX * (player.Center.X + Math.Sign(NPC.Center.X - player.Center.X) * 400) + Vector2.UnitY * player.Center.Y;
-                NPC.velocity = Vector2.Lerp(NPC.velocity, (desiredPos - NPC.Center) * (Timer / 33) / 3, 0.3f);
+                Movement(desiredPos, 35f, 2f);
+                //NPC.velocity = Vector2.Lerp(NPC.velocity, (desiredPos - NPC.Center) * (Timer / 33) / 3, 0.3f);
             }
             if (Timer >= 33 && Timer <= 40)
             {
+                //Movement(desiredPos, 35f, 2f);
                 NPC.velocity = Vector2.Lerp(NPC.velocity / 3, NPC.rotation.ToRotationVector2() * 12, (Timer - 33) / 7);
             }
             if (Timer == 40)
             {
-                SoundEngine.PlaySound(BaronYell, NPC.Center);
+                SoundEngine.PlaySound(FargosSoundRegistry.BaronYell, NPC.Center);
 
             }
             if (Timer > 60)
@@ -1243,7 +1245,7 @@ namespace FargowiltasSouls.Content.Bosses.BanishedBaron
             {
                 NPC.Opacity = 1;
                 NPC.dontTakeDamage = false;
-                SoundEngine.PlaySound(BaronRoar, NPC.Center);
+                SoundEngine.PlaySound(FargosSoundRegistry.BaronRoar, NPC.Center);
 
                 NPC.velocity = NPC.rotation.ToRotationVector2() * (baseSpeed + extraSpeed);
 
@@ -1324,7 +1326,7 @@ namespace FargowiltasSouls.Content.Bosses.BanishedBaron
             {
                 AI2 = Math.Sign(NPC.Center.X - player.Center.X);
                 LockVector1 = player.Center + new Vector2(Xstart * AI2, 0);
-                SoundEngine.PlaySound(BaronYell, NPC.Center);
+                SoundEngine.PlaySound(FargosSoundRegistry.BaronYell, NPC.Center);
                 NPC.netUpdate = true;
             }
             if (AI3 == 0)
@@ -1333,7 +1335,8 @@ namespace FargowiltasSouls.Content.Bosses.BanishedBaron
                 NPC.rotation = NPC.SafeDirectionTo(target).ToRotation();
                 //float modifier = Math.Min(Timer / 50, 1);
                 float modifier = 1;
-                NPC.velocity = Vector2.Lerp(NPC.velocity, modifier * NPC.SafeDirectionTo(target) * NPC.Distance(target) / 1.2f, 0.3f);
+                //NPC.velocity = Vector2.Lerp(NPC.velocity, modifier * NPC.SafeDirectionTo(target) * NPC.Distance(target) / 1.2f, 0.3f);
+                Movement(target, 45f, 4f);
                 if (NPC.velocity.Length() > 25)
                 {
                     NPC.velocity *= 25 / NPC.velocity.Length();
@@ -1383,7 +1386,7 @@ namespace FargowiltasSouls.Content.Bosses.BanishedBaron
                 {
                     LockVector1 = player.Center - Vector2.UnitY * Height * (checks - i);
 
-                    if (Wet(LockVector1 + Vector2.UnitY * 2f * Height / (float)checks)) //check 2 checks down
+                    if (Wet(LockVector1 + Vector2.UnitY * 1.25f * Height / (float)checks)) //check 2 checks down
                     {
                         NPC.netUpdate = true;
                         break;
@@ -1394,7 +1397,8 @@ namespace FargowiltasSouls.Content.Bosses.BanishedBaron
             if (Timer < 60)
             {
                 HitPlayer = false;
-                NPC.velocity = Vector2.Lerp(NPC.velocity, (LockVector1 - NPC.Center) * (Timer / 60) * 0.04f, 0.3f);
+                //NPC.velocity = Vector2.Lerp(NPC.velocity, (LockVector1 - NPC.Center) * (Timer / 60) * 0.04f, 0.3f);
+                Movement(LockVector1, 25f, 2f);
                 RotateTowards(LockVector1, 2);
                 if (!Wet(NPC.position + Vector2.UnitY * NPC.height / 4) && NPC.Center.Y < player.Center.Y)
                 {
@@ -1466,20 +1470,25 @@ namespace FargowiltasSouls.Content.Bosses.BanishedBaron
 
                 if (AI3 == 0)
                 {
+                    /*
                     if (NPC.velocity.Length() < 20 + (player.velocity.Length() / 2))
                     {
                         NPC.velocity += NPC.SafeDirectionTo(target) * 0.02f;
-                        NPC.velocity = Vector2.Lerp(NPC.velocity, NPC.SafeDirectionTo(target) * NPC.velocity.Length() * 1.05f, 0.5f);
+                        Movement(target, 45f, 2.5f);
+                        //NPC.velocity = Vector2.Lerp(NPC.velocity, NPC.SafeDirectionTo(target) * NPC.velocity.Length() * 1.05f, 0.5f);
                     }
                     else
                     {
-                        NPC.velocity = Vector2.Lerp(NPC.velocity, NPC.SafeDirectionTo(target) * (20 + (player.velocity.Length() / 2)), 0.5f);
-
+                        //NPC.velocity = Vector2.Lerp(NPC.velocity, NPC.SafeDirectionTo(target) * (20 + (player.velocity.Length() / 2)), 0.5f);
+                        Movement(target, 30f, 1.5f);
                     }
+                    */
+                    Movement(target, 30f, 2f);
                 }
                 else
                 {
-                    NPC.velocity = Vector2.Lerp(NPC.velocity, (target - NPC.Center) / 10, 0.3f);
+                    //NPC.velocity = Vector2.Lerp(NPC.velocity, (target - NPC.Center) / 10, 0.3f);
+                    Movement(target, 30f, 1f);
                 }
                 if (NPC.Distance(player.Center) < 200)
                     NPC.velocity -= NPC.SafeDirectionTo(player.Center);
@@ -1499,7 +1508,7 @@ namespace FargowiltasSouls.Content.Bosses.BanishedBaron
             }
             if (Timer == ReactTime)
             {
-                SoundEngine.PlaySound(BaronRoar, NPC.Center);
+                SoundEngine.PlaySound(FargosSoundRegistry.BaronRoar, NPC.Center);
                 Trail = 8;
                 NPC.velocity = NPC.rotation.ToRotationVector2() * PredictStr;
                 Vector2 uv = Vector2.Normalize(NPC.velocity);
@@ -1545,7 +1554,7 @@ namespace FargowiltasSouls.Content.Bosses.BanishedBaron
             }
             if (Timer == ReactTime + 90 && WorldSavingSystem.EternityMode)
             {
-                SoundEngine.PlaySound(BaronRoar, NPC.Center);
+                SoundEngine.PlaySound(FargosSoundRegistry.BaronRoar, NPC.Center);
                 NPC.velocity = NPC.rotation.ToRotationVector2() * PredictStr * 1.2f;
 
             }
@@ -1577,7 +1586,8 @@ namespace FargowiltasSouls.Content.Bosses.BanishedBaron
                     NPC.velocity += 0.5f * NPC.rotation.ToRotationVector2();
                     NPC.velocity *= 1.03f;
                 }
-                NPC.velocity = Vector2.Lerp(NPC.velocity, NPC.velocity.Length() * NPC.rotation.ToRotationVector2(), 0.3f);
+                //NPC.velocity = Vector2.Lerp(NPC.velocity, NPC.velocity.Length() * NPC.rotation.ToRotationVector2(), 0.3f);
+                Movement(LockVector1, 45f, 2f);
                 if (NPC.Distance(LockVector1) < 25)
                 {
                     AI3 = 1; //reached point, start attack
@@ -1617,7 +1627,7 @@ namespace FargowiltasSouls.Content.Bosses.BanishedBaron
                 if (prog >= 1)
                 {
                     AI3 = -1; //end attack, start next part
-                    SoundEngine.PlaySound(BaronYell, NPC.Center);
+                    SoundEngine.PlaySound(FargosSoundRegistry.BaronYell, NPC.Center);
                 }
             }
             if (AI3 < 0) //home into player after arc
@@ -1682,6 +1692,7 @@ namespace FargowiltasSouls.Content.Bosses.BanishedBaron
 
             if (AI3 == 0)
             {
+                /*
                 if (NPC.velocity.Length() <= 20 + (player.velocity.Length() / 2))
                 {
                     NPC.velocity += NPC.SafeDirectionTo(target) * 0.02f;
@@ -1692,6 +1703,8 @@ namespace FargowiltasSouls.Content.Bosses.BanishedBaron
                     NPC.velocity = NPC.SafeDirectionTo(target) * (20 + (player.velocity.Length() / 2));
 
                 }
+                */
+                Movement(target, 30f, 2f);
                 if (Timer > 2)
                 {
                     Timer = 2;
@@ -1699,7 +1712,8 @@ namespace FargowiltasSouls.Content.Bosses.BanishedBaron
             }
             else
             {
-                NPC.velocity = Vector2.Lerp(NPC.velocity, (target - NPC.Center) / 10, 0.3f);
+                //.velocity = Vector2.Lerp(NPC.velocity, (target - NPC.Center) / 10, 0.3f);
+                Movement(target, 20f, 0.75f);
             }
 
 
@@ -1755,17 +1769,21 @@ namespace FargowiltasSouls.Content.Bosses.BanishedBaron
 
                 LockVector1 = new Vector2(0, radius).RotatedBy(startRot * -AI2);
                 Vector2 target = player.Center + LockVector1;
-                NPC.rotation = NPC.SafeDirectionTo(target).ToRotation();
+                //NPC.rotation = NPC.SafeDirectionTo(target).ToRotation();
+                RotateTowards(player.Center, 1f);
 
                 //velocity on rotation = radius * rotation per tick
                 NPC.netUpdate = true;
                 float rotVelocity = radius * MathHelper.ToRadians(3); //maximum value since random rotation velocity is not determined yet (could be done better by determining random before but would have to rework structure and i'm too lazy)
+                /*
                 if (NPC.velocity.Length() < rotVelocity + player.velocity.Length())
                 {
                     NPC.velocity += 0.5f * NPC.rotation.ToRotationVector2();
                     NPC.velocity *= 1.03f;
                 }
                 NPC.velocity = Vector2.Lerp(NPC.velocity, NPC.velocity.Length() * NPC.rotation.ToRotationVector2(), 0.3f);
+                */
+                Movement(target, 30f, 2f);
                 if (NPC.Distance(target) < 25)
                 {
                     AI3 = Main.rand.NextFloat(0.2f, 0.4f); //reached point, start attack, decide random rotation during charge windup
@@ -1786,11 +1804,13 @@ namespace FargowiltasSouls.Content.Bosses.BanishedBaron
 
                 if (Math.Abs(AI2) <= rotStart)
                 {
-                    NPC.velocity = Vector2.Lerp(NPC.velocity, (target - NPC.Center) / 10, 0.3f);
-                    NPC.rotation = NPC.velocity.ToRotation();
+                    //NPC.velocity = Vector2.Lerp(NPC.velocity, (target - NPC.Center) / 10, 0.3f);
+                    Movement(target, 25f, 1.5f);
+                    RotateTowards(player.Center, 1f);
+                    NPC.rotation += Main.rand.NextFloat(-MathHelper.PiOver2 * 0.04f, MathHelper.PiOver2 * 0.04f);
                     if (Math.Abs(AI2) == rotStart)
                     {
-                        SoundEngine.PlaySound(BaronYell, NPC.Center);
+                        SoundEngine.PlaySound(FargosSoundRegistry.BaronYell, NPC.Center);
                     }
                 }
                 else //prepare for dash and dash
@@ -1800,7 +1820,7 @@ namespace FargowiltasSouls.Content.Bosses.BanishedBaron
                     RotateTowards(player.Center, 6f);
                     if (Math.Abs(AI2) > dashStart + reactTime)
                     {
-                        SoundEngine.PlaySound(BaronRoar, NPC.Center);
+                        SoundEngine.PlaySound(FargosSoundRegistry.BaronRoar, NPC.Center);
                         SoundEngine.PlaySound(SoundID.Item14, NPC.Center);
                         NPC.velocity = NPC.rotation.ToRotationVector2() * DashSpeed;
                         AI3 = -1;
@@ -1883,6 +1903,7 @@ namespace FargowiltasSouls.Content.Bosses.BanishedBaron
             {
                 Timer--; //timer doesnt go up until you reach start position
                 RotateTowards(player.Center, 4);
+                /*
                 if (NPC.velocity.Length() < 200 + (player.velocity.Length() / 2))
                 {
                     NPC.velocity += NPC.SafeDirectionTo(target) * 0.02f;
@@ -1893,11 +1914,13 @@ namespace FargowiltasSouls.Content.Bosses.BanishedBaron
                     NPC.velocity = Vector2.Lerp(NPC.velocity, NPC.SafeDirectionTo(target) * (20 + (player.velocity.Length() / 2)), 0.7f);
 
                 }
+                */
+                Movement(target, 30f, 2f);
             }
             else
             {
-
-                NPC.velocity = Vector2.Lerp(NPC.velocity, (target - NPC.Center) / 10, 0.3f);
+                Movement(target, 20f, 0.75f);
+                //NPC.velocity = Vector2.Lerp(NPC.velocity, (target - NPC.Center) / 10, 0.3f);
             }
 
             const int cd = 5;
@@ -2007,6 +2030,7 @@ namespace FargowiltasSouls.Content.Bosses.BanishedBaron
 
                 if (AI3 == 0)
                 {
+                    /*
                     if (NPC.velocity.Length() < 20 + (player.velocity.Length() / 2))
                     {
                         NPC.velocity += NPC.SafeDirectionTo(target) * 0.02f;
@@ -2017,10 +2041,13 @@ namespace FargowiltasSouls.Content.Bosses.BanishedBaron
                         NPC.velocity = Vector2.Lerp(NPC.velocity, NPC.SafeDirectionTo(target) * (20 + (player.velocity.Length() / 2)), 0.3f);
 
                     }
+                    */
+                    Movement(target, 30f, 2f);
                 }
                 else
                 {
-                    NPC.velocity = Vector2.Lerp(NPC.velocity, (target - NPC.Center) / 10, 0.3f);
+                    //NPC.velocity = Vector2.Lerp(NPC.velocity, (target - NPC.Center) / 10, 0.3f);
+                    Movement(target, 15f, 0.25f);
                 }
             }
             RotateTowards(player.Center, 2f);
@@ -2087,6 +2114,7 @@ namespace FargowiltasSouls.Content.Bosses.BanishedBaron
             if (Timer < PositioningTime) //get to position
             {
                 Vector2 target = player.Center + LockVector1;
+                /*
                 if (NPC.velocity.Length() < 20 + (player.velocity.Length() / 2))
                 {
                     NPC.velocity += NPC.SafeDirectionTo(target) * 0.02f;
@@ -2097,6 +2125,8 @@ namespace FargowiltasSouls.Content.Bosses.BanishedBaron
                     NPC.velocity = Vector2.Lerp(NPC.velocity, NPC.SafeDirectionTo(target) * (20 + (player.velocity.Length() / 2)), 0.75f);
 
                 }
+                */
+                Movement(target, 20f, 1f);
                 RotateTowards(player.Center, 2);
             }
             else if (Timer < PositioningTime + WindupTime) //rotate with telegraph line
@@ -2104,7 +2134,7 @@ namespace FargowiltasSouls.Content.Bosses.BanishedBaron
                 NPC.velocity *= 0.8f;
                 if (Timer == PositioningTime)
                 {
-                    SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/Challengers/Baron/BaronLaserTelegraph") with { Volume = 1.25f }, NPC.Center);
+                    SoundEngine.PlaySound(FargosSoundRegistry.BaronLaserTelegraph with { Volume = 1.25f }, NPC.Center);
                     AI3 = Main.rand.NextBool() ? 1 : -1; //sign for rotation
                     LockVector1 = (player.Center - NPC.Center).RotatedBy(AI3 * MaxRot);
                     if (FargoSoulsUtil.HostCheck)
@@ -2139,7 +2169,7 @@ namespace FargowiltasSouls.Content.Bosses.BanishedBaron
 
                     AI4 = FargoSoulsUtil.RotationDifference(NPC.rotation.ToRotationVector2(), (player.Center - NPC.Center)); //cache rotation direction towards player
 
-                    SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/Challengers/Baron/BaronLaserSound_Slow") with { Pitch = -0.2f }, NPC.Center);
+                    SoundEngine.PlaySound(FargosSoundRegistry.BaronLaserSoundSlow with { Pitch = -0.2f }, NPC.Center);
                     if (FargoSoulsUtil.HostCheck)
                     {
                         Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, NPC.rotation.ToRotationVector2(), ModContent.ProjectileType<BaronDeathray>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), 0f, Main.myPlayer, ai0: NPC.whoAmI, ai2: AttackTime);
@@ -2165,6 +2195,13 @@ namespace FargowiltasSouls.Content.Bosses.BanishedBaron
         #endregion
         #endregion
         #region Help Methods
+        void Movement(Vector2 target, float maxSpeed = 35f, float speedMultiplier = 1f)
+        {
+            float accel = 0.4f * speedMultiplier;
+            float decel = 0.7f * speedMultiplier;
+            float resistance = NPC.velocity.Length() * accel / (maxSpeed * speedMultiplier);
+            NPC.velocity = FargoSoulsUtil.SmartAccel(NPC.Center, target, NPC.velocity, accel - resistance, decel + resistance);
+        }
         void StateReset(bool randomizeState = true)
         {
             NPC.TargetClosest(false);
@@ -2191,7 +2228,7 @@ namespace FargowiltasSouls.Content.Bosses.BanishedBaron
             AI2 = 0;
             AI3 = 0;
         }
-        void RandomizeState() //it's done this way so it cycles between attacks in a random order: for increased variety
+        void RandomizeState() // cycles between attacks in a random order: for increased variety
         {
             int index;
             if (availablestates.Count < 1)

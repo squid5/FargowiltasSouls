@@ -1,6 +1,6 @@
 Freeze.DisplayName: Заморозка
 Gold.DisplayName: Превратиться в Золото
-SmokeBomb.DisplayName: Кинуть Дымовую Бомбу
+// SmokeBomb.DisplayName: Throw Smoke Bomb
 SpecialDash.DisplayName: Особый Рывок
 Bomb.DisplayName: Бомба
 EffectToggle.DisplayName: Открыть Переключатель Эффектов

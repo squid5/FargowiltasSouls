@@ -1,11 +1,8 @@
-﻿using FargowiltasSouls.Content.Buffs.Souls;
-using FargowiltasSouls.Content.Items.Accessories.Enchantments;
-using FargowiltasSouls.Content.Projectiles.Masomode;
+﻿using FargowiltasSouls.Content.Items.Accessories.Enchantments;
 using FargowiltasSouls.Content.Projectiles.Souls;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using FargowiltasSouls.Core.Toggler.Content;
 using Microsoft.Xna.Framework;
-using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -45,21 +42,20 @@ namespace FargowiltasSouls.Content.Items.Accessories.Forces
             SetActive(player);
 
             player.AddEffect<TerraLightningEffect>(Item);
-
+            // tin
+            player.AddEffect<TinEffect>(Item);
+            // copper
+            player.AddEffect<CopperEffect>(Item);
+            // iron
             IronEnchant.AddEffects(player, Item);
+            // lead
             player.AddEffect<LeadEffect>(Item);
+            // silver
             player.AddEffect<SilverEffect>(Item);
-
-            player.lavaImmune = true;
-            player.fireWalk = true;
-
-            //in lava effects
-            if (player.lavaWet)
-            {
-                player.gravity = Player.defaultGravity;
-                player.ignoreWater = true;
-                player.accFlipper = true;
-            }
+            // tungsten
+            player.AddEffect<TungstenEffect>(Item);
+            // obsidian
+            ObsidianEnchant.AddEffects(player, Item);
         }
 
         public override void AddRecipes()
@@ -73,11 +69,9 @@ namespace FargowiltasSouls.Content.Items.Accessories.Forces
     }
     public class TerraLightningEffect : AccessoryEffect
     {
-        public override Header ToggleHeader => Header.GetHeader<TerraHeader>();
-        public override int ToggleItemType => ModContent.ItemType<TerraForce>();
-        public override bool ExtraAttackEffect => true;
+        public override Header ToggleHeader => null;
+        //public override int ToggleItemType => ModContent.ItemType<TerraForce>();
         
-
         public override void PostUpdateEquips(Player player)
         {
             FargoSoulsPlayer modPlayer = player.FargoSouls();
@@ -96,18 +90,20 @@ namespace FargowiltasSouls.Content.Items.Accessories.Forces
         public static void LightningProc(Player player, NPC target, float damageMultiplier = 1f)
         {
             FargoSoulsPlayer modPlayer = player.FargoSouls();
-            if (modPlayer.TerraProcCD == 0)
+            if (modPlayer.TerraProcCD == 0 && player.HasEffect<CopperEffect>())
             {
-                int dmg = (int)(3500 * damageMultiplier);
+                int dmg = (int)(1500 * damageMultiplier);
                 int cdLength = 300;
 
                 // cooldown scaling from 2x to 1x depending on how recently you got hurt
+                /*
                 int maxHurtTime = 60 * 30;
                 if (modPlayer.TimeSinceHurt < maxHurtTime)
                 {
                     float multiplier = 2f - (modPlayer.TimeSinceHurt / maxHurtTime) * 1f;
                     cdLength = (int)(cdLength * multiplier);
                 }
+                */
 
                 Vector2 ai = target.Center - player.Center;
                 Vector2 velocity = Vector2.Normalize(ai) * 20;

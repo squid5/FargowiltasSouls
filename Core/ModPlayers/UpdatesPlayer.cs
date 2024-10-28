@@ -1,4 +1,5 @@
-﻿using FargowiltasSouls.Content.Buffs.Boss;
+﻿using Fargowiltas.Items.Explosives;
+using FargowiltasSouls.Content.Buffs;
 using FargowiltasSouls.Content.Buffs.Masomode;
 using FargowiltasSouls.Content.Items.Accessories.Enchantments;
 using FargowiltasSouls.Content.Items.Accessories.Expert;
@@ -7,6 +8,7 @@ using FargowiltasSouls.Content.Items.Armor;
 using FargowiltasSouls.Content.Items.Consumables;
 using FargowiltasSouls.Content.Items.Weapons.Challengers;
 using FargowiltasSouls.Content.Items.Weapons.SwarmDrops;
+using FargowiltasSouls.Content.Projectiles.Souls;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using FargowiltasSouls.Core.Globals;
 using FargowiltasSouls.Core.Systems;
@@ -27,7 +29,6 @@ namespace FargowiltasSouls.Core.ModPlayers
         public override void PreUpdate()
         {
             Toggler.TryLoad();
-
 
             if (Player.CCed)
             {
@@ -74,7 +75,6 @@ namespace FargowiltasSouls.Core.ModPlayers
                 RustedOxygenTank.PassiveEffect(Player);
             }
 
-
             if (GoldShell)
                 GoldUpdate();
 
@@ -120,6 +120,27 @@ namespace FargowiltasSouls.Core.ModPlayers
                     // Player.mount._data.usesHover = BaseSquireMountData.usesHover;
                 }
             }
+            ForbiddenTornados.Clear();
+            ShadowOrbs.Clear();
+            bool forbidden = Player.HasEffect<ForbiddenEffect>();
+            bool shadow = Player.HasEffect<ShadowBalls>();
+            if (forbidden || shadow)
+            {
+                for (int i = 0; i < Main.maxProjectiles; i++)
+                {
+                    Projectile p = Main.projectile[i];
+                    if (forbidden && (p.TypeAlive<ForbiddenTornado>() || p.TypeAlive<SpiritTornado>()) && p.owner == Player.whoAmI)
+                    {
+                        ForbiddenTornados.Add(p.whoAmI);
+                    }
+                    if (shadow && p.TypeAlive<ShadowEnchantOrb>() && p.owner == Player.whoAmI)
+                    {
+                        ShadowOrbs.Add(p.whoAmI);
+                    }
+                }
+            }
+           
+            
         }
 
         public override void PostUpdate()
@@ -150,7 +171,7 @@ namespace FargowiltasSouls.Core.ModPlayers
         {
             if (Berserked && !Player.CCed)
             {
-                if (Player.HeldItem != null && Player.HeldItem.IsWeapon())
+                if (Player.HeldItem != null && Player.HeldItem.IsWeapon() && Player.HeldItem.type != ModContent.ItemType<BoomShuriken>())
                 {
                     Player.controlUseItem = true;
                     Player.releaseUseItem = true;
@@ -164,13 +185,25 @@ namespace FargowiltasSouls.Core.ModPlayers
                 Player.gravControl2 = false;
             }
         }
-
         public override void PostUpdateEquips()
         {
+            if (LumUtils.AnyBosses())
+            {
+                if (!BossAliveLastFrame)
+                {
+                    BossAliveLastFrame = true;
+                    TinEffect.TinHurt(Player, true);
+                }
+            }
+            else
+                BossAliveLastFrame = false;
             if (Graze && NekomiSet)
             {
                 GrazeRadius *= DeviGraze || CirnoGraze ? 1.5f : 0.75f;
             }
+
+            if (SpectreGhostTime > 0)
+                SpectreEffect.GhostUpdate(Player);
 
             if (DeerSinew)
                 Player.AddEffect<DeerSinewEffect>(ModContent.GetInstance<DeerSinew>().Item);
@@ -261,16 +294,32 @@ namespace FargowiltasSouls.Core.ModPlayers
                     DevianttHeartsCD--;
             }
 
-            if ((BetsysHeartItem != null || QueenStingerItem != null) && SpecialDashCD > 0 && --SpecialDashCD == 0)
-            {
-                SoundEngine.PlaySound(SoundID.Item9, Player.Center);
+            if (Player.HasBuff<TwinsInstallBuff>() && !Player.HasEffect<FusedLensInstall>())
+                Player.ClearBuff(ModContent.BuffType<TwinsInstallBuff>());
 
-                for (int i = 0; i < 30; i++)
+            if (Player.HasBuff<BerserkerInstallBuff>() && !Player.HasEffect<AgitatingLensInstall>())
+                Player.ClearBuff(ModContent.BuffType<BerserkerInstallBuff>());
+
+            if ((BetsysHeartItem != null || QueenStingerItem != null))
+            {
+                if (SpecialDashCD > 0)
+                    SpecialDashCD--;
+                if (SpecialDashCD == 1)
                 {
-                    int d = Dust.NewDust(Player.position, Player.width, Player.height, DustID.GemTopaz, 0, 0, 0, default, 2.5f);
-                    Main.dust[d].noGravity = true;
-                    Main.dust[d].velocity *= 4f;
+                    SoundEngine.PlaySound(SoundID.Item9, Player.Center);
+
+                    for (int i = 0; i < 30; i++)
+                    {
+                        int d = Dust.NewDust(Player.position, Player.width, Player.height, DustID.GemTopaz, 0, 0, 0, default, 2.5f);
+                        Main.dust[d].noGravity = true;
+                        Main.dust[d].velocity *= 4f;
+                    }
                 }
+            }
+            else
+            {
+                if (SpecialDashCD > 0 && SpecialDashCD < LumUtils.SecondsToFrames(7))
+                    SpecialDashCD++;
             }
 
 
@@ -318,7 +367,6 @@ namespace FargowiltasSouls.Core.ModPlayers
                 Player.dashDelay = Math.Max(DashCD, Player.dashDelay);
 
             DashManager.AddDashes(Player);
-
             DashManager.ManageDashes(Player);
 
             if (LihzahrdTreasureBoxItem != null || Player.HasEffect<DeerclawpsDive>())
@@ -355,6 +403,13 @@ namespace FargowiltasSouls.Core.ModPlayers
                 Player.fullRotation = 0f;
                 NecromanticBrewRotation = 0f;
             }
+        }
+        public override void UpdateLifeRegen()
+        {
+            if (UsingAnkh)
+                Player.lifeRegen += 3;
+            if (Ambrosia)
+                Player.lifeRegen += 5;
         }
         public override void UpdateBadLifeRegen()
         {
@@ -412,6 +467,9 @@ namespace FargowiltasSouls.Core.ModPlayers
             if (FlamesoftheUniverse)
                 DamageOverTime((30 + 50 + 48 + 30) / 2, true);
 
+            if (IvyVenom && !Player.venom)
+                DamageOverTime(16, true);
+
             if (Smite)
                 DamageOverTime(0, true);
 
@@ -421,6 +479,15 @@ namespace FargowiltasSouls.Core.ModPlayers
             if (Player.onFire && Player.HasEffect<AshWoodEffect>())
             {
                 Player.lifeRegen += 8;
+                if (Player.lifeRegen > 0)
+                    Player.lifeRegen = 0;
+            }
+
+            if (Player.burned && Player.HasEffect<AshWoodEffect>())
+            {
+                Player.lifeRegen += 60;
+                if (Player.lifeRegen > 0)
+                    Player.lifeRegen = 0;
             }
 
             if (Player.lifeRegen < 0)
@@ -446,14 +513,34 @@ namespace FargowiltasSouls.Core.ModPlayers
             if (ToggleRebuildCooldown > 0)
                 ToggleRebuildCooldown--;
 
+            if (EmodeToggleCooldown > 0)
+                EmodeToggleCooldown--;
+
             if (CosmosMoonTimer > 0) // naturally degrades
                 CosmosMoonTimer--;
 
-            if (LifeBeetleDuration > 0)
-                LifeBeetleDuration--;
+            if (VortexCD > 0)
+                VortexCD--;
 
-            if (NatureHealCounter > 0 && NatureHealCD <= 0)
-                NatureHealCounter--;
+            if (WretchedPouchCD > 0 && !Player.HasEffect<WretchedPouchEffect>())
+                WretchedPouchCD--;
+
+            if (LightslingerHitShots > 0 && Player.HeldItem.type != ModContent.ItemType<Lightslinger>())
+                LightslingerHitShots--;
+
+            if (MeteorCD < MeteorEffect.Cooldown && !Player.HasEffect<MeteorEffect>())
+                MeteorCD++;
+
+            if (MythrilTimer > 0 && !Player.HasEffect<MythrilEffect>())
+                MythrilTimer--;
+            if (MythrilSoundCooldown > 0)
+                MythrilSoundCooldown--;
+
+            if (TinCrit > 0 && !Player.HasEffect<TinEffect>())
+                TinCrit--;
+
+            if (HuntressStage > 0 && !Player.HasEffect<HuntressEffect>())
+                HuntressStage--;
 
             //these are here so that emode minion nerf can properly detect the real set bonuses over in EModePlayer postupdateequips
             if (SquireEnchantActive)
@@ -484,6 +571,12 @@ namespace FargowiltasSouls.Core.ModPlayers
                 Player.dashDelay = -1;
             }
 
+            if (CoyoteTime > 0)
+                CoyoteTime--;
+
+            if (CrystalDashFirstStrikeCD > 0)
+                CrystalDashFirstStrikeCD--;
+
             if (GoldEnchMoveCoins)
             {
                 ChestUI.MoveCoins(Player.inventory, Player.bank.item, ContainerTransferContext.FromUnknown(Player));
@@ -492,14 +585,54 @@ namespace FargowiltasSouls.Core.ModPlayers
 
             if (SpectreCD > 0)
                 SpectreCD--;
+            if (SpectreGhostTime > 0)
+                SpectreGhostTime--;
+
+            if (LockedMana > 0)
+            {
+                float previousLockedMana = LockedMana;
+                LockedMana -= 0.3f;
+                Player.statManaMax2 -= (int)Player.FargoSouls().LockedMana;
+                if ((int)LockedMana != (int)previousLockedMana)
+                {
+                    Player.statMana += 1;
+                }
+
+            }
+            if (BorealCD > 0)
+                BorealCD--;
+
+            if (PalmWoodForceCD > 0)
+                PalmWoodForceCD--;
 
             if (ChargeSoundDelay > 0)
                 ChargeSoundDelay--;
+
+            if (EarthSplitTimer > 0)
+                EarthSplitTimer--;
 
             if (RustRifleReloading && Player.HeldItem.type == ModContent.ItemType<NavalRustrifle>())
             {
                 RustRifleTimer++;
             }
+
+            if (Player.HeldItem.type == ModContent.ItemType<EgyptianFlail>())
+            {
+                EgyptianFlailCD--;
+                if (EgyptianFlailCD == 0)
+                {
+                    SoundEngine.PlaySound(SoundID.Item103 with { Volume = 0.8f }, Player.Center);
+
+                    for (int i = 0; i < 20; i++)
+                    {
+                        int d = Dust.NewDust(Player.position, Player.width, Player.height, DustID.GemAmethyst, 0, 0, 0, default, 2.5f);
+                        Main.dust[d].noGravity = true;
+                        Main.dust[d].velocity *= 4f;
+                    }
+                }
+            }
+            if (SKSCancelTimer > 0)
+                SKSCancelTimer--;
 
             if (ParryDebuffImmuneTime > 0)
             {
@@ -530,6 +663,8 @@ namespace FargowiltasSouls.Core.ModPlayers
             if (HealTimer > 0)
                 HealTimer--;
 
+            if (Player.grapCount > 0)
+                Grappled = true;
 
             if (LowGround)
             {
@@ -570,13 +705,6 @@ namespace FargowiltasSouls.Core.ModPlayers
 
                 if (CirnoGrazeCounter > 0)
                     CirnoGrazeCounter--;
-            }
-
-
-            if (Atrophied)
-            {
-                Player.GetDamage(DamageClass.Melee) *= 0.01f;
-                Player.GetCritChance(DamageClass.Melee) /= 100;
             }
 
             if (Slimed)
@@ -631,8 +759,8 @@ namespace FargowiltasSouls.Core.ModPlayers
             if (Asocial)
             {
                 KillPets();
-                Player.maxMinions = 0;
-                Player.maxTurrets = 0;
+                Player.maxMinions /= 2;
+                Player.maxTurrets /= 2;
             }
             else if (WasAsocial) //should only occur when above debuffs end
             {
@@ -640,6 +768,11 @@ namespace FargowiltasSouls.Core.ModPlayers
                 Player.hideMisc[1] = HidePetToggle1;
 
                 WasAsocial = false;
+            }
+
+            if (UsingAnkh)
+            {
+                Player.statDefense -= 10;
             }
 
             if (Rotting)

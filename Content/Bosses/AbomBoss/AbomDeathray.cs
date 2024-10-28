@@ -1,8 +1,7 @@
-﻿using FargowiltasSouls.Content.Projectiles.Deathrays;
+﻿using FargowiltasSouls.Assets.Sounds;
+using FargowiltasSouls.Content.Projectiles.Deathrays;
 using FargowiltasSouls.Core.Systems;
-using Luminance.Core.Graphics;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
 using Terraria.Audio;
@@ -16,6 +15,7 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
         public override string Texture => "FargowiltasSouls/Content/Projectiles/Deathrays/AbomDeathray";
         public AbomDeathray() : base(120) { }
         private Vector2 spawnPos;
+        public bool fadeStart = false;
 
         public override void SetStaticDefaults()
         {
@@ -50,7 +50,7 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
             if (Projectile.localAI[0] == 0f)
             {
                 if (!Main.dedServ)
-                    SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/VanillaEternity/Mechs/RetinazerDeathray"), Projectile.Center);
+                    SoundEngine.PlaySound(FargosSoundRegistry.GenericDeathray, Projectile.Center);
                 spawnPos = Projectile.Center;
             }
             else //vibrate beam
@@ -160,34 +160,7 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
 
         public override bool PreDraw(ref Color lightColor)
         {
-            // This should never happen, but just in case.
-            if (Projectile.velocity == Vector2.Zero)
-                return false;
-
-            ManagedShader shader = ShaderManager.GetShader("FargowiltasSouls.WillBigDeathray");
-
-            // Get the laser end position.
-            Vector2 laserEnd = Projectile.Center + Projectile.velocity.SafeNormalize(Vector2.UnitY) * drawDistance;
-
-            // Create 8 points that span across the draw distance from the projectile center.
-
-            // This allows the drawing to be pushed back, which is needed due to the shader fading in at the start to avoid
-            // sharp lines.
-            Vector2 initialDrawPoint = Projectile.Center - Projectile.velocity * 150f;
-            Vector2[] baseDrawPoints = new Vector2[8];
-            for (int i = 0; i < baseDrawPoints.Length; i++)
-                baseDrawPoints[i] = Vector2.Lerp(initialDrawPoint, laserEnd, i / (float)(baseDrawPoints.Length - 1f));
-
-            // Set shader parameters. This one takes a fademap and a color.
-
-            // The laser should fade to this in the middle.
-            Color brightColor = new(252, 252, 192, 100);
-            shader.TrySetParameter("mainColor", brightColor);
-            // GameShaders.Misc["FargoswiltasSouls:MutantDeathray"].UseImage1(); cannot be used due to only accepting vanilla paths.
-            Texture2D fademap = ModContent.Request<Texture2D>("FargowiltasSouls/Assets/ExtraTextures/Trails/WillStreak").Value;
-            FargoSoulsUtil.SetTexture1(fademap);
-
-            PrimitiveRenderer.RenderTrail(baseDrawPoints, new(WidthFunction, ColorFunction, Shader: shader), 30);
+            AbomSword.DrawStyxGazerDeathray(Projectile, drawDistance, WidthFunction, false, fadeStart);
             return false;
         }
     }

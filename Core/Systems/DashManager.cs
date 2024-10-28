@@ -1,7 +1,4 @@
-﻿//this currently does not work: it still does the vanilla dash, i do not know how, i do not know how to fix it.
-
-
-using FargowiltasSouls.Content.Items.Accessories.Enchantments;
+﻿using FargowiltasSouls.Content.Items.Accessories.Enchantments;
 using FargowiltasSouls.Content.Items.Accessories.Forces;
 using FargowiltasSouls.Content.Items.Consumables;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
@@ -19,6 +16,7 @@ namespace FargowiltasSouls.Core.Systems
             Shadow,
             Monk,
             Jungle,
+            Crystal,
             DeerSinew
         }
         public static void AddDashes(Player player)
@@ -35,14 +33,20 @@ namespace FargowiltasSouls.Core.Systems
             {
                 JungleDashEffect.AddDash(player);
             }
+            if (player.HasEffect<CrystalAssassinDash>())
+            {
+                CrystalAssassinDash.AddDash(player);
+            }
             if (player.HasEffect<MonkDashEffect>())
             {
                 MonkDashEffect.AddDash(player);
             }
+            /*
             if (player.HasEffect<SolarEffect>())
             {
                 SolarEffect.AddDash(player);
             }
+            */
             if (player.HasEffect<ShadowForceDashEffect>())
             {
                 ShadowForceDashEffect.AddDash(player);
@@ -80,6 +84,11 @@ namespace FargowiltasSouls.Core.Systems
                                 MonkDashEffect.MonkDash(Player, dir);
                             }
                             break;
+                        case DashType.Crystal:
+                            {
+                                CrystalAssassinDash.CrystalDash(Player, dir);
+                            }
+                            break;
                         case DashType.Jungle:
                             {
                                 JungleDashEffect.JungleDash(Player, dir);
@@ -98,6 +107,17 @@ namespace FargowiltasSouls.Core.Systems
                     }
                 }
             }
+            if (Player.dashDelay == -1 && !Player.mount.Active)
+            {
+                switch (modPlayer.FargoDash)
+                {
+                    case DashType.Crystal:
+                        {
+                            CrystalAssassinDash.WhileDashing(Player);
+                        }
+                        break;
+                }
+            }
         }
 
         public static MethodInfo DashHandleMethod { get; set; }
@@ -111,14 +131,12 @@ namespace FargowiltasSouls.Core.Systems
             dir = 1;
             dashing = true; //these two are overriden by the actual method anyway
 
-
             Player player = Main.LocalPlayer;
             Player.DashStartAction action = null;
             object[] args = [dir, dashing, action];
             DashHandleMethod.Invoke(player, args);
             dir = (int)args[0];
             dashing = (bool)args[1];
-            //action = (Player.DashStartAction)args[2];
         }
 
     }

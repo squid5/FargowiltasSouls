@@ -1,4 +1,5 @@
-﻿using FargowiltasSouls.Content.Buffs;
+﻿using FargowiltasSouls.Content.Bosses.MutantBoss;
+using FargowiltasSouls.Content.Buffs;
 using FargowiltasSouls.Content.Buffs.Masomode;
 using FargowiltasSouls.Content.Buffs.Minions;
 using FargowiltasSouls.Content.Projectiles.Deathrays;
@@ -20,18 +21,6 @@ namespace FargowiltasSouls.Content.Items.Accessories.Masomode
 
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("Remote Control");
-            /* Tooltip.SetDefault(@"Grants immunity to Lightning Rod
-Electric and ray attacks supercharge you and do halved damage if not already supercharged
-While supercharged, you have increased movement speed, attack speed, and inflict Electrified and Lightning Rod
-Two friendly probes fight by your side and will supercharge with you
-'A defeated foe's segment with an antenna glued on'"); */
-            //             DisplayName.AddTranslation((int)GameCulture.CultureName.Chinese, "遥控装置");
-            //             Tooltip.AddTranslation((int)GameCulture.CultureName.Chinese, @"'被击败敌人的残片,上面粘着天线'
-            // 免疫避雷针
-            // 攻击小概率造成避雷针效果
-            // 召唤2个友善的探测器为你而战");
-
             Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
@@ -98,6 +87,9 @@ Two friendly probes fight by your side and will supercharge with you
                 if (name.Contains("lightning") || name.Contains("electr") || name.Contains("thunder") || name.Contains("laser"))
                     electricAttack = true;
             }
+
+            if (NPC.AnyNPCs(ModContent.NPCType<MutantBoss>()))
+                electricAttack = false;
 
             if (electricAttack && player.whoAmI == Main.myPlayer && !player.HasBuff(ModContent.BuffType<SuperchargedBuff>()))
             {

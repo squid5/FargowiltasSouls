@@ -1,5 +1,6 @@
 ﻿using FargowiltasSouls.Content.Bosses.MutantBoss;
 using FargowiltasSouls.Content.Buffs.Masomode;
+using FargowiltasSouls.Content.Buffs.Souls;
 using FargowiltasSouls.Content.Items.Accessories.Masomode;
 using FargowiltasSouls.Content.Items.Placables;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
@@ -160,7 +161,16 @@ namespace FargowiltasSouls.Core.Globals
                     if (Main.player[npc.target].ZoneJungle)
                         npc.AddBuff(BuffID.Poisoned, 2, true);
                 }
+
+
+
+                //if (!npc.boss && !npc.friendly && Main.SceneMetrics.EnoughTilesForSnow)
+                //{
+                //    npc.AddBuff(ModContent.BuffType<FrozenBuff>(), 3600);
+                //}
             }
+
+            
 
             return true;
         }
@@ -188,7 +198,6 @@ namespace FargowiltasSouls.Core.Globals
                 }
             }
         }
-
         public override void EditSpawnRate(Player player, ref int spawnRate, ref int maxSpawns)
         {
             if (WorldSavingSystem.EternityMode)
@@ -209,6 +218,7 @@ namespace FargowiltasSouls.Core.Globals
         public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo)
         {
             //layers
+            int x = spawnInfo.SpawnTileX;
             int y = spawnInfo.SpawnTileY;
             bool cavern = y >= Main.maxTilesY * 0.4f && y <= Main.maxTilesY * 0.8f;
             bool underground = y > Main.worldSurface && y <= Main.maxTilesY * 0.4f;
@@ -257,6 +267,8 @@ namespace FargowiltasSouls.Core.Globals
             bool normalSpawn = !spawnInfo.PlayerInTown && noInvasion && !oldOnesArmy && noEvent;
 
             bool bossCanSpawn = WorldSavingSystem.MasochistModeReal && !spawnInfo.Player.HasEffect<SinisterIconEffect>() && !LumUtils.AnyBosses();
+
+
 
             //MASOCHIST MODE
             if (WorldSavingSystem.EternityMode)
@@ -311,6 +323,15 @@ namespace FargowiltasSouls.Core.Globals
 
                         if (day && NPC.downedGolemBoss && (noBiome || dungeon))
                             pool[NPCID.CultistArcherWhite] = .01f;
+                        float scoutRate = 0.07f;
+                        int xFromSpawn = Math.Abs(x - Main.spawnTileX);
+                        bool goblinCondition = xFromSpawn > Main.maxTilesX / 3 || Main.remixWorld;
+                        if ((!NPC.savedGoblin && goblinCondition) || (pool.TryGetValue(NPCID.GoblinScout, out float value) && value < scoutRate))
+                        {
+                            pool[NPCID.GoblinScout] = scoutRate;
+                        }
+                            
+
                     }
                     else if (wideUnderground)
                     {
@@ -335,6 +356,9 @@ namespace FargowiltasSouls.Core.Globals
                         {
                             if (noBiome && NPC.downedBoss3)
                                 pool[NPCID.DarkCaster] = .02f;
+                            if (noBiome && (!pool.ContainsKey(NPCID.RockGolem) || pool[NPCID.RockGolem] < 0.01f))
+                                pool[NPCID.RockGolem] = 0.01f;
+                                
                         }
 
                         if (NPC.downedGoblins && !NPC.savedGoblin && !NPC.AnyNPCs(NPCID.BoundGoblin))
@@ -448,7 +472,12 @@ namespace FargowiltasSouls.Core.Globals
                             }
 
                             if (noInvasion && !oldOnesArmy && bossCanSpawn)
+                            {
                                 pool[NPCID.Clown] = 0.01f;
+                                if (!pool.ContainsKey(NPCID.Werewolf) || pool[NPCID.Werewolf] < 0.02f)
+                                    pool[NPCID.Werewolf] = 0.02f;
+                            }
+                                
 
                             if (normalSpawn)
                             {
@@ -860,6 +889,7 @@ namespace FargowiltasSouls.Core.Globals
                     break;
 
                 case NPCID.DemonEye:
+                case NPCID.DemonEye2:
                 case NPCID.DemonEyeOwl:
                 case NPCID.DemonEyeSpaceship:
                     TimsConcoctionDrop(ItemDropRule.Common(ItemID.NightOwlPotion));
@@ -1016,7 +1046,7 @@ namespace FargowiltasSouls.Core.Globals
                     break;
 
                 case NPCID.GraniteGolem:
-                    TimsConcoctionDrop(ItemDropRule.Common(ItemID.EndurancePotion, 1, 1, 3));
+                    TimsConcoctionDrop(ItemDropRule.Common(ItemID.EndurancePotion, 1, 3, 5));
                     break;
 
                 case NPCID.Shark:
@@ -1409,7 +1439,7 @@ namespace FargowiltasSouls.Core.Globals
 
             //works because buffs are client side anyway :ech:
             float range = npc.Distance(p.Center);
-            if (p.active && !p.dead && !p.ghost && (reverse ? range > distance && range < Math.Max(3000f, distance * 2) : range < distance))
+            if (p.Alive() && (reverse ? range > distance && range < Math.Max(3000f, distance * 2) : range < distance))
             {
                 foreach (int buff in buffs)
                 {
@@ -1476,7 +1506,20 @@ namespace FargowiltasSouls.Core.Globals
                 }
             }
         }*/
-
+        public override bool CanHitPlayer(NPC npc, Player target, ref int cooldownSlot)
+        {
+            bool ret = base.CanHitPlayer(npc, target, ref cooldownSlot);
+            if (!WorldSavingSystem.EternityMode)
+                return ret;
+            if (npc.type is NPCID.Sharkron or NPCID.Sharkron2)
+            {
+                int halfwidth = npc.width / 2;
+                Vector2 dir = npc.velocity.SafeNormalize(Vector2.Zero);
+                if (!Collision.CheckAABBvLineCollision(target.position, target.Size, npc.Center - dir * halfwidth, npc.Center + dir * halfwidth))
+                    return false;
+            }
+            return ret;
+        }
         public static void CustomReflect(NPC npc, int dustID, int ratio = 1)
         {
             float distance = 2f * 16;

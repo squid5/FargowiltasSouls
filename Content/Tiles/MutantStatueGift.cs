@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -47,6 +48,16 @@ namespace FargowiltasSouls.Content.Tiles
             j += 2;
             WorldGen.KillTile(i, j, noItem: true);
 
+            if (Main.netMode != NetmodeID.SinglePlayer)
+            {
+                ModPacket packet = Mod.GetPacket();
+
+                packet.Write((byte)FargowiltasSouls.PacketID.DropMutantGift);
+                packet.Write(i);
+                packet.Write(j);
+                packet.Send();
+            }
+
             return true;
         }
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
@@ -59,14 +70,17 @@ namespace FargowiltasSouls.Content.Tiles
             i += 1;
             j += 2;
 
-            Item.NewItem(new EntitySource_TileBreak(i, j - 1), i * 16, j * 16, 48, 48, ModContent.ItemType<Items.Masochist>());
             WorldGen.PlaceTile(i, j, ModContent.TileType<MutantStatue>());
+        }
+        public override IEnumerable<Item> GetItemDrops(int i, int j)
+        {
+            yield return new Item(ModContent.ItemType<Items.Masochist>());
         }
         public override void NumDust(int i, int j, bool fail, ref int num)
         {
             num = 0;
         }
-        public override bool CanDrop(int i, int j) => false;
+        //public override bool CanDrop(int i, int j) => false;
 
     }
 }

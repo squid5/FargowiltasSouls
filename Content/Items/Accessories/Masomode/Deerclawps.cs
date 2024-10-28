@@ -14,15 +14,6 @@ namespace FargowiltasSouls.Content.Items.Accessories.Masomode
 
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("Deerclawps");
-            /* Tooltip.SetDefault("Grants immunity to Slow and Frozen" +
-                "\nDashing leaves a trail of ice spikes" +
-                "\n'The trimmed nails of a defeated foe'"); */
-
-            //             DisplayName.AddTranslation((int)GameCulture.CultureName.Chinese, "冰鹿爪");
-            //             Tooltip.AddTranslation((int)GameCulture.CultureName.Chinese, @"免疫缓慢和冰冻
-            // 冲刺会留下一串冰刺
-            // “从被击败的敌人的脚上剪下来的指甲”");
 
             Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
@@ -101,7 +92,18 @@ namespace FargowiltasSouls.Content.Items.Accessories.Masomode
                 if (player.velocity.Y == 0)
                     Projectile.NewProjectile(player.GetSource_EffectItem<DeerclawpsEffect>(), pos, vel, type, dam, 4f, Main.myPlayer, ai0, ai1);
                 else
-                    Projectile.NewProjectile(player.GetSource_EffectItem<DeerclawpsEffect>(), pos, vel * (Main.rand.NextBool() ? 1 : -1), type, dam, 4f, Main.myPlayer, ai0, ai1 / 2);
+                {
+                    int npcID = FargoSoulsUtil.FindClosestHostileNPC(pos, 300, true, true);
+                    if (!npcID.IsWithinBounds(Main.maxNPCs))
+                        return;
+                    NPC npc = Main.npc[npcID];
+                    if (!npc.Alive())
+                        return;
+                    vel = pos.DirectionTo(npc.Center) * vel.Length();
+                    Projectile.NewProjectile(player.GetSource_EffectItem<DeerclawpsEffect>(), pos, vel.RotatedByRandom(MathHelper.PiOver2 * 0.3f), type, dam, 4f, Main.myPlayer, ai0, ai1 / 2);
+
+                }
+                    
             }
         }
     }

@@ -1,3 +1,4 @@
+using FargowiltasSouls.Content.Items.Accessories.Forces;
 using FargowiltasSouls.Content.Items.Weapons.Challengers;
 using FargowiltasSouls.Content.Projectiles;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
@@ -16,12 +17,6 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
-
-            // DisplayName.SetDefault("Adamantite Enchantment");
-            /* Tooltip.SetDefault("Every weapon shot will split into 2" +
-                "\nAll weapon shots deal 50% damage" +
-                "\nThey hit twice as fast and gain armor penetration equal to 50% damage" +
-                "\n'Chaos'"); */
         }
 
         public override Color nameColor => new(221, 85, 125);
@@ -63,6 +58,8 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
 
         public override void PostUpdateEquips(Player player)
         {
+            if (player.HasEffect<EarthForceEffect>())
+                return;
             FargoSoulsPlayer modPlayer = player.FargoSouls();
             //modPlayer.AdamantiteEnchantItem = item;
 
@@ -96,7 +93,6 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
         {
             bool adaForce = modPlayer.ForceEffect<AdamantiteEnchant>();
             bool isProjHoming = ProjectileID.Sets.CultistIsResistantTo[projectile.type];
-
             if (AdamIgnoreItems.Contains(modPlayer.Player.HeldItem.type))
             {
                 return;
@@ -111,10 +107,11 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
                 if (p.Alive())
                 {
                     p.FargoSouls().HuntressProj = projectile.FargoSouls().HuntressProj;
+                    p.FargoSouls().Adamantite = true;
                 }
             }
 
-            if (!adaForce)
+            if (!adaForce) 
             {
                 projectile.type = ProjectileID.None;
                 projectile.timeLeft = 0;

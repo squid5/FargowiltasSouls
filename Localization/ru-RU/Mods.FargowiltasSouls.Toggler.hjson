@@ -41,7 +41,7 @@ RedRidingEffect: Дождь Стрел Красного Наездника
 ValhallaDash: Наездный Рывок Вальгаллы
 SquireMountJump: Наездный Прыжок Оруженосца
 SquireMountSpeed: Скорость Наездных Питомцев Оруженосца
-WillGladiatorEffect: Дух Гладиатора Воли
+WillEffect: Дух Гладиатора Воли
 LifeHeader: "{$Mods.FargowiltasSouls.Items.LifeForce.DisplayName}"
 BeeEffect: Цветы Пчелы
 BeetleEffect: Жуки
@@ -49,18 +49,21 @@ CactusEffect: Иглы Кактуса
 PumpkinEffect: Растущие Тыквы
 SpiderEffect: Криты Паука
 TurtleEffect: Бафф Черепашьего Панциря
+// LifeForceEffect: Concise Life Force
 NatureHeader: "{$Mods.FargowiltasSouls.Items.NatureForce.DisplayName}"
 ChloroMinion: Кристальный Лист Хлорофита
 CrimsonEffect: Лечение Багрянца
 RainUmbrellaEffect: Зонт Дождя
 RainInnerTubeEffect: Воздушная Камера
+// RainFeatherfallEffect: Umbrella Featherfall
 SnowEffect: Замораживающие Снежки
 JungleJump: Прыжок и Споры Джунглей
 JungleDashEffect: Рывок Джунглей
 MoltenEffect: Бафф Литого Инферно
-ShroomiteStealthEffect: Невидимость Грибов
+// ShroomiteHealEffect: Shroomite Consumption Buff
+// ShroomiteMushroomPriority: Mushrooms Take Potion Priority
 ShroomiteShroomEffect: Грибы Грибов
-NatureBeamEffect: Лечебные Лучи Природы
+// NatureEffect: Concise Nature Force
 ShadowHeader: "{$Mods.FargowiltasSouls.Items.ShadowForce.DisplayName}"
 DarkArtistMinion: Огнемётный Миньон
 ApprenticeSupport: Эффект Ученика
@@ -73,13 +76,14 @@ ShinobiThroughWalls: Шиноби Через Стены
 SpookyEffect: Косы Жути
 NinjaEffect: Скорость Ниндзя
 CrystalAssassinDash: Рывок Хрустального Убийцы
+// CrystalDiagonalDash: Diagonal Dash
 ShadowForceDashEffect: Рывок Тени
-ShadowForceDamageEffect: Урон Рывка Тени
+// ShadowForceEffect: Concise Death Force
 SpiritHeader: "{$Mods.FargowiltasSouls.Items.SpiritForce.DisplayName}"
 FossilBones: Ископаемые Кости При Ударе
 HallowEffect: Лечебные Зелья Освящения
 AncientHallowMinion: Клинок Древнего Освящения
-SpectreEffect: Сферы Спектра
+// SpectreOnHitEffect: Spirits On Hit
 ForbiddenEffect: Запретный Шторм
 TikiEffect: Миньоны Тики
 SpiritTornadoEffect: Торнадо Духа
@@ -91,9 +95,9 @@ NebulaEffect: Усилители Туманности
 SolarEffect: Щит и Рывок Солнечной Вспышки
 SolarFlareEffect: Дебафф Солнечная Вспышка
 StardustMinionEffect: Защитник Звёздной Пыли
-VortexStealthEffect: Невидимость Вихря
-VortexVortexEffect: Пустоты Вихря
+// VortexEffect: Vortex Laser
 CosmosMoonEffect: Луны Космоса
+// CosmoForceEffect: Concise Cosmo Force
 DeviEnergyHeader: Аксессуары Режима Вечность
 DeerSinewEffect: Рывок Сухожилия Оленя
 ZephyrJump: Пердёжный Прыжок
@@ -140,7 +144,6 @@ DeerclawpsDive: Пикирование Циклешненя
 DeerclawpsEffect: След из Шипов При Рывке Циклешненя
 DreadShellEffect: Парирование Панциря Ужаса
 ChaliceHeader: "{$Mods.FargowiltasSouls.Items.ChaliceoftheMoon.DisplayName}"
-CultistMinionEffect: Прислужник Культист
 PlantMinionEffect: Прислужник Плантера
 LihzahrdGroundPound: Быстрое Падение Ящщеров
 LihzahrdBoulders: Валуны и Гейзеры Топота
@@ -150,8 +153,8 @@ PrecisionSealHurtbox: Уменьшенный Размер Хёртбокса
 PumpkingsCapeEffect: Парирование Плаща Тыквенного Короля
 IceQueenGraze: Грэйз
 UfoMinionEffect: Прислужник Тарелка
-MasoGravEffect: Контроль Гравитации
-MasoTrueEyeMinion: Прислужники Истинные Глаза
+// ChalicePotionEffect: Free Potion Buffs
+// MasoTrueEyeMinion: True Eye Minions
 MutantArmorHeader: Истинная Броня Мутанта
 MasoAbom: Прислужник Выродокк
 MasoRing: Прислужник Фантазматическое Кольцо
@@ -176,12 +179,12 @@ ShimmerImmunityEffect: Иммунитет к Симмеру
 FlightMasteryHeader: "{$Mods.FargowiltasSouls.Items.FlightMasterySoul.DisplayName}"
 FlightMasteryInsignia: Ускорение Парящей Эмблемы
 FlightMasteryGravity: Усиленная Гравитация
+// JumpsDisabled: Disable All Jumps
 SupersonicHeader: "{$Mods.FargowiltasSouls.Items.SupersonicSoul.DisplayName}"
 RunSpeed: Увеличенная Базовая Скорость Бега
 NoMomentum: Нет Инерции
 SupersonicTabi: Рывок Таби
 SupersonicClimbing: Альпинистский Набор Тигра
-SupersonicSpeedEffect: Увеличение Скорости
 SupersonicJumps: Прыжки
 SupersonicRocketBoots: Реактивные Сапоги
 SupersonicCarpet: Ковёр-самолёт
@@ -194,9 +197,8 @@ TrawlerJump: Прыжок
 TrawlerGel: Нестабильный Желатин
 EternityHeader: "{$Mods.FargowiltasSouls.Items.EternitySoul.DisplayName}"
 EternityTin: Эффект Накладывающихся Критов Вечности
-TerrariaMoonEffect: Луны Террарии
-// the pets are no longer existing in game
 // PetHeader: Pets
+// the pets are no longer existing in game
 // PetDinoConfig: Dino Pet
 // PetEaterConfig: Eater Pet
 // PetFaceMonsterConfig: Face Monster Pet

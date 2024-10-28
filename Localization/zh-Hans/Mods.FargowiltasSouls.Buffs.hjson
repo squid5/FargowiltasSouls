@@ -238,9 +238,13 @@ FlippedBuff: {
 	Description: 你的重力被颠倒了
 }
 
-FlippedHallowBuff: {
-	DisplayName: 翻转
-	Description: 你的重力被颠倒了
+HallowIlluminatedBuff: {
+	// DisplayName: Illuminated
+	/* Description:
+		'''
+		Increased brightness and spawn rate
+		Damage taken and dealt increased in bright areas
+		''' */
 }
 
 FusedBuff: {
@@ -328,6 +332,11 @@ LovestruckBuff: {
 LowGroundBuff: {
 	DisplayName: 下陷
 	Description: 钩爪被禁止，不能站在平台或液体上
+}
+
+LowGroundEridanusBuff: {
+	// DisplayName: Low Ground
+	// Description: Cannot stand on platforms
 }
 
 MarkedforDeathBuff: {
@@ -678,14 +687,14 @@ WretchedHexBuff: {
 	Description: 暗影焰触手伤害大幅提升，但速度和防御大幅下降
 }
 
-WitheredBuff: {
+CorruptedBuff: {
 	// DisplayName: Withered
-	// Description: Mods.FargowiltasSouls.Buffs.WithereddBuff.Description
+	// Description: You have withered
 }
 
-WitheredWizardBuff: {
-	// DisplayName: Withered
-	// Description: Mods.FargowiltasSouls.Buffs.WitheredWizardBuff.Description
+CorruptedBuffForce: {
+	// DisplayName: Withered (Force)
+	// Description: You have withered
 }
 
 JungleMimicSummonBuff: {
@@ -753,4 +762,49 @@ TimberBleedBuff: {
 EarthPoison: {
 	// DisplayName: Earth Poison
 	// Description: Mods.FargowiltasSouls.Buffs.EarthPoison.Description
+}
+
+WitheredBuff: {
+	// DisplayName: Withered Buff
+	// Description: Mods.FargowiltasSouls.Buffs.WitheredBuff.Description
+}
+
+WitheredWizardBuff: {
+	// DisplayName: Withered Wizard Buff
+	// Description: Mods.FargowiltasSouls.Buffs.WitheredWizardBuff.Description
+}
+
+MushroomPowerBuff: {
+	// DisplayName: Mushroom Power
+	// Description: Increased damage and critical strike chance
+}
+
+SolarBuff: {
+	// DisplayName: Solar Buff
+	// Description: Increased damage reduction
+}
+
+VortexBuff: {
+	// DisplayName: Vortex Buff
+	// Description: Increased critical strike chance
+}
+
+NebulaBuff: {
+	// DisplayName: Nebula Buff
+	// Description: Increased life regeneration
+}
+
+StardustBuff: {
+	// DisplayName: Stardust Buff
+	// Description: Increased damage
+}
+
+AmbrosiaBuff: {
+	// DisplayName: Ambrosia Buff
+	// Description: +30% damage, +30% melee speed, +20% damage reduction, +5 life regeneration
+}
+
+MutantDesperationBuff: {
+	// DisplayName: Phantasmal Fury
+	// Description: His final stand. You take double damage!
 }

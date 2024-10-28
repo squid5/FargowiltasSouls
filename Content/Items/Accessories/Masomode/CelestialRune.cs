@@ -17,17 +17,6 @@ namespace FargowiltasSouls.Content.Items.Accessories.Masomode
 
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("Celestial Rune");
-            /* Tooltip.SetDefault("Grants immunity to Marked for Death" +
-                "\nYou may periodically fire additional attacks depending on weapon type" +
-                "\nTaking damage creates a friendly Ancient Vision to attack enemies" +
-                "\n'A fallen enemy's spells, repurposed'"); */
-
-            // DisplayName.AddTranslation((int)GameCulture.CultureName.Chinese, "天界符文");
-            // Tooltip.AddTranslation((int)GameCulture.CultureName.Chinese, "'堕落的敌人的咒语,被改换用途'" +
-            //     "\n免疫死亡标记" +
-            //     "\n根据武器类型定期发动额外的攻击" +
-            //     "\n受伤时创造一个友好的远古幻象来攻击敌人");
 
             Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
@@ -59,6 +48,10 @@ namespace FargowiltasSouls.Content.Items.Accessories.Masomode
             {
                 modPlayer.AdditionalAttacksTimer = 60;
 
+                float projDamage = 65f;
+                if (modPlayer.MoonChalice)
+                    projDamage *= 1.5f;
+
                 Vector2 position = player.Center;
                 Vector2 velocity = Vector2.Normalize(Main.MouseWorld - position);
 
@@ -68,7 +61,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Masomode
                     for (int i = 0; i < 3; i++)
                     {
                         Projectile.NewProjectile(GetSource_EffectItem(player), position, velocity.RotatedByRandom(Math.PI / 6) * Main.rand.NextFloat(6f, 10f),
-                            ModContent.ProjectileType<CelestialRuneFireball>(), (int)(65f * player.ActualClassDamage(DamageClass.Melee)), 9f, player.whoAmI);
+                            ModContent.ProjectileType<CelestialRuneFireball>(), (int)(projDamage * player.ActualClassDamage(DamageClass.Melee)), 9f, player.whoAmI);
                     }
                 }
                 if (damageType.CountsAsClass(DamageClass.Ranged)) //lightning
@@ -78,16 +71,16 @@ namespace FargowiltasSouls.Content.Items.Accessories.Masomode
                         float ai1 = Main.rand.Next(100);
                         Vector2 vel = Vector2.Normalize(velocity.RotatedByRandom(Math.PI / 4)).RotatedBy(MathHelper.ToRadians(5) * i) * 7f;
                         Projectile.NewProjectile(GetSource_EffectItem(player), position, vel, ModContent.ProjectileType<CelestialRuneLightningArc>(),
-                            (int)(65f * player.ActualClassDamage(DamageClass.Ranged)), 1f, player.whoAmI, velocity.ToRotation(), ai1);
+                            (int)(projDamage * player.ActualClassDamage(DamageClass.Ranged)), 1f, player.whoAmI, velocity.ToRotation(), ai1);
                     }
                 }
                 if (damageType.CountsAsClass(DamageClass.Magic)) //ice mist
                 {
-                    Projectile.NewProjectile(GetSource_EffectItem(player), position, velocity * 4.25f, ModContent.ProjectileType<CelestialRuneIceMist>(), (int)(65f * player.ActualClassDamage(DamageClass.Magic)), 4f, player.whoAmI);
+                    Projectile.NewProjectile(GetSource_EffectItem(player), position, velocity * 4.25f, ModContent.ProjectileType<CelestialRuneIceMist>(), (int)(projDamage * player.ActualClassDamage(DamageClass.Magic)), 4f, player.whoAmI);
                 }
                 if (damageType.CountsAsClass(DamageClass.Summon)) //ancient vision
                 {
-                    FargoSoulsUtil.NewSummonProjectile(GetSource_EffectItem(player), position, velocity * 16f, ModContent.ProjectileType<CelestialRuneAncientVision>(), 65, 3f, player.whoAmI);
+                    FargoSoulsUtil.NewSummonProjectile(GetSource_EffectItem(player), position, velocity * 16f, ModContent.ProjectileType<CelestialRuneAncientVision>(), (int)projDamage, 3f, player.whoAmI);
                 }
             }
         }
@@ -95,6 +88,9 @@ namespace FargowiltasSouls.Content.Items.Accessories.Masomode
         {
             int damage = info.Damage;
             FargoSoulsPlayer modPlayer = player.FargoSouls();
+            if (modPlayer.MoonChalice)
+                return;
+
             if (modPlayer.HurtTimer <= 0)
             {
                 modPlayer.HurtTimer = 20;

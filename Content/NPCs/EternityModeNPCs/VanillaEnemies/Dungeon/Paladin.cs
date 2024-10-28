@@ -59,7 +59,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.Dungeon
                 npc.Bottom = npc.Center;
             }
 
-            EModeGlobalNPC.Aura(npc, 800f, BuffID.BrokenArmor, false, 246);
+            EModeGlobalNPC.Aura(npc, 800f, false, 246, default, BuffID.BrokenArmor, ModContent.BuffType<LowGroundBuff>());
             foreach (NPC n in Main.npc.Where(n => n.active && !n.friendly && n.type != NPCID.Paladin && n.Distance(npc.Center) < 800f))
             {
                 n.Eternity().PaladinsShield = true;

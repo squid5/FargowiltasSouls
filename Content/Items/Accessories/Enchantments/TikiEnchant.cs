@@ -12,16 +12,6 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
-
-            // DisplayName.SetDefault("Tiki Enchantment");
-            /* Tooltip.SetDefault(
-@"Increases whip range by 20%
-Whip your summons to make them work harder
-'Aku Aku!'"); */
-            //             DisplayName.AddTranslation((int)GameCulture.CultureName.Chinese, "提基魔石");
-            //             Tooltip.AddTranslation((int)GameCulture.CultureName.Chinese,
-            // @"在召唤栏用光后你仍可以召唤临时的哨兵和仆从
-            // 'Aku Aku!'");
         }
 
         public override Color nameColor => new(86, 165, 43);
@@ -41,8 +31,7 @@ Whip your summons to make them work harder
         }
         public static void AddEffects(Player player, Item item)
         {
-            if (player.FargoSouls().ForceEffect<TikiEnchant>())
-                player.whipRangeMultiplier += 0.2f;
+            player.whipRangeMultiplier += player.FargoSouls().ForceEffect<TikiEnchant>() ? 0.4f : 0.2f;
             player.AddEffect<TikiEffect>(item);
         }
 

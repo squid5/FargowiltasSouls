@@ -1,8 +1,10 @@
 ﻿using FargowiltasSouls.Content.Projectiles.Souls;
+using FargowiltasSouls.Content.UI.Elements;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using FargowiltasSouls.Core.Systems;
 using FargowiltasSouls.Core.Toggler.Content;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
 using Terraria.ID;
@@ -58,6 +60,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
     {
         public override Header ToggleHeader => Header.GetHeader<ShadowHeader>();
         public override int ToggleItemType => ModContent.ItemType<MonkEnchant>();
+        public override bool MutantsPresenceAffects => true;
         public static void AddDash(Player player)
         {
             FargoSoulsPlayer modPlayer = player.FargoSouls();
@@ -87,12 +90,16 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
             float speed = player.HasEffect<ShinobiDashEffect>() ? 8 : 16;
             player.velocity.X = speed * direction;
 
-            player.immune = true;
             int invul = player.HasEffect<ShinobiDashEffect>() ? 10 : 20;
             modPlayer.MonkDashing = invul;
-            player.immuneTime = Math.Max(player.immuneTime, invul);
-            player.hurtCooldowns[0] = Math.Max(player.hurtCooldowns[0], invul);
-            player.hurtCooldowns[1] = Math.Max(player.hurtCooldowns[1], invul);
+
+            if (!player.FargoSouls().MutantPresence)
+            {
+                player.immune = true;
+                player.immuneTime = Math.Max(player.immuneTime, invul);
+                player.hurtCooldowns[0] = Math.Max(player.hurtCooldowns[0], invul);
+                player.hurtCooldowns[1] = Math.Max(player.hurtCooldowns[1], invul);
+            }
             bool monkForce = modPlayer.ShinobiEnchantActive || modPlayer.ForceEffect<MonkEnchant>();
             bool shinobiForce = modPlayer.ShinobiEnchantActive && modPlayer.ForceEffect<ShinobiEnchant>();
 
@@ -104,6 +111,9 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
 
             modPlayer.DashCD = 100;
             player.dashDelay = 100;
+
+            if (player.whoAmI == Main.myPlayer)
+                CooldownBarManager.Activate("MonkDash", ModContent.Request<Texture2D>("FargowiltasSouls/Content/Items/Accessories/Enchantments/MonkEnchant").Value, Color.Red, () => (float)modPlayer.DashCD / 100f, activeFunction: () => player.HasEffect<MonkDashEffect>());
             if (player.FargoSouls().IsDashingTimer < 20)
                 player.FargoSouls().IsDashingTimer = 20;
 
@@ -149,7 +159,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
                     }
                     else
                     {
-                        teleportPos.X -= 18 * direction;
+                        //teleportPos.X -= 18 * direction;
                         tryGoThroughWalls = true;
                         break;
                     }
@@ -169,7 +179,6 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
                         }
                     }
                 }
-
                 if (teleportPos.X > 50 && teleportPos.X < (double)(Main.maxTilesX * 16 - 50) && teleportPos.Y > 50 && teleportPos.Y < (double)(Main.maxTilesY * 16 - 50))
                 {
                     FargoSoulsUtil.GrossVanillaDodgeDust(player);

@@ -32,6 +32,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
         public float JumpTimer = 0;
         const int SpecialJumpTime = 60 * 15;
+        public int SpecialJumpWindupTimer;
 
         const int SummonWaves = 6;
         public float SummonCounter = SummonWaves - 1;
@@ -42,10 +43,6 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             npc.color = Main.DiscoColor * 0.3f; // Rainbow colour
 
             ref float teleportTimer = ref npc.ai[2];
-
-
-            if (WorldSavingSystem.SwarmActive)
-                return true;
 
             if (CertainAttackCooldown > 0)
                 CertainAttackCooldown--;
@@ -72,19 +69,20 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                 {
                     for (int i = 0; i < Slimes; i++)
                     {
-                        int x = (int)(npc.position.X + (float)Main.rand.Next(npc.width - 32));
-                        int y = (int)(npc.position.Y + (float)Main.rand.Next(npc.height - 32));
+                        int x = (int)(npc.position.X + Main.rand.NextFloat(npc.width - 32));
+                        int y = (int)(npc.position.Y + Main.rand.NextFloat(npc.height - 32));
                         int type = ModContent.NPCType<SlimeSwarm>();
                         int slime = NPC.NewNPC(npc.GetSource_FromThis(), x, y, type);
                         if (slime.IsWithinBounds(Main.maxNPCs))
                         {
                             Main.npc[slime].SetDefaults(type);
-                            Main.npc[slime].velocity.X = (float)Main.rand.Next(-15, 16) * 0.1f;
-                            Main.npc[slime].velocity.Y = (float)Main.rand.Next(-30, 1) * 0.1f;
+                            Main.npc[slime].velocity.X = Main.rand.NextFloat(-15, 16) * 0.1f;
+                            Main.npc[slime].velocity.Y = Main.rand.NextFloat(-30, -15) * 0.3f;
 
                             if (npc.HasValidTarget)
                             {
                                 Main.npc[slime].ai[0] = Math.Sign(player.Center.X - npc.Center.X);
+                                Main.npc[slime].velocity.X = Main.rand.NextFloat(10, 16) * 0.4f * -npc.HorizontalDirectionTo(player.Center);
                             }
 
                             //Main.npc[slime].ai[0] = -1000 * Main.rand.Next(3);
@@ -103,7 +101,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
             if (WorldSavingSystem.MasochistModeReal)
                 npc.position.X += npc.velocity.X * 0.2f;
-
+            //FargoSoulsUtil.PrintAI(npc);
             // Attack that happens when landing
             if (LandingAttackReady)
             {
@@ -118,6 +116,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                         Particle p = new ExpandingBloomParticle(npc.Center, Vector2.Zero, Color.Blue, Vector2.One, Vector2.One * 60, 40, true, Color.Transparent);
                         SpecialJumping = true;
                         CertainAttackCooldown = 240;
+                        SpecialJumpWindupTimer = 60;
                         p.Spawn();
 
                     }
@@ -145,8 +144,8 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                                 }
                                 */
 
-                                /*
-                                if (npc.HasValidTarget)
+                                
+                                if (WorldSavingSystem.MasochistModeReal && npc.HasValidTarget)
                                 {
                                     SoundEngine.PlaySound(SoundID.Item21, player.Center);
                                     if (FargoSoulsUtil.HostCheck)
@@ -164,7 +163,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                                         }
                                     }
                                 }
-                                */
+                                
                             }
                         }
                     }
@@ -205,6 +204,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                             shootSpikes = true;
 
 
+
                         if (npc.HasValidTarget)
                         {
                             // If player is well above me, jump higher
@@ -232,7 +232,8 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                             }
 
                         }
-
+                        if (npc.ai[1] == 0) // big jump
+                            shootSpikes = false;
 
                         if (shootSpikes && FargoSoulsUtil.HostCheck)
                         {
@@ -257,6 +258,13 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
             if (npc.velocity.Y == 0) //on ground
             {
+                if (SpecialJumpWindupTimer > 0)
+                {
+                    npc.ai[0] = -999; // no jumping until this is done
+                    SpecialJumpWindupTimer--;
+                    if (SpecialJumpWindupTimer == 0)
+                        npc.ai[0] = -1; // ok now you can jump
+                }
 
             }
             else //midair

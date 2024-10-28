@@ -1,7 +1,7 @@
 using FargowiltasSouls.Content.Bosses.Champions.Cosmos;
 using FargowiltasSouls.Content.Items.Accessories.Enchantments;
 using FargowiltasSouls.Content.Items.Accessories.Forces;
-using FargowiltasSouls.Content.Projectiles.Souls;
+using FargowiltasSouls.Core;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using FargowiltasSouls.Core.Toggler.Content;
 using Microsoft.Xna.Framework;
@@ -9,7 +9,6 @@ using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
-using Terraria.DataStructures;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -34,12 +33,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Souls
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
-
-            // DisplayName.SetDefault("Soul of Terraria");
-
-            // Tooltip.SetDefault(tooltip);
-
-            Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(6, 24));
+            Main.RegisterItemAnimation(Item.type, new DrawAnimationRectangularV(6, 6, 8));
             ItemID.Sets.AnimatesAsSoul[Item.type] = true;
         }
 
@@ -73,10 +67,10 @@ namespace FargowiltasSouls.Content.Items.Accessories.Souls
             foreach (int force in Forces)
                 modPlayer.ForceEffects.Add(force);
 
-            //includes revive, both spectres, adamantite, and star heal
             modPlayer.TerrariaSoul = true;
             modPlayer.WizardEnchantActive = true;
 
+            /*
             // super moons
             player.AddEffect<TerrariaMoonEffect>(Item);
             // revive
@@ -92,8 +86,9 @@ namespace FargowiltasSouls.Content.Items.Accessories.Souls
             player.AddEffect<WoodCompletionEffect>(Item);
             // iron items and attraction
             IronEnchant.AddEffects(player, Item);
+            */
 
-            /*
+            
             //TIMBER
             ModContent.GetInstance<TimberForce>().UpdateAccessory(player, hideVisual);
             //TERRA
@@ -112,7 +107,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Souls
             ModContent.GetInstance<WillForce>().UpdateAccessory(player, hideVisual);
             //COSMOS
             ModContent.GetInstance<CosmoForce>().UpdateAccessory(player, hideVisual);
-            */
+            
         }
 
         public override void UpdateVanity(Player player)
@@ -142,6 +137,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Souls
             .Register();
         }
     }
+    /*
     public class TerrariaMoonEffect : AccessoryEffect
     {
         public override Header ToggleHeader => Header.GetHeader<EternityHeader>();
@@ -195,4 +191,5 @@ namespace FargowiltasSouls.Content.Items.Accessories.Souls
             modPlayer.TerrariaSoulProcCD = 160 * 2;
         }
     }
+    */
 }

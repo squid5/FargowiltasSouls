@@ -1,3 +1,4 @@
+using FargowiltasSouls.Content.Items.Accessories.Forces;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using FargowiltasSouls.Core.Toggler.Content;
 using Microsoft.Xna.Framework;
@@ -12,12 +13,6 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
-
-            // DisplayName.SetDefault("Orichalcum Enchantment");
-            /* Tooltip.SetDefault(
-@"Flower petals will cause extra damage to your target and inflict Orichalcum Poison
-Damaging debuffs deal 2.5x damage
-'Nature blesses you'"); */
         }
 
         public override Color nameColor => new(235, 50, 145);
@@ -59,7 +54,7 @@ Damaging debuffs deal 2.5x damage
 
         public override bool ExtraAttackEffect => true;
 
-        public static void OriDotModifier(NPC npc, FargoSoulsPlayer modPlayer, ref int damage)
+        public static float OriDotModifier(NPC npc, FargoSoulsPlayer modPlayer)
         {
             float multiplier = 2.5f;
 
@@ -67,20 +62,13 @@ Damaging debuffs deal 2.5x damage
             {
                 multiplier = 3.5f;
             }
-
-            npc.lifeRegen = (int)(npc.lifeRegen * multiplier);
-            damage = (int)(damage * multiplier);
-
-            //half as effective if daybreak applied
-            if (npc.daybreak)
-            {
-                npc.lifeRegen /= 2;
-                damage /= 2;
-            }
+            return multiplier;
         }
 
         public override void PostUpdateEquips(Player player)
         {
+            if (player.HasEffect<EarthForceEffect>())
+                return;
             player.onHitPetal = true;
         }
 

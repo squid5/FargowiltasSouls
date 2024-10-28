@@ -1,4 +1,6 @@
-﻿using System;
+﻿using FargowiltasSouls.Content.WorldGeneration;
+using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -50,6 +52,7 @@ namespace FargowiltasSouls.Core.Systems
         internal static bool downedAnyBoss;
         internal static bool[] downedBoss = new bool[Enum.GetValues(typeof(Downed)).Length];
         internal static bool wOFDroppedDeviGift2;
+        internal static bool shiftingSandEvent;
 
         public static bool EternityMode { get; set; }
 
@@ -60,6 +63,8 @@ namespace FargowiltasSouls.Core.Systems
         public static int SkipMutantP1 { get => skipMutantP1; set => skipMutantP1 = value; }
 
         public static bool WOFDroppedDeviGift2 { get => wOFDroppedDeviGift2; set => wOFDroppedDeviGift2 = value; }
+
+        public static bool ShiftingSandEvent { get => shiftingSandEvent; set => shiftingSandEvent = value; }
 
         public static bool[] DownedBoss { get => downedBoss; set => downedBoss = value; }
 
@@ -93,6 +98,8 @@ namespace FargowiltasSouls.Core.Systems
 
         public static List<int> IronUsedList = [];
 
+        public static Point CoffinArenaCenter { get; set; }
+
         public override void Unload() => DownedBoss = null;
 
         private static void ResetFlags()
@@ -122,6 +129,7 @@ namespace FargowiltasSouls.Core.Systems
 
             DownedAnyBoss = false;
             WOFDroppedDeviGift2 = false;
+            ShiftingSandEvent = false;
 
             PlacedMutantStatue = false;
         }
@@ -178,6 +186,10 @@ namespace FargowiltasSouls.Core.Systems
 
             if (WOFDroppedDeviGift2)
                 downed.Add("WOFDroppedDeviGift2");
+
+            if (ShiftingSandEvent)
+                downed.Add("ShiftingSandEvent");
+
             if (PlacedMutantStatue)
                 downed.Add("PlacedMutantStatue");
 
@@ -207,6 +219,8 @@ namespace FargowiltasSouls.Core.Systems
 
             tag.Add("downed", downed);
             tag.Add("mutantP1", SkipMutantP1);
+            tag.Add("CoffinArenaCenterX", CoffinArenaCenter.X);
+            tag.Add("CoffinArenaCenterY", CoffinArenaCenter.Y);
         }
 
         public override void LoadWorldData(TagCompound tag)
@@ -228,6 +242,7 @@ namespace FargowiltasSouls.Core.Systems
             SpawnedDevi = downed.Contains("spawnedDevi");
             DownedAnyBoss = downed.Contains("downedAnyBoss");
             WOFDroppedDeviGift2 = downed.Contains("WOFDroppedDeviGift2");
+            ShiftingSandEvent = downed.Contains("ShiftingSandEvent");
             PlacedMutantStatue = downed.Contains("PlacedMutantStatue");
 
             if (downed.Contains("IronUsedList_"))
@@ -257,6 +272,13 @@ namespace FargowiltasSouls.Core.Systems
 
             if (tag.ContainsKey("mutantP1"))
                 SkipMutantP1 = tag.GetAsInt("mutantP1");
+            int coffinX = 0;
+            if (tag.ContainsKey("CoffinArenaCenterX"))
+                coffinX = tag.GetAsInt("CoffinArenaCenterX");
+            int coffinY = 0;
+            if (tag.ContainsKey("CoffinArenaCenterY"))
+                coffinY = tag.GetAsInt("CoffinArenaCenterY");
+            CoffinArena.SetArenaPosition(new(coffinX, coffinY));
         }
 
         public override void NetReceive(BinaryReader reader)
@@ -291,6 +313,9 @@ namespace FargowiltasSouls.Core.Systems
 
                 DownedBoss[i] = flags[bits];
             }
+
+            CoffinArenaCenter = reader.ReadVector2().ToPoint();
+            ShiftingSandEvent = reader.ReadBoolean();
         }
 
         public override void NetSend(BinaryWriter writer)
@@ -335,6 +360,9 @@ namespace FargowiltasSouls.Core.Systems
                 bitsByte[bit] = DownedBoss[i];
             }
             writer.Write(bitsByte);
+
+            writer.WriteVector2(CoffinArenaCenter.ToVector2());
+            writer.Write(ShiftingSandEvent);
         }
     }
 }

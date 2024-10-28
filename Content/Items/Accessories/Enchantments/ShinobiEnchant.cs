@@ -12,10 +12,6 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
-
-            // DisplayName.SetDefault("Shinobi Infiltrator Enchantment");
-
-            // Tooltip.SetDefault(tooltip);
         }
 
         public override Color nameColor => new(147, 91, 24);
@@ -62,6 +58,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
     {
         public override Header ToggleHeader => Header.GetHeader<ShadowHeader>();
         public override int ToggleItemType => ModContent.ItemType<ShinobiEnchant>();
+        public override bool MutantsPresenceAffects => true;
     }
     public class ShinobiThroughWalls : AccessoryEffect
     {

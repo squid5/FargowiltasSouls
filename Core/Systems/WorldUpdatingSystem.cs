@@ -1,4 +1,8 @@
-﻿using Microsoft.Xna.Framework;
+﻿using FargowiltasSouls.Content.Bosses.CursedCoffin;
+using FargowiltasSouls.Content.WorldGeneration;
+using Luminance.Core.Graphics;
+using Microsoft.Xna.Framework;
+using System;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -9,11 +13,59 @@ namespace FargowiltasSouls.Core.Systems
 {
     public class WorldUpdatingSystem : ModSystem
     {
-        public override void PreUpdateNPCs() => SwarmActive = ModLoader.TryGetMod("Fargowiltas", out Mod fargo) && (bool)fargo.Call("SwarmActive");
+        public static int rainCD;
+
+        public override void PreUpdateNPCs() => SwarmActive = FargowiltasSouls.MutantMod is Mod fargo && (bool)fargo.Call("SwarmActive");
 
         public override void PostUpdateWorld()
         {
             //NPC.LunarShieldPowerMax = NPC.downedMoonlord ? 50 : 100;
+
+            if (!downedBoss[(int)Downed.CursedCoffin] && !Main.hardMode)
+            {
+                bool noCoffin = !NPC.AnyNPCs(ModContent.NPCType<CursedCoffinInactive>()) && !NPC.AnyNPCs(ModContent.NPCType<CursedCoffin>());
+
+                if (noCoffin || !ShiftingSandEvent)
+                {
+                    Vector2 coffinArenaCenter = CoffinArena.Center.ToWorldCoordinates();
+                    for (int i = 0; i < Main.maxPlayers; i++)
+                    {
+                        Player player = Main.player[i];
+                        if (player != null && player.Alive())
+                        {
+                            float xDif = MathF.Abs(player.Center.X - coffinArenaCenter.X);
+                            if (noCoffin && xDif < 2500 && Math.Abs(player.Center.Y - coffinArenaCenter.Y) < 2500)
+                                NPC.NewNPC(NPC.GetSource_NaturalSpawn(), (int)coffinArenaCenter.X, (int)coffinArenaCenter.Y, ModContent.NPCType<CursedCoffinInactive>());
+                            if (!ShiftingSandEvent && player.Center.Y < coffinArenaCenter.Y && xDif < CoffinArena.VectorWidth / 2)
+                            {
+                                ShiftingSandEvent = true;
+                                FargoSoulsUtil.PrintLocalization($"Mods.{Mod.Name}.Message.{Name}.ShiftingSands", Color.Goldenrod);
+                                if (Main.netMode == NetmodeID.Server)
+                                    NetMessage.SendData(MessageID.WorldData);
+                                ScreenShakeSystem.StartShake(5f, shakeStrengthDissipationIncrement: 5f / 200);
+                                
+                                for (int x = -10; x < 10; x++)
+                                {
+                                    for (int y = 0; y < 50; y++)
+                                    {
+                                        Tile t = Main.tile[x + (int)(player.Center.X / 16f), y + (int)(player.Center.Y / 16f)];
+                                        if (t.HasTile && t.TileType == TileID.Sand)
+                                        {
+                                            for (int d = 0; d < 3; d++)
+                                            {
+                                                Dust.NewDust(player.Center + Vector2.UnitX * (x * 16 - 8) + Vector2.UnitY * (y * 16 - 8), 16, 16, DustID.Sand);
+                                            }
+                                            break;
+                                        }
+                                    }
+                                }
+                                
+                            }
+                    }
+                    }
+                }
+            }
+
 
             if (!PlacedMutantStatue && (Main.zenithWorld || Main.remixWorld))
             {
@@ -96,7 +148,7 @@ namespace FargowiltasSouls.Core.Systems
                     }
                 }
 
-                if (!MasochistModeReal && EternityMode && ((FargoSoulsUtil.WorldIsMaster() && CanPlayMaso) || Main.zenithWorld) && !LumUtils.AnyBosses())
+                if (!MasochistModeReal && EternityMode && CanActuallyPlayMaso && !LumUtils.AnyBosses())
                 {
                     MasochistModeReal = true;
                     FargoSoulsUtil.PrintLocalization($"Mods.{Mod.Name}.Message.{Name}.MasochistOn{(Main.zenithWorld ? "Zenith" : "")}", new Color(51, 255, 191, 0));
@@ -109,7 +161,7 @@ namespace FargowiltasSouls.Core.Systems
                 }
             }
 
-            if (MasochistModeReal && !(EternityMode && ((FargoSoulsUtil.WorldIsMaster() && CanPlayMaso) || Main.zenithWorld)))
+            if (MasochistModeReal && !(EternityMode && CanActuallyPlayMaso))
             {
                 MasochistModeReal = false;
                 FargoSoulsUtil.PrintLocalization($"Mods.{Mod.Name}.Message.{Name}.MasochistOff", new Color(51, 255, 191, 0));
@@ -117,6 +169,11 @@ namespace FargowiltasSouls.Core.Systems
                     NetMessage.SendData(MessageID.WorldData);
                 if (!Main.dedServ)
                     SoundEngine.PlaySound(SoundID.Roar, Main.LocalPlayer.Center);
+            }
+
+            if (rainCD > 0)
+            {
+                rainCD--;
             }
 
             //Main.NewText(BuilderMode);
@@ -237,5 +294,7 @@ namespace FargowiltasSouls.Core.Systems
 
             #endregion
         }
+
+        public static bool CanActuallyPlayMaso => (FargoSoulsUtil.WorldIsMaster() && CanPlayMaso) || Main.zenithWorld;
     }
 }

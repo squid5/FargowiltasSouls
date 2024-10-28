@@ -1,20 +1,23 @@
 using FargowiltasSouls.Content.Buffs.Souls;
 using FargowiltasSouls.Content.Items.Accessories.Enchantments;
-using FargowiltasSouls.Content.Items.Accessories.Forces;
 using FargowiltasSouls.Content.Items.Placables;
+using FargowiltasSouls.Content.Items.Weapons.BossDrops;
 using FargowiltasSouls.Content.Items.Weapons.Challengers;
 using FargowiltasSouls.Content.Projectiles.Souls;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
+using FargowiltasSouls.Core.Systems;
+
 //using FargowiltasSouls.Content.Buffs.Souls;
 //using FargowiltasSouls.Content.Projectiles.Critters;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Terraria;
 using Terraria.Audio;
-using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
+using Terraria.Map;
 using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Content.Items
@@ -23,9 +26,16 @@ namespace FargowiltasSouls.Content.Items
     {
         public override void SetDefaults(Item item)
         {
-            if (item.type == ItemID.Acorn || item.type == ItemID.Bone)
+            if (item.type is ItemID.Acorn or ItemID.GemTreeAmberSeed or ItemID.GemTreeAmethystSeed or ItemID.GemTreeDiamondSeed or ItemID.GemTreeEmeraldSeed or ItemID.GemTreeRubySeed or ItemID.GemTreeSapphireSeed or ItemID.GemTreeTopazSeed)
             {
-                item.ammo = item.type;
+                item.ammo = ItemID.Acorn;
+                item.notAmmo = true;
+            }
+
+            if (item.type == ItemID.Bone)
+            {
+                item.ammo = ItemID.Bone;
+                item.notAmmo = true;
             }
         }
         public override void UpdateAccessory(Item item, Player player, bool hideVisual)
@@ -60,7 +70,7 @@ namespace FargowiltasSouls.Content.Items
 
             if (player.whoAmI == Main.myPlayer && player.HasEffect<GoldToPiggy>())
                 modPlayer.GoldEnchMoveCoins = true;
-
+            
             if (ItemID.Sets.IsAPickup[item.type])
             {
                 OnRetrievePickup(player);
@@ -75,8 +85,33 @@ namespace FargowiltasSouls.Content.Items
 
         public override void PickAmmo(Item weapon, Item ammo, Player player, ref int type, ref float speed, ref StatModifier damage, ref float knockback)
         {
-            if (weapon.CountsAsClass(DamageClass.Ranged) && player.FargoSouls().Jammed)
-                type = ProjectileID.ConfettiGun;
+            //if (weapon.CountsAsClass(DamageClass.Ranged) && player.FargoSouls().Jammed)
+                //type = ProjectileID.ConfettiGun;
+
+            switch (ammo.type)
+            {
+                case ItemID.GemTreeAmethystSeed:
+                    damage.Flat += 1;
+                    break;
+                case ItemID.GemTreeTopazSeed:
+                    damage.Flat += 2; 
+                    break;
+                case ItemID.GemTreeSapphireSeed:
+                    damage.Flat += 3;
+                    break;
+                case ItemID.GemTreeEmeraldSeed:
+                    damage.Flat += 4;
+                    break;
+                case ItemID.GemTreeRubySeed:
+                    damage.Flat += 5;
+                    break;
+                case ItemID.GemTreeAmberSeed:
+                    damage.Flat += 6;
+                    break;
+                case ItemID.GemTreeDiamondSeed:
+                    damage.Flat += 7;
+                    break;
+            }
 
             //coin gun is broken as fucking shit codingwise so i'm fixing it
             if (weapon.type == ItemID.CoinGun)
@@ -106,9 +141,20 @@ namespace FargowiltasSouls.Content.Items
 
             if (item.healLife > 0)
             {
+                if (player.HasEffect<ShroomiteHealEffect>())
+                {
+                    if (item.type == ItemID.Mushroom)
+                    {
+                        player.AddBuff(ModContent.BuffType<MushroomPowerBuff>(), LumUtils.SecondsToFrames(20f));
+                    }
+                }
                 if (player.HasEffect<HallowEffect>())
                 {
-                    modPlayer.HallowHealTime = 6 * modPlayer.GetHealMultiplier(item.healLife);
+                    int hallowIndex = ModContent.GetInstance<HallowEffect>().Index;
+                    // Hallow needs to disabled so it doesn't set GetHealLife to 0
+                    player.AccessoryEffects().ActiveEffects[hallowIndex] = false;
+                    modPlayer.HallowHealTime = 6 * player.GetHealLife(item);
+                    player.AccessoryEffects().ActiveEffects[hallowIndex] = true;
                     HallowEffect.HealRepel(player);
                 }
                 modPlayer.StatLifePrevious += modPlayer.GetHealMultiplier(item.healLife);
@@ -140,17 +186,24 @@ namespace FargowiltasSouls.Content.Items
             //ItemID.PiercingStarlight,
             ItemID.TheHorsemansBlade,
             ModContent.ItemType<TheBaronsTusk>(),
-            ItemID.LucyTheAxe
+            ItemID.LucyTheAxe,
+            ModContent.ItemType<SlimeKingsSlasher>(),
+            ItemID.TheAxe
         ];
         public override void ModifyItemScale(Item item, Player player, ref float scale)
         {
             FargoSoulsPlayer modPlayer = player.FargoSouls();
 
-
-            if (player.HasEffect<TungstenEffect>()
-                && !item.IsAir && ((item.IsWeapon() && !item.noMelee) || TungstenAlwaysAffects.Contains(item.type)))
+            if (!item.IsAir && ((item.IsWeapon() && !item.noMelee) || TungstenAlwaysAffects.Contains(item.type)))
             {
-                scale *= TungstenEffect.TungstenIncreaseWeaponSize(modPlayer);
+                if (player.HasEffect<TungstenEffect>())
+                {
+                    scale *= TungstenEffect.TungstenIncreaseWeaponSize(modPlayer);
+                    if (item.type == ItemID.TheAxe && player.name.ToLower().Contains("gonk"))
+                        scale *= 2.5f;
+                }
+                if (modPlayer.Atrophied)
+                    scale *= 0.5f;
             }
         }
 
@@ -185,7 +238,35 @@ namespace FargowiltasSouls.Content.Items
             }
             return base.CanAutoReuseItem(item, player);
         }
-
+        public override void ModifyWeaponDamage(Item item, Player player, ref StatModifier damage)
+        {
+            if (player.HasEffect<TikiEffect>())
+            {
+                if (item.shoot > ProjectileID.None && ProjectileID.Sets.IsAWhip[item.shoot] && item.DamageType.CountsAsClass(DamageClass.SummonMeleeSpeed))
+                {
+                    damage /= player.ActualClassDamage(DamageClass.SummonMeleeSpeed);
+                    List<float> types =
+                        [
+                            player.ActualClassDamage(DamageClass.Melee),
+                            player.ActualClassDamage(DamageClass.Ranged),
+                            player.ActualClassDamage(DamageClass.Magic),
+                            player.ActualClassDamage(DamageClass.Summon)
+                        ];
+                    damage *= types.Max();
+                }
+            }
+        }
+        public override void ModifyWeaponCrit(Item item, Player player, ref float crit)
+        {
+            if (player.HasEffect<TikiEffect>())
+            {
+                if (item.shoot > ProjectileID.None && ProjectileID.Sets.IsAWhip[item.shoot] && item.DamageType.CountsAsClass(DamageClass.SummonMeleeSpeed))
+                {
+                    crit /= player.ActualClassCrit(DamageClass.SummonMeleeSpeed);
+                    crit *= FargoSoulsUtil.HighestCritChance(player);
+                }
+            }
+        }
         public override bool CanUseItem(Item item, Player player)
         {
             FargoSoulsPlayer modPlayer = player.FargoSouls();
@@ -193,6 +274,8 @@ namespace FargowiltasSouls.Content.Items
             if (modPlayer.NoUsingItems > 0)
                 return false;
 
+            if (PyramidGenSystem.ArenaItemPrevention(item, player))
+                return false;
             //if (modPlayer.AdamantiteEnchantActive && modPlayer.AdamantiteCD == 0)
             //{
             //// ??? tm
@@ -205,14 +288,6 @@ namespace FargowiltasSouls.Content.Items
                     player.ClearBuff(ModContent.BuffType<GoldenStasisBuff>());
                 else
                     return false;
-            }
-
-            if (item.CountsAsClass(DamageClass.Magic) && player.FargoSouls().ReverseManaFlow)
-            {
-                int damage = (int)(item.mana / (1f - player.endurance) + player.statDefense);
-                player.Hurt(PlayerDeathReason.ByCustomReason(Language.GetTextValue("Mods.FargowiltasSouls.DeathMessage.ReverseManaFlow", player.name)), damage, 0);
-                player.immune = false;
-                player.immuneTime = 0;
             }
 
             if (modPlayer.BuilderMode && (item.createTile != -1 || item.createWall != -1) && item.type != ItemID.PlatinumCoin && item.type != ItemID.GoldCoin)
@@ -360,37 +435,6 @@ namespace FargowiltasSouls.Content.Items
         //            return true;
         //        }
 
-        public override void HoldItem(Item item, Player player)
-        {
-            if (item.type == ItemID.Binoculars) //the amount of nesting here exists to prevent excessive lag
-            {
-                if (NPC.AnyNPCs(NPCID.TownCat))
-                {
-                    for (int j = 0; j < Main.maxNPCs; j++)
-                    {
-                        if (Main.npc[j].active && Main.npc[j].type == NPCID.TownCat)
-                        {
-                            NPC cat = Main.npc[j];
-                            for (int i = 0; i < Main.maxItems; i++)
-                            {
-                                if (Main.item[i].active && Main.item[i].type == ItemID.CellPhone)
-                                {
-                                    if (cat.Distance(Main.item[i].Center) < cat.Size.Length() && Main.MouseWorld.Distance(cat.Center) < cat.Size.Length())
-                                    {
-                                        Item.NewItem(player.GetSource_ItemUse(item), cat.Center, ModContent.ItemType<WiresPainting>());
-                                        Main.item[i].active = false;
-                                        cat.active = false;
-                                        return;
-                                    }
-                                }
-
-                            }
-                        }
-                    }
-                }
-            }
-            base.HoldItem(item, player);
-        }
         public override void ModifyShootStats(Item item, Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
         {
             FargoSoulsPlayer modPlayer = player.FargoSouls();
@@ -514,6 +558,30 @@ namespace FargowiltasSouls.Content.Items
             if (item.type == ItemID.PiercingStarlight)
                 tooltips.Add(new TooltipLine(Mod, "StarlightTungsten", Language.GetTextValue("Mods.FargowiltasSouls.Items.Extra.StarlightTungsten")));
 
+            if (item.potion || item.healLife > 0)
+            {
+                bool hallow = Main.LocalPlayer.HasEffect<HallowEffect>();
+                bool shroomite = Main.LocalPlayer.HasEffect<ShroomiteHealEffect>() && item.type == ItemID.Mushroom;
+                if (hallow || (shroomite))
+                {
+                    foreach (var tooltip in tooltips)
+                    {
+                        if (tooltip.Name == "HealLife")
+                        {
+                            if (hallow)
+                            {
+                                tooltip.Text = "[i:FargowiltasSouls/HallowEnchant] " + tooltip.Text;
+                                tooltip.Text += $" {Language.GetTextValue("Mods.FargowiltasSouls.Items.HallowEnchant.OverTime")}";
+                            }
+                            if (shroomite)
+                            {
+                                tooltip.Text = "[i:FargowiltasSouls/ShroomiteEnchant] " + tooltip.Text;
+                                tooltip.Text += $" {Language.GetTextValue("Mods.FargowiltasSouls.Items.ShroomiteEnchant.AndMushroomPower")}";
+                            }
+                        }
+                    }
+                }
+            }
             /*if (Array.IndexOf(Summon, item.type) > -1)
             {
                 TooltipLine helperLine = new TooltipLine(mod, "help", "Right click to convert");
@@ -570,8 +638,6 @@ namespace FargowiltasSouls.Content.Items
                     #region mediocre
 
                     case PrefixID.Hasty:
-                    case PrefixID.Intrepid:
-
                     case PrefixID.Intense:
                     case PrefixID.Frenzying:
                     case PrefixID.Dangerous:

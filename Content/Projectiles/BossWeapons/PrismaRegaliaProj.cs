@@ -43,7 +43,6 @@ namespace FargowiltasSouls.Content.Projectiles.BossWeapons
         public float Extension = 0;
         int OrigAnimMax = 30;
         bool Charged;
-        Vector2 ChargeVector = Vector2.Zero;
         public override void AI()
         {
             ref float chargeLevel = ref Projectile.ai[0];

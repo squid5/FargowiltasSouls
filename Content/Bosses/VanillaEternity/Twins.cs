@@ -1,20 +1,26 @@
+using FargowiltasSouls.Assets.ExtraTextures;
+using FargowiltasSouls.Assets.Sounds;
 using FargowiltasSouls.Common.Graphics.Particles;
 using FargowiltasSouls.Common.Utilities;
 using FargowiltasSouls.Content.Buffs.Masomode;
-using FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies;
 using FargowiltasSouls.Content.Projectiles;
 using FargowiltasSouls.Content.Projectiles.Deathrays;
 using FargowiltasSouls.Content.Projectiles.Masomode;
 using FargowiltasSouls.Core.Globals;
 using FargowiltasSouls.Core.NPCMatching;
 using FargowiltasSouls.Core.Systems;
+using Luminance.Assets;
 using Luminance.Core.Graphics;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.IO;
+using System.Threading;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.GameContent;
+using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
@@ -27,6 +33,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
         public int DeathrayState;
         public int LaserSide;
+        public float LockedRotation;
         public int AuraRadiusCounter;
         public int MechElectricOrbTimer;
 
@@ -39,6 +46,17 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
         public bool Resist;
         public int RespawnTimer;
 
+        public bool ShouldDrawAura = false;
+        public float AuraOpacity = 0f;
+
+        public float AuraRadius()
+        {
+            float radius = 2000 - 1200 * AuraRadiusCounter / 180f;
+            if (WorldSavingSystem.MasochistModeReal)
+                radius *= 0.75f;
+            return radius;
+        }
+
         public override void SendExtraAI(NPC npc, BitWriter bitWriter, BinaryWriter binaryWriter)
         {
             binaryWriter.Write7BitEncodedInt(LaserSide);
@@ -46,6 +64,8 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             binaryWriter.Write7BitEncodedInt(AuraRadiusCounter);
             binaryWriter.Write7BitEncodedInt(MechElectricOrbTimer);
             bitWriter.WriteBit(StoredDirectionToPlayer);
+            bitWriter.WriteBit(ShouldDrawAura);
+            binaryWriter.Write(LockedRotation);
         }
 
         public override void ReceiveExtraAI(NPC npc, BitReader bitReader, BinaryReader binaryReader)
@@ -55,6 +75,8 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             AuraRadiusCounter = binaryReader.Read7BitEncodedInt();
             MechElectricOrbTimer = binaryReader.Read7BitEncodedInt();
             StoredDirectionToPlayer = bitReader.ReadBit();
+            ShouldDrawAura = bitReader.ReadBit();
+            LockedRotation = binaryReader.ReadSingle();
         }
 
         public override void SetDefaults(NPC npc)
@@ -70,14 +92,118 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
             npc.buffImmune[BuffID.Suffocation] = true;
         }
+        public static void TwinDefaultMovement(NPC npc, float desiredX, float desiredY, float accel, float decelMult)
+        {
+            if (npc.velocity.X < desiredX)
+            {
+                npc.velocity.X += accel;
+                if (npc.velocity.X < 0f && desiredX > 0f)
+                {
+                    npc.velocity.X += accel * decelMult;
+                }
+            }
+            else if (npc.velocity.X > desiredX)
+            {
+                npc.velocity.X -= accel;
+                if (npc.velocity.X > 0f && desiredX < 0f)
+                {
+                    npc.velocity.X -= accel * decelMult;
+                }
+            }
+            if (npc.velocity.Y < desiredY)
+            {
+                npc.velocity.Y += accel;
+                if (npc.velocity.Y < 0f && desiredY > 0f)
+                {
+                    npc.velocity.Y += accel * decelMult;
+                }
+            }
+            else if (npc.velocity.Y > desiredY)
+            {
+                npc.velocity.Y -= accel;
+                if (npc.velocity.Y > 0f && desiredY < 0f)
+                {
+                    npc.velocity.Y -= accel * decelMult;
+                }
+            }
+        }
+        public static void TwinManageRotation(NPC npc)
+        {
+            if (!npc.HasPlayerTarget)
+                return;
+            float num412 = npc.Center.X - Main.player[npc.target].Center.X;
+            float num413 = npc.Center.Y - Main.player[npc.target].Center.Y;
+            float num414 = (float)Math.Atan2(num413, num412) + 1.57f;
+            if (num414 < 0f)
+            {
+                num414 += 6.283f;
+            }
+            else if ((double)num414 > 6.283)
+            {
+                num414 -= 6.283f;
+            }
+            float num415 = 0.1f;
+            if (npc.rotation < num414)
+            {
+                if ((double)(num414 - npc.rotation) > 3.1415)
+                {
+                    npc.rotation -= num415;
+                }
+                else
+                {
+                    npc.rotation += num415;
+                }
+            }
+            else if (npc.rotation > num414)
+            {
+                if ((double)(npc.rotation - num414) > 3.1415)
+                {
+                    npc.rotation += num415;
+                }
+                else
+                {
+                    npc.rotation -= num415;
+                }
+            }
+            if (npc.rotation > num414 - num415 && npc.rotation < num414 + num415)
+            {
+                npc.rotation = num414;
+            }
+            if (npc.rotation < 0f)
+            {
+                npc.rotation += 6.283f;
+            }
+            else if ((double)npc.rotation > 6.283)
+            {
+                npc.rotation -= 6.283f;
+            }
+            if (npc.rotation > num414 - num415 && npc.rotation < num414 + num415)
+            {
+                npc.rotation = num414;
+            }
+        }
         public override bool SafePreAI(NPC npc)
         {
             EModeGlobalNPC.retiBoss = npc.whoAmI;
 
             Resist = false;
 
-            if (WorldSavingSystem.SwarmActive)
-                return true;
+            if (!npc.HasValidTarget || !Main.player[npc.target].active || Main.player[npc.target].dead)
+            {
+                npc.TargetClosest();
+                Player p = Main.player[npc.target];
+                if (!npc.HasValidTarget || !p.active || p.dead)
+                {
+                    npc.noTileCollide = true;
+                    if (npc.timeLeft > 30)
+                        npc.timeLeft = 30;
+
+                    if (npc.velocity.Y > 0)
+                        npc.velocity.Y = 0;
+                    npc.velocity.Y -= 0.5f;
+                    return false;
+                }
+            }
 
             //have some dr during phase transition animation
             if (npc.ai[0] == 1 || npc.ai[0] == 2)
@@ -160,10 +286,12 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             }
             if (!Phase2) // phase 1
             {
-
+                npc.damage = npc.defDamage;
                 ref float ai_State = ref npc.ai[1];
+                ref float ai_StateTimer = ref npc.ai[2];
+                ref float ai_ShotTimer = ref npc.ai[3];
 
-                if (!npc.HasPlayerTarget)
+                if (!npc.HasPlayerTarget || Main.IsItDay())
                     return true;
                 Player player = Main.player[npc.target];
 
@@ -171,6 +299,17 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                 {
                     case 0: //normal laser state
                         {
+                            int stateTime = 600;
+                            if (ai_StateTimer >= stateTime - 1)
+                            {
+                                ai_State = 1f;
+                                ai_StateTimer = 0f;
+                                ai_ShotTimer = 0f;
+                                npc.netUpdate = true;
+                                npc.TargetClosest();
+                                goto case 1;
+                            }
+
                             // movement
                             float accel = 0.22f;
                             int side = 1;
@@ -180,50 +319,18 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                             }
 
                             // up position, default retinazer
-                            float desiredX = player.position.X + (float)(player.width / 2) + (float)(side * 300) - npc.Center.X;
-                            float desiredY = player.position.Y + (float)(player.height / 2) - 300f - npc.Center.Y;
-                                
-                            if (npc.velocity.X < desiredX)
-                            {
-                                npc.velocity.X += accel;
-                                if (npc.velocity.X < 0f && desiredX > 0f)
-                                {
-                                    npc.velocity.X += accel * 2;
-                                }
-                            }
-                            else if (npc.velocity.X > desiredX)
-                            {
-                                npc.velocity.X -= accel;
-                                if (npc.velocity.X > 0f && desiredX < 0f)
-                                {
-                                    npc.velocity.X -= accel * 2;
-                                }
-                            }
-                            if (npc.velocity.Y < desiredY)
-                            {
-                                npc.velocity.Y += accel;
-                                if (npc.velocity.Y < 0f && desiredY > 0f)
-                                {
-                                    npc.velocity.Y += accel * 2;
-                                }
-                            }
-                            else if (npc.velocity.Y > desiredY)
-                            {
-                                npc.velocity.Y -= accel;
-                                if (npc.velocity.Y > 0f && desiredY < 0f)
-                                {
-                                    npc.velocity.Y -= accel * 2;
-                                }
-                            }
+                            float desiredX = player.position.X + (float)(player.width / 2) + (float)(side * 350) - npc.Center.X;
+                            float desiredY = player.position.Y + (float)(player.height / 2) - 350f - npc.Center.Y;
+                            TwinDefaultMovement(npc, desiredX, desiredY, accel, 2);
 
                             // reworked p1 lasers
                             float delay = 55f; //LaserSide == 0 ? 50f : 20f;
-                            if (npc.ai[3] >= delay)
+                            if (ai_ShotTimer >= delay)
                             {
                                 LaserSide++;
                                 if (LaserSide > 1)
                                     LaserSide = 0;
-                                npc.ai[3] = 0f;
+                                ai_ShotTimer = 0f;
                                 Vector2 shootPos = new Vector2(npc.position.X + (float)npc.width * 0.5f, npc.position.Y + (float)npc.height * 0.5f);
                                 float targetX = player.Center.X - shootPos.X;
                                 float targetY = player.Center.Y - shootPos.Y;
@@ -231,7 +338,8 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                                 if (FargoSoulsUtil.HostCheck)
                                 {
                                     float num429 = 10.5f;
-                                    int attackDamage_ForProjectiles3 = npc.GetAttackDamage_ForProjectiles(20f, 19f);
+                                    int projDamage = npc.GetAttackDamage_ForProjectiles(20f, 19f);
+                                    projDamage = (int)(projDamage * 1.25f);
                                     int num430 = 83;
 
                                     float angle = (float)Math.Sqrt(targetX * targetX + targetY * targetY);
@@ -252,13 +360,13 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                                         spread = 0;
                                     for (int i = -spread; i <= spread; i++)
                                     {
-                                        if (spread != 0 && i == 0 && !WorldSavingSystem.MasochistModeReal)
+                                        if (spread != 0 && i == 0) // && !WorldSavingSystem.MasochistModeReal)
                                             continue;
                                         float offset = i;
                                         offset *= (int)npc.HorizontalDirectionTo(player.Center);
                                         Vector2 vel2 = vel.RotatedBy(MathHelper.PiOver2 * 0.15f * offset);
                                         //shootPos += vel2 * 6f;
-                                        Projectile.NewProjectile(npc.GetSource_FromThis(), shootPos.X, shootPos.Y, vel2.X, vel2.Y, num430, attackDamage_ForProjectiles3, 0f, Main.myPlayer);
+                                        Projectile.NewProjectile(npc.GetSource_FromThis(), shootPos.X, shootPos.Y, vel2.X, vel2.Y, num430, projDamage, 0f, Main.myPlayer);
                                     }
                                     npc.velocity -= vel;
 
@@ -268,23 +376,93 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                         break;
                     case 1: // dash frame
                         {
-                            
+                            float prepTime = WorldSavingSystem.MasochistModeReal ? 70 : 90;
+
+                            if (ai_StateTimer == 0)
+                            {
+                                LockedRotation = player.DirectionTo(npc.Center).ToRotation();
+                                int dir = Main.rand.NextBool() ? 1 : -1;
+                                // rotate away from spazmatism
+                                if (spazmatism != null && spazmatism.TypeAlive(NPCID.Spazmatism)) 
+                                {
+                                    float spazmatism_Angle = player.DirectionTo(spazmatism.Center).ToRotation();
+                                    dir = MathF.Sign(LockedRotation - spazmatism_Angle);
+                                }
+                                LockedRotation += dir * MathHelper.PiOver2 * (0.25f + Main.rand.NextFloat(0.2f));
+                            }
+
+                            // lock on to spot next to player
+                            float distance = WorldSavingSystem.MasochistModeReal ? 350f : 450f;
+                            Vector2 desiredPos = player.Center + LockedRotation.ToRotationVector2() * distance;
+                            float desiredX = desiredPos.X - npc.Center.X;
+                            float desiredY = desiredPos.Y - npc.Center.Y;
+
+                            float accel = 0.6f;
+                            TwinDefaultMovement(npc, desiredX, desiredY, accel, 4);
+                            TwinManageRotation(npc);
+
+                            bool waitForSpaz = spazmatism.ai[1] == npc.ai[1];
+                            Vector2 spazDesiredPos = player.Center + spazmatism.GetGlobalNPC<Spazmatism>().LockedRotation.ToRotationVector2() * distance;
+                            if (spazmatism.Distance(spazDesiredPos) <= 300)
+                                waitForSpaz = false;
+
+                            if (ai_StateTimer < prepTime - 30 && (npc.Distance(desiredPos) > 300 || waitForSpaz))
+                                ai_StateTimer--;
+
+                            if (ai_StateTimer < prepTime - 30 && spazmatism.ai[2] < npc.ai[2])
+                                npc.ai[2] = spazmatism.ai[2];
+
+                            if (ai_StateTimer == prepTime - (WorldSavingSystem.MasochistModeReal ? 25 : 35))
+                            {
+                                if (FargoSoulsUtil.HostCheck)
+                                {
+                                    Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center + TwinsEyeFlash.Offset(npc), Vector2.Zero, ModContent.ProjectileType<TwinsEyeFlash>(), 0, 0, Main.myPlayer, npc.whoAmI);
+                                }
+                            }
+
+                            if (++ai_StateTimer >= prepTime)
+                            {
+                                npc.velocity = npc.DirectionTo(player.Center) * 30;
+                                ai_StateTimer = 0;
+                                LockedRotation = 0;
+                                ai_State = 2;
+                            }
+                            return false;
                         }
-                        break;
                     case 2: // mid dash
                         {
-                            if (npc.ai[2] == 1f)
+                            npc.damage = (int)(npc.defDamage * 1.5f);
+                            ai_StateTimer += 1f;
+                            if (ai_StateTimer >= 25f)
                             {
-                                npc.velocity += npc.velocity.SafeNormalize(Vector2.UnitX) * npc.ai[3] * 3f;
+                                ai_ShotTimer += 1f;
+                                ai_StateTimer = 0f;
+                                npc.TargetClosest();
+                                if (ai_ShotTimer >= 4f)
+                                {
+                                    ai_State = 0f;
+                                    ai_ShotTimer = 0f;
+                                }
+                                else
+                                {
+                                    ai_State = 1f;
+                                }
                             }
-                            npc.velocity = npc.velocity.RotateTowards(npc.DirectionTo(player.Center).ToRotation(), 0.02f);
+                            else
+                            {
+                                npc.rotation = (float)Math.Atan2(npc.velocity.Y, npc.velocity.X) - 1.57f;
+                                if (ai_StateTimer >= 20)
+                                    npc.velocity *= 0.95f;
+                            }
+                            return false;
                         }
-                        break;
                 }
 
             }
             else
             {
+                npc.damage = (int)(npc.defDamage * 1.5f);
+
                 if (npc.ai[1] != 0)
                     npc.localAI[1] -= 1f;
                 if (npc.localAI[1] >= (npc.ai[1] == 0 ? 170 : 50)) //hijacking vanilla laser code
@@ -293,13 +471,13 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     Vector2 vel = npc.SafeDirectionTo(Main.player[npc.target].Center);
                     Vector2 shotVel = vel;
                     shotVel *= 20;
-                    int spread = 1;
                     int type = ModContent.ProjectileType<MechElectricOrb>();
                     bool middle = true;
                     float spreadAngle = 0.4f;
-                    if (npc.ai[1] != 0)
+                    int spread = 0; // 1;
+                    if (npc.ai[1] == 0 && Main.getGoodWorld)
                     {
-                        spread = 0;
+                        spread = 1;
                     }
                         
                     for (int i = -spread; i <= spread; i++)
@@ -330,47 +508,17 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
                         // movement
                         float num438 = 12.5f;
-                        float num439 = 0.22f;
+                        float accel = 0.22f;
 
                         Vector2 vector45 = npc.Center;
-                        float num440 = player.Center.X - npc.Center.X;
-                        float num441 = player.Center.Y - npc.Center.Y - 400f;
-                        float num442 = (float)Math.Sqrt(num440 * num440 + num441 * num441);
+                        float desiredX = player.Center.X - npc.Center.X;
+                        float desiredY = player.Center.Y - npc.Center.Y - 450f;
+                        float num442 = (float)Math.Sqrt(desiredX * desiredX + desiredY * desiredY);
                         num442 = num438 / num442;
-                        num440 *= num442;
-                        num441 *= num442;
-                        if (npc.velocity.X < num440)
-                        {
-                            npc.velocity.X += num439;
-                            if (npc.velocity.X < 0f && num440 > 0f)
-                            {
-                                npc.velocity.X += num439 * 2;
-                            }
-                        }
-                        else if (npc.velocity.X > num440)
-                        {
-                            npc.velocity.X -= num439;
-                            if (npc.velocity.X > 0f && num440 < 0f)
-                            {
-                                npc.velocity.X -= num439 * 2;
-                            }
-                        }
-                        if (npc.velocity.Y < num441)
-                        {
-                            npc.velocity.Y += num439;
-                            if (npc.velocity.Y < 0f && num441 > 0f)
-                            {
-                                npc.velocity.Y += num439 * 2;
-                            }
-                        }
-                        else if (npc.velocity.Y > num441)
-                        {
-                            npc.velocity.Y -= num439;
-                            if (npc.velocity.Y > 0f && num441 < 0f)
-                            {
-                                npc.velocity.Y -= num439 * 2;
-                            }
-                        }
+                        desiredX *= num442;
+                        desiredY *= num442;
+
+                        TwinDefaultMovement(npc, desiredX, desiredY, accel, 2);
                     }
                 }
                 if (npc.ai[0] < 4f) //going to phase 3
@@ -380,10 +528,12 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                         //npc.ai[0] = 4f;
                         npc.ai[0] = 604f; //initiate spin immediately
                         npc.netUpdate = true;
-                        SoundEngine.PlaySound(SoundID.Roar, npc.Center);
+                        //SoundEngine.PlaySound(SoundID.Roar, npc.Center);
 
-                        if (FargoSoulsUtil.HostCheck)
-                            Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, Vector2.Zero, ModContent.ProjectileType<GlowRingHollow>(), 0, 0f, Main.myPlayer, 11, npc.whoAmI);
+                        ShouldDrawAura = true;
+
+                        //if (FargoSoulsUtil.HostCheck)
+                        //    Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, Vector2.Zero, ModContent.ProjectileType<GlowRingHollow>(), 0, 0f, Main.myPlayer, 11, npc.whoAmI);
                     }
                 }
                 else //in phase 3
@@ -433,9 +583,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                             AuraRadiusCounter = 180;
                     }
 
-                    float auraDistance = 2000 - 1200 * AuraRadiusCounter / 180f;
-                    if (WorldSavingSystem.MasochistModeReal)
-                        auraDistance *= 0.75f;
+                    float auraDistance = AuraRadius();
                     if (auraDistance < 2000 - 1)
                     {
                         EModeGlobalNPC.Aura(npc, auraDistance, true, -1, default, ModContent.BuffType<OiledBuff>());
@@ -449,21 +597,9 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                             {
                                 if (distance > threshold * 2f)
                                 {
-                                    localPlayer.controlLeft = false;
-                                    localPlayer.controlRight = false;
-                                    localPlayer.controlUp = false;
-                                    localPlayer.controlDown = false;
-                                    localPlayer.controlUseItem = false;
-                                    localPlayer.controlUseTile = false;
-                                    localPlayer.controlJump = false;
-                                    localPlayer.controlHook = false;
-                                    if (localPlayer.grapCount > 0)
-                                        localPlayer.RemoveAllGrapplingHooks();
-                                    if (localPlayer.mount.Active)
-                                        localPlayer.mount.Dismount(localPlayer);
+                                    localPlayer.Incapacitate();
                                     localPlayer.velocity.X = 0f;
                                     localPlayer.velocity.Y = -0.4f;
-                                    localPlayer.FargoSouls().NoUsingItems = 2;
                                 }
 
                                 Vector2 movement = npc.Center - localPlayer.Center;
@@ -507,7 +643,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                                     if (FargoSoulsUtil.HostCheck)
                                         Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, Vector2.Zero, ModContent.ProjectileType<GlowRing>(), 0, 0f, Main.myPlayer, npc.whoAmI, npc.type);
 
-                                    SoundEngine.PlaySound(SoundID.ForceRoarPitched, npc.Center); //eoc roar
+                                    SoundEngine.PlaySound(FargosSoundRegistry.TwinsWarning with {Volume = 4f }, npc.Center); 
                                 }
 
                                 if (Main.netMode == NetmodeID.Server)
@@ -522,6 +658,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                             //if (--npc.ai[2] > 295f) npc.ai[2] = 295f;
                             npc.ai[3] -= (npc.ai[0] - 4f) / 120f * rotationInterval * (StoredDirectionToPlayer ? 1f : -1f);
                             npc.rotation = -npc.ai[3];
+                            
 
                             if (npc.ai[0] == 35f)
                             {
@@ -533,6 +670,8 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
                             if (npc.ai[0] >= 155f) //FIRE LASER
                             {
+                                if (!Main.dedServ)
+                                    SoundEngine.PlaySound(FargosSoundRegistry.TwinsDeathray with { Volume = 2f }, npc.Center);
                                 if (FargoSoulsUtil.HostCheck)
                                 {
                                     Vector2 speed = Vector2.UnitX.RotatedBy(npc.rotation);
@@ -624,7 +763,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
         public override bool CheckDead(NPC npc)
         {
-            if (WorldSavingSystem.SwarmActive || WorldSavingSystem.MasochistModeReal)
+            if (WorldSavingSystem.MasochistModeReal)
                 return base.CheckDead(npc);
 
             if (FargoSoulsUtil.BossIsAlive(ref EModeGlobalNPC.spazBoss, NPCID.Spazmatism) && Main.npc[EModeGlobalNPC.spazBoss].life > 1) //spaz still active
@@ -644,7 +783,69 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
             return base.CheckDead(npc);
         }
+        public override bool PreDraw(NPC npc, SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
+            Vector2 AuraPosition = npc.Center;
+            if (ShouldDrawAura)
+                DrawAura(npc, spriteBatch, AuraPosition);
 
+            Vector2 offset = new Vector2(npc.width - 24, 0).RotatedBy(npc.rotation + 1.57079637);
+            Vector2 position = npc.Center + offset;
+            Texture2D flare = MiscTexturesRegistry.BloomFlare.Value;
+            float flarescale = Main.rand.NextFloat(0.1f, 0.15f);
+            
+
+            if (npc.GetGlobalNPC<Retinazer>().DeathrayState == 2)
+            {
+                Main.spriteBatch.Draw(flare, position - Main.screenPosition, null, Color.Red with {A= 0}, Main.GlobalTimeWrappedHourly * -2f, flare.Size() * 0.5f, flarescale, 0, 0f);
+                Main.spriteBatch.Draw(flare, position - Main.screenPosition, null, Color.Red with {A = 0}, Main.GlobalTimeWrappedHourly * 2f, flare.Size() * 0.5f, flarescale, 0, 0f);
+                Main.spriteBatch.End();
+                Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.ZoomMatrix);
+
+            }
+            
+            
+                
+            return true;
+        }
+        public void DrawAura(NPC npc, SpriteBatch spriteBatch, Vector2 position)
+        {
+            if (AuraOpacity < 1f)
+                AuraOpacity += 0.05f;
+
+            Color darkColor = Color.DarkRed;
+            Color mediumColor = Color.Red;
+            Color lightColor2 = Color.Lerp(Color.IndianRed, Color.White, 0.35f);
+            Vector2 auraPos = position;
+            float radius = AuraRadius();
+            var blackTile = TextureAssets.MagicPixel;
+            var diagonalNoise = FargosTextureRegistry.Techno1Noise;
+            if (!blackTile.IsLoaded || !diagonalNoise.IsLoaded)
+                return;
+            var maxOpacity = npc.Opacity * AuraOpacity;
+
+            ManagedShader borderShader = ShaderManager.GetShader("FargowiltasSouls.TwinsAuraShader");
+            borderShader.TrySetParameter("colorMult", 7.35f); 
+            borderShader.TrySetParameter("time", Main.GlobalTimeWrappedHourly);
+            borderShader.TrySetParameter("radius", radius);
+            borderShader.TrySetParameter("anchorPoint", auraPos);
+            borderShader.TrySetParameter("screenPosition", Main.screenPosition);
+            borderShader.TrySetParameter("screenSize", Main.ScreenSize.ToVector2());
+            borderShader.TrySetParameter("maxOpacity", maxOpacity);
+            borderShader.TrySetParameter("darkColor", darkColor.ToVector4());
+            borderShader.TrySetParameter("midColor", mediumColor.ToVector4());
+            borderShader.TrySetParameter("lightColor", lightColor2.ToVector4());
+
+            spriteBatch.GraphicsDevice.Textures[1] = diagonalNoise.Value;
+
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, SamplerState.LinearWrap, DepthStencilState.None, Main.Rasterizer, borderShader.WrappedEffect, Main.GameViewMatrix.TransformationMatrix);
+            Rectangle rekt = new(Main.screenWidth / 2, Main.screenHeight / 2, Main.screenWidth, Main.screenHeight);
+            spriteBatch.Draw(blackTile.Value, rekt, null, default, 0f, blackTile.Value.Size() * 0.5f, 0, 0f);
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
+        }
+        
         public override void LoadSprites(NPC npc, bool recolor)
         {
             base.LoadSprites(npc, recolor);
@@ -664,6 +865,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
         public override NPCMatcher CreateMatcher() => new NPCMatcher().MatchType(NPCID.Spazmatism);
 
         public int ProjectileTimer;
+        public float LockedRotation;
         public int FlameWheelSpreadTimer;
         public int FlameWheelCount;
         public int MechElectricOrbTimer;
@@ -684,6 +886,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             binaryWriter.Write7BitEncodedInt(FlameWheelCount);
             binaryWriter.Write7BitEncodedInt(MechElectricOrbTimer);
             binaryWriter.Write7BitEncodedInt(P3DashPhaseDelay);
+            binaryWriter.Write(LockedRotation);
         }
 
         public override void ReceiveExtraAI(NPC npc, BitReader bitReader, BinaryReader binaryReader)
@@ -695,6 +898,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             FlameWheelCount = binaryReader.Read7BitEncodedInt();
             MechElectricOrbTimer = binaryReader.Read7BitEncodedInt();
             P3DashPhaseDelay = binaryReader.Read7BitEncodedInt();
+            LockedRotation = binaryReader.ReadSingle();
         }
 
         public override void OnFirstTick(NPC npc)
@@ -709,8 +913,22 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
             Resist = false;
 
-            if (WorldSavingSystem.SwarmActive)
-                return true;
+            if (!npc.HasValidTarget || !Main.player[npc.target].active || Main.player[npc.target].dead)
+            {
+                npc.TargetClosest();
+                Player p = Main.player[npc.target];
+                if (!npc.HasValidTarget || !p.active || p.dead)
+                {
+                    npc.noTileCollide = true;
+                    if (npc.timeLeft > 30)
+                        npc.timeLeft = 30;
+
+                    if (npc.velocity.Y > 0)
+                        npc.velocity.Y = 0;
+                    npc.velocity.Y -= 0.5f;
+                    return false;
+                }
+            }
 
             //have some dr during phase transition animation
             if (npc.ai[0] == 1 || npc.ai[0] == 2)
@@ -801,15 +1019,31 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
             if (!Phase2) // phase 1
             {
+                npc.damage = npc.defDamage;
                 ref float ai_State = ref npc.ai[1];
-                if (!npc.HasPlayerTarget)
+                ref float ai_StateTimer = ref npc.ai[2];
+                ref float ai_ShotTimer = ref npc.ai[3];
+
+                if (!npc.HasPlayerTarget || Main.IsItDay())
                     return true;
                 Player player = Main.player[npc.target];
+
 
                 switch (ai_State)
                 {
                     case 0: //normal fireball state
                         {
+                            int num470 = 600;
+                            if (ai_StateTimer >= (float)num470 - 1)
+                            {
+                                ai_State = 1f;
+                                ai_StateTimer = 0f;
+                                ai_ShotTimer = 0f;
+                                npc.TargetClosest();
+                                npc.netUpdate = true;
+                                goto case 1;
+                            }
+
                             // movement
                             float accel = 0.18f;
                             int side = 1;
@@ -822,51 +1056,23 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                             float desiredX = player.Center.X + side * 400 - npc.Center.X;
                             float desiredY = player.Center.Y - npc.Center.Y;
 
-                            if (npc.velocity.X < desiredX)
-                            {
-                                npc.velocity.X += accel;
-                                if (npc.velocity.X < 0f && desiredX > 0f)
-                                {
-                                    npc.velocity.X += accel * 2;
-                                }
-                            }
-                            else if (npc.velocity.X > desiredX)
-                            {
-                                npc.velocity.X -= accel;
-                                if (npc.velocity.X > 0f && desiredX < 0f)
-                                {
-                                    npc.velocity.X -= accel * 2;
-                                }
-                            }
-                            if (npc.velocity.Y < desiredY)
-                            {
-                                npc.velocity.Y += accel;
-                                if (npc.velocity.Y < 0f && desiredY > 0f)
-                                {
-                                    npc.velocity.Y += accel * 2;
-                                }
-                            }
-                            else if (npc.velocity.Y > desiredY)
-                            {
-                                npc.velocity.Y -= accel;
-                                if (npc.velocity.Y > 0f && desiredY < 0f)
-                                {
-                                    npc.velocity.Y -= accel * 2;
-                                }
-                            }
+                            Retinazer.TwinDefaultMovement(npc, desiredX, desiredY, accel, 2);
 
                             // reworked p1 fireballs
                             float delay = 58f;
-                            if (npc.ai[3] >= delay)
+                            if (WorldSavingSystem.MasochistModeReal)
+                                ai_ShotTimer += 0.25f;
+                            if (ai_ShotTimer >= delay)
                             {
-                                npc.ai[3] = 0f;
+                                ai_ShotTimer = 0f;
                                 Vector2 shootPos = new Vector2(npc.position.X + (float)npc.width * 0.5f, npc.position.Y + (float)npc.height * 0.5f);
                                 float targetX = player.Center.X - shootPos.X;
                                 float targetY = player.Center.Y - shootPos.Y;
                                 if (FargoSoulsUtil.HostCheck)
                                 {
                                     float vel = 14f;
-                                    int attackDamage_ForProjectiles6 = npc.GetAttackDamage_ForProjectiles(25f, 22f);
+                                    int projDamage = npc.GetAttackDamage_ForProjectiles(25f, 22f);
+                                    //projDamage = (int)(projDamage * 1.25f);
                                     float angle = (float)Math.Sqrt(targetX * targetX + targetY * targetY);
                                     angle = vel / angle;
                                     targetX *= angle;
@@ -875,8 +1081,8 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                                     targetY += (float)Main.rand.Next(-40, 41) * 0.05f;
                                     shootPos.X += targetX * 4f;
                                     shootPos.Y += targetY * 4f;
-                                    int num473 = Projectile.NewProjectile(npc.GetSource_FromThis(), shootPos.X, shootPos.Y, targetX / 10f, targetY / 10f, ModContent.ProjectileType<MechElectricOrbSpaz>(), 
-                                        attackDamage_ForProjectiles6, 0f, Main.myPlayer, ai0: npc.target, ai2: MechElectricOrb.Green);
+                                    int num473 = Projectile.NewProjectile(npc.GetSource_FromThis(), shootPos.X, shootPos.Y, targetX / 10f, targetY / 10f, ModContent.ProjectileType<MechElectricOrbSpaz>(),
+                                        projDamage, 0f, Main.myPlayer, ai0: npc.target, ai2: MechElectricOrb.Green);
 
                                     Vector2 shotVel = new(targetX, targetY);
                                     npc.velocity -= shotVel / 2f;
@@ -894,19 +1100,101 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                         break;
                     case 1: // dash frame
                         {
+                            float prepTime = 70;
 
+                            if (ai_StateTimer == 0)
+                            {
+                                LockedRotation = player.DirectionTo(npc.Center).ToRotation();
+                                int dir = Main.rand.NextBool() ? 1 : -1;
+                                // rotate away from spazmatism
+                                if (retinazer != null && retinazer.TypeAlive(NPCID.Spazmatism))
+                                {
+                                    float spazmatism_Angle = player.DirectionTo(retinazer.Center).ToRotation();
+                                    dir = MathF.Sign(LockedRotation - spazmatism_Angle);
+                                }
+                                LockedRotation += dir * MathHelper.PiOver2 * (0.25f + Main.rand.NextFloat(0.2f));
+                                npc.netUpdate = true;
+                            }
+
+                            // lock on to spot next to player
+                            float distance = WorldSavingSystem.MasochistModeReal ? 350f : 450f;
+                            Vector2 desiredPos = player.Center + LockedRotation.ToRotationVector2() * distance;
+                            float desiredX = desiredPos.X - npc.Center.X;
+                            float desiredY = desiredPos.Y - npc.Center.Y;
+
+                            float accel = 0.6f;
+                            Retinazer.TwinDefaultMovement(npc, desiredX, desiredY, accel, 4);
+                            Retinazer.TwinManageRotation(npc);
+
+                            bool waitForReti = retinazer.ai[1] == npc.ai[1];
+                            Vector2 spazDesiredPos = player.Center + retinazer.GetGlobalNPC<Retinazer>().LockedRotation.ToRotationVector2() * distance;
+                            if (retinazer.Distance(spazDesiredPos) <= 300)
+                                waitForReti = false;
+
+                            if (ai_StateTimer < prepTime - 30 && (npc.Distance(desiredPos) > 300 || waitForReti))
+                            {
+                                ai_StateTimer--;
+                                npc.netUpdate = true;
+                            }
+                                
+
+                            if (ai_StateTimer < prepTime - 30 && retinazer.ai[2] < npc.ai[2])
+                            {
+                                npc.ai[2] = retinazer.ai[2];
+                                npc.netUpdate = true;
+                            }
+                                
+
+                            if (ai_StateTimer == prepTime - 25)
+                            {
+                                if (FargoSoulsUtil.HostCheck)
+                                {
+                                    Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center + TwinsEyeFlash.Offset(npc), Vector2.Zero, ModContent.ProjectileType<TwinsEyeFlash>(), 0, 0, Main.myPlayer, npc.whoAmI);
+                                }
+                            }
+                            if (++ai_StateTimer >= prepTime)
+                            {
+                                npc.velocity = npc.DirectionTo(player.Center) * 30;
+                                ai_StateTimer = 0;
+                                LockedRotation = 0;
+                                ai_State = 2;
+                                npc.netUpdate = true;
+                            }
+                            return false;
                         }
-                        break;
                     case 2: // mid dash
                         {
-                            if (npc.ai[2] == 1f)
-                                npc.velocity += npc.velocity.SafeNormalize(Vector2.UnitX) * npc.ai[3] * 3f;
+                            npc.damage = (int)(npc.defDamage * 1.5f);
+
+                            ai_StateTimer += 1f;
+                            if (ai_StateTimer >= 25f)
+                            {
+                                ai_ShotTimer += 1f;
+                                ai_StateTimer = 0f;
+                                npc.TargetClosest();
+                                if (ai_ShotTimer >= 7f)
+                                {
+                                    ai_State = 0f;
+                                    ai_ShotTimer = 0f;
+                                }
+                                else
+                                {
+                                    ai_State = 1f;
+                                }
+                            }
+                            else
+                            {
+                                npc.rotation = (float)Math.Atan2(npc.velocity.Y, npc.velocity.X) - 1.57f;
+                                if (ai_StateTimer >= 20)
+                                    npc.velocity *= 0.95f;
+                            }
+                            return false;
                         }
-                        break;
                 }
             }
             else
             {
+                npc.damage = (int)(npc.defDamage * 1.5f);
                 if (npc.ai[1] == 0f) // not dashing
                 {
                     if (retinazer != null && (retinazer.ai[0] < 4f || retinazer.GetGlobalNPC<Retinazer>().DeathrayState == 0
@@ -953,6 +1241,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     if (npc.ai[2] > 50)
                     {
                         npc.ai[2] -= modifier;
+                        npc.ai[2] -= 0.15f;
                     }
                     else
                     {
@@ -1111,6 +1400,12 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
                             return false;
                         }
+                        else // if reti dead, switch to dashing
+                        {
+                            npc.ai[1] = 1; 
+                            npc.ai[2] = 0;
+                            npc.ai[3] = 0;
+                        }
                     }
                     else //dashing
                     {
@@ -1198,7 +1493,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
         public override bool CheckDead(NPC npc)
         {
-            if (WorldSavingSystem.SwarmActive || WorldSavingSystem.MasochistModeReal)
+            if ( WorldSavingSystem.MasochistModeReal)
                 return base.CheckDead(npc);
 
             if (FargoSoulsUtil.BossIsAlive(ref EModeGlobalNPC.retiBoss, NPCID.Retinazer) && Main.npc[EModeGlobalNPC.retiBoss].life > 1) //reti still active

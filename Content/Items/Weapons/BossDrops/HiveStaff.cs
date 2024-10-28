@@ -42,12 +42,13 @@ namespace FargowiltasSouls.Content.Items.Weapons.BossDrops
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            Vector2 mouse = Main.MouseWorld;
-
-            Projectile.NewProjectile(source, mouse.X, mouse.Y - 10, 0f, 0f, type, damage, knockback, player.whoAmI);
-
+            player.FindSentryRestingSpot(type, out int XPosition, out int YPosition, out int YOffset);
+            YOffset += 5;
+            position = new Vector2(XPosition, YPosition - YOffset);
+            int p = Projectile.NewProjectile(source, position, Vector2.Zero, type, damage, knockback, player.whoAmI);
+            if (p.IsWithinBounds(Main.maxProjectiles))
+                Main.projectile[p].originalDamage = Item.damage;
             player.UpdateMaxTurrets();
-
             return false;
         }
     }

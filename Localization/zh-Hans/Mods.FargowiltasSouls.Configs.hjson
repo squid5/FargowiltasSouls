@@ -1,19 +1,68 @@
+ClientConfig: {
+	// DisplayName: Client Config
+
+	Headers: {
+		// Maso: Eternity Mode
+		// Patreon: "[i:FargowiltasSouls/RoombaPet] [c/ffffff:Patreon Items]"
+	}
+
+	HideTogglerWhenInventoryIsClosed: {
+		// Label: Only show effect toggler when inventory is open
+		// Tooltip: If true, the effect toggler is automatically hidden when your inventory is closed.
+	}
+
+	ItemDisabledTooltip: {
+		// Label: Disabled Effect Tooltip
+		// Tooltip: If true, items with any effects disabled by the Effect Toggler will have a tooltip line stating this.
+	}
+
+	ToggleSearchReset: {
+		// Label: Accessory Effects menu resets search bar when closed
+		// Tooltip: ""
+	}
+
+	RainbowHealThreshold: {
+		// Label: "[i:FargowiltasSouls/ConcentratedRainbowMatter] Automatic Heal Threshold"
+		// Tooltip: ""
+	}
+
+	PrecisionSealIsHold: {
+		// Label: "[i:FargowiltasSouls/PrecisionSeal] Precision Seal Key must be held"
+		// Tooltip: If false, precision mode is instead toggled with the key.
+	}
+
+	OncomingMutantX: {
+		// Label: Eternity Mode inventory icon X position
+		// Tooltip: ""
+	}
+
+	OncomingMutantY: {
+		// Label: Eternity Mode inventory icon Y position
+		// Tooltip: ""
+	}
+
+	CooldownBars: {
+		// Label: Cooldown Bars
+		// Tooltip: ""
+	}
+
+	CooldownBarsX: {
+		// Label: Cooldown Bars X
+		// Tooltip: ""
+	}
+
+	CooldownBarsY: {
+		// Label: Cooldown Bars Y
+		// Tooltip: ""
+	}
+}
+
 SoulConfig: {
 	DisplayName: Fargo魂配置
 
 	Headers: {
 		Maso: 永恒模式
 		Patreon: "[i:FargowiltasSouls/RoombaPet] [c/ffffff:捐赠者物品]"
-	}
-
-	HideTogglerWhenInventoryIsClosed: {
-		Label: 只在开启物品栏时，才会显示饰品效果菜单
-		Tooltip: 如果开启，饰品效果菜单会在你关闭物品栏时自动隐藏
-	}
-
-	ItemDisabledTooltip: {
-		Label: 在物品信息中显示效果被禁用
-		Tooltip: 开启时，若饰品有效果被饰品效果配置禁用，会有一条物品信息提示你
 	}
 
 	DeviChatter: {
@@ -38,26 +87,6 @@ SoulConfig: {
 
 	BossRecolors: {
 		Label: Boss贴图替换
-		Tooltip: ""
-	}
-
-	PrecisionSealIsHold: {
-		Label: 按住“玲珑圣印”键时开启精确模式
-		Tooltip: 如果关闭，你不再需要一直按住热键以开启精度模式。不在精度模式时，按下热键可以激活，再按一次即可取消。
-	}
-
-	PreBossNightGlow: {
-		Label: Boss前敌怪发光
-		Tooltip: 永恒模式中，如果你没有击败任何Boss，敌怪会在夜晚发光
-	}
-
-	OncomingMutantX: {
-		Label: 永恒模式图标水平位置
-		Tooltip: ""
-	}
-
-	OncomingMutantY: {
-		Label: 永恒模式图标竖直位置
 		Tooltip: ""
 	}
 

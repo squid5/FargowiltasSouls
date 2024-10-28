@@ -5,7 +5,6 @@ using FargowiltasSouls.Core.Systems;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using Terraria;
 using Terraria.DataStructures;
@@ -292,7 +291,7 @@ namespace FargowiltasSouls.Content.Bosses.Magmaw
         }
         public override void OnKill()
         {
-            NPC.SetEventFlagCleared(ref WorldSavingSystem.downedBoss[(int)WorldSavingSystem.Downed.Magmaw], -1);
+            NPC.SetEventFlagCleared(ref WorldSavingSystem.DownedBoss[(int)WorldSavingSystem.Downed.Magmaw], -1);
             NPC.SetEventFlagCleared(ref NPC.downedGolemBoss, 6);
         }
         public override void BossLoot(ref string name, ref int potionType)

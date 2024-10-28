@@ -8,7 +8,6 @@ using FargowiltasSouls.Core.Systems;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using Terraria;
 using Terraria.Audio;
@@ -83,7 +82,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Life
             NPC.knockBackResist = 0f;
             NPC.lavaImmune = true;
             NPC.aiStyle = -1;
-            NPC.value = Item.buyPrice(1);
+            NPC.value = Item.buyPrice(5, 50);
             NPC.boss = true;
 
             Music = ModLoader.TryGetMod("FargowiltasMusic", out Mod musicMod)
@@ -648,7 +647,10 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Life
         public override void UpdateLifeRegen(ref int damage)
         {
             if (NPC.lifeRegen < 0)
+            {
                 NPC.lifeRegen /= 2;
+                damage /= 2;
+            }
         }
 
         public override void FindFrame(int frameHeight)
@@ -838,7 +840,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Life
 
             if (!NPC.IsABestiaryIconDummy)
             {
-                spriteBatch.End(); spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.ZoomMatrix);
+                spriteBatch.UseBlendState(BlendState.Additive);
             }
 
             Texture2D star = ModContent.Request<Texture2D>("FargowiltasSouls/Assets/Effects/LifeStar", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
@@ -854,7 +856,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Life
 
             if (!NPC.IsABestiaryIconDummy)
             {
-                spriteBatch.End(); spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.ZoomMatrix);
+                spriteBatch.ResetToDefault();
             }
         }
     }

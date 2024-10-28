@@ -1,4 +1,5 @@
 using FargowiltasSouls.Content.Buffs.Masomode;
+using FargowiltasSouls.Core.Systems;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -64,8 +65,8 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
             Projectile.FargoSouls().DeletionImmuneRank = 2;
         }
 
-        int arenaDistance = Main.rand.Next(980, 1050);
-        const int defaultDistance = 2600;
+        int arenaDistance = (int)(Main.rand.Next(630, 700));
+        public const int defaultDistance = 1800;
 
         public override void AI()
         {
@@ -94,7 +95,7 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
 
                 if (true)
                 {
-                    Projectile.position -= npc.velocity * 2 / 3;
+                    Projectile.position += npc.velocity;
                     int playerIndex = Player.FindClosest(npc.Center, 1, 1);
                     if (!playerIndex.IsWithinBounds(Main.maxPlayers))
                         return;
@@ -114,8 +115,7 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
                     Projectile.velocity *= MathHelper.Lerp(0.7f, 1, MathHelper.Clamp(Projectile.Distance(player.Center), 0, defaultDistance - arenaDistance) / (defaultDistance - arenaDistance));
                 }
 
-                //if (Projectile.velocity.Length() > 8)
-                    //Projectile.velocity = Vector2.Normalize(Projectile.velocity) * 8;
+                Projectile.velocity.ClampLength(0, 5f);
 
                 if (++Projectile.frameCounter > 3 * (Projectile.extraUpdates + 1))
                 {

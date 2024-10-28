@@ -63,7 +63,7 @@ namespace FargowiltasSouls.Content.Projectiles.Souls
                 {
                     float speed = 1;
                     Projectile.velocity = Projectile.SafeDirectionTo(player.Center) * speed;
-                }
+                } 
                 else
                 {
                     Projectile.velocity = Vector2.Zero;

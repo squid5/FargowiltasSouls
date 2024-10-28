@@ -34,7 +34,7 @@ namespace FargowiltasSouls.Content.Buffs.Masomode
                 if (player.whoAmI == Main.myPlayer)
                     Main.NewText(Language.GetTextValue($"Mods.{Mod.Name}.Buffs.IvyVenomBuff.Transform"), 175, 75, 255);
             }
-            player.venom = true;
+            player.FargoSouls().IvyVenom = true;
         }
     }
 }

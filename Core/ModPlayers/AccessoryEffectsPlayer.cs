@@ -1,16 +1,13 @@
 ﻿using FargowiltasSouls.Content.Projectiles.BossWeapons;
 using FargowiltasSouls.Content.Projectiles.Masomode;
-using FargowiltasSouls.Content.Projectiles.Minions;
 using FargowiltasSouls.Content.Projectiles.Souls;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using FargowiltasSouls.Common.Utilities;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameInput;
-using Terraria.Graphics.Capture;
 using Terraria.ID;
 using Terraria.ModLoader;
 using FargowiltasSouls.Content.Projectiles;
@@ -18,22 +15,16 @@ using FargowiltasSouls.Content.Items.Accessories.Enchantments;
 using FargowiltasSouls.Content.Buffs;
 using FargowiltasSouls.Content.Buffs.Souls;
 using FargowiltasSouls.Content.Buffs.Masomode;
-using FargowiltasSouls.Content.Projectiles.Deathrays;
-using FargowiltasSouls.Core.Globals;
-using FargowiltasSouls.Content.NPCs.EternityModeNPCs;
-
-using FargowiltasSouls.Core.Systems;
-using Fargowiltas.Common.Configs;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
-using FargowiltasSouls.Core.Toggler;
-using FargowiltasSouls.Content.Items.Accessories.Souls;
 using FargowiltasSouls.Content.Items.Accessories.Masomode;
 using Luminance.Core.Graphics;
 using FargowiltasSouls.Content.Items.Accessories.Forces;
+using FargowiltasSouls.Content.UI.Elements;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace FargowiltasSouls.Core.ModPlayers
 {
-	public partial class FargoSoulsPlayer
+    public partial class FargoSoulsPlayer
     {
 
         public void GoldKey()
@@ -146,7 +137,7 @@ namespace FargowiltasSouls.Core.ModPlayers
                     {
                         if (SlimyShieldItem != null)
                         {
-                            SoundEngine.PlaySound(SoundID.Item21, Player.Center);
+                            SoundEngine.PlaySound(SoundID.Item21 with { Volume = 0.5f }, Player.Center);
                             Vector2 mouse = Main.MouseWorld;
                             int damage = 8;
                             if (SupremeDeathbringerFairy)
@@ -162,7 +153,11 @@ namespace FargowiltasSouls.Core.ModPlayers
                                     Vector2 speed = mouse - spawn;
                                     speed.Normalize();
                                     speed *= 10f;
-                                    Projectile.NewProjectile(Player.GetSource_Accessory(SlimyShieldItem, "SlimyShield"), spawn, speed, ModContent.ProjectileType<SlimeBall>(), damage, 1f, Main.myPlayer);
+                                    int p = Projectile.NewProjectile(Player.GetSource_Accessory(SlimyShieldItem, "SlimyShield"), spawn, speed, ModContent.ProjectileType<SlimeBall>(), damage, 1f, Main.myPlayer);
+                                    if (p.IsWithinBounds(Main.maxProjectiles))
+                                    {
+                                        Main.projectile[p].DamageType = DamageClass.Generic;
+                                    }
                                 }
                             }
                         }
@@ -223,12 +218,19 @@ namespace FargowiltasSouls.Core.ModPlayers
                         ++num;
                     if (Main.rand.NextBool(9))
                         ++num;
-                    int dam = PureHeart ? 45 : 18;
+                    int dam = PureHeart ? 35 : 13;
                     if (MasochistSoul)
                         dam *= 2;
                     for (int index = 0; index < num; ++index)
-                        Projectile.NewProjectile(Player.GetSource_Accessory(DarkenedHeartItem), Player.Center.X, Player.Center.Y, Main.rand.Next(-35, 36) * 0.02f * 10f,
+                    {
+                        int p = Projectile.NewProjectile(Player.GetSource_Accessory(DarkenedHeartItem), Player.Center.X, Player.Center.Y, Main.rand.Next(-35, 36) * 0.02f * 10f,
                             Main.rand.Next(-35, 36) * 0.02f * 10f, ProjectileID.TinyEater, (int)(dam * Player.ActualClassDamage(DamageClass.Melee)), 1.75f, Player.whoAmI);
+                        if (p.IsWithinBounds(Main.maxProjectiles))
+                        {
+                            Main.projectile[p].DamageType = DamageClass.Default;
+                        }
+                    }
+                        
                 }
             }
         }
@@ -294,6 +296,9 @@ namespace FargowiltasSouls.Core.ModPlayers
                                 Player.buffImmune[debuff] = true;
                             }
                         }
+
+                        CooldownBarManager.Activate("SpecialDashCooldown", ModContent.Request<Texture2D>("FargowiltasSouls/Content/Items/Accessories/Masomode/BetsysHeart").Value, Color.OrangeRed, 
+                            () => 1 - (float)SpecialDashCD / LumUtils.SecondsToFrames(5), activeFunction: () => BetsysHeartItem != null);
                     }
                     else if (QueenStingerItem != null)
                     {
@@ -301,6 +306,9 @@ namespace FargowiltasSouls.Core.ModPlayers
 
                         Vector2 vel = Player.SafeDirectionTo(Main.MouseWorld) * 20;
                         Projectile.NewProjectile(Player.GetSource_Accessory(QueenStingerItem), Player.Center, vel, ModContent.ProjectileType<BeeDash>(), (int)(44 * Player.ActualClassDamage(DamageClass.Melee)), 6f, Player.whoAmI);
+
+                        CooldownBarManager.Activate("SpecialDashCooldown", ModContent.Request<Texture2D>("FargowiltasSouls/Content/Items/Accessories/Masomode/QueenStinger").Value, Color.Yellow, 
+                            () => 1 - (float)SpecialDashCD / LumUtils.SecondsToFrames(6), activeFunction: () => QueenStingerItem != null);
                     }
 
                     Player.AddBuff(ModContent.BuffType<BetsyDashBuff>(), 20);
@@ -344,8 +352,8 @@ namespace FargowiltasSouls.Core.ModPlayers
         {
             if (Player.HasBuff(ModContent.BuffType<MagicalCleanseCDBuff>()))
                 return;
-            
-            if (TryCleanseDebuffs())
+            TryCleanseDebuffs();
+            if (true)
             {
                 int cdInSec = 40;
 
@@ -748,7 +756,11 @@ namespace FargowiltasSouls.Core.ModPlayers
                 {
                     Vector2 vel = Vector2.UnitX.RotatedByRandom(MathHelper.TwoPi);
                     vel *= Main.rand.NextFloat(12f, 24f);
-                    FargoSoulsUtil.NewSummonProjectile(Player.GetSource_EffectItem<PumpkingsCapeEffect>(), Player.Center, vel, ModContent.ProjectileType<SpookyScythe>(), counterDamage, 6f, Player.whoAmI);
+                    int p = FargoSoulsUtil.NewSummonProjectile(Player.GetSource_EffectItem<PumpkingsCapeEffect>(), Player.Center, vel, ModContent.ProjectileType<SpookyScythe>(), counterDamage, 6f, Player.whoAmI);
+                    if (p.IsWithinBounds(Main.maxProjectiles))
+                    {
+                        Main.projectile[p].DamageType = DamageClass.Generic;
+                    }
                 }
             }
         }
@@ -861,6 +873,9 @@ namespace FargowiltasSouls.Core.ModPlayers
                 ParryDebuffImmuneTime = invul;
                 shieldCD = invul + extrashieldCD;
 
+                CooldownBarManager.Activate("ParryCooldown", ModContent.Request<Texture2D>("FargowiltasSouls/Content/Items/Accessories/Enchantments/SilverEnchant").Value, Color.Gray, 
+                    () => 1 - shieldCD / (float)(invul + extrashieldCD), activeFunction: () => Player.HasEffect<SilverEffect>() || Player.HasEffect<DreadShellEffect>() || Player.HasEffect<PumpkingsCapeEffect>());
+
                 foreach (int debuff in FargowiltasSouls.DebuffIDs) //immune to all debuffs
                 {
                     if (!Player.HasBuff(debuff))
@@ -918,6 +933,8 @@ namespace FargowiltasSouls.Core.ModPlayers
 
             if (shieldCD < cooldown)
                 shieldCD = cooldown;
+
+            CooldownBarManager.Activate("ParryCooldown", ModContent.Request<Texture2D>("FargowiltasSouls/Content/Items/Accessories/Enchantments/SilverEnchant").Value, Color.Gray, () => (float)shieldCD / cooldown);
         }
 
         public void UpdateShield()
@@ -936,11 +953,8 @@ namespace FargowiltasSouls.Core.ModPlayers
                 wasHoldingShield = false;
                 return;
             }
-
-            Player.shieldRaised = Player.selectedItem != 58 && Player.controlUseTile && !Player.tileInteractionHappened && Player.releaseUseItem
-                && !Player.controlUseItem && !Player.mouseInterface && !CaptureManager.Instance.Active && !Main.HoveringOverAnNPC
-                && !Main.SmartInteractShowingGenuine &&
-                Player.itemAnimation == 0 && Player.itemTime == 0 && Player.reuseDelay == 0 && PlayerInput.Triggers.Current.MouseRight;
+            Player.shieldRaised = Player.selectedItem != 58 && Player.controlUseTile && Player.releaseUseItem && !Player.tileInteractionHappened && !Player.controlUseItem && FargoSoulsUtil.ActuallyClickingInGameplay(Player)
+                && !Main.HoveringOverAnNPC && !Main.SmartInteractShowingGenuine && Player.itemAnimation == 0 && Player.itemTime == 0 && Player.reuseDelay == 0 && PlayerInput.Triggers.Current.MouseRight;
 
             if (Player.shieldRaised)
             {

@@ -1,10 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
+using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 
@@ -28,15 +24,23 @@ namespace FargowiltasSouls.Core.ModPlayers
         public int CosmosTimer = 0;
         public override void PostUpdateEquips()
         {
+            bool hasNebulaDmg = Player.HasBuff(BuffID.NebulaUpDmg1) || Player.HasBuff(BuffID.NebulaUpDmg2) || Player.HasBuff(BuffID.NebulaUpDmg3);
+            //if (VortexTimer > 0 && hasNebulaDmg)
+            //    VortexTimer = 0;
+            if (StardustTimer > 0 && hasNebulaDmg)
+                StardustTimer = 0;
+            if (NebulaTimer > 0 && (Player.HasBuff(BuffID.NebulaUpLife1) || Player.HasBuff(BuffID.NebulaUpLife2) || Player.HasBuff(BuffID.NebulaUpLife3)))
+                NebulaTimer = 0;
+
             if (SolarTimer > 0)
             {
                 SolarTimer--;
-                Player.endurance += 0.2f;
+                Player.endurance += 0.15f;
             }
             if (VortexTimer > 0)
             {
                 VortexTimer--;
-                Player.GetCritChance(DamageClass.Generic) += 35;
+                Player.GetCritChance(DamageClass.Generic) += 25;
             }
                 
             if (NebulaTimer > 0)
@@ -46,7 +50,7 @@ namespace FargowiltasSouls.Core.ModPlayers
             if (StardustTimer > 0)
             {
                 StardustTimer--;
-                Player.GetDamage(DamageClass.Generic) += 0.35f;
+                Player.GetDamage(DamageClass.Generic) += 0.25f;
             }
 
             if (TimberTimer > 0)
@@ -101,14 +105,14 @@ namespace FargowiltasSouls.Core.ModPlayers
             {
                 CosmosTimer--;
             }
-            if (SolarTimer == 1)
-                CombatText.NewText(Player.Hitbox, Color.Yellow, Language.GetTextValue("Mods.FargowiltasSouls.Items.SolarBooster.Deactivate", 20), true);
+            /* if (SolarTimer == 1)
+                CombatText.NewText(Player.Hitbox, Color.Yellow, Language.GetTextValue("Mods.FargowiltasSouls.Items.SolarBooster.Deactivate", 15), true);
             if (VortexTimer == 1)
-                CombatText.NewText(Player.Hitbox, Color.LightCyan, Language.GetTextValue("Mods.FargowiltasSouls.Items.VortexBooster.Deactivate", 35), true);
+                CombatText.NewText(Player.Hitbox, Color.LightCyan, Language.GetTextValue("Mods.FargowiltasSouls.Items.VortexBooster.Deactivate", 25), true);
             if (NebulaTimer == 1)
                 CombatText.NewText(Player.Hitbox, Color.Magenta, Language.GetTextValue("Mods.FargowiltasSouls.Items.NebulaBooster.Deactivate", 5), true);
             if (StardustTimer == 1)
-                CombatText.NewText(Player.Hitbox, Color.Cyan, Language.GetTextValue("Mods.FargowiltasSouls.Items.StardustBooster.Deactivate", 35), true);
+                CombatText.NewText(Player.Hitbox, Color.Cyan, Language.GetTextValue("Mods.FargowiltasSouls.Items.StardustBooster.Deactivate", 25), true); */
 
             if (TimberTimer == 1)
                 CombatText.NewText(Player.Hitbox, Color.SandyBrown, Language.GetTextValue("Mods.FargowiltasSouls.Items.TimberBooster.Deactivate", 30), true);

@@ -1,4 +1,6 @@
-﻿using Microsoft.Xna.Framework;
+﻿using FargowiltasSouls.Content.Buffs.Masomode;
+using FargowiltasSouls.Core.Systems;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -19,19 +21,8 @@ namespace FargowiltasSouls.Content.Buffs.Boss
 
         public override void Update(Player player, ref int buffIndex)
         {
-            player.controlLeft = false;
-            player.controlRight = false;
-            player.controlJump = false;
-            player.controlDown = false;
-            player.controlUseItem = false;
-            player.controlUseTile = false;
-            player.controlHook = false;
-            player.releaseHook = true;
-            player.RemoveAllGrapplingHooks();
-            if (player.mount.Active)
-                player.mount.Dismount(player);
+            player.Incapacitate();
             player.FargoSouls().Stunned = true;
-            player.FargoSouls().NoUsingItems = 2;
 
             player.velocity = Vector2.Normalize(player.velocity) * 30;
             player.fullRotation = player.velocity.ToRotation() + MathHelper.PiOver2;
@@ -49,8 +40,10 @@ namespace FargowiltasSouls.Content.Buffs.Boss
                 int damage = 35;
                 player.Hurt(PlayerDeathReason.ByCustomReason(Language.GetTextValue("Mods.FargowiltasSouls.DeathMessage.CoffinToss", player.name)), damage, 0, false, false, 0, false);
                 player.DelBuff(buffIndex);
+                player.ClearBuff(ModContent.BuffType<StunnedBuff>());
                 SoundEngine.PlaySound(SoundID.NPCHit18, player.Center);
-                player.velocity *= -1;
+                float multiplier = WorldSavingSystem.MasochistModeReal ? 1f : 0.05f; // markiplier
+                player.velocity *= -multiplier;
                 player.fullRotation = 0;
             }
         }

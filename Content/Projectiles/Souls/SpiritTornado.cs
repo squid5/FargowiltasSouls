@@ -1,5 +1,4 @@
-﻿using FargowiltasSouls.Content.Items.Accessories.Enchantments;
-using FargowiltasSouls.Content.Items.Accessories.Forces;
+﻿using FargowiltasSouls.Content.Items.Accessories.Forces;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -62,6 +61,7 @@ namespace FargowiltasSouls.Content.Projectiles.Souls
             Player player = Main.player[Projectile.owner];
             FargoSoulsPlayer modPlayer = player.FargoSouls();
 
+            /* Collision is done in FargoSoulsGlobalProjectile:PreAI
             if (player.HasEffect<SpiritTornadoEffect>())
             {
                 foreach (Projectile p in Main.projectile.Where(p => p.active && p.friendly && !p.hostile && p.owner == Projectile.owner && p.type != Projectile.type && p.Colliding(p.Hitbox, Projectile.Hitbox)))
@@ -69,6 +69,7 @@ namespace FargowiltasSouls.Content.Projectiles.Souls
                     p.FargoSouls().stormTimer = 240;
                 }
             };
+            */
 
             Projectile.damage = (int)(125f * (1f + player.GetDamage(DamageClass.Magic).Additive + player.GetDamage(DamageClass.Summon).Additive - 2f));
 
@@ -76,6 +77,7 @@ namespace FargowiltasSouls.Content.Projectiles.Souls
             SyncMouse(player);
             Movement(player);
 
+            /*
             if (Timer % 13 == 0)
             {
                 if (FargoSoulsUtil.HostCheck)
@@ -89,6 +91,7 @@ namespace FargowiltasSouls.Content.Projectiles.Souls
                         FargoSoulsUtil.NewProjectileDirectSafe(Projectile.InheritSource(Projectile), Projectile.Center + Vector2.UnitY * Main.rand.Next(-50, 50), vel, ProjectileID.SpectreWrath, Projectile.damage, 0, player.whoAmI, target.whoAmI);
                 }
             }
+            */
 
             float num1123 = 900f;
             if (Projectile.soundDelay == 0)
@@ -192,8 +195,8 @@ namespace FargowiltasSouls.Content.Projectiles.Souls
             Vector2 idlePosition = mousePos;
             Vector2 toIdlePosition = idlePosition - Projectile.Center;
             float distance = toIdlePosition.Length();
-            float speed = 25f;
-            float inertia = 15f;
+            float speed = 4f;
+            float inertia = 30f;
             toIdlePosition.Normalize();
             toIdlePosition *= speed;
             Projectile.velocity = (Projectile.velocity * (inertia - 1f) + toIdlePosition) / inertia;
@@ -210,8 +213,7 @@ namespace FargowiltasSouls.Content.Projectiles.Souls
 
         public override bool PreDraw(ref Color lightColor)
         {
-            Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.ZoomMatrix);
+            Main.spriteBatch.UseBlendState(BlendState.Additive);
 
             float halfheight = 220;
             float density = 50f;
@@ -235,8 +237,7 @@ namespace FargowiltasSouls.Content.Projectiles.Souls
                     0);
             }
 
-            Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.ZoomMatrix);
+            Main.spriteBatch.ResetToDefault();
 
             return false;
         }

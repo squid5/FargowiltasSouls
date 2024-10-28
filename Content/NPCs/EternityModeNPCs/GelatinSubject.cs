@@ -1,3 +1,4 @@
+using Fargowiltas;
 using FargowiltasSouls.Content.Bosses.VanillaEternity;
 using FargowiltasSouls.Core.Globals;
 using FargowiltasSouls.Core.Systems;
@@ -10,7 +11,6 @@ using Terraria.Audio;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static FargowiltasSouls.Core.Systems.DashManager;
 
 namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs
 {
@@ -26,6 +26,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs
             NPCID.Sets.TrailingMode[NPC.type] = 1;
             NPCID.Sets.CantTakeLunchMoney[Type] = true;
             NPCID.Sets.SpecificDebuffImmunity[Type] = NPCID.Sets.SpecificDebuffImmunity[NPCID.QueenSlimeBoss];
+
             this.ExcludeFromBestiary();
         }
 

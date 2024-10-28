@@ -33,6 +33,20 @@ namespace FargowiltasSouls //lets everything access it without using
             itemName.Text = string.Join(" ", splitName);
             return itemName;
         }
+        public static string ArticlePrefixAdjustmentString(this string itemName, string[] localizationArticles)
+        {
+            List<string> splitName = itemName.Split(' ').ToList();
+
+            for (int i = 0; i < localizationArticles.Length; i++)
+                if (splitName.Remove(localizationArticles[i]))
+                {
+                    splitName.Insert(0, localizationArticles[i]);
+                    break;
+                }
+
+            itemName = string.Join(" ", splitName);
+            return itemName;
+        }
 
         /// <summary>
         /// Uses <see cref="Enumerable.First{TSource}(IEnumerable{TSource}, System.Func{TSource, bool})"/> to find the specified tooltip line. <br />
@@ -89,7 +103,6 @@ namespace FargowiltasSouls //lets everything access it without using
 
         public static void Null(ref this Player.HurtInfo hurtInfo)
         {
-            // hurtInfo.Damage = 0;
             object unboxedHurtInfo = hurtInfo;
             _damageFieldHurtInfo.SetValue(unboxedHurtInfo, 0);
             hurtInfo = (Player.HurtInfo)unboxedHurtInfo;
@@ -131,7 +144,7 @@ namespace FargowiltasSouls //lets everything access it without using
                 return false;
             return player.FargoSouls().ForceEffect(item.ModItem);
         }
-
+            
         public static bool Alive(this Player player) => player != null && player.active && !player.dead && !player.ghost;
         public static bool Alive(this Projectile projectile) => projectile != null && projectile.active;
         public static bool Alive(this NPC npc) => npc != null && npc.active;
@@ -185,6 +198,35 @@ namespace FargowiltasSouls //lets everything access it without using
         public static bool FeralGloveReuse(this Player player, Item item)
             => player.autoReuseGlove && (item.CountsAsClass(DamageClass.Melee) || item.CountsAsClass(DamageClass.SummonMeleeSpeed));
 
+        public static bool CannotUseItems(this Player player) => player.CCed || player.noItems || player.FargoSouls().NoUsingItems > 0 || (player.HeldItem != null && (!ItemLoader.CanUseItem(player.HeldItem, player) || !PlayerLoader.CanUseItem(player, player.HeldItem)));
+
+        public static void Incapacitate(this Player player, bool preventDashing = true)
+        {
+            player.controlLeft = false;
+            player.controlRight = false;
+            player.controlJump = false;
+            player.controlDown = false;
+            player.controlUseItem = false;
+            player.controlUseTile = false;
+            player.controlHook = false;
+            player.releaseHook = true;
+            if (player.grapCount > 0)
+                player.RemoveAllGrapplingHooks();
+            if (player.mount.Active)
+                player.mount.Dismount(player);
+            player.FargoSouls().NoUsingItems = 2;
+            if (preventDashing)
+            {
+                for (int i = 0; i < 4; i++)
+                {
+                    player.doubleTapCardinalTimer[i] = 0;
+                    player.holdDownCardinalTimer[i] = 0;
+                }
+            }
+            if (player.dashDelay < 10 && preventDashing)
+                player.dashDelay = 10;
+        }
+
         public static bool CountsAsClass(this DamageClass damageClass, DamageClass intendedClass)
         {
             return damageClass == intendedClass || damageClass.GetEffectInheritance(intendedClass);
@@ -219,5 +261,9 @@ namespace FargowiltasSouls //lets everything access it without using
                 proj.frameCounter = 0;
             }
         }
+
+        public static Rectangle ToWorldCoords(this Rectangle rectangle) => new(rectangle.X * 16, rectangle.Y * 16, rectangle.Width * 16, rectangle.Height * 16);
+
+        public static Rectangle ToTileCoords(this Rectangle rectangle) => new(rectangle.X / 16, rectangle.Y / 16, rectangle.Width / 16, rectangle.Height / 16);
     }
 }

@@ -117,7 +117,13 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
         public override void OnKill(int timeLeft)
         {
             if (FargoSoulsUtil.HostCheck)
-                Projectile.NewProjectile(Terraria.Entity.InheritSource(Projectile), Projectile.Center, Projectile.velocity, ModContent.ProjectileType<AbomDeathray>(), Projectile.damage, Projectile.knockBack, Projectile.owner, Projectile.ai[0], Projectile.ai[1]);
+            {
+                int p = Projectile.NewProjectile(Terraria.Entity.InheritSource(Projectile), Projectile.Center, Projectile.velocity, ModContent.ProjectileType<AbomDeathray>(), Projectile.damage, Projectile.knockBack, Projectile.owner, Projectile.ai[0], Projectile.ai[1]);
+                if (p.IsWithinBounds(Main.maxProjectiles))
+                {
+                    Main.projectile[p].As<AbomDeathray>().fadeStart = true;
+                }
+            }
         }
     }
 }

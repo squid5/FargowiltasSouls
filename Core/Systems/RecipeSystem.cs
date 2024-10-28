@@ -1,4 +1,5 @@
 ﻿using FargowiltasSouls.Content.Items.Accessories.Enchantments;
+using FargowiltasSouls.Content.Items.Accessories.Essences;
 using FargowiltasSouls.Content.Items.Accessories.Forces;
 using FargowiltasSouls.Content.Items.Accessories.Souls;
 using FargowiltasSouls.Content.Items.Misc;
@@ -203,18 +204,33 @@ namespace FargowiltasSouls.Core.Systems
             group = new RecipeGroup(() => AnyItem(ItemID.Shellphone), ItemID.Shellphone, ItemID.ShellphoneDummy, ItemID.ShellphoneHell, ItemID.ShellphoneOcean, ItemID.ShellphoneSpawn);
             RecipeGroup.RegisterGroup("FargowiltasSouls:AnyShellphone", group);
 
+            // any gem
+            group = new RecipeGroup(() => AnyItem("Gem"), ItemID.Diamond, ItemID.Amber, ItemID.Ruby, ItemID.Emerald, ItemID.Sapphire, ItemID.Topaz, ItemID.Amethyst);
+            RecipeGroup.RegisterGroup("FargowiltasSouls:AnyGem", group);
+
 
         }
         public override void PostAddRecipes()
         {
-            foreach (Recipe recipe in Main.recipe.Where(recipe => !recipe.requiredTile.Contains(ModContent.TileType<Fargowiltas.Items.Tiles.CrucibleCosmosSheet>())))
+            foreach (Recipe recipe in Main.recipe)
             {
-                recipe.AddConsumeItemCallback(IronBonusBars);
-            }
-            //disable shimmer decraft for all enchants, forces and souls
-            foreach (Recipe recipe in Main.recipe.Where(recipe => recipe.createItem.ModItem != null && (recipe.createItem.ModItem is BaseEnchant || recipe.createItem.ModItem is BaseForce || recipe.createItem.ModItem is BaseSoul)))
-            {
-                recipe.DisableDecraft();
+                // add iron enchant bonus
+                if (!recipe.requiredTile.Contains(ModContent.TileType<Fargowiltas.Items.Tiles.CrucibleCosmosSheet>()))
+                    recipe.AddConsumeItemCallback(IronBonusBars);
+
+                //disable shimmer decrafts
+                if (recipe.createItem.ModItem != null && (recipe.createItem.ModItem is BaseEnchant || recipe.createItem.ModItem is BaseForce || recipe.createItem.ModItem is BaseSoul || recipe.createItem.ModItem is BaseEssence))
+                    recipe.DisableDecraft();
+
+                // disable pre-evil meteorite recipes
+                /*
+                if (recipe.HasIngredient(ItemID.MeteoriteBar))
+                {
+                    LocalizedText desc = Language.GetText($"Mods.FargowiltasSouls.Conditions.PostEvilEternity");
+                    Condition c = new(desc, () => WorldSavingSystem.EternityMode && Condition.DownedEowOrBoc.IsMet());
+                    recipe.AddCondition(c);
+                }
+                */
             }
         }
     }

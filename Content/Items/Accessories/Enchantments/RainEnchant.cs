@@ -1,4 +1,5 @@
 ﻿using FargowiltasSouls.Content.Buffs.Souls;
+using FargowiltasSouls.Content.Items.Accessories.Forces;
 using FargowiltasSouls.Content.Projectiles.Souls;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using FargowiltasSouls.Core.Toggler.Content;
@@ -14,14 +15,6 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
-
-            // DisplayName.SetDefault("Rain Enchantment");
-            /* Tooltip.SetDefault(
-@"Grants immunity to Wet
-Spawns a miniature storm that follows your cursor
-It only attacks if there is a clear line of sight between you
-Effects of Inner Tube
-'Come again some other day'"); */
         }
 
         public override Color nameColor => new(255, 236, 0);
@@ -45,8 +38,16 @@ Effects of Inner Tube
             player.AddEffect<RainUmbrellaEffect>(item);
             player.AddEffect<RainInnerTubeEffect>(item);
             player.AddEffect<RainWetEffect>(item);
+            player.AddEffect<LightningImmunity>(item);
         }
-
+        public override void UpdateVanity(Player player)
+        {
+            player.AddEffect<LightningImmunity>(Item);
+        }
+        public override void UpdateInventory(Player player)
+        {
+            player.AddEffect<LightningImmunity>(Item);
+        }
         public override void AddRecipes()
         {
             CreateRecipe()
@@ -72,14 +73,19 @@ Effects of Inner Tube
             if (!player.HasBuff(ModContent.BuffType<RainCDBuff>()))
             {
                 player.FargoSouls().AddMinion(EffectItem(player), true, ModContent.ProjectileType<RainUmbrella>(), 0, 0);
-
-                if (!player.controlDown)
+                if (!player.controlDown && player.HasEffect<RainFeatherfallEffect>() && !player.HasEffect<NatureEffect>())
                 {
                     player.slowFall = true;
                 }
             }
         }
     }
+    public class RainFeatherfallEffect : AccessoryEffect
+    {
+        public override int ToggleItemType => ModContent.ItemType<RainEnchant>();
+        public override Header ToggleHeader => Header.GetHeader<NatureHeader>();
+    }
+
     public class RainWetEffect : AccessoryEffect
     {
         public override Header ToggleHeader => null;
@@ -97,5 +103,9 @@ Effects of Inner Tube
             player.hasFloatingTube = true;
             player.canFloatInWater = true;
         }
+    }
+    public class LightningImmunity : AccessoryEffect
+    {
+        public override Header ToggleHeader => null;
     }
 }

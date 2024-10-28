@@ -9,9 +9,6 @@ namespace FargowiltasSouls.Content.Items.Summons
     {
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("Squirrel Coat of Arms");
-            // Tooltip.SetDefault("Summons squirrelly wrath");
-
             Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 3;
             ItemID.Sets.SortingPriorityBossSpawns[Type] = 12;
         }
@@ -40,6 +37,7 @@ namespace FargowiltasSouls.Content.Items.Summons
                 .AddRecipeGroup("Wood", 20)
                 .AddRecipeGroup("FargowiltasSouls:AnySquirrel")
                 .AddTile(TileID.WorkBenches)
+                .DisableDecraft()
                 .Register();
         }
     }

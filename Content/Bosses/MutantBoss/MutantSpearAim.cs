@@ -3,6 +3,7 @@ using FargowiltasSouls.Content.Buffs.Masomode;
 using FargowiltasSouls.Core.Systems;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -63,7 +64,8 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
          * 4: predictive, blue, 1.5sec with no more tracking after a bit for p2 slow dash finisher (maybe red?)
          * 5: predictive, NONE, 1sec for p2 slow dash
          */
-
+        public ref float VisualRotation => ref Projectile.ai[2];
+        public ref float MaxTime => ref Projectile.localAI[2];
         public override void AI()
         {
             //basically: ai1 > 1 means predictive and blue glow, otherwise direct aim and green glow
@@ -78,17 +80,18 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
 
                 if (Projectile.ai[1] > 1)
                 {
-                    if (!(Projectile.ai[1] == 4 && Projectile.timeLeft < System.Math.Abs(Projectile.localAI[1]) + 5))
-                        Projectile.rotation = Projectile.rotation.AngleLerp(mutant.SafeDirectionTo(Main.player[mutant.target].Center + Main.player[mutant.target].velocity * 30).ToRotation(), 0.2f);
+                    Projectile.rotation = mutant.SafeDirectionTo(Main.player[mutant.target].Center + Main.player[mutant.target].velocity * 30).ToRotation();
                 }
                 else
                 {
-                    Projectile.rotation = mutant.SafeDirectionTo(Main.player[mutant.target].Center).ToRotation();
+                    if (!(Projectile.ai[1] == 4 && Projectile.timeLeft < System.Math.Abs(Projectile.localAI[1]) + 5))
+                        Projectile.rotation = Projectile.rotation.AngleLerp(mutant.SafeDirectionTo(Main.player[mutant.target].Center).ToRotation(), 0.2f);
                 }
             }
             else
             {
                 Projectile.Kill();
+                return;
             }
 
             if (Projectile.localAI[0] == 0) //modifying timeleft for mp sync, localAI1 changed to adjust the rampup on the glow tell
@@ -115,6 +118,7 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
                     Projectile.timeLeft += 20;
                     Projectile.localAI[1] = -20;
                 }
+                MaxTime = Projectile.timeLeft;
             }
         }
 
@@ -138,12 +142,48 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
             int num156 = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value.Height / Main.projFrames[Projectile.type]; //ypos of lower right corner of sprite to draw
             int y3 = num156 * Projectile.frame; //ypos of upper left corner of sprite to draw
             Rectangle rectangle = new(0, y3, texture2D13.Width, num156);
-            Vector2 origin2 = rectangle.Size() / 2f;
+            Vector2 origin = rectangle.Size() / 2f;
 
             Color color26 = lightColor;
             color26 = Projectile.GetAlpha(color26);
 
             float rotationOffset = MathHelper.ToRadians(135f);
+
+            // visual animation
+            int direction = Projectile.rotation.ToRotationVector2().X.NonZeroSign();
+            float timeFraction = Projectile.timeLeft / MaxTime;
+            float maxRearback = MathHelper.PiOver2 * 0.35f;
+            Vector2 maxOffset = Projectile.rotation.ToRotationVector2() * 30;
+            float rotationAnimation;
+            Vector2 positionOffset = Vector2.Zero;
+            float windupFraction = 0.5f;
+            float extensionFraction;
+            //dont do it for predictive aim
+            if (!WorldSavingSystem.MasochistModeReal && Projectile.ai[1] <= 1)
+            {
+                if (timeFraction > windupFraction) // rear back
+                {
+                    float rearbackFraction = (timeFraction - windupFraction) / (1 - windupFraction);
+                    rotationAnimation = MathHelper.SmoothStep(-maxRearback, -maxRearback * 0.8f, rearbackFraction);
+                    positionOffset = Vector2.SmoothStep(-maxOffset, -maxOffset * 0.8f, rearbackFraction);
+                    extensionFraction = 0;
+                }
+                else
+                {
+                    float tossFraction = timeFraction / windupFraction;
+                    tossFraction = MathF.Pow(tossFraction, 0.5f);
+                    rotationAnimation = MathHelper.Lerp(0, -maxRearback, tossFraction);
+                    positionOffset = Vector2.Lerp(Vector2.Zero, -maxOffset, tossFraction);
+                    extensionFraction = MathHelper.Lerp(1, 0, tossFraction);
+                }
+                rotationOffset += direction * rotationAnimation;
+                Vector2 extendMax = (Projectile.rotation + direction * rotationAnimation).ToRotationVector2() * origin.Length() * 0.3f;
+                Vector2 extensionOffset = Vector2.Lerp(-extendMax, extendMax * 0.5f, extensionFraction);
+                positionOffset += extensionOffset;
+
+            }
+
+            
 
             for (int i = 0; i < ProjectileID.Sets.TrailCacheLength[Projectile.type]; i++)
             {
@@ -151,10 +191,10 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
                 color27 *= (float)(ProjectileID.Sets.TrailCacheLength[Projectile.type] - i) / ProjectileID.Sets.TrailCacheLength[Projectile.type];
                 Vector2 value4 = Projectile.oldPos[i];
                 float num165 = Projectile.oldRot[i] + rotationOffset;
-                Main.EntitySpriteDraw(texture2D13, value4 + Projectile.Size / 2f - Main.screenPosition + new Vector2(0, Projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color27, num165, origin2, Projectile.scale, SpriteEffects.None, 0);
+                Main.EntitySpriteDraw(texture2D13, value4 + positionOffset + Projectile.Size / 2f - Main.screenPosition + new Vector2(0, Projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color27, num165, origin, Projectile.scale, SpriteEffects.None, 0);
             }
 
-            Main.EntitySpriteDraw(texture2D13, Projectile.Center - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), Projectile.GetAlpha(lightColor), Projectile.rotation + rotationOffset, origin2, Projectile.scale, SpriteEffects.None, 0);
+            Main.EntitySpriteDraw(texture2D13, Projectile.Center + positionOffset - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), Projectile.GetAlpha(lightColor), Projectile.rotation + rotationOffset, origin, Projectile.scale, SpriteEffects.None, 0);
 
             if (Projectile.ai[1] != 5)
             {

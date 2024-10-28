@@ -1,7 +1,9 @@
+using FargowiltasSouls.Assets.Sounds;
 using FargowiltasSouls.Common.Utilities;
 using FargowiltasSouls.Content.Buffs.Masomode;
 using FargowiltasSouls.Content.Buffs.Souls;
 using FargowiltasSouls.Content.Projectiles;
+using FargowiltasSouls.Content.Projectiles.BossWeapons;
 using FargowiltasSouls.Content.Projectiles.ChallengerItems;
 using FargowiltasSouls.Content.Projectiles.Masomode;
 using FargowiltasSouls.Core;
@@ -25,6 +27,8 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
     public class Destroyer : EModeNPCBehaviour
     {
         public override NPCMatcher CreateMatcher() => new NPCMatcher().MatchType(NPCID.TheDestroyer);
+
+        public static readonly SoundStyle ScanSound = FargosSoundRegistry.DestroyerScan with { Volume = 5 };
 
         public int AttackModeTimer;
         public int CoilRadius;
@@ -196,7 +200,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                 double angle = Main.rand.NextDouble() * 2d * Math.PI;
                 offset.X += (float)(Math.Sin(angle) * 600);
                 offset.Y += (float)(Math.Cos(angle) * 600);
-                Dust dust = Main.dust[Dust.NewDust(pivot + offset - new Vector2(4, 4), 0, 0, DustID.Clentaminator_Purple, 0, 0, 100, Color.White, 1f)];
+                Dust dust = Main.dust[Dust.NewDust(pivot + offset - new Vector2(4, 4), 0, 0, DustID.Clentaminator_Blue, 0, 0, 100, Color.White, 1f)];
                 dust.velocity = Vector2.Zero;
                 if (Main.rand.NextBool(3))
                     dust.velocity += Vector2.Normalize(offset) * 5f;
@@ -217,7 +221,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
                     for (int i = 0; i < 20; i++)
                     {
-                        int d = Dust.NewDust(target.position, target.width, target.height, DustID.Clentaminator_Purple, 0f, 0f, 0, default, 2f);
+                        int d = Dust.NewDust(target.position, target.width, target.height, DustID.Clentaminator_Blue, 0f, 0f, 0, default, 2f);
                         Main.dust[d].noGravity = true;
                         Main.dust[d].velocity *= 5f;
                     }
@@ -294,7 +298,8 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     npc.netUpdate = true;
                     NetSync(npc);
 
-                    SoundEngine.PlaySound(SoundID.Roar, Main.player[npc.target].Center);
+                    //SoundEngine.PlaySound(SoundID.Roar, Main.player[npc.target].Center);
+                    SoundEngine.PlaySound(ScanSound with { Pitch = -0.5f, Volume = 2f }, Main.player[npc.target].Center);
                     if (npc.life < npc.lifeMax / 10)
                         SoundEngine.PlaySound(SoundID.ForceRoarPitched, Main.player[npc.target].Center); //eoc roar
 
@@ -340,7 +345,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                 }
                 else if (AttackModeTimer == P2_COIL_BEGIN_TIME - 120) //telegraph with roar
                 {
-                    SoundEngine.PlaySound(SoundID.Roar, Main.player[npc.target].Center);
+                    SoundEngine.PlaySound(ScanSound with { Pitch = 0.5f, Volume = 2f }, Main.player[npc.target].Center);
                     if (FargoSoulsUtil.HostCheck)
                     {
                         Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, Vector2.Zero, ModContent.ProjectileType<GlowRingHollow>(), 0, 0f, Main.myPlayer, 6, npc.whoAmI);
@@ -451,6 +456,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     if (maxStarsInOneWave > 6)
                         maxStarsInOneWave = 6;
                     //Main.NewText($"{Counter3} {maxStarModifier} {maxStarsInOneWave} {maxMechElectricOrbIntervals}");
+                    SoundEngine.PlaySound(MechElectricOrb.ShotSound with { Volume = 0.5f, MaxInstances = 4 }, Main.player[npc.target].position);
                     for (int i = -maxStarsInOneWave; i <= maxStarsInOneWave; i++)
                     {
                         Vector2 offset = segment.SafeDirectionTo(targetPos).RotatedBy(MathHelper.PiOver2);
@@ -467,15 +473,25 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     //Main.NewText($"targetpos dist to player: {Main.player[npc.target].Distance(targetPos)}");
                 }
             }
+            int telegraphTime = 120;
 
-            if (AttackModeTimer == laserThreshold - 120) //tell for hyper dash for light show
+            if (AttackModeTimer == laserThreshold - telegraphTime) //tell for hyper dash for light show
             {
                 SecondaryAttackTimer = 0;
+                SoundEngine.PlaySound(ScanSound with { Volume = 2f }, npc.Center);
                 if (FargoSoulsUtil.HostCheck)
                 {
-                    Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, Vector2.Zero, ModContent.ProjectileType<GlowRingHollow>(), 0, 0f, Main.myPlayer, 9, npc.whoAmI);
-                    Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, Vector2.Zero, ModContent.ProjectileType<GlowRingHollow>(), 0, 0f, Main.myPlayer, 9, npc.whoAmI);
+                    float angle = MathHelper.Pi * 0.7f;
+                    int p = Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, npc.velocity, ModContent.ProjectileType<DestroyerScanTelegraph>(), 0, 0f, Main.myPlayer, 0, angle, 1000);
+                    if (p != Main.maxProjectiles)
+                        Main.projectile[p].timeLeft = telegraphTime;
+                    //Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, Vector2.Zero, ModContent.ProjectileType<GlowRingHollow>(), 0, 0f, Main.myPlayer, 9, npc.whoAmI);
+                    //Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, Vector2.Zero, ModContent.ProjectileType<GlowRingHollow>(), 0, 0f, Main.myPlayer, 9, npc.whoAmI);
                 }
+            }
+            if (AttackModeTimer.IsWithinBounds(laserThreshold - telegraphTime, laserThreshold) && npc.HasPlayerTarget) // while telegraphing light show
+            {
+                npc.velocity = Vector2.Lerp(npc.velocity, (Main.player[npc.target].Center - npc.Center) / 80, 0.05f);
             }
             if (AttackModeTimer > laserThreshold && AttackModeTimer < laserThreshold + 420)
             {
@@ -660,8 +676,6 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
         {
             EModeGlobalNPC.destroyBoss = npc.whoAmI;
 
-            if (WorldSavingSystem.SwarmActive)
-                return true;
 
             if (!InPhase2)
             {
@@ -671,7 +685,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     AttackModeTimer = P2_COIL_BEGIN_TIME;
                     npc.netUpdate = true;
                     if (npc.HasPlayerTarget)
-                        SoundEngine.PlaySound(SoundID.Roar, Main.player[npc.target].Center);
+                        SoundEngine.PlaySound(ScanSound with { Pitch = 1f, Volume = 2f }, Main.player[npc.target].Center);
                 }
             }
             else
@@ -811,9 +825,6 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
         public override bool SafePreAI(NPC npc)
         {
             bool result = base.SafePreAI(npc);
-
-            if (WorldSavingSystem.SwarmActive)
-                return result;
 
             NPC destroyer = FargoSoulsUtil.NPCExists(npc.realLife, NPCID.TheDestroyer);
 
@@ -996,10 +1007,24 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                 modifiers.FinalDamage *= 0.75f;
             if (projectile.type == ModContent.ProjectileType<DecrepitAirstrikeNuke>() || projectile.type == ModContent.ProjectileType<DecrepitAirstrikeNukeSplinter>())
                 modifiers.FinalDamage *= 0.7f;
+
+            if (projectile.type == ProjectileID.MonkStaffT1 || projectile.type == ProjectileID.MonkStaffT1Explosion) // sleepy
+                modifiers.FinalDamage *= 0.3f;
+
+            if (projectile.FargoSouls().IsAHeldProj)
+                modifiers.FinalDamage *= 0.4f;
+
+            if (WorldSavingSystem.SwarmActive)
+                if (projectile.type == ModContent.ProjectileType<StyxGazer>() || projectile.type == ModContent.ProjectileType<StyxSickle>())
+                    modifiers.FinalDamage *= 0.001f;
+        }
+        public override void SafeModifyHitByItem(NPC npc, Player player, Item item, ref NPC.HitModifiers modifiers)
+        {
+            modifiers.FinalDamage *= 0.4f;
         }
         public override void SafeOnHitByProjectile(NPC npc, Projectile projectile, NPC.HitInfo hit, int damageDone)
         {
-            if (!FargoSoulsUtil.IsSummonDamage(projectile) && projectile.damage > 5)
+            if (!FargoSoulsUtil.IsSummonDamage(projectile) && !projectile.FargoSouls().IsAHeldProj && projectile.damage > 5)
                 projectile.damage = (int)Math.Min(projectile.damage - 1, projectile.damage * 0.75);
         }
 
@@ -1065,9 +1090,8 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
         public override bool CanHitPlayer(NPC npc, Player target, ref int CooldownSlot)
         {
-            return WorldSavingSystem.SwarmActive
-                || !FargoSoulsUtil.BossIsAlive(ref EModeGlobalNPC.destroyBoss, NPCID.TheDestroyer)
-                || WorldSavingSystem.MasochistModeReal;
+            return !FargoSoulsUtil.BossIsAlive(ref EModeGlobalNPC.destroyBoss, NPCID.TheDestroyer)
+                || (WorldSavingSystem.MasochistModeReal && Main.getGoodWorld);
         }
 
         public override void OnFirstTick(NPC npc)
@@ -1084,7 +1108,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
         {
             bool result = base.SafePreAI(npc);
 
-            if (WorldSavingSystem.SwarmActive || !FargoSoulsUtil.BossIsAlive(ref EModeGlobalNPC.destroyBoss, NPCID.TheDestroyer))
+            if (!FargoSoulsUtil.BossIsAlive(ref EModeGlobalNPC.destroyBoss, NPCID.TheDestroyer))
                 return result;
 
             //bool isCoiling = Main.npc[EModeGlobalNPC.destroyBoss].GetGlobalNPC<Destroyer>().IsCoiling;
@@ -1095,7 +1119,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     npc.localAI[0] = -30;
             }
 
-            if (WorldSavingSystem.MasochistModeReal) //use vanilla movement unless shooting laser
+            if (WorldSavingSystem.MasochistModeReal && Main.getGoodWorld) //use vanilla movement unless shooting laser
             {
                 if (!ShootLaser)
                     return result;

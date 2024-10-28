@@ -35,14 +35,14 @@ namespace FargowiltasSouls.Common.Graphics.Drawers
             private set;
         }
 
-        public override void Load()
-        {
-            WingTarget = new(true, ManagedRenderTarget.CreateScreenSizedTarget, true);
-            Main.OnPreDraw += PrepareWingTarget;
-            On_LegacyPlayerRenderer.DrawPlayers += DrawWingTarget;
-            On_PlayerDrawLayers.DrawPlayer_09_Wings += PreventDefaultWingDrawing;
-            On_Player.WingFrame += ManuallyAnimateCustomWingsIHateThis;
-        }
+		public override void Load()
+		{
+			WingTarget = new(true, ManagedRenderTarget.CreateScreenSizedTarget, true);
+			Main.OnPreDraw += PrepareWingTarget;
+			On_LegacyPlayerRenderer.DrawPlayers += DrawWingTarget;
+			On_PlayerDrawLayers.DrawPlayer_09_Wings += PreventDefaultWingDrawing;
+			On_Player.WingFrame += ManuallyAnimateCustomWingsIHateThis;
+		}
 
         // This suffices for now, but a better system should be used if multiple wings with more frames are wanted.
         private void ManuallyAnimateCustomWingsIHateThis(On_Player.orig_WingFrame orig, Player self, bool wingFlap, bool isCustomWings)
@@ -92,21 +92,21 @@ namespace FargowiltasSouls.Common.Graphics.Drawers
                 break;
             }
 
-            if (!ShaderManager.HasFinishedLoading || Main.gameMenu || !WingsInUse)
-                return;
+			if (!ShaderManager.HasFinishedLoading || Main.gameMenu || !WingsInUse)
+				return;
 
-            WingTarget.SwapToRenderTarget();
+			WingTarget.SwapToRenderTarget();
 
-            // Prepare the shader.
-            var shader = ShaderManager.GetShader("FargowiltasSouls.EternitySoulWings");
-            FargoSoulsUtil.SetTexture1(FargosTextureRegistry.TurbulentNoise.Value);
-            FargoSoulsUtil.SetTexture2(FargosTextureRegistry.ColorNoiseMap.Value);
+			// Prepare the shader.
+			var shader = ShaderManager.GetShader("FargowiltasSouls.EternitySoulWings");
+			FargoSoulsUtil.SetTexture1(FargosTextureRegistry.TurbulentNoise.Value);
+			FargoSoulsUtil.SetTexture2(FargosTextureRegistry.ColorNoiseMap.Value);
 
-            shader.TrySetParameter("lightning", Color.White);
+			shader.TrySetParameter("lightning", Color.White);
             shader.TrySetParameter("resolution", WingTarget.Target.Size() / 2);
             shader.Apply();
 
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearWrap, DepthStencilState.None, Main.Rasterizer, shader.Shader.Value, Matrix.Identity);
+			Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearWrap, DepthStencilState.None, Main.Rasterizer, shader.Shader.Value, Matrix.Identity);
 
             for (int i = 0; i < Main.maxPlayers; i++)
             {

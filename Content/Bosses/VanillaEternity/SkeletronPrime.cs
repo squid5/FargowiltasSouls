@@ -82,9 +82,6 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
             EModeGlobalNPC.primeBoss = npc.whoAmI;
 
-            if (WorldSavingSystem.SwarmActive)
-                return result;
-
             if (npc.ai[1] == 3) //despawn faster
             {
                 if (npc.timeLeft > 60)
@@ -118,7 +115,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                 }
             }
 
-            if (npc.ai[0] != 2f || WorldSavingSystem.MasochistModeReal)
+            if (npc.ai[0] != 2f)
             {
                 if (!HaveShotGuardians && npc.ai[1] == 1f && npc.ai[2] > 2f) //spinning, do wave of guardians
                 {
@@ -242,7 +239,8 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                 }
 
                 //spawn 4 more limbs
-                if (!FullySpawnedLimbs && (npc.life < npc.lifeMax * 0.6 || WorldSavingSystem.MasochistModeReal) && npc.ai[1] == 0f && npc.ai[3] >= 0f) // cannot go p3 while spinning
+                float threshold = WorldSavingSystem.MasochistModeReal ? 0.8f : 0.6f;
+                if (!FullySpawnedLimbs && npc.life < npc.lifeMax * threshold && npc.ai[1] == 0f && npc.ai[3] >= 0f) // cannot go p3 while spinning
                 {
                     if (limbTimer == 0)
                     {
@@ -314,7 +312,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
                             foreach (NPC l in Main.npc.Where(l => l.active && l.ai[1] == npc.whoAmI && limbs.Contains(l.type) && !l.GetGlobalNPC<PrimeLimb>().IsSwipeLimb))
                             {
-                                l.GetGlobalNPC<PrimeLimb>().RangedAttackMode = npc.type == rangedArm || npc.type == meleeArm;
+                                l.GetGlobalNPC<PrimeLimb>().RangedAttackMode = !(npc.type == rangedArm || npc.type == meleeArm);
 
                                 int heal = l.lifeMax;
                                 l.life = Math.Min(l.life + l.lifeMax / 2, l.lifeMax);
@@ -360,7 +358,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             // it's also kept for structural reasons, and since phase 1 still exists in masomode
             if (npc.ai[0] != 2f) //go phase 2 instantly
             {
-                float threshold = WorldSavingSystem.MasochistModeReal ? 0.8f : 1f;  //instant in emode, 80% in maso
+                float threshold = 1f; //instant
                 if (npc.life <= npc.lifeMax * threshold /*.8*/)
                 {
                     npc.ai[0] = 2f;
@@ -380,12 +378,14 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
         public override bool CheckDead(NPC npc)
         {
-            if (npc.ai[1] != 2f && !WorldSavingSystem.SwarmActive)
+            if (npc.ai[1] != 2f)
             {
                 SoundEngine.PlaySound(SoundID.Roar, npc.Center);
                 npc.life = npc.lifeMax / 630;
                 if (npc.life < 100)
                     npc.life = 100;
+                if (WorldSavingSystem.SwarmActive && npc.life > 666)
+                    npc.life = 666;
                 npc.defDefense = 9999;
                 npc.defense = 9999;
                 npc.defDamage *= 13;
@@ -507,9 +507,6 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             if (NoContactDamageTimer > 0)
                 NoContactDamageTimer--;
 
-            if (WorldSavingSystem.SwarmActive)
-                return true;
-
             NPC head = FargoSoulsUtil.NPCExists(npc.ai[1], NPCID.SkeletronPrime);
             if (head == null)
             {
@@ -548,6 +545,8 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
             if (npc.timeLeft < 600)
                 npc.timeLeft = 600;
+
+            npc.chaseable = false;
 
             if (npc.dontTakeDamage)
             {

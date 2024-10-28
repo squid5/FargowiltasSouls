@@ -10,11 +10,6 @@ namespace FargowiltasSouls.Content.Items.Armor
     {
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("Eridanus Battleplate");
-            /* Tooltip.SetDefault(@"10% increased damage
-10% increased critical strike chance
-Reduces damage taken by 10%
-Grants life regeneration"); */
 
             Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }

@@ -89,7 +89,13 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies
                     && (!NeedLineOfSight || NeedLineOfSight && Collision.CanHitLine(npc.Center, 0, 0, Main.player[npc.target].Center, 0, 0))
                     && FargoSoulsUtil.HostCheck)
                 {
-                    Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, Speed * npc.SafeDirectionTo(Main.player[npc.target].Center), ProjectileType, FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage, DamageMultiplier), 0, Main.myPlayer);
+                    int p = Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, Speed * npc.SafeDirectionTo(Main.player[npc.target].Center), ProjectileType, FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage, DamageMultiplier), 0, Main.myPlayer);
+                    if (p.IsWithinBounds(Main.maxProjectiles))
+                    {
+                        Main.projectile[p].friendly = false;
+                        Main.projectile[p].hostile = true;
+                        Main.projectile[p].netUpdate = true;
+                    }
                 }
             }
         }

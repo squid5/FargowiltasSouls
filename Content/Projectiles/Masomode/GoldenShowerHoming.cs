@@ -79,7 +79,7 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
                     Projectile.velocity = new Vector2(Projectile.velocity.Length(), 0f).RotatedBy(rotation.AngleLerp(targetAngle, 0.025f));
                 }
 
-                if (WorldSavingSystem.MasochistModeReal && !hitATile && Collision.SolidTiles(Projectile.Center, 0, 0))
+                if (WorldSavingSystem.MasochistModeReal && Main.getGoodWorld && !hitATile && Collision.SolidTiles(Projectile.Center, 0, 0))
                 {
                     hitATile = true;
                     if (FargoSoulsUtil.HostCheck)

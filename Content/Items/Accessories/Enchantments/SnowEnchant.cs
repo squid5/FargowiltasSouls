@@ -14,13 +14,6 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
-
-            // DisplayName.SetDefault("Snow Enchantment");
-            /* Tooltip.SetDefault(
-@"Your attacks briefly inflict Frostburn
-Press the Freeze Key to chill everything for 15 seconds
-There is a 60 second cooldown for this effect
-'It's Burning Cold Outside'"); */
         }
 
         public override Color nameColor => new(37, 195, 242);
@@ -140,7 +133,7 @@ There is a 60 second cooldown for this effect
                 if (modPlayer.IcicleCount >= 1 && player.controlUseItem && player.HeldItem.IsWeapon() && player.HeldItem.createTile == -1 && player.HeldItem.createWall == -1 && player.HeldItem.ammo == AmmoID.None)
                 {
 
-                    int dmg = modPlayer.ForceEffect<FrostEnchant>() ? 100 : (player.HasEffect<FrostEffect>() ? 50 : 20);
+                    int dmg = modPlayer.ForceEffect<FrostEnchant>() ? 100 : (player.HasEffect<FrostEffect>() ? 50 : 30);
 
                     for (int i = 0; i < Main.maxProjectiles; i++)
                     {
@@ -155,8 +148,10 @@ There is a 60 second cooldown for this effect
                             int p = Projectile.NewProjectile(GetSource_EffectItem(player), proj.Center, vel, attackType, FargoSoulsUtil.HighestDamageTypeScaling(player, dmg), 1f, player.whoAmI);
                             if (p != Main.maxProjectiles)
                             {
+                                Main.projectile[p].DamageType = DamageClass.Magic;
                                 Main.projectile[p].FargoSouls().CanSplit = false;
-                                Main.projectile[p].FargoSouls().FrostFreeze = true;
+                                if (player.HasEffect<FrostEffect>() || player.ForceEffect<SnowEffect>())
+                                    Main.projectile[p].FargoSouls().FrostFreeze = true;
                             }
 
                             proj.Kill();

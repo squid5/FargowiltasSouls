@@ -10,6 +10,7 @@ namespace FargowiltasSouls.Content.Projectiles.ChallengerItems
 
     public class LightslingerBombshot : ModProjectile
     {
+        public override string Texture => "FargowiltasSouls/Content/Bosses/Lifelight/LifeProjSmall";
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Light Shot");

@@ -1,13 +1,12 @@
-﻿using FargowiltasSouls.Content.Bosses.Champions.Cosmos;
-using FargowiltasSouls.Content.Buffs;
-using FargowiltasSouls.Content.Buffs.Masomode;
-using FargowiltasSouls.Content.Items.Accessories.Forces;
+﻿using FargowiltasSouls.Content.Buffs.Masomode;
+using FargowiltasSouls.Content.Items.Accessories.Enchantments;
 using FargowiltasSouls.Content.Projectiles.Masomode;
+using FargowiltasSouls.Content.UI.Elements;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using FargowiltasSouls.Core.Toggler.Content;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -22,18 +21,6 @@ namespace FargowiltasSouls.Content.Items.Accessories.Masomode
 
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("Wretched Pouch");
-            /* Tooltip.SetDefault(
-@"Grants immunity to Shadowflame
-While attacking, increases damage by 120% but reduces damage reduction by 20% and massively decreases movement
-While attacking, shadowflame tentacles lash out at nearby enemies
-Attack speed bonuses are half as effective
-'The accursed incendiary powder of a defeated foe'"); */
-            //             DisplayName.AddTranslation((int)GameCulture.CultureName.Chinese, "诅咒袋子");
-            //             Tooltip.AddTranslation((int)GameCulture.CultureName.Chinese, @"'被打败的敌人的诅咒燃烧炸药'
-            // 免疫暗影烈焰
-            // 受伤时爆发暗影烈焰触须");
-
             Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
@@ -80,11 +67,16 @@ Attack speed bonuses are half as effective
                     Main.dust[d].noGravity = true;
                     Main.dust[d].velocity *= 5f;
                 }
+                if (player.whoAmI == Main.myPlayer)
+                    CooldownBarManager.Activate("WretchedPouchCharge", ModContent.Request<Texture2D>("FargowiltasSouls/Content/Items/Accessories/Masomode/WretchedPouch").Value, Color.DarkMagenta, 
+                        () => Main.LocalPlayer.FargoSouls().WretchedPouchCD / (float)MaxChargeTime, true, activeFunction: () => player.HasEffect<WretchedPouchEffect>());
             }
             else
             {
                 // maximum charge: 8 seconds
                 float charge = modPlayer.WretchedPouchCD / (float)MaxChargeTime;
+                if (modPlayer.WretchedPouchCD > 0)
+                    modPlayer.WretchedPouchCD--;
                 if (charge < 0.2f)
                     return;
                 charge = MathHelper.Clamp(charge, 0, 1);

@@ -1,4 +1,6 @@
 ﻿using FargowiltasSouls.Content.Buffs.Souls;
+using FargowiltasSouls.Content.Items.Accessories.Forces;
+using FargowiltasSouls.Content.Projectiles;
 using FargowiltasSouls.Content.Projectiles.Souls;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using FargowiltasSouls.Core.Toggler.Content;
@@ -7,6 +9,7 @@ using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static FargowiltasSouls.Content.Items.Accessories.Forces.TimberForce;
 
 namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
 {
@@ -15,12 +18,6 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
-
-            // DisplayName.SetDefault("Shadewood Enchantment");
-            /* Tooltip.SetDefault(
-@"You have an aura of Bleeding
-Enemies struck while Bleeding spew damaging blood
-'Surprisingly clean'"); */
         }
 
         public override Color nameColor => new(88, 104, 118);
@@ -58,6 +55,7 @@ Enemies struck while Bleeding spew damaging blood
 
         public override Header ToggleHeader => Header.GetHeader<TimberHeader>();
         public override int ToggleItemType => ModContent.ItemType<ShadewoodEnchant>();
+        public static int Range(Player player, bool forceEffect) => (int)((forceEffect ? 400f : 200f) * (1f + player.FargoSouls().AuraSizeBonus));
         public override void PostUpdateEquips(Player player)
         {
             FargoSoulsPlayer modPlayer = player.FargoSouls();
@@ -65,7 +63,7 @@ Enemies struck while Bleeding spew damaging blood
             if (player.whoAmI != Main.myPlayer)
                 return;
             bool forceEffect = modPlayer.ForceEffect<ShadewoodEnchant>();
-            int dist = forceEffect ? 400 : 200;
+            int dist = Range(player, forceEffect);
 
             for (int i = 0; i < Main.maxNPCs; i++)
             {
@@ -74,27 +72,19 @@ Enemies struck while Bleeding spew damaging blood
                 {
                     Vector2 npcComparePoint = FargoSoulsUtil.ClosestPointInHitbox(npc, player.Center);
                     if (player.Distance(npcComparePoint) < dist && (forceEffect || Collision.CanHitLine(player.Center, 0, 0, npcComparePoint, 0, 0)))
+                    {
+                        //if (!player.HasEffect<TimberEffect>())
                         npc.AddBuff(ModContent.BuffType<SuperBleedBuff>(), 120);
+                    }
+                        
                 }
             }
-
-            for (int i = 0; i < 20; i++)
+            if (!MoltenAuraProj.CombinedAura(player))
             {
-                Vector2 offset = new();
-                double angle = Main.rand.NextDouble() * 2d * Math.PI;
-                offset.X += (float)(Math.Sin(angle) * dist);
-                offset.Y += (float)(Math.Cos(angle) * dist);
-                Vector2 spawnPos = player.Center + offset - new Vector2(4, 4);
-                if (forceEffect || Collision.CanHitLine(player.Left, 0, 0, spawnPos, 0, 0) || Collision.CanHitLine(player.Right, 0, 0, spawnPos, 0, 0))
+                int visualProj = ModContent.ProjectileType<ShadewoodAuraProj>();
+                if (player.ownedProjectileCounts[visualProj] <= 0)
                 {
-                    Dust dust = Main.dust[Dust.NewDust(
-                        spawnPos, 0, 0,
-                        DustID.Blood, 0, 0, 100, Color.White, 1f
-                        )];
-                    dust.velocity = player.velocity;
-                    if (Main.rand.NextBool(3))
-                        dust.velocity += Vector2.Normalize(offset) * -5f;
-                    dust.noGravity = true;
+                    Projectile.NewProjectile(GetSource_EffectItem(player), player.Center, Vector2.Zero, visualProj, 0, 0, Main.myPlayer);
                 }
             }
 
@@ -115,9 +105,12 @@ Enemies struck while Bleeding spew damaging blood
 
             if (forceEffect)
                 dmg *= 3;
+            if (player.HasEffect<NatureEffect>())
+                dmg *= 4;
 
             if (target.HasBuff(ModContent.BuffType<SuperBleedBuff>()) && modPlayer.ShadewoodCD == 0 && (projectile == null || projectile.type != ModContent.ProjectileType<SuperBlood>()) && player.whoAmI == Main.myPlayer)
             {
+                modPlayer.ShadewoodCD = 120;
                 for (int i = 0; i < Main.rand.Next(3, 6); i++)
                 {
                     Projectile.NewProjectile(player.GetSource_Misc(""), target.Center.X, target.Center.Y - 20, 0f + Main.rand.NextFloat(-5, 5), Main.rand.NextFloat(-5, 5), ModContent.ProjectileType<SuperBlood>(), FargoSoulsUtil.HighestDamageTypeScaling(player, dmg), 0f, Main.myPlayer);

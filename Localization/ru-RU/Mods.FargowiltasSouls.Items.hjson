@@ -111,6 +111,7 @@ CactusEnchant: {
 		Даёт иммунитет к урону от кактусов в Режиме Вечность
 		'Самый охладительный!' 
 		'''
+	// VanityTooltip: Grants immunity to cactus damage in Eternity Mode
 }
 
 ChlorophyteEnchant: {
@@ -262,6 +263,7 @@ HallowEnchant: {
 		При использовании зелья исцеления создаётся ударная волна, отталкивающая вражеские выстрелы
 		'Ударь по мне всем, что у тебя есть'
 		'''
+	// OverTime: over time
 }
 
 HuntressEnchant: {
@@ -288,6 +290,13 @@ IronEnchant: {
 		Вы подбираете предметы с большего расстояния
 		'Куй железо, пока горячо'
 		'''
+	/* VanityTooltip:
+		'''
+		When crafting an item, each material has a 33% chance to not be consumed
+		Works once per material type, ever
+		Does not work on Crucible of the Cosmos items
+		You attract items from a larger range
+		''' */
 }
 
 JungleEnchant: {
@@ -483,6 +492,7 @@ RainEnchant: {
 		Эффекты Воздушной Камеры
 		'К нам ты завтра приходи'
 		'''
+	// VanityTooltip: Grants immunity to lightning strikes in Eternity Mode
 }
 
 RedRidingEnchant: {
@@ -554,6 +564,7 @@ ShroomiteEnchant: {
 		Пока вы в скрытности, оружия будут оставлять больше грибов
 		'Сделано из настоящих грибов!'
 		'''
+	// AndMushroomPower: and grants the Mushroom Power buff
 }
 
 SilverEnchant: {
@@ -701,6 +712,7 @@ TurtleEnchant: {
 		Даёт иммунитет к урону от кактусов в режиме Вечность
 		'У вас резко появилось желание спрятаться в панцирь'
 		'''
+	// VanityTooltip: Grants immunity to cactus damage in Eternity Mode
 }
 
 ValhallaKnightEnchant: {
@@ -800,6 +812,12 @@ BoxofGizmos: {
 		Стойте неподвижно, чтобы подсветить ближайшие сокровища и врагов
 		Дайт возможность авто-атаки предметам, не относящимся к оружию
 		'''
+	/* VanityTooltip:
+		'''
+		Stand still to expose nearby treasure and enemies
+		Enemies emit light at night
+		Grants autofire to non-weapon items
+		''' */
 }
 
 UniverseCore: {
@@ -932,6 +950,7 @@ TerraForce: {
 		Шанс 50% не потратить предмет при первом создании, также вы притягиваете предметы с большего расстояния (работает в инвентаре и слотах украшений)
 		'Земля делится своей силой'
 		'''
+	// VanityTooltip: "[i:FargowiltasSouls/IronEnchant] 50% chance to not consume each item on first craft and you attract items from a larger range"
 }
 
 TimberForce: {
@@ -963,6 +982,7 @@ WillForce: {
 		У врагов есть 33% шанс оставить в 5 раз больше добычи
 		'Разум несокрушимой решимости'
 		'''
+	// VanityTooltip: "[i:FargowiltasSouls/GoldEnchant] Automatically sends coins to your piggy bank when picked up"
 }
 
 AbominableWand: {
@@ -1043,6 +1063,15 @@ BionomicCluster: {
 		    [i:FargowiltasSouls/OrdinaryCarrot] Нажмите ПКМ, чтобы отдалить камеру
 		'Амальгама, в которую слилась тысяча обыкновенных врагов'
 		'''
+	/* VanityTooltip:
+		'''
+		Grants immunity to [i:FargowiltasSouls/SandsofTime] Mighty Wind, cactus damage, [i:FargowiltasSouls/MysticSkull] Suffocation, [i:FargowiltasSouls/FrigidGemstone] Chilled, [i:FargowiltasSouls/SqueakyToy] and Guilty
+		[i:FargowiltasSouls/WyvernFeather] Stabilizes gravity in space and in liquid, [i:FargowiltasSouls/OrdinaryCarrot] improves your nightvision, [i:FargowiltasSouls/SecurityWallet] and drastically improves reforges
+		[i:FargowiltasSouls/ConcentratedRainbowMatter] Automatically uses healing & [i:FargowiltasSouls/MysticSkull] mana potions when needed and increases pickup range for mana stars
+		[i:FargowiltasSouls/NymphsPerfume] You respawn with more life [i:FargowiltasSouls/SandsofTime] and when no boss is alive, respawn faster
+		[i:FargowiltasSouls/FrigidGemstone] Press the Frigid Spell key to cast Ice Rod
+		[i:FargowiltasSouls/OrdinaryCarrot] Press right click to zoom in
+		''' */
 }
 
 BionomicClusterInactive: {
@@ -1106,6 +1135,7 @@ ConcentratedRainbowMatter: {
 		Призывает малыша радужного слизня, сражающегося за вас
 		'Попробуй радугу'
 		'''
+	// VanityTooltip: Automatically use healing potions when needed
 }
 
 DarkenedHeart: {
@@ -1177,6 +1207,12 @@ FrigidGemstone: {
 		Ваши ледяные блоки накладывают Ледяной Ожог
 		'Осколок древнего магического льда'
 		'''
+	/* VanityTooltip:
+		'''
+		Grants immunity to Frostburn and Chilled
+		Press the Frigid Spell key to cast Ice Rod
+		Your ice blocks inflict Frostburn
+		''' */
 }
 
 FrigidGemstoneInactive: {
@@ -1214,6 +1250,15 @@ GalacticGlobe: {
 		Увеличивает время полёта на 100%
 		'Всегда наблюдает'
 		'''
+	// VanityTooltip: Grants most standard potion and station buffs
+	// HoldShift: "[c/ADD8E6:Hold Left Shift to view potion buffs]"
+	/* ExpandedTooltip:
+		'''
+		[c/ADD8E6:Ironskin, Regeneration, Swiftness, Mana Regeneration, Magic Power, Ammo Reservation, Archery,] 
+		[c/ADD8E6:Builder, Crate, Endurance, Fishing, Gills, Lucky, Heartreach, Lifeforce, Mining, Obsidian Skin,] 
+		[c/ADD8E6:Rage, Wrath, Sonar, Summoning, Thorns, Titan, Warmth, Water Walking, Exquisitely Stuffed,]
+		[c/ADD8E6:Sharpened, Ammo Box, Clairvoyance, Bewitched, Wartable, Honey]
+		''' */
 }
 
 GelicWings: {
@@ -1273,6 +1318,7 @@ HeartoftheMasochist: {
 		[i:FargowiltasSouls/SaucerControlConsole] Нажмите клавишу Смены Боеприпасов, чтобы переключить используемые боеприпасы (работает пассивно из инвентаря)
 		'Тёплое, бьётся, и не нуждается в теле'
 		'''
+	// VanityTooltip: "[i:FargowiltasSouls/SaucerControlConsole] Press Ammo Cycle key to cycle ammos and [i:FargowiltasSouls/GalacticGlobe] grants most standard potion buffs"
 }
 
 IceQueensCrown: {
@@ -1369,6 +1415,12 @@ MysticSkull: {
 		Увеличивает дальность подбора звёзд маны
 		'Тихо бормочущая голова побеждённого врага'
 		'''
+	/* VanityTooltip:
+		'''
+		Grants immunity to Suffocation
+		Automatically use mana potions when needed
+		Increases pickup range for mana stars
+		''' */
 }
 
 MysticSkullInactive: {
@@ -1404,6 +1456,7 @@ NymphsPerfume: {
 		Ваши атаки периодически создают сердца
 		'Запах довольно резкий'
 		'''
+	// VanityTooltip: You respawn with more life
 }
 
 PrecisionSeal: {
@@ -1499,6 +1552,12 @@ SandsofTime: {
 		Используйте, чтобы телепортироваться к месту вашей последней смерти
 		'Что бы ты не делал, не урони их'
 		'''
+	/* VanityTooltip:
+		'''
+		Grants immunity to Mighty Wind and cactus damage
+		You respawn twice as fast when no boss is alive
+		Use to teleport to your last death point
+		''' */
 }
 
 SaucerControlConsole: {
@@ -1511,6 +1570,7 @@ SaucerControlConsole: {
 		Притягивающие лучи тарелки замедляют врагов при попадании
 		'Просто оставь её в режиме полёта'
 		'''
+	// VanityTooltip: Press the Ammo Cycle key to cycle ammos
 }
 
 SecurityWallet: {
@@ -1522,6 +1582,11 @@ SecurityWallet: {
 		Эффект работает из инвентаря
 		'Не защищает от воровства с вашего трупа'
 		'''
+	/* VanityTooltip:
+		'''
+		Grants immunity to Midas
+		Drastically improves reforges
+		''' */
 }
 
 SinisterIcon: {
@@ -1639,6 +1704,7 @@ WyvernFeather: {
 		Стабилизирует гравитацию в космосе и жидкостях, работает из инвентаря
 		'Тёплое на ощупь'
 		'''
+	// VanityTooltip: Stabilizes gravity in space and in liquids
 }
 
 ZephyrBoots: {
@@ -1785,6 +1851,7 @@ MasochistSoul: {
 		[i:FargowiltasSouls/SandsofTime] Используйте, чтобы телепортироваться к месту вашей последней смерти
 		'Прими власть, прими вечность'
 		'''
+	// VanityTooltip: "[i:FargowiltasSouls/GalacticGlobe] Grants most standard potion and station buffs"
 }
 
 SnipersSoul: {
@@ -2123,6 +2190,7 @@ OrdinaryCarrot: {
 		Нажмите ПКМ, чтобы увеличить дальность обзора, пока находится в инвентаре
 		'Сорвано с лица побеждённого врага'
 		'''
+	// VanityTooltip: Right click to increase view range
 }
 
 RabiesShot: {
@@ -3372,6 +3440,7 @@ OncomingMutantItem: {
 Extra: {
 	StarlightTungsten: x0.40 урона при использовании с Зачарованием Вольфрама
 	DefensePrefixMaxLife: +{0} к максимальному запасу здоровья
+	// ViolentPrefix: +{0}% attack speed
 	EternityItem: Вечность
 	DisabledEffects: Некоторые эффекты выключены в меню Переключения Эффектов
 	PatreonItem: >> Предмет Патреона <<
@@ -3495,4 +3564,110 @@ WillBooster: {
 	// Tooltip: ""
 	// Activate: +{0} flat damage
 	// Deactivate: -{0} flat damage
+}
+
+CoffinRoominator: {
+	// DisplayName: Coffin Roominator
+	// Tooltip: ""
+}
+
+GildedSceptre: {
+	// DisplayName: Gilded Sceptre
+	/* Tooltip:
+		'''
+		Draw a circle to activate projectiles
+		Activated projectiles chase after the nearest enemy
+		Activated projectiles deal more damage based on circle accuracy
+		''' */
+}
+
+AccursedAnkh: {
+	// DisplayName: Accursed Ankh
+	// Tooltip: While held out, increases life regeneration and debuff depletion, but decreases defense by 10
+}
+
+SisypheanFist: {
+	// DisplayName: Sisyphean Gauntlet
+	/* Tooltip:
+		'''
+		While grounded, grab a huge boulder from the earth
+		Release the button to hurl it towards your cursor
+		Boulder damage scales with its speed
+		Pierces enemies with low health
+		''' */
+}
+
+EgyptianFlail: {
+	// DisplayName: Nekhakha
+	/* Tooltip:
+		'''
+		Your summons will focus struck enemies
+		Occasionally causes shadowflame explosions
+		''' */
+}
+
+SpiritLongbow: {
+	// DisplayName: Spirit Longbow
+	/* Tooltip:
+		'''
+		Converts arrows to Spirit Arrows that release spirit flames behind them
+		Hold button to charge shots for more damage and higher speed
+		Pierces enemies with low health
+		''' */
+}
+
+CursedCoffinBag: {
+	// DisplayName: Treasure Bag (Cursed Coffin)
+	// Tooltip: Right Click to open
+}
+
+CursedCoffinRelic: {
+	// DisplayName: Cursed Coffin Relic
+	// Tooltip: ""
+}
+
+CursedCoffinTrophy: {
+	// DisplayName: Cursed Coffin Trophy
+	// Tooltip: ""
+}
+
+UmbraRegalia: {
+	// DisplayName: Umbra Regalia
+	/* Tooltip:
+		'''
+		Left Click to rapidly stab with the spear
+		Hold Right Click to charge a spear toss
+		Becomes stronger when fully charged
+		Can continue to gain damage for a while after full charge
+		'The reward for a mighty rematch...'
+		''' */
+}
+
+CoffinPainting: {
+	// DisplayName: Coffin Painting
+	// Tooltip: ""
+}
+
+ElectricWhip: {
+	// DisplayName: Voltaic Chain
+	/* Tooltip:
+		'''
+		Whip enemies to fire chain lightning from nearby minions, up to 4 times per swing
+		'The lifeblood of a defeated foe...'
+		''' */
+}
+
+TheDestroyer: {
+	// DisplayName: The Destroyer
+	/* Tooltip:
+		'''
+		Whip your minions to fire a laser at a nearby enemy, up to 6 times per swing
+		Every 20th swing, the destroyer breaks loose and tracks your mouse for 5 seconds
+		'The reward for a mighty rematch..'
+		''' */
+}
+
+FallenStarDayItem: {
+	// DisplayName: Fallen Star
+	// Tooltip: ""
 }

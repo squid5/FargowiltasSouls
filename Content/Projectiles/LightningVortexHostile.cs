@@ -23,7 +23,8 @@ namespace FargowiltasSouls.Content.Projectiles
         {
             Projectile.width = 32;
             Projectile.height = 32;
-            Projectile.friendly = true;
+            Projectile.friendly = false;
+            Projectile.hostile = true;
             Projectile.ignoreWater = true;
             Projectile.tileCollide = false;
             Projectile.alpha = 255;

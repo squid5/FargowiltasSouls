@@ -1,4 +1,5 @@
 ﻿using FargowiltasSouls.Content.Buffs.Souls;
+using FargowiltasSouls.Content.Projectiles;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using FargowiltasSouls.Core.Toggler.Content;
 using Microsoft.Xna.Framework;
@@ -8,6 +9,7 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static FargowiltasSouls.Content.Items.Accessories.Forces.TimberForce;
 
 namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
 {
@@ -16,13 +18,6 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
-
-            // DisplayName.SetDefault("Ebonwood Enchantment");
-            /* Tooltip.SetDefault(
-@"You are surrounded by an aura of Shadowflame
-Any projectiles that would deal less than 10 damage to you are destroyed
-'Untapped potential'"); */
-            //in force damage theshold increased to 25 AND any npc that has less than 200 HP is instantly killed in the aura
         }
 
         public override Color nameColor => new(100, 90, 141);
@@ -70,7 +65,7 @@ Any projectiles that would deal less than 10 damage to you are destroyed
                 return;
 
             bool forceEffect = modPlayer.ForceEffect<EbonwoodEnchant>();
-            int dist = forceEffect ? 400 : 200;
+            int dist = ShadewoodEffect.Range(player, forceEffect);
             foreach (NPC npc in Main.npc.Where(n => n.active && !n.friendly && n.lifeMax > 5 && !n.dontTakeDamage))
             {
                 Vector2 npcComparePoint = FargoSoulsUtil.ClosestPointInHitbox(npc, player.Center);
@@ -81,29 +76,19 @@ Any projectiles that would deal less than 10 damage to you are destroyed
                         npc.AddBuff(ModContent.BuffType<CorruptingBuff>(), 2);
                     }
                 }
-                if (npc.FargoSouls().EbonCorruptionTimer > 60 * 3 && (!(npc.HasBuff<WitheredWizardBuff>() || npc.HasBuff<WitheredBuff>())))
+                float corruptTime = player.HasEffect<TimberEffect>() ? 10f : 60 * 3;
+                if (npc.FargoSouls().EbonCorruptionTimer > corruptTime && (!(npc.HasBuff<WitheredWizardBuff>() || npc.HasBuff<WitheredBuff>())))
                 {
                     EbonwoodProc(player, npc, dist, forceEffect, 5);
                 }
             }
             //dust
-            for (int i = 0; i < 20; i++)
+            if (!MoltenAuraProj.CombinedAura(player))
             {
-                Vector2 offset = new();
-                double angle = Main.rand.NextDouble() * 2d * Math.PI;
-                offset.X += (float)(Math.Sin(angle) * dist);
-                offset.Y += (float)(Math.Cos(angle) * dist);
-                Vector2 spawnPos = player.Center + offset - new Vector2(4, 4);
-                if (forceEffect || Collision.CanHitLine(player.Left, 0, 0, spawnPos, 0, 0) || Collision.CanHitLine(player.Right, 0, 0, spawnPos, 0, 0))
+                int visualProj = ModContent.ProjectileType<EbonwoodAuraProj>();
+                if (player.ownedProjectileCounts[visualProj] <= 0)
                 {
-                    Dust dust = Main.dust[Dust.NewDust(
-                        spawnPos, 0, 0,
-                        DustID.Shadowflame, 0, 0, 100, Color.White, 1f
-                        )];
-                    dust.velocity = player.velocity;
-                    if (Main.rand.NextBool(3))
-                        dust.velocity += Vector2.Normalize(offset) * -5f;
-                    dust.noGravity = true;
+                    Projectile.NewProjectile(GetSource_EffectItem(player), player.Center, Vector2.Zero, visualProj, 0, 0, Main.myPlayer);
                 }
             }
         }

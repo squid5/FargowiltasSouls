@@ -672,7 +672,7 @@ RoseTintedVisorDeathray.DisplayName: 玫瑰激光
 GladiatorStandard.DisplayName: 角斗士旗帜
 HiveSentry.DisplayName: 蜂巢
 ROB.DisplayName: R.O.B
-MeteorFlame.DisplayName: 流星焰
+// MeteorEnchantMeatball.DisplayName: Massive Meteor
 RainUmbrella.DisplayName: 雨伞
 BeeFlower.DisplayName: 蜜蜂花朵
 MonkDashDamage.DisplayName: 武僧冲刺
@@ -687,7 +687,7 @@ DeviGuardianHarmless.DisplayName: 宝宝守卫者
 PungentEyeballMinion.DisplayName: 尖刻眼球
 // MinosPrime.DisplayName: Minos Prime
 RainLightning.DisplayName: 闪电弧
-PlanteraThornChakram.DisplayName: 荆棘旋刃
+// PlanteraTooth.DisplayName: Plantera Tooth
 PlanteraRitual.DisplayName: 世纪之花结界
 PlanteraManEater.DisplayName: 食人怪
 PlanteraSnatcher.DisplayName: 抓人草
@@ -717,17 +717,54 @@ HentaiSword.DisplayName: 洞察者
 HentaiSwordBlast.DisplayName: 洞察者爆炸
 HentaiSphereOkuu.DisplayName: 洞察者幻影球
 AbomRitualFTW.DisplayName: 憎恶结界FTW
-// RoyalSubjectProjectile.DisplayName: Royal Subject Projectile
+// FallingSandstone.DisplayName: Falling Sandstone
+// CoffinPlayerSoul.DisplayName: Your Soul
+// GildedSceptreProj.DisplayName: Shadowflame Sceptre Shot
+// RoyalSubjectProjectile.DisplayName: Royal Subject
+// SandstoneBoulder.DisplayName: Sandstone Boulder
+// SandstoneShrapnel.DisplayName: Sandstone Shrapnel
+// EgyptianFlailProjectile.DisplayName: Nekhakha
+// SpiritBow.DisplayName: Spirit Bow
 // TimberBranch.DisplayName: Timber Branch
 // CosmosForceMoon.DisplayName: Cosmos Force Moon
 // GladiatorSpirit.DisplayName: Gladiator Spirit
 // ShadowDash.DisplayName: Shadow Dash
 // SpiritTornado.DisplayName: Spirit Tornado
-// TerrariaSoulMoon.DisplayName: Terraria Soul Moon
-// DeviDevilScythe.DisplayName: Devi Devil Scythe
-// LifeHomingProjSmall.DisplayName: Life Homing Proj Small
+// TerrariaSoulMoon.DisplayName: Moon of Terraria
+// DeviDevilScythe.DisplayName: Devil Scythe
+// LifeHomingProjSmall.DisplayName: Lifeshot
 // LifeRuneExplosion.DisplayName: Life Rune Explosion
-// LifeRunespearHitbox.DisplayName: Life Runespear Hitbox
+// LifeRunespearHitbox.DisplayName: Life Runespear
 // LifeRunespearExplosion.DisplayName: Life Runespear Explosion
-// LifeRuneRetractHitbox.DisplayName: Life Rune Retract Hitbox
+// LifeRuneRetractHitbox.DisplayName: Life Rune
 // Slimesplosion.DisplayName: Slimesplosion
+// TwinsEyeFlash.DisplayName: Twins Eye Flash
+// UmbraRegaliaProj.DisplayName: Umbra Regalia
+// EffectVisual.DisplayName: Effect Visual
+// SpectreGhostProj.DisplayName: Spectre Ghost
+// SpectreSpirit.DisplayName: Spectre Spirit
+// VortexLaser.DisplayName: Vortex Laser
+// DicerPlanteraSeed.DisplayName: Dicer Bomb Seed
+// MoltenAuraProj.DisplayName: Molten Aura
+// LifelightEnvironmentStar.DisplayName: Star of Light
+// NebulaShot.DisplayName: Nebula Shot
+// SolarEnchFlare.DisplayName: Solar Flare
+// DeerclopsDarknessHand.DisplayName: Hand of Shadow
+// SlimeKingSlasherProj.DisplayName: Slime King's Slasher
+// AbomStyxGazerDash.DisplayName: Styx Gazer
+// EbonwoodAuraProj.DisplayName: Ebonwood Aura
+// ShadewoodAuraProj.DisplayName: Shadewood Aura
+// MeteorExplosion.DisplayName: Meteor Explosion
+// SlimeSlingingSlasherProj.DisplayName: Slime Slinging Slasher
+// PlanteraSpikevine.DisplayName: Plantera Spikevine
+// ElectricWhipProj.DisplayName: Voltaic Lasher
+// ElectricWhipLightning.DisplayName: Voltaic Lasher Lightning
+// TheDestroyerProj.DisplayName: The Destroyer
+// DestroyerBodyWhip.DisplayName: Destroyer Body
+// DestroyerHeadWhip.DisplayName: Destroyer Head
+// DestroyerTailWhip.DisplayName: Destroyer Tail
+// DestroyerScanTelegraph.DisplayName: Destroyer Scan Telegraph
+// PungentAuraProj.DisplayName: Pungent Aura Proj
+// RockeaterAuraProj.DisplayName: Rockeater Aura Proj
+// FallenStarDay.DisplayName: Fallen Star Day
+// LightningRodLightning.DisplayName: Lightning Rod Lightning

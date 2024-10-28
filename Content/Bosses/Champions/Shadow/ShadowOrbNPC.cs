@@ -17,10 +17,12 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Shadow
             NPCID.Sets.BossBestiaryPriority.Add(NPC.type);
 
             NPCID.Sets.ImmuneToAllBuffs[Type] = true;
+            this.ExcludeFromBestiary();
         }
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
+            /*
             bestiaryEntry.UIInfoProvider = new CommonEnemyUICollectionInfoProvider(
                    ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[ModContent.NPCType<ShadowChampion>()],
                    quickUnlock: true
@@ -30,6 +32,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Shadow
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.NightTime,
                 new FlavorTextBestiaryInfoElement($"Mods.FargowiltasSouls.Bestiary.{Name}")
             ]);
+            */
         }
 
         public override void SetDefaults()

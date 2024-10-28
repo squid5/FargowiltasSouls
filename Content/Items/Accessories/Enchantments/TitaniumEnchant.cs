@@ -1,9 +1,8 @@
 using FargowiltasSouls.Content.Buffs.Souls;
+using FargowiltasSouls.Content.Items.Accessories.Forces;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using FargowiltasSouls.Core.Toggler.Content;
 using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
 using Terraria;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
@@ -16,13 +15,6 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
-
-            // DisplayName.SetDefault("Titanium Enchantment");
-            /* Tooltip.SetDefault(
-@"Attacking generates a defensive barrier of up to 20 titanium shards
-When you reach the maximum amount, you gain resistance to most debuffs on hit and 50% damage resistance against contact damage and projectiles in close range
-This has a cooldown of 10 seconds during which you cannot gain shards
-'The power of titanium in the palm of your hand'"); */
         }
 
         public override Color nameColor => new(130, 140, 136);
@@ -63,7 +55,7 @@ This has a cooldown of 10 seconds during which you cannot gain shards
 
         public override float ContactDamageDR(Player player, NPC npc, ref Player.HurtModifiers modifiers)
         {
-            return base.ContactDamageDR(player, npc, ref modifiers);
+            return TitaniumDR(player, npc);
         }
         public override float ProjectileDamageDR(Player player, Projectile projectile, ref Player.HurtModifiers modifiers)
         {
@@ -71,28 +63,38 @@ This has a cooldown of 10 seconds during which you cannot gain shards
         }
         public static float TitaniumDR(Player player, Entity attacker)
         {
+            if (player.HasEffect<EarthForceEffect>())
+                return 0;
             FargoSoulsPlayer modPlayer = player.FargoSouls();
 
             if (!modPlayer.TitaniumDRBuff)
                 return 0;
+            NPC sourceNPC = null;
+            if (attacker is NPC attackerNPC)
+                sourceNPC = attackerNPC;
+            if (attacker is Projectile projectile && projectile.GetSourceNPC() is NPC projNPC)
+                sourceNPC = projNPC;
 
-            bool canUseDR = attacker is NPC ||
-                attacker is Projectile projectile && projectile.GetSourceNPC() is NPC sourceNPC
-                && player.Distance(sourceNPC.Center) < Math.Max(sourceNPC.width, sourceNPC.height) + 16 * 8;
-
-            if (canUseDR)
+            if (sourceNPC != null)
             {
-                float diff = 1f - player.endurance;
-                diff *= modPlayer.ForceEffect<TitaniumEnchant>() ? 0.35f : 0.25f;
-                return diff;
+                float dr = 0.1f;
+                float closeExtraDR = 0.2f;
+                if (modPlayer.ForceEffect<TitaniumEnchant>())
+                    closeExtraDR += 0.1f;
+                float distance = player.Distance(sourceNPC.Center);
+                float closeBonus = MathHelper.Lerp(closeExtraDR, 0f, distance / 1000f);
+                closeBonus = MathHelper.Clamp(closeBonus, 0f, closeExtraDR);
+                dr += closeBonus;
+                return dr;
             }
             return 0;
         }
 
         public static void TitaniumShards(FargoSoulsPlayer modPlayer, Player player)
         {
-
             if (modPlayer.TitaniumCD)
+                return;
+            if (player.HasEffect<EarthForceEffect>())
                 return;
 
             player.AddBuff(306, 600, true, false);
@@ -130,6 +132,8 @@ This has a cooldown of 10 seconds during which you cannot gain shards
 
         public override void PostUpdateMiscEffects(Player player)
         {
+            if (player.HasEffect<EarthForceEffect>())
+                return;
             FargoSoulsPlayer modPlayer = player.FargoSouls();
 
             if (modPlayer.TitaniumDRBuff && modPlayer.prevDyes == null)

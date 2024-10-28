@@ -4,12 +4,9 @@ using FargowiltasSouls.Content.Projectiles.Souls;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using FargowiltasSouls.Core.Toggler.Content;
 using Microsoft.Xna.Framework.Graphics;
-using System.Collections.Generic;
-using System;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
-using Terraria.ID;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 
@@ -21,7 +18,6 @@ namespace FargowiltasSouls.Content.Items.Accessories.Forces
         {
             Enchants[Type] =
             [
-                ModContent.ItemType<FossilEnchant>(),
                 ModContent.ItemType<ForbiddenEnchant>(),
                 ModContent.ItemType<HallowEnchant>(),
                 ModContent.ItemType<AncientHallowEnchant>(),
@@ -34,9 +30,19 @@ namespace FargowiltasSouls.Content.Items.Accessories.Forces
         {
             SetActive(player);
             player.AddEffect<SpiritTornadoEffect>(Item);
-            player.AddEffect<FossilEffect>(Item);
+            // forbidden
+            player.AddEffect<ForbiddenEffect>(Item);
+            // hallow
             player.AddEffect<HallowEffect>(Item);
+            // ahallow
+            if (!player.HasEffect<SpiritTornadoEffect>())
+                AncientHallowEnchant.AddEffects(player, Item);
+            // tiki
             TikiEnchant.AddEffects(player, Item);
+            // spectre
+            player.AddEffect<SpectreEffect>(Item);
+            if (!player.HasEffect<SpiritTornadoEffect>())
+                player.AddEffect<SpectreOnHitEffect>(Item);
         }
 
         public override void AddRecipes()
@@ -50,12 +56,12 @@ namespace FargowiltasSouls.Content.Items.Accessories.Forces
     }
     public class SpiritTornadoEffect : AccessoryEffect
     {
-        public override Header ToggleHeader => Header.GetHeader<SpiritHeader>();
-        public override int ToggleItemType => ModContent.ItemType<SpiritForce>();
-        
+        public override Header ToggleHeader => null;
+        //public override int ToggleItemType => ModContent.ItemType<SpiritForce>();
+
         public static void ActivateSpiritStorm(Player player)
         {
-            if (player.HasEffect<SpiritTornadoEffect>())
+            if (player.HasEffect<SpiritTornadoEffect>() && player.HasEffect<ForbiddenEffect>())
             {
                 CommandSpiritStorm(player);
             }
@@ -67,7 +73,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Forces
                 Projectile projectile = Main.projectile[i];
                 if (projectile.active && projectile.type == ModContent.ProjectileType<SpiritTornado>() && projectile.owner == Player.whoAmI)
                 {
-                    projectile.Kill();
+                    return;
                 }
             }
 
@@ -76,6 +82,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Forces
         }
         public override void DrawEffects(Player player, PlayerDrawSet drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright)
         {
+            /*
             if (drawInfo.shadow == 0f)
             {
                 Color color12 = player.GetImmuneAlphaPure(Lighting.GetColor((int)(drawInfo.Position.X + player.width * 0.5) / 16, (int)(drawInfo.Position.Y + player.height * 0.5) / 16, Color.White), drawInfo.shadow);
@@ -111,6 +118,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Forces
                     drawInfo.DrawDataCache.Add(value);
                 }
             }
+            */
         }
     }
 }

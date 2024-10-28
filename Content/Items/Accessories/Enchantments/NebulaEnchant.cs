@@ -1,6 +1,8 @@
-﻿using FargowiltasSouls.Core.AccessoryEffectSystem;
+﻿using FargowiltasSouls.Content.UI.Elements;
+using FargowiltasSouls.Core.AccessoryEffectSystem;
 using FargowiltasSouls.Core.Toggler.Content;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -12,21 +14,9 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
-
-            // DisplayName.SetDefault("Nebula Enchantment");
-            /* Tooltip.SetDefault(
-@"Hurting enemies has a chance to spawn buff boosters
-Buff booster stacking capped at 2
-'The pillars of creation have shined upon you'"); */
-            //             DisplayName.AddTranslation((int)GameCulture.CultureName.Chinese, "星云魔石");
-            //             Tooltip.AddTranslation((int)GameCulture.CultureName.Chinese, 
-            // @"伤害敌人时有几率生成强化增益
-            // 强化增益最大堆叠上限为2
-            // '创生之柱照耀着你'");
         }
-
-        public override Color nameColor => new(254, 126, 229);
-
+        public static readonly Color NameColor = new(254, 126, 229);
+        public override Color nameColor => NameColor;
 
         public override void SetDefaults()
         {
@@ -64,9 +54,46 @@ Buff booster stacking capped at 2
     {
         public override Header ToggleHeader => Header.GetHeader<CosmoHeader>();
         public override int ToggleItemType => ModContent.ItemType<NebulaEnchant>();
-        
-        public override void PostUpdateMiscEffects(Player player)
+        public override bool ExtraAttackEffect => true;
+
+        public override void PostUpdateEquips(Player player)
         {
+            FargoSoulsPlayer modPlayer = player.FargoSouls();
+            if (modPlayer.NebulaEnchCD > 0)
+            {
+                modPlayer.NebulaEnchCD--;
+            }
+            
+            int max = 3 * 60;
+            CooldownBarManager.Activate("NebulaEnchantCharge", ModContent.Request<Texture2D>("FargowiltasSouls/Content/Items/Accessories/Enchantments/NebulaEnchant").Value, NebulaEnchant.NameColor, 
+                () => (float)(max - Main.LocalPlayer.FargoSouls().NebulaEnchCD) / max, activeFunction: () => player.HasEffect<NebulaEffect>());
+
+            if (player.setNebula)
+                return;
+
+            if (!modPlayer.TerrariaSoul) //cap boosters
+            {
+                void DecrementBuff(int buffType)
+                {
+                    for (int i = 0; i < player.buffType.Length; i++)
+                    {
+                        if (player.buffType[i] == buffType && player.buffTime[i] > 3)
+                        {
+                            player.buffTime[i] = 3;
+                            break;
+                        }
+                    }
+                };
+
+                if (player.nebulaLevelDamage == 3)
+                    DecrementBuff(BuffID.NebulaUpDmg3);
+                if (player.nebulaLevelLife == 3)
+                    DecrementBuff(BuffID.NebulaUpLife3);
+                if (player.nebulaLevelMana == 3)
+                    DecrementBuff(BuffID.NebulaUpMana3);
+            }
+
+            /*
             if (player.setNebula)
                 return;
 
@@ -95,7 +122,10 @@ Buff booster stacking capped at 2
                 if (player.nebulaLevelMana == 3)
                     DecrementBuff(BuffID.NebulaUpMana3);
             }
+            */
         }
+
+        /*
         public override void OnHitNPCEither(Player player, NPC target, NPC.HitInfo hitInfo, DamageClass damageClass, int baseDamage, Projectile projectile, Item item)
         {
             if (damageClass != DamageClass.Magic && player.nebulaCD <= 0 && Main.rand.NextBool(3))
@@ -116,5 +146,6 @@ Buff booster stacking capped at 2
                 }
             }
         }
+        */
     }
 }

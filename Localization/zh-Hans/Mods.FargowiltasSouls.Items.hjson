@@ -110,6 +110,7 @@ CactusEnchant: {
 		使你免受永恒模式的仙人掌伤害
 		“多汁解渴！”
 		'''
+	// VanityTooltip: Grants immunity to cactus damage in Eternity Mode
 }
 
 ChlorophyteEnchant: {
@@ -257,6 +258,7 @@ HallowEnchant: {
 		使用治疗药水时会产生冲击波，可击退附近的敌对弹幕
 		《Hit me with your best shot》
 		'''
+	// OverTime: over time
 }
 
 HuntressEnchant: {
@@ -283,6 +285,13 @@ IronEnchant: {
 		物品的吸附范围扩大
 		“趁热打铁”
 		'''
+	/* VanityTooltip:
+		'''
+		When crafting an item, each material has a 33% chance to not be consumed
+		Works once per material type, ever
+		Does not work on Crucible of the Cosmos items
+		You attract items from a larger range
+		''' */
 }
 
 JungleEnchant: {
@@ -477,6 +486,7 @@ RainEnchant: {
 		拥有浮游圈的效果
 		“改日再来”
 		'''
+	// VanityTooltip: Grants immunity to lightning strikes in Eternity Mode
 }
 
 RedRidingEnchant: {
@@ -547,6 +557,7 @@ ShroomiteEnchant: {
 		处于隐身状态时，攻击会产生更多蘑菇
 		“是用真的蘑菇做的！”
 		'''
+	// AndMushroomPower: and grants the Mushroom Power buff
 }
 
 SilverEnchant: {
@@ -695,6 +706,7 @@ TurtleEnchant: {
 		使你免受永恒模式的仙人掌伤害
 		“你突然有一种想躲进壳里的冲动”
 		'''
+	// VanityTooltip: Grants immunity to cactus damage in Eternity Mode
 }
 
 ValhallaKnightEnchant: {
@@ -795,6 +807,12 @@ BoxofGizmos: {
 		敌怪在夜晚会发光
 		使非武器物品获得自动使用的效果
 		'''
+	/* VanityTooltip:
+		'''
+		Stand still to expose nearby treasure and enemies
+		Enemies emit light at night
+		Grants autofire to non-weapon items
+		''' */
 }
 
 UniverseCore: {
@@ -944,6 +962,7 @@ TerraForce: {
 		[i:FargowiltasSouls/AshWoodEnchant] 玩家攻击时会附带火球
 		“大地赐予它力量”
 		'''
+	// VanityTooltip: "[i:FargowiltasSouls/IronEnchant] 50% chance to not consume each item on first craft and you attract items from a larger range"
 }
 
 TimberForce: {
@@ -974,6 +993,7 @@ WillForce: {
 		[i:FargowiltasSouls/ValhallaKnightEnchant] 提升坐骑的各项数据，坐骑可以进行冲刺
 		“坚不可摧的决心”
 		'''
+	// VanityTooltip: "[i:FargowiltasSouls/GoldEnchant] Automatically sends coins to your piggy bank when picked up"
 }
 
 AbominableWand: {
@@ -1057,6 +1077,15 @@ BionomicCluster: {
 		    [i:FargowiltasSouls/WyvernFeather]在太空和液体中恢复正常重力作用
 		“由上千普通敌人融合而成”
 		'''
+	/* VanityTooltip:
+		'''
+		Grants immunity to [i:FargowiltasSouls/SandsofTime] Mighty Wind, cactus damage, [i:FargowiltasSouls/MysticSkull] Suffocation, [i:FargowiltasSouls/FrigidGemstone] Chilled, [i:FargowiltasSouls/SqueakyToy] and Guilty
+		[i:FargowiltasSouls/WyvernFeather] Stabilizes gravity in space and in liquid, [i:FargowiltasSouls/OrdinaryCarrot] improves your nightvision, [i:FargowiltasSouls/SecurityWallet] and drastically improves reforges
+		[i:FargowiltasSouls/ConcentratedRainbowMatter] Automatically uses healing & [i:FargowiltasSouls/MysticSkull] mana potions when needed and increases pickup range for mana stars
+		[i:FargowiltasSouls/NymphsPerfume] You respawn with more life [i:FargowiltasSouls/SandsofTime] and when no boss is alive, respawn faster
+		[i:FargowiltasSouls/FrigidGemstone] Press the Frigid Spell key to cast Ice Rod
+		[i:FargowiltasSouls/OrdinaryCarrot] Press right click to zoom in
+		''' */
 }
 
 BionomicClusterInactive: {
@@ -1123,6 +1152,7 @@ ConcentratedRainbowMatter: {
 		召唤一个彩虹史莱姆宝宝
 		“遇上彩虹，吃定彩虹！”
 		'''
+	// VanityTooltip: Automatically use healing potions when needed
 }
 
 DarkenedHeart: {
@@ -1193,6 +1223,12 @@ FrigidGemstone: {
 		你的冰块会造成霜冻减益
 		“一块古老的魔法冰碎片”
 		'''
+	/* VanityTooltip:
+		'''
+		Grants immunity to Frostburn and Chilled
+		Press the Frigid Spell key to cast Ice Rod
+		Your ice blocks inflict Frostburn
+		''' */
 }
 
 FrigidGemstoneInactive: {
@@ -1230,6 +1266,15 @@ GalacticGlobe: {
 		增加100%飞行时间
 		“时刻凝视”
 		'''
+	// VanityTooltip: Grants most standard potion and station buffs
+	// HoldShift: "[c/ADD8E6:Hold Left Shift to view potion buffs]"
+	/* ExpandedTooltip:
+		'''
+		[c/ADD8E6:Ironskin, Regeneration, Swiftness, Mana Regeneration, Magic Power, Ammo Reservation, Archery,] 
+		[c/ADD8E6:Builder, Crate, Endurance, Fishing, Gills, Lucky, Heartreach, Lifeforce, Mining, Obsidian Skin,] 
+		[c/ADD8E6:Rage, Wrath, Sonar, Summoning, Thorns, Titan, Warmth, Water Walking, Exquisitely Stuffed,]
+		[c/ADD8E6:Sharpened, Ammo Box, Clairvoyance, Bewitched, Wartable, Honey]
+		''' */
 }
 
 GelicWings: {
@@ -1289,6 +1334,7 @@ HeartoftheMasochist: {
 		[i:FargowiltasSouls/GalacticGlobe]可以控制重力，增加100%飞行时间，召唤友善的克苏鲁真眼
 		“它还在跳动，很暖和，但没人想要”
 		'''
+	// VanityTooltip: "[i:FargowiltasSouls/SaucerControlConsole] Press Ammo Cycle key to cycle ammos and [i:FargowiltasSouls/GalacticGlobe] grants most standard potion buffs"
 }
 
 IceQueensCrown: {
@@ -1386,6 +1432,12 @@ MysticSkull: {
 		扩大魔力星的拾取范围
 		“被打败敌人的喃喃自语的脑袋”
 		'''
+	/* VanityTooltip:
+		'''
+		Grants immunity to Suffocation
+		Automatically use mana potions when needed
+		Increases pickup range for mana stars
+		''' */
 }
 
 MysticSkullInactive: {
@@ -1421,6 +1473,7 @@ NymphsPerfume: {
 		你的攻击偶尔会生成心
 		“气味有点太浓了”
 		'''
+	// VanityTooltip: You respawn with more life
 }
 
 PrecisionSeal: {
@@ -1516,6 +1569,12 @@ SandsofTime: {
 		使用以传送到你上一次死亡的地点
 		“无论你做什么，都不要丢下它”
 		'''
+	/* VanityTooltip:
+		'''
+		Grants immunity to Mighty Wind and cactus damage
+		You respawn twice as fast when no boss is alive
+		Use to teleport to your last death point
+		''' */
 }
 
 SaucerControlConsole: {
@@ -1528,6 +1587,7 @@ SaucerControlConsole: {
 		飞碟的死亡射线会减慢被击中敌人的速度
 		“请保持飞行模式”
 		'''
+	// VanityTooltip: Press the Ammo Cycle key to cycle ammos
 }
 
 SecurityWallet: {
@@ -1539,6 +1599,11 @@ SecurityWallet: {
 		放置在背包中即可生效
 		“无法完美保护尸体上的财物”
 		'''
+	/* VanityTooltip:
+		'''
+		Grants immunity to Midas
+		Drastically improves reforges
+		''' */
 }
 
 SinisterIcon: {
@@ -1657,6 +1722,7 @@ WyvernFeather: {
 		在太空和液体中恢复正常重力作用，在物品栏中同样生效
 		“摸起来很暖和”
 		'''
+	// VanityTooltip: Stabilizes gravity in space and in liquids
 }
 
 ZephyrBoots: {
@@ -1809,6 +1875,7 @@ MasochistSoul: {
 		[i:FargowiltasSouls/SaucerControlConsole]迷你飞碟、[i:FargowiltasSouls/MagicalBulb]世纪之花和[i:FargowiltasSouls/GalacticGlobe]克苏鲁真眼为你而战
 		“拥抱精通，拥抱永恒”
 		'''
+	// VanityTooltip: "[i:FargowiltasSouls/GalacticGlobe] Grants most standard potion and station buffs"
 }
 
 SnipersSoul: {
@@ -2155,6 +2222,7 @@ OrdinaryCarrot: {
 		放在物品栏中时，右键点击可以增加视野
 		“从被打败的敌人的脸上拔下来的”
 		'''
+	// VanityTooltip: Right click to increase view range
 }
 
 RabiesShot: {
@@ -3407,6 +3475,7 @@ OncomingMutantItem: {
 Extra: {
 	StarlightTungsten: 装备钨魔石时只造成40%伤害
 	DefensePrefixMaxLife: +{0} 最大生命值
+	// ViolentPrefix: +{0}% attack speed
 	EternityItem: 永恒
 	DisabledEffects: 有效果被饰品效果配置禁用
 	PatreonItem: >> 捐赠者物品 <<
@@ -3530,4 +3599,110 @@ WillBooster: {
 	// Tooltip: ""
 	// Activate: +{0} flat damage
 	// Deactivate: -{0} flat damage
+}
+
+CoffinRoominator: {
+	// DisplayName: Coffin Roominator
+	// Tooltip: ""
+}
+
+GildedSceptre: {
+	// DisplayName: Gilded Sceptre
+	/* Tooltip:
+		'''
+		Draw a circle to activate projectiles
+		Activated projectiles chase after the nearest enemy
+		Activated projectiles deal more damage based on circle accuracy
+		''' */
+}
+
+AccursedAnkh: {
+	// DisplayName: Accursed Ankh
+	// Tooltip: While held out, increases life regeneration and debuff depletion, but decreases defense by 10
+}
+
+SisypheanFist: {
+	// DisplayName: Sisyphean Gauntlet
+	/* Tooltip:
+		'''
+		While grounded, grab a huge boulder from the earth
+		Release the button to hurl it towards your cursor
+		Boulder damage scales with its speed
+		Pierces enemies with low health
+		''' */
+}
+
+EgyptianFlail: {
+	// DisplayName: Nekhakha
+	/* Tooltip:
+		'''
+		Your summons will focus struck enemies
+		Occasionally causes shadowflame explosions
+		''' */
+}
+
+SpiritLongbow: {
+	// DisplayName: Spirit Longbow
+	/* Tooltip:
+		'''
+		Converts arrows to Spirit Arrows that release spirit flames behind them
+		Hold button to charge shots for more damage and higher speed
+		Pierces enemies with low health
+		''' */
+}
+
+CursedCoffinBag: {
+	// DisplayName: Treasure Bag (Cursed Coffin)
+	// Tooltip: Right Click to open
+}
+
+CursedCoffinRelic: {
+	// DisplayName: Cursed Coffin Relic
+	// Tooltip: ""
+}
+
+CursedCoffinTrophy: {
+	// DisplayName: Cursed Coffin Trophy
+	// Tooltip: ""
+}
+
+UmbraRegalia: {
+	// DisplayName: Umbra Regalia
+	/* Tooltip:
+		'''
+		Left Click to rapidly stab with the spear
+		Hold Right Click to charge a spear toss
+		Becomes stronger when fully charged
+		Can continue to gain damage for a while after full charge
+		'The reward for a mighty rematch...'
+		''' */
+}
+
+CoffinPainting: {
+	// DisplayName: Coffin Painting
+	// Tooltip: ""
+}
+
+ElectricWhip: {
+	// DisplayName: Voltaic Chain
+	/* Tooltip:
+		'''
+		Whip enemies to fire chain lightning from nearby minions, up to 4 times per swing
+		'The lifeblood of a defeated foe...'
+		''' */
+}
+
+TheDestroyer: {
+	// DisplayName: The Destroyer
+	/* Tooltip:
+		'''
+		Whip your minions to fire a laser at a nearby enemy, up to 6 times per swing
+		Every 20th swing, the destroyer breaks loose and tracks your mouse for 5 seconds
+		'The reward for a mighty rematch..'
+		''' */
+}
+
+FallenStarDayItem: {
+	// DisplayName: Fallen Star
+	// Tooltip: ""
 }

@@ -1,6 +1,5 @@
 using FargowiltasSouls.Common.Graphics.Particles;
 using FargowiltasSouls.Content.Bosses.VanillaEternity;
-using FargowiltasSouls.Content.Items.Accessories.Enchantments;
 using FargowiltasSouls.Content.NPCs.EternityModeNPCs;
 using Luminance.Core.Graphics;
 using Microsoft.Xna.Framework;
@@ -153,7 +152,7 @@ namespace FargowiltasSouls.Content.Projectiles
                     break;
 
                 case -19: //abom dash
-                    color = Color.Yellow;
+                    color = Color.Orange;
                     color.A = 0;
                     scale = 18f;
                     break;
@@ -304,13 +303,16 @@ namespace FargowiltasSouls.Content.Projectiles
                     break;
 
                 case NPCID.Deerclops:
-                    color = npc.life < npc.lifeMax / 3 ? Color.Red : Color.LightSkyBlue;
                     color.A = 0;
                     scale = 9f;
                     maxTime = 30;
 
-                    if (npc != null)
+                    if (npc.Alive())
+                    {
+                        color = npc.life < npc.lifeMax / 3 ? Color.Red : Color.LightSkyBlue;
                         Projectile.Center = npc.direction < 0 ? npc.TopLeft : npc.TopRight;
+                    }
+                        
                     break;
 
                 default:

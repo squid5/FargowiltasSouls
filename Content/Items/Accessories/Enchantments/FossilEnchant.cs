@@ -6,7 +6,6 @@ using FargowiltasSouls.Core.Toggler.Content;
 using Microsoft.Xna.Framework;
 using System;
 using Terraria;
-using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
@@ -19,19 +18,6 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
-
-            // DisplayName.SetDefault("Fossil Enchantment");
-            /* Tooltip.SetDefault(
-@"If you reach zero HP you will revive with 50 HP and spawn several bones
-You will also spawn a few bones on every hit
-Collect the bones to heal for 20 HP each
-'Beyond a forgotten age'"); */
-            //             DisplayName.AddTranslation((int)GameCulture.CultureName.Chinese, "化石魔石");
-            //             Tooltip.AddTranslation((int)GameCulture.CultureName.Chinese,
-            // @"受到致死伤害时会以1生命值重生并爆出几根骨头
-            // 你攻击敌人时也会扔出骨头
-            // 每根骨头会回复15点生命值
-            // '被遗忘已久的记忆'");
         }
 
         public override Color nameColor => new(140, 92, 59);
@@ -77,6 +63,15 @@ Collect the bones to heal for 20 HP each
         }
         public static void FossilRevive(Player player)
         {
+            static Projectile[] XWay(int num, IEntitySource spawnSource, Vector2 pos, int type, float speed, int damage, float knockback, int player)
+            {
+                Projectile[] projs = new Projectile[num];
+                double spread = 2 * Math.PI / num;
+                for (int i = 0; i < num; i++)
+                    projs[i] = FargoSoulsUtil.NewProjectileDirectSafe(spawnSource, pos, new Vector2(speed, speed).RotatedBy(spread * i), type, damage, knockback, player);
+                return projs;
+            }
+
             FargoSoulsPlayer modPlayer = player.FargoSouls();
             bool spiritForce = modPlayer.ForceEffects.Contains(ModContent.ItemType<SpiritForce>());
 
@@ -123,18 +118,21 @@ Collect the bones to heal for 20 HP each
             if (modPlayer.Eternity)
             {
                 Revive(player.statLifeMax2 / 2 > 300 ? player.statLifeMax2 / 2 : 300, 10800);
-                //FargoSoulsUtil.XWay(30, player.GetSource_Misc("FossilEnchant"), player.Center, ModContent.ProjectileType<FossilBone>(), 15, 0, 0);
+                //if (player.HasEffect<FossilBones>())
+                    XWay(30, player.GetSource_Misc("FossilEnchant"), player.Center, ModContent.ProjectileType<FossilBone>(), 15, 0, 0, player.whoAmI);
             }
             else if (modPlayer.TerrariaSoul)
             {
                 Revive(300, 14400);
-                //FargoSoulsUtil.XWay(25, player.GetSource_Misc("FossilEnchant"), player.Center, ModContent.ProjectileType<FossilBone>(), 15, 0, 0);
+                //if (player.HasEffect<FossilBones>())
+                    XWay(25, player.GetSource_Misc("FossilEnchant"), player.Center, ModContent.ProjectileType<FossilBone>(), 15, 0, 0, player.whoAmI);
             }
             else
             {
                 bool forceEffect = modPlayer.ForceEffect<FossilEnchant>();
                 Revive(forceEffect ? 200 : 50, 18000);
-                FargoSoulsUtil.XWay(forceEffect ? 20 : 10, player.GetSource_Misc("FossilEnchant"), player.Center, ModContent.ProjectileType<FossilBone>(), 15, 0, 0);
+                if (player.HasEffect<FossilBones>())
+                    XWay(forceEffect ? 20 : 10, player.GetSource_EffectItem<FossilEffect>(), player.Center, ModContent.ProjectileType<FossilBone>(), 15, 0, 0, player.whoAmI);
             }
         }
     }

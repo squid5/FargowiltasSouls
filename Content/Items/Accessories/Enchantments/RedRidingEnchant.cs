@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static FargowiltasSouls.Content.Items.Accessories.Forces.TimberForce;
 
 namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
 {
@@ -13,16 +14,6 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
-
-            // DisplayName.SetDefault("Red Riding Enchantment");
-            /* Tooltip.SetDefault(
-@"Attacks ignore 10 enemy defense and deal 5 flat extra damage
-Each successive attack ignores an additional 10 defense and deals 5 more damage
-Upon reaching 10 stacks, spawn a rain of arrows
-The arrow type defaults to Venom or whatever is first in your inventory
-Homing and minion attacks do not increase these bonuses
-Missing any attack will reset these bonuses
-'Big Bad Red Riding Hood'"); */
         }
 
         public override Color nameColor => new(192, 27, 60);
@@ -39,6 +30,7 @@ Missing any attack will reset these bonuses
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.AddEffect<RedRidingEffect>(Item);
+            player.AddEffect<RedRidingHuntressEffect>(Item);
             player.AddEffect<HuntressEffect>(Item);
         }
 
@@ -56,6 +48,10 @@ Missing any attack will reset these bonuses
             .Register();
         }
     }
+    public class RedRidingHuntressEffect : AccessoryEffect
+    {
+        public override Header ToggleHeader => null;
+    }
     public class RedRidingEffect : AccessoryEffect
     {
 
@@ -72,6 +68,8 @@ Missing any attack will reset these bonuses
         }
         public static void SpawnArrowRain(Player player, NPC target)
         {
+            if (player.HasEffect<TimberEffect>())
+                return;
             FargoSoulsPlayer modPlayer = player.FargoSouls();
             Item effectItem = player.EffectItem<RedRidingEffect>();
             Item firstAmmo = PickAmmo(player);

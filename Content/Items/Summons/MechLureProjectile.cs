@@ -49,7 +49,6 @@ namespace FargowiltasSouls.Content.Items.Summons
                 if (FargoSoulsUtil.HostCheck && Main.player[playerID] != null && Main.player[playerID].active)
                 {
                     NPC.SpawnOnPlayer(playerID, ModContent.NPCType<BanishedBaron>());
-
                 }
             }
             Projectile.velocity *= 0.978f;

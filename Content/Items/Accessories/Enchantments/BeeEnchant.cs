@@ -59,7 +59,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
     {
         public override Header ToggleHeader => Header.GetHeader<LifeHeader>();
         public override int ToggleItemType => ModContent.ItemType<BeeEnchant>();
-
+        public override bool MutantsPresenceAffects => true;
         public override void PostUpdateEquips(Player player)
         {
         }

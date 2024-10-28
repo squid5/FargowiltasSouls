@@ -40,6 +40,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Souls
             BionomicCluster.PassiveEffect(player, Item);
 
             player.FargoSouls().CanAmmoCycle = true;
+            player.AddEffect<ChalicePotionEffect>(Item);
         }
 
         public override void UpdateInventory(Player player) => PassiveEffect(player, Item);
@@ -175,7 +176,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Souls
             //wretched pouch
             player.buffImmune[BuffID.ShadowFlame] = true;
             player.buffImmune[ModContent.BuffType<ShadowflameBuff>()] = true;
-            player.AddEffect<WretchedPouchEffect>(Item);
+            //player.AddEffect<WretchedPouchEffect>(Item);
 
             //sands of time
             player.buffImmune[BuffID.WindPushed] = true;
@@ -210,12 +211,13 @@ namespace FargowiltasSouls.Content.Items.Accessories.Souls
             player.AddEffect<TimsConcoctionEffect>(Item);
 
             //wyvern feather
-            player.AddEffect<WyvernBalls>(Item);
+            //player.AddEffect<WyvernBalls>(Item); pointless; you have infinite flight at this point
 
             //dubious circuitry
             player.buffImmune[BuffID.CursedInferno] = true;
             player.buffImmune[BuffID.Ichor] = true;
             fargoPlayer.FusedLens = true;
+            fargoPlayer.DubiousCircuitry = true;
             player.AddEffect<FusedLensInstall>(Item);
             player.AddEffect<GroundStickDR>(Item);
             player.noKnockback = true;
@@ -263,7 +265,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Souls
             player.buffImmune[BuffID.VortexDebuff] = true;
             //player.buffImmune[BuffID.ChaosState] = true;
             fargoPlayer.GravityGlobeEXItem = Item;
-            player.AddEffect<MasoGravEffect>(Item);
+            player.AddEffect<ChalicePotionEffect>(Item);
 
             //heart of maso
             fargoPlayer.MasochistHeart = true;
@@ -294,7 +296,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Souls
             player.buffImmune[ModContent.BuffType<DefenselessBuff>()] = true;
             player.buffImmune[ModContent.BuffType<FlamesoftheUniverseBuff>()] = true;
             player.buffImmune[ModContent.BuffType<FlippedBuff>()] = true;
-            player.buffImmune[ModContent.BuffType<FlippedHallowBuff>()] = true;
+            player.buffImmune[ModContent.BuffType<HallowIlluminatedBuff>()] = true;
             player.buffImmune[ModContent.BuffType<FusedBuff>()] = true;
             //player.buffImmune[ModContent.BuffType<GodEater>()] = true;
             player.buffImmune[ModContent.BuffType<GuiltyBuff>()] = true;

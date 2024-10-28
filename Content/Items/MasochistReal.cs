@@ -7,14 +7,6 @@ namespace FargowiltasSouls.Content.Items
 {
     public class MasochistReal : SoulsItem
     {
-        //public override bool IsLoadingEnabled(Mod mod) => false;
-
-        public override void SetStaticDefaults()
-        {
-            // DisplayName.SetDefault("Forgotten Gift");
-            // Tooltip.SetDefault("[c/ff0000:Debug item]\nLeft click: Toggles session ability to play Maso\nRight click: Toggles world ability to play Maso");
-        }
-
         public override void SetDefaults()
         {
             Item.width = 20;

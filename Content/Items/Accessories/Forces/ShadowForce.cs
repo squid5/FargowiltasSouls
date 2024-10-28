@@ -1,7 +1,7 @@
 ﻿using FargowiltasSouls.Common.Graphics.Particles;
 using FargowiltasSouls.Content.Items.Accessories.Enchantments;
-using FargowiltasSouls.Content.Items.Dyes;
 using FargowiltasSouls.Content.Projectiles.Souls;
+using FargowiltasSouls.Content.UI.Elements;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using FargowiltasSouls.Core.Systems;
 using FargowiltasSouls.Core.Toggler.Content;
@@ -12,7 +12,6 @@ using ReLogic.Content;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
-using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -38,25 +37,42 @@ namespace FargowiltasSouls.Content.Items.Accessories.Forces
         {
             SetActive(player);
             FargoSoulsPlayer modPlayer = player.FargoSouls();
-            //player.AddEffect<NinjaEffect>(Item);
-            //modPlayer.ApprenticeEnchantActive = true;
-            //modPlayer.DarkArtistEnchantActive = true;
-            //player.AddEffect<ApprenticeSupport>(Item);
-            //player.AddEffect<DarkArtistMinion>(Item);
-            //player.AddEffect<NecroEffect>(Item);
-            //shadow orbs
-            //modPlayer.AncientShadowEnchantActive = true;
-            //player.AddEffect<ShadowBalls>(Item);
-            //darkness debuff
-            //player.AddEffect<AncientShadowDarkness>(Item);
-            //shinobi and monk effects
-            //ShinobiEnchant.AddEffects(player, Item);
-            //smoke bomb nonsense
-            //CrystalAssassinEnchant.AddEffects(player, Item);
-            //scythe doom
-            //player.AddEffect<SpookyEffect>(Item);
-            player.AddEffect<ShadowForceDashEffect>(Item);
-            player.AddEffect<ShadowForceDamageEffect>(Item);
+            player.AddEffect<ShadowForceEffect>(Item);
+            // Ninja
+            player.AddEffect<NinjaEffect>(Item);
+            player.AddEffect<NinjaDamageEffect>(Item);
+            // Ashadow
+            player.AddEffect<ShadowBalls>(Item);
+            // CrystalAssassin-Shinobi
+            player.AddEffect<CrystalDiagonalDash>(Item);
+            if (player.HasEffect<ShadowForceEffect>())
+                player.AddEffect<ShadowForceDashEffect>(Item);
+            // Spooky
+            player.AddEffect<SpookyEffect>(Item);
+            // Dartist
+            modPlayer.ApprenticeEnchantActive = true;
+            modPlayer.DarkArtistEnchantActive = true;
+            player.AddEffect<ApprenticeSupport>(Item);
+
+            // Necro
+            player.AddEffect<NecroEffect>(Item);
+
+            if (!player.HasEffect<ShadowForceEffect>())
+            {
+                player.AddEffect<DarkArtistMinion>(Item);
+                player.AddEffect<NecroEffect>(Item);
+                //shadow orbs
+                modPlayer.AncientShadowEnchantActive = true;
+                //darkness debuff
+                player.AddEffect<AncientShadowDarkness>(Item);
+                //shinobi and monk effects
+                ShinobiEnchant.AddEffects(player, Item);
+                //smoke bomb nonsense
+                CrystalAssassinEnchant.AddEffects(player, Item);
+
+            }
+
+
         }
 
         public override void AddRecipes()
@@ -68,26 +84,17 @@ namespace FargowiltasSouls.Content.Items.Accessories.Forces
             recipe.Register();
         }
     }
-    public class ShadowForceDamageEffect : AccessoryEffect
+    public class ShadowForceEffect : AccessoryEffect
     {
-        public override Header ToggleHeader => Header.GetHeader<ShadowHeader>();
-        public override int ToggleItemType => ModContent.ItemType<ShadowForce>();
-        public override void PostUpdateEquips(Player player)
-        {
-            player.GetDamage(DamageClass.Generic) += MathHelper.Lerp(0, 0.4f, 1 - MathHelper.Clamp(player.velocity.Length() / 7f, 0, 1));
-
-            
-            if (Main.rand.NextBool((int)MathHelper.Lerp(7, 20, MathHelper.Clamp(player.velocity.Length() / 7f, 0, 1))) && player.velocity.Length() <= 7){
-                Particle dot = new AlphaBloomParticle(player.position + new Vector2(Main.rand.Next(0, player.width), Main.rand.Next(0, player.height)), new Vector2(0, Main.rand.NextFloat(-0.5f, -0.1f)), Color.Black, Vector2.One * 0.4f, Vector2.One * 0.1f, 30);
-                dot.Spawn();
-            }
-        }
+        public override Header ToggleHeader => null;
+        //public override int ToggleItemType => ModContent.ItemType<ShadowForce>();
     }
     public class ShadowForceDashEffect : AccessoryEffect
     {
         public override Header ToggleHeader => Header.GetHeader<ShadowHeader>();
         public override int ToggleItemType => ModContent.ItemType<ShadowForce>();
-        
+        public override bool MutantsPresenceAffects => true;
+
         public override void PostUpdateEquips(Player player)
         {
             FargoSoulsPlayer farg = player.FargoSouls();
@@ -95,6 +102,8 @@ namespace FargowiltasSouls.Content.Items.Accessories.Forces
             {
                 farg.IFrameDashTimer--;
             }
+            CooldownBarManager.Activate("DeathForceIframeCooldown", ModContent.Request<Texture2D>("FargowiltasSouls/Content/Items/Accessories/Enchantments/ShinobiEnchant").Value, new(147, 91, 24),
+                () => 1 - farg.IFrameDashTimer / 250f, activeFunction: () => player.HasEffect<ShadowForceDashEffect>());
             if (farg.IFrameDashTimer == 1)
             {
                 SoundEngine.PlaySound(SoundID.DD2_BetsyFireballImpact with { Pitch = -0.5f });
@@ -158,15 +167,19 @@ namespace FargowiltasSouls.Content.Items.Accessories.Forces
         }
         public static void ShadowDash(Player player, int dir)
         {
-            
-            
-            
-            
             player.FargoSouls().ShadowDashTimer = 30;
             
 
             FargoSoulsPlayer modPlayer = player.FargoSouls();
             float dashSpeed = 25f;
+            if (player.HasEffect<CrystalDiagonalDash>())
+            {
+                player.velocity.Y *= 0;
+                if (player.controlUp)
+                    player.velocity.Y = dashSpeed * -0.5f;
+                else if (player.controlDown)
+                    player.velocity.Y = dashSpeed * 0.7f;
+            }
             player.velocity.X = dashSpeed * dir;
             if (modPlayer.IsDashingTimer < 30)
                 modPlayer.IsDashingTimer = 30;
@@ -191,6 +204,20 @@ namespace FargowiltasSouls.Content.Items.Accessories.Forces
                 int proj = Projectile.NewProjectile(player.GetSource_EffectItem<ShadowForceDashEffect>(), player.Center, Vector2.Zero, ModContent.ProjectileType<ShadowDash>(), 5000, 3, player.whoAmI);
                 if (Main.netMode == NetmodeID.MultiplayerClient)
                     NetMessage.SendData(MessageID.SyncProjectile, number: proj);
+
+                if (player.HasEffect<ShadowBalls>())
+                {
+                    int numBalls = 5;
+                    int dmg = 400;
+
+                    int damage = FargoSoulsUtil.HighestDamageTypeScaling(player, dmg);
+                    Projectile[] balls = FargoSoulsUtil.XWay(numBalls, player.GetSource_EffectItem<ShadowForceDashEffect>(), player.Center, ModContent.ProjectileType<ShadowBall>(), 6, damage, 0);
+
+                    foreach (Projectile ball in balls)
+                    {
+                        ball.originalDamage = damage;
+                    }
+                }
             }
         }
     }

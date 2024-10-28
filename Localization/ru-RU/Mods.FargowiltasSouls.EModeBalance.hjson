@@ -9,6 +9,7 @@ RodofDiscord: Во время битвы боссов требует ваше з
 Split: Уменьшена частота разделения
 ChlorophyteBullet: Снижены скорость и длительность
 WaterBolt: Не может быть использовано до победы над Скелетроном
+// SpaceGun: Cannot be used until an evil boss is defeated
 DemonScythe: Снижены урон и скорость на 40% до победы над боссом зла
 HolyDodge: Активация Святой Защиты временно снижает вашу скорость атаки
 FrozenTurtleShell: Ледяная преграда слегка снижает наносимый урон
@@ -25,6 +26,8 @@ MoonsWaves: Смерти снижают прогресс события
 WhipSpeed: На хлысты не действуют бонусы к скорости ближнего боя
 WhipStack: Баффы и дебаффы хлыстов не складываются
 DefensePrefix: Скорректированы характеристики префикса: снижена защита до Хардмода, +5 максимального здоровья
+// DefensePrefix_HM: Adjusted prefix stats: +5 max life
+// ViolentPrefix: Adjusted prefix stats: grants attack speed, not melee speed
 ManaPots: Не может быть использован во время действия Болезни Маны, но восстанавливает на 50% больше
 MinionStack: Урон призываемых существ снижается, если их больше 3 копий (ограничение эффекта - 12)
 SummonMulticlass: Урон призывателя снижается, если вы атакуете оружием другого класса (вне Армии Древних)
@@ -43,3 +46,5 @@ JungleRose: Увеличивает шанс выпадения Фрукта Пл
 StarCloak: 33% урона звёзд до Хардмода
 WeatherPain: Увеличены частоту попаданий и прошивание
 HoundiusShootius: Увеличена скорость шаров
+// SniperRifle: Deals up to double damage to enemies the further away they are
+// ChlorophyteSaber: Faster projectiles that slow down on hit

@@ -10,7 +10,7 @@ namespace FargowiltasSouls.Content.Items.Weapons.Challengers
 {
     public class NavalRustrifle : SoulsItem
     {
-
+        public static readonly SoundStyle PowerShotSound = new("FargowiltasSouls/Assets/Sounds/Weapons/Rustrifle_Powershot");
         public override void SetStaticDefaults()
         {
 
@@ -51,7 +51,7 @@ namespace FargowiltasSouls.Content.Items.Weapons.Challengers
             {
                 player.itemRotation = (-Vector2.UnitY * player.direction).RotatedBy(player.direction * MathHelper.Pi / 4f).ToRotation();
 
-                player.itemLocation = (Vector2)player.HandPosition - (Item.Size / 2) -
+                player.itemLocation = (Vector2)player.HandPosition - Vector2.UnitY * 10 -
                     player.itemRotation.ToRotationVector2() * player.direction * (float)Math.Sin(MathHelper.Pi * player.itemAnimation / (float)player.itemAnimationMax) * Item.Size.Length() / 2f;
             }
         }
@@ -88,7 +88,7 @@ namespace FargowiltasSouls.Content.Items.Weapons.Challengers
                 {
                     EmpoweredShot = true;
                     SoundEngine.PlaySound(SoundID.Item149 with { Pitch = 0.5f }, player.Center);
-                    Item.UseSound = SoundID.Item68;
+                    Item.UseSound = PowerShotSound;
                 }
                 else
                 {

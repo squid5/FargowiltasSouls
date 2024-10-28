@@ -1,9 +1,12 @@
+using FargowiltasSouls.Content.Items.Accessories.Enchantments;
 using FargowiltasSouls.Content.Items.BossBags;
 using FargowiltasSouls.Content.Projectiles.ChallengerItems;
+using FargowiltasSouls.Content.UI.Elements;
+using FargowiltasSouls.Core.AccessoryEffectSystem;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.Audio;
-using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -81,6 +84,8 @@ namespace FargowiltasSouls.Content.Items.Weapons.Challengers
         public override bool? UseItem(Player player)
         {
             FargoSoulsPlayer soulsPlayer = player.FargoSouls();
+            CooldownBarManager.Activate("LightslingerCharge", ModContent.Request<Texture2D>("FargowiltasSouls/Content/Projectiles/ChallengerItems/LightslingerBomb").Value, Color.Pink, 
+                () => (float)Main.LocalPlayer.FargoSouls().LightslingerHitShots / ReqShots, activeFunction: () => player.HeldItem != null && player.HeldItem.type == ModContent.ItemType<Lightslinger>());
             if (player.altFunctionUse == 2)
             {
                 soulsPlayer.LightslingerHitShots = 0;

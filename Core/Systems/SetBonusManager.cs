@@ -29,7 +29,6 @@ namespace FargowiltasSouls.Core.Systems
                 StyxCrown.StyxSetBonusKey(player);
                 ForbiddenEffect.ActivateForbiddenStorm(player);
                 SpiritTornadoEffect.ActivateSpiritStorm(player);
-                VortexEnchant.ActivateVortex(player);
             }
 
         }

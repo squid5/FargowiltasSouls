@@ -15,14 +15,17 @@ namespace FargowiltasSouls.Content.NPCs.Critters
             Main.npcFrameCount[NPC.type] = 6;
             NPCID.Sets.TownCritter[NPC.type] = true;
             //DisplayName.AddTranslation((int)GameCulture.CultureName.Chinese, "高顶礼帽松鼠");
+            this.ExcludeFromBestiary();
         }
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
+            /*
             bestiaryEntry.Info.AddRange([
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface,
                 new FlavorTextBestiaryInfoElement($"Mods.FargowiltasSouls.Bestiary.{Name}")
             ]);
+            */
         }
 
         public override void SetDefaults()

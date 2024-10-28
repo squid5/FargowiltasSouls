@@ -19,10 +19,12 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs
             Main.npcFrameCount[NPC.type] = 3;
             NPCID.Sets.CantTakeLunchMoney[Type] = true;
             NPCID.Sets.ImmuneToAllBuffs[Type] = true;
+            this.ExcludeFromBestiary();
         }
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
+            /*
             bestiaryEntry.UIInfoProvider = new CommonEnemyUICollectionInfoProvider(
                     ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[NPCID.BrainofCthulhu],
                     quickUnlock: true
@@ -31,6 +33,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.TheCrimson,
                 new FlavorTextBestiaryInfoElement("Mods.FargowiltasSouls.Bestiary.GuttedCreeper")
             ]);
+            */
         }
 
         public override void SetDefaults()

@@ -8,14 +8,11 @@ using FargowiltasSouls.Core.Systems;
 using Microsoft.Xna.Framework;
 using System;
 using System.IO;
-using System.Linq;
 using Terraria;
 using Terraria.Audio;
-using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
-using Terraria.WorldBuilding;
 
 namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 {
@@ -27,6 +24,8 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
         public int StompCounter;
         public int RainTimer;
         public int SpikeCounter;
+
+        public int SummonCooldown;
 
         public float StompVelocityX;
         public float StompVelocityY;
@@ -50,6 +49,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             binaryWriter.Write7BitEncodedInt(StompTimer);
             binaryWriter.Write7BitEncodedInt(StompCounter);
             binaryWriter.Write7BitEncodedInt(RainTimer);
+            binaryWriter.Write7BitEncodedInt(SummonCooldown);
             binaryWriter.Write(StompVelocityX);
             binaryWriter.Write(StompVelocityY);
         }
@@ -61,6 +61,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             StompTimer = binaryReader.Read7BitEncodedInt();
             StompCounter = binaryReader.Read7BitEncodedInt();
             RainTimer = binaryReader.Read7BitEncodedInt();
+            SummonCooldown = binaryReader.Read7BitEncodedInt();
             StompVelocityX = binaryReader.ReadSingle();
             StompVelocityY = binaryReader.ReadSingle();
         }
@@ -223,8 +224,6 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
         {
             EModeGlobalNPC.queenSlimeBoss = npc.whoAmI;
 
-            if (WorldSavingSystem.SwarmActive)
-                return true;
             void TrySpawnMinions(ref bool check, double threshold)
             {
                 if (!check && npc.life < npc.lifeMax * threshold)
@@ -251,6 +250,9 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
             GelatinSubjectDR = NPC.AnyNPCs(ModContent.NPCType<GelatinSubject>());
             npc.HitSound = GelatinSubjectDR ? SoundID.Item27 : SoundID.NPCHit1;
+
+            if (SummonCooldown > 0)
+                SummonCooldown--;
 
             //ai0
             //0 = default
@@ -313,7 +315,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                 }
 
                 // minion spawns
-                if (!NPC.AnyNPCs(ModContent.NPCType<GelatinSubject>()))
+                if (!NPC.AnyNPCs(ModContent.NPCType<GelatinSubject>()) && SummonCooldown <= 0)
                 {
                     bool condition1 = npc.ai[0] == 3 && npc.ai[1] == -20;
                     bool condition2 = npc.ai[0] == 0 && npc.ai[1] == 40;
@@ -322,6 +324,8 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                         if (FargoSoulsUtil.HostCheck && NPC.CountNPCS(ModContent.NPCType<GelatinBouncer>()) < MaxMinions)
                             FargoSoulsUtil.NewNPCEasy(npc.GetSource_FromAI(), npc.Center, ModContent.NPCType<GelatinBouncer>(), npc.whoAmI, target: npc.target,
                                 velocity: Main.rand.NextFloat(8f) * npc.DirectionFrom(Main.player[npc.target].Center).RotatedByRandom(MathHelper.PiOver2));
+
+                        SummonCooldown = LumUtils.SecondsToFrames(8);
                     }
                 }
             }
@@ -510,6 +514,8 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
         public override void ModifyIncomingHit(NPC npc, ref NPC.HitModifiers modifiers)
         {
+            if (npc.lifeRegen >= 0)
+                return;
             if (npc.life < npc.lifeMax / 2)
                 modifiers.FinalDamage *= 0.8f;
 
@@ -523,9 +529,16 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             if (npc.lifeRegen < 0)
             {
                 if (npc.life < npc.lifeMax / 2)
+                {
                     npc.lifeRegen = (int)Math.Round(npc.lifeRegen * 0.8f);
+                    damage = (int)(Math.Round(damage *0.8f));
+                }
+                    
                 if (GelatinSubjectDR)
+                {
                     npc.lifeRegen /= 10;
+                    damage /= 10;
+                }
             }
         }
         public override void OnHitPlayer(NPC npc, Player target, Player.HurtInfo hurtInfo)
@@ -545,6 +558,11 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             LoadExtra(recolor, 177);
             LoadExtra(recolor, 180);
             LoadExtra(recolor, 185);
+            LoadExtra(recolor, 186);
+            LoadProjectile(recolor, ProjectileID.QueenSlimeGelAttack);
+            LoadProjectile(recolor, ProjectileID.QueenSlimeMinionPinkBall);
+            LoadProjectile(recolor, ProjectileID.QueenSlimeMinionBlueSpike);
+
         }
     }
 
@@ -581,6 +599,17 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                 npc.knockBackResist = 0;
         }
 
+        public override void OnFirstTick(NPC npc)
+        {
+            if (NPC.AnyNPCs(NPCID.QueenSlimeBoss))
+            {
+                npc.life = 0;
+                npc.active = false;
+                npc.timeLeft = 0;
+                npc = null;
+                return;
+            }
+        }
         public override void AI(NPC npc)
         {
             if (NPC.AnyNPCs(NPCID.QueenSlimeBoss))

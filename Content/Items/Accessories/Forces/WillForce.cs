@@ -33,13 +33,29 @@ namespace FargowiltasSouls.Content.Items.Accessories.Forces
         {
             SetActive(player);
             FargoSoulsPlayer modPlayer = player.FargoSouls();
+            player.AddEffect<WillEffect>(Item);
+
+            // gladi
+            player.AddEffect<GladiatorBanner>(Item);
+            // gold
             player.AddEffect<GoldToPiggy>(Item);
+            player.AddEffect<GoldEffect>(Item);
+            // platinum
             modPlayer.PlatinumEffect = Item;
+            // red riding
             player.AddEffect<HuntressEffect>(Item);
+            player.AddEffect<RedRidingHuntressEffect>(Item);
+            // valhalla
             player.FargoSouls().ValhallaEnchantActive = true;
             player.AddEffect<ValhallaDash>(Item);
             SquireEnchant.SquireEffect(player, Item);
-            player.AddEffect<WillGladiatorEffect>(Item);
+
+            if (!player.HasEffect<WillEffect>())
+            {
+                player.AddEffect<GladiatorSpears>(Item);
+                player.AddEffect<GoldEffect>(Item);
+                player.AddEffect<RedRidingEffect>(Item);
+            }
         }
 
         public override void AddRecipes()
@@ -51,22 +67,10 @@ namespace FargowiltasSouls.Content.Items.Accessories.Forces
             recipe.Register();
         }
     }
-    public class WillGladiatorEffect : AccessoryEffect
+    public class WillEffect : AccessoryEffect
     {
-        public override Header ToggleHeader => Header.GetHeader<WillHeader>();
-        public override int ToggleItemType => ModContent.ItemType<WillForce>();
-        public override bool MinionEffect => true;
-        
-        public override void PostUpdateEquips(Player player)
-        {
-            if (player.ownedProjectileCounts[ModContent.ProjectileType<GladiatorSpirit>()] == 0)
-            {
-                if (player.whoAmI == Main.myPlayer)
-                {
-                    Projectile proj = Projectile.NewProjectileDirect(GetSource_EffectItem(player), player.Center, Vector2.Zero, ModContent.ProjectileType<GladiatorSpirit>(), 0, 0f, player.whoAmI);
-                    proj.netUpdate = true;
-                }
-            }
-        }
+        public override Header ToggleHeader => null;
+        //public override int ToggleItemType => ModContent.ItemType<WillForce>();
+       
     }
 }

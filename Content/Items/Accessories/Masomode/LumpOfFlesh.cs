@@ -14,28 +14,6 @@ namespace FargowiltasSouls.Content.Items.Accessories.Masomode
 
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("Lump of Flesh");
-            /* Tooltip.SetDefault(@"Grants immunity to knockback, Anticoagulation, Blackout, Obstructed, Dazed, Slow, and Frozen
-Increases damage dealt by 15%
-Increases spawn rate of rare enemies
-Your cursor causes nearby enemies to take increased damage
-Effect intensifies the longer you track them
-Right Click to parry attacks with extremely tight timing
-Defense and damage reduction drastically decreased while and shortly after guarding
-Dashing leaves a trail of blood spikes
-The pungent eyeball charges energy to fire a laser as you attack
-Enemies are less likely to target you
-'It's growing'"); */
-            //             DisplayName.AddTranslation((int)GameCulture.CultureName.Chinese, "肉团");
-            //             Tooltip.AddTranslation((int)GameCulture.CultureName.Chinese, @"'它在增长'
-            // 免疫致盲,阻塞和眩晕
-            // 增加16%召唤伤害,但略微减少防御
-            // +2最大召唤栏
-            // +2最大哨兵栏
-            // 当你攻击时,尖刻眼球会充能来发射激光
-            // 敌人不太可能以你为目标
-            // 地牢外的装甲和魔法骷髅敌意减小");
-
             Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 

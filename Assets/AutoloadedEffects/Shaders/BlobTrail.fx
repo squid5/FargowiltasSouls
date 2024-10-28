@@ -42,8 +42,19 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
     
     // You determine what this is by simply fucking around with changing stuff and seeing how it changes,
     // until you get something that looks cool.
-    float bloomOpacity = lerp(pow(sin(coords.y * 3.141), lerp(2, 6, coords.x)), 0.7, coords.x);
-    return color * pow(bloomOpacity, 5) * lerp(2, 6, fadeMapBrightness);
+    float bloomOpacity = lerp(pow(abs(sin(coords.y * 3.141)), lerp(2, 6, coords.x)), 0.7, coords.x);
+
+    float opacity = 1;
+    // Fade out at the top and bottom of the streak.
+    float y = 0.5 - abs(coords.y - 0.5);
+    if (y < 0.25)
+        opacity *= pow(y / 0.25, 4);
+    
+    if (coords.x < 0.05)
+        opacity *= pow(coords.x / 0.05, 2);
+    if (coords.x > 0.7)
+        opacity *= pow(1 - ((coords.x - 0.7) / 0.3), 2);
+    return color * opacity * pow(abs(bloomOpacity), 5) * lerp(2, 6, fadeMapBrightness);
 }
 
 technique Technique1

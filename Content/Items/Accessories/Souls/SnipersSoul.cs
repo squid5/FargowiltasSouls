@@ -1,6 +1,4 @@
-﻿using FargowiltasSouls.Core.AccessoryEffectSystem;
-using FargowiltasSouls.Core.Toggler.Content;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -13,20 +11,6 @@ namespace FargowiltasSouls.Content.Items.Accessories.Souls
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
-
-            // DisplayName.SetDefault("Sniper's Soul");
-
-            //DisplayName.AddTranslation((int)GameCulture.CultureName.Chinese, "神枪手之魂");
-
-            // Tooltip.SetDefault(tooltip);
-
-            //string tooltip_ch =
-            //@"增加30%远程伤害
-            //20%几率不消耗弹药
-            //增加15%远程暴击率
-            //拥有狙击镜效果
-            //'预备，瞄准，开火'";
-            //Tooltip.AddTranslation((int)GameCulture.CultureName.Chinese, tooltip_ch);
         }
 
 
@@ -37,11 +21,11 @@ namespace FargowiltasSouls.Content.Items.Accessories.Souls
         {
             //reduce ammo consume
             player.FargoSouls().RangedSoul = true;
-            player.GetDamage(DamageClass.Ranged) += 0.3f;
-            player.GetCritChance(DamageClass.Ranged) += 15;
+            player.GetDamage(DamageClass.Ranged) += 0.22f;
+            player.GetCritChance(DamageClass.Ranged) += 10;
 
             //add new effects
-
+            player.magicQuiver = true;
         }
 
         public override void AddRecipes()

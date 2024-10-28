@@ -1,7 +1,6 @@
 ﻿using FargowiltasSouls.Content.Bosses.Champions.Cosmos;
 using FargowiltasSouls.Content.Items.Accessories.Enchantments;
 using FargowiltasSouls.Content.Items.Materials;
-using FargowiltasSouls.Content.Projectiles.Souls;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using FargowiltasSouls.Core.Toggler.Content;
 using Microsoft.Xna.Framework;
@@ -32,22 +31,25 @@ namespace FargowiltasSouls.Content.Items.Accessories.Forces
             SetActive(player);
             modPlayer.WizardEnchantActive = true;
             player.AddEffect<MeteorMomentumEffect>(Item);
-            player.AddEffect<CosmosMoonEffect>(Item);
-
-            /*
-            //meteor shower
-            MeteorEnchant.AddEffects(player, Item);
-            //solar shields
-            player.AddEffect<SolarEffect>(Item);
-            player.AddEffect<SolarFlareEffect>(Item);
-            //stealth, voids, pet
-            VortexEnchant.AddEffects(player, Item);
-            //boosters
-            player.AddEffect<NebulaEffect>(Item);
-            //guardian and time freeze
-            player.AddEffect<StardustMinionEffect>(Item);
             player.AddEffect<StardustEffect>(Item);
-            */
+            if (player.AddEffect<CosmoForceEffect>(Item))
+                player.AddEffect<CosmosMoonEffect>(Item);
+
+            if (!player.HasEffect<CosmosMoonEffect>())
+            {
+                //meteor shower
+                MeteorEnchant.AddEffects(player, Item);
+                //solar shields
+                //player.AddEffect<SolarEffect>(Item);
+                player.AddEffect<SolarFlareEffect>(Item);
+                //stealth, voids, pet
+                VortexEnchant.AddEffects(player, Item);
+                //boosters
+                player.AddEffect<NebulaEffect>(Item);
+                //guardian and time freeze
+                player.AddEffect<StardustMinionEffect>(Item);
+                player.AddEffect<StardustEffect>(Item);
+            }
         }
 
         public override void AddRecipes()
@@ -72,19 +74,61 @@ namespace FargowiltasSouls.Content.Items.Accessories.Forces
         {
             FargoSoulsPlayer modPlayer = player.FargoSouls();
 
-            if (player.HeldItem != null && player.HeldItem.damage > 0 && player.controlUseItem)
+            if (modPlayer.TerrariaSoul)
+            {
+                if (!player.ItemTimeIsZero)
+                {
+                    modPlayer.CosmosMoonTimer += 2;
+                    if (modPlayer.CosmosMoonTimer >= LumUtils.SecondsToFrames(3) && player.whoAmI == Main.myPlayer)
+                    {
+                        int moonDamage = FargoSoulsUtil.HighestDamageTypeScaling(player, 1200);
+
+                        NPC result = null;
+                        float range = 1200;
+                        for (int i = 0; i < 200; i++)
+                        {
+                            NPC npc = Main.npc[i];
+                            if (npc.CanBeChasedBy() && Collision.CanHitLine(player.Center, 1, 1, npc.Center, 1, 1))
+                            {
+                                float foundRange = player.Distance(npc.Center);
+                                if (!(range <= foundRange))
+                                {
+                                    range = foundRange;
+                                    result = npc;
+                                }
+                            }
+                        }
+                        int npcid = result != null ? result.whoAmI : -1;
+
+                        Projectile.NewProjectileDirect(player.GetSource_EffectItem<CosmosMoonEffect>(), player.Center, player.DirectionTo(Main.MouseWorld) * 7, ModContent.ProjectileType<TerrariaSoulMoon>(), moonDamage, 1, player.whoAmI, MathHelper.Pi, ai1: npcid, ai2: modPlayer.CosmosMoonCycle);
+                        modPlayer.CosmosMoonTimer = 0;
+                        modPlayer.CosmosMoonCycle++;
+                        modPlayer.CosmosMoonCycle %= 4;
+                    }
+                }
+                return;
+            }
+
+            if (player.HeldItem != null && player.HeldItem.damage > 0 && (player.controlUseItem || !player.ItemTimeIsZero))
             {
                 modPlayer.CosmosMoonTimer += 2;
-
-                if (modPlayer.CosmosMoonTimer >= LumUtils.SecondsToFrames(3) && player.whoAmI == Main.myPlayer && player.ownedProjectileCounts[ModContent.ProjectileType<CosmosForceMoon>()] < 4)
+                int moonCount = player.ownedProjectileCounts[ModContent.ProjectileType<CosmosForceMoon>()];
+                if (modPlayer.CosmosMoonTimer >= LumUtils.SecondsToFrames(3) && player.whoAmI == Main.myPlayer && moonCount < 4)
                 {
-                    int moonDamage = FargoSoulsUtil.HighestDamageTypeScaling(player, 3200);
+                    int moonDamage = FargoSoulsUtil.HighestDamageTypeScaling(player, 1200);
 
-                    Projectile.NewProjectileDirect(player.GetSource_EffectItem<CosmosMoonEffect>(), player.Center, Vector2.Zero, ModContent.ProjectileType<CosmosForceMoon>(), moonDamage, 1, player.whoAmI, MathHelper.Pi);
+                    Projectile.NewProjectileDirect(player.GetSource_EffectItem<CosmosMoonEffect>(), player.Center, Vector2.Zero, ModContent.ProjectileType<CosmosForceMoon>(), moonDamage, 1, player.whoAmI, MathHelper.Pi, ai2: modPlayer.CosmosMoonCycle);
                     modPlayer.CosmosMoonTimer = 0;
+                    modPlayer.CosmosMoonCycle++;
+                    modPlayer.CosmosMoonCycle %= 4;
                 }
             }
             
         }
+    }
+    public class CosmoForceEffect : AccessoryEffect
+    {
+        public override Header ToggleHeader => null;
+        //public override int ToggleItemType => ModContent.ItemType<CosmoForce>();
     }
 }

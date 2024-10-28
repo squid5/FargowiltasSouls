@@ -4,6 +4,7 @@
 using Luminance.Core.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Steamworks;
 using System;
 using Terraria;
 using Terraria.Audio;
@@ -12,7 +13,7 @@ using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Content.Projectiles.Deathrays
 {
-    public class DeviDeathray : BaseDeathray, IPixelatedPrimitiveRenderer
+	public class DeviDeathray : BaseDeathray, IPixelatedPrimitiveRenderer
     {
         const int MaxLength = 3000;
         int Length = 10;
@@ -53,11 +54,6 @@ namespace FargowiltasSouls.Content.Projectiles.Deathrays
             if (Length < MaxLength)
             {
                 Length += 50;
-            }
-            if (Projectile.localAI[0] == 0f)
-            {
-                SoundEngine.PlaySound(SoundID.Item12, Projectile.Center);
-                //SoundEngine.PlaySound(SoundID.Zombie104, Projectile.Center);
             }
             float num801 = 0.5f;
             Projectile.localAI[0] += 1f;

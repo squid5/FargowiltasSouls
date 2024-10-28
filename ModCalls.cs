@@ -8,9 +8,6 @@ using FargowiltasSouls.Core.Systems;
 using Luminance.Core.ModCalls;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
@@ -371,6 +368,19 @@ namespace FargowiltasSouls
         protected override object SafeProcess(params object[] argsWithoutCommand)
         {
             return (int)Main.LocalPlayer.ActualClassCrit(DamageClass.Summon);
+        }
+    }
+    internal sealed class AttackSpeedCall : ModCall
+    {
+        public override IEnumerable<string> GetCallCommands()
+        {
+            yield return "AttackSpeed";
+            yield return "GetAttackSpeed";
+        }
+        public override IEnumerable<Type> GetInputTypes() => null;
+        protected override object SafeProcess(params object[] argsWithoutCommand)
+        {
+            return Main.LocalPlayer.FargoSouls().AttackSpeed;
         }
     }
 }

@@ -1,11 +1,17 @@
-﻿using FargowiltasSouls.Core;
+﻿using Fargowiltas.NPCs;
+using Fargowiltas.Projectiles;
+using FargowiltasSouls.Core;
 using FargowiltasSouls.Core.Systems;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Terraria;
+using Terraria.Audio;
 using Terraria.GameContent.UI.Elements;
 using Terraria.GameInput;
+using Terraria.ID;
+using Terraria.Localization;
+using Terraria.ModLoader;
 using Terraria.UI;
 
 namespace FargowiltasSouls.Content.UI.Elements
@@ -17,15 +23,33 @@ namespace FargowiltasSouls.Content.UI.Elements
         public bool dragging;
         public Texture2D Texture;
         public Texture2D AuraTexture;
+        public Texture2D EmptyTexture;
         public string TextEMode;
         public string TextMaso;
+        public string TextDisabled;
+        public string TextRightClick;
 
-        public UIOncomingMutant(Texture2D tex, Texture2D auraTex, string textEMode, string textMaso)
+        public string TextHoldShift;
+        public string TextExpandedEternity;
+        public string TextExpandedMaso;
+        public string TextExpandedFeatures;
+
+        public int ToggleCooldown;
+
+        public UIOncomingMutant(Texture2D tex, Texture2D auraTex, Texture2D emptyTex, string textEMode, string textMaso, string textDisabled, string textRightClick, 
+            string textHoldShift, string textExpandedEternity, string textExpandedMaso, string textExpandedFeatures)
         {
             Texture = tex;
             AuraTexture = auraTex;
+            EmptyTexture = emptyTex;
             TextEMode = textEMode;
             TextMaso = textMaso;
+            TextDisabled = textDisabled;
+            TextRightClick = textRightClick;
+            TextHoldShift = textHoldShift;
+            TextExpandedEternity = textExpandedEternity;
+            TextExpandedMaso = textExpandedMaso;
+            TextExpandedFeatures = textExpandedFeatures;
 
             Width.Set(24, 0);
             Height.Set(26, 0);
@@ -48,16 +72,16 @@ namespace FargowiltasSouls.Content.UI.Elements
 
             StayInBounds();
 
-            SoulConfig.Instance.OncomingMutantX = end.X;
-            SoulConfig.Instance.OncomingMutantY = end.Y;
-            SoulConfig.Instance.OnChanged();
+            ClientConfig.Instance.OncomingMutantX = end.X;
+            ClientConfig.Instance.OncomingMutantY = end.Y;
+            ClientConfig.Instance.OnChanged();
         }
 
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime); // don't remove.
 
-            bool conditions = WorldSavingSystem.EternityMode && Main.playerInventory;
+            bool conditions = Main.playerInventory; //&&  WorldSavingSystem.EternityMode;
 
             // Checking ContainsPoint and then setting mouseInterface to true is very common. This causes clicks on this UIElement to not cause the player to use current items. 
             if (ContainsPoint(Main.MouseScreen) && conditions)
@@ -74,6 +98,52 @@ namespace FargowiltasSouls.Content.UI.Elements
                 DragEnd(Main.MouseScreen);
             }
 
+            if (Main.LocalPlayer.FargoSouls().EmodeToggleCooldown <= 0 && !dragging && conditions && ContainsPoint(Main.MouseScreen) && Main.mouseRight && PlayerInput.MouseInfoOld.RightButton == ButtonState.Released)
+            {
+                Main.LocalPlayer.FargoSouls().EmodeToggleCooldown = 15;
+                if (Main.netMode == NetmodeID.SinglePlayer)
+                {
+                    if (FargoSoulsUtil.WorldIsExpertOrHarder())
+                    {
+                        if (!LumUtils.AnyBosses())
+                        {
+                            WorldSavingSystem.ShouldBeEternityMode = !WorldSavingSystem.ShouldBeEternityMode;
+
+                            int deviType = ModContent.NPCType<Deviantt>();
+                            if (FargoSoulsUtil.HostCheck && WorldSavingSystem.ShouldBeEternityMode && !WorldSavingSystem.SpawnedDevi && !NPC.AnyNPCs(deviType))
+                            {
+                                WorldSavingSystem.SpawnedDevi = true;
+
+                                Vector2 spawnPos = (Main.zenithWorld || Main.remixWorld) ? Main.LocalPlayer.Center : Main.LocalPlayer.Center - 1000 * Vector2.UnitY;
+                                Projectile.NewProjectile(Main.LocalPlayer.GetSource_Misc(""), spawnPos, Vector2.Zero, ModContent.ProjectileType<SpawnProj>(), 0, 0, Main.myPlayer, deviType);
+
+                                FargoSoulsUtil.PrintLocalization("Announcement.HasAwoken", new Color(175, 75, 255), Language.GetTextValue("Mods.Fargowiltas.NPCs.Deviantt.DisplayName"));
+                            }
+
+                            SoundEngine.PlaySound(SoundID.Roar, Main.LocalPlayer.Center);
+
+                            if (Main.netMode == NetmodeID.Server)
+                                NetMessage.SendData(MessageID.WorldData); //sync world
+                        }
+                    }
+                    else
+                    {
+                        if (FargoSoulsUtil.WorldIsExpertOrHarder())
+                            if (!LumUtils.AnyBosses())
+                                SoundEngine.PlaySound(SoundID.Roar, Main.LocalPlayer.Center);
+                        FargoSoulsUtil.PrintLocalization($"Mods.FargowiltasSouls.Items.Masochist.WrongDifficulty", new Color(175, 75, 255));
+                    }
+                }
+                else
+                {
+                    var netMessage = FargowiltasSouls.Instance.GetPacket();
+                    netMessage.Write((byte)FargowiltasSouls.PacketID.ToggleEternityMode);
+                    netMessage.Write((byte)Main.LocalPlayer.whoAmI);
+                    netMessage.Send();
+                }
+                
+            }
+
             if (dragging)
             {
                 Left.Set(Main.mouseX - offset.X, 0); // Main.MouseScreen.X and Main.mouseX are the same.
@@ -82,8 +152,8 @@ namespace FargowiltasSouls.Content.UI.Elements
             }
             else
             {
-                Left.Set(SoulConfig.Instance.OncomingMutantX, 0);
-                Top.Set(SoulConfig.Instance.OncomingMutantY, 0);
+                Left.Set(ClientConfig.Instance.OncomingMutantX, 0);
+                Top.Set(ClientConfig.Instance.OncomingMutantY, 0);
                 Recalculate();
             }
 
@@ -105,8 +175,8 @@ namespace FargowiltasSouls.Content.UI.Elements
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
-            if (!WorldSavingSystem.EternityMode)
-                return;
+            //if (!WorldSavingSystem.EternityMode)
+            //    return;
 
             //base.DrawSelf(spriteBatch);
 
@@ -115,18 +185,44 @@ namespace FargowiltasSouls.Content.UI.Elements
             if (IsMouseHovering && !dragging)
             {
                 Vector2 textPosition = Main.MouseScreen + new Vector2(21, 21);
+                string text = WorldSavingSystem.MasochistModeReal ? TextMaso : WorldSavingSystem.EternityMode ? TextEMode : TextDisabled;
+                if (WorldSavingSystem.MasochistModeReal)
+                    text = $"[c/33ffbe:{text}]";
+                else if (WorldSavingSystem.EternityMode)
+                    text = $"[c/00FFFF:{text}]";
+
+                if (!LumUtils.AnyBosses())
+                    text += $"\n[c/787878:{TextRightClick}]";
+                
+
+                if (Main.keyState.IsKeyDown(Keys.LeftShift))
+                {
+                    string difText = WorldSavingSystem.MasochistModeReal ? TextExpandedMaso : TextExpandedEternity;
+                    text += $"\n{difText}";
+                    text += $"\n{TextExpandedFeatures}";
+                }
+                else
+                    text += $"\n[c/787878:{TextHoldShift}]";
+
                 Utils.DrawBorderString(
                     spriteBatch,
-                    WorldSavingSystem.MasochistModeReal ? TextMaso : TextEMode,
+                    text,
                     textPosition,
-                    WorldSavingSystem.MasochistModeReal ? new Color(51, 255, 191) : Color.White);
+                    Color.White);
             }
 
             // Drawing
             Vector2 position = style.Position();
-            spriteBatch.Draw(Texture, position + new Vector2(2), Texture.Bounds, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0);
-            if (WorldSavingSystem.MasochistModeReal)
-                spriteBatch.Draw(AuraTexture, position, AuraTexture.Bounds, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0);
+            if (WorldSavingSystem.EternityMode)
+            {
+                spriteBatch.Draw(Texture, position + new Vector2(2), Texture.Bounds, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0);
+                if (WorldSavingSystem.MasochistModeReal)
+                    spriteBatch.Draw(AuraTexture, position, AuraTexture.Bounds, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0);
+            }
+            else
+            {
+                spriteBatch.Draw(EmptyTexture, position + new Vector2(2), Texture.Bounds, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0);
+            }
         }
     }
 }

@@ -16,7 +16,7 @@ using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Content.Projectiles.Deathrays
 {
-    public class DeviBigDeathray : BaseDeathray, IPixelatedPrimitiveRenderer
+	public class DeviBigDeathray : BaseDeathray, IPixelatedPrimitiveRenderer
     {
         public override string Texture => "FargowiltasSouls/Content/Projectiles/Deathrays/DeviDeathray";
 
@@ -230,7 +230,7 @@ namespace FargowiltasSouls.Content.Projectiles.Deathrays
 
         }
 
-        public float RingWidthFunction(float trailInterpolant) => Projectile.scale * 5;
+        public float RingWidthFunction(float trailInterpolant) => Projectile.scale * 4;
 
         public static Color RingColorFunction(float trailInterpolant)
         {

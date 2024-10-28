@@ -16,10 +16,6 @@ namespace FargowiltasSouls.Content.Items.Accessories.Souls
         {
             base.SetStaticDefaults();
 
-            // DisplayName.SetDefault("Soul of the Universe");
-
-            // Tooltip.SetDefault(tooltip);
-
 
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(6, 7));
             ItemID.Sets.AnimatesAsSoul[Item.type] = true;
@@ -47,7 +43,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Souls
 
             FargoSoulsPlayer modPlayer = player.FargoSouls();
             //use speed, velocity, debuffs, crit dmg, mana up, double knockback
-            modPlayer.UniverseSoul = true;
+            modPlayer.UniverseSoul = modPlayer.UniverseSoulBuffer = true;
             modPlayer.UniverseCore = true;
 
             player.AddEffect<UniverseSpeedEffect>(Item);
@@ -83,7 +79,6 @@ namespace FargowiltasSouls.Content.Items.Accessories.Souls
         public override void AddRecipes()
         {
             Recipe recipe = CreateRecipe()
-            .AddIngredient<UniverseCore>()
             .AddIngredient<BerserkerSoul>()
             .AddIngredient<SnipersSoul>()
             .AddIngredient<ArchWizardsSoul>()

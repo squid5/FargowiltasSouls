@@ -20,7 +20,8 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
             ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
         }
 
-        const int maxTime = 60;
+        public static int TelegraphTime => WorldSavingSystem.MasochistModeReal ? 30 : 30;
+        public const int maxTime = 60;
 
         public override void SetDefaults()
         {
@@ -30,7 +31,7 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
             Projectile.hostile = true;
             Projectile.ignoreWater = true;
             Projectile.tileCollide = false;
-            Projectile.timeLeft = maxTime;
+            Projectile.timeLeft = 60 * 60;
             //Projectile.alpha = 250;
             Projectile.aiStyle = -1;
             Projectile.penetrate = -1;
@@ -40,7 +41,10 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
 
             CooldownSlot = 1;
         }
-
+        public ref float TelegraphTimer => ref Projectile.ai[2];
+        public ref float RotationTimer => ref Projectile.localAI[2];
+        public ref float Rotation => ref Projectile.localAI[1];
+        public static int Direction = 1;
         public override void AI()
         {
             Projectile.hide = false; //to avoid edge case tick 1 wackiness
@@ -51,11 +55,38 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
             {
                 if (npc.ai[0] == 0) Projectile.extraUpdates = 1;
 
-                if (Projectile.localAI[0] == 0)
-                    Projectile.localAI[1] = Projectile.ai[1] / maxTime; //do this first
+                if (!npc.HasValidTarget || !Main.player[npc.target].Alive())
+                {
+                    Projectile.Kill();
+                    return;
+                }
+                Player player = Main.player[npc.target];
+                float toPlayer = npc.DirectionTo(player.Center).ToRotation();
+                float idleRot = MathHelper.Pi * 0.7f * -Math.Sign(Projectile.ai[1]);
 
-                Projectile.velocity = Projectile.velocity.RotatedBy(Projectile.ai[1]);
-                Projectile.ai[1] -= Projectile.localAI[1];
+                if (TelegraphTimer < TelegraphTime)
+                {
+                    TelegraphTimer += 1f / Projectile.MaxUpdates;
+                    Rotation = MathHelper.SmoothStep(toPlayer, toPlayer + idleRot, MathF.Pow(TelegraphTimer / TelegraphTime, 0.5f));
+
+
+                    float fadein = 15;
+                    if (TelegraphTimer <= fadein)
+                        Projectile.Opacity = TelegraphTimer / fadein;
+                }
+                else
+                {
+                    RotationTimer++;
+                    Rotation = MathHelper.SmoothStep(toPlayer + idleRot, toPlayer - idleRot, MathF.Pow(RotationTimer / maxTime, 0.5f));
+
+
+                    float fadeout = 15;
+                    if (RotationTimer >= maxTime - fadeout)
+                        Projectile.Opacity = 1 - ((RotationTimer - (maxTime - fadeout)) / fadeout);
+
+                    if (RotationTimer >= maxTime)
+                        Projectile.Kill();
+                }
                 Projectile.Center = npc.Center + new Vector2(60, 60).RotatedBy(Projectile.velocity.ToRotation() - MathHelper.PiOver4) * Projectile.scale;
             }
             else
@@ -64,7 +95,7 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
                 return;
             }
 
-            if (Projectile.localAI[0] == 0)
+            if (Projectile.localAI[0] == 0 && TelegraphTimer >= TelegraphTime)
             {
                 Projectile.localAI[0] = 1;
 
@@ -96,8 +127,7 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
                 }
             }*/
 
-            Projectile.Opacity = (float)Math.Min(1, (2 - Projectile.extraUpdates) * Math.Sin(Math.PI * (maxTime - Projectile.timeLeft) / maxTime));
-
+            Projectile.velocity = Rotation.ToRotationVector2();
             Projectile.direction = Projectile.spriteDirection = Math.Sign(Projectile.ai[1]);
             Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(Projectile.direction < 0 ? 135 : 45);
             //Main.NewText(MathHelper.ToDegrees(Projectile.velocity.ToRotation()) + " " + MathHelper.ToDegrees(Projectile.ai[1]));

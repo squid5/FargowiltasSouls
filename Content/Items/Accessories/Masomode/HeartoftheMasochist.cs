@@ -34,11 +34,13 @@ namespace FargowiltasSouls.Content.Items.Accessories.Masomode
         public override void UpdateInventory(Player player)
         {
             player.FargoSouls().CanAmmoCycle = true;
+            player.AddEffect<ChalicePotionEffect>(Item);
         }
 
         public override void UpdateVanity(Player player)
         {
             player.FargoSouls().CanAmmoCycle = true;
+            player.AddEffect<ChalicePotionEffect>(Item);
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
@@ -62,7 +64,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Masomode
             //saucer control console
             player.buffImmune[BuffID.Electrified] = true;
             player.buffImmune[BuffID.VortexDebuff] = true;
-            player.AddEffect<UfoMinionEffect>(Item);
+            //player.AddEffect<UfoMinionEffect>(Item);
 
             //betsy's heart
             player.buffImmune[BuffID.OgreSpit] = true;
@@ -81,12 +83,11 @@ namespace FargowiltasSouls.Content.Items.Accessories.Masomode
 
             //galactic globe
             player.buffImmune[ModContent.BuffType<FlippedBuff>()] = true;
-            player.buffImmune[ModContent.BuffType<FlippedHallowBuff>()] = true;
+            player.buffImmune[ModContent.BuffType<HallowIlluminatedBuff>()] = true;
             player.buffImmune[ModContent.BuffType<UnstableBuff>()] = true;
             player.buffImmune[ModContent.BuffType<CurseoftheMoonBuff>()] = true;
             //player.buffImmune[BuffID.ChaosState] = true;
-            player.AddEffect<MasoGravEffect>(Item);
-            player.AddEffect<MasoTrueEyeMinion>(Item);
+            player.AddEffect<ChalicePotionEffect>(Item);
             fargoPlayer.GravityGlobeEXItem = Item;
             fargoPlayer.WingTimeModifier += 1f;
 

@@ -6,13 +6,12 @@ using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Core.AccessoryEffectSystem
 {
-    //Proof of concept file for an accessory effect rework
 
     /// <summary>
     /// Contains the behavior for an accessory effect. <para/>
     /// All Toggles have a corresponding accessory effect. <para/>
     /// Each accessory effect with a toggle needs a localized toggle description as Mods.YourMod.Toggler.YourAccessoryEffectName.<para/>
-    /// This type is not instanced per player. Put instanced things (such as fields) in an EffectFields.
+    /// This type is not instanced per player. Put instanced things (such as fields) in a ModPlayer.
     /// </summary>
     public abstract class AccessoryEffect : ModType
     {
