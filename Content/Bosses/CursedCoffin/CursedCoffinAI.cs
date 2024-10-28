@@ -244,6 +244,8 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
                             if (Main.musicFade[Music] < 0.5f)
                                 Main.musicFade[Music] = 0.5f;
                         }
+                        else
+                            Music = MusicID.OtherworldlyBoss1;
                     }
 				}
 				if (NPC.Center.Y >= LockVector1.Y + 800) //only go so far
