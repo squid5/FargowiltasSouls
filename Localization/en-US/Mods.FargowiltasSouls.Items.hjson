@@ -382,7 +382,7 @@ NebulaEnchant: {
 	Tooltip:
 		'''
 		Once every 3 seconds a projectile will be replaced with a nebula shot that deals magic damage
-		Nebula shots chase after enemies and spawns a nebula booster
+		Nebula shots chase after enemies and spawn a nebula booster
 		Buff booster stacking capped at 2 and does not spawn mana boosters
 		'The pillars of creation have shined upon you'
 		'''
@@ -394,7 +394,7 @@ NecroEnchant: {
 		'''
 		Slain enemies may drop a pile of bones
 		Touch a pile of bones to spawn a friendly Dungeon Guardian
-		Damage scales solely with the defeated enemy's max HP
+		Damage scales solely with the defeated enemy's max HP and is capped at 10000
 		Bosses will drop bones every 10% of their HP lost
 		'Welcome to the bone zone'
 		'''
@@ -916,7 +916,7 @@ ShadowForce: {
 	Tooltip:
 		'''
 		[i:FargowiltasSouls/CrystalAssassinEnchant] Grants a shadow dash that cancels vertical movement and can be angled diagonally
-		[i:FargowiltasSouls/ShinobiEnchant] Every 4 seconds, your next dash will envolope you in shade, making you invincible during the dash
+		[i:FargowiltasSouls/ShinobiEnchant] Every 4 seconds, your next dash will envolop you in shade, making you invincible during the dash
 		[i:FargowiltasSouls/ShinobiEnchant] Dashing through an enemy with the shade dash damages them and inflicts Marked for Death 
 		[i:FargowiltasSouls/AncientShadowEnchant] Dashing fires a burst of shadowflame projectiles around you
 		[i:FargowiltasSouls/NinjaEnchant] Increases projectile damage based on projectile speed

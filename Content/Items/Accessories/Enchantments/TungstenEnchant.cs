@@ -6,6 +6,7 @@ using FargowiltasSouls.Core.AccessoryEffectSystem;
 using FargowiltasSouls.Core.Toggler.Content;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
+using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -179,7 +180,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
             {
                 bool forceEffect = modPlayer.ForceEffect<TungstenEnchant>();
                 float scale = forceEffect ? 3f : 2f;
-                if (terraForce)
+                if (terraForce && !modPlayer.EquippedEnchants.Any(e => e.Type == ModContent.ItemType<TungstenEnchant>()))
                     scale = 1.5f;
                 else if (TungstenNerfedProj(projectile))
                     scale -= (scale - 1f) / 2f;
