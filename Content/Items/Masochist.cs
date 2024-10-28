@@ -114,7 +114,7 @@ Cannot be used while a boss is alive
             }
             return true;
         }
-        public static bool CanToggleEternity()
+        public static bool CanToggleEternity() // exists for DLC compat
         {
             return FargoSoulsUtil.WorldIsExpertOrHarder() && !LumUtils.AnyBosses();
         }

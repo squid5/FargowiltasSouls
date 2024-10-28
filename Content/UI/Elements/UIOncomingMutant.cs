@@ -192,7 +192,7 @@ namespace FargowiltasSouls.Content.UI.Elements
                 else if (WorldSavingSystem.EternityMode)
                     text = $"[c/00FFFF:{text}]";
 
-                if (!LumUtils.AnyBosses())
+                if (Masochist.CanToggleEternity())
                     text += $"\n[c/787878:{TextRightClick}]";
                 
 
