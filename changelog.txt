@@ -59,15 +59,15 @@ Reworked Shroomite Enchantment:
 Mushrooms heal 50 HP and consuming them grants Mushroom Power, increasing your damage and critical strike chance for a duration
 Piercing projectiles spawn a cloud of mushrooms on their first hit, with a short cooldown
 
-Reworked Solar Enchant:
+Reworked Solar Enchantment:
 -Build up solar charge while attacking
 -Gain damage resistance the more charge is stored, up to 20%
 -Stop attacking when fully charged to release a large solar burst
 
-Reworked Vortex Enchant: 
+Reworked Vortex Enchantment: 
 -Hitting very distant enemies fires a deathray at them
 
-Reworked Nebula Enchant:
+Reworked Nebula Enchantment:
 -Once every 3 seconds a projectile will be replaced with a nebula shot that deals magic damage
 -Nebula shots chase after enemies and spawn a nebula booster
 
@@ -405,7 +405,7 @@ Tree Sword base damage 14 -> 15
 Dicer base damage 60 -> 80
 Mounted Acorn Gun can now use Gemcorns, which deal more damage
 
-Lightslinger: Bomb cannot split with Adamantite Enchantment and similar effects, slightly decreased bomb shot damage
+Lightslinger: Bomb cannot split with Adamantite Enchant and similar effects, slightly decreased bomb shot damage
 Crystalline Congregation: 
 -Now only counts projectiles that are currently congregating towards projectile limit, and not shot projectiles
 -Attack delay is now affected by attack speed
@@ -454,7 +454,7 @@ Gladiator Enchant:
 -Wizard effect increases banner damage and DR to 10%
 -Banners no longer expire; instead can only be refreshed every 15 seconds
 
-Ebonwood Enchantment:
+Ebonwood Enchant:
 -Now provides flat damage rather than negative defense
 -Enemy withering buildup decays more slowly
 
@@ -482,7 +482,7 @@ Ancient Cobalt Enchant:
 -Added immunity effect to description
 -Now has wizard effect because why not: un-nerfed immunity time and increased explosion damage
 
-Stardust Enchantment: Duration 9s-> 6s and fixed tooltip, cooldown 1m -> 1m30s
+Stardust Enchant: Duration 9s-> 6s and fixed tooltip, cooldown 1m -> 1m30s
 Miner Enchant: Grants immunity to damage from mining explosives
 Cactus Enchant: Enemies actually spray needles on death
 Molten Enchant: Nerfed damage and damage amp
@@ -578,7 +578,7 @@ Fixed the article prefix adjustment (e.g Unreal The Big Sting -> The Unreal Big 
 Fixed Ancient Hallow Enchant and Chlorophyte Enchant summons screenshotting Wizard effect damage
 Fixed Wyvern Feather not working correctly for liquids
 Fixed Computation Orb on-hit mana cost affecting Magic/Summoner attacks
-Fixed lightning used for certain Eridanus, Moon Lord and Cultist attacks, as well as Lightning Rod on players, Vortex enemies and Etherian Lightning Bugs, being marked .friendly, and thus being affected by things such as Ninja Enchantment
+Fixed lightning used for certain Eridanus, Moon Lord and Cultist attacks, as well as Lightning Rod on players, Vortex enemies and Etherian Lightning Bugs, being marked .friendly, and thus being affected by things such as Ninja Enchant
 Fixed Naval Rustrifle reload animation position being offset incorrectly
 Fixed several weapons and projectiles interacting incorrectly with Tungsten Enchant
 Fixed bug where Fargo hotkeys could be used under various circumstances where player shouldn't be able to use items
@@ -592,7 +592,7 @@ Fixed Shadow Enchant ball projectiles being marked as minions
 Fixed Prime Staff limbs not teleporting to player with the head if too far
 Fixed whips not having pierce damage fall-off
 Fixed CRM autoheal not taking GetHealLife modifiers into account
-Fixed Hallow Enchantment not working with all healLife modifiers correctly (such as Shroomite Enchantment)
+Fixed Hallow Enchant not working with all healLife modifiers correctly (such as Shroomite Enchant)
 Fixed Abominationn doing dash circle telegraph without eternity mode
 Fixed some boss debuff DR not working and some not visually displaying correctly
 Fixed Lightning Rod buff lightning being able to hurt enemies
