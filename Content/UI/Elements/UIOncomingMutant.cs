@@ -1,5 +1,6 @@
 ﻿using Fargowiltas.NPCs;
 using Fargowiltas.Projectiles;
+using FargowiltasSouls.Content.Items;
 using FargowiltasSouls.Core;
 using FargowiltasSouls.Core.Systems;
 using Microsoft.Xna.Framework;
@@ -105,7 +106,7 @@ namespace FargowiltasSouls.Content.UI.Elements
                 {
                     if (FargoSoulsUtil.WorldIsExpertOrHarder())
                     {
-                        if (!LumUtils.AnyBosses())
+                        if (Masochist.CanToggleEternity())
                         {
                             WorldSavingSystem.ShouldBeEternityMode = !WorldSavingSystem.ShouldBeEternityMode;
 
