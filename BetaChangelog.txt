@@ -85,3 +85,5 @@ twinrangs has autofire m2
 changed how plantera dicer mines spin while growing
 randomized blazing wheel patrol slightly
 tweaked check for purified on lizard altar
+
+maso ftw destro segments temporarily lose contact damage after each coil

@@ -787,6 +787,8 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
         public int ProjectileCooldownTimer;
         public int AttackTimer;
         public int ProbeReleaseTimer;
+        public int IntangibleTimer;
+        public bool GoIntangibleAfterCoil;
 
         public override void SendExtraAI(NPC npc, BitWriter bitWriter, BinaryWriter binaryWriter)
         {
@@ -826,6 +828,25 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
         {
             bool result = base.SafePreAI(npc);
 
+            if (IntangibleTimer > 0)
+                IntangibleTimer--;
+
+            if (IntangibleTimer > 20)
+            {
+                npc.alpha += 12;
+                if (npc.alpha > 255)
+                    npc.alpha = 255;
+            }
+            else
+            {
+                npc.alpha -= 12;
+                if (npc.alpha < 0)
+                    npc.alpha = 0;
+            }
+
+            if (npc.whoAmI == NPC.FindFirstNPC(npc.type))
+                Main.NewText($"{IntangibleTimer} {npc.alpha}");
+
             NPC destroyer = FargoSoulsUtil.NPCExists(npc.realLife, NPCID.TheDestroyer);
 
             if (destroyer == null || npc.life <= 0 || !destroyer.active || destroyer.life <= 0)
@@ -857,6 +878,17 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                 pivot += Vector2.Normalize(Main.npc[npc.realLife].velocity.RotatedBy(MathHelper.PiOver2 * destroyerEmode.RotationDirection)) * 600;
                 if (npc.Distance(pivot) < 600) //make sure body doesnt coil into the circling zone
                     npc.Center = pivot + npc.DirectionFrom(pivot) * 600;
+
+                if (WorldSavingSystem.MasochistModeReal && Main.getGoodWorld)
+                    GoIntangibleAfterCoil = true;
+            }
+            else //not spinning
+            {
+                if (GoIntangibleAfterCoil)
+                {
+                    IntangibleTimer = 120;
+                    GoIntangibleAfterCoil = false;
+                }
             }
 
             if (destroyerEmode.InPhase2)
@@ -945,6 +977,9 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
             if (destroyer == null)
                 return base.CanHitPlayer(npc, target, ref CooldownSlot);
+
+            if (IntangibleTimer > 0)
+                return false;
 
             Destroyer destroyerEmode = destroyer.GetGlobalNPC<Destroyer>(); //basically, don't hit player right around when a coil begins, segments inside radius may move eratically
             if (destroyerEmode.IsCoiling)
