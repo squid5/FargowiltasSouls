@@ -1910,7 +1910,7 @@ TerrariaSoul: {
 		[i:FargowiltasSouls/ShadowForce] Grants a shadow dash, and an invincible shade dash every 4 seconds, increased projectile stats based on speed
 		[i:FargowiltasSouls/ShadowForce] You fire additional weapons as support, your minions get a scythe attack, and slain enemies may drop a pile of bones
 		[i:FargowiltasSouls/WillForce] Summons a gladiator spirit, increases your healing and mount stats, and successive attacks gain bonus damage, press the Gold hotkey to encase yourself
-		[i:FargowiltasSouls/WillForce] Automatically sends coins to your piggy bank when picked up (works from vanity and inventory), enemies may drop extra loot,
+		[i:FargowiltasSouls/WillForce] Automatically sends coins to your piggy bank when picked up (works from vanity and inventory), enemies may drop extra loot
 		[i:FargowiltasSouls/CosmoForce] Attacking occasionally launches moons at enemies that explode into Lunar Boosters
 		[i:FargowiltasSouls/CosmoForce] Increases your movement speed and acceleration and decreases your momentum, press the Freeze Key to freeze time for 6 seconds with a 60 second cooldown
 		'A true master of Terraria'
