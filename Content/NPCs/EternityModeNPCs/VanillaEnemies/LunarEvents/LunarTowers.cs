@@ -41,6 +41,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEve
         public abstract List<int> RandomAttacks { get; }
 
         public bool spawned;
+        public bool DeathAnimation = false;
 
         public override void SetDefaults(NPC npc)
         {
@@ -96,6 +97,14 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEve
                 }
             }
             return false;
+        }
+        public override void HitEffect(NPC npc, NPC.HitInfo hit)
+        {
+            if (npc.life < 0)
+            {
+                DeathAnimation = true;
+                Main.NewText("e");
+            }
         }
         public override void AI(NPC npc)
         {
@@ -165,16 +174,18 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEve
                     CombatText.NewText(npc.Hitbox, CombatText.HealLife, heal);
                 }
             }
+            if (DeathAnimation)
+                return;
             bool anyPlayersClose = AnyPlayerWithin(npc, AuraSize);
             if (anyPlayersClose)
             {
                 AttackTimer++;
                 npc.defense = npc.defDefense;
             }
-            if (ShieldStrength <= 0)
-                npc.dontTakeDamage = false;
+            //if (ShieldStrength <= 0 && npc.life > 0)
+            //    npc.dontTakeDamage = false;
 
-            if (npc.dontTakeDamage)
+            if (npc.dontTakeDamage && npc.life > npc.lifeMax / 2)
             {
                 AuraSize = 5000;
                 if (anyPlayersClose)
@@ -210,6 +221,8 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEve
                         }
                         ShieldStrength = 0;
                         npc.netUpdate = true;
+                        npc.dontTakeDamage = false;
+                        NetSync(npc);
                     }
                 }
                 if (npc.life < npc.lifeMax)
@@ -217,7 +230,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEve
                     npc.life = npc.lifeMax;
                 }
             }
-            else
+            else if (!npc.dontTakeDamage)
             {
                 if (AuraSize > 1500)
                 {
