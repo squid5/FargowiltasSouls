@@ -1137,7 +1137,7 @@ ChaliceoftheMoon: {
 		[i:FargowiltasSouls/MagicalBulb] Increases life regeneration based on how much light you receive
 		[i:FargowiltasSouls/LihzahrdTreasureBox] Double tap DOWN in the air to fastfall, creating an explosion on landing after falling a certain distance
 		[i:FargowiltasSouls/CelestialRune] You fire additional attacks depending on weapon type and spawn
-		[c/BC5252:Converts all of your accessory minion effects and empty minion slots into +2% damage for each (toggleable)]
+		[c/BC5252:Converts all of your accessory minion effects and empty minion slots into +1% damage for each (toggleable)]
 		Otherwise, summons [i:FargowiltasSouls/MagicalBulb] a plant to fight at your side, [i:FargowiltasSouls/CelestialRune] and erupt into Ancient Visions when injured
 		'Always watching'
 		'''
@@ -1330,7 +1330,7 @@ HeartoftheMasochist: {
 		[i:FargowiltasSouls/PrecisionSeal] Hold Precision Seal key to disable dashes and double jumps, and show your hurtbox
 		[i:FargowiltasSouls/PrecisionSeal] Decreases hurtbox for projectiles, even when it isn't shown and [i:FargowiltasSouls/GalacticGlobe] grants increases flight time
 		[i:FargowiltasSouls/SaucerControlConsole] Press Ammo Cycle key to cycle ammos and [i:FargowiltasSouls/GalacticGlobe] grants most standard potion buffs (works from inventory and vanity)
-		[c/BC5252:Converts all of your accessory minion effects and empty minion slots into +2% damage for each (toggleable)]
+		[c/BC5252:Converts all of your accessory minion effects and empty minion slots into +1% damage for each (toggleable)]
 		Otherwise, summons [i:FargowiltasSouls/GalacticGlobe] mini True Eyes of Cthulhu and [i:FargowiltasSouls/SaucerControlConsole] a friendly Mini Saucer which slows enemies it hits
 		'Warm, beating, and no body needed'
 		'''
@@ -1859,7 +1859,7 @@ MasochistSoul: {
 		Improves your [i:FargowiltasSouls/SecurityWallet] reforges, [i:FargowiltasSouls/OrdinaryCarrot] night vision, [i:FargowiltasSouls/NymphsPerfume] respawn hp, and [i:FargowiltasSouls/SandsofTime] respawn time, as well as using [i:FargowiltasSouls/ConcentratedRainbowMatter] healing and [i:FargowiltasSouls/MysticSkull] mana potions as needed.
 		When hit, [i:FargowiltasSouls/SqueakyToy] you have a 5% chance to only take 1 damage, and [i:FargowiltasSouls/NecromanticBrew] you reflect damage while dashing
 		Your attacks [i:FargowiltasSouls/NymphsPerfume] produce hearts and inflict a cocktail of Eternity Mode debuffs
-		[c/BC5252:Converts all of your accessory minion effects and empty minion slots into +2% damage for each (toggleable)]
+		[c/BC5252:Converts all of your accessory minion effects and empty minion slots into +1% damage for each (toggleable)]
 		Otherwise, summons [i:FargowiltasSouls/NecromanticBrew] Skeletron arms, [i:FargowiltasSouls/GuttedHeart] creepers, [i:FargowiltasSouls/ConcentratedRainbowMatter] a rainbow slime, [i:FargowiltasSouls/GroundStick] two friendly probes, [i:FargowiltasSouls/SkullCharm] an eyeball minion, [i:FargowiltasSouls/SaucerControlConsole] a mini saucer, [i:FargowiltasSouls/MagicalBulb] a plant, [i:FargowiltasSouls/CelestialRune] a cultist, [i:FargowiltasSouls/GalacticGlobe] and True Eyes of Cthulhu by your side
 		[i:FargowiltasSouls/SandsofTime] Use to teleport to your last death point
 		'Embrace mastery, embrace eternity'

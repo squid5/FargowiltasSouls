@@ -515,7 +515,7 @@ namespace FargowiltasSouls.Core.ModPlayers
                 int minioncount = DeactivatedMinionEffectCount;
                 minioncount += Player.maxMinions - (int)Player.slotsMinions;
                 if (DeactivatedMinionEffectCount > 0)
-                    Player.GetDamage(DamageClass.Generic) += minioncount * 0.02f; // 2% each
+                    Player.GetDamage(DamageClass.Generic) += minioncount * 0.01f; // 1% each
   
             }
 
