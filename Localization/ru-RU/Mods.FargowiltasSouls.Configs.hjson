@@ -1,64 +1,64 @@
 ClientConfig: {
-	// DisplayName: Client Config
+	DisplayName: Конфигурация: Сторона клиента
 
 	Headers: {
-		// Maso: Eternity Mode
-		// Patreon: "[i:FargowiltasSouls/RoombaPet] [c/ffffff:Patreon Items]"
+		Maso: Режим Вечность
+		Patreon: "[i:FargowiltasSouls/RoombaPet] [c/ffffff:Patreon Items]"
 	}
 
 	HideTogglerWhenInventoryIsClosed: {
-		// Label: Only show effect toggler when inventory is open
-		// Tooltip: If true, the effect toggler is automatically hidden when your inventory is closed.
+		Label: Показывать переключатель эффектов только при открытом инвентаре
+		Tooltip: Если включена, переключатель эффектов автоматически выключается когда инвентарь закрыт.
 	}
 
 	ItemDisabledTooltip: {
-		// Label: Disabled Effect Tooltip
-		// Tooltip: If true, items with any effects disabled by the Effect Toggler will have a tooltip line stating this.
+		Label: Описание о выключенном эффекте
+		Tooltip: Если включена, у предметов с любыми выключенными эффектами в описании будет строчка об этом.
 	}
 
 	ToggleSearchReset: {
-		// Label: Accessory Effects menu resets search bar when closed
-		// Tooltip: ""
+		Label: Полоска поиска меню переключателей эффектов перезапускается при закрытии
+		Tooltip: ""
 	}
 
 	RainbowHealThreshold: {
-		// Label: "[i:FargowiltasSouls/ConcentratedRainbowMatter] Automatic Heal Threshold"
-		// Tooltip: ""
+		Label: "[i:FargowiltasSouls/ConcentratedRainbowMatter] Максимум здоровья для автоматического лечения"
+		Tooltip: ""
 	}
 
 	PrecisionSealIsHold: {
-		// Label: "[i:FargowiltasSouls/PrecisionSeal] Precision Seal Key must be held"
-		// Tooltip: If false, precision mode is instead toggled with the key.
+		Label: "[i:FargowiltasSouls/PrecisionSeal] Кнопка печати точности должна быть зажата"
+		Tooltip: Если выключена, кнопка печати точности будет переключать режим точности.
 	}
 
 	OncomingMutantX: {
-		// Label: Eternity Mode inventory icon X position
-		// Tooltip: ""
+		Label: Позиция иконки режима Вечность в инвентаре по X
+		Tooltip: ""
 	}
 
 	OncomingMutantY: {
-		// Label: Eternity Mode inventory icon Y position
-		// Tooltip: ""
+		Label: Позиция иконки режима Вечность в инвентаре по Y
+		Tooltip: ""
 	}
 
 	CooldownBars: {
-		// Label: Cooldown Bars
-		// Tooltip: ""
+		Label: Шкалы перезарядки
+		Tooltip: ""
 	}
 
 	CooldownBarsX: {
-		// Label: Cooldown Bars X
-		// Tooltip: ""
+		Label: Позиция шкал перезарядки по X
+		Tooltip: ""
 	}
 
 	CooldownBarsY: {
-		// Label: Cooldown Bars Y
-		// Tooltip: ""
+		Label: Позиция шкал перезарядки по Y
+		Tooltip: ""
 	}
 }
 
 SoulConfig: {
-	DisplayName: Конфигурация мода Souls
+	DisplayName: Конфигурация: Souls
 
 	Headers: {
 		Maso: Режим Вечность
@@ -71,17 +71,17 @@ SoulConfig: {
 	}
 
 	ToggleSearchReset: {
-		Label: Меню Эффектов Аксессуаров выключает строку поиска при закрытии
+		Label: Полоска поиска меню переключателей эффектов перезапускается при закрытии
 		Tooltip: ""
 	}
 
 	BigTossMode: {
-		Label: Режим Большого Броска
+		Label: Режим большого броска
 		Tooltip: ""
 	}
 
 	ForcedFilters: {
-		Label: Включать настройку Качества волн (игнорирует настройки игры)
+		Label: Включать настройку качества волн (игнорирует настройки игры)
 		Tooltip: Необходимо для корректной работы некоторых визуальных эффектов.
 	}
 
@@ -166,7 +166,7 @@ SoulConfig: {
 	}
 
 	PerformanceMode: {
-		// Label: Performance Mode
-		// Tooltip: Disables the most performance-demanding visuals. Currently disables Mutant's eye attack trails.
+		Label: Режим производительности
+		Tooltip: Выключает большинство визуальных эффектов, влияющих на производительность. На данный момент выключает хвосты глаз Мутанта
 	}
 }
