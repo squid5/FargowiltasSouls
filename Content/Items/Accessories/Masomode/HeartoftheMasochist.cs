@@ -64,7 +64,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Masomode
             //saucer control console
             player.buffImmune[BuffID.Electrified] = true;
             player.buffImmune[BuffID.VortexDebuff] = true;
-            //player.AddEffect<UfoMinionEffect>(Item);
+            player.AddEffect<UfoMinionEffect>(Item);
 
             //betsy's heart
             player.buffImmune[BuffID.OgreSpit] = true;
@@ -88,6 +88,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Masomode
             player.buffImmune[ModContent.BuffType<CurseoftheMoonBuff>()] = true;
             //player.buffImmune[BuffID.ChaosState] = true;
             player.AddEffect<ChalicePotionEffect>(Item);
+            player.AddEffect<MasoTrueEyeMinion>(Item);
             fargoPlayer.GravityGlobeEXItem = Item;
             fargoPlayer.WingTimeModifier += 1f;
 
