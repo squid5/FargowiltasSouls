@@ -103,7 +103,6 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEve
             if (npc.life < 0)
             {
                 DeathAnimation = true;
-                Main.NewText("e");
             }
         }
         public override void AI(NPC npc)
@@ -182,8 +181,8 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEve
                 AttackTimer++;
                 npc.defense = npc.defDefense;
             }
-            //if (ShieldStrength <= 0 && npc.life > 0)
-            //    npc.dontTakeDamage = false;
+            if (ShieldStrength <= 0)
+                npc.dontTakeDamage = false;
 
             if (npc.dontTakeDamage && npc.life > npc.lifeMax / 2)
             {
