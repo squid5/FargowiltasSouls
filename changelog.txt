@@ -20,8 +20,10 @@ PostML accessory/toggle overhaul:
 -Universe Core -> Cosmic Core and no longer part of Soul of the Universe; tweaked to be optimal for Mutant over Class Souls; Flames of the Universe -> Flames of the Cosmos
 -Soul of the Universe: Attack speed bonus 50% -> 25%, class damage 66% -> 50%
 -Decreased class soul effects: damage 30% -> 22%, crit 15% -> 10%
--Soul of the Master: Removed minion summons and several other cluttery effects
+-Swapped names and design of Chalice of the Moon and Galactic Globe
+-Reworked Chalice of the Moon (now Eternity Moon Lord drop which was previously Galactic Globe): Grants most buffs of Vanilla buff potions and stations (works in inventory)
 -Abom Wand minion: No longer fires scythe rings on death, increased base damage
+-Soul of the Master, Heart of the Master and Galactic Globe (previously Chalice of the Moon) have a toggle that converts all of your accessory minion effects and empty minion slots into +1% damage for each
 -Flight Mastery Soul now has a toggle that disables all jump effects
 -Removed gravity control from Flight Mastery Soul
 -Removed several unnecessary toggles and effects
@@ -74,9 +76,6 @@ Reworked Nebula Enchantment:
 Reworked Wretched Pouch:
 -While attacking, builds up shadowflame charge but reduces damage reduction by 10%
 -Stop attacking to consume shadowflame charge, releasing a burst of shadowflame tentacles that deal magic damage
-
-Swapped names and design of Chalice of the Moon and Galactic Globe
-Reworked Chalice of the Moon (now Eternity Moon Lord drop which was previously Galactic Globe): Grants most buffs of Vanilla buff potions and stations (works in inventory)
 
 Reworked Slime King's Slasher:
 -New custom swing style
