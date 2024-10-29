@@ -48,6 +48,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Masomode
             player.FargoSouls().CanAmmoCycle = true;
 
             FargoSoulsPlayer fargoPlayer = player.FargoSouls();
+            ChaliceoftheMoon.DeactivateMinions(fargoPlayer, Item);
             player.GetDamage(DamageClass.Generic) += 0.10f;
             player.GetCritChance(DamageClass.Generic) += 10;
             fargoPlayer.MasochistHeart = true;

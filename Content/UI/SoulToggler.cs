@@ -1,5 +1,7 @@
-﻿using FargowiltasSouls.Content.UI.Elements;
+﻿using FargowiltasSouls.Content.Items.Accessories.Masomode;
+using FargowiltasSouls.Content.UI.Elements;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
+using FargowiltasSouls.Core.Toggler;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -206,6 +208,9 @@ namespace FargowiltasSouls.Content.UI
 
             bool hasMinions = false;
             bool hasExtraAttacks = false;
+
+            var deactivatedMinions = AccessoryEffectLoader.GetEffect<MinionsDeactivatedEffect>();
+
             for (int i = 0; i < AccessoryEffectLoader.AccessoryEffects.Count; i++)
             {
                 if (effectPlayer.EquippedEffects[i] && AccessoryEffectLoader.AccessoryEffects[i].MinionEffect)
@@ -213,7 +218,9 @@ namespace FargowiltasSouls.Content.UI
                 if (effectPlayer.EquippedEffects[i] && AccessoryEffectLoader.AccessoryEffects[i].ExtraAttackEffect)
                     hasExtraAttacks = true;
             }
-            if (hasMinions)
+            if (effectPlayer.EquippedEffects[deactivatedMinions.Index])
+                ToggleList.Add(new UIToggle(deactivatedMinions, deactivatedMinions.Mod.Name));
+            else if (hasMinions)
                 ToggleList.Add(new MinionsToggle());
             if (hasExtraAttacks)
                 ToggleList.Add(new ExtraAttacksToggle());
@@ -231,6 +238,7 @@ namespace FargowiltasSouls.Content.UI
                         return
                         (effectPlayer.Equipped(toggle.Effect) || alwaysDisplay) &&
                         toggle.Header == header &&
+                        toggle.Effect.Index != deactivatedMinions.Index &&
                         (string.IsNullOrEmpty(DisplayMod) || toggle.Mod == DisplayMod) &&
                         (string.IsNullOrEmpty(SortCategory) || toggle.Category == SortCategory) &&
                         (string.IsNullOrEmpty(SearchBar.Input) || SearchMatches(words) || SearchMatches(headerWords));

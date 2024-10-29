@@ -734,7 +734,7 @@ namespace FargowiltasSouls
                     case PacketID.SyncOneToggle: //sync single toggle
                         {
                             Player player = Main.player[reader.ReadByte()];
-                            player.SetToggleValue(AccessoryEffectLoader.EffectType(reader.ReadString()), reader.ReadBoolean());
+                            player.SetToggleValue(AccessoryEffectLoader.GetEffect(reader.ReadString()), reader.ReadBoolean());
                         }
                         break;
                     case PacketID.SyncDefaultToggles:

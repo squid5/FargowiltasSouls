@@ -85,7 +85,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Masomode
     public class MinionsDeactivatedEffect : AccessoryEffect
     {
         public override Header ToggleHeader => Header.GetHeader<ChaliceHeader>();
-        public override int ToggleItemType => ModContent.ItemType<ChaliceoftheMoon>();
+        public override int ToggleItemType => EffectItem(Main.LocalPlayer) != null ? EffectItem(Main.LocalPlayer).type : -1;
     }
     /*
      public class CultistMinionEffect : AccessoryEffect

@@ -35,6 +35,9 @@ namespace FargowiltasSouls.Core.AccessoryEffectSystem
 
             if (effect.HasToggle)
             {
+                if (modPlayer.MutantPresence && (effect.MutantsPresenceAffects || effect.MinionEffect))
+                    return false;
+
                 if (effect.MinionEffect)
                 {
                     if (modPlayer.GalacticMinionsDeactivated)
@@ -47,9 +50,6 @@ namespace FargowiltasSouls.Core.AccessoryEffectSystem
                         return false;
                 }
                 if (effect.ExtraAttackEffect && modPlayer.Toggler_ExtraAttacksDisabled)
-                    return false;
-
-                if (modPlayer.MutantPresence && (effect.MutantsPresenceAffects || effect.MinionEffect))
                     return false;
 
                 SoulsItem soulsItem = item != null && item.ModItem is SoulsItem si ? si : null;
@@ -74,7 +74,7 @@ namespace FargowiltasSouls.Core.AccessoryEffectSystem
         public static bool HasEffect(this Player player, AccessoryEffect accessoryEffect) => player.AccessoryEffects().ActiveEffects[accessoryEffect.Index];
         public static Item EffectItem<T>(this Player player) where T : AccessoryEffect => player.AccessoryEffects().EffectItems[ModContent.GetInstance<T>().Index];
         public static IEntitySource GetSource_EffectItem<T>(this Player player) where T : AccessoryEffect => ModContent.GetInstance<T>().GetSource_EffectItem(player);
-        public static T EffectType<T>() where T : AccessoryEffect => ModContent.GetInstance<T>();
-        public static AccessoryEffect EffectType(string internalName) => ModContent.Find<AccessoryEffect>(internalName);
+        public static T GetEffect<T>() where T : AccessoryEffect => ModContent.GetInstance<T>();
+        public static AccessoryEffect GetEffect(string internalName) => ModContent.Find<AccessoryEffect>(internalName);
     }
 }
