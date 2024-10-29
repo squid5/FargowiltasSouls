@@ -87,3 +87,5 @@ randomized blazing wheel patrol slightly
 tweaked check for purified on lizard altar
 
 maso ftw destro segments temporarily lose contact damage after each coil
+nerfed nebula pillar deathray damage
+touched vortex pillar lightning? idk if this reduced its damage gurasit
