@@ -34,8 +34,10 @@ namespace FargowiltasSouls.Content.Items.Accessories.Masomode
         {
             player.buffImmune[ModContent.BuffType<MarkedforDeathBuff>()] = true;
             player.AddEffect<CelestialRuneAttacks>(Item);
+            player.AddEffect<CelestialRuneOnhit>(Item);
         }
     }
+
     public class CelestialRuneAttacks : AccessoryEffect
     {
         public override Header ToggleHeader => Header.GetHeader<ChaliceHeader>();
@@ -84,12 +86,16 @@ namespace FargowiltasSouls.Content.Items.Accessories.Masomode
                 }
             }
         }
+    }
+    public class CelestialRuneOnhit : AccessoryEffect
+    {
+        public override Header ToggleHeader => Header.GetHeader<ChaliceHeader>();
+        public override int ToggleItemType => ModContent.ItemType<CelestialRune>();
+        public override bool MinionEffect => true;
         public override void OnHurt(Player player, Player.HurtInfo info)
         {
             int damage = info.Damage;
             FargoSoulsPlayer modPlayer = player.FargoSouls();
-            if (modPlayer.MoonChalice)
-                return;
 
             if (modPlayer.HurtTimer <= 0)
             {

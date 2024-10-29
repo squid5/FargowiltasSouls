@@ -47,10 +47,11 @@ namespace FargowiltasSouls.Content.Items.Accessories.Souls
         public override void UpdateVanity(Player player) => PassiveEffect(player, Item);
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
+            FargoSoulsPlayer fargoPlayer = player.FargoSouls();
+            ChaliceoftheMoon.DeactivateMinions(fargoPlayer, Item);
 
             BionomicCluster.PassiveEffect(player, Item);
 
-            FargoSoulsPlayer fargoPlayer = player.FargoSouls();
             fargoPlayer.MasochistSoul = true;
             fargoPlayer.MasochistSoulItem = Item;
 
@@ -257,6 +258,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Souls
             if (fargoPlayer.AdditionalAttacksTimer > 0)
                 fargoPlayer.AdditionalAttacksTimer -= 2;
             */
+            player.AddEffect<CelestialRuneOnhit>(Item);
 
             //chalice
             fargoPlayer.MoonChalice = true;

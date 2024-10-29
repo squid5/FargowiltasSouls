@@ -50,7 +50,7 @@ namespace FargowiltasSouls.Content.UI.Elements
                     modPlayer.SyncToggle(Effect);
             }
 
-            bool disabledByMinos = (Effect.MinionEffect || Effect.ExtraAttackEffect) && modPlayer.PrimeSoulActive;
+            bool disabledByMinos = (Effect.MinionEffect || Effect.ExtraAttackEffect) && modPlayer.GalacticMinionsDeactivated;
             bool disabledByPresence = modPlayer.MutantPresence && (Effect.MutantsPresenceAffects || Effect.MinionEffect);
             bool disabledByGlobalToggle = (Effect.MinionEffect && modPlayer.Toggler_MinionsDisabled) || (Effect.ExtraAttackEffect && modPlayer.Toggler_ExtraAttacksDisabled);
             bool toggled = Main.LocalPlayer.GetToggleValue(Effect, true);

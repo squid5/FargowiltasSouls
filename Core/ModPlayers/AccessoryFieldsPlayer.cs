@@ -110,12 +110,12 @@ namespace FargowiltasSouls.Core.ModPlayers
         public int MythrilMaxTime => Player.HasEffect<MythrilEffect>() ? Player.ForceEffect<MythrilEffect>() ? 300 : 180 : 180;
         public float MythrilMaxSpeedBonus => Player.HasEffect<MythrilEffect>() ? Player.ForceEffect<MythrilEffect>() ? 1.75f : 1.5f : 1.5f;
 
-        public bool PrimeSoulActive = false;
-        public bool PrimeSoulActiveBuffer = false; // Needed to make sure the item effect is applied during the entirety of the update cycle, so it doesn't miss anything
+        public bool GalacticMinionsDeactivated = false;
+        public bool GalacticMinionsDeactivatedBuffer = false; // Needed to make sure the item effect is applied during the entirety of the update cycle, so it doesn't miss anything
         //public bool JumpsDisabled = false;
         //public bool JumpsDisabledBuffer = false;  // Needed to make sure the item effect is applied during the entirety of the update cycle, so it doesn't miss anything
 
-        public int PrimeSoulItemCount = 0;
+        public int DeactivatedMinionEffectCount = 0;
 
         public int CrimsonRegenAmount;
         public int CrimsonRegenTime;

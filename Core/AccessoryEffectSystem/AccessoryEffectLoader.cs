@@ -30,21 +30,24 @@ namespace FargowiltasSouls.Core.AccessoryEffectSystem
             effectPlayer.EquippedEffects[effect.Index] = true;
             effectPlayer.EffectItems[effect.Index] = item;
 
+            if (effectPlayer.DeactivatedEffects[effect.Index])
+                return false;
+
             if (effect.HasToggle)
             {
-                if (effect.MinionEffect || effect.ExtraAttackEffect)
+                if (effect.MinionEffect)
                 {
-                    if (modPlayer.PrimeSoulActive)
+                    if (modPlayer.GalacticMinionsDeactivated)
                     {
-                        if (!player.HasEffect(effect)) // Don't stack per item
-                            modPlayer.PrimeSoulItemCount++;
+                        effectPlayer.DeactivatedEffects[effect.Index] = true;
+                        modPlayer.DeactivatedMinionEffectCount++;
                         return false;
                     }
-                    if (effect.MinionEffect && modPlayer.Toggler_MinionsDisabled)
-                        return false;
-                    if (effect.ExtraAttackEffect && modPlayer.Toggler_ExtraAttacksDisabled)
+                    if (modPlayer.Toggler_MinionsDisabled)
                         return false;
                 }
+                if (effect.ExtraAttackEffect && modPlayer.Toggler_ExtraAttacksDisabled)
+                    return false;
 
                 if (modPlayer.MutantPresence && (effect.MutantsPresenceAffects || effect.MinionEffect))
                     return false;
@@ -62,7 +65,6 @@ namespace FargowiltasSouls.Core.AccessoryEffectSystem
 
             if (!effectPlayer.ActiveEffects[effect.Index])
             {
-
                 effectPlayer.ActiveEffects[effect.Index] = true;
                 return true;
             }

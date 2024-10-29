@@ -28,10 +28,10 @@ namespace FargowiltasSouls.Content.Items.Accessories.Masomode
             Item.value = Item.sellPrice(0, 7);
             Item.defense = 8;
         }
-
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             FargoSoulsPlayer fargoPlayer = player.FargoSouls();
+            DeactivateMinions(fargoPlayer, Item);
 
             //magical bulb
             MagicalBulb.AddEffects(player, Item);
@@ -48,6 +48,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Masomode
             //celestial rune
             player.buffImmune[ModContent.BuffType<MarkedforDeathBuff>()] = true;
             player.AddEffect<CelestialRuneAttacks>(Item);
+            player.AddEffect<CelestialRuneOnhit>(Item);
 
             //chalice
             player.buffImmune[ModContent.BuffType<AtrophiedBuff>()] = true;
@@ -58,7 +59,11 @@ namespace FargowiltasSouls.Content.Items.Accessories.Masomode
             //player.AddEffect<CultistMinionEffect>(Item);
 
         }
-
+        public static void DeactivateMinions(FargoSoulsPlayer modPlayer, Item item)
+        {
+            if (modPlayer.Player.AddEffect<MinionsDeactivatedEffect>(item))
+                modPlayer.GalacticMinionsDeactivated = modPlayer.GalacticMinionsDeactivatedBuffer = true;
+        }
         public override void AddRecipes()
         {
             CreateRecipe()
@@ -77,8 +82,13 @@ namespace FargowiltasSouls.Content.Items.Accessories.Masomode
             .Register();
         }
     }
-    
-    /* public class CultistMinionEffect : AccessoryEffect
+    public class MinionsDeactivatedEffect : AccessoryEffect
+    {
+        public override Header ToggleHeader => Header.GetHeader<ChaliceHeader>();
+        public override int ToggleItemType => ModContent.ItemType<ChaliceoftheMoon>();
+    }
+    /*
+     public class CultistMinionEffect : AccessoryEffect
     {
         public override Header ToggleHeader => Header.GetHeader<ChaliceHeader>();
         public override int ToggleItemType => ModContent.ItemType<ChaliceoftheMoon>();
@@ -88,5 +98,6 @@ namespace FargowiltasSouls.Content.Items.Accessories.Masomode
             if (!player.HasBuff<SouloftheMasochistBuff>())
                 player.AddBuff(ModContent.BuffType<LunarCultistBuff>(), 2);
         }
-    } */
+    } 
+    */
 }

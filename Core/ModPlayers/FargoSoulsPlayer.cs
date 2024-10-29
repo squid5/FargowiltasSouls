@@ -303,12 +303,12 @@ namespace FargowiltasSouls.Core.ModPlayers
             VoidSoul = false;
             Eternity = false;
 
-            PrimeSoulItemCount = 0;
-            if (!PrimeSoulActiveBuffer)
+            DeactivatedMinionEffectCount= 0;
+            if (!GalacticMinionsDeactivatedBuffer)
             {
-                PrimeSoulActive = false;
+                GalacticMinionsDeactivated = false;
             }
-            PrimeSoulActiveBuffer = false;
+            GalacticMinionsDeactivatedBuffer = false;
 
             /*
             if (!JumpsDisabledBuffer)
