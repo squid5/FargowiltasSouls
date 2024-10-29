@@ -130,7 +130,7 @@ CobaltEnchant: {
 	DisplayName: Зачарование кобальта
 	Tooltip:
 		'''
-		Дарует взрывной прыжок, накладывающий дебафф «В масле» и дающий временную неуязвимость
+		Даёт взрывной прыжок, накладывающий дебафф «В масле» и дающий временную неуязвимость
 		При получении урона вы яростно взрываетесь, нанося урон ближайшим врагам
 		'Не могу поверить, что это не палладий!'
 		'''
@@ -1320,8 +1320,9 @@ HeartoftheMasochist: {
 	DisplayName: Сердце Властителя
 	Tooltip:
 		'''
-		Даёт иммунитет к дебаффам [i:FargowiltasSouls/PumpkingsCape] «Живая пустошь», [i:FargowiltasSouls/IceQueensCrown] «Гипотермия», «Заморозка», [i:FargowiltasSouls/SaucerControlConsole] «Электризация», «Искажение», [i:FargowiltasSouls/BetsysHeart] «Тормоз», «Усохшее оружие», «Усохшая броня»,
-		[i:FargowiltasSouls/MutantAntibodies] «Влага», «Укус зверя», «Укус Мутанта», «Океаническое терзание», дебаффам воды, [i:FargowiltasSouls/PrecisionSeal] «Сражённый», [i:FargowiltasSouls/GalacticGlobe] «Проклятье нуллификации», «Перевёрнутый», «Нестабильный» и «Проклятье луны»
+		Даёт иммунитет к дебаффам [i:FargowiltasSouls/PumpkingsCape] «Живая пустошь», [i:FargowiltasSouls/IceQueensCrown] «Гипотермия», «Заморозка», [i:FargowiltasSouls/SaucerControlConsole] «Электризация», «Искажение»,
+		[i:FargowiltasSouls/BetsysHeart] «Тормоз», «Усохшее оружие», «Усохшая броня», [i:FargowiltasSouls/MutantAntibodies] «Влага», «Укус зверя», «Укус Мутанта», «Океаническое терзание», дебаффам воды,
+		[i:FargowiltasSouls/PrecisionSeal] «Сражённый», [i:FargowiltasSouls/GalacticGlobe] «Проклятье нуллификации», «Перевёрнутый», «Нестабильный» и «Проклятье луны»
 		[i:FargowiltasSouls/PumpkingsCape] [i:FargowiltasSouls/MutantAntibodies] [i:FargowiltasSouls/IceQueensCrown] Увеличивает урон и шанс крит. удара на 10% и сопротивление урону на 5%
 		[i:FargowiltasSouls/PumpkingsCape] Нажмите ПКМ, чтобы защититься и парировать до 200 урона. Парирования исцеляют вас в зависимости от заблокированного урона. Во время защиты даёт ауру «Гниения»
 		[i:FargowiltasSouls/IceQueensCrown] Дайте атакам попасть в грэйз, чтобы зарядить бомбу. Когда она зарядится, нажмите клавишу бомбы, чтобы заморозить все выстрелы и врагов на короткое время
@@ -1850,13 +1851,17 @@ MasochistSoul: {
 		'''
 		[i:FargowiltasSouls/GalacticGlobe] Увеличивает время полёта на 200%, скорость передвижения на 20% [i:FargowiltasSouls/QueenStinger] и пробивание брони на 50 единиц
 		[i:FargowiltasSouls/GuttedHeart] Увеличивает максимальный запас здоровья на 100%, [i:FargowiltasSouls/MagicalBulb] восстановление здоровья, [i:FargowiltasSouls/MutantAntibodies][i:FargowiltasSouls/SkullCharm][i:FargowiltasSouls/PumpkingsCape] урон для класса взятого оружия на 50% [i:FargowiltasSouls/ReinforcedPlating] и сопротивление урону на 10%
-		[i:FargowiltasSouls/PungentEyeball] Значительно увеличивает шанс появления редких врагов, [i:FargowiltasSouls/SinisterIcon] увеличивает скорость появления врагов, c обычных врагов падает в два раза больше предметов и [i:FargowiltasSouls/TimsConcoction] некоторые враги будут оставлять после смерти зелья
-		Даёт [i:FargowiltasSouls/SlimyShield] ускоренное падение, [i:FargowiltasSouls/ReinforcedPlating] иммунитет к отбрасыванию, [i:FargowiltasSouls/PureHeart] иммунитет к дебаффам биомов, [i:FargowiltasSouls/GalacticGlobe] иммунитет почти ко всем дебаффам режима Вечность, базовые баффы зелий и классовых станций (работает в инвентаре и слотах для украшений) и др.
-		Нажмите [i:FargowiltasSouls/BetsysHeart] клавишу специального рывка, чтобы совершить неуязвимый рывок, [i:FargowiltasSouls/PrecisionSeal] клавишу печати точности, чтобы отключить рывки и двойные прыжки, [i:FargowiltasSouls/AgitatingLens] [i:FargowiltasSouls/FusedLens] клавишу установки дебаффа, чтобы усилить себя с помощью дебаффов,
-		[i:FargowiltasSouls/FrigidGemstone] клавишу морозного заклинания, чтобы использовать ледяной жезл, [i:FargowiltasSouls/IceQueensCrown] клавишу бомбы, чтобы заморозить всё при достаточном грэйзе, и [i:FargowiltasSouls/OrdinaryCarrot] ПКМ, чтобы отдалить камеру [i:FargowiltasSouls/DreadShell] [i:FargowiltasSouls/PumpkingsCape] и парировать до 200 ед. урона
+		[i:FargowiltasSouls/PungentEyeball] Значительно увеличивает шанс появления редких врагов, [i:FargowiltasSouls/SinisterIcon] увеличивает скорость появления врагов, с обычных врагов падает в два раза больше предметов
+		[i:FargowiltasSouls/TimsConcoction] Некоторые враги будут оставлять после смерти зелья
+		Даёт [i:FargowiltasSouls/SlimyShield] ускоренное падение, [i:FargowiltasSouls/ReinforcedPlating] иммунитет к отбрасыванию, [i:FargowiltasSouls/PureHeart] иммунитет к дебаффам биомов
+		[i:FargowiltasSouls/GalacticGlobe] Даёт иммунитет почти ко всем дебаффам режима Вечность, базовые баффы зелий и классовых станций (работает в инвентаре и слотах для украшений) и др.
+		Нажмите [i:FargowiltasSouls/BetsysHeart] клавишу специального рывка, чтобы совершить неуязвимый рывок, [i:FargowiltasSouls/PrecisionSeal] клавишу печати точности, чтобы отключить рывки и двойные прыжки,
+		[i:FargowiltasSouls/AgitatingLens] [i:FargowiltasSouls/FusedLens] клавишу установки дебаффа, чтобы усилить себя с помощью дебаффов, [i:FargowiltasSouls/FrigidGemstone] клавишу морозного заклинания, чтобы использовать ледяной жезл,
+		[i:FargowiltasSouls/IceQueensCrown] клавишу бомбы, чтобы заморозить всё при достаточном грэйзе, и [i:FargowiltasSouls/OrdinaryCarrot] ПКМ, чтобы отдалить камеру [i:FargowiltasSouls/DreadShell] [i:FargowiltasSouls/PumpkingsCape] и парировать до 200 ед. урона
 		[i:FargowiltasSouls/Deerclawps] [i:FargowiltasSouls/LihzahrdTreasureBox] Дважды нажмите ВНИЗ, чтобы ускорить падение и создать взрыв и ледяные шипы при приземлении.
 		[i:FargowiltasSouls/PrecisionSeal] Уменьшает размер вашего хёртбокса, [i:FargowiltasSouls/NecromanticBrew] увеличивает дистанцию рывка и [i:FargowiltasSouls/PungentEyeball] заставляет врагов рядом с вашим курсором получать в 1,15 раза больше урона
-		Улучшает [i:FargowiltasSouls/SecurityWallet] перековки, [i:FargowiltasSouls/OrdinaryCarrot] видимость ночью, [i:FargowiltasSouls/NymphsPerfume] здоровье при возрождении [i:FargowiltasSouls/SandsofTime] и время возрождения, а также автоматически использует [i:FargowiltasSouls/ConcentratedRainbowMatter] лечебные зелья и [i:FargowiltasSouls/MysticSkull] зелья маны по необходимости.
+		Улучшает [i:FargowiltasSouls/SecurityWallet] перековки, [i:FargowiltasSouls/OrdinaryCarrot] видимость ночью, [i:FargowiltasSouls/NymphsPerfume] здоровье при возрождении [i:FargowiltasSouls/SandsofTime] и время возрождения
+		Автоматически использует [i:FargowiltasSouls/ConcentratedRainbowMatter] лечебные зелья и [i:FargowiltasSouls/MysticSkull] зелья маны по необходимости.
 		При получении урона, [i:FargowiltasSouls/SqueakyToy] есть 5% шанс получить только 1 ед. урона, [i:FargowiltasSouls/NecromanticBrew] и вы отражаете весь урон во время рывка
 		Ваши атаки [i:FargowiltasSouls/NymphsPerfume] создают сердца и накладывают солянку из дебаффов режима Вечность
 		Призывает [i:FargowiltasSouls/GuttedHeart] истинные глаза-ползуны, чтобы защищать вас
@@ -1901,8 +1906,9 @@ TerrariaSoul: {
 		'''
 		[i:FargowiltasSouls/TimberForce] Даёт ауру, которая выпускает снаряды, улучшенные крюки и периодические звёзды маны при попадании
 		[i:FargowiltasSouls/TimberForce] Даёт перекрутку крит. ударов при подборе пикапов, записи в бестиарий и скидку за них
-		[i:FargowiltasSouls/TerraForce] Критические удары выпускают мощную молнию; ПКМ, чтобы защититься и парировать до 200 урона; вы получаете меньше постепенного урона; ваши мечи усилены
-		[i:FargowiltasSouls/TerraForce] Даёт 10% шанс критического удара, который увеличивается при попадании; увеличивает дальность подбора предметов, и вы можете не потратить материалы для крафта
+		[i:FargowiltasSouls/TerraForce] Критические удары выпускают мощную молнию; ПКМ, чтобы защититься и парировать до 200 урона
+		[i:FargowiltasSouls/TerraForce] Вы получаете меньше постепенного урона; ваши мечи усилены; даёт 10% шанс критического удара, который увеличивается при попадании
+		[i:FargowiltasSouls/TerraForce] Увеличивает дальность подбора предметов, и вы можете не потратить материалы для крафта
 		[i:FargowiltasSouls/EarthForce] Вы получаете бонусы защиты, пока не атакуете, и бонусы атаки, пока атакуете
 		[i:FargowiltasSouls/EarthForce] Увеличивает постепенный урон в 4 раза, и вы взрываетесь при получении урона, пока не атакуете
 		[i:FargowiltasSouls/NatureForce] Даёт ауру, которая высасывает здоровье, увеличивает получаемый урон и выпускает листовые лазеры в ближайших врагов
@@ -1913,7 +1919,8 @@ TerrariaSoul: {
 		[i:FargowiltasSouls/SpiritForce] Если ваше здоровье достигнет 0, вы воскреснете с 300 ХП и очистите с себя все дебаффы
 		[i:FargowiltasSouls/ShadowForce] Даёт теневой рывок, а также неуязвимый рывок тени каждые 4 секунды; увеличивает скорость снарядов в зависимости от вашей скорости
 		[i:FargowiltasSouls/ShadowForce] Вы используете дополнительные орудия как огневую поддержку; ваши миньоны получают атаку косой; из павших врагов могут выпадать костяные кучи
-		[i:FargowiltasSouls/WillForce] Призывает дух гладиатора; улучшает восстановление здоровья, увеличивает хар-ки верхом; успешные попадания дают доп. урон; нажмите клавишу озолочения, чтобы заключить себя в золотой панцирь
+		[i:FargowiltasSouls/WillForce] Призывает дух гладиатора; улучшает восстановление здоровья, увеличивает хар-ки верхом
+		[i:FargowiltasSouls/WillForce] Успешные попадания дают доп. урон; нажмите клавишу озолочения, чтобы заключить себя в золотой панцирь
 		[i:FargowiltasSouls/WillForce] Автоматически складывает деньги в свинью-копилку при подборе (работает в инвентаре и слотах для украшений); у врагов есть шанс оставить больше добычи
 		[i:FargowiltasSouls/CosmoForce] Атаки периодически запускают во врагов луны, которые взрываются в лунные усилители
 		[i:FargowiltasSouls/CosmoForce] Увеличивает ваши скорость передвижения и ускорение, уменьшает инерцию; нажмите клавишу заморозки, чтобы остановить время на 6 секунд (перезарядка 60 секунд)
@@ -3038,7 +3045,8 @@ Masochist: {
 	Tooltip:
 		'''
 		Мир должен быть в режиме Эксперта
-		Включает режим Мазохиста, если мир в режиме Мастера, и если вы победили финального босса режима Вечность в любом мире
+		Включает режим Мазохиста, если мир в режиме Мастера,
+		и если вы победили финального босса режима Вечность в любом мире
 		Режим включает в себя:
 
 		-Переработку боссов и врагов, делая их сильнее
