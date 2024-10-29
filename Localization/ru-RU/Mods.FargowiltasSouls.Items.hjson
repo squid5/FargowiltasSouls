@@ -1733,7 +1733,7 @@ ZephyrBoots: {
 		Увеличивают высоту прыжка и дают иммунитет к урону от падения
 		'Беги словно ветер'
 		'''
-}	
+}
 
 ArchWizardsSoul: {
 	DisplayName: Душа Архиволшебника
@@ -2566,7 +2566,7 @@ MutantStatueGift: {
 
 ScremPainting: {
 	DisplayName: Картина «Крек»
-	Tooltip: "авт. Merry N. Tuse"
+	Tooltip: авт. Merry N. Tuse
 }
 
 TophatSquirrelBanner: {
@@ -2576,7 +2576,7 @@ TophatSquirrelBanner: {
 
 TwentyTwoPainting: {
 	DisplayName: Картина "22"
-	Tooltip: "авт. Ком Е. Дия"
+	Tooltip: авт. Ком Е. Дия
 }
 
 AbominationnVoodooDoll: {
@@ -2716,7 +2716,6 @@ LeashOfCthulhu: {
 RefractorBlaster: {
 	DisplayName: Преломляющий бластер
 	Tooltip: "'Модифицированная рука побеждённого врага...'"
-		
 }
 
 RockSlide: {
