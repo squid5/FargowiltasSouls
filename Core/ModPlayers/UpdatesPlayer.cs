@@ -511,7 +511,7 @@ namespace FargowiltasSouls.Core.ModPlayers
             TimeSinceHurt++;
 
             if (DeactivatedMinionEffectCount > 0)
-                Player.GetDamage(DamageClass.Generic) += DeactivatedMinionEffectCount * 0.01f; // 1% each
+                Player.GetDamage(DamageClass.Generic) += DeactivatedMinionEffectCount * 0.02f; // 2% each
 
             if (ToggleRebuildCooldown > 0)
                 ToggleRebuildCooldown--;

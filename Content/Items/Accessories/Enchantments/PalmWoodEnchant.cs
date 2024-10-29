@@ -51,7 +51,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
 
         public override Header ToggleHeader => Header.GetHeader<TimberHeader>();
         public override int ToggleItemType => ModContent.ItemType<PalmWoodEnchant>();
-        public override bool MinionEffect => true;
+        public override bool MinionEffect => !Main.LocalPlayer.HasEffect<TimberEffect>();
         public override void OnHitNPCEither(Player player, NPC target, NPC.HitInfo hitInfo, DamageClass damageClass, int baseDamage, Projectile projectile, Item item)
         {
             if (player.HasEffect<TimberEffect>())
