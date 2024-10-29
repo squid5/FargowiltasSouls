@@ -342,7 +342,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEve
                 for (int i = 0; i < 14; i++)
                 {
                     Vector2 pos = posOrig - (Vector2.UnitY * 150 * i);
-                    Projectile.NewProjectile(parent.GetSource_FromThis(), pos, Vector2.Zero, ModContent.ProjectileType<LightningTelegraph>(), FargoSoulsUtil.ScaledProjectileDamage(parent.damage), 2f, Main.myPlayer, i);
+                    Projectile.NewProjectile(parent.GetSource_FromThis(), pos, Vector2.Zero, ModContent.ProjectileType<LightningTelegraph>(), FargoSoulsUtil.ScaledProjectileDamage(parent.defDamage), 2f, Main.myPlayer, i);
                 }
             }
         }

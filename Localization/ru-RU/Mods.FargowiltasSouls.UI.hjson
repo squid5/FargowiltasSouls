@@ -1,33 +1,34 @@
-SoulTogglerButton: Переключатель Эффектов Аксессуаров
-EternityEnabled: Включен Режим Вечность
-MasochistEnabled: Включен Режим Мазохиста
-// EternityDisabled: Eternity Mode is disabled
-// RightClickToggle: Right Click to toggle
-// HoldShift: Hold Shift to read more
-/* ExpandedEternity:
+SoulTogglerButton: Переключатель эффектов аксессуаров
+EternityEnabled: Включён режим Вечность
+MasochistEnabled: Включён режим Мазохиста
+EternityDisabled: Режим Вечность выключен
+RightClickToggle: ПКМ для переключения
+HoldShift: Удерж. Shift для большей информации
+ExpandedEternity:
 	'''
-	[c/00FFFF:A new mode above Expert for Terraria veterans. The intended Fargo experience.]
-	World must be in Expert Mode or above
-	Enables Masochist Mode if world is in Master Mode and you've defeated the final Eternity boss in any world
-	''' */
-/* ExpandedMasochist:
+	[c/00FFFF:Новый режим, сложнее режима Эксперта, для ветеранов Террарии. Предпологаемый опыт модов Fargo.]
+	Мир должен быть в режиме Эксперта или выше
+	Включает режим Мазохиста, если мир в режиме Мастера,
+	и если вы победили финального босса режима Вечность в любом мире
 	'''
-	[c/33ffbe:An intense post-Eternity bonus challenge mode.]
-	World must be in Master Mode or above
-	Enables Eternity if world is not in Master Mode or above
-	''' */
-/* ExpandedFeatures:
+ExpandedMasochist:
 	'''
-	Eternity features include:
+	[c/33ffbe:Дополнительный режим-испытание, усложнённая версия режима Вечность.]
+	Мир должен быть в режиме Мастера или выше
+	Включает режим Вечность, если мир ниже режима Мастера
+	'''
+ExpandedFeatures:
+	'''
+	Режим включает в себя:
 
-	-Reworks bosses and enemies, making them stronger
-	-Enables Master Mode drops
-	-New Eternity-exclusive item drops
-	-Deviantt provides a starter pack and progress-based advice
-	-Improves base stats and caps player DR at 75%
-	-Debuffs wear off faster when not attacking
-	-Changes the functionality and strength of certain items
-	''' */
+	-Переработку боссов и врагов, делая их сильнее
+	-Выпадение предметов режима Мастера
+	-Новые эксклюзивные для режима выпадающие предметы
+	-Девиантт предоставляет стартовый набор и советы по прохождению
+	-Улучшает базовые хар-ки и ставит игроку лимит сопротивления урону в 75%
+	-Дебаффы спадают быстрее, пока вы не атакуете
+	-Изменяет функционал и силу некоторых предметов
+	'''
 SavedToSlot: Включённые эффекты сохранены в настраиваемый пресет {0}!
 NoTogglesFound: В настраиваемом пресете {0} не найдено включенных эффектов
 TurnAllTogglesOff: Выключить все эффекты
