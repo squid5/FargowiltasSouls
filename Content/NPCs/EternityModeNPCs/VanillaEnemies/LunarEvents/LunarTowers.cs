@@ -122,17 +122,18 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEve
             }
             if (!spawned)
             {
-                npc.lifeMax = npc.life = MaxHP;
-                npc.damage = Damage;
                 spawned = true;
                 SpawnedDuringLunarEvent = NPC.LunarApocalypseIsUp;
+                if (!SpawnedDuringLunarEvent)
+                    return;
+                npc.lifeMax = npc.life = MaxHP;
+                npc.damage = Damage;
                 npc.damage += 150;
                 npc.defDamage += 150;
-                npc.netUpdate = true;
                 npc.buffImmune[ModContent.BuffType<ClippedWingsBuff>()] = true;
                 npc.netUpdate = true;
             }
-
+            Main.NewText("e");
             //fix the funny where solar pillar rockets down when killed mid-dive attack
             if (npc.dontTakeDamage && npc.velocity.Y > 1)
                 npc.velocity.Y = 1;

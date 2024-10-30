@@ -148,7 +148,8 @@
 // LihzahrdGroundPound: Lihzahrd Fastfall
 // LihzahrdBoulders: Ground Pound Spray
 // CelestialRuneAttacks: Celestial Rune Support
-// MinionsDeactivatedEffect: Disabled Minions for Damage
+// CelestialRuneOnhit: Ancient Visions On Hit
+// MinionsDeactivatedEffect: Disabled Minion Effects for Damage
 // HeartHeader: "{$Mods.FargowiltasSouls.Items.HeartoftheMasochist.DisplayName}"
 // PrecisionSealHurtbox: Reduced Hurtbox Size
 // PumpkingsCapeEffect: Pumpking's Cape Parry
