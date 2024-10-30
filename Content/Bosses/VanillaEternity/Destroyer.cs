@@ -844,8 +844,8 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     npc.alpha = 0;
             }
 
-            if (npc.whoAmI == NPC.FindFirstNPC(npc.type))
-                Main.NewText($"{IntangibleTimer} {npc.alpha}");
+            //if (npc.whoAmI == NPC.FindFirstNPC(npc.type))
+                //Main.NewText($"{IntangibleTimer} {npc.alpha}");
 
             NPC destroyer = FargoSoulsUtil.NPCExists(npc.realLife, NPCID.TheDestroyer);
 
