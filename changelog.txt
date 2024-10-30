@@ -188,7 +188,7 @@ Wall of Flesh:
 --Eternity HP 2.2x -> 2x
 --Master Eternity+ HP x0.9
 -Lowered desperation attack cycling speed
--Lowed Masochist maximum speed
+-Lowered Masochist maximum speed
 -Reduced duration of Masochist laser burning debuff
 -Masochist reticle chains inflicting Tongued is now FTW exclusive, instead they grab the player
 -Masochist deathray inflicting Unstable is now FTW only, instead it massively propels the player
