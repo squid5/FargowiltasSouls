@@ -148,14 +148,14 @@ PlantMinionEffect: Прислужник Плантера
 LihzahrdGroundPound: Быстрое падение ящщеров
 LihzahrdBoulders: Валуны и гейзеры топота
 CelestialRuneAttacks: Поддержка небесной руны
-// MinionsDeactivatedEffect: Disabled Minions for Damage
+MinionsDeactivatedEffect: Отключить эффекты миньонов для урона
 HeartHeader: "{$Mods.FargowiltasSouls.Items.HeartoftheMasochist.DisplayName}"
 PrecisionSealHurtbox: Уменьшенный размер хёртбокса
 PumpkingsCapeEffect: Парирование плаща Тыквенного короля
 IceQueenGraze: Грэйз
 UfoMinionEffect: Прислужник тарелка
 ChalicePotionEffect: Бесплатные баффы зелий
-// MasoTrueEyeMinion: True Eye Minions
+MasoTrueEyeMinion: Истинные глаза-миньоны
 MutantArmorHeader: Истинная броня Мутанта
 MasoAbom: Прислужник Выродокк
 MasoRing: Прислужник фантазматическое кольцо

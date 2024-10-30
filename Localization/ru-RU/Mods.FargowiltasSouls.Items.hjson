@@ -1140,6 +1140,8 @@ ChaliceoftheMoon: {
 		[i:FargowiltasSouls/MagicalBulb] Увеличивает регенерацию здоровья в зависимости от получаемого света
 		[i:FargowiltasSouls/LihzahrdTreasureBox] Дважды нажмите ВНИЗ в воздухе, чтобы ускорить падение и создать взрыв при приземлении после пролёта определённого расстояния
 		[i:FargowiltasSouls/CelestialRune] Вы периодически выпускаете дополнительные атаки в зависимости от типа используемого оружия
+		[c/BC5252:Превращает все эффекты аксессуаров с миньонами и пустые слоты призыва в +1% к урону за каждый (можно переключить)]
+		При выключенном эффекте, призывает на вашу сторону [i:FargowiltasSouls/MagicalBulb] цветок, а также [i:FargowiltasSouls/CelestialRune] вы извергаете из себя древние видения при получении урона
 		'Всегда наблюдает'
 		'''
 }
@@ -1333,6 +1335,8 @@ HeartoftheMasochist: {
 		[i:FargowiltasSouls/PrecisionSeal] Зажмите клавишу печати точности, чтобы отключить рывки и двойные прыжки и показать ваш хёртбокс
 		[i:FargowiltasSouls/PrecisionSeal] Уменьшает ваш хёртбокс для выстрелов, даже когда не показан
 		[i:FargowiltasSouls/SaucerControlConsole] Нажмите клавишу смены боеприпасов, чтобы переключить используемые боеприпасы и [i:FargowiltasSouls/GalacticGlobe] даёт базовые баффы зелий (работает в инвентаре и слотах для украшений)
+		[c/BC5252:Превращает все эффекты аксессуаров с миньонами и пустые слоты призыва в +1% к урону за каждый (можно переключить)]
+		При выключенном эффекте, призывает [i:FargowiltasSouls/GalacticGlobe] маленькие истинные глаза Ктулху и [i:FargowiltasSouls/SaucerControlConsole] дружелюбную мини-тарелку, которая замедляет врагов при попадании
 		'Тёплое, бьётся, и не нуждается в теле'
 		'''
 	VanityTooltip: "[i:FargowiltasSouls/SaucerControlConsole] Нажмите клавишу смены боеприпасов, чтобы переключить используемые боеприпасы и [i:FargowiltasSouls/GalacticGlobe] даёт базовые баффы зелий"
@@ -1864,7 +1868,8 @@ MasochistSoul: {
 		Автоматически использует [i:FargowiltasSouls/ConcentratedRainbowMatter] лечебные зелья и [i:FargowiltasSouls/MysticSkull] зелья маны по необходимости.
 		При получении урона, [i:FargowiltasSouls/SqueakyToy] есть 5% шанс получить только 1 ед. урона, [i:FargowiltasSouls/NecromanticBrew] и вы отражаете весь урон во время рывка
 		Ваши атаки [i:FargowiltasSouls/NymphsPerfume] создают сердца и накладывают солянку из дебаффов режима Вечность
-		Призывает [i:FargowiltasSouls/GuttedHeart] истинные глаза-ползуны, чтобы защищать вас
+		[c/BC5252:Превращает все эффекты аксессуаров с миньонами и пустые слоты призыва в +1% к урону за каждый (можно переключить)]
+		При выключенном эффекте, призывает на вашу сторону [i:FargowiltasSouls/NecromanticBrew] руки Скелетрона, [i:FargowiltasSouls/GuttedHeart] ползунов, [i:FargowiltasSouls/ConcentratedRainbowMatter] радужного слизня, [i:FargowiltasSouls/GroundStick] два дружелюбных дрона, [i:FargowiltasSouls/SkullCharm] миньона-глаз, [i:FargowiltasSouls/SaucerControlConsole] мини-тарелку, [i:FargowiltasSouls/MagicalBulb] цветок, [i:FargowiltasSouls/CelestialRune] культиста [i:FargowiltasSouls/GalacticGlobe] и истинные глаза Ктулху
 		[i:FargowiltasSouls/SandsofTime] Используйте, чтобы телепортироваться к месту вашей последней смерти
 		'Прими власть, прими вечность'
 		'''
