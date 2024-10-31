@@ -75,9 +75,9 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
             return MathHelper.SmoothStep(baseWidth, 3.5f, completionRatio);
         }
 
-        public static Color ColorFunction(float completionRatio)
+        public Color ColorFunction(float completionRatio)
         {
-            return Color.Lerp(SoulConfig.Instance.BossRecolors && WorldSavingSystem.EternityMode ? Color.Teal : Color.DarkRed , Color.Transparent, completionRatio) * 0.7f;
+            return Color.Lerp(recolor ? Color.Teal : Color.DarkRed , Color.Transparent, completionRatio) * 0.7f;
         }
 
         public void RenderPixelatedPrimitives(SpriteBatch spriteBatch)
@@ -100,7 +100,7 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
             Vector2 glowDrawPosition = Projectile.Center + Projectile.velocity / 10f;
             glowDrawPosition += Main.rand.NextVector2Circular(5, 5);
 
-            Main.EntitySpriteDraw(glowTexture, glowDrawPosition - Main.screenPosition, null, SoulConfig.Instance.BossRecolors && WorldSavingSystem.EternityMode ? Color.Teal : Color.DarkRed, Projectile.rotation, glowTexture.Size() * 0.5f, Projectile.scale * 0.8f, SpriteEffects.None, 0);
+            Main.EntitySpriteDraw(glowTexture, glowDrawPosition - Main.screenPosition, null, recolor ? Color.Teal : Color.DarkRed, Projectile.rotation, glowTexture.Size() * 0.5f, Projectile.scale * 0.8f, SpriteEffects.None, 0);
             FargoSoulsUtil.GenericProjectileDraw(Projectile, lightColor, texture: texture);
             return false;
         }
