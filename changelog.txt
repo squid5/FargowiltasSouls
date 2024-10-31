@@ -103,7 +103,7 @@ Deviantt:
 -Rune Wizard auras only functionally apply to multiplayer target
 
 Banished Baron:
--Increased smoothness of boss movement
+-Improved smoothness of boss movement
 -New shaking telegraph for phase 2 spin dash
 -Decreased (Eternity) Oceanic Maul duration
 -Tweaked music timing
@@ -114,7 +114,7 @@ Lifelight:
 -New sound effects
 
 Eridanus:
--Increased smoothness of boss movement
+-Improved smoothness of boss movement
 -Improved movement during rapid deathray punches attack
 -Vortex applies a unique Low Ground that only disables platforms and nothing else, and that you cannot be immune to
 -Tweaked vortex lightning spawn frequency
