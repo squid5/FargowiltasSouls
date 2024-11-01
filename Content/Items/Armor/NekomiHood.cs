@@ -2,8 +2,10 @@
 using FargowiltasSouls.Content.Projectiles;
 using FargowiltasSouls.Content.Projectiles.Masomode;
 using FargowiltasSouls.Content.Projectiles.Minions;
+using FargowiltasSouls.Content.UI.Elements;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
 using Terraria.Audio;
@@ -19,9 +21,6 @@ namespace FargowiltasSouls.Content.Items.Armor
         public override void SetStaticDefaults()
         {
             Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
-            // DisplayName.SetDefault("Nekomi Hood");
-            /* Tooltip.SetDefault(@"7% increased damage
-Increases max number of minions by 2"); */
             ArmorIDs.Head.Sets.DrawHatHair[Item.headSlot] = true;
         }
 
@@ -31,7 +30,7 @@ Increases max number of minions by 2"); */
             Item.height = 18;
             Item.rare = ItemRarityID.LightRed;
             Item.value = Item.sellPrice(0, 1, 50);
-            Item.defense = 7;
+            Item.defense = 6;
         }
 
         public override void UpdateEquip(Player player)
@@ -68,7 +67,7 @@ Increases max number of minions by 2"); */
                 bool superAttack = modPlayer.NekomiAttackReadyTimer > 0;
                 if (superAttack)
                 {
-                    int baseDamage = 2222 / 3;
+                    int baseDamage = (2222 / 3) - 80;
                     if (!Main.hardMode)
                         baseDamage /= 2;
                     FargoSoulsUtil.NewSummonProjectile(player.GetSource_Misc(""), player.Center, Vector2.Zero, ModContent.ProjectileType<NekomiDevi>(), baseDamage, 16f, player.whoAmI);
@@ -132,6 +131,8 @@ Increases max number of minions by 2"); */
 
             if (player.whoAmI == Main.myPlayer)
             {
+                CooldownBarManager.Activate("NekomiHoodGraze", ModContent.Request<Texture2D>("FargowiltasSouls/Content/Items/Armor/NekomiHood").Value, Color.DeepPink, () => ((float)fargoPlayer.NekomiMeter / MAX_METER), true, 0, () => fargoPlayer.NekomiSet);
+
                 if (fargoPlayer.NekomiMeter >= MAX_METER)
                     fargoPlayer.NekomiAttackReadyTimer = FargoSoulsPlayer.SuperAttackMaxWindow;
 
@@ -150,7 +151,7 @@ Increases max number of minions by 2"); */
 
             if (!Main.dedServ)
             {
-                SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/Graze") { Volume = 0.5f }, Main.LocalPlayer.Center);
+                SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/Accessories/Graze") { Volume = 0.5f }, Main.LocalPlayer.Center);
             }
         }
 

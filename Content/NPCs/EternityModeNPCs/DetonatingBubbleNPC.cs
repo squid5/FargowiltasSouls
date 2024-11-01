@@ -2,7 +2,6 @@
 using FargowiltasSouls.Core.Globals;
 using FargowiltasSouls.Core.Systems;
 using Microsoft.Xna.Framework;
-using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
@@ -20,12 +19,12 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs
             //DisplayName.AddTranslation((int)GameCulture.CultureName.Chinese, "爆炸泡泡");
             Main.npcFrameCount[NPC.type] = 2;
             NPCID.Sets.CantTakeLunchMoney[Type] = true;
-            NPC.AddDebuffImmunities(new List<int>
-            {
+            NPC.AddDebuffImmunities(
+            [
                 BuffID.Confused,
                 BuffID.OnFire,
                 BuffID.Suffocation
-            });
+            ]);
 
             this.ExcludeFromBestiary();
         }
@@ -88,7 +87,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs
             target.AddBuff(BuffID.Wet, 420);
             if (WorldSavingSystem.MasochistModeReal)
                 target.AddBuff(ModContent.BuffType<SqueakyToyBuff>(), 120);
-            target.AddBuff(ModContent.BuffType<OceanicMaulBuff>(), 20 * 60);
+            target.AddBuff(ModContent.BuffType<OceanicMaulBuff>(), 15 * 60);
             target.FargoSouls().MaxLifeReduction += FargoSoulsUtil.BossIsAlive(ref EModeGlobalNPC.fishBossEX, NPCID.DukeFishron) ? 100 : 25;
         }
 

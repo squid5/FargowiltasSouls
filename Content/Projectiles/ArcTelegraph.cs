@@ -108,8 +108,8 @@ namespace FargowiltasSouls.Content.Projectiles
             shader.Apply();
 
             VertexStrip vertexStrip = new();
-            List<Vector2> positions = new();
-            List<float> rotations = new();
+            List<Vector2> positions = [];
+            List<float> rotations = [];
             float initialRotation = Projectile.rotation - ArcAngle * 0.5f;
             for (float i = 0; i < 1; i += 0.005f)
             {
@@ -119,7 +119,7 @@ namespace FargowiltasSouls.Content.Projectiles
             }
             vertexStrip.PrepareStrip(positions.ToArray(), rotations.ToArray(), ColorFunction, WidthFunction, -Main.screenPosition, includeBacksides: true);
             vertexStrip.DrawTrail();
-            Main.spriteBatch.ExitShaderRegion();
+            Main.spriteBatch.ResetToDefault();
             return false;
         }
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)

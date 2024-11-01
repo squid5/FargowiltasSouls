@@ -1,4 +1,9 @@
-﻿using FargowiltasSouls.Content.Projectiles.Deathrays;
+﻿
+
+using FargowiltasSouls.Assets.ExtraTextures;
+using FargowiltasSouls.Assets.Sounds;
+using FargowiltasSouls.Common.Graphics.Particles;
+using FargowiltasSouls.Content.Projectiles.Deathrays;
 using FargowiltasSouls.Core.Systems;
 using Luminance.Core.Graphics;
 using Microsoft.Xna.Framework;
@@ -56,7 +61,11 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
             }
             if (Projectile.localAI[0] == 0f)
             {
-                SoundEngine.PlaySound(SoundID.Zombie104, Projectile.Center);
+                if (!Main.dedServ)
+                {
+                    SoundEngine.PlaySound(FargosSoundRegistry.StyxGazer with { Volume = 1.5f }, Projectile.Center);
+                    SoundEngine.PlaySound(FargosSoundRegistry.GenericDeathray, Projectile.Center);
+                }
             }
             float num801 = 1f;
             Projectile.localAI[0] += 1f;
@@ -65,16 +74,19 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
                 Projectile.Kill();
                 return;
             }
-            Projectile.scale = (float)Math.Sin(Projectile.localAI[0] * 3.14159274f / maxTime) * num801 * 6f;
+            Projectile.scale = (float)Math.Sin(Projectile.localAI[0] * MathF.PI / maxTime) * num801 * 3;
             if (Projectile.scale > num801)
             {
                 Projectile.scale = num801;
             }
-            float num804 = Projectile.velocity.ToRotation();
+            float rotation = Projectile.velocity.ToRotation();
             if ((abom.velocity != Vector2.Zero || abom.ai[0] == 19) && abom.ai[0] != 20)
-                num804 += Projectile.ai[0] / Projectile.MaxUpdates;
-            Projectile.rotation = num804 - 1.57079637f;
-            Projectile.velocity = num804.ToRotationVector2();
+            {
+                rotation += Projectile.ai[0] / Projectile.MaxUpdates;
+            }
+
+            Projectile.rotation = rotation - 1.57079637f;
+            Projectile.velocity = rotation.ToRotationVector2();
             float num805 = 3f;
             float num806 = Projectile.width;
             Vector2 samplingPoint = Projectile.Center;
@@ -120,28 +132,63 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
                 //DelegateMethods.v3_1 = new Vector3(0.3f, 0.65f, 0.7f);
                 //Utils.PlotTileLine(Projectile.Center, Projectile.Center + Projectile.velocity * Projectile.localAI[1], (float)Projectile.width * Projectile.scale, new Utils.PerLinePoint(DelegateMethods.CastLight));
 
-                if (abom.velocity != Vector2.Zero && --counter < 0)
+                if (abom.velocity != Vector2.Zero)
                 {
-                    counter = 5;
-                    if (FargoSoulsUtil.HostCheck) //spawn bonus projs
+                    if (--counter < 0)
                     {
-                        Vector2 spawnPos = Projectile.Center;
-                        Vector2 vel = Projectile.velocity.RotatedBy(Math.PI / 2 * Math.Sign(Projectile.ai[0]));
-                        const int max = 15;
-                        for (int i = 1; i <= max; i++)
+                        counter = 5;
+                        if (FargoSoulsUtil.HostCheck) //spawn bonus projs
                         {
-                            spawnPos += Projectile.velocity * 3000f / max;
-                            Projectile.NewProjectile(Terraria.Entity.InheritSource(Projectile), spawnPos, vel, ModContent.ProjectileType<AbomSickle2>(), Projectile.damage, 0f, Projectile.owner);
+                            Vector2 spawnPos = Projectile.Center;
+                            Vector2 vel = Projectile.velocity.RotatedBy(Math.PI / 2 * Math.Sign(Projectile.ai[0]));
+                            const int max = 15;
+                            for (int i = 1; i <= max; i++)
+                            {
+                                spawnPos += Projectile.velocity * 3000f / max;
+                                Projectile.NewProjectile(Terraria.Entity.InheritSource(Projectile), spawnPos, vel, ModContent.ProjectileType<AbomSickle2>(), Projectile.damage, 0f, Projectile.owner);
+                            }
+                        }
+                    }
+                    // spark visuals
+                    const float sparks = 60;
+                    for (int i = 2; i < sparks; i++)
+                    {
+                        if (Main.rand.NextBool(6))
+                        {
+                            float lerper = i + Main.rand.NextFloat(-0.7f, 0.7f);
+                            Vector2 spawnPos = Projectile.Center + lerper * Projectile.velocity * 3000f / sparks;
+                            Vector2 vel = Projectile.velocity.RotatedBy(Math.PI / 2 * -Math.Sign(Projectile.ai[0]));
+                            vel *= Main.rand.NextFloat(6, 12f);
+                            vel = vel.RotatedByRandom(MathHelper.PiOver2 * 0.3f);
+                            Particle p = new SparkParticle(spawnPos, vel, Color.OrangeRed, Main.rand.NextFloat(0.4f, 0.8f), Main.rand.Next(20, 40), true, Color.Yellow);
+                            p.Spawn();
+                        }
+                    }
+                    const float smoke = 20;
+                    for (int i = 2; i < smoke; i++)
+                    {
+                        if (Main.rand.NextBool(10))
+                        {
+                            float lerper = i + Main.rand.NextFloat(-0.7f, 0.7f);
+                            Vector2 spawnPos = Projectile.Center + lerper * Projectile.velocity * 3000f / smoke;
+                            Vector2 vel = Projectile.velocity.RotatedBy(Math.PI / 2 * -Math.Sign(Projectile.ai[0]));
+                            vel *= Main.rand.NextFloat(2f, 4f);
+                            vel = vel.RotatedByRandom(MathHelper.PiOver2 * 0.3f);
+
+                            int index = Gore.NewGore(Projectile.GetSource_FromThis(), spawnPos, vel, Main.rand.Next(61, 64), 1f);
+                            Main.gore[index].scale *= Main.rand.NextFloat(0.6f, 0.9f);
+                            Main.gore[index].rotation = Main.rand.NextFloat(MathHelper.TwoPi);
                         }
                     }
                 }
-
+                /*
                 for (int i = 0; i < 15; i++)
                 {
                     int d = Dust.NewDust(Projectile.position + Projectile.velocity * Main.rand.NextFloat(2000), Projectile.width, Projectile.height, DustID.GemTopaz, 0f, 0f, 0, default, 1.5f);
                     Main.dust[d].noGravity = true;
                     Main.dust[d].velocity *= 4f;
                 }
+                */
             }
 
             if (!spawnedHandle)
@@ -149,8 +196,8 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
                 spawnedHandle = true;
                 if (FargoSoulsUtil.HostCheck)
                 {
-                    Projectile.NewProjectile(Terraria.Entity.InheritSource(Projectile), Projectile.Center, Projectile.velocity, ModContent.ProjectileType<AbomSwordHandle>(), Projectile.damage, Projectile.knockBack, Projectile.owner, (float)Math.PI / 2, Projectile.identity);
-                    Projectile.NewProjectile(Terraria.Entity.InheritSource(Projectile), Projectile.Center, Projectile.velocity, ModContent.ProjectileType<AbomSwordHandle>(), Projectile.damage, Projectile.knockBack, Projectile.owner, -(float)Math.PI / 2, Projectile.identity);
+                    //Projectile.NewProjectile(Terraria.Entity.InheritSource(Projectile), Projectile.Center, Projectile.velocity, ModContent.ProjectileType<AbomSwordHandle>(), Projectile.damage, Projectile.knockBack, Projectile.owner, (float)Math.PI / 2, Projectile.identity);
+                    //Projectile.NewProjectile(Terraria.Entity.InheritSource(Projectile), Projectile.Center, Projectile.velocity, ModContent.ProjectileType<AbomSwordHandle>(), Projectile.damage, Projectile.knockBack, Projectile.owner, -(float)Math.PI / 2, Projectile.identity);
                 }
             }
         }
@@ -172,25 +219,45 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
         }
 
         public float WidthFunction(float _) => Projectile.width * Projectile.scale * 2;
+        public static Color FromDecimal(double r, double g, double b, double a) => new((int)(r * 255), (int)(g * 255), (int)(b * 255), (int)(a * 255)); 
+        public static readonly Color darkColor = FromDecimal(0.75, 0.36, 0.08, 1);
+        public static readonly Color midColor = FromDecimal(0.96, 0.60, 0.09, 1);
+        public static readonly Color lightColor = FromDecimal(0.98, 0.95, 0.79, 1);
 
-        public static Color ColorFunction(float _) => new(253, 254, 32, 100);
+        public static Color ColorFunction(float _) => darkColor;
 
         public override bool PreDraw(ref Color lightColor)
         {
+            DrawStyxGazerDeathray(Projectile, drawDistance, WidthFunction);
+            return false;
+        }
+        public static void DrawStyxGazerDeathray(Projectile projectile, float drawDistance, PrimitiveSettings.VertexWidthFunction widthFunction, bool drawHandle = true, bool fadeStart = false)
+        {
             // This should never happen, but just in case.
-            if (Projectile.velocity == Vector2.Zero)
-                return false;
+            if (projectile.velocity == Vector2.Zero)
+                return;
 
-            ManagedShader shader = ShaderManager.GetShader("FargowiltasSouls.WillBigDeathray");
+            Main.spriteBatch.End();
+            Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, SamplerState.LinearWrap, DepthStencilState.None, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
 
-            // Get the laser end position.
-            Vector2 laserEnd = Projectile.Center + Projectile.velocity.SafeNormalize(Vector2.UnitY) * drawDistance;
+            ManagedShader shader = ShaderManager.GetShader("FargowiltasSouls.StyxGazerShader");
+            Texture2D hiltTexture = ModContent.Request<Texture2D>("FargowiltasSouls/Content/Bosses/AbomBoss/AbomSword").Value;
+
+            Vector2 direction = projectile.velocity.SafeNormalize(Vector2.UnitY);
+            Vector2 offset = direction * projectile.scale * hiltTexture.Height;
+            if (!drawHandle)
+                offset = direction;
+
+            // Get the laser positions.
+            Vector2 laserStartOffset = direction * -176 * projectile.scale;
+            Vector2 laserStart = projectile.Center + offset * 2 + laserStartOffset;
+            Vector2 laserEnd = laserStart + direction * drawDistance;
 
             // Create 8 points that span across the draw distance from the projectile center.
 
             // This allows the drawing to be pushed back, which is needed due to the shader fading in at the start to avoid
             // sharp lines.
-            Vector2 initialDrawPoint = Projectile.Center;
+            Vector2 initialDrawPoint = laserStart;
             Vector2[] baseDrawPoints = new Vector2[8];
             for (int i = 0; i < baseDrawPoints.Length; i++)
                 baseDrawPoints[i] = Vector2.Lerp(initialDrawPoint, laserEnd, i / (float)(baseDrawPoints.Length - 1f));
@@ -198,16 +265,18 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
             // Set shader parameters. This one takes a fademap and a color.
 
             // The laser should fade to this in the middle.
-            Color brightColor = Color.Black;
+            Color brightColor = midColor;
             shader.TrySetParameter("mainColor", brightColor);
+            shader.TrySetParameter("fadeStart", fadeStart);
+
             // GameShaders.Misc["FargoswiltasSouls:MutantDeathray"].UseImage1(); cannot be used due to only accepting vanilla paths.
-            Texture2D fademap = ModContent.Request<Texture2D>("FargowiltasSouls/Assets/ExtraTextures/Trails/WillStreak").Value;
+            Texture2D fademap = FargosTextureRegistry.MagmaStreak.Value;
             FargoSoulsUtil.SetTexture1(fademap);
             for (int j = 0; j < 2; j++)
             {
-                PrimitiveSettings primSettings = new(WidthFunction, ColorFunction, Shader: shader);
+                PrimitiveSettings primSettings = new(widthFunction, ColorFunction, Shader: shader);
                 PrimitiveRenderer.RenderTrail(baseDrawPoints, primSettings, 30);
-
+                /*
                 for (int i = 0; i < baseDrawPoints.Length / 2; i++)
                 {
                     Vector2 temp = baseDrawPoints[i];
@@ -216,8 +285,31 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
                     baseDrawPoints[swap] = temp;
                 }
                 PrimitiveRenderer.RenderTrail(baseDrawPoints, primSettings, 30);
+                */
             }
-            return false;
+
+            if (drawHandle)
+            {
+                Main.spriteBatch.UseBlendState(BlendState.Additive);
+
+                // glow
+                for (int j = 0; j < 12; j++)
+                {
+                    Vector2 afterimageOffset = (MathHelper.TwoPi * j / 12f).ToRotationVector2() * 6f;
+                    Color glowColor = darkColor;
+
+                    Main.EntitySpriteDraw(hiltTexture, projectile.Center + offset + afterimageOffset - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), null, glowColor,
+                        direction.ToRotation() + MathHelper.PiOver2, Vector2.UnitX * hiltTexture.Width / 2, projectile.scale, SpriteEffects.None, 0);
+                }
+                Main.spriteBatch.ResetToDefault();
+
+                Main.EntitySpriteDraw(hiltTexture, projectile.Center + offset - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), null, lightColor,
+                    direction.ToRotation() + MathHelper.PiOver2, Vector2.UnitX * hiltTexture.Width / 2, projectile.scale, SpriteEffects.None, 0);
+            }
+            else
+            {
+                Main.spriteBatch.ResetToDefault();
+            }
         }
     }
 }

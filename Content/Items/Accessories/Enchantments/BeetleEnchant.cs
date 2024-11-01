@@ -43,7 +43,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
             {
                 Player.beetleDefense = true;
                 Player.beetleCounter += 1f;
-                int cap = modPlayer.TerrariaSoul ? 3 : 2;
+                int cap = modPlayer.TerrariaSoul || modPlayer.ForceEffect<BeetleEnchant>() ? 3 : 2;
                 int time = 180 * 3 / cap;
                 if (Player.beetleCounter >= time)
                 {
@@ -87,7 +87,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
 
                 if (Player.beetleCounter > num2 + num3 + num4 + num3)
                     Player.beetleCounter = num2 + num3 + num4 + num3;
-                if (modPlayer.TerrariaSoul && Player.beetleCounter > num2 + num3 + num4)
+                if ((modPlayer.TerrariaSoul || modPlayer.ForceEffect<BeetleEnchant>()) && Player.beetleCounter > num2 + num3 + num4)
                 {
                     Player.AddBuff(BuffID.BeetleMight3, 5, false);
                     beetles = 3;
@@ -217,6 +217,9 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
 
         public override void OnHitNPCEither(Player player, NPC target, NPC.HitInfo hitInfo, DamageClass damageClass, int baseDamage, Projectile projectile, Item item)
         {
+            FargoSoulsPlayer modPlayer = player.FargoSouls();
+            if (modPlayer.LifeForceActive)
+                return;
             if (player.beetleOffense && damageClass != DamageClass.Melee)
             {
                 player.beetleCounter += hitInfo.Damage;
@@ -226,6 +229,8 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
         public override void OnHurt(Player player, Player.HurtInfo info)
         {
             FargoSoulsPlayer modPlayer = player.FargoSouls();
+            if (modPlayer.LifeForceActive)
+                return;
             modPlayer.BeetleEnchantDefenseTimer = 600;
 
             //AFTER THIS DAMAGE, transfer all offense beetles to endurance instead

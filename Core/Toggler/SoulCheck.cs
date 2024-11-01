@@ -19,18 +19,21 @@ namespace FargowiltasSouls.Core.Toggler
                 return false;
             if (!skipChecks)
             {
-                if (effect.MinionEffect || effect.ExtraAttackEffect)
+                /*
+                if (effect.MinionEffect)
                 {
                     FargoSoulsPlayer modPlayer = player.FargoSouls();
-                    if (modPlayer.PrimeSoulActive)
+                    AccessoryEffectPlayer effectPlayer = player.AccessoryEffects();
+                    if (modPlayer.GalacticMinionsDeactivated && !effectPlayer.DeactivatedEffects[effect.Index])
                     {
-                        //if (!player.HasEffect(effect)) // Don't stack per item
-                        //modPlayer.PrimeSoulItemCount++;
+                        effectPlayer.DeactivatedEffects[effect.Index] = true;
+                        modPlayer.DeactivatedMinionEffectCount++;
                         return false;
                     }
                 }
+                */
                 if (player.FargoSouls().MutantPresence)
-                    if (!effect.IgnoresMutantPresence)
+                    if (effect.MutantsPresenceAffects || effect.MinionEffect)
                         return false;
             }
             return toggle.ToggleBool;

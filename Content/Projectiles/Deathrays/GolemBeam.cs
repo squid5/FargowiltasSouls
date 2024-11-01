@@ -50,7 +50,7 @@ namespace FargowiltasSouls.Content.Projectiles.Deathrays
             if (Projectile.localAI[0] == 0f)
             {
                 if (!Main.dedServ)
-                    SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/GolemBeam"), Projectile.Center);
+                    SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/VanillaEternity/Golem/GolemBeam"), Projectile.Center);
             }
             float num801 = 1.3f;
             Projectile.localAI[0] += 1f;
@@ -98,7 +98,7 @@ namespace FargowiltasSouls.Content.Projectiles.Deathrays
 
                 if (Projectile.localAI[0] == descendTime && !Main.dedServ && Main.LocalPlayer.active)
                 {
-                    ScreenShakeSystem.StartShake(15, shakeStrengthDissipationIncrement: 15f / 60);
+                    ScreenShakeSystem.StartShake(10, shakeStrengthDissipationIncrement: 10f / 30);
                     for (int i = -1; i <= 1; i += 2)
                     {
                         for (int j = 0; j < 50; j++)

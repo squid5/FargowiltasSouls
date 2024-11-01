@@ -1,4 +1,5 @@
-﻿using FargowiltasSouls.Content.Projectiles;
+﻿using FargowiltasSouls.Assets.Sounds;
+using FargowiltasSouls.Content.Projectiles;
 using FargowiltasSouls.Core.Systems;
 using Luminance.Core.Graphics;
 using Microsoft.Xna.Framework;
@@ -24,7 +25,7 @@ namespace FargowiltasSouls.Content.Bosses.DeviBoss
             ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
         }
 
-        const int maxTime = 60 * 3;
+        const int maxTime = 60 * 10;
         public override void SetDefaults()
         {
             Projectile.width = 100;
@@ -53,6 +54,8 @@ namespace FargowiltasSouls.Content.Bosses.DeviBoss
                 if (Projectile.localAI[0] == 0)
                 {
                     Projectile.localAI[0] = 1;
+                    if (WorldSavingSystem.MasochistModeReal)
+                        Projectile.localAI[0] = 30;
                     Projectile.localAI[1] = Projectile.DirectionFrom(npc.Center).ToRotation();
                     if (FargoSoulsUtil.HostCheck)
                         Projectile.NewProjectile(Terraria.Entity.InheritSource(Projectile), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<GlowRing>(), 0, 0f, Main.myPlayer, -1, -17);
@@ -86,6 +89,7 @@ namespace FargowiltasSouls.Content.Bosses.DeviBoss
                             Projectile.NewProjectile(Terraria.Entity.InheritSource(Projectile), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<GlowRing>(), 0, 0f, Main.myPlayer, -1, -16 + scaleCounter);
 
                         SoundEngine.PlaySound(SoundID.Item92, Projectile.Center);
+                        
                     }
                 }
 
@@ -107,7 +111,10 @@ namespace FargowiltasSouls.Content.Bosses.DeviBoss
                     Projectile.NewProjectile(Terraria.Entity.InheritSource(Projectile), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<GlowRing>(), 0, 0f, Main.myPlayer, -1, -14);
 
                 if (!Main.dedServ && Main.LocalPlayer.active)
-                    ScreenShakeSystem.StartShake(15, shakeStrengthDissipationIncrement: 15f / 30);
+                    ScreenShakeSystem.StartShake(10, shakeStrengthDissipationIncrement: 10f / 30);
+                
+                    
+                
 
                 if (FargoSoulsUtil.HostCheck)
                 {

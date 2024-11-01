@@ -1,11 +1,7 @@
 ﻿using FargowiltasSouls.Content.Items.Accessories.Enchantments;
-using FargowiltasSouls.Content.Projectiles.Souls;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
-using Microsoft.Xna.Framework;
 using System.Collections.Generic;
-using System.Linq;
 using Terraria;
-using Terraria.ID;
 using static FargowiltasSouls.Core.Systems.DashManager;
 
 namespace FargowiltasSouls.Core.ModPlayers
@@ -48,22 +44,26 @@ namespace FargowiltasSouls.Core.ModPlayers
         public bool ChibiDevi;
         public bool MutantSpawn;
         public bool BabyAbom;
-
         public bool PetsActive;
 
         #region enchantments
+
+        // new forces
+        public int TerraProcCD;
+        public int CosmosMoonTimer;
+        public int CosmosMoonCycle;
+        public bool LifeForceActive;
+        public float AuraSizeBonus;
+        public int TerrariaSoulProcCD;
+
+        public int TimeSinceHurt;
+
         //force of timber
         public bool MahoganyCanUseDR;
-        public Vector2[] PearlwoodTrail = new Vector2[30]; //store a second of trail 
-        public int PearlwoodIndex = 0;
-        public int PearlwoodGrace = 0;
-        public Vector2 PStarelinePos;
-
-        public bool PStarelineActive => Main.projectile.Any(p => p.active && p.owner == Player.whoAmI && p.type == ProjectileID.FairyQueenMagicItemShot && p.TryGetGlobalProjectile(out PearlwoodStareline gp) && gp.Pearlwood);
-
         public int ShadewoodCD;
-        public Item WoodEnchantItem;
         public bool WoodEnchantDiscount;
+        public int PearlwoodCritDuration;
+        public int PearlwoodManaCD;
         //force of terra
         public int CopperProcCD;
         public bool GuardRaised;
@@ -75,13 +75,12 @@ namespace FargowiltasSouls.Core.ModPlayers
         public int TinProcCD;
         public bool TinCritBuffered;
         public int TungstenCD;
-        public bool PearlwoodStar;
         public int AshwoodCD;
 
         //force of cosmos
-        public int MeteorTimer;
-        public int MeteorCD = 60;
-        public bool MeteorShower;
+        public float NebulaEnchCD = 3 * 60;
+        public float SolarEnchCharge = 0;
+        public float MeteorCD = 60;
 
         public int ApprenticeCD;
         public bool IronRecipes = false;
@@ -93,6 +92,7 @@ namespace FargowiltasSouls.Core.ModPlayers
         public int monkTimer = 0;
 
         public int PumpkinSpawnCD;
+        public int ShroomiteCD;
 
         public bool TitaniumDRBuff;
         public bool TitaniumCD;
@@ -100,25 +100,33 @@ namespace FargowiltasSouls.Core.ModPlayers
         public bool ValhallaEnchantActive = false;
 
         public bool AncientShadowEnchantActive = false;
+        public int AncientShadowFlameCooldown;
         public int ShadowOrbRespawnTimer;
 
         public Item PlatinumEffect;
         public int PalladCounter;
         public int MythrilTimer;
+        public int MythrilSoundCooldown;
         public int MythrilMaxTime => Player.HasEffect<MythrilEffect>() ? Player.ForceEffect<MythrilEffect>() ? 300 : 180 : 180;
         public float MythrilMaxSpeedBonus => Player.HasEffect<MythrilEffect>() ? Player.ForceEffect<MythrilEffect>() ? 1.75f : 1.5f : 1.5f;
 
-        public bool PrimeSoulActive = false;
-        public bool PrimeSoulActiveBuffer = false; // Needed to make sure the item effect is applied during the entirety of the update cycle, so it doesn't miss anything
-        public int PrimeSoulItemCount = 0;
+        public bool GalacticMinionsDeactivated = false;
+        public bool GalacticMinionsDeactivatedBuffer = false; // Needed to make sure the item effect is applied during the entirety of the update cycle, so it doesn't miss anything
+        //public bool JumpsDisabled = false;
+        //public bool JumpsDisabledBuffer = false;  // Needed to make sure the item effect is applied during the entirety of the update cycle, so it doesn't miss anything
+
+        public int DeactivatedMinionEffectCount = 0;
 
         public int CrimsonRegenAmount;
         public int CrimsonRegenTime;
 
         public bool CanSummonForbiddenStorm = false;
+        public List<int> ForbiddenTornados = [];
+        public List<int> ShadowOrbs = [];
         public int IcicleCount;
         public int icicleCD;
         public int GladiatorCD;
+        public int GladiatorStandardCD;
         public bool GoldEnchMoveCoins;
         public bool GoldShell;
         private int goldHP;
@@ -137,7 +145,10 @@ namespace FargowiltasSouls.Core.ModPlayers
         public int JungleCD;
         public int BeetleEnchantDefenseTimer;
         public int BorealCD;
+        public int PalmWoodForceCD;
         public bool CrystalEnchantActive = false;
+        public int CrystalDashFirstStrikeCD;
+        public int CoyoteTime;
 
         public int MonkDashing;
 
@@ -145,6 +156,12 @@ namespace FargowiltasSouls.Core.ModPlayers
         public Projectile CrystalSmokeBombProj = null;
         public bool FirstStrike;
         public int SmokeBombCD;
+
+        public int ShadowDashTimer;
+        public int IFrameDashTimer;
+        public bool IFrameDash;
+        public int EarthTimer;
+        public int EarthSplitTimer;
 
         //public int RainCD;
 
@@ -154,6 +171,7 @@ namespace FargowiltasSouls.Core.ModPlayers
 
         public bool SnowVisual;
         public int SpectreCD;
+        public int SpectreGhostTime;
         public bool MinionCrits;
         //public bool squireReduceIframes;
         public bool FreezeTime;
@@ -167,14 +185,16 @@ namespace FargowiltasSouls.Core.ModPlayers
         public int turtleRecoverCD = 240;
         public bool ShellHide;
         public int ValhallaDashCD;
-        public bool VortexStealth;
+        public int VortexCD;
         public bool WizardEnchantActive;
         public bool WizardTooltips;
         public Item WizardedItem;
 
         public int CritterAttackTimer;
 
-        public HashSet<int> ForceEffects = new();
+        public bool MiningImmunity;
+
+        public HashSet<int> ForceEffects = [];
 
         #endregion
 
@@ -190,6 +210,7 @@ namespace FargowiltasSouls.Core.ModPlayers
         public bool RangedEssence;
         public bool BuilderMode;
         public bool UniverseSoul;
+        public bool UniverseSoulBuffer;  // Needed to make sure the item effect is applied during the entirety of the update cycle, so it doesn't miss anything
         public bool UniverseCore;
         public bool FishSoul1;
         public bool FishSoul2;
@@ -218,6 +239,7 @@ namespace FargowiltasSouls.Core.ModPlayers
         public int WyvernBallsCD;
         public bool FusedLens;
         public bool FusedLensCanDebuff;
+        public bool DubiousCircuitry;
         public bool Supercharged;
         public bool Probes;
         public bool MagicalBulb;
@@ -292,6 +314,8 @@ namespace FargowiltasSouls.Core.ModPlayers
         public Item GelicWingsItem;
         public bool ConcentratedRainbowMatter;
 
+        // buffs
+        public bool Ambrosia;
 
         //debuffs
         public bool Hexed;
@@ -308,9 +332,11 @@ namespace FargowiltasSouls.Core.ModPlayers
         public bool Bloodthirsty;
         public bool Unlucky;
         public bool DisruptedFocus;
+        public bool BaronsBurden;
 
         public bool Smite;
         public bool Anticoagulation;
+        public bool IvyVenom;
         public bool GodEater;               //defense removed, endurance removed, colossal DOT
         public bool FlamesoftheUniverse;    //activates various vanilla debuffs
         public bool MutantNibble;           //moon bite effect, feral bite effect, disables lifesteal
@@ -341,12 +367,15 @@ namespace FargowiltasSouls.Core.ModPlayers
         public bool Midas;
         public bool HadMutantPresence;
         public bool MutantPresence;
+        public bool MutantPresenceBuffer;
+        public bool MutantDesperation;
         public int PresenceTogglerTimer;
         public bool MutantFang;
         public bool DevianttPresence;
         public bool Swarming;
         public bool LowGround;
         public bool Flipped;
+        public bool Illuminated;
         public bool Mash;
         public bool[] MashPressed = new bool[4];
         public int MashCounter;
@@ -372,6 +401,7 @@ namespace FargowiltasSouls.Core.ModPlayers
         public int shieldHeldTime;
         public bool wasHoldingShield;
         public int LightslingerHitShots;
+        public int ChargeSoundDelay = 0;
 
         public int NoUsingItems;
 

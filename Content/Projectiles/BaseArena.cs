@@ -14,7 +14,7 @@ namespace FargowiltasSouls.Content.Projectiles
         protected readonly int dustType;
         protected readonly int increment;
         protected readonly int visualCount;
-        protected float threshold;
+        public float threshold;
         protected float targetPlayer;
 
         protected BaseArena(float rotationPerTick, float threshold, int npcType, int dustType = 135, int increment = 2, int visualCount = 32)
@@ -103,21 +103,9 @@ namespace FargowiltasSouls.Content.Projectiles
                     {
                         if (distance > threshold * 2f)
                         {
-                            player.controlLeft = false;
-                            player.controlRight = false;
-                            player.controlUp = false;
-                            player.controlDown = false;
-                            player.controlUseItem = false;
-                            player.controlUseTile = false;
-                            player.controlJump = false;
-                            player.controlHook = false;
-                            if (player.grapCount > 0)
-                                player.RemoveAllGrapplingHooks();
-                            if (player.mount.Active)
-                                player.mount.Dismount(player);
+                            player.Incapacitate();
                             player.velocity.X = 0f;
                             player.velocity.Y = -0.4f;
-                            player.FargoSouls().NoUsingItems = 2;
                         }
 
                         Vector2 movement = Projectile.Center - player.Center;

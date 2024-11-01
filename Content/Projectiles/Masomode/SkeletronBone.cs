@@ -5,6 +5,7 @@ using FargowiltasSouls.Core.Systems;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -36,7 +37,14 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
                 CooldownSlot = 1;
             }
         }
-
+        public override void OnSpawn(IEntitySource source)
+        {
+            if (SourceIsSkeletron(source))
+            {
+                Projectile.ai[0] = 1;
+                Projectile.netUpdate = true;
+            }
+        }
         public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
             if (FargoSoulsUtil.BossIsAlive(ref EModeGlobalNPC.guardBoss, NPCID.DungeonGuardian))
@@ -52,9 +60,8 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
         }
         public override bool PreDraw(ref Color lightColor)
         {
-            NPC sourceNPC = Projectile.GetSourceNPC();
             bool recolor =
-                (sourceNPC != null && (sourceNPC.type == NPCID.SkeletronHead || sourceNPC.type == NPCID.SkeletronHand || sourceNPC.type == NPCID.DungeonGuardian)) &&
+                Projectile.ai[0] == 1 &&
                 SoulConfig.Instance.BossRecolors && WorldSavingSystem.EternityMode;
 
             Texture2D texture = recolor ? ModContent.Request<Texture2D>("FargowiltasSouls/Content/Projectiles/Masomode/SkeletronBone_Recolor").Value : TextureAssets.Projectile[Type].Value;
@@ -62,5 +69,10 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
             FargoSoulsUtil.GenericProjectileDraw(Projectile, lightColor, texture);
             return false;
         }
+
+        public static bool SourceIsSkeletron(IEntitySource source) => 
+            source is EntitySource_Parent parent && 
+            parent.Entity is NPC sourceNPC && 
+            (sourceNPC.type == NPCID.SkeletronHead || sourceNPC.type == NPCID.SkeletronHand || sourceNPC.type == NPCID.DungeonGuardian);
     }
 }

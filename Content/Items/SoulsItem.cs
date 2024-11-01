@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using Terraria;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using Terraria.UI;
 
 namespace FargowiltasSouls.Content.Items
 {
@@ -25,7 +26,7 @@ namespace FargowiltasSouls.Content.Items
         /// A list of articles that this item may begin with depending on localization. <br />
         /// Used for the prefix-article fix.
         /// </summary>
-        public virtual List<string> Articles => new() { "The" };
+        public virtual List<string> Articles => ["The"];
 
         /// <summary>
         /// Allows you to modify all the tooltips that display for this item. <br />
@@ -85,7 +86,17 @@ namespace FargowiltasSouls.Content.Items
 
                 // Call the artcle-prefix adjustment method.
                 // This automatically handles fixing item names that begin with an article.
-                itemNameLine.ArticlePrefixAdjustment(Articles.ToArray());
+                //itemNameLine.ArticlePrefixAdjustment(Articles.ToArray());
+            }
+
+            string vanityKey = $"Mods.{Mod.Name}.Items.{Name}.VanityTooltip";
+            if (Language.Exists(vanityKey))
+            {
+                if (tooltips.FindIndex(line => line.Name == "SocialDesc") is int socialIndex && socialIndex != -1)
+                {
+                    tooltips.RemoveAt(socialIndex);
+                    tooltips.Insert(socialIndex, new TooltipLine(Mod, "SoulsVanityTooltip", Language.GetTextValue(vanityKey)));
+                }
             }
 
             SafeModifyTooltips(tooltips);

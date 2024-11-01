@@ -16,8 +16,8 @@ namespace FargowiltasSouls.Content.Projectiles
 
         public int SwingDirection = 1;
 
-        public static List<int> ReworkedSpears = new()
-        {
+        public static List<int> ReworkedSpears =
+        [
                 ProjectileID.Spear,
                 ProjectileID.AdamantiteGlaive,
                 ProjectileID.CobaltNaginata,
@@ -29,18 +29,18 @@ namespace FargowiltasSouls.Content.Projectiles
                 ProjectileID.ObsidianSwordfish,
                 ProjectileID.Swordfish,
                 ProjectileID.ChlorophytePartisan
-            };
+            ];
         public override void PostAI(Projectile projectile)
         {
             if (WorldSavingSystem.EternityMode)
             {
                 if (ReworkedSpears.Contains(projectile.type))
                 {
-                    ReworkedSpearSwing(projectile);
+                    ReworkedSpearSwing(projectile, ref SwingDirection);
                 }
             }
         }
-        public void ReworkedSpearSwing(Projectile projectile)
+        public static void ReworkedSpearSwing(Projectile projectile, ref int swingDirection)
         {
             Texture2D tex = (Texture2D)TextureAssets.Projectile[projectile.type];
             float HoldoutRangeMax = (float)tex.Size().Length() * projectile.scale; //since sprite is diagonal
@@ -52,7 +52,7 @@ namespace FargowiltasSouls.Content.Projectiles
             player.heldProj = projectile.whoAmI;
             projectile.spriteDirection = player.direction;
             if (projectile.ai[1] == 0)
-                SwingDirection = Main.rand.NextBool(2) ? 1 : -1;
+                swingDirection = Main.rand.NextBool(2) ? 1 : -1;
             float Swing = 13; //higher value = less swing
             projectile.usesLocalNPCImmunity = true;
             projectile.localNPCHitCooldown = player.itemAnimationMax; //only hit once per swing
@@ -65,18 +65,18 @@ namespace FargowiltasSouls.Content.Projectiles
             if (projectile.ai[1] <= duration / 2)
             {
                 projectile.ai[0] = projectile.ai[1] / (duration / 2);
-                projectile.velocity = projectile.velocity.RotatedBy(SwingDirection * projectile.spriteDirection * -Math.PI / (Swing * player.itemAnimationMax));
+                projectile.velocity = projectile.velocity.RotatedBy(swingDirection * projectile.spriteDirection * -Math.PI / (Swing * player.itemAnimationMax));
             }
             else if (projectile.ai[1] <= duration / 2 + WaitTime)
             {
                 projectile.ai[0] = 1;
-                projectile.velocity = projectile.velocity.RotatedBy(SwingDirection * projectile.spriteDirection * (1.5 * duration / WaitTime) * Math.PI / (Swing * player.itemAnimationMax)); //i know how wacky this looks
+                projectile.velocity = projectile.velocity.RotatedBy(swingDirection * projectile.spriteDirection * (1.5 * duration / WaitTime) * Math.PI / (Swing * player.itemAnimationMax)); //i know how wacky this looks
             }
             else //backswing
             {
                 //projectile.friendly = false; //no hit on backswing
                 projectile.ai[0] = (duration + WaitTime - projectile.ai[1]) / (duration / 2);
-                projectile.velocity = projectile.velocity.RotatedBy(SwingDirection * projectile.spriteDirection * -Math.PI / (Swing * player.itemAnimationMax));
+                projectile.velocity = projectile.velocity.RotatedBy(swingDirection * projectile.spriteDirection * -Math.PI / (Swing * player.itemAnimationMax));
             }
             //if (projectile.ai[1] == duration / 2)
             //SoundEngine.PlaySound(SoundID.Item1, player.Center);
@@ -110,14 +110,6 @@ namespace FargowiltasSouls.Content.Projectiles
                         break;
                     }
                 */
-                case ProjectileID.OrichalcumHalberd:
-                    {
-                        if (projectile.ai[1] == duration / 2 || projectile.ai[1] == duration / 2 + WaitTime && FargoSoulsUtil.HostCheck)
-                        {
-                            Projectile.NewProjectile(projectile.GetSource_FromThis(), projectile.Center, Vector2.Normalize(projectile.velocity) * 5, ProjectileID.FlowerPetal, projectile.damage / 2, projectile.knockBack / 2, Main.myPlayer);
-                        }
-                        break;
-                    }
                     /*
                 case ProjectileID.TheRottedFork:
                     {
@@ -125,6 +117,15 @@ namespace FargowiltasSouls.Content.Projectiles
                     }
                     */
             }
+        }
+
+        public static float OrichalcumDoTDamageModifier(float lifeRegen)
+        {
+            if (lifeRegen > 0)
+                return 1f;
+            float result = 1f - lifeRegen * 0.001f;
+            result = MathHelper.Clamp(result, 1f, 2f);
+            return result;
         }
     }
 }

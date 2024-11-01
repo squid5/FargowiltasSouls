@@ -43,13 +43,12 @@ namespace FargowiltasSouls.Content.Items.Summons
                     Projectile.Kill();
                     return;
                 }
-                SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/BaronSummon"), Projectile.Center);
+                SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/Challengers/Baron/BaronSummon"), Projectile.Center);
 
                 int playerID = Player.FindClosest(Projectile.Center, 1, 1);
                 if (FargoSoulsUtil.HostCheck && Main.player[playerID] != null && Main.player[playerID].active)
                 {
                     NPC.SpawnOnPlayer(playerID, ModContent.NPCType<BanishedBaron>());
-
                 }
             }
             Projectile.velocity *= 0.978f;

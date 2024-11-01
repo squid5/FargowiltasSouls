@@ -9,14 +9,6 @@ namespace FargowiltasSouls.Content.Items.Ammos
     {
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("Amalgamated Arrow Quiver");
-            /* Tooltip.SetDefault("Bounces several times\n" +
-                "Each impact explodes, summons falling stars, and fires laser arrows\n" +
-                "Inflicts several debuffs"); */
-            //DisplayName.AddTranslation((int)GameCulture.CultureName.Chinese, "混合箭袋");
-            //Tooltip.AddTranslation((int)GameCulture.CultureName.Chinese, "弹跳多次\n" +
-            //"每次撞击都会爆炸,召唤流星,发射激光箭\n" +
-            //"造成多种Debuff");
             Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 

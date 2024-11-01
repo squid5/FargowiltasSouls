@@ -26,6 +26,7 @@ namespace FargowiltasSouls.Content.Buffs.Minions
             {
                 Item item = null;
 
+                
                 if (player.AddEffect<SkeleMinionEffect>(item))
                 {
                     fargoPlayer.SkeletronArms = true;
@@ -78,7 +79,7 @@ namespace FargowiltasSouls.Content.Buffs.Minions
                     if (player.ownedProjectileCounts[ModContent.ProjectileType<MiniSaucer>()] < 1)
                         FargoSoulsUtil.NewSummonProjectile(player.GetSource_Buff(buffIndex), player.Center, Vector2.Zero, ModContent.ProjectileType<MiniSaucer>(), damage, 3f, player.whoAmI);
                 }
-
+                /*
                 if (player.AddEffect<CultistMinionEffect>(item))
                 {
                     fargoPlayer.LunarCultist = true;
@@ -86,7 +87,8 @@ namespace FargowiltasSouls.Content.Buffs.Minions
                     if (player.whoAmI == Main.myPlayer && player.ownedProjectileCounts[ModContent.ProjectileType<LunarCultist>()] < 1)
                         FargoSoulsUtil.NewSummonProjectile(player.GetSource_Buff(buffIndex), player.Center, Vector2.Zero, ModContent.ProjectileType<LunarCultist>(), damage, 2f, player.whoAmI, -1f);
                 }
-
+                */
+                
                 if (player.AddEffect<MasoTrueEyeMinion>(item))
                 {
                     fargoPlayer.TrueEyes = true;
@@ -102,6 +104,7 @@ namespace FargowiltasSouls.Content.Buffs.Minions
                     if (player.ownedProjectileCounts[ModContent.ProjectileType<TrueEyeS>()] < 1)
                         FargoSoulsUtil.NewSummonProjectile(player.GetSource_Buff(buffIndex), player.Center, Vector2.Zero, ModContent.ProjectileType<TrueEyeS>(), damage, 3f, player.whoAmI, -1f);
                 }
+                
             }
         }
     }

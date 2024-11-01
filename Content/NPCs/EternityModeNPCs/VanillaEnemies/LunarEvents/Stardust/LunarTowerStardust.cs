@@ -29,15 +29,15 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEve
         public override int MaxHP => 20000;
         public override int Damage => 0;
 
-        List<int> DragonParts = new()
-        {
+        List<int> DragonParts =
+        [
                     NPCID.CultistDragonHead,
                     NPCID.CultistDragonBody1,
                     NPCID.CultistDragonBody2,
                     NPCID.CultistDragonBody3,
                     NPCID.CultistDragonBody4,
                     NPCID.CultistDragonTail
-                };
+                ];
 
         private string DragonName => Language.GetTextValue("Mods.FargowiltasSouls.NPCs.StardustDragon.DisplayName");
 
@@ -58,13 +58,14 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEve
             CellCurves,
             CellScissor
         }
-        public override List<int> RandomAttacks => new() //these are randomly chosen attacks in p1
-        {
+        public override List<int> RandomAttacks =>
+        //these are randomly chosen attacks in p1
+        [
             (int)Attacks.CellExpandContract,
             (int)Attacks.CellRush,
             (int)Attacks.CellCurves,
             (int)Attacks.CellScissor
-        };
+        ];
         private bool gotBossBar = false;
         public const int CellAmount = 20;
         public float CellRotation = 0;
@@ -135,12 +136,15 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEve
             }
             else
             {
+                npc.dontTakeDamage = false;
+                ShieldStrength = 0;
                 if (npc.defense != 0) //trigger shield going down animation
                 {
                     CellState((int)States.Idle);
                     npc.defense = 0;
                     npc.ai[3] = 1f;
                     npc.netUpdate = true;
+                    npc.dontTakeDamage = false;
                     NetSync(npc);
                 }
                 if (NPC.CountNPCS(NPCID.CultistDragonHead) <= 0) //spawn james
@@ -355,6 +359,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEve
                 if (Main.npc[i].active && Main.npc[i].type == ModContent.NPCType<StardustMinion>())
                 {
                     Main.npc[i].ai[1] = state;
+                    Main.npc[i].netUpdate = true;
                 }
             }
         }
@@ -366,6 +371,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEve
                 spawn.ai[1] = 1;
                 spawn.ai[2] = npc.whoAmI;
                 spawn.ai[3] = cell;
+                NetSync(spawn);
             }
             return;
         }

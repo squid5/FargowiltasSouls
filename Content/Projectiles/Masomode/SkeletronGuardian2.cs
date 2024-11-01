@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -38,7 +39,14 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
 
             Projectile.light = 0.5f;
         }
-
+        public override void OnSpawn(IEntitySource source)
+        {
+            if (SkeletronBone.SourceIsSkeletron(source))
+            {
+                Projectile.ai[2] = 1;
+                Projectile.netUpdate = true;
+            }
+        }
         public override void AI()
         {
             if (Projectile.localAI[0] == 0)
@@ -80,9 +88,8 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
 
         public override bool PreDraw(ref Color lightColor)
         {
-            NPC sourceNPC = Projectile.GetSourceNPC();
             bool recolor =
-                (sourceNPC != null && (sourceNPC.type == NPCID.SkeletronHead || sourceNPC.type == NPCID.SkeletronHand || sourceNPC.type == NPCID.DungeonGuardian)) &&
+                Projectile.ai[2] == 1 &&
                 SoulConfig.Instance.BossRecolors && WorldSavingSystem.EternityMode;
 
             Texture2D texture2D13 = recolor ? ModContent.Request<Texture2D>("FargowiltasSouls/Content/Bosses/DeviBoss/DeviGuardian_Recolor").Value : TextureAssets.Projectile[Type].Value;

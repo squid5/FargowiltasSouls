@@ -1,3 +1,4 @@
+using FargowiltasSouls.Assets.Sounds;
 using FargowiltasSouls.Common.Graphics.Particles;
 using FargowiltasSouls.Content.Buffs.Masomode;
 using FargowiltasSouls.Core;
@@ -17,8 +18,8 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
 {
     public class MechElectricOrb : ModProjectile
     {
-        public static readonly SoundStyle ShotSound = new("FargowiltasSouls/Assets/Sounds/ElectricOrbShot") { PitchVariance = 0.3f, Volume = 7f };
-        public static readonly SoundStyle HumSound = new("FargowiltasSouls/Assets/Sounds/ElectricOrbHum");
+        public static readonly SoundStyle ShotSound = FargosSoundRegistry.ElectricOrbShot with { PitchVariance = 0.3f, Volume = 7f };
+        public static readonly SoundStyle HumSound = FargosSoundRegistry.ElectricOrbHum;
         public const int Red = 0;
         public const int Blue = 1;
         public const int Yellow = 2;
@@ -68,13 +69,6 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
 
         public override void AI()
         {
-
-            if (Projectile.soundDelay == 0)
-            {
-                Projectile.soundDelay = 60 + 54;
-                SoundEngine.PlaySound(HumSound with { PitchVariance = 0.3f, Volume = 0.2f, MaxInstances = 0 }, Projectile.position);
-            }
-
             if (++Projectile.frameCounter > 6)
             {
                 if (++Projectile.frame >= Main.projFrames[Type])
@@ -83,9 +77,15 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
             }
             if (Projectile.localAI[1] == 0)
             {
+                SoundEngine.PlaySound(ShotSound with { Volume = 0.5f, MaxInstances = 4 }, Projectile.position);
                 Projectile.localAI[1] = 1f;
 
-                SoundEngine.PlaySound(ShotSound with { Volume = 0.5f }, Projectile.position);
+                SoundEngine.PlaySound(HumSound with { 
+                    PitchVariance = 0.3f, 
+                    Volume = 0.2f, 
+                    MaxInstances = 5, 
+                    SoundLimitBehavior = SoundLimitBehavior.ReplaceOldest 
+                }, Projectile.position);
 
                 //doing it this way so projs that inherit from Electric Orb dont inherit the accel
                 lastSecondAccel = Projectile.type == ModContent.ProjectileType<MechElectricOrb>();

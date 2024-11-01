@@ -1,5 +1,7 @@
 ﻿using FargowiltasSouls.Core.Globals;
 using FargowiltasSouls.Core.NPCMatching;
+using FargowiltasSouls.Core.Systems;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent.ItemDropRules;
@@ -22,8 +24,15 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.Hell
         {
             base.OnFirstTick(npc);
 
+            int hordeAmt = Main.rand.Next(5) + 1;
+
+            if (npc.type == NPCID.RedDevil)
+            {
+                hordeAmt = 2;
+            }
+
             if (Main.hardMode && Main.rand.NextBool(4) && npc.FargoSouls().CanHordeSplit)
-                EModeGlobalNPC.Horde(npc, Main.rand.Next(5) + 1);
+                EModeGlobalNPC.Horde(npc, hordeAmt);
         }
 
         public override void AI(NPC npc)
@@ -44,14 +53,14 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.Hell
                 if (t != -1 && npc.Distance(Main.player[t].Center) < 800 && FargoSoulsUtil.HostCheck)
                 {
                     int amount = npc.type == NPCID.RedDevil ? 9 : 6;
-                    int damage = FargoSoulsUtil.ScaledProjectileDamage(npc.damage, npc.type == NPCID.RedDevil ? 4f / 3 : 1);
+                    int damage = FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage, npc.type == NPCID.RedDevil ? 4f / 3 : 1);
                     FargoSoulsUtil.XWay(amount, npc.GetSource_FromThis(), npc.Center, ProjectileID.DemonSickle, 1, damage, .5f);
                 }
             }
 
             if (npc.type == NPCID.VoodooDemon) //can ignite itself to burn up its doll
             {
-                const int dollBurningTime = 720;
+                const int dollBurningTime = 600;
 
                 if (npc.lavaWet && npc.HasValidTarget
                     && (npc.Distance(Main.player[npc.target].Center) < 450 || Collision.CanHitLine(npc.Center, 0, 0, Main.player[npc.target].Center, 0, 0)))
@@ -67,7 +76,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.Hell
 
                     for (int i = 0; i < 3; i++) //NOTICE ME
                     {
-                        int d = Dust.NewDust(npc.position, npc.width, npc.height, DustID.Torch, 0f, 0f, 0, default, (float)Counter / dollBurningTime * 5f);
+                        int d = Dust.NewDust(npc.position, npc.width, npc.height, DustID.Torch, 0f, 0f, 0, default, (float)Counter / dollBurningTime * 3f);
                         Main.dust[d].noGravity = !Main.rand.NextBool(5);
                         Main.dust[d].noLight = true;
                         Main.dust[d].velocity *= Main.rand.NextFloat(12f);
@@ -83,8 +92,22 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.Hell
                             Main.npc[guide].SimpleStrikeNPC(int.MaxValue, 0, false, 0, null, false, 0, true);
 
                             int p = npc.HasPlayerTarget ? npc.target : npc.FindClosestPlayer();
-                            if (p != -1 && !FargoSoulsUtil.BossIsAlive(ref EModeGlobalNPC.wallBoss, NPCID.WallofFlesh))
-                                NPC.SpawnWOF(Main.player[npc.target].Center);
+                            if (p != -1)
+                            {
+                                for (int i = 0; i < 8; i++)
+                                {
+                                    int npcType = Main.rand.NextBool() ? NPCID.LeechHead : NPCID.TheHungryII; 
+
+                                    FargoSoulsUtil.NewNPCEasy(npc.GetSource_FromAI(), npc.Center, npcType,
+                                        velocity: new Vector2(Main.rand.NextFloat(-5, 5) * 2, Main.rand.NextFloat(-5, 5) * 2));
+                                }
+
+                                if (WorldSavingSystem.MasochistModeReal && !FargoSoulsUtil.BossIsAlive(ref EModeGlobalNPC.wallBoss, NPCID.WallofFlesh))
+                                {
+                                    NPC.SpawnWOF(Main.player[npc.target].Center);
+                                }
+                            }
+                                
 
                         }
                     }
@@ -94,10 +117,15 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.Hell
 
         public override void UpdateLifeRegen(NPC npc, ref int damage)
         {
+            if (npc.lifeRegen >= 0)
+                return;
             base.UpdateLifeRegen(npc, ref damage);
 
             if (npc.type == NPCID.VoodooDemon && npc.onFire)
+            {
                 damage /= 2;
+                npc.lifeRegen /= 2;
+            }
         }
 
         public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)

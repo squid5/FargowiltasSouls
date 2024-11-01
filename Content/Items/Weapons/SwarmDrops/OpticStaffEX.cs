@@ -15,14 +15,12 @@ namespace FargowiltasSouls.Content.Items.Weapons.SwarmDrops
         public override void SetStaticDefaults()
         {
             Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
-            // DisplayName.SetDefault("Omniscience Staff");
-            // Tooltip.SetDefault("Summons the real twins to fight for you\nNeeds 3 minion slots\n'The reward for slaughtering many...'");
-            ItemID.Sets.StaffMinionSlotsRequired[Item.type] = 4;
+            ItemID.Sets.StaffMinionSlotsRequired[Item.type] = 3;
         }
 
         public override void SetDefaults()
         {
-            Item.damage = 312;
+            Item.damage = 1200;
             Item.mana = 10;
             Item.DamageType = DamageClass.Summon;
             Item.width = 24;

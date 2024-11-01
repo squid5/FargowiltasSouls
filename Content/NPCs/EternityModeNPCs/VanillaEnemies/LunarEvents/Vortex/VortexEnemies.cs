@@ -16,13 +16,13 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEve
     public class VortexEnemies : EModeNPCBehaviour
     {
         public static int[] VortexEnemyIDs =
-        {
+        [
             NPCID.VortexLarva,
             NPCID.VortexHornet,
             NPCID.VortexHornetQueen,
             NPCID.VortexSoldier,
             NPCID.VortexRifleman
-        };
+        ];
         public override NPCMatcher CreateMatcher() => new NPCMatcher().MatchTypeRange(
             VortexEnemyIDs
         );
@@ -41,6 +41,12 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEve
 
             target.AddBuff(ModContent.BuffType<LightningRodBuff>(), 300);
         }
+        public override bool PreKill(NPC npc)
+        {
+            if (!NPC.LunarApocalypseIsUp && !NPC.downedAncientCultist)
+                return false;
+            return base.PreKill(npc);
+        }
     }
 
     public class VortexHornetQueen : EModeNPCBehaviour
@@ -57,7 +63,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEve
             {
                 Counter = Main.rand.Next(30);
                 if (FargoSoulsUtil.HostCheck)
-                    Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, Vector2.Zero, ModContent.ProjectileType<LightningVortexHostile>(), FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 0f, Main.myPlayer);
+                    Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, Vector2.Zero, ModContent.ProjectileType<LightningVortexHostile>(), FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 0f, Main.myPlayer);
             }
         }
     }

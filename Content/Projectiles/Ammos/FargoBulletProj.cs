@@ -10,7 +10,7 @@ namespace FargowiltasSouls.Content.Projectiles.Ammos
     public class FargoBulletProj : ModProjectile
     {
         private int _bounce = 6;
-        private readonly int[] dusts = new int[] { 130, 55, 133, 131, 132 };
+        private readonly int[] dusts = [130, 55, 133, 131, 132];
         private int currentDust = 0;
 
         public override void SetStaticDefaults()

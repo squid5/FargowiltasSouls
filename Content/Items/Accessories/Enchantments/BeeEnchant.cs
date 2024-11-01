@@ -31,6 +31,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
             FargoSoulsPlayer modPlayer = player.FargoSouls();
             ArmorIDs.Wing.Sets.Stats[Item.wingSlot] = modPlayer.ForceEffect(Item.type) ? ArmorIDs.Wing.Sets.Stats[ArmorIDs.Wing.BeeWings] : ArmorIDs.Wing.Sets.Stats[ArmorIDs.Wing.CreativeWings];
             player.AddEffect<BeeEffect>(Item);
+            player.strongBees = true;
         }
         public override void AddRecipes()
         {
@@ -58,10 +59,9 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
     {
         public override Header ToggleHeader => Header.GetHeader<LifeHeader>();
         public override int ToggleItemType => ModContent.ItemType<BeeEnchant>();
-
+        public override bool MutantsPresenceAffects => true;
         public override void PostUpdateEquips(Player player)
         {
-            player.strongBees = true;
         }
     }
 }

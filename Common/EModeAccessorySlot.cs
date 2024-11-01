@@ -1,4 +1,5 @@
 ﻿using FargowiltasSouls.Content.Items.Accessories.Enchantments;
+using FargowiltasSouls.Content.Items.Accessories.Essences;
 using FargowiltasSouls.Content.Items.Accessories.Forces;
 using FargowiltasSouls.Content.Items.Accessories.Souls;
 using FargowiltasSouls.Content.Patreon.ParadoxWolf;
@@ -13,8 +14,9 @@ namespace FargowiltasSouls.Common
 {
     public abstract class EModeAccessorySlot : ModAccessorySlot
     {
-        int[] AllowedItemExceptions = new int[] //technically these are souls so should legally go in the slot that allows souls
-        {
+        int[] AllowedItemExceptions =
+        //technically these are souls so should legally go in the slot that allows souls
+        [
             ModContent.ItemType<ParadoxWolfSoul>(),
             ItemID.RareEnchantment,
             ItemID.SoulofLight,
@@ -23,13 +25,13 @@ namespace FargowiltasSouls.Common
             ItemID.SoulofFright,
             ItemID.SoulofSight,
             ItemID.SoulofMight,
-        };
+        ];
         public abstract int Loadout { get; }
         public override bool CanAcceptItem(Item checkItem, AccessorySlotType context)
         {
             if ((context == AccessorySlotType.FunctionalSlot || context == AccessorySlotType.VanitySlot) && (base.CanAcceptItem(checkItem, context) || AllowedItemExceptions.Contains(checkItem.type)))
             {
-                if ((checkItem.ModItem != null && (checkItem.ModItem is BaseEnchant || checkItem.ModItem is BaseForce || checkItem.ModItem is BaseSoul)) || AllowedItemExceptions.Contains(checkItem.type))
+                if ((checkItem.ModItem != null && (checkItem.ModItem is BaseEnchant || checkItem.ModItem is BaseForce || checkItem.ModItem is BaseSoul || checkItem.ModItem is BaseEssence)) || AllowedItemExceptions.Contains(checkItem.type))
                 {
 
                     return true;
@@ -57,16 +59,6 @@ namespace FargowiltasSouls.Common
         //public override string FunctionalBackgroundTexture => "FargowiltasSouls/Assets/UI/EnchantSlotBackground";
         //public override string VanityBackgroundTexture => "FargowiltasSouls/Assets/UI/EnchantSlotBackground";
         //public override string DyeBackgroundTexture => "FargowiltasSouls/Assets/UI/EnchantSlotBackground";
-        public override void ApplyEquipEffects()
-        {
-            int lastAccIndex = 7 + Player.GetAmountOfExtraAccessorySlotsToShow();
-            if (Player.armor[lastAccIndex].type == ModContent.ItemType<WizardEnchant>() || Player.armor[lastAccIndex].type == ModContent.ItemType<CosmoForce>())
-            {
-                Player.FargoSouls().WizardedItem = FunctionalItem;
-            }
-
-            base.ApplyEquipEffects();
-        }
         public override void OnMouseHover(AccessorySlotType context)
         {
             switch (context)

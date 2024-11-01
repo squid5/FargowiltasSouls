@@ -36,8 +36,8 @@ namespace FargowiltasSouls
             projection = Matrix.CreateOrthographicOffCenter(0f, Main.screenWidth * zoom.X, 0f, Main.screenHeight * zoom.Y, 0f, 1f) * zoomScaleMatrix;
         }
 
-        private static readonly FieldInfo shaderTextureField = typeof(MiscShaderData).GetField("_uImage1", BindingFlags.NonPublic | BindingFlags.Instance);
-        private static readonly FieldInfo shaderTextureField2 = typeof(MiscShaderData).GetField("_uImage2", BindingFlags.NonPublic | BindingFlags.Instance);
+		private static readonly FieldInfo shaderTextureField = typeof(MiscShaderData).GetField("_uImage1", BindingFlags.NonPublic | BindingFlags.Instance);
+		private static readonly FieldInfo shaderTextureField2 = typeof(MiscShaderData).GetField("_uImage2", BindingFlags.NonPublic | BindingFlags.Instance);
 
         /// <summary>
         /// Uses reflection to set uImage1. Its underlying data is private and the only way to change it publicly
@@ -55,26 +55,6 @@ namespace FargowiltasSouls
         /// <param name="texture">The texture to set</param>
         public static void SetShaderTexture2(this MiscShaderData shader, Asset<Texture2D> texture) => shaderTextureField2.SetValue(shader, texture);
 
-        /// <summary>
-        /// Prepares a <see cref="SpriteBatch"/> for shader-based drawing.
-        /// </summary>
-        /// <param name="spriteBatch">The sprite batch.</param>
-        public static void EnterShaderRegion(this SpriteBatch spriteBatch)
-        {
-            spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
-        }
-
-        /// <summary>
-        /// Ends changes to a <see cref="SpriteBatch"/> based on shader-based drawing in favor of typical draw begin states.
-        /// </summary>
-        /// <param name="spriteBatch">The sprite batch.</param>
-        public static void ExitShaderRegion(this SpriteBatch spriteBatch)
-        {
-            spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
-        }
-
         public static void SetTexture1(this Texture2D texture) => Main.instance.GraphicsDevice.Textures[1] = texture;
 
         public static void SetTexture2(this Texture2D texture) => Main.instance.GraphicsDevice.Textures[2] = texture;
@@ -83,6 +63,7 @@ namespace FargowiltasSouls
 
         public static string VanillaTextureProjectile(int projectileID) => $"Terraria/Images/Projectile_{projectileID}";
         public static string VanillaTextureNPC(int npcID) => $"Terraria/Images/NPC_{npcID}";
+        public static string VanillaTextureItem(int itemID) => $"Terraria/Images/Item_{itemID}";
 
         public static void GenericProjectileDraw(Projectile projectile, Color lightColor, Texture2D texture = null, Vector2? drawPos = null, float? rotation = null)
         {
@@ -113,14 +94,13 @@ namespace FargowiltasSouls
 
             if (additiveTrail)
             {
-                Main.spriteBatch.End();
-                Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
+                Main.spriteBatch.UseBlendState(BlendState.Additive);
             }
             for (int i = 0; i < trailLength.Value; i++)
             {
                 Color oldColor = lightColor * 0.75f;
                 oldColor = (Color)(oldColor * ((float)(trailLength - i) / trailLength));
-                Vector2 oldPos = projectile.oldPos[i] + rectangle.Size() / 2;
+                Vector2 oldPos = projectile.oldPos[i] + projectile.Size / 2;
                 float oldRot = projectile.oldRot[i];
                 Main.spriteBatch.Draw(texture, oldPos - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), rectangle, projectile.GetAlpha(oldColor),
                     oldRot, origin, projectile.scale, spriteEffects, 0);
@@ -133,8 +113,7 @@ namespace FargowiltasSouls
             GenericProjectileDraw(projectile, lightColor, texture);
             if (additiveTrail && alsoAdditiveMainSprite)
             {
-                Main.spriteBatch.End();
-                Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.ZoomMatrix);
+                Main.spriteBatch.ResetToDefault();
             }
         }
         public static string EmptyTexture => "FargowiltasSouls/Content/Projectiles/Empty";

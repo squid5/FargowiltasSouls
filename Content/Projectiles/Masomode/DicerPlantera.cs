@@ -17,7 +17,7 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
     {
         public override string Texture => FargoSoulsUtil.VanillaTextureProjectile(ProjectileID.ThornBall);
 
-        private const float range = 200;
+        private const float range = 160f;
 
         public override void SetDefaults()
         {
@@ -55,9 +55,10 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
                 Lighting.AddLight(Projectile.Center, .4f, 1.2f, .4f);
 
 
-            if (Projectile.localAI[0] == 0) //random rotation direction
+            if (Projectile.localAI[2] == 0) //random rotation direction
             {
-                Projectile.localAI[0] = Main.rand.NextBool() ? 1 : -1;
+                Projectile.localAI[2] = Main.rand.NextFloat(0.5f, 1f) * MathHelper.PiOver2;
+                Projectile.localAI[2] *= Main.rand.NextBool() ? 1f : -1f;
             }
 
             if (Projectile.localAI[1] >= 0)
@@ -118,7 +119,7 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
                 if (Projectile.localAI[0] < -30 && Projectile.localAI[0] > -120)
                 {
                     Projectile.scale += 0.06f;
-                    Projectile.rotation += 0.3f * Projectile.localAI[0];
+                    Projectile.rotation += 0.2f * Projectile.localAI[2] * (float)Math.Sin(Projectile.localAI[0] / 60 * MathHelper.Pi + Projectile.localAI[2]);
                 }
                 else if (Projectile.localAI[0] == -120)
                 {
@@ -162,16 +163,16 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
                         }
                         else //do the actual attack
                         {
-                            const int time = 16;
-                            const int max = 16;
+                            const float time = 16f;
+                            const float max = 16f;
                             float rotation = Main.rand.NextFloat(MathHelper.TwoPi);
                             for (int i = 0; i < max; i++)
                             {
-                                int type = WorldSavingSystem.MasochistModeReal ? ProjectileID.PoisonSeedPlantera : ProjectileID.SeedPlantera;
-                                int p = Projectile.NewProjectile(Terraria.Entity.InheritSource(Projectile), Projectile.Center, range / time * Vector2.UnitX.RotatedBy(Math.PI * 2 / max * i + rotation),
+                                int type = ModContent.ProjectileType<DicerPlanteraSeed>();
+                                int p = Projectile.NewProjectile(Terraria.Entity.InheritSource(Projectile), Projectile.Center, range / time * Vector2.UnitX.RotatedBy(Math.PI * 2f / max * i + rotation),
                                     type, Projectile.damage, Projectile.knockBack, Projectile.owner);
                                 if (p != Main.maxProjectiles)
-                                    Main.projectile[p].timeLeft = time;
+                                    Main.projectile[p].timeLeft = (int)time;
                             }
                         }
 

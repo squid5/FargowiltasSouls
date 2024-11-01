@@ -1,4 +1,5 @@
-﻿using FargowiltasSouls.Content.Projectiles.Deathrays;
+﻿using FargowiltasSouls.Assets.Sounds;
+using FargowiltasSouls.Content.Projectiles.Deathrays;
 using FargowiltasSouls.Core.Globals;
 using Microsoft.Xna.Framework;
 using System;
@@ -28,7 +29,7 @@ namespace FargowiltasSouls.Content.Bosses.DeviBoss
             CooldownSlot = 1;
 
             Projectile.alpha = 150;
-            Projectile.timeLeft = 90;
+            Projectile.timeLeft = 80;
 
             Projectile.FargoSouls().DeletionImmuneRank = 1;
         }
@@ -61,7 +62,7 @@ namespace FargowiltasSouls.Content.Bosses.DeviBoss
         public override void OnKill(int timeLeft)
         {
             FargoSoulsUtil.HeartDust(Projectile.Center, Projectile.rotation + MathHelper.PiOver2);
-
+            SoundEngine.PlaySound(FargosSoundRegistry.DeviHeartExplosion with { MaxInstances = 0, Volume = 0.33f }, Projectile.Center);
             /*for (int i = 0; i < 10; i++)
             {
                 int d = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 86, 0f, 0f, 0, default(Color), 2f);

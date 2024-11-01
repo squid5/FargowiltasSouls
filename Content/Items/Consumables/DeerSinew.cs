@@ -14,14 +14,6 @@ namespace FargowiltasSouls.Content.Items.Consumables
 
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("Deer Sinew");
-            /* Tooltip.SetDefault(
-@"Allows the ability to dash
-Double tap a direction
-Taking damage may briefly freeze you
-Reduces damage when your speed increases, down to 0.85x at max
-All effects negated if toggled off or another dash is already in use
-'Cold but twitching'"); */
             Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
@@ -57,7 +49,7 @@ All effects negated if toggled off or another dash is already in use
     {
         public override Header ToggleHeader => Header.GetHeader<DeviEnergyHeader>();
         public override int ToggleItemType => ModContent.ItemType<DeerSinew>();
-        public override bool IgnoresMutantPresence => true;
+        
         public override void PostUpdateEquips(Player player)
         {
             FargoSoulsPlayer modPlayer = player.FargoSouls();

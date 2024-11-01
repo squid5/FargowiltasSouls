@@ -17,19 +17,13 @@ namespace FargowiltasSouls.Core
         private const string ModName = "FargowiltasSouls";
 
         [DefaultValue(true)]
-        public bool HideTogglerWhenInventoryIsClosed;
-
-        [DefaultValue(true)]
-        public bool ItemDisabledTooltip;
-
-        [DefaultValue(true)]
         public bool DeviChatter;
 
         [DefaultValue(false)]
-        public bool ToggleSearchReset;
+        public bool BigTossMode;
 
         [DefaultValue(false)]
-        public bool BigTossMode;
+        public bool PerformanceMode;
 
         [DefaultValue(true)]
         public bool ForcedFilters;
@@ -41,24 +35,6 @@ namespace FargowiltasSouls.Core
         [DefaultValue(true)]
         [ReloadRequired]
         public bool BossRecolors;
-
-        [DefaultValue(true)]
-        public bool PrecisionSealIsHold;
-
-        [DefaultValue(true)]
-        public bool PreBossNightGlow;
-
-        private const float max4kX = 3840f;
-        [Increment(1f)]
-        [Range(0f, max4kX)]
-        [DefaultValue(610f)]
-        public float OncomingMutantX;
-
-        private const float max4kY = 2160f;
-        [Increment(1f)]
-        [Range(0f, max4kY)]
-        [DefaultValue(250f)]
-        public float OncomingMutantY;
 
         #endregion
 
@@ -126,12 +102,5 @@ namespace FargowiltasSouls.Core
         public bool PatreonROB;
 
         #endregion
-
-        [OnDeserialized]
-        internal void OnDeserializedMethod(StreamingContext context)
-        {
-            OncomingMutantX = Utils.Clamp(OncomingMutantX, 0, max4kX);
-            OncomingMutantY = Utils.Clamp(OncomingMutantY, 0, max4kY);
-        }
     }
 }

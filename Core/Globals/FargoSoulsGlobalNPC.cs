@@ -1,7 +1,9 @@
 using Fargowiltas.NPCs;
+using FargowiltasSouls.Common.Graphics.Particles;
 using FargowiltasSouls.Content.Buffs.Masomode;
 using FargowiltasSouls.Content.Buffs.Souls;
 using FargowiltasSouls.Content.Items.Accessories.Enchantments;
+using FargowiltasSouls.Content.Items.Accessories.Forces;
 using FargowiltasSouls.Content.Items.Accessories.Masomode;
 using FargowiltasSouls.Content.Items.Misc;
 using FargowiltasSouls.Content.Items.Summons;
@@ -13,18 +15,23 @@ using FargowiltasSouls.Content.Projectiles.ChallengerItems;
 using FargowiltasSouls.Content.Projectiles.Masomode;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using FargowiltasSouls.Core.ItemDropRules;
+using FargowiltasSouls.Core.ModPlayers;
 using FargowiltasSouls.Core.Systems;
+using Luminance.Core.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static FargowiltasSouls.Content.Items.Accessories.Forces.TimberForce;
+using static tModPorter.ProgressUpdate;
 
 namespace FargowiltasSouls.Core.Globals
 {
@@ -45,7 +52,10 @@ namespace FargowiltasSouls.Core.Globals
         public bool FirstTick;
         //        //debuffs
         public bool OriPoison;
+        public bool EarthPoison;
+        public int EarthDoTValue; //value to base Earth Poison DoT on.
         public bool SBleed;
+        public bool TimberBleed;
         //        public bool Shock;
         public bool Rotting;
         public bool LeadPoison;
@@ -69,6 +79,7 @@ namespace FargowiltasSouls.Core.Globals
         public bool GodEater;
         public bool Suffocation;
         public int SuffocationTimer;
+        public bool DeathMarked;
         //        public bool Villain;
         public bool FlamesoftheUniverse;
         public bool Lethargic;
@@ -98,7 +109,7 @@ namespace FargowiltasSouls.Core.Globals
 
         //        public static bool Revengeance => CalamityMod.World.CalamityWorld.revenge;
 
-        static HashSet<int> RareNPCs = new();
+        static HashSet<int> RareNPCs = [];
 
         public override void Unload()
         {
@@ -111,6 +122,7 @@ namespace FargowiltasSouls.Core.Globals
             BrokenArmor = false;
             TimeFrozen = false;
             SBleed = false;
+            TimberBleed = false;
             //            Shock = false;
             Rotting = false;
             LeadPoison = false;
@@ -120,6 +132,7 @@ namespace FargowiltasSouls.Core.Globals
             Corrupted = false;
             CorruptedForce = false;
             OriPoison = false;
+            EarthPoison = false;
             Infested = false;
             Electrified = false;
             CurseoftheMoon = false;
@@ -129,6 +142,7 @@ namespace FargowiltasSouls.Core.Globals
             GodEater = false;
             Suffocation = false;
             Sublimation = false;
+            DeathMarked = false;
             //            //SnowChilled = false;
             Chilled = false;
             Smite = false;
@@ -260,7 +274,7 @@ namespace FargowiltasSouls.Core.Globals
             //            }
             if (!npc.HasBuff<CorruptingBuff>())
             {
-                EbonCorruptionTimer -= Math.Min(3, EbonCorruptionTimer);
+                EbonCorruptionTimer -= Math.Min(1, EbonCorruptionTimer);
             }
             if (SnowChilled)
             {
@@ -284,11 +298,15 @@ namespace FargowiltasSouls.Core.Globals
             if (BrokenArmor)
             {
                 npc.defense = originalDefense - 10;
+                if (npc.defense < 0)
+                    npc.defense = 0;
             }
 
             if (Sublimation)
             {
                 npc.defense = originalDefense - 15; //ichor 2
+                if (npc.defense < 0)
+                    npc.defense = 0;
             }
 
             if (SnowChilled)
@@ -442,7 +460,7 @@ namespace FargowiltasSouls.Core.Globals
                 }
             }
 
-            if (SBleed)
+            if (SBleed || TimberBleed)
             {
                 if (Main.rand.Next(4) < 3)
                 {
@@ -615,16 +633,25 @@ namespace FargowiltasSouls.Core.Globals
 
             if (PungentGazeTime > 0)
             {
-                if (Main.rand.NextBool())
+                if (Main.rand.NextBool(3))
                 {
                     float ratio = (float)PungentGazeTime / PungentGazeBuff.MAX_TIME;
-                    int d = Dust.NewDust(npc.Center, 0, 0, DustID.GemRuby, npc.velocity.X * 0.2f, npc.velocity.Y * 0.2f, 0, Color.White);
-                    Main.dust[d].scale = MathHelper.Lerp(0.5f, 3f, ratio);
-                    Main.dust[d].velocity *= Main.dust[d].scale;
-                    Main.dust[d].noGravity = true;
+                    Vector2 sparkDir = Vector2.UnitX.RotatedByRandom(MathHelper.TwoPi);
+                    float sparkDistance = 20 * Main.rand.NextFloat(0.6f, 1.3f);
+                    Vector2 sparkCenter = npc.Center + sparkDir * sparkDistance * 2;
+                    float sparkTime = 15;
+                    Vector2 sparkVel = (npc.Center - sparkCenter) / sparkTime;
+                    float sparkScale = MathHelper.Lerp(0.25f, 1.5f,ratio);
+                    Particle spark = new SmallSparkle(npc.Center, sparkVel, Color.Red, sparkScale, (int)sparkTime);
+                    spark.Spawn();
                 }
             }
-
+            if (DeathMarked)
+            {
+                drawColor.R = (byte)(drawColor.R * 0.7f);
+                drawColor.G = (byte)(drawColor.G * 0.6f);
+                drawColor.B = (byte)(drawColor.B * 0.7f);
+            }
 
         }
         public override void PostDraw(NPC npc, SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
@@ -702,7 +729,13 @@ namespace FargowiltasSouls.Core.Globals
                     dot *= 3;
                 }
 
+                bool terraEffect = Main.player.Any(p => p.Alive() && p.HasEffect<TerraLightningEffect>());
+                if (terraEffect)
+                    dot = 250;
+
                 npc.lifeRegen -= dot;
+                if (damage < (int)(dot / 10f))
+                    damage = (int)(dot / 10f);
             }
 
 
@@ -738,15 +771,6 @@ namespace FargowiltasSouls.Core.Globals
                     damage = shownDamage;
                 }
             }
-            bool anyAshwood = modPlayer.fireNoDamage;
-            if (npc.onFire)
-            {
-                if (npc.townNPC && anyAshwood)
-                {
-                    npc.lifeRegen += 8;
-                    damage -= 1;
-                }
-            }
 
             //25 dps which is 1 more than  
             if (Sublimation)
@@ -770,6 +794,17 @@ namespace FargowiltasSouls.Core.Globals
 
                 if (damage < 4)
                     damage = 4;
+            }
+            if (EarthPoison)
+            {
+                int EarthDamage = EarthDoTValue;
+
+                if (npc.lifeRegen > 0)
+                    npc.lifeRegen = 0;
+
+                npc.lifeRegen -= EarthDamage;
+                if (damage < EarthDamage / 8)
+                    damage = EarthDamage / 8;
             }
 
             if (Infested)
@@ -884,6 +919,13 @@ namespace FargowiltasSouls.Core.Globals
                     damage = 20;
             }
 
+            if (TimberBleed)
+            {
+                npc.lifeRegen -= 400;
+                if (damage < 40)
+                    damage = 40;
+            }
+
             if (Anticoagulation)
             {
                 if (npc.lifeRegen > 0)
@@ -893,15 +935,11 @@ namespace FargowiltasSouls.Core.Globals
                     damage = 6;
             }
 
-            if (modPlayer.Player.HasEffect<OrichalcumEffect>() && npc.lifeRegen < 0)
+            float dotMultiplier = DoTMultiplier(npc, modPlayer.Player);
+            if (dotMultiplier != 1 && npc.lifeRegen < 0)
             {
-                OrichalcumEffect.OriDotModifier(npc, modPlayer, ref damage);
-            }
-
-            if (MagicalCurse && npc.lifeRegen < 0)
-            {
-                npc.lifeRegen *= 2;
-                damage *= 2;
+                npc.lifeRegen = (int)(npc.lifeRegen * dotMultiplier);
+                damage = (int)(damage * dotMultiplier);
             }
 
             if (TimeFrozen && npc.life == 1)
@@ -910,7 +948,27 @@ namespace FargowiltasSouls.Core.Globals
                     npc.lifeRegen = 0;
             }
         }
+        public static float DoTMultiplier(NPC npc, Player player)
+        {
+            float multiplier = 1;
+            if (npc.lifeRegen >= 0)
+                return multiplier;
 
+            if (player.HasEffect<OrichalcumEffect>())
+                multiplier += OrichalcumEffect.OriDotModifier(npc, player.FargoSouls()) - 1;
+
+            if (player.HasEffect<EarthForceEffect>())
+                multiplier += 3;
+
+            if (npc.FargoSouls().MagicalCurse)
+                multiplier += 1;
+
+            //half as effective if daybreak applied
+            if (npc.daybreak && multiplier > 1)
+                multiplier -= (multiplier - 1) / 2;
+
+            return multiplier;
+        }
         private int InfestedExtraDot(NPC npc)
         {
             int buffIndex = npc.FindBuffIndex(ModContent.BuffType<InfestedBuff>());
@@ -920,7 +978,7 @@ namespace FargowiltasSouls.Core.Globals
             int timeLeft = npc.buffTime[buffIndex];
             if (MaxInfestTime <= 0)
                 MaxInfestTime = timeLeft;
-            float baseVal = (MaxInfestTime - timeLeft) / 30f; //change the denominator to adjust max power of DOT
+            float baseVal = (MaxInfestTime - timeLeft) / 20f; //change the denominator to adjust max power of DOT
             int dmg = (int)(baseVal * baseVal + 8);
 
             InfestedDust = baseVal / 15 + .5f;
@@ -940,6 +998,23 @@ namespace FargowiltasSouls.Core.Globals
                 spawnRate = (int)(spawnRate * 0.01);
                 //2x max spawn
                 maxSpawns *= 3;
+            }
+
+            if (modPlayer.Illuminated)
+            {
+                spawnRate = (int)(spawnRate / 1.5f);
+                maxSpawns = (int)(maxSpawns * 1.5f);
+                /*
+                Color light = Lighting.GetColor(player.Center.ToTileCoordinates());
+                float modifier = (light.R + light.G + light.B) / 700f;
+                modifier = MathHelper.Clamp(modifier, 0, 1);
+                modifier += 1;
+
+                spawnRate = (int)(spawnRate / modifier);
+                maxSpawns = (int)(maxSpawns * modifier);
+                Main.NewText(spawnRate);
+                Main.NewText(maxSpawns);
+                */
             }
 
             if (player.HasEffect<SinisterIconEffect>())
@@ -974,12 +1049,12 @@ namespace FargowiltasSouls.Core.Globals
         }
 
         private bool lootMultiplierCheck;
-        private static int[] IllegalLootMultiplierNPCs => new int[] {
+        private static int[] IllegalLootMultiplierNPCs => [
             NPCID.DD2Betsy,
             NPCID.EaterofWorldsBody,
             NPCID.EaterofWorldsHead,
             NPCID.EaterofWorldsTail
-        };
+        ];
 
         public override void OnKill(NPC npc)
         {
@@ -1069,7 +1144,7 @@ namespace FargowiltasSouls.Core.Globals
                     break;
 
                 case NPCID.TheDestroyer:
-                    npcLoot.Add(BossDrop(ModContent.ItemType<DestroyerGun>()));
+                    npcLoot.Add(BossDrop(ModContent.ItemType<ElectricWhip>()));
                     break;
 
                 case NPCID.SkeletronPrime:
@@ -1152,12 +1227,12 @@ namespace FargowiltasSouls.Core.Globals
             //                return false;
             //            }*/
 
-            if (modPlayer.WoodEnchantItem != null)
+            if (player.HasEffect<WoodCompletionEffect>())
             {
-                WoodEnchant.WoodCheckDead(modPlayer, npc);
+                WoodCompletionEffect.WoodCheckDead(modPlayer, npc);
             }
 
-            if (Needled && npc.lifeMax > 1 && npc.lifeMax != int.MaxValue) //super dummy
+            if (player.HasEffect<CactusEffect>() && npc.lifeMax > 10 && !npc.townNPC && npc.lifeMax != int.MaxValue) //super dummy
             {
                 CactusEffect.CactusProc(npc, player);
             }
@@ -1172,6 +1247,7 @@ namespace FargowiltasSouls.Core.Globals
         public override void OnHitByProjectile(NPC npc, Projectile projectile, NPC.HitInfo hit, int damageDone)
         {
             OnHitByEither(npc, Main.player[projectile.owner], damageDone);
+            
         }
 
         // TODO: damageDone or hitInfo.Damage ?
@@ -1186,6 +1262,7 @@ namespace FargowiltasSouls.Core.Globals
                     Projectile.NewProjectile(npc.GetSource_OnHurt(player), npc.Center, Main.rand.NextVector2Circular(speed, speed), type, 0, 0f, Main.myPlayer, 1f);
                 }
             }
+            
 
             if (damageDone > 0 && player.HasEffect<NecroEffect>() && npc.boss)
             {
@@ -1230,11 +1307,12 @@ namespace FargowiltasSouls.Core.Globals
 
             if (Corrupted)
             {
-                modifiers.ArmorPenetration += 10;
+                modifiers.FlatBonusDamage += 5;
             }
             if (CorruptedForce)
             {
-                modifiers.ArmorPenetration += 40;
+                int pen = player.HasEffect<TimberEffect>() ? 15 : 20;
+                modifiers.FlatBonusDamage += pen;
             }
 
             if (OceanicMaul)
@@ -1243,7 +1321,8 @@ namespace FargowiltasSouls.Core.Globals
                 modifiers.ArmorPenetration += 10;
             if (Rotting)
                 modifiers.ArmorPenetration += 10;
-
+            if (DeathMarked)
+                modifiers.FinalDamage *= 1.15f;
             if (Smite)
             {
                 modifiers.FinalDamage *= 1.2f;
@@ -1251,7 +1330,12 @@ namespace FargowiltasSouls.Core.Globals
 
             if (MoltenAmplify)
             {
-                modifiers.FinalDamage *= 1.25f;
+                float modifier = 1.2f;
+                if (player.HasEffect<NatureEffect>())
+                    modifier = 1.15f;
+                else if (modPlayer.ForceEffect<MoltenEnchant>())
+                    modifier = 1.3f;
+                modifiers.FinalDamage *= modifier;
             }
 
             if (PungentGazeTime > 0)

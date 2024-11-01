@@ -12,7 +12,7 @@ namespace FargowiltasSouls.Content.Projectiles.ChallengerItems
     {
         private int RotDirect = 1;
 
-        private bool home = true;
+        public bool home = true;
 
         private bool homingonMouse;
 
@@ -80,7 +80,7 @@ namespace FargowiltasSouls.Content.Projectiles.ChallengerItems
                     Projectile.friendly = false;
                     Projectile.tileCollide = false;
                 }
-                if (player.channel && !player.noItems && !player.CCed || !((player.Center - Projectile.Center).Length() < 50)) //homing on player while mouse held
+                if ((Main.mouseLeft || player.whoAmI != Main.myPlayer) || !((player.Center - Projectile.Center).Length() < 50)) //homing on player while mouse held
                 {
                     vectorToIdlePosition = player.Center - Projectile.Center;
                     speed = 24f;
@@ -152,6 +152,7 @@ namespace FargowiltasSouls.Content.Projectiles.ChallengerItems
 
             SpriteEffects effects = Projectile.spriteDirection < 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
+            Main.spriteBatch.UseBlendState(BlendState.Additive);
             for (int i = 0; i < ProjectileID.Sets.TrailCacheLength[Projectile.type]; i++)
             {
                 Color color27 = Color.DeepPink * Projectile.Opacity * 0.5f;
@@ -161,6 +162,7 @@ namespace FargowiltasSouls.Content.Projectiles.ChallengerItems
                 float num165 = Projectile.oldRot[i];
                 Main.EntitySpriteDraw(texture2D13, value4 + Projectile.Size / 2f - Main.screenPosition + new Vector2(0, Projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color27, num165, origin2, Projectile.scale, effects, 0);
             }
+            Main.spriteBatch.ResetToDefault();
 
             Main.EntitySpriteDraw(texture2D13, Projectile.Center - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), Projectile.GetAlpha(lightColor), Projectile.rotation, origin2, Projectile.scale, effects, 0);
             return false;

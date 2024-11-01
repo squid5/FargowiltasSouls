@@ -45,7 +45,7 @@ Not consumed on use"); */
 
         public override bool CanUseItem(Player player)
         {
-            List<int> bosses = new(new int[] {
+            List<int> bosses = new([
                 ModContent.NPCType<CosmosChampion>(),
                 ModContent.NPCType<EarthChampion>(),
                 ModContent.NPCType<LifeChampion>(),
@@ -55,7 +55,7 @@ Not consumed on use"); */
                 ModContent.NPCType<TerraChampion>(),
                 ModContent.NPCType<TimberChampion>(),
                 ModContent.NPCType<WillChampion>()
-            });
+            ]);
 
             for (int i = 0; i < Main.maxNPCs; i++) //no using during another champ fight
             {
@@ -180,7 +180,7 @@ Not consumed on use"); */
             .AddIngredient(ItemID.AncientBattleArmorMaterial, 5)
             .AddIngredient(ItemID.Coral, 5)
             .AddIngredient(ItemID.LunarBar, 5)
-
+            .DisableDecraft()
             .AddTile(TileID.LunarCraftingStation)
 
             .Register();

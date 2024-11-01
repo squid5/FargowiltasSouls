@@ -12,7 +12,7 @@ namespace FargowiltasSouls.Assets.ExtraTextures
         public static Asset<Texture2D> BloomTexture => ModContent.Request<Texture2D>("FargowiltasSouls/Assets/ExtraTextures/AdditiveTextures/Bloom");
         public static Asset<Texture2D> BloomParticleTexture => ModContent.Request<Texture2D>("FargowiltasSouls/Assets/ExtraTextures/AdditiveTextures/BloomParticle");
         public static Asset<Texture2D> BloomFlareTexture => ModContent.Request<Texture2D>("FargowiltasSouls/Assets/ExtraTextures/AdditiveTextures/BloomFlare");
-        public static Asset<Texture2D> DeviBorderTexture => ModContent.Request<Texture2D>("FargowiltasSouls/Assets/ExtraTextures/AdditiveTextures/DeviBorder");
+		public static Asset<Texture2D> DeviBorderTexture => ModContent.Request<Texture2D>("FargowiltasSouls/Assets/ExtraTextures/AdditiveTextures/DeviBorder");
         public static Asset<Texture2D> HardEdgeRing => ModContent.Request<Texture2D>("FargowiltasSouls/Assets/ExtraTextures/AdditiveTextures/HardEdgeRing");
         public static Asset<Texture2D> SoftEdgeRing => ModContent.Request<Texture2D>("FargowiltasSouls/Assets/ExtraTextures/AdditiveTextures/SoftEdgeRing");
         #endregion
@@ -34,6 +34,7 @@ namespace FargowiltasSouls.Assets.ExtraTextures
         public static Asset<Texture2D> SmokyNoise => ModContent.Request<Texture2D>("FargowiltasSouls/Assets/ExtraTextures/Noise/SmokyNoise");
         public static Asset<Texture2D> TurbulentNoise => ModContent.Request<Texture2D>("FargowiltasSouls/Assets/ExtraTextures/Noise/TurbulentNoise");
         public static Asset<Texture2D> WavyNoise => ModContent.Request<Texture2D>("FargowiltasSouls/Assets/ExtraTextures/Noise/WavyNoise");
+        public static Asset<Texture2D> Techno1Noise => ModContent.Request<Texture2D>("FargowiltasSouls/Assets/ExtraTextures/Noise/Techno1Noise");
 
         #endregion
 

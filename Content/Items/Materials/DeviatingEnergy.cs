@@ -9,7 +9,6 @@ namespace FargowiltasSouls.Content.Items.Materials
     {
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("Deviating Energy");
             Main.RegisterItemAnimation(Type, new DrawAnimationVertical(5, 7));
             ItemID.Sets.AnimatesAsSoul[Item.type] = true;
             ItemID.Sets.ItemNoGravity[Type] = true;

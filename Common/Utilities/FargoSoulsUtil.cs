@@ -17,6 +17,9 @@ using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using Terraria.Graphics.Capture;
+using Terraria.GameContent.Achievements;
+using FargowiltasSouls.Content.Items.Misc;
 
 namespace FargowiltasSouls //lets everything access it without using
 {
@@ -30,6 +33,8 @@ namespace FargowiltasSouls //lets everything access it without using
         public static bool WorldIsMaster() => Main.masterMode || (Main.GameModeInfo.IsJourneyMode && CreativePowerManager.Instance.GetPower<CreativePowers.DifficultySliderPower>().StrengthMultiplierToGiveNPCs >= 3);
 
         public static bool HostCheck => Main.netMode != NetmodeID.MultiplayerClient;
+
+        public static bool ActuallyClickingInGameplay(Player player) => !player.mouseInterface && !CaptureManager.Instance.Active;
 
         public static void AddDebuffFixedDuration(Player player, int buffID, int intendedTime, bool quiet = true)
         {
@@ -75,26 +80,26 @@ namespace FargowiltasSouls //lets everything access it without using
 
         public static int HighestDamageTypeScaling(Player player, int dmg)
         {
-            List<float> types = new()
-            {
+            List<float> types =
+            [
                 player.ActualClassDamage(DamageClass.Melee),
                 player.ActualClassDamage(DamageClass.Ranged),
                 player.ActualClassDamage(DamageClass.Magic),
                 player.ActualClassDamage(DamageClass.Summon)
-            };
+            ];
 
             return (int)(types.Max() * dmg);
         }
 
         public static float HighestCritChance(Player player)
         {
-            List<float> types = new()
-            {
+            List<float> types =
+            [
                 player.ActualClassCrit(DamageClass.Melee),
                 player.ActualClassCrit(DamageClass.Ranged),
                 player.ActualClassCrit(DamageClass.Magic),
                 player.ActualClassCrit(DamageClass.Summon)
-            };
+            ];
 
             return types.Max();
         }
@@ -663,6 +668,139 @@ namespace FargowiltasSouls //lets everything access it without using
         public static bool AprilFools => DateTime.Today.Month == 4 && DateTime.Today.Day <= 7;
         public static string TryAprilFoolsTexture => AprilFools ? "_April" : "";
 
+        public static void ScreenshakeRumble(float strength)
+        {
+            if (ScreenShakeSystem.OverallShakeIntensity < strength)
+            {
+                ScreenShakeSystem.SetUniversalRumble(strength, MathF.Tau, null, 0.2f);
+            }
+        }
+
+        public static Vector2 EyePosition(this Player player)
+        {
+            // Taken from player.Yoraiz0rEye().
+            int num = 0;
+            num += player.bodyFrame.Y / 56;
+            if (num >= Main.OffsetsPlayerHeadgear.Length)
+                num = 0;
+
+            Vector2 vector = Main.OffsetsPlayerHeadgear[num];
+            vector *= player.Directions;
+            Vector2 vector2 = new Vector2(player.width / 2, player.height / 2) + vector + (player.MountedCenter - player.Center);
+            player.sitting.GetSittingOffsetInfo(player, out var posOffset, out var seatAdjustment);
+            vector2 += posOffset + new Vector2(0f, seatAdjustment);
+            if (player.face == 19)
+                vector2.Y -= 5f * player.gravDir;
+
+            if (player.head == 276)
+                vector2.X += 2.5f * (float)player.direction;
+
+            if (player.mount.Active && player.mount.Type == 52)
+            {
+                vector2.X += 14f * (float)player.direction;
+                vector2.Y -= 2f * player.gravDir;
+            }
+
+            // this is added to adjust to exact eye position
+            //vector2.X += 1f * player.direction;
+            vector2.Y -= 2f * player.gravDir;
+
+            float y = -11.5f * player.gravDir;
+            Vector2 vector3 = new Vector2(3 * player.direction - ((player.direction == 1) ? 1 : 0), y) + Vector2.UnitY * player.gfxOffY + vector2;
+            Vector2 vector4 = new Vector2(3 * player.shadowDirection[1] - ((player.direction == 1) ? 1 : 0), y) + vector2;
+            Vector2 vector5 = Vector2.Zero;
+            if (player.mount.Active && player.mount.Cart)
+            {
+                int num2 = Math.Sign(player.velocity.X);
+                if (num2 == 0)
+                    num2 = player.direction;
+
+                vector5 = new Vector2(MathHelper.Lerp(0f, -8f, player.fullRotation / ((float)Math.PI / 4f)), MathHelper.Lerp(0f, 2f, Math.Abs(player.fullRotation / ((float)Math.PI / 4f)))).RotatedBy(player.fullRotation);
+                if (num2 == Math.Sign(player.fullRotation))
+                    vector5 *= MathHelper.Lerp(1f, 0.6f, Math.Abs(player.fullRotation / ((float)Math.PI / 4f)));
+            }
+
+            if (player.fullRotation != 0f)
+            {
+                vector3 = vector3.RotatedBy(player.fullRotation, player.fullRotationOrigin);
+                //vector4 = vector4.RotatedBy(player.fullRotation, player.fullRotationOrigin);
+            }
+
+            //float num3 = 0f;
+            Vector2 vector6 = player.position + vector3 + vector5;
+            return vector6;
+        }
+
+        public static void TileExplosion(Vector2 compareSpot, int radius)
+        {
+            Point tileCenter = compareSpot.ToTileCoordinates();
+            int minI = (int)tileCenter.X - radius;
+            int maxI = (int)tileCenter.X + radius;
+            int minJ = (int)tileCenter.Y - radius;
+            int maxJ = (int)tileCenter.Y + radius;
+
+            Projectile sampleBomb = ContentSamples.ProjectilesByType[ProjectileID.Bomb];
+            bool wallSplode = sampleBomb.ShouldWallExplode(compareSpot, radius, minI, maxI, minJ, maxJ);
+            sampleBomb.ExplodeTiles(compareSpot, radius, minI, maxI, minJ, maxJ, wallSplode);
+        }
+
+        public static Vector2 SmartAccel(Vector2 position, Vector2 destination, Vector2 velocity, float accel, float decel)
+        {
+            Vector2 dif = destination - position;
+
+            if (dif == Vector2.Zero)
+                return Vector2.Zero;
+
+            if (velocity == Vector2.Zero)
+                velocity = Vector2.UnitX * 0.1f;
+
+            // Project velocity onto difference
+            Vector2 a = velocity;
+            Vector2 b = dif.SafeNormalize(Vector2.Zero);
+            float scalarProj = Vector2.Dot(a, b);
+            Vector2 vProj = b * scalarProj;
+            Vector2 vOrth = velocity - vProj;
+
+            // towards target
+            Vector2 vProjN = vProj.SafeNormalize(Vector2.Zero);
+            if (scalarProj > 0)
+                velocity += vProjN * (float)SmartAccel1D(dif.Length(), vProj.Length(), accel, decel);
+            else
+                velocity -= vProjN * decel;
+
+            // perpendicular to target
+            velocity -= Math.Min(decel, vOrth.Length()) * vOrth.SafeNormalize(Vector2.Zero);
+
+            return velocity;
+        }
+
+        public static double SmartAccel1D(double s, double v, double a, double d)
+        {
+            // Deceleration should be negative, acceleration positive, and distance positive.
+            s = Math.Abs(s);
+            a = Math.Abs(a);
+            d = -Math.Abs(d);
+
+            // The root part of the linear acceleration formula solved for t.
+            // If the root is real, there's 2 solutions for t, which means we're overshooting. Our only option is to decelerate fully.
+            // If the root is 0, there's 1 solution for t, which means we perfectly match the target by decelerating.
+            // If the root is imaginary, we would undershoot by decelerating now.
+
+            double root = Math.Abs(v * v / (d * d)) + 2 * s / d;
+            if (root >= 0)
+                return d;
+
+            // We're undershooting.
+            // If full acceleration would cause us to overshoot next frame, only accelerate enough to perfectly match deceleration time with arrival time.
+            double root2 = -2 * s / d;
+            if (root2 <= 0)
+                return a;
+            double accelFraction = (Math.Sqrt(root2) * -d - v) / a;
+            if (accelFraction > 0 && accelFraction < 1)
+                return accelFraction * a;
+            return a;
+
+        }
 
         #region npcloot
 

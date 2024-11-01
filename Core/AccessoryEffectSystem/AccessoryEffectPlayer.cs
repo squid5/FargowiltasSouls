@@ -12,11 +12,12 @@ namespace FargowiltasSouls.Core.AccessoryEffectSystem
 {
     public class AccessoryEffectPlayer : ModPlayer
     {
-        public bool[] ActiveEffects = Array.Empty<bool>();
-        public bool[] EquippedEffects = Array.Empty<bool>();
-        public Item[] EffectItems = Array.Empty<Item>();
+        public bool[] ActiveEffects = [];
+        public bool[] DeactivatedEffects = [];
+        public bool[] EquippedEffects = [];
+        public Item[] EffectItems = [];
 
-        private static readonly Dictionary<Expression<Func<AccessoryEffect, Delegate>>, List<AccessoryEffect>> Hooks = new();
+        private static readonly Dictionary<Expression<Func<AccessoryEffect, Delegate>>, List<AccessoryEffect>> Hooks = [];
 
         public bool Active(AccessoryEffect effect) => ActiveEffects[effect.Index];
         public bool Equipped(AccessoryEffect effect) => EquippedEffects[effect.Index];
@@ -32,6 +33,7 @@ namespace FargowiltasSouls.Core.AccessoryEffectSystem
         {
             int effectCount = AccessoryEffectLoader.AccessoryEffects.Count;
             ActiveEffects = new bool[effectCount];
+            DeactivatedEffects = new bool[effectCount];
             EquippedEffects = new bool[effectCount];
             EffectItems = new Item[effectCount];
         }
@@ -48,13 +50,8 @@ namespace FargowiltasSouls.Core.AccessoryEffectSystem
             for (int i = 0; i < ActiveEffects.Length; i++)
             {
                 ActiveEffects[i] = false;
-            }
-            for (int i = 0; i < EquippedEffects.Length; i++)
-            {
+                DeactivatedEffects[i] = false;
                 EquippedEffects[i] = false;
-            }
-            for (int i = 0; i < EffectItems.Length; i++)
-            {
                 EffectItems[i] = null;
             }
         }

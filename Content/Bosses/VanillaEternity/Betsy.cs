@@ -34,6 +34,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
         public bool DroppedSummon;
 
+        public bool TargetPlayer = false;
 
         public override void SendExtraAI(NPC npc, BitWriter bitWriter, BinaryWriter binaryWriter)
         {
@@ -42,6 +43,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             bitWriter.WriteBit(DoFuryRingAttack);
             bitWriter.WriteBit(InFuryRingAttackCooldown);
             bitWriter.WriteBit(InPhase2);
+            bitWriter.WriteBit(TargetPlayer);
         }
 
         public override void ReceiveExtraAI(NPC npc, BitReader bitReader, BinaryReader binaryReader)
@@ -51,6 +53,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             DoFuryRingAttack = bitReader.ReadBit();
             InFuryRingAttackCooldown = bitReader.ReadBit();
             InPhase2 = bitReader.ReadBit();
+            TargetPlayer = bitReader.ReadBit();
         }
 
         public override void SetDefaults(NPC npc)
@@ -63,8 +66,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
         {
             EModeGlobalNPC.betsyBoss = npc.whoAmI;
 
-            if (WorldSavingSystem.SwarmActive)
-                return true;
+            TargetPlayer = true;
 
             //npc.boss = npc.HasPlayerTarget || !DD2Event.Ongoing; //allow players to respawn in mp if everyone is dead during event
 
@@ -123,12 +125,12 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
                         case 4:
                             if (!Main.dedServ)
-                                SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/Monster94"), Main.player[npc.target].Center);
+                                SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/VanillaEternity/WallofFlesh/WoFScreech"), Main.player[npc.target].Center);
                             break;
 
                         case 5:
                             if (!Main.dedServ)
-                                SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/Monster5") { Volume = 1.5f }, Main.player[npc.target].Center);
+                                SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/VanillaEternity/WallofFlesh/WoFGrowl") { Volume = 1.5f }, Main.player[npc.target].Center);
                             break;
 
                         case 6:
@@ -148,17 +150,17 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
                         case 9:
                             if (!Main.dedServ)
-                                SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/Railgun"), Main.player[npc.target].Center);
+                                SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/Weapons/Railgun"), Main.player[npc.target].Center);
                             break;
 
                         case 10:
                             if (!Main.dedServ)
-                                SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/Navi"), Main.player[npc.target].Center);
+                                SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/VanillaEternity/Navi"), Main.player[npc.target].Center);
                             break;
 
                         case 11:
                             if (!Main.dedServ)
-                                SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/ZaWarudo") { Volume = 1.5f }, Main.player[npc.target].Center);
+                                SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/Accessories/ZaWarudo") { Volume = 1.5f }, Main.player[npc.target].Center);
                             break;
 
                         default:
@@ -193,7 +195,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                 if (FuryRingTimer == 0)
                 {
                     if (FargoSoulsUtil.HostCheck)
-                        Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, Vector2.Zero, ModContent.ProjectileType<GlowRingHollow>(), FargoSoulsUtil.ScaledProjectileDamage(npc.damage, 4f / 3), 0f, Main.myPlayer, 4);
+                        Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, Vector2.Zero, ModContent.ProjectileType<GlowRingHollow>(), FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage, 4f / 3), 0f, Main.myPlayer, 4);
 
                     if (WorldSavingSystem.MasochistModeReal)
                     {
@@ -210,8 +212,8 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                         float rotation = FuryRingShotRotationCounter;
                         if (WorldSavingSystem.MasochistModeReal && FuryRingTimer >= 30 && FuryRingTimer <= 60)
                             rotation += 1; //staggers each wave instead of lining them up behind each other
-                        Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, -Vector2.UnitY.RotatedBy(2 * Math.PI / 30 * rotation), ModContent.ProjectileType<BetsyFury>(), FargoSoulsUtil.ScaledProjectileDamage(npc.damage, 4f / 3), 0f, Main.myPlayer, npc.target);
-                        Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, -Vector2.UnitY.RotatedBy(2 * Math.PI / 30 * -rotation), ModContent.ProjectileType<BetsyFury>(), FargoSoulsUtil.ScaledProjectileDamage(npc.damage, 4f / 3), 0f, Main.myPlayer, npc.target);
+                        Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, -Vector2.UnitY.RotatedBy(2 * Math.PI / 30 * rotation), ModContent.ProjectileType<BetsyFury>(), FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage, 4f / 3), 0f, Main.myPlayer, npc.target);
+                        Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, -Vector2.UnitY.RotatedBy(2 * Math.PI / 30 * -rotation), ModContent.ProjectileType<BetsyFury>(), FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage, 4f / 3), 0f, Main.myPlayer, npc.target);
                     }
                     FuryRingShotRotationCounter++;
                 }
@@ -242,7 +244,6 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                 if (FuryRingTimer % 2 == 0)
                     return false;
             }
-
             if (!DD2Event.Ongoing && npc.HasPlayerTarget && (!Main.player[npc.target].active || Main.player[npc.target].dead || npc.Distance(Main.player[npc.target].Center) > 3000))
             {
                 int p = Player.FindClosest(npc.Center, 0, 0); //extra despawn code for when summoned outside event
@@ -297,8 +298,8 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             LoadProjectile(recolor, ProjectileID.DD2BetsyFlameBreath);
         }
 
-        private static readonly List<LocalizedText> MasoTexts = new()
-        {
+        private static readonly List<LocalizedText> MasoTexts =
+        [
             Language.GetText("Mods.FargowiltasSouls.NPCs.EMode.Betsy1"),
             Language.GetText("Mods.FargowiltasSouls.NPCs.EMode.Betsy2"),
             Language.GetText("Mods.FargowiltasSouls.NPCs.EMode.Betsy3"),
@@ -326,6 +327,6 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             Language.GetText("Mods.FargowiltasSouls.NPCs.EMode.Betsy25"),
             Language.GetText("Mods.FargowiltasSouls.NPCs.EMode.Betsy26"),
             Language.GetText("Mods.FargowiltasSouls.NPCs.EMode.Betsy27"),
-        };
+        ];
     }
 }

@@ -12,15 +12,6 @@ namespace FargowiltasSouls.Content.Items.Accessories.Masomode
 
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("Squeaky Toy");
-            /* Tooltip.SetDefault(@"Grants immunity to Squeaky Toy and Guilty
-Attacks have a chance to squeak and deal 1 damage to you
-'The beloved toy of a defeated foe...?'"); */
-            //             DisplayName.AddTranslation((int)GameCulture.CultureName.Chinese, "吱吱响的玩具");
-            //             Tooltip.AddTranslation((int)GameCulture.CultureName.Chinese, @"'被打败的敌人心爱的玩具...?
-            // 免疫吱吱响的玩具和净化
-            // 敌人攻击概率发出吱吱声,并只造成1点伤害");
-
             Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
@@ -44,7 +35,7 @@ Attacks have a chance to squeak and deal 1 damage to you
         {
             if (!lastLMouse && Main.mouseLeft)
             {
-                FargoSoulsPlayer.Squeak(player.Center);
+                FargoSoulsPlayer.Squeak(player.Center, 0.25f);
             }
             lastLMouse = Main.mouseLeft;
         }
@@ -53,5 +44,6 @@ Attacks have a chance to squeak and deal 1 damage to you
     {
         public override Header ToggleHeader => Header.GetHeader<BionomicHeader>();
         public override int ToggleItemType => ModContent.ItemType<SqueakyToy>();
+        public override bool MutantsPresenceAffects => true;
     }
 }

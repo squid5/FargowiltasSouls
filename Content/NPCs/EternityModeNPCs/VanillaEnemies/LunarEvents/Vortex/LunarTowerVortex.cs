@@ -1,4 +1,5 @@
-﻿using FargowiltasSouls.Content.Buffs.Masomode;
+﻿using FargowiltasSouls.Assets.Sounds;
+using FargowiltasSouls.Content.Buffs.Masomode;
 using FargowiltasSouls.Core.NPCMatching;
 using Microsoft.Xna.Framework;
 using System;
@@ -35,14 +36,15 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEve
             VortexShield
 
         }
-        public override List<int> RandomAttacks => new() //these are randomly chosen attacks in p1
-        {
+        public override List<int> RandomAttacks =>
+        //these are randomly chosen attacks in p1
+        [
             (int)Attacks.LightningBall,
             (int)Attacks.SkyLightning,
             (int)Attacks.LightningElderHu,
             (int)Attacks.VortexShield
 
-        };
+        ];
         public override void ShieldsDownAI(NPC npc)
         {
             Player target = Main.player[npc.target];
@@ -108,7 +110,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEve
                     if (!vortexAlive)
                     {
                         Vector2 pos = npc.Center - Vector2.UnitY * npc.height * 0.8f;
-                        Vortex = Projectile.NewProjectile(npc.GetSource_FromThis(), pos, Vector2.Zero, ModContent.ProjectileType<VortexVortex>(), FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 0f, Main.myPlayer, 0f, 1);
+                        Vortex = Projectile.NewProjectile(npc.GetSource_FromThis(), pos, Vector2.Zero, ModContent.ProjectileType<VortexVortex>(), FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 0f, Main.myPlayer, 0f, 1);
                     }
 
                 }
@@ -145,10 +147,10 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEve
                     {
                         Vector2 pos = npc.Center - Vector2.UnitY * npc.height * 0.8f;
                         Vector2 vel = second ? pos.SafeDirectionTo(player.Center) * 6 : Vector2.Zero;
-                        Projectile.NewProjectile(npc.GetSource_FromThis(), pos, vel.RotatedBy(Math.PI / 2), ProjectileID.CultistBossLightningOrb, FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 3f, Main.myPlayer);
+                        Projectile.NewProjectile(npc.GetSource_FromThis(), pos, vel.RotatedBy(Math.PI / 2), ProjectileID.CultistBossLightningOrb, FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 3f, Main.myPlayer);
                         if (second)
                         {
-                            Projectile.NewProjectile(npc.GetSource_FromThis(), pos, vel.RotatedBy(-Math.PI / 2), ProjectileID.CultistBossLightningOrb, FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 3f, Main.myPlayer);
+                            Projectile.NewProjectile(npc.GetSource_FromThis(), pos, vel.RotatedBy(-Math.PI / 2), ProjectileID.CultistBossLightningOrb, FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 3f, Main.myPlayer);
                         }
                     }
                 }
@@ -196,7 +198,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEve
                         second = true;
                     }
                     const int Bolts = 24;
-                    SoundEngine.PlaySound(NukeBeep, player.Center);
+                    SoundEngine.PlaySound(FargosSoundRegistry.NukeBeep, player.Center);
                     for (int i = 0; i < Bolts; i++)
                     {
                         int x = i;
@@ -257,7 +259,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEve
                     for (int side = -1; side < 2; side += 2)
                     {
                         Vector2 pos = npc.Center + Vector2.UnitX * (distance * i * side);
-                        SoundEngine.PlaySound(NukeBeep, pos);
+                        SoundEngine.PlaySound(FargosSoundRegistry.NukeBeep, pos);
                         if (FargoSoulsUtil.HostCheck)
                         {
 
@@ -330,7 +332,6 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEve
             }
         }
 
-        private readonly SoundStyle NukeBeep = new("FargowiltasSouls/Assets/Sounds/NukeBeep");
         private void SpawnLightning(NPC parent, Vector2 position)
         {
 
@@ -341,7 +342,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEve
                 for (int i = 0; i < 14; i++)
                 {
                     Vector2 pos = posOrig - (Vector2.UnitY * 150 * i);
-                    Projectile.NewProjectile(parent.GetSource_FromThis(), pos, Vector2.Zero, ModContent.ProjectileType<LightningTelegraph>(), FargoSoulsUtil.ScaledProjectileDamage(parent.damage), 2f, Main.myPlayer, i);
+                    Projectile.NewProjectile(parent.GetSource_FromThis(), pos, Vector2.Zero, ModContent.ProjectileType<LightningTelegraph>(), FargoSoulsUtil.ScaledProjectileDamage(parent.defDamage), 2f, Main.myPlayer, i);
                 }
             }
         }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
@@ -11,11 +12,6 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
-
-            // DisplayName.SetDefault("Wizard Enchantment");
-            /* Tooltip.SetDefault(
-@"Enhances the power of all other Enchantments to their Force effects
-'I'm a what?'"); */
         }
 
         public override Color nameColor => new(50, 80, 193);
@@ -45,13 +41,13 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
                 if (localSoulsPlayer.ForceEffect(enchant.Type))
                 {
                     if (enchant.wizardEffect().Length != 0)
-                        tooltips.Add(new TooltipLine(Mod, "wizard", $"[i:{enchant.Item.type}] " + enchant.wizardEffect()));
+                        tooltips.Add(new TooltipLine(enchant.Mod, "wizard", $"{Language.GetTextValue($"Mods.FargowiltasSouls.WizardEffect.Active")} [i:{enchant.Item.type}]: " + enchant.wizardEffect()));
                 }
                 else
                 {
                     if (enchant.wizardEffect().Length != 0)
                     {
-                        tooltips.Add(new TooltipLine(Mod, "wizard", $"[i:{enchant.Item.type}] " + enchant.wizardEffect()));
+                        tooltips.Add(new TooltipLine(enchant.Mod, "wizard", $"{Language.GetTextValue($"Mods.FargowiltasSouls.WizardEffect.Inactive")} [i:{enchant.Item.type}]: " + enchant.wizardEffect()));
                         tooltips[tooltips.Count - 1].OverrideColor = Color.Gray;
                     }
 

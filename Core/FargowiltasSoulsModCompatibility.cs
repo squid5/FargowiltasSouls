@@ -35,6 +35,27 @@ namespace FargowiltasSouls
 {
     public partial class FargowiltasSouls
     {
+        /// <summary>
+        /// <b>Vanilla main bosses:</b><br />
+        ///  1.0 = King Slime<br />
+        ///  2.0 = Eye of Cthulhu<br />
+        ///  3.0 = Eater of Worlds / Brain of Cthulhu<br />
+        ///  4.0 = Queen Bee<br />
+        ///  5.0 = Skeletron<br />
+        ///  6.0 = Deerclops<br />
+        ///  7.0 = Wall of Flesh<br />
+        ///  8.0 = Queen Slime<br />
+        ///  9.0 = The Twins<br />
+        /// 10.0 = The Destroyer<br />
+        /// 11.0 = Skeletron Prime<br />
+        /// 12.0 = Plantera<br />
+        /// 13.0 = Golem<br />
+        /// 14.0 = Duke Fishron<br />
+        /// 15.0 = Empress of Light<br />
+        /// 16.0 = Betsy<br />
+        /// 17.0 = Lunatic Cultist<br />
+        /// 18.0 = Moon Lord
+        /// </summary>
         public Dictionary<string, float> BossChecklistValues = new()
         {
             {"DeviBoss", 6.9f},
@@ -104,49 +125,49 @@ namespace FargowiltasSouls
                 bool calamity = ModLoader.HasMod("CalamityMod");
                 Add("Boss",
                     "DeviBoss",
-                    new List<int> { ModContent.NPCType<DeviBoss>() },
+                    [ModContent.NPCType<DeviBoss>()],
                     () => WorldSavingSystem.DownedDevi,
                     () => true,
-                    new List<int> {
+                    [
                         ModContent.ItemType<DeviMusicBox>(),
                         ModContent.ItemType<DeviatingEnergy>(),
                         ModContent.ItemType<DeviTrophy>(),
                         ModContent.ItemType<ChibiHat>(),
                         ModContent.ItemType<BrokenBlade>()
-                    },
-                    new List<int> { ModContent.ItemType<DevisCurse>() },
+                    ],
+                    [ModContent.ItemType<DevisCurse>()],
                     true
                 );
                 float abomValue = calamity ? 22.6f : 20f;
                 Add("Boss",
                     "AbomBoss",
-                    new List<int> { ModContent.NPCType<AbomBoss>() },
+                    [ModContent.NPCType<AbomBoss>()],
                     () => WorldSavingSystem.DownedAbom,
                     () => true,
-                    new List<int> {
+                    [
                         ModContent.ItemType<AbomMusicBox>(),
                         ModContent.ItemType<AbomEnergy>(),
                         ModContent.ItemType<AbomTrophy>(),
                         ModContent.ItemType<BabyScythe>(),
                         ModContent.ItemType<BrokenHilt>()
-                    },
-                    new List<int> { ModContent.ItemType<AbomsCurse>() },
+                    ],
+                    [ModContent.ItemType<AbomsCurse>()],
                     true
                 );
                 float mutantValue = calamity ? 30 : 23;
                 Add("Boss",
                     "MutantBoss",
-                    new List<int> { ModContent.NPCType<MutantBoss>() },
+                    [ModContent.NPCType<MutantBoss>()],
                     () => WorldSavingSystem.DownedMutant,
                     () => true,
-                    new List<int> {
+                    [
                         ModContent.ItemType<MutantMusicBox>(),
                         ModContent.ItemType<EternalEnergy>(),
                         ModContent.ItemType<MutantTrophy>(),
                         ModContent.ItemType<SpawnSack>(),
                         ModContent.ItemType<PhantasmalEnergy>()
-                    },
-                    new List<int> { ModContent.ItemType<AbominationnVoodooDoll>() },
+                    ],
+                    [ModContent.ItemType<AbominationnVoodooDoll>()],
                     true
                 );
 
@@ -155,89 +176,89 @@ namespace FargowiltasSouls
 
                 Add("MiniBoss",
                     "TimberChampion",
-                    new List<int> { ModContent.NPCType<TimberChampion>() },
+                    [ModContent.NPCType<TimberChampion>()],
                     () => WorldSavingSystem.DownedBoss[(int)WorldSavingSystem.Downed.TimberChampion],
                     () => true,
                     new List<int>(BaseForce.EnchantsIn<TimberForce>()).Append(ModContent.ItemType<ChampionMusicBox>()).ToList(),
-                    new List<int> { ModContent.ItemType<SigilOfChampions>() },
+                    [ModContent.ItemType<SigilOfChampions>()],
                     false
                 );
                 Add("MiniBoss",
                     "TerraChampion",
-                    new List<int> { ModContent.NPCType<TerraChampion>(), ModContent.NPCType<TerraChampionBody>(), ModContent.NPCType<TerraChampionTail>() },
+                    [ModContent.NPCType<TerraChampion>(), ModContent.NPCType<TerraChampionBody>(), ModContent.NPCType<TerraChampionTail>()],
                     () => WorldSavingSystem.DownedBoss[(int)WorldSavingSystem.Downed.TerraChampion],
                     () => true,
                     new List<int>(BaseForce.EnchantsIn<TerraForce>()).Append(ModContent.ItemType<ChampionMusicBox>()).ToList(),
-                    new List<int> { ModContent.ItemType<SigilOfChampions>() },
+                    [ModContent.ItemType<SigilOfChampions>()],
                     false,
                     "Content/Bosses/Champions/Terra/TerraChampion_Still"
                 );
                 Add("MiniBoss",
                     "EarthChampion",
-                    new List<int> { ModContent.NPCType<EarthChampion>(), ModContent.NPCType<EarthChampionHand>() },
+                    [ModContent.NPCType<EarthChampion>(), ModContent.NPCType<EarthChampionHand>()],
                     () => WorldSavingSystem.DownedBoss[(int)WorldSavingSystem.Downed.EarthChampion],
                     () => true,
                     new List<int>(BaseForce.EnchantsIn<EarthForce>()).Append(ModContent.ItemType<ChampionMusicBox>()).ToList(),
-                    new List<int> { ModContent.ItemType<SigilOfChampions>() },
+                    [ModContent.ItemType<SigilOfChampions>()],
                     false,
                     "Content/Bosses/Champions/Earth/EarthChampion_Still"
                 );
                 Add("MiniBoss",
                     "NatureChampion",
-                    new List<int> { ModContent.NPCType<NatureChampion>(), ModContent.NPCType<NatureChampionHead>() },
+                    [ModContent.NPCType<NatureChampion>(), ModContent.NPCType<NatureChampionHead>()],
                     () => WorldSavingSystem.DownedBoss[(int)WorldSavingSystem.Downed.NatureChampion],
                     () => true,
                     new List<int>(BaseForce.EnchantsIn<NatureForce>()).Append(ModContent.ItemType<ChampionMusicBox>()).ToList(),
-                    new List<int> { ModContent.ItemType<SigilOfChampions>() },
+                    [ModContent.ItemType<SigilOfChampions>()],
                     false,
                     "Content/Bosses/Champions/Nature/NatureChampion_Still"
                 );
                 Add("MiniBoss",
                     "LifeChampion",
-                    new List<int> { ModContent.NPCType<LifeChampion>() },
+                    [ModContent.NPCType<LifeChampion>()],
                     () => WorldSavingSystem.DownedBoss[(int)WorldSavingSystem.Downed.LifeChampion],
                     () => true,
                     new List<int>(BaseForce.EnchantsIn<LifeForce>()).Append(ModContent.ItemType<ChampionMusicBox>()).ToList(),
-                    new List<int> { ModContent.ItemType<SigilOfChampions>() },
+                    [ModContent.ItemType<SigilOfChampions>()],
                     false,
                     "Content/Bosses/Champions/Life/LifeChampion_Still"
                 );
                 Add("MiniBoss",
                     "ShadowChampion",
-                    new List<int> { ModContent.NPCType<ShadowChampion>() },
+                    [ModContent.NPCType<ShadowChampion>()],
                     () => WorldSavingSystem.DownedBoss[(int)WorldSavingSystem.Downed.ShadowChampion],
                     () => true,
                     new List<int>(BaseForce.EnchantsIn<ShadowForce>()).Append(ModContent.ItemType<ChampionMusicBox>()).ToList(),
-                    new List<int> { ModContent.ItemType<SigilOfChampions>() },
+                    [ModContent.ItemType<SigilOfChampions>()],
                     false
                 );
                 Add("MiniBoss",
                     "SpiritChampion",
-                    new List<int> { ModContent.NPCType<SpiritChampion>(), ModContent.NPCType<SpiritChampionHand>() },
+                    [ModContent.NPCType<SpiritChampion>(), ModContent.NPCType<SpiritChampionHand>()],
                     () => WorldSavingSystem.DownedBoss[(int)WorldSavingSystem.Downed.SpiritChampion],
                     () => true,
                     new List<int>(BaseForce.EnchantsIn<SpiritForce>()).Append(ModContent.ItemType<ChampionMusicBox>()).ToList(),
-                    new List<int> { ModContent.ItemType<SigilOfChampions>() },
+                    [ModContent.ItemType<SigilOfChampions>()],
                     false,
                     "Content/Bosses/Champions/Spirit/SpiritChampion_Still"
                 );
                 Add("MiniBoss",
                     "WillChampion",
-                    new List<int> { ModContent.NPCType<WillChampion>() },
+                    [ModContent.NPCType<WillChampion>()],
                     () => WorldSavingSystem.DownedBoss[(int)WorldSavingSystem.Downed.WillChampion],
                     () => true,
                     new List<int>(BaseForce.EnchantsIn<WillForce>()).Append(ModContent.ItemType<ChampionMusicBox>()).ToList(),
-                    new List<int> { ModContent.ItemType<SigilOfChampions>() },
+                    [ModContent.ItemType<SigilOfChampions>()],
                     false
                 );
 
                 Add("Boss",
                     "CosmosChampion",
-                    new List<int> { ModContent.NPCType<CosmosChampion>() },
+                    [ModContent.NPCType<CosmosChampion>()],
                     () => WorldSavingSystem.DownedBoss[(int)WorldSavingSystem.Downed.CosmosChampion],
                     () => true,
                     new List<int>(BaseForce.EnchantsIn<CosmoForce>()).Append(ModContent.ItemType<ChampionMusicBox>()).ToList(),
-                    new List<int> { ModContent.ItemType<SigilOfChampions>() },
+                    [ModContent.ItemType<SigilOfChampions>()],
                     true
                 );
 
@@ -248,51 +269,51 @@ namespace FargowiltasSouls
 
                 Add("Boss",
                     "TrojanSquirrel",
-                    new List<int> { ModContent.NPCType<TrojanSquirrel>() },
+                    [ModContent.NPCType<TrojanSquirrel>()],
                     () => WorldSavingSystem.DownedBoss[(int)WorldSavingSystem.Downed.TrojanSquirrel],
                     () => true,
-                    new List<int> {
+                    [
                         ModContent.ItemType<TrojanSquirrelTrophy>(),
                         ModContent.ItemType<TreeSword>(),
                         ModContent.ItemType<MountedAcornGun>(),
                         ModContent.ItemType<SnowballStaff>(),
                         ModContent.ItemType<KamikazeSquirrelStaff>()
-                    },
-                    new List<int> { ModContent.ItemType<SquirrelCoatofArms>() },
+                    ],
+                    [ModContent.ItemType<SquirrelCoatofArms>()],
                     false,
                     "Content/Bosses/TrojanSquirrel/TrojanSquirrel_Still"
                 );
                 Add("Boss",
                     "LifeChallenger",
-                    new List<int> { ModContent.NPCType<LifeChallenger>() },
+                    [ModContent.NPCType<LifeChallenger>()],
                     () => WorldSavingSystem.DownedBoss[(int)WorldSavingSystem.Downed.Lifelight],
                     () => true,
-                    new List<int> {
+                    [
                         ModContent.ItemType<LifelightTrophy>(),
                         ModContent.ItemType<EnchantedLifeblade>(),
                         ModContent.ItemType<Lightslinger>(),
                         ModContent.ItemType<CrystallineCongregation>(),
                         ModContent.ItemType<KamikazePixieStaff>(),
                         ModContent.ItemType<LifelightMasterPet>()
-                    },
-                    new List<int> { ModContent.ItemType<FragilePixieLamp>() },
+                    ],
+                    [ModContent.ItemType<FragilePixieLamp>()],
                     false,
                     "Content/Bosses/Lifelight/LifeChallenger"
                 );
 
                 Add("Boss",
                     "BanishedBaron",
-                    new List<int> { ModContent.NPCType<BanishedBaron>() },
+                    [ModContent.NPCType<BanishedBaron>()],
                     () => WorldSavingSystem.downedBoss[(int)WorldSavingSystem.Downed.BanishedBaron],
                     () => true,
-                    new List<int> {
+                    [
                         ModContent.ItemType<BaronTrophy>(),
                         ModContent.ItemType<TheBaronsTusk>(),
                         ModContent.ItemType<RoseTintedVisor>(),
                         ModContent.ItemType<NavalRustrifle>(),
                         ModContent.ItemType<DecrepitAirstrikeRemote>(),
-                    },
-                    new List<int> { ModContent.ItemType<MechLure>() },
+                    ],
+                    [ModContent.ItemType<MechLure>()],
                     false
                 );
                 if (CursedCoffin.Enabled)
@@ -300,14 +321,11 @@ namespace FargowiltasSouls
                     Add("Boss",
                     "CursedCoffin",
                     //TODO: ADD LOOT
-                    new List<int> { ModContent.NPCType<CursedCoffin>() },
+                    [ModContent.NPCType<CursedCoffin>()],
                     () => WorldSavingSystem.downedBoss[(int)WorldSavingSystem.Downed.CursedCoffin],
                     () => true,
-                    new List<int>
-                    {
-
-                    },
-                    new List<int> { ModContent.ItemType<CoffinSummon>() },
+                    [],
+                    [ModContent.ItemType<CoffinSummon>()],
                     false
                 //"Content/NPCs/Challengers/CursedCoffin"
                 );

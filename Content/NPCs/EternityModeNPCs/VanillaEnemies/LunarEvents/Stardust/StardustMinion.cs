@@ -1,18 +1,18 @@
 using FargowiltasSouls.Core.Systems;
 using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
 using System.IO;
+using System;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
+using System.Collections.Generic;
 
 namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEvents.Stardust
 {
     public class StardustMinion : ModNPC
     {
-        public enum States
+        public enum States 
         {
             Idle = 1,
             PrepareExpand,
@@ -25,13 +25,12 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEve
             ScissorContract,
             Curve
         }
-        public List<int> NoDamage = new()
-        {
+        public List<int> NoDamage =
+        [
             (int)States.PrepareScissor
-        };
+        ];
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("Crystal Slime");
             Main.npcFrameCount[NPC.type] = 2;
             NPCID.Sets.CantTakeLunchMoney[Type] = true;
             NPCID.Sets.SpecificDebuffImmunity[Type] = NPCID.Sets.SpecificDebuffImmunity[NPCID.LunarTowerStardust];
@@ -55,11 +54,15 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEve
         public override void SendExtraAI(BinaryWriter writer)
         {
             writer.Write(NPC.localAI[0]);
+            writer.WriteVector2(LockPos);
+            writer.WriteVector2(initialLock);
         }
 
         public override void ReceiveExtraAI(BinaryReader reader)
         {
             NPC.localAI[0] = reader.ReadSingle();
+            LockPos = reader.ReadVector2();
+            initialLock = reader.ReadVector2();
         }
         public override bool CanHitPlayer(Player target, ref int CooldownSlot)
         {
@@ -71,6 +74,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEve
         }
         private Vector2 initialLock = Vector2.Zero;
         private Vector2 LockPos = Vector2.Zero;
+        int HealCounter = 0;
         public void StardustMinionAI()
         {
             ref float Timer = ref NPC.ai[0];
@@ -89,6 +93,27 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEve
             LunarTowerStardust parentModNPC = parent.GetGlobalNPC<LunarTowerStardust>();
             float NearParent = parent.height * 0.8f;
 
+            if (++HealCounter > 60)
+            {
+                HealCounter = 0;
+                if (!parent.HasValidTarget || parent.Distance(Main.player[parent.target].Center) > parentModNPC.AuraSize)
+                {
+                    const int heal = 500;
+                    NPC.life += heal;
+                    if (NPC.life > NPC.lifeMax)
+                        NPC.life = NPC.lifeMax;
+                    if (NPC.life >= NPC.lifeMax)
+                    {
+                        NPC.dontTakeDamage = false;
+                        NPC.position = NPC.Center;
+                        NPC.width = 48;
+                        NPC.height = 48;
+                        NPC.Center = NPC.position;
+                    }
+                    NPC.netUpdate = true;
+                    CombatText.NewText(NPC.Hitbox, CombatText.HealLife, heal);
+                }
+            }
 
             switch (State)
             {
@@ -157,10 +182,10 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEve
                         {
                             if (parentModNPC.AttackTimer > ReactionTime && player.active && !player.ghost && Math.Abs(toPlayer - fromCenter) < MathHelper.Pi / 8)
                             {
-
                                 substate = 0;
                                 SoundEngine.PlaySound(SoundID.Item96, NPC.Center);
                                 State = (int)States.Rush;
+                                NPC.netUpdate = true;
                             }
                         }
                         break;
@@ -173,11 +198,13 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEve
                         {
                             NPC.velocity = NPC.SafeDirectionTo(player.Center) * RushSpeed;
                             substate = (float)States.Rush;
+                            NPC.netUpdate = true;
                         }
                         if (NPC.Distance(parent.Center) > parentModNPC.AuraSize)
                         {
                             substate = 0;
                             State = (int)States.Contract;
+                            NPC.netUpdate = true;
                         }
                         break;
                     }
@@ -188,6 +215,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEve
                         {
                             initialLock = player.Center;
                             substate = (int)States.PrepareScissor;
+                            NPC.netUpdate = true;
                         }
                         if (WorldSavingSystem.MasochistModeReal)
                         {
@@ -214,6 +242,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEve
                         if (NPC.Distance(desiredLocation) <= 100)
                         {
                             State = (int)States.Idle;
+                            NPC.netUpdate = true;
                         }
                         break;
                     }
@@ -239,23 +268,25 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEve
                         {
                             LockPos = Vector2.Zero;
                             substate = -1;
+                            NPC.netUpdate = true;
                         }
                         if (NPC.Distance(parent.Center) <= NearParent && substate == HomeBack)
                         {
                             substate = 0;
                             State = (float)States.Idle;
+                            NPC.netUpdate = true;
                         }
                         break;
                     }
             }
         }
-
+        
         public void Scissor(NPC parent, float num, LunarTowerStardust parentModNPC, bool telegraph)
         {
             const float speedFactor = 0.05f;
             int Side = (num >= LunarTowerStardust.CellAmount / 2) ? 1 : -1;
             int x = Side == 1 ? (int)num - LunarTowerStardust.CellAmount / 2 : (int)num;
-            float ScissorSpeed = 1f + (0.08f * (5 - x));
+            float ScissorSpeed = 1f + (0.08f * (5-x));
             int Distance = (x * parentModNPC.AuraSize / (LunarTowerStardust.CellAmount / 2)) + (parent.width / 2);
             if (Side == 1)
             {
@@ -265,7 +296,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEve
             if (telegraph)
             {
                 rotation = parent.SafeDirectionTo(initialLock).ToRotation() + (parentModNPC.CellRotation * Side);
-
+                
             }
             else
             {
@@ -326,7 +357,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEve
             Vector2 PV = NPC.SafeDirectionTo(target);
             Vector2 LV = NPC.velocity;
             float anglediff = (float)(Math.Atan2(PV.Y * LV.X - PV.X * LV.Y, LV.X * PV.X + LV.Y * PV.Y)); //real
-                                                                                                         //change rotation towards target
+            //change rotation towards target
             NPC.velocity = NPC.velocity.RotatedBy(Math.Sign(anglediff) * Math.Min(Math.Abs(anglediff), speed * MathHelper.Pi / 180));
         }
         public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers)

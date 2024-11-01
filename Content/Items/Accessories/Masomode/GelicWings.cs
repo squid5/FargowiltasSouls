@@ -14,18 +14,6 @@ namespace FargowiltasSouls.Content.Items.Accessories.Masomode
 
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("Gelic Wings");
-            /* Tooltip.SetDefault(@"Acts as wings
-Grants immunity to Flipped caused by the Underground Hallow
-Allows the wearer to double jump
-When you land after a jump, slime spikes shoot out to your sides
-'Step on me'"); */
-            //             DisplayName.AddTranslation((int)GameCulture.CultureName.Chinese, "明胶羽翼");
-            //             Tooltip.AddTranslation((int)GameCulture.CultureName.Chinese, @"免疫由地下神圣之地造成的翻转减益
-            // 可让持有者二连跳
-            // 落地时向左右发射出史莱姆尖刺
-            // “踩在我身上”");
-
             Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 
             ArmorIDs.Wing.Sets.Stats[Item.wingSlot] = new Terraria.DataStructures.WingStats(100);
@@ -42,7 +30,7 @@ When you land after a jump, slime spikes shoot out to your sides
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.buffImmune[ModContent.BuffType<FlippedHallowBuff>()] = true;
+            player.buffImmune[ModContent.BuffType<HallowIlluminatedBuff>()] = true;
             player.FargoSouls().GelicWingsItem = Item;
             player.AddEffect<GelicWingJump>(Item);
             player.AddEffect<GelicWingSpikes>(Item);

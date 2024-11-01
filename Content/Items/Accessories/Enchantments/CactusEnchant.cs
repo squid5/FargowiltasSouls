@@ -13,18 +13,6 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
-
-            // DisplayName.SetDefault("Cactus Enchantment");
-            /* Tooltip.SetDefault(
-@"While attacking you release a spray of needles
-Enemies will explode into needles on death if they are struck with your needles
-'It's the quenchiest!'"); */
-
-            //             DisplayName.AddTranslation((int)GameCulture.CultureName.Chinese, "仙人掌魔石");
-            //             Tooltip.AddTranslation((int)GameCulture.CultureName.Chinese, 
-            // @"反弹25%接触伤害
-            // 敌人死亡时有几率爆裂出针刺
-            // '太解渴了！'");
         }
 
         public override Color nameColor => new(121, 158, 29);
@@ -41,6 +29,14 @@ Enemies will explode into needles on death if they are struck with your needles
         {
             player.FargoSouls().CactusImmune = true;
             player.AddEffect<CactusEffect>(Item);
+        }
+        public override void UpdateInventory(Player player)
+        {
+            player.FargoSouls().CactusImmune = true;
+        }
+        public override void UpdateVanity(Player player)
+        {
+            player.FargoSouls().CactusImmune = true;
         }
 
         public override void AddRecipes()
@@ -86,7 +82,6 @@ Enemies will explode into needles on death if they are struck with your needles
                 modPlayer.CactusProcCD = 15;
             }
         }
-
         public static void CactusProc(NPC npc, Player player)
         {
             CactusSpray(player, npc.Center);
@@ -105,7 +100,7 @@ Enemies will explode into needles on death if they are struck with your needles
 
             for (int i = 0; i < numNeedles; i++)
             {
-                int p = Projectile.NewProjectile(player.GetSource_EffectItem<CactusEffect>(), player.Center, Vector2.UnitX.RotatedByRandom(MathHelper.TwoPi) * 4, ModContent.ProjectileType<CactusNeedle>(), FargoSoulsUtil.HighestDamageTypeScaling(player, dmg), 5f);
+                int p = Projectile.NewProjectile(player.GetSource_EffectItem<CactusEffect>(), position, Vector2.UnitX.RotatedByRandom(MathHelper.TwoPi) * 4, ModContent.ProjectileType<CactusNeedle>(), FargoSoulsUtil.HighestDamageTypeScaling(player, dmg), 5f);
                 if (p != Main.maxProjectiles)
                 {
                     Projectile proj = Main.projectile[p];

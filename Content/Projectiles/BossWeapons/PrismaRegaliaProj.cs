@@ -43,7 +43,6 @@ namespace FargowiltasSouls.Content.Projectiles.BossWeapons
         public float Extension = 0;
         int OrigAnimMax = 30;
         bool Charged;
-        Vector2 ChargeVector = Vector2.Zero;
         public override void AI()
         {
             ref float chargeLevel = ref Projectile.ai[0];
@@ -68,7 +67,7 @@ namespace FargowiltasSouls.Content.Projectiles.BossWeapons
                     chargeLevel++;
                 if (chargeLevel == (int)maxCharge - 1 && player.whoAmI == Main.myPlayer)
                 {
-                    SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/ChargeSound"), Projectile.Center + Projectile.velocity * Projectile.Size.Length() / 2);
+                    SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/Accessories/ChargeSound"), Projectile.Center + Projectile.velocity * Projectile.Size.Length() / 2);
                 }
                 Projectile.localAI[1] = chargeLevel; //store the charge amount
                                                      //int d = Dust.NewDust(player.MountedCenter + Projectile.velocity * Projectile.Size.Length() * 0.95f, 0, 0, DustID.CrystalPulse);

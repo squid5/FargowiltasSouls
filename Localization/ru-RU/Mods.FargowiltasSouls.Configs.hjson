@@ -1,0 +1,172 @@
+ClientConfig: {
+	DisplayName: Конфигурация: Сторона клиента
+
+	Headers: {
+		Maso: Режим Вечность
+		Patreon: "[i:FargowiltasSouls/RoombaPet] [c/ffffff:Patreon Items]"
+	}
+
+	HideTogglerWhenInventoryIsClosed: {
+		Label: Показывать переключатель эффектов только при открытом инвентаре
+		Tooltip: Если включена, переключатель эффектов автоматически выключается когда инвентарь закрыт.
+	}
+
+	ItemDisabledTooltip: {
+		Label: Описание о выключенном эффекте
+		Tooltip: Если включена, у предметов с любыми выключенными эффектами в описании будет строчка об этом.
+	}
+
+	ToggleSearchReset: {
+		Label: Полоска поиска меню переключателей эффектов перезапускается при закрытии
+		Tooltip: ""
+	}
+
+	RainbowHealThreshold: {
+		Label: "[i:FargowiltasSouls/ConcentratedRainbowMatter] Максимум здоровья для автоматического лечения"
+		Tooltip: ""
+	}
+
+	PrecisionSealIsHold: {
+		Label: "[i:FargowiltasSouls/PrecisionSeal] Кнопка печати точности должна быть зажата"
+		Tooltip: Если выключена, кнопка печати точности будет переключать режим точности.
+	}
+
+	OncomingMutantX: {
+		Label: Позиция иконки режима Вечность в инвентаре по X
+		Tooltip: ""
+	}
+
+	OncomingMutantY: {
+		Label: Позиция иконки режима Вечность в инвентаре по Y
+		Tooltip: ""
+	}
+
+	CooldownBars: {
+		Label: Шкалы перезарядки
+		Tooltip: ""
+	}
+
+	CooldownBarsX: {
+		Label: Позиция шкал перезарядки по X
+		Tooltip: ""
+	}
+
+	CooldownBarsY: {
+		Label: Позиция шкал перезарядки по Y
+		Tooltip: ""
+	}
+}
+
+SoulConfig: {
+	DisplayName: Конфигурация: Souls
+
+	Headers: {
+		Maso: Режим Вечность
+		Patreon: "[i:FargowiltasSouls/RoombaPet] [c/ffffff:Предметы Патреона]"
+	}
+
+	DeviChatter: {
+		Label: Чиби Деви может говорить
+		Tooltip: ""
+	}
+
+	ToggleSearchReset: {
+		Label: Полоска поиска меню переключателей эффектов перезапускается при закрытии
+		Tooltip: ""
+	}
+
+	BigTossMode: {
+		Label: Режим большого броска
+		Tooltip: ""
+	}
+
+	ForcedFilters: {
+		Label: Включать настройку качества волн (игнорирует настройки игры)
+		Tooltip: Необходимо для корректной работы некоторых визуальных эффектов.
+	}
+
+	BossRecolors: {
+		Label: Боссы используют другие спрайты
+		Tooltip: ""
+	}
+
+	PatreonRoomba: {
+		Label: "[i:FargowiltasSouls/RoombaPet] [c/ffffff:{$Mods.FargowiltasSouls.Items.RoombaPet.DisplayName}]"
+		Tooltip: ""
+	}
+
+	PatreonOrb: {
+		Label: "[i:FargowiltasSouls/ComputationOrb] [c/ffffff:{$Mods.FargowiltasSouls.Items.ComputationOrb.DisplayName}]"
+		Tooltip: ""
+	}
+
+	PatreonFishingRod: {
+		Label: "[i:FargowiltasSouls/MissDrakovisFishingPole] [c/ffffff:{$Mods.FargowiltasSouls.Items.MissDrakovisFishingPole.DisplayName}]"
+		Tooltip: ""
+	}
+
+	PatreonDoor: {
+		Label: "[i:FargowiltasSouls/SquidwardDoor] [c/ffffff:{$Mods.FargowiltasSouls.Items.SquidwardDoor.DisplayName}]"
+		Tooltip: ""
+	}
+
+	PatreonWolf: {
+		Label: "[i:FargowiltasSouls/ParadoxWolfSoul] [c/ffffff:{$Mods.FargowiltasSouls.Items.ParadoxWolfSoul.DisplayName}]"
+		Tooltip: ""
+	}
+
+	PatreonDove: {
+		Label: "[i:FargowiltasSouls/FigBranch] [c/ffffff:{$Mods.FargowiltasSouls.Items.FigBranch.DisplayName}]"
+		Tooltip: ""
+	}
+
+	PatreonKingSlime: {
+		Label: "[i:FargowiltasSouls/MedallionoftheFallenKing] [c/ffffff:{$Mods.FargowiltasSouls.Items.MedallionoftheFallenKing.DisplayName}]"
+		Tooltip: ""
+	}
+
+	PatreonFishron: {
+		Label: "[i:FargowiltasSouls/StaffOfUnleashedOcean] [c/ffffff:{$Mods.FargowiltasSouls.Items.StaffOfUnleashedOcean.DisplayName}]"
+		Tooltip: ""
+	}
+
+	PatreonPlant: {
+		Label: "[i:FargowiltasSouls/PiranhaPlantVoodooDoll] [c/ffffff:{$Mods.FargowiltasSouls.Items.PiranhaPlantVoodooDoll.DisplayName}]"
+		Tooltip: ""
+	}
+
+	PatreonDevious: {
+		Label: "[i:FargowiltasSouls/DeviousAestheticus] [c/ffffff:{$Mods.FargowiltasSouls.Items.DeviousAestheticus.DisplayName}]"
+		Tooltip: ""
+	}
+
+	PatreonVortex: {
+		Label: "[i:FargowiltasSouls/VortexMagnetRitual] [c/ffffff:{$Mods.FargowiltasSouls.Items.VortexMagnetRitual.DisplayName}]"
+		Tooltip: ""
+	}
+
+	PatreonPrime: {
+		Label: "[i:FargowiltasSouls/PrimeStaff] [c/ffffff:{$Mods.FargowiltasSouls.Items.PrimeStaff.DisplayName}]"
+		Tooltip: ""
+	}
+
+	PatreonCrimetroid: {
+		Label: "[i:FargowiltasSouls/CrimetroidEgg] [c/ffffff:{$Mods.FargowiltasSouls.Items.CrimetroidEgg.DisplayName}]"
+		Tooltip: ""
+	}
+
+	PatreonNanoCore: {
+		Label: "[i:FargowiltasSouls/NanoCore] [c/ffffff:{$Mods.FargowiltasSouls.Items.NanoCore.DisplayName}]"
+		Tooltip: ""
+	}
+
+	PatreonROB: {
+		Label: "[i:FargowiltasSouls/ROBGyro] [c/ffffff:{$Mods.FargowiltasSouls.Items.ROBGyro.DisplayName}]"
+		Tooltip: ""
+	}
+
+	PerformanceMode: {
+		Label: Режим производительности
+		Tooltip: Выключает большинство визуальных эффектов, влияющих на производительность. На данный момент выключает хвосты глаз Мутанта
+	}
+}

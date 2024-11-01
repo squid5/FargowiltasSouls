@@ -1,6 +1,10 @@
+using FargowiltasSouls.Content.Items.Accessories.Enchantments;
 using FargowiltasSouls.Content.Items.BossBags;
 using FargowiltasSouls.Content.Projectiles.ChallengerItems;
+using FargowiltasSouls.Content.UI.Elements;
+using FargowiltasSouls.Core.AccessoryEffectSystem;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -79,21 +83,36 @@ namespace FargowiltasSouls.Content.Items.Weapons.Challengers
         }
         public override bool? UseItem(Player player)
         {
+            FargoSoulsPlayer soulsPlayer = player.FargoSouls();
+            CooldownBarManager.Activate("LightslingerCharge", ModContent.Request<Texture2D>("FargowiltasSouls/Content/Projectiles/ChallengerItems/LightslingerBomb").Value, Color.Pink, 
+                () => (float)Main.LocalPlayer.FargoSouls().LightslingerHitShots / ReqShots, activeFunction: () => player.HeldItem != null && player.HeldItem.type == ModContent.ItemType<Lightslinger>());
             if (player.altFunctionUse == 2)
             {
-                player.FargoSouls().LightslingerHitShots = 0;
+                soulsPlayer.LightslingerHitShots = 0;
             }
             else
             {
-                if (++player.FargoSouls().LightslingerHitShots >= ReqShots && player.whoAmI == Main.myPlayer)
-                    SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/ChargeSound"), player.Center);
+                if (++soulsPlayer.LightslingerHitShots >= ReqShots && player.whoAmI == Main.myPlayer)
+                {
+                    if (soulsPlayer.ChargeSoundDelay <= 0)
+                    {
+                        soulsPlayer.ChargeSoundDelay = 120;
+                        SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/Accessories/ChargeSound"), player.Center);
+                    }
+                    Vector2 direction = player.itemRotation.ToRotationVector2() * player.direction;
+                    Vector2 perpDirection = direction.RotatedBy(MathHelper.PiOver2) * player.direction;
+                    for (int i = 0; i < 7; i++)
+                    {
+                        Dust.NewDust(player.itemLocation + direction * Item.width * 0.5f + perpDirection * Item.height * 0.3f, 15, 15, DustID.PinkTorch, direction.X * Main.rand.NextFloat(2, 5), direction.Y * Main.rand.NextFloat(2, 5));
+                    }
+                }
             }
 
             return base.UseItem(player);
         }
         public override void AddRecipes()
         {
-            CreateRecipe().AddIngredient<LifelightBag>(2).AddTile(TileID.Solidifier).Register();
+            CreateRecipe().AddIngredient<LifelightBag>(2).AddTile(TileID.Solidifier).DisableDecraft().Register();
         }
     }
 }

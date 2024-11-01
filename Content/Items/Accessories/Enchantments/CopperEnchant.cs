@@ -1,3 +1,4 @@
+using FargowiltasSouls.Content.Items.Accessories.Forces;
 using FargowiltasSouls.Content.Projectiles.Souls;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using FargowiltasSouls.Core.Toggler.Content;
@@ -14,11 +15,6 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
-
-            // DisplayName.SetDefault("Copper Enchantment");
-            /* Tooltip.SetDefault(
-@"Crits have a chance to shock enemies with chain lightning
-'Behold'"); */
         }
 
         public override Color nameColor => new(213, 102, 23);
@@ -74,6 +70,8 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
 
         public static void CopperProc(Player player, NPC target)
         {
+            if (player.HasEffect<TerraLightningEffect>())
+                return;
             FargoSoulsPlayer modPlayer = player.FargoSouls();
             if (modPlayer.CopperProcCD == 0)
             {
@@ -91,7 +89,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
                     cdLength = 150;
                 }
 
-                List<int> npcIndexes = new();
+                List<int> npcIndexes = [];
                 float closestDist = 500f;
                 NPC closestNPC;
 

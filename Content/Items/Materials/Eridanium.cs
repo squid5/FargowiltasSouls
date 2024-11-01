@@ -7,10 +7,6 @@ namespace FargowiltasSouls.Content.Items.Materials
     {
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("Eridanium");
-            // Tooltip.SetDefault("A shard of cosmic power");
-            //DisplayName.AddTranslation((int)GameCulture.CultureName.Chinese, "月之水晶");
-            //Tooltip.AddTranslation((int)GameCulture.CultureName.Chinese, "月球能量的碎片\n宇宙英灵掉落");
             Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 30;
         }
 

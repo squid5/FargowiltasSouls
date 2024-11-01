@@ -1,7 +1,8 @@
 ﻿using FargowiltasSouls.Content.Projectiles.BossWeapons;
 using Microsoft.Xna.Framework;
+using System;
 using Terraria;
-using Terraria.DataStructures;
+using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -12,45 +13,48 @@ namespace FargowiltasSouls.Content.Items.Weapons.SwarmDrops
         public override void SetStaticDefaults()
         {
             Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
-            // DisplayName.SetDefault("Slime Slinging Slasher");
-            // Tooltip.SetDefault("'The reward for slaughtering many..'");
-            //DisplayName.AddTranslation((int)GameCulture.CultureName.Chinese, "史莱姆抛射屠戮者");
-            //Tooltip.AddTranslation((int)GameCulture.CultureName.Chinese, "'屠戮众多的奖励..'");
         }
 
         public override void SetDefaults()
         {
-            Item.damage = 335;
+            Item.damage = 745;
             Item.DamageType = DamageClass.Melee;
             Item.width = 48;
             Item.height = 64;
-            Item.useTime = 12;
-            Item.useAnimation = 12;
+            Item.useTime = 23;
+            Item.useAnimation = 23;
             Item.useStyle = ItemUseStyleID.Swing;
             Item.knockBack = 6;
             Item.value = Item.sellPrice(0, 10);
             Item.rare = ItemRarityID.Purple;
-            Item.UseSound = SoundID.Item1;
+            //Item.UseSound = SoundID.Item1;
             Item.autoReuse = true;
-            Item.shoot = ModContent.ProjectileType<SlimeBallHoming>();
-            Item.shootSpeed = 16f;
+            Item.scale = 1.5f;
+
+            Item.noMelee = true;
+            Item.noUseGraphic = true;
+            Item.channel = true;
+            Item.shoot = ModContent.ProjectileType<SlimeSlingingSlasherProj>();
+            Item.shootSpeed = 1f;
         }
 
-        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        public override void HoldItem(Player player) //fancy momentum swing, this should be generalized and applied to other swords imo
         {
-            int numberProjectiles = 9;
-            for (int i = 0; i < numberProjectiles; i++)
-            {
-                velocity = velocity.RotatedBy(MathHelper.ToRadians(45) * (Main.rand.NextDouble() - 0.5));
-                Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI);
-            }
+            
 
-            return false;
         }
-
+        public override void ModifyHitNPC(Player player, NPC target, ref NPC.HitModifiers modifiers)
+        {
+            if (target.onFire || target.onFire2 || target.onFire3)
+            {
+                modifiers.FinalDamage *= 1.2f;
+            }
+        }
         public override void OnHitNPC(Player player, NPC target, NPC.HitInfo hit, int damageDone)
         {
-            target.AddBuff(BuffID.Slimed, 180);
+            target.AddBuff(BuffID.Slimed, 240);
+            SoundEngine.PlaySound(SoundID.Item17);
+            Projectile.NewProjectile(player.GetSource_FromThis(), target.Center, Vector2.Zero, ModContent.ProjectileType<Slimesplosion>(), damageDone, 1f, Item.whoAmI, 1, 1, 1);
         }
 
         public override void AddRecipes()

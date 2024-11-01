@@ -14,7 +14,6 @@ namespace FargowiltasSouls.Content.PlayerDrawLayers
         public override Position GetDefaultPosition() => new Between();
         protected override void Draw(ref PlayerDrawSet drawInfo)
         {
-
             if (drawInfo.shadow == 0f)
             {
                 float scale = 2f;

@@ -1,4 +1,5 @@
-﻿using FargowiltasSouls.Content.Items.Accessories.Expert;
+﻿/*
+using FargowiltasSouls.Content.Items.Accessories.Expert;
 using FargowiltasSouls.Content.Items.Accessories.Souls;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using Microsoft.Xna.Framework;
@@ -12,6 +13,7 @@ using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Content.Projectiles.Minions
 {
+
     public class MinosPrime : ModProjectile
     {
         public ref float Timer => ref Projectile.ai[0];
@@ -154,7 +156,7 @@ namespace FargowiltasSouls.Content.Projectiles.Minions
         public Color? GetColor(Player player)
         {
             ColorTimer++;
-            List<Color> colors = new();
+            List<Color> colors = [];
 
             FargoSoulsPlayer modPlayer = player.FargoSouls();
 
@@ -203,3 +205,4 @@ namespace FargowiltasSouls.Content.Projectiles.Minions
         }
     }
 }
+*/

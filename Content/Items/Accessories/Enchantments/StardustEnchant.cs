@@ -69,11 +69,13 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
     public class StardustEffect : AccessoryEffect
     {
         public override Header ToggleHeader => null;
-        public const int TIMESTOP_DURATION = 540; //300
+        public const int TIMESTOP_DURATION = 60 * 6;
         public override void PostUpdateEquips(Player player)
         {
             player.setStardust = true;
             FargoSoulsPlayer modPlayer = player.FargoSouls();
+            if (modPlayer.MutantPresence)
+                return;
             if (modPlayer.FreezeTime && modPlayer.freezeLength > 0)
             {
                 player.buffImmune[ModContent.BuffType<TimeFrozenBuff>()] = true;
@@ -133,7 +135,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
                 if (modPlayer.freezeLength == 90)
                 {
                     if (!Main.dedServ)
-                        SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/ZaWarudoResume"), player.Center);
+                        SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/Accessories/ZaWarudoResume"), player.Center);
                 }
 
                 if (modPlayer.freezeLength <= 0)

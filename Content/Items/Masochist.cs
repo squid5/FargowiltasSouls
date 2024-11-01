@@ -87,7 +87,7 @@ Cannot be used while a boss is alive
         {
             if (FargoSoulsUtil.WorldIsExpertOrHarder())
             {
-                if (!LumUtils.AnyBosses())
+                if (CanToggleEternity())
                 {
                     WorldSavingSystem.ShouldBeEternityMode = !WorldSavingSystem.ShouldBeEternityMode;
 
@@ -113,6 +113,10 @@ Cannot be used while a boss is alive
                 FargoSoulsUtil.PrintLocalization($"Mods.{Mod.Name}.Items.{Name}.WrongDifficulty", new Color(175, 75, 255));
             }
             return true;
+        }
+        public static bool CanToggleEternity() // exists for DLC compat
+        {
+            return FargoSoulsUtil.WorldIsExpertOrHarder() && !LumUtils.AnyBosses();
         }
     }
 }

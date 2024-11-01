@@ -14,13 +14,15 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
     public abstract class BaseEnchant : SoulsItem
     {
         public abstract Color nameColor { get; }
+        public bool IsAccessory = false;
         public string wizardEffect()
         {
-            string text = Language.GetTextValue($"Mods.FargowiltasSouls.WizardEffect.{Name.Replace("Enchantment", "").Replace("Enchant", "")}");
-            if (text.Contains("Mods.FargowiltasSouls.WizardEffect") || text.Length <= 1) //if there's no localization entry or it's empty
-            {
+            string key = $"Mods.{Mod.Name}.WizardEffect.{Name.Replace("Enchantment", "").Replace("Enchant", "")}";
+            if (!Language.Exists(key)) // if there's no localization entry
                 return Language.GetTextValue($"Mods.FargowiltasSouls.WizardEffect.NoUpgrade");
-            }
+            string text = Language.GetTextValue(key);
+            if (text.Length <= 1) //if it's empty
+                return Language.GetTextValue($"Mods.FargowiltasSouls.WizardEffect.NoUpgrade");
             return text;
         }
 
@@ -50,13 +52,13 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
                 if (localSoulsPlayer.ForceEffect(Type))
                 {
                     if (wizardEffect().Length != 0)
-                        tooltips.Add(new TooltipLine(Mod, "wizard", $"[i:{ModContent.ItemType<WizardEnchant>()}] " + wizardEffect()));
+                        tooltips.Add(new TooltipLine(Mod, "wizard", $"{Language.GetTextValue($"Mods.FargowiltasSouls.WizardEffect.Active")} [i:{ModContent.ItemType<WizardEnchant>()}]: " + wizardEffect()));
                 }
                 else
                 {
                     if (wizardEffect().Length != 0)
                     {
-                        tooltips.Add(new TooltipLine(Mod, "wizard", $"[i:{ModContent.ItemType<WizardEnchant>()}] " + wizardEffect()));
+                        tooltips.Add(new TooltipLine(Mod, "wizard", $"{Language.GetTextValue($"Mods.FargowiltasSouls.WizardEffect.Inactive")} [i:{ModContent.ItemType<WizardEnchant>()}]: " + wizardEffect()));
                         tooltips[tooltips.Count - 1].OverrideColor = Color.Gray;
                     }
                 }
@@ -87,7 +89,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
             Player player = Main.LocalPlayer;
             FargoSoulsPlayer modPlayer = player.FargoSouls();
 
-            if (modPlayer.WizardedItem == Item)
+            if (modPlayer.ForceEffect(this, true) && player.FargoSouls().EquippedEnchants.Contains(this))
             {
                 for (int j = 0; j < 12; j++)
                 {
@@ -113,7 +115,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
     {
         public override void PostSetupRecipes()
         {
-            SetFactory factory = new(ContentSamples.ItemsByType.Count);
+            SetFactory factory = ItemID.Sets.Factory;
             BaseEnchant.CraftsInto = factory.CreateIntSet();
             foreach (BaseEnchant modItem in ModContent.GetContent<BaseEnchant>())
             {

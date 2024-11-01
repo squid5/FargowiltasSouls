@@ -2,7 +2,6 @@
 using FargowiltasSouls.Content.Buffs.Souls;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -22,8 +21,8 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
             Main.npcFrameCount[NPC.type] = 4;
             NPCID.Sets.CantTakeLunchMoney[Type] = true;
 
-            NPC.AddDebuffImmunities(new List<int>
-            {
+            NPC.AddDebuffImmunities(
+            [
                 BuffID.Confused,
                 BuffID.Chilled,
                 BuffID.OnFire,
@@ -36,7 +35,7 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
                 ModContent.BuffType<SadismBuff>(),
                 ModContent.BuffType<GodEaterBuff>(),
                 ModContent.BuffType<TimeFrozenBuff>()
-            });
+            ]);
 
             this.ExcludeFromBestiary();
         }

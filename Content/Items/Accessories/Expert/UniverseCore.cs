@@ -22,14 +22,8 @@ namespace FargowiltasSouls.Content.Items.Accessories.Expert
             Item.accessory = true;
             Item.rare = ItemRarityID.Expert;
             Item.value = Item.sellPrice(0, 50);
-
-            //Item.scale *= 0.5f;
-
             Item.expert = true;
         }
-
-        //public override Color? GetAlpha(Color lightColor) => Color.White;
-
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.FargoSouls().UniverseCore = true;

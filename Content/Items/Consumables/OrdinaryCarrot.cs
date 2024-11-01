@@ -12,20 +12,6 @@ namespace FargowiltasSouls.Content.Items.Consumables
 
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("Ordinary Carrot");
-            /* Tooltip.SetDefault(@"Increases night vision
-Minor improvements to all stats
-1 minute duration
-Right click to increase view range while in inventory
-'Plucked from the face of a defeated foe'"); */
-            //DisplayName.AddTranslation((int)GameCulture.CultureName.Chinese, "普通的胡萝卜");
-            //Tooltip.AddTranslation((int)GameCulture.CultureName.Chinese,
-            //@"提高夜视能力
-            //所有属性小幅提升
-            //1分钟持续时间
-            //放在物品栏中时，右键点击可以增加视野
-            //“从被打败的敌人的脸上拔下来的”");
-
             Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 20;
         }
 
@@ -62,7 +48,7 @@ Right click to increase view range while in inventory
     {
         public override Header ToggleHeader => Header.GetHeader<BionomicHeader>();
         public override int ToggleItemType => ModContent.ItemType<OrdinaryCarrot>();
-        public override bool IgnoresMutantPresence => true;
+        
         public override void PostUpdateEquips(Player player)
         {
             player.scope = true;

@@ -25,6 +25,8 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
         public int RainTimer;
         public int SpikeCounter;
 
+        public int SummonCooldown;
+
         public float StompVelocityX;
         public float StompVelocityY;
 
@@ -38,6 +40,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
         private const float StompTravelTime = 60;
         private const float StompGravity = 1.6f;
 
+        public static int MaxMinions => WorldSavingSystem.MasochistModeReal ? 3 : 2;
 
         public override void SendExtraAI(NPC npc, BitWriter bitWriter, BinaryWriter binaryWriter)
         {
@@ -46,6 +49,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             binaryWriter.Write7BitEncodedInt(StompTimer);
             binaryWriter.Write7BitEncodedInt(StompCounter);
             binaryWriter.Write7BitEncodedInt(RainTimer);
+            binaryWriter.Write7BitEncodedInt(SummonCooldown);
             binaryWriter.Write(StompVelocityX);
             binaryWriter.Write(StompVelocityY);
         }
@@ -57,6 +61,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             StompTimer = binaryReader.Read7BitEncodedInt();
             StompCounter = binaryReader.Read7BitEncodedInt();
             RainTimer = binaryReader.Read7BitEncodedInt();
+            SummonCooldown = binaryReader.Read7BitEncodedInt();
             StompVelocityX = binaryReader.ReadSingle();
             StompVelocityY = binaryReader.ReadSingle();
         }
@@ -65,7 +70,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
         {
             base.SetDefaults(npc);
 
-            npc.lifeMax = (int)Math.Round(npc.lifeMax * 1.25, MidpointRounding.ToEven);
+            npc.lifeMax = (int)Math.Round(npc.lifeMax * 1.35, MidpointRounding.ToEven);
 
             StompTimer = -360;
         }
@@ -180,7 +185,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                         if (FargoSoulsUtil.HostCheck)
                         {
                             int smashDamage = WorldSavingSystem.MasochistModeReal && Main.getGoodWorld
-                                ? FargoSoulsUtil.ScaledProjectileDamage(npc.damage) : 0;
+                                ? FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage) : 0;
                             Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, Vector2.Zero, ProjectileID.QueenSlimeSmash, smashDamage, 0f, Main.myPlayer);
 
                             for (int j = -1; j <= 1; j += 2) //spray spikes
@@ -191,7 +196,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                                 {
                                     Vector2 vel = Main.rand.NextFloat(5f, 15f) * j * baseVel.RotatedBy(MathHelper.PiOver4 * 0.8f / max * i * -j);
                                     vel *= WorldSavingSystem.MasochistModeReal ? 2f : 1.5f;
-                                    Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, vel, ProjectileID.QueenSlimeMinionBlueSpike, FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 0f, Main.myPlayer);
+                                    Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, vel, ProjectileID.QueenSlimeMinionBlueSpike, FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 0f, Main.myPlayer);
                                 }
                             }
                         }
@@ -219,9 +224,6 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
         {
             EModeGlobalNPC.queenSlimeBoss = npc.whoAmI;
 
-            if (WorldSavingSystem.SwarmActive)
-                return true;
-
             void TrySpawnMinions(ref bool check, double threshold)
             {
                 if (!check && npc.life < npc.lifeMax * threshold)
@@ -248,6 +250,9 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
             GelatinSubjectDR = NPC.AnyNPCs(ModContent.NPCType<GelatinSubject>());
             npc.HitSound = GelatinSubjectDR ? SoundID.Item27 : SoundID.NPCHit1;
+
+            if (SummonCooldown > 0)
+                SummonCooldown--;
 
             //ai0
             //0 = default
@@ -308,10 +313,36 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     if (!Stompy(npc))
                         return false;
                 }
+
+                // minion spawns
+                if (!NPC.AnyNPCs(ModContent.NPCType<GelatinSubject>()) && SummonCooldown <= 0)
+                {
+                    bool condition1 = npc.ai[0] == 3 && npc.ai[1] == -20;
+                    bool condition2 = npc.ai[0] == 0 && npc.ai[1] == 40;
+                    if (condition1 || condition2)
+                    {
+                        if (FargoSoulsUtil.HostCheck && NPC.CountNPCS(ModContent.NPCType<GelatinBouncer>()) < MaxMinions)
+                            FargoSoulsUtil.NewNPCEasy(npc.GetSource_FromAI(), npc.Center, ModContent.NPCType<GelatinBouncer>(), npc.whoAmI, target: npc.target,
+                                velocity: Main.rand.NextFloat(8f) * npc.DirectionFrom(Main.player[npc.target].Center).RotatedByRandom(MathHelper.PiOver2));
+
+                        SummonCooldown = LumUtils.SecondsToFrames(8);
+                    }
+                }
             }
             else //phase 2
             {
                 npc.defense = npc.defDefense / 2;
+
+                if (!NPC.AnyNPCs(ModContent.NPCType<GelatinSubject>()) && RainTimer < 0)
+                {
+                    bool condition1 = npc.ai[0] == 0 && npc.ai[1] == 20;
+                    if (condition1)
+                    {
+                        if (FargoSoulsUtil.HostCheck && NPC.CountNPCS(ModContent.NPCType<GelatinFlyer>()) < MaxMinions)
+                            FargoSoulsUtil.NewNPCEasy(npc.GetSource_FromAI(), npc.Center, ModContent.NPCType<GelatinFlyer>(), npc.whoAmI, target: npc.target,
+                                velocity: 16f * npc.DirectionFrom(Main.player[npc.target].Center).RotatedBy(MathHelper.PiOver2 * 0.3f * (Main.rand.NextBool() ? 1 : -1)));
+                    }
+                }
 
                 if (RainTimer < 0)
                     RainTimer++;
@@ -359,21 +390,38 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                         if (RainTimer == delay)
                             RainDirection = Math.Sign(Main.player[npc.target].Center.X - npc.Center.X);
 
-                        if (RainTimer > delay && RainTimer < delay + maxAttackTime && RainTimer % 5 == 0)
+                        if (RainTimer > delay && RainTimer < delay + maxAttackTime) // actually attacking
                         {
-                            const float maxWavy = 200;
-                            Vector2 focusPoint = new(npc.Center.X, Math.Min(npc.Center.Y, Main.player[npc.target].Center.Y));
-                            focusPoint.X += maxWavy * RainDirection * (float)Math.Sin(Math.PI * 2f / maxAttackTime * attackTimer * 1.5f);
-                            focusPoint.Y -= 500;
-
-                            for (int i = -4; i <= 4; i++)
+                            if (RainTimer % 5 == 0) // projectiles
                             {
-                                Vector2 spawnPos = focusPoint + Main.rand.NextVector2Circular(32, 32);
-                                spawnPos.X += 330 * i;
-                                if (FargoSoulsUtil.HostCheck)
+                                const float maxWavy = 200;
+                                Vector2 focusPoint = new(npc.Center.X, Math.Min(npc.Center.Y, Main.player[npc.target].Center.Y));
+                                focusPoint.X += maxWavy * RainDirection * (float)Math.Sin(Math.PI * 2f / maxAttackTime * attackTimer * 1.5f);
+                                focusPoint.Y -= 500;
+
+                                for (int i = -4; i <= 4; i++)
                                 {
-                                    Projectile.NewProjectile(npc.GetSource_FromThis(), spawnPos, 8f * Vector2.UnitY,
-                                      ProjectileID.QueenSlimeMinionBlueSpike, FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 0f, Main.myPlayer);
+                                    Vector2 spawnPos = focusPoint + Main.rand.NextVector2Circular(32, 32);
+                                    spawnPos.X += 330 * i;
+                                    if (FargoSoulsUtil.HostCheck)
+                                    {
+                                        Projectile.NewProjectile(npc.GetSource_FromThis(), spawnPos, 8f * Vector2.UnitY,
+                                          ProjectileID.QueenSlimeMinionBlueSpike, FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 0f, Main.myPlayer);
+                                    }
+                                }
+                            }
+                            if (RainTimer % 50 == 0 && RainTimer > delay * 2) // minion spawns
+                            {
+
+                                if (!NPC.AnyNPCs(ModContent.NPCType<GelatinSubject>()))
+                                {
+                                    if (NPC.CountNPCS(ModContent.NPCType<GelatinFlyer>()) < MaxMinions)
+                                    {
+                                        SoundEngine.PlaySound(SoundID.Item155, npc.Center);
+                                        FargoSoulsUtil.NewNPCEasy(npc.GetSource_FromAI(), npc.Center, ModContent.NPCType<GelatinFlyer>(), npc.whoAmI, target: npc.target,
+                                            velocity: 16f * npc.DirectionFrom(Main.player[npc.target].Center).RotatedBy(MathHelper.PiOver2 * 0.3f * (Main.rand.NextBool() ? 1 : -1)));
+                                    }
+
                                 }
                             }
                         }
@@ -466,15 +514,33 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
         public override void ModifyIncomingHit(NPC npc, ref NPC.HitModifiers modifiers)
         {
+            if (npc.lifeRegen >= 0)
+                return;
             if (npc.life < npc.lifeMax / 2)
                 modifiers.FinalDamage *= 0.8f;
 
             if (GelatinSubjectDR)
-                modifiers.FinalDamage *= 0.25f;
+                modifiers.FinalDamage *= 0.1f;
 
             base.ModifyIncomingHit(npc, ref modifiers);
         }
-
+        public override void UpdateLifeRegen(NPC npc, ref int damage)
+        {
+            if (npc.lifeRegen < 0)
+            {
+                if (npc.life < npc.lifeMax / 2)
+                {
+                    npc.lifeRegen = (int)Math.Round(npc.lifeRegen * 0.8f);
+                    damage = (int)(Math.Round(damage *0.8f));
+                }
+                    
+                if (GelatinSubjectDR)
+                {
+                    npc.lifeRegen /= 10;
+                    damage /= 10;
+                }
+            }
+        }
         public override void OnHitPlayer(NPC npc, Player target, Player.HurtInfo hurtInfo)
         {
             base.OnHitPlayer(npc, target, hurtInfo);
@@ -492,6 +558,11 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             LoadExtra(recolor, 177);
             LoadExtra(recolor, 180);
             LoadExtra(recolor, 185);
+            LoadExtra(recolor, 186);
+            LoadProjectile(recolor, ProjectileID.QueenSlimeGelAttack);
+            LoadProjectile(recolor, ProjectileID.QueenSlimeMinionPinkBall);
+            LoadProjectile(recolor, ProjectileID.QueenSlimeMinionBlueSpike);
+
         }
     }
 
@@ -528,8 +599,27 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                 npc.knockBackResist = 0;
         }
 
+        public override void OnFirstTick(NPC npc)
+        {
+            if (NPC.AnyNPCs(NPCID.QueenSlimeBoss))
+            {
+                npc.life = 0;
+                npc.active = false;
+                npc.timeLeft = 0;
+                npc = null;
+                return;
+            }
+        }
         public override void AI(NPC npc)
         {
+            if (NPC.AnyNPCs(NPCID.QueenSlimeBoss))
+            {
+                npc.life = 0;
+                npc.active = false;
+                npc.timeLeft = 0;
+                npc = null;
+                return;
+            }
             base.AI(npc);
 
             if (WorldSavingSystem.MasochistModeReal)
@@ -615,4 +705,5 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             LoadGore(recolor, 1260);
         }
     }
+   
 }

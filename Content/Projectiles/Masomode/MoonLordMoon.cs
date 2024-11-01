@@ -45,7 +45,7 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
                 SoundEngine.PlaySound(SoundID.Item89, Projectile.position);
 
                 if (!Main.dedServ && Main.LocalPlayer.active)
-                    ScreenShakeSystem.StartShake(15, shakeStrengthDissipationIncrement: 15f / 30);
+                    ScreenShakeSystem.StartShake(10, shakeStrengthDissipationIncrement: 10f / 30);
 
                 for (int num615 = 0; num615 < 20; num615++)
                 {

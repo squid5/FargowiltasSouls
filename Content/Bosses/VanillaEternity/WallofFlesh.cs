@@ -1,3 +1,6 @@
+using Fargowiltas.Common.Configs;
+using FargowiltasSouls.Assets.ExtraTextures;
+using FargowiltasSouls.Assets.Sounds;
 using FargowiltasSouls.Common.Graphics.Particles;
 using FargowiltasSouls.Common.Utilities;
 using FargowiltasSouls.Content.Buffs.Masomode;
@@ -12,6 +15,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.IO;
+using System.Security.Cryptography.X509Certificates;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
@@ -38,6 +42,11 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
         public bool MadeEyeInvul;
 
         public bool DroppedSummon;
+
+        public bool DidGrowl;
+
+        public Vector2 AuraCenter = Vector2.Zero;
+
 
 
         public override void SendExtraAI(NPC npc, BitWriter bitWriter, BinaryWriter binaryWriter)
@@ -70,7 +79,9 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
         {
             base.SetDefaults(npc);
 
-            npc.lifeMax = (int)Math.Round(npc.lifeMax * 2.2);
+            npc.lifeMax = (int)Math.Round(npc.lifeMax * 2f);
+            if (Main.masterMode) //master mode is already long enough
+                npc.lifeMax = (int)Math.Round(npc.lifeMax * 0.9f);
             npc.defense = 0;
             npc.HitSound = SoundID.NPCHit41;
         }
@@ -82,8 +93,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             npc.buffImmune[BuffID.OnFire] = true;
             npc.buffImmune[BuffID.OnFire3] = true;
 
-            if (FargoSoulsUtil.HostCheck)
-                Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, Vector2.Zero, ModContent.ProjectileType<GlowRingHollow>(), FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 0f, Main.myPlayer, 13, npc.whoAmI);
+            //DrawAura
         }
 
         public override bool SafePreAI(NPC npc)
@@ -91,9 +101,6 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             bool result = base.SafePreAI(npc);
 
             EModeGlobalNPC.wallBoss = npc.whoAmI;
-
-            if (WorldSavingSystem.SwarmActive)
-                return result;
 
             if (!MadeEyeInvul && npc.ai[3] == 0f) //when spawned in, make one eye invul
             {
@@ -119,12 +126,23 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                 {
                     WorldEvilAttackCycleTimer = 0;
                     UseCorruptAttack = !UseCorruptAttack;
+                    DidGrowl = false;
 
                     npc.netUpdate = true;
                     NetSync(npc);
                 }
                 else if (WorldEvilAttackCycleTimer > (InDesperationPhase ? 300 : 600 - 120)) //telegraph for special attacks
                 {
+                    if (!DidGrowl)
+                    {
+                        DidGrowl = true;
+                        if (!Main.dedServ)
+                        {
+                            SoundEngine.PlaySound(FargosSoundRegistry.WoFSuck,
+                                npc.HasValidTarget && Main.player[npc.target].ZoneUnderworldHeight ? Main.player[npc.target].Center : npc.Center);
+                        }
+                    }
+
                     for (int i = 0; i < 2; i++)
                     {
                         int type = !UseCorruptAttack ? 75 : 170; //corruption dust, then crimson dust
@@ -166,10 +184,10 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                             const int speed = 14;
                             if (FargoSoulsUtil.HostCheck)
                             {
-                                Projectile.NewProjectile(npc.GetSource_FromThis(), spawnPos + Vector2.UnitY * offsetY, Vector2.UnitY * -speed, ModContent.ProjectileType<CursedFlamethrower>(), FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 0f, Main.myPlayer);
-                                Projectile.NewProjectile(npc.GetSource_FromThis(), spawnPos + Vector2.UnitY * offsetY / 2, Vector2.UnitY * speed, ModContent.ProjectileType<CursedFlamethrower>(), FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 0f, Main.myPlayer);
-                                Projectile.NewProjectile(npc.GetSource_FromThis(), spawnPos + Vector2.UnitY * -offsetY / 2, Vector2.UnitY * -speed, ModContent.ProjectileType<CursedFlamethrower>(), FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 0f, Main.myPlayer);
-                                Projectile.NewProjectile(npc.GetSource_FromThis(), spawnPos + Vector2.UnitY * -offsetY, Vector2.UnitY * speed, ModContent.ProjectileType<CursedFlamethrower>(), FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 0f, Main.myPlayer);
+                                Projectile.NewProjectile(npc.GetSource_FromThis(), spawnPos + Vector2.UnitY * offsetY, Vector2.UnitY * -speed, ModContent.ProjectileType<CursedFlamethrower>(), FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 0f, Main.myPlayer);
+                                Projectile.NewProjectile(npc.GetSource_FromThis(), spawnPos + Vector2.UnitY * offsetY / 2, Vector2.UnitY * speed, ModContent.ProjectileType<CursedFlamethrower>(), FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 0f, Main.myPlayer);
+                                Projectile.NewProjectile(npc.GetSource_FromThis(), spawnPos + Vector2.UnitY * -offsetY / 2, Vector2.UnitY * -speed, ModContent.ProjectileType<CursedFlamethrower>(), FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 0f, Main.myPlayer);
+                                Projectile.NewProjectile(npc.GetSource_FromThis(), spawnPos + Vector2.UnitY * -offsetY, Vector2.UnitY * speed, ModContent.ProjectileType<CursedFlamethrower>(), FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 0f, Main.myPlayer);
                             }
                         }
                     }
@@ -179,8 +197,12 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                         {
                             if (FargoSoulsUtil.HostCheck)
                             {
-                                for (int i = 0; i < 8; i++)
+                                int max = WorldSavingSystem.MasochistModeReal ? 12 : 8;
+                                int flip = 1;
+                                for (int i = 0; i < max; i++)
                                 {
+                                    if (WorldSavingSystem.MasochistModeReal)
+                                        flip *= -1;
                                     Vector2 target = npc.Center;
                                     target.X += Math.Sign(npc.velocity.X) * 1000f * WorldEvilAttackCycleTimer / 240f; //gradually targets further and further
                                     target.X += Main.rand.NextFloat(-100, 100);
@@ -191,9 +213,10 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                                     Vector2 distance = target - npc.Center;
                                     distance.X /= time;
                                     distance.Y = distance.Y / time - 0.5f * gravity * time;
+                                    distance.Y *= flip;
 
                                     Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center + Vector2.UnitX * Math.Sign(npc.velocity.X) * 32f, distance,
-                                        ModContent.ProjectileType<GoldenShowerWOF>(), FargoSoulsUtil.ScaledProjectileDamage(npc.damage, 0.75f), 0f, Main.myPlayer, time);
+                                        ModContent.ProjectileType<GoldenShowerWOF>(), FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage, 0.75f), 0f, Main.myPlayer, time, 0f, flip);
                                 }
                             }
                         }
@@ -208,11 +231,11 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
                 if (!Main.dedServ)
                 {
-                    SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/Monster94"),
+                    SoundEngine.PlaySound(FargosSoundRegistry.WoFScreech,
                         npc.HasValidTarget && Main.player[npc.target].ZoneUnderworldHeight ? Main.player[npc.target].Center : npc.Center);
 
                     if (Main.LocalPlayer.active)
-                        ScreenShakeSystem.StartShake(25, shakeStrengthDissipationIncrement: 25f / 90);
+                        ScreenShakeSystem.StartShake(15, shakeStrengthDissipationIncrement: 15f / 90);
                 }
             }
 
@@ -222,7 +245,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                 {
                     //ChainBarrageTimer -= 0.5f; //increment faster
 
-                    if (WorldEvilAttackCycleTimer % 2 == 1) //always make sure its even in here
+                    if (WorldEvilAttackCycleTimer % 4 == 1) //always make sure its even in here
                         WorldEvilAttackCycleTimer--;
                 }
 
@@ -248,7 +271,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                                     spawnPos.Y = (Main.maxTilesY - 200) * 16;
                                 if (spawnPos.Y / 16 >= Main.maxTilesY)
                                     spawnPos.Y = Main.maxTilesY * 16 - 16;
-                                Projectile.NewProjectile(npc.GetSource_FromThis(), spawnPos, Vector2.Zero, ModContent.ProjectileType<WOFReticle>(), FargoSoulsUtil.ScaledProjectileDamage(npc.damage, 4f / 6), 0f, Main.myPlayer);
+                                Projectile.NewProjectile(npc.GetSource_FromThis(), spawnPos, Vector2.Zero, ModContent.ProjectileType<WOFReticle>(), FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage, 4f / 6), 0f, Main.myPlayer);
                             }
                         }
                     }
@@ -266,11 +289,11 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
                 if (!Main.dedServ)
                 {
-                    SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/Monster94"),
+                    SoundEngine.PlaySound(FargosSoundRegistry.WoFScreech,
                         npc.HasValidTarget && Main.player[npc.target].ZoneUnderworldHeight ? Main.player[npc.target].Center : npc.Center);
 
                     if (Main.LocalPlayer.active)
-                        ScreenShakeSystem.StartShake(25, shakeStrengthDissipationIncrement: 25f / 90);
+                        ScreenShakeSystem.StartShake(15, shakeStrengthDissipationIncrement: 15f / 90);
                 }
             }
 
@@ -296,16 +319,16 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
                     if (!Main.dedServ)
                     {
-                        SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/Monster5") { Volume = 1.5f },
+                        SoundEngine.PlaySound(FargosSoundRegistry.WoFGrowl with { Volume = 1.5f },
                             npc.HasValidTarget && Main.player[npc.target].ZoneUnderworldHeight ? Main.player[npc.target].Center : npc.Center);
 
                         if (Main.LocalPlayer.active)
-                            ScreenShakeSystem.StartShake(50, shakeStrengthDissipationIncrement: 50f / 180);
+                            ScreenShakeSystem.StartShake(20, shakeStrengthDissipationIncrement: 20f  / 180);
                     }
                 }
             }
 
-            float maxSpeed = WorldSavingSystem.MasochistModeReal ? 4.5f : 3.5f; //don't let wof move faster than this normally
+            float maxSpeed = WorldSavingSystem.MasochistModeReal ? 4f : 3.5f; //don't let wof move faster than this normally
             if (!Main.getGoodWorld)
             {
                 if (npc.HasPlayerTarget && (Main.player[npc.target].dead || Vector2.Distance(npc.Center, Main.player[npc.target].Center) > 3000))
@@ -335,7 +358,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     velX = -maxSpeed;
 
 
-                for (int i = 0; i < 10; i++) //dust
+                /*for (int i = 0; i < 10; i++) //dust
                 {
                     Vector2 dustPos = new Vector2(2000 * npc.direction, 0f).RotatedBy(Math.PI / 3 * (-0.5 + Main.rand.NextDouble()));
                     int d = Dust.NewDust(npc.Center + dustPos, 0, 0, DustID.Torch);
@@ -345,6 +368,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     Main.dust[d].noGravity = true;
                     Main.dust[d].noLight = true;
                 }
+                */
 
                 if (++TongueTimer > 15)
                 {
@@ -359,6 +383,8 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             }
 
             EModeUtils.DropSummon(npc, "FleshyDoll", Main.hardMode, ref DroppedSummon);
+            
+            
 
             return result;
         }
@@ -400,6 +426,40 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
             LoadSpecial(recolor, ref TextureAssets.Chain12, ref FargowiltasSouls.TextureBuffer.Chain12, "Chain12");
             LoadSpecial(recolor, ref TextureAssets.Wof, ref FargowiltasSouls.TextureBuffer.Wof, "WallOfFlesh");
+        }
+        public override bool PreDraw(NPC npc, SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
+            Vector2 auraPosition = npc.Center;
+            DrawAura(npc, spriteBatch, auraPosition);
+            return true;
+        }
+        public void DrawAura(NPC npc, SpriteBatch spriteBatch, Vector2 position)
+        {
+            Vector2 auraPos = npc.Center;
+            float radius = 2000;
+            var blackTile = TextureAssets.MagicPixel;
+            var diagonalNoise = FargosTextureRegistry.WavyNoise;
+            if (!blackTile.IsLoaded || !diagonalNoise.IsLoaded)
+                return;
+            var maxOpacity = npc.Opacity;
+
+            ManagedShader borderShader = ShaderManager.GetShader("FargowiltasSouls.WoFAuraShader");
+            borderShader.TrySetParameter("colorMult", 7.35f);
+            borderShader.TrySetParameter("time", Main.GlobalTimeWrappedHourly);
+            borderShader.TrySetParameter("radius", radius);
+            borderShader.TrySetParameter("anchorPoint", auraPos);
+            borderShader.TrySetParameter("screenPosition", Main.screenPosition);
+            borderShader.TrySetParameter("screenSize", Main.ScreenSize.ToVector2());
+            borderShader.TrySetParameter("maxOpacity", maxOpacity);
+
+            Main.spriteBatch.GraphicsDevice.Textures[1] = diagonalNoise.Value;
+
+            Main.spriteBatch.End();
+            Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, SamplerState.LinearWrap, DepthStencilState.None, Main.Rasterizer, borderShader.WrappedEffect, Main.GameViewMatrix.TransformationMatrix);
+            Rectangle rekt = new(Main.screenWidth / 2, Main.screenHeight / 2, Main.screenWidth, Main.screenHeight);
+            Main.spriteBatch.Draw(blackTile.Value, rekt, null, default, 0f, blackTile.Value.Size() * 0.5f, 0, 0f);
+            Main.spriteBatch.End();
+            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
         }
     }
 
@@ -462,7 +522,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             ref float ai_State = ref npc.ai[2];
 
             NPC mouth = FargoSoulsUtil.NPCExists(npc.realLife, NPCID.WallofFlesh);
-            if (WorldSavingSystem.SwarmActive || RepeatingAI || mouth == null)
+            if (RepeatingAI || mouth == null)
                 return true;
 
             if (PreventAttacks > 0)
@@ -487,22 +547,31 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                 if (TelegraphTimer < npc.localAI[1])
                     TelegraphTimer = (int)npc.localAI[1];
 
-                float progress = (float)Math.Cos(Math.PI / 2f / TelegraphTime * TelegraphTimer);
+                
+                const float TelegraphFraction = 0.2f; // time fraction that actual telegraph lasts for
 
-                Color color = new Color(255, 0, 255, 100) * ((1f - progress) / 4 + 0.75f);
-                //float alpha = (int)(255f * progress);
-                int frequency = 2 + (int)Math.Ceiling(progress * 6);
-                float coneHalfWidth = MathHelper.PiOver2 * 0.8f * progress;
-                float speed = 6 + (1 - progress) * 6;
-                Vector2 vel = direction.RotatedByRandom(coneHalfWidth);
-                float offsetAmt = 25 + (30 * progress);
-                Vector2 offset = vel * Main.rand.NextFloat(offsetAmt, offsetAmt * 2);
-                vel *= Main.rand.NextFloat(speed, speed + 4);
+                float totalProgress = (float)Math.Cos(Math.PI / 2f / TelegraphTime * TelegraphTimer);
 
-                if (TelegraphTimer % frequency == 0)
+                if (totalProgress < TelegraphFraction)
                 {
-                    Particle p = new SparkParticle(eyeCenter + offset, vel, color, Main.rand.NextFloat(1.25f, 2f), 20);
-                    p.Spawn();
+                    float progress = totalProgress / (2 * TelegraphFraction);
+                    Color color = new Color(255, 0, 255, 100) * ((1f - progress) / 4 + 0.75f);
+                    //float alpha = (int)(255f * progress);
+                    int frequency = 2 + (int)Math.Ceiling(progress * 6);
+                    if (frequency <= 0)
+                        frequency = 1;
+                    float coneHalfWidth = MathHelper.PiOver2 * 0.8f * progress;
+                    float speed = 6 + (1 - progress) * 6;
+                    Vector2 vel = direction.RotatedByRandom(coneHalfWidth);
+                    float offsetAmt = 25 + (30 * progress);
+                    Vector2 offset = vel * Main.rand.NextFloat(offsetAmt, offsetAmt * 2);
+                    vel *= Main.rand.NextFloat(speed, speed + 4);
+
+                    if (TelegraphTimer % frequency == 0)
+                    {
+                        Particle p = new SparkParticle(eyeCenter + offset, vel, color, Main.rand.NextFloat(1.25f, 2f), 20);
+                        p.Spawn();
+                    }
                 }
 
                 if (--TelegraphTimer <= 0)
@@ -536,7 +605,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                 {
                     Vector2 speed = Vector2.UnitX.RotatedBy(npc.ai[3]);
                     if (FargoSoulsUtil.HostCheck && PreventAttacks <= 0)
-                        Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, speed, ModContent.ProjectileType<PhantasmalDeathrayWOF>(), FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 0f, Main.myPlayer, 0, npc.whoAmI);
+                        Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, speed, ModContent.ProjectileType<PhantasmalDeathrayWOF>(), FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 0f, Main.myPlayer, 0, npc.whoAmI);
                 }
                 /*
                 else //ring dust to denote i am vulnerable now
@@ -684,7 +753,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
                 ArmorShaderData shader = GameShaders.Armor.GetShaderFromItemId(ItemID.PhaseDye);
                 shader.Apply(npc, new Terraria.DataStructures.DrawData?());
-            }
+            }           
             return true;
         }
 
@@ -719,9 +788,6 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
         public override void AI(NPC npc)
         {
             base.AI(npc);
-
-            if (WorldSavingSystem.SwarmActive)
-                return;
 
             NPC wall = FargoSoulsUtil.NPCExists(EModeGlobalNPC.wallBoss, NPCID.WallofFlesh);
             if (npc.HasValidTarget && npc.Distance(Main.player[npc.target].Center) < 200 && wall != null

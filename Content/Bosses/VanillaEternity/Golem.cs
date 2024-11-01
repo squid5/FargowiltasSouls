@@ -16,7 +16,6 @@ using FargowiltasSouls.Common.Utilities;
 using FargowiltasSouls.Core.NPCMatching;
 using Terraria.GameContent;
 using Terraria.WorldBuilding;
-using System.Drawing;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System.Collections.Generic;
@@ -58,7 +57,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
         public override bool SafePreAI(NPC npc)
         {
-            if (!WorldSavingSystem.SwarmActive && !npc.dontTakeDamage && HealPerSecond != 0)
+            if (!npc.dontTakeDamage && HealPerSecond != 0)
             {
                 npc.life += HealPerSecond / 60; //healing stuff
                 if (npc.life > npc.lifeMax)
@@ -67,7 +66,11 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                 if (++HealCounter >= 75)
                 {
                     HealCounter = Main.rand.Next(30);
-                    CombatText.NewText(npc.Hitbox, CombatText.HealLife, HealPerSecond);
+                    if (HealPerSecond != 9999)
+                    {
+                        CombatText.NewText(npc.Hitbox, CombatText.HealLife, HealPerSecond);
+                    }
+                                        
                 }
             }
             return base.SafePreAI(npc);
@@ -167,11 +170,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
         public override bool SafePreAI(NPC npc)
         {
             bool result = base.SafePreAI(npc);
-
             NPC.golemBoss = npc.whoAmI;
-
-            if (WorldSavingSystem.SwarmActive)
-                return result;
 
             /*if (npc.ai[0] == 0f && npc.velocity.Y == 0f) //manipulating golem jump ai
             {
@@ -194,7 +193,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     p.AddBuff(ModContent.BuffType<LowGroundBuff>(), 2);
             }
 
-            HealPerSecond = WorldSavingSystem.MasochistModeReal ? 360 : 180;
+            HealPerSecond = WorldSavingSystem.MasochistModeReal && Main.getGoodWorld ? 360 : 180;
             if (!IsInTemple) //temple enrage, more horiz move and fast jumps
             {
                 HealPerSecond *= 2;
@@ -242,24 +241,25 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                                 StompAttackCounter++;
 
                             Vector2 spawnPos = new(npc.position.X, npc.Center.Y); //floor geysers
-                            spawnPos.X -= npc.width * 7;
+                            int originalNpcWidth = (int)Math.Round(npc.width / npc.scale);
+                            spawnPos.X -= (int)(originalNpcWidth * 7);
                             for (int i = 0; i < 6; i++)
                             {
-                                int tilePosX = (int)spawnPos.X / 16 + npc.width * i * 3 / 16;
+                                int tilePosX = (int)spawnPos.X / 16 + originalNpcWidth * i * 3 / 16;
                                 int tilePosY = (int)spawnPos.Y / 16;// + 1;
 
                                 if (FargoSoulsUtil.HostCheck)
-                                    Projectile.NewProjectile(npc.GetSource_FromThis(), tilePosX * 16 + 8, tilePosY * 16 + 8, 0f, 0f, ModContent.ProjectileType<GolemGeyser2>(), FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 0f, Main.myPlayer, npc.whoAmI);
+                                    Projectile.NewProjectile(npc.GetSource_FromThis(), tilePosX * 16 + 8, tilePosY * 16 + 8, 0f, 0f, ModContent.ProjectileType<GolemGeyser2>(), FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 0f, Main.myPlayer, npc.whoAmI);
                             }
 
                             spawnPos = npc.Center;
                             for (int i = -3; i <= 3; i++) //ceiling geysers
                             {
-                                int tilePosX = (int)spawnPos.X / 16 + npc.width * i * 3 / 16;
+                                int tilePosX = (int)spawnPos.X / 16 + originalNpcWidth * i * 3 / 16;
                                 int tilePosY = (int)spawnPos.Y / 16;// + 1;
 
                                 if (FargoSoulsUtil.HostCheck)
-                                    Projectile.NewProjectile(npc.GetSource_FromThis(), tilePosX * 16 + 8, tilePosY * 16 + 8, 0f, 0f, ModContent.ProjectileType<GolemGeyser>(), FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 0f, Main.myPlayer, npc.whoAmI);
+                                    Projectile.NewProjectile(npc.GetSource_FromThis(), tilePosX * 16 + 8, tilePosY * 16 + 8, 0f, 0f, ModContent.ProjectileType<GolemGeyser>(), FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 0f, Main.myPlayer, npc.whoAmI);
                             }
                         }
                         else if (StompAttackCounter == 2) //empty jump
@@ -274,7 +274,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                             if (npc.HasPlayerTarget)
                             {
                                 if (!Main.dedServ)
-                                    ScreenShakeSystem.StartShake(15, shakeStrengthDissipationIncrement: 15f / 20);
+                                    ScreenShakeSystem.StartShake(10, shakeStrengthDissipationIncrement: 10f / 20);
 
                                 if (FargoSoulsUtil.HostCheck)
                                     Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, Vector2.Zero, ProjectileID.DD2OgreSmash, 0, 0, Main.myPlayer);
@@ -304,7 +304,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
                                     Vector2 spawn = new(tilePosX * 16 + 8, tilePosY * 16 + 8);
                                     if (FargoSoulsUtil.HostCheck)
-                                        Projectile.NewProjectile(npc.GetSource_FromThis(), spawn, Vector2.Zero, ModContent.ProjectileType<GolemBoulder>(), FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 0f, Main.myPlayer);
+                                        Projectile.NewProjectile(npc.GetSource_FromThis(), spawn, Vector2.Zero, ModContent.ProjectileType<GolemBoulder>(), FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 0f, Main.myPlayer);
                                 }
                             }
                         }
@@ -316,10 +316,11 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     else //outside temple
                     {
                         Vector2 spawnPos = new(npc.position.X, npc.Center.Y);
-                        spawnPos.X -= npc.width * 7;
+                        int originalNpcWidth = (int)Math.Round(npc.width / npc.scale);
+                        spawnPos.X -= originalNpcWidth * 7;
                         for (int i = 0; i < 6; i++)
                         {
-                            int tilePosX = (int)spawnPos.X / 16 + npc.width * i * 3 / 16;
+                            int tilePosX = (int)spawnPos.X / 16 + originalNpcWidth * i * 3 / 16;
                             int tilePosY = (int)spawnPos.Y / 16;// + 1;
 
                             for (int j = 0; j < 100; j++)
@@ -335,15 +336,15 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                                 if (npc.HasPlayerTarget && Main.player[npc.target].position.Y > tilePosY * 16)
                                 {
                                     Projectile.NewProjectile(npc.GetSource_FromThis(), tilePosX * 16 + 8, tilePosY * 16 + 8, 6.3f, 6.3f,
-                                        ProjectileID.FlamesTrap, FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 0f, Main.myPlayer);
+                                        ProjectileID.FlamesTrap, FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 0f, Main.myPlayer);
                                     Projectile.NewProjectile(npc.GetSource_FromThis(), tilePosX * 16 + 8, tilePosY * 16 + 8, -6.3f, 6.3f,
-                                        ProjectileID.FlamesTrap, FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 0f, Main.myPlayer);
+                                        ProjectileID.FlamesTrap, FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 0f, Main.myPlayer);
                                 }
 
-                                Projectile.NewProjectile(npc.GetSource_FromThis(), tilePosX * 16 + 8, tilePosY * 16 + 8, 0f, -8f, ProjectileID.GeyserTrap, FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 0f, Main.myPlayer);
+                                Projectile.NewProjectile(npc.GetSource_FromThis(), tilePosX * 16 + 8, tilePosY * 16 + 8, 0f, -8f, ProjectileID.GeyserTrap, FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 0f, Main.myPlayer);
 
-                                Projectile.NewProjectile(npc.GetSource_FromThis(), tilePosX * 16 + 8, tilePosY * 16 + 8 - 640, 0f, -8f, ProjectileID.GeyserTrap, FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 0f, Main.myPlayer);
-                                Projectile.NewProjectile(npc.GetSource_FromThis(), tilePosX * 16 + 8, tilePosY * 16 + 8 - 640, 0f, 8f, ProjectileID.GeyserTrap, FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 0f, Main.myPlayer);
+                                Projectile.NewProjectile(npc.GetSource_FromThis(), tilePosX * 16 + 8, tilePosY * 16 + 8 - 640, 0f, -8f, ProjectileID.GeyserTrap, FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 0f, Main.myPlayer);
+                                Projectile.NewProjectile(npc.GetSource_FromThis(), tilePosX * 16 + 8, tilePosY * 16 + 8 - 640, 0f, 8f, ProjectileID.GeyserTrap, FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 0f, Main.myPlayer);
                             }
                         }
                         if (npc.HasPlayerTarget)
@@ -363,7 +364,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
                                 Vector2 spawn = new(tilePosX * 16 + 8, tilePosY * 16 + 8);
                                 if (FargoSoulsUtil.HostCheck)
-                                    Projectile.NewProjectile(npc.GetSource_FromThis(), spawn, Vector2.Zero, ModContent.ProjectileType<GolemBoulder>(), FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 0f, Main.myPlayer);
+                                    Projectile.NewProjectile(npc.GetSource_FromThis(), spawn, Vector2.Zero, ModContent.ProjectileType<GolemBoulder>(), FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 0f, Main.myPlayer);
                             }
                         }
                     }
@@ -375,7 +376,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             }
 
             //spray spiky balls
-            if (WorldSavingSystem.MasochistModeReal && ++SpikyBallTimer >= 900)
+            if (WorldSavingSystem.MasochistModeReal && Main.getGoodWorld && ++SpikyBallTimer >= 900)
             {
                 if (CheckTempleWalls(npc.Center))
                 {
@@ -385,7 +386,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                         for (int i = 0; i < 8; i++)
                         {
                             Projectile.NewProjectile(npc.GetSource_FromThis(), npc.position.X + Main.rand.Next(npc.width), npc.position.Y + Main.rand.Next(npc.height),
-                                  Main.rand.NextFloat(-0.3f, 0.3f), Main.rand.NextFloat(-10, -6), ModContent.ProjectileType<GolemSpikyBall>(), FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 0f, Main.myPlayer);
+                                  Main.rand.NextFloat(-0.3f, 0.3f), Main.rand.NextFloat(-10, -6), ModContent.ProjectileType<GolemSpikyBall>(), FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 0f, Main.myPlayer);
                         }
                     }
                 }
@@ -395,7 +396,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     for (int i = 0; i < 16; i++)
                     {
                         Projectile.NewProjectile(npc.GetSource_FromThis(), npc.position.X + Main.rand.Next(npc.width), npc.position.Y + Main.rand.Next(npc.height),
-                              Main.rand.NextFloat(-1f, 1f), Main.rand.Next(-20, -9), ModContent.ProjectileType<GolemSpikyBall>(), FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 0f, Main.myPlayer);
+                              Main.rand.NextFloat(-1f, 1f), Main.rand.Next(-20, -9), ModContent.ProjectileType<GolemSpikyBall>(), FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 0f, Main.myPlayer);
                     }
                 }
             }
@@ -426,7 +427,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             //        for (int i = -max; i <= max; i++)
             //        {
             //            Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center.X, npc.Center.Y, distance.X + i, distance.Y,
-            //                ModContent.ProjectileType<GolemFireball>(), FargoSoulsUtil.ScaledProjectileDamage(npc.damage, 0.8f), 0f, Main.myPlayer, gravity, 0);
+            //                ModContent.ProjectileType<GolemFireball>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage, 0.8f), 0f, Main.myPlayer, gravity, 0);
             //        }
             //    }
             //}
@@ -517,9 +518,6 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
         {
             bool result = base.SafePreAI(npc);
 
-            if (WorldSavingSystem.SwarmActive)
-                return result;
-
             if (npc.HasValidTarget && Golem.CheckTempleWalls(Main.player[npc.target].Center))
             {
                 if (npc.ai[0] == 1) //on the tick it shoots out, reset counter
@@ -538,13 +536,15 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     npc.position -= Vector2.Normalize(npc.velocity) * (npc.velocity.Length() - 10);
             }
 
+            npc.chaseable = false;
+
             if (npc.ai[0] == 0f && DoAttackOnFistImpact)
             {
                 DoAttackOnFistImpact = false;
                 if (!Golem.CheckTempleWalls(Main.player[npc.target].Center) || WorldSavingSystem.MasochistModeReal)
                 {
                     if (FargoSoulsUtil.HostCheck)
-                        Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, Vector2.Zero, ModContent.ProjectileType<MoonLordSunBlast>(), FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 0f, Main.myPlayer);
+                        Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, Vector2.Zero, ModContent.ProjectileType<MoonLordSunBlast>(), FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 0f, Main.myPlayer);
                 }
             }
             DoAttackOnFistImpact = npc.ai[0] != 0f;
@@ -561,12 +561,20 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
         public override bool? DrawHealthBar(NPC npc, byte hbPosition, ref float scale, ref Vector2 position) => false;
 
+        public override void ModifyHitByAnything(NPC npc, Player player, ref NPC.HitModifiers modifiers)
+        {
+            modifiers.Null();
+        }
         public override void SafeOnHitByProjectile(NPC npc, Projectile projectile, NPC.HitInfo hit, int damageDone)
         {
             base.SafeOnHitByProjectile(npc, projectile, hit, damageDone);
 
             if (WorldSavingSystem.MasochistModeReal && projectile.maxPenetrate != 1 && FargoSoulsUtil.CanDeleteProjectile(projectile))
                 projectile.timeLeft = 0;
+        }
+        public override void OnHitByAnything(NPC npc, Player player, NPC.HitInfo hit, int damageDone)
+        {
+            hit.Null();
         }
     }
 
@@ -584,6 +592,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
         public bool DoAttack;
         public bool DoDeathray;
+        public bool SecondDeathray = false;
         public bool SweepToLeft;
         public bool IsInTemple;
 
@@ -599,6 +608,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             binaryWriter.Write(SuppressedAi2);
             bitWriter.WriteBit(DoAttack);
             bitWriter.WriteBit(DoDeathray);
+            bitWriter.WriteBit(SecondDeathray);
             bitWriter.WriteBit(SweepToLeft);
             bitWriter.WriteBit(IsInTemple);
         }
@@ -613,6 +623,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             SuppressedAi2 = binaryReader.ReadSingle();
             DoAttack = bitReader.ReadBit();
             DoDeathray = bitReader.ReadBit();
+            SecondDeathray = bitReader.ReadBit();
             SweepToLeft = bitReader.ReadBit();
             IsInTemple = bitReader.ReadBit();
         }
@@ -633,12 +644,10 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
         public override bool SafePreAI(NPC npc)
         {
             bool result = base.SafePreAI(npc);
-
-            if (WorldSavingSystem.SwarmActive)
-                return result;
+            if (npc.damage < 165)
+                npc.damage = 165;
 
             NPC golem = FargoSoulsUtil.NPCExists(NPC.golemBoss, NPCID.Golem);
-
             if (npc.type == NPCID.GolemHead)
             {
                 if (golem != null)
@@ -647,6 +656,37 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             else //detatched head
             {
                 const int attackThreshold = 540;
+
+                if (DoAttack || (WorldSavingSystem.MasochistModeReal && SecondDeathray))
+                {
+                    const float geyserTiming = 100;
+                    if (AttackTimer % geyserTiming == geyserTiming - 5)
+                    {
+                        Vector2 spawnPos = golem.Center;
+                        float offset = AttackTimer % (geyserTiming * 2) == geyserTiming - 5 ? 0 : 0.5f;
+                        for (int i = -3; i <= 3; i++) //ceiling geysers
+                        {
+                            int tilePosX = (int)(spawnPos.X / 16 + golem.width * (i + offset) * 3 / 16);
+                            int tilePosY = (int)spawnPos.Y / 16;// + 1;
+
+                            int type = IsInTemple ? ModContent.ProjectileType<GolemGeyser>() : ModContent.ProjectileType<GolemGeyser2>();
+                            Projectile.NewProjectile(npc.GetSource_FromThis(), tilePosX * 16 + 8, tilePosY * 16 + 8, 0f, 0f, type, FargoSoulsUtil.ScaledProjectileDamage(golem.damage), 0f, Main.myPlayer, golem.whoAmI);
+                        }
+                    }
+
+                    if (IsInTemple) //nerf golem movement during deathray dash, provided we're in temple
+                    {
+                        if (golem != null && golem.HasValidTarget && !(WorldSavingSystem.MasochistModeReal && Main.getGoodWorld))
+                        {
+                            //golem.velocity.X = 0f;
+
+                            if (golem.ai[0] == 0f && golem.velocity.Y == 0f && golem.ai[1] > 1f) //if golem is standing on ground and preparing to jump, stall it
+                                golem.ai[1] = 1f;
+
+                            golem.GetGlobalNPC<Golem>().DoStompBehaviour = false; //disable stomp attacks
+                        }
+                    }
+                }
 
                 if (!DoAttack) //default mode
                 {
@@ -662,7 +702,6 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                         if (SuppressedAi1 < npc.ai[1])
                             SuppressedAi1 = npc.ai[1];
                         npc.ai[1] = 0f;
-
                         if (SuppressedAi2 < npc.ai[2])
                             SuppressedAi2 = npc.ai[2];
                         npc.ai[2] = 0f;
@@ -716,7 +755,8 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     if (WorldSavingSystem.MasochistModeReal || !IsInTemple)
                     {
                         DoDeathray = true;
-                        doSpikeBalls = true;
+                        if (!SecondDeathray)
+                            doSpikeBalls = true;
                     }
 
                     if (++AttackTimer < fireTime) //move to above golem
@@ -751,7 +791,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                         {
                             if (DoDeathray)
                             {
-                                Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, Vector2.UnitY, ModContent.ProjectileType<GolemBeam>(), FargoSoulsUtil.ScaledProjectileDamage(npc.damage, 1.5f), 0f, Main.myPlayer, 0f, npc.whoAmI);
+                                Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, Vector2.UnitY, ModContent.ProjectileType<GolemBeam>(), FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage, 1.5f), 0f, Main.myPlayer, 0f, npc.whoAmI);
                             }
 
                             if (doSpikeBalls)
@@ -762,7 +802,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                                 for (int i = -max; i <= max; i++)
                                 {
                                     Vector2 vel = 6f * -Vector2.UnitY.RotatedBy(MathHelper.PiOver2 / max * (i + Main.rand.NextFloat(0.25f, 0.75f) * (Main.rand.NextBool() ? -1 : 1)));
-                                    int p = Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, vel, ModContent.ProjectileType<GolemSpikeBallBig>(), FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 0f, Main.myPlayer);
+                                    int p = Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, vel, ModContent.ProjectileType<GolemSpikeBallBig>(), FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 0f, Main.myPlayer);
                                     if (p != Main.maxProjectiles)
                                         Main.projectile[p].timeLeft -= Main.rand.Next(60);
                                 }
@@ -773,7 +813,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     {
                         //do nothing
                     }
-                    else if (AttackTimer < fireTime + 150 && DoDeathray)
+                    else if (AttackTimer < fireTime + 240 && DoDeathray)
                     {
                         npc.velocity.X += SweepToLeft ? -.15f : .15f;
                         bool wallCheck = Golem.CheckTempleWalls(npc.Center);
@@ -783,10 +823,20 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                         {
                             npc.velocity = Vector2.Zero;
                             npc.netUpdate = true;
+                            NetSync(npc);
 
                             AttackTimer = 0;
                             DeathraySweepTargetHeight = 0;
                             DoAttack = false;
+
+                            if (WorldSavingSystem.MasochistModeReal && !SecondDeathray)
+                            {
+                                SecondDeathray = true;
+                                AttackTimer = attackThreshold - 1;
+                                IsInTemple = Golem.CheckTempleWalls(npc.Center);
+                            }
+                            else
+                                SecondDeathray = false;
                         }
                     }
                     else
@@ -796,42 +846,21 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                         AttackTimer = 0;
                         DeathraySweepTargetHeight = 0;
                         DoAttack = false;
-                    }
 
-                    if (!WorldSavingSystem.MasochistModeReal)
-                    {
-                        const float geyserTiming = 100;
-                        if (AttackTimer % geyserTiming == geyserTiming - 5)
+                        if (WorldSavingSystem.MasochistModeReal && !SecondDeathray)
                         {
-                            Vector2 spawnPos = golem.Center;
-                            float offset = AttackTimer % (geyserTiming * 2) == geyserTiming - 5 ? 0 : 0.5f;
-                            for (int i = -3; i <= 3; i++) //ceiling geysers
-                            {
-                                int tilePosX = (int)(spawnPos.X / 16 + golem.width * (i + offset) * 3 / 16);
-                                int tilePosY = (int)spawnPos.Y / 16;// + 1;
-
-                                int type = IsInTemple ? ModContent.ProjectileType<GolemGeyser>() : ModContent.ProjectileType<GolemGeyser2>();
-                                Projectile.NewProjectile(npc.GetSource_FromThis(), tilePosX * 16 + 8, tilePosY * 16 + 8, 0f, 0f, type, FargoSoulsUtil.ScaledProjectileDamage(golem.damage), 0f, Main.myPlayer, golem.whoAmI);
-                            }
+                            SecondDeathray = true;
+                            AttackTimer = attackThreshold - 1;
+                            IsInTemple = Golem.CheckTempleWalls(npc.Center);
                         }
-
-                        if (IsInTemple) //nerf golem movement during deathray dash, provided we're in temple
-                        {
-                            if (golem.HasValidTarget)
-                            {
-                                //golem.velocity.X = 0f;
-
-                                if (golem.ai[0] == 0f && golem.velocity.Y == 0f && golem.ai[1] > 1f) //if golem is standing on ground and preparing to jump, stall it
-                                    golem.ai[1] = 1f;
-
-                                golem.GetGlobalNPC<Golem>().DoStompBehaviour = false; //disable stomp attacks
-                            }
-                        }
+                        else
+                            SecondDeathray = false;
                     }
 
                     if (!DoAttack) //spray lasers after dash
                     {
                         DoDeathray = !DoDeathray;
+                        npc.ai[2] = 0; // reset vanilla eye laser timer
 
                         if (FargoSoulsUtil.HostCheck)
                         {
@@ -840,7 +869,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                             for (int i = -max; i <= max; i++)
                             {
                                 int p = Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, speed * Vector2.UnitY.RotatedBy(Math.PI / 2 / max * i),
-                                    ModContent.ProjectileType<EyeBeam2>(), FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 0f, Main.myPlayer);
+                                    ModContent.ProjectileType<EyeBeam2>(), FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 0f, Main.myPlayer);
                                 if (p != Main.maxProjectiles)
                                     Main.projectile[p].timeLeft = 1200;
                             }

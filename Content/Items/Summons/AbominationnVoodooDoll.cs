@@ -101,6 +101,7 @@ namespace FargowiltasSouls.Content.Items.Summons
             .AddIngredient(ModContent.ItemType<AbomEnergy>(), 5)
             .AddIngredient(ItemID.GuideVoodooDoll)
             .AddTile(ModContent.Find<ModTile>("Fargowiltas", "CrucibleCosmosSheet"))
+            .DisableDecraft()
             .Register();
         }
     }

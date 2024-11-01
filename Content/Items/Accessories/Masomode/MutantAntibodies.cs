@@ -11,20 +11,6 @@ namespace FargowiltasSouls.Content.Items.Accessories.Masomode
 
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("Mutant Antibodies");
-            /* Tooltip.SetDefault(@"Grants immunity to Wet, Feral Bite, Mutant Nibble, and Oceanic Maul
-Grants immunity to most debuffs caused by entering water
-Grants effects of Wet debuff while riding Cute Fishron
-Increases damage for your current weapon class by 20%, but decreases life regeneration
-Submerging in water refreshes flight time and gives you improved speed and increased max flight time
-'Healthy drug recommended by 0 out of 10 doctors'"); */
-            //             DisplayName.AddTranslation((int)GameCulture.CultureName.Chinese, "突变抗体");
-            //             Tooltip.AddTranslation((int)GameCulture.CultureName.Chinese, @"'推荐健康药物指数: 0/10'
-            // 免疫潮湿,野性咬噬和突变啃啄和海洋重击
-            // 免疫大部分由水造成的Debuff
-            // 骑乘猪鲨坐骑时获得潮湿状态
-            // 增加20%伤害");
-
             Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 

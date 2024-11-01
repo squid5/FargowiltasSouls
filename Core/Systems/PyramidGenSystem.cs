@@ -1,23 +1,39 @@
-﻿namespace FargowiltasSouls.Core.Systems
+﻿using FargowiltasSouls.Content.Tiles;
+using FargowiltasSouls.Content.WorldGeneration;
+using Microsoft.Xna.Framework;
+using System;
+using System.Collections.Generic;
+using Terraria;
+using Terraria.GameContent.Biomes;
+using Terraria.GameContent.Generation;
+using Terraria.ID;
+using Terraria.ModLoader;
+using Terraria.WorldBuilding;
+
+namespace FargowiltasSouls.Core.Systems
 {
-    // TODO: 1.7 pyramid gen 
-    /*
     public class PyramidGenSystem : ModSystem
     {
         public override void Load()
         {
-            Terraria.On_WorldGen.Pyramid += OnPyramidGen;
+            On_WorldGen.Pyramid += OnPyramidGen;
+            On_WorldGen.PlaceTile += OnPlaceTile;
+            On_WorldGen.CanKillTile_int_int_refBoolean += OnCanKillTile;
+            On_Player.PickWall += OnPickWall;
+            On_WorldGen.KillWall += OnKillWall;
         }
         public override void Unload()
         {
-            Terraria.On_WorldGen.Pyramid -= OnPyramidGen;
+            On_WorldGen.Pyramid -= OnPyramidGen;
+            On_WorldGen.PlaceTile -= OnPlaceTile;
+            On_WorldGen.CanKillTile_int_int_refBoolean -= OnCanKillTile;
         }
-        public Point PyramidLocation = new();
+        public static Point PyramidLocation = new(); // Doesn't save. Only used within worldgen.
         public override void PreWorldGen()
         {
             PyramidLocation = new();
         }
-        public bool OnPyramidGen(On_WorldGen.orig_Pyramid orig, int i, int j)
+        public static bool OnPyramidGen(On_WorldGen.orig_Pyramid orig, int i, int j)
         {
             bool ret = orig(i, j);
             if (ret)
@@ -29,6 +45,64 @@
             }
             return ret;
         }
+        public static bool OnPlaceTile(On_WorldGen.orig_PlaceTile orig, int i, int j, int Type, bool mute = false, bool forced = false, int plr = -1, int style = 0)
+        {
+            if (!TileID.Sets.Torch[Type] && CoffinProtectionActive(i, j))
+                return false;
+            return orig(i, j, Type, mute, forced, plr, style);
+        }
+        public static bool OnCanKillTile(On_WorldGen.orig_CanKillTile_int_int_refBoolean orig, int x, int y, out bool blockDamaged)
+        {
+            bool ret = orig(x, y, out blockDamaged);
+            if (FargoGlobalTile.SolidTile(x, y) && CoffinProtectionActive(x, y))
+                ret = false;
+            return ret;
+        }
+        public static void OnPickWall(On_Player.orig_PickWall orig, Player player, int x, int y, int damage)
+        {
+            if (CoffinProtectionActive(x, y))
+                return;
+            orig(player, x, y, damage);
+        }
+        public static void OnKillWall(On_WorldGen.orig_KillWall orig, int i, int j, bool fail = false)
+        {
+            if (CoffinProtectionActive(i, j))
+                return;
+            orig(i, j, fail);
+        }
+        // Tile protection with this is done in FargoGlobalTile.
+        public static bool CoffinProtectionActive(int x, int y) => !WorldGen.generatingWorld && !WorldSavingSystem.downedBoss[(int)WorldSavingSystem.Downed.CursedCoffin] && CoffinArena.PaddedRectangle.Contains(x, y);
+        public static bool ArenaItemPrevention(Item item, Player player)
+        {
+            bool illegalItem = false;
+            bool buildItem = false;
+
+            // no placing
+            if (!ItemID.Sets.Torches[item.type] && (item.createTile != -1 || item.createWall != -1))
+            {
+                illegalItem = true;
+                buildItem = true;
+            }
+
+            // no mining
+            if (item.pick != 0 || item.hammer != 0 || item.axe != 0)
+                illegalItem = true;
+
+            if (item.type == ItemID.WetBomb || item.type == ItemID.LavaBomb)
+            {
+                illegalItem = true;
+                buildItem = true;
+            }
+
+            if (!illegalItem)
+                return false;
+
+            Point tilePos = Main.MouseWorld.ToTileCoordinates();
+            if ((FargoGlobalTile.SolidTile(tilePos.X, tilePos.Y) || buildItem) && CoffinProtectionActive(tilePos.X, tilePos.Y))
+                return true;
+
+            return false;
+        }
         public override void PreUpdateWorld()
         {
             //Main.NewText("pyramid pos: " + PyramidLocation.X + " " + PyramidLocation.Y + " your pos: " + Main.LocalPlayer.Bottom.ToTileCoordinates().X + " " + Main.LocalPlayer.Bottom.ToTileCoordinates().Y);
@@ -38,12 +112,12 @@
         {
             double worldSizeXMod = (double)Main.maxTilesX / 4200.0;
             DunesBiome dunesBiome = GenVars.configuration.CreateBiome<DunesBiome>();
-            while (true)
+            bool success = false;
+            for (int i = 0; i < 1000; i++)
             {
                 Point dunePoint = Point.Zero;
-                bool validated = false;
                 int huh = 0; // what's up with this variable. it's very strange.
-                while (!validated)
+                for (int j = 0; j < 1000; j++)
                 {
                     dunePoint = WorldGen.RandomWorldPoint(0, 500, 0, 500);
                     bool nearJungle = Math.Abs(dunePoint.X - GenVars.jungleOriginX) < (int)(600.0 * worldSizeXMod);
@@ -58,7 +132,11 @@
                     {
                         nearSnow = false;
                     }
-                    validated = !(nearJungle || nearEdge || nearSnow);
+                    bool validated = !(nearJungle || nearEdge || nearSnow);
+                    if (validated)
+                    {
+                        break;
+                    }
                 }
                 dunesBiome.Place(dunePoint, GenVars.structures);
                 int x = WorldGen.genRand.Next(dunePoint.X - 200, dunePoint.X + 200);
@@ -69,12 +147,20 @@
                         GenVars.PyrX[GenVars.numPyr] = x;
                         GenVars.PyrY[GenVars.numPyr] = y + 20;
                         GenVars.numPyr++;
+                        success = true;
                         break;
                     }
                 }
                 if (GenVars.numPyr > 0)
+                {
+                    success = true;
                     break;
+                }
+                   
             }
+            //if (!success)
+            //    throw new Exception("Fargo's Souls: Pyramid position could not be correctly designated. Post a bug report in Fargo's Mods Discord and provide this world's seed and your modlist.");
+
         }
         // Rummages through the world until it finds a valid spot for a Pyramid
         // Runs the "generate dune + designate pyramid" code except without generating a dune, until a pyramid spot is found in Sand tiles
@@ -190,14 +276,24 @@
             //The Pyramids pass index has incremented, so increment index tracker
             pyramidIndex++;
             // Generate Cursed Coffin arena right after Pyramid pass
-            tasks.Insert(pyramidIndex + 1, new PassLegacy("CursedCoffinArena", delegate
+            tasks.Insert(pyramidIndex + 1, new PassLegacy("CursedCoffinArena", (progress, config) =>
             {
                 if (!ModLoader.HasMod("Remnants")) // don't do this if remnants is enabled, because it's not compatible. instead use item that spawns the arena if you have remnants
                 {
-                    // code here
+                    progress.Message = "Burying a sarcophagus";
+                    if (PyramidLocation == Point.Zero)
+                    {
+                        Rectangle undergroundDesertLocation = GenVars.UndergroundDesertLocation;
+                        int x = undergroundDesertLocation.Center.X;
+                        int y = undergroundDesertLocation.Top - 10;
+                        WorldGen.Pyramid(x, y);
+                    }
+                    if (PyramidLocation != Point.Zero)
+                    {
+                        CoffinArena.Generate(PyramidLocation);
+                    }
                 }
             }));
         }
     }
-    */
 }

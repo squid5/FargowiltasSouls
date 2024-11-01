@@ -8,8 +8,6 @@ namespace FargowiltasSouls.Content.Items.Consumables
     {
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("Rabies Vaccine");
-            // Tooltip.SetDefault(@"Permanently grants immunity to Feral Bite");
             Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 

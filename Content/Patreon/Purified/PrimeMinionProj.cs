@@ -32,6 +32,8 @@ namespace FargowiltasSouls.Content.Patreon.Purified
             Projectile.ignoreWater = true;
             Projectile.timeLeft = 18000;
             Projectile.FargoSouls().CanSplit = false;
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = 10;
         }
 
         public override void AI()
@@ -43,13 +45,13 @@ namespace FargowiltasSouls.Content.Patreon.Purified
             // Projectile.alpha = 0;
 
             bool foundLimbs = false;
-            int[] limbs = new int[]
-            {
+            int[] limbs =
+            [
                 ModContent.ProjectileType<PrimeMinionCannon>(),
                 ModContent.ProjectileType<PrimeMinionLaserGun>(),
                 ModContent.ProjectileType<PrimeMinionSaw>(),
                 ModContent.ProjectileType<PrimeMinionVice>()
-            };
+            ];
             for (int i = 0; i < Main.projectile.Length; i++)
             {
                 if (Main.projectile[i].active && Main.projectile[i].owner == Projectile.owner && limbs.Contains(Main.projectile[i].type))

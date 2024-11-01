@@ -19,7 +19,7 @@ namespace FargowiltasSouls.Core.Toggler
         public readonly static string ConfigPath = Path.Combine(Main.SavePath, "ModConfigs", "FargowiltasSouls_Toggles.json");
         public Preferences Config;
 
-        public Dictionary<AccessoryEffect, Toggle> Toggles = new();
+        public Dictionary<AccessoryEffect, Toggle> Toggles = [];
         //public Point TogglerPosition;
         public bool CanPlayMaso;
 
@@ -62,7 +62,7 @@ namespace FargowiltasSouls.Core.Toggler
                 var toggleUnpack = Config.Get<Dictionary<string, bool>>($"CustomPresetsOff{i + 1}", null);
                 if (toggleUnpack != null)
                 {
-                    List<AccessoryEffect> disabledEffects = new();
+                    List<AccessoryEffect> disabledEffects = [];
                     foreach (AccessoryEffect effect in ToggleLoader.LoadedToggles.Keys.ToList())
                     {
                         if (toggleUnpack.ContainsKey(effect.Name))
@@ -138,7 +138,6 @@ namespace FargowiltasSouls.Core.Toggler
 
             player.SetToggleValue<BorealEffect>(false);
             player.SetToggleValue<ShadewoodEffect>(false);
-            player.SetToggleValue<PearlwoodEffect>(false);
 
             player.SetToggleValue<CobaltEffect>(false);
             player.SetToggleValue<AncientCobaltEffect>(false);
@@ -182,20 +181,16 @@ namespace FargowiltasSouls.Core.Toggler
             //player.SetToggleValue<PungentEyeballCursor>(false);
             player.SetToggleValue<PungentMinion>(false);
             player.SetToggleValue<DeerclawpsEffect>(false);
-            player.SetToggleValue<CultistMinionEffect>(false);
+            //player.SetToggleValue<CultistMinionEffect>(false);
             player.SetToggleValue<LihzahrdBoulders>(false);
             player.SetToggleValue<PlantMinionEffect>(false);
             player.SetToggleValue<CelestialRuneAttacks>(false);
 
             player.SetToggleValue<UfoMinionEffect>(false);
-            player.SetToggleValue<MasoTrueEyeMinion>(false);
 
             player.SetToggleValue<MasoAbom>(false);
 
             player.SetToggleValue<MasoRing>(false);
-
-            player.SetToggleValue<MagmaStoneEffect>(false);
-            player.SetToggleValue<SniperScopeEffect>(false);
 
             player.SetToggleValue<BuilderEffect>(false);
 
@@ -203,7 +198,6 @@ namespace FargowiltasSouls.Core.Toggler
             player.SetToggleValue<DefenseBeeEffect>(false);
 
             player.SetToggleValue<SupersonicClimbing>(false);
-            player.SetToggleValue<SupersonicSpeedEffect>(false);
 
             player.SetToggleValue<TrawlerSporeSac>(false);
 
@@ -234,10 +228,11 @@ namespace FargowiltasSouls.Core.Toggler
             player.SetToggleValue<SquireMountJump>(true);
             player.SetToggleValue<SquireMountSpeed>(true);
             player.SetToggleValue<NebulaEffect>(true);
-            player.SetToggleValue<SolarEffect>(true);
+            //player.SetToggleValue<SolarEffect>(true);
             player.SetToggleValue<HuntressEffect>(true);
             player.SetToggleValue<CrystalAssassinDash>(true);
             player.SetToggleValue<GladiatorBanner>(true);
+            player.SetToggleValue<ChalicePotionEffect>(true);
 
             player.SetToggleValue<EternityTin>(true);
 
@@ -262,7 +257,6 @@ namespace FargowiltasSouls.Core.Toggler
             player.SetToggleValue<MeteorMomentumEffect>(true);
             player.SetToggleValue<FlightMasteryInsignia>(true);
             player.SetToggleValue<FlightMasteryGravity>(true);
-            player.SetToggleValue<UniverseSpeedEffect>(true);
             player.SetToggleValue<PaladinShieldEffect>(true);
             player.SetToggleValue<ShimmerImmunityEffect>(true);
             player.SetToggleValue<MasoAeolusFrog>(true);

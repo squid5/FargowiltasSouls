@@ -1,6 +1,5 @@
 using FargowiltasSouls.Common.Graphics.Particles;
 using FargowiltasSouls.Content.Bosses.VanillaEternity;
-using FargowiltasSouls.Content.Items.Accessories.Enchantments;
 using FargowiltasSouls.Content.NPCs.EternityModeNPCs;
 using Luminance.Core.Graphics;
 using Microsoft.Xna.Framework;
@@ -51,26 +50,6 @@ namespace FargowiltasSouls.Content.Projectiles
 
             switch ((int)Projectile.ai[1])
             {
-                case -25: //hallow enchant heal shockwave
-                    {
-                        Player player = Main.player[(int)Projectile.ai[2]];
-                        if (player != null && player.active && !player.dead && !player.ghost)
-                        {
-                            customScaleAlpha = true;
-                            Projectile.Center = player.Center;
-                            maxTime = 40;
-                            color = Color.LightGoldenrodYellow;
-                            Projectile.scale = 2.5f * HallowEffect.RepelRadius / Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value.Height;
-                            Projectile.alpha = 100 + (int)(155f * Projectile.localAI[0] / maxTime);
-                            color.A = 0;
-                        }
-                        else
-                        {
-                            Projectile.Kill();
-                        }
-
-                    }
-                    break;
                 case -24: //baron debuff apply at opening
                     {
                         //customScaleAlpha = true;
@@ -173,7 +152,7 @@ namespace FargowiltasSouls.Content.Projectiles
                     break;
 
                 case -19: //abom dash
-                    color = Color.Yellow;
+                    color = Color.Orange;
                     color.A = 0;
                     scale = 18f;
                     break;
@@ -324,13 +303,16 @@ namespace FargowiltasSouls.Content.Projectiles
                     break;
 
                 case NPCID.Deerclops:
-                    color = npc.life < npc.lifeMax / 3 ? Color.Red : Color.LightSkyBlue;
                     color.A = 0;
                     scale = 9f;
                     maxTime = 30;
 
-                    if (npc != null)
+                    if (npc.Alive())
+                    {
+                        color = npc.life < npc.lifeMax / 3 ? Color.Red : Color.LightSkyBlue;
                         Projectile.Center = npc.direction < 0 ? npc.TopLeft : npc.TopRight;
+                    }
+                        
                     break;
 
                 default:

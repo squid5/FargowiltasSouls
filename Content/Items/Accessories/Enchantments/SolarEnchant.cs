@@ -1,9 +1,18 @@
-﻿using FargowiltasSouls.Content.Buffs.Souls;
+﻿using FargowiltasSouls.Common.Graphics.Particles;
+using FargowiltasSouls.Content.Bosses.Champions.Cosmos;
+using FargowiltasSouls.Content.Buffs.Souls;
+using FargowiltasSouls.Content.Items.Accessories.Forces;
+using FargowiltasSouls.Content.Projectiles.Souls;
+using FargowiltasSouls.Content.UI.Elements;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using FargowiltasSouls.Core.Systems;
 using FargowiltasSouls.Core.Toggler.Content;
+using Luminance.Core.Graphics;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using rail;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -14,22 +23,10 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
-
-            // DisplayName.SetDefault("Solar Enchantment");
-            /* Tooltip.SetDefault(
-@"Solar shield allows you to dash through enemies
-Solar shield is not depleted on hit, but has reduced damage reduction
-Attacks may inflict the Solar Flare debuff
-'Too hot to handle'"); */
-            //             DisplayName.AddTranslation((int)GameCulture.CultureName.Chinese, "日耀魔石");
-            //             Tooltip.AddTranslation((int)GameCulture.CultureName.Chinese, 
-            // @"允许你使用日耀护盾进行冲刺
-            // 日耀护盾在击中敌人时不会被消耗，但会降低其伤害减免效果
-            // 攻击有几率造成耀斑减益
-            // '烫手魔石'");
         }
 
-        public override Color nameColor => new(254, 158, 35);
+        public static readonly Color NameColor = new(254, 158, 35);
+        public override Color nameColor => NameColor;
 
 
         public override void SetDefaults()
@@ -42,7 +39,7 @@ Attacks may inflict the Solar Flare debuff
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.AddEffect<SolarEffect>(Item);
+            //player.AddEffect<SolarEffect>(Item);
             player.AddEffect<SolarFlareEffect>(Item);
         }
 
@@ -65,86 +62,56 @@ Attacks may inflict the Solar Flare debuff
 
         }
     }
-    public class SolarEffect : AccessoryEffect
-    {
-        public override Header ToggleHeader => Header.GetHeader<CosmoHeader>();
-        public override int ToggleItemType => ModContent.ItemType<SolarEnchant>();
-        public static void AddDash(Player player)
-        {
-            Player Player = player;
-            if (!Player.setSolar && !player.FargoSouls().TerrariaSoul) //nerf DR
-            {
-                Player.endurance -= 0.15f;
-            }
 
-            Player.AddBuff(BuffID.SolarShield3, 5, false);
-
-            Player.setSolar = true;
-            int solarCD = 240;
-            if (++Player.solarCounter >= solarCD)
-            {
-                if (Player.solarShields > 0 && Player.solarShields < 3)
-                {
-                    for (int i = 0; i < Player.MaxBuffs; i++)
-                    {
-                        if (Player.buffType[i] >= BuffID.SolarShield1 && Player.buffType[i] <= BuffID.SolarShield2)
-                        {
-                            Player.DelBuff(i);
-                        }
-                    }
-                }
-                if (Player.solarShields < 3)
-                {
-                    Player.AddBuff(BuffID.SolarShield1 + Player.solarShields, 5, false);
-                    for (int i = 0; i < 16; i++)
-                    {
-                        Dust dust = Main.dust[Dust.NewDust(Player.position, Player.width, Player.height, DustID.Torch, 0f, 0f, 100)];
-                        dust.noGravity = true;
-                        dust.scale = 1.7f;
-                        dust.fadeIn = 0.5f;
-                        dust.velocity *= 5f;
-                    }
-                    Player.solarCounter = 0;
-                }
-                else
-                {
-                    Player.solarCounter = solarCD;
-                }
-            }
-            for (int i = Player.solarShields; i < 3; i++)
-            {
-                Player.solarShieldPos[i] = Vector2.Zero;
-            }
-            for (int i = 0; i < Player.solarShields; i++)
-            {
-                Player.solarShieldPos[i] += Player.solarShieldVel[i];
-                Vector2 value = (Player.miscCounter / 100f * 6.28318548f + i * (6.28318548f / Player.solarShields)).ToRotationVector2() * 6f;
-                value.X = Player.direction * 20;
-                Player.solarShieldVel[i] = (value - Player.solarShieldPos[i]) * 0.2f;
-            }
-            if (Player.dashDelay >= 0)
-            {
-                Player.solarDashing = false;
-                Player.solarDashConsumedFlare = false;
-            }
-            bool flag = Player.solarDashing && Player.dashDelay < 0;
-            if (Player.solarShields > 0 || flag)
-            {
-                Player.dashType = 3;
-                FargoSoulsPlayer modPlayer = player.FargoSouls();
-                modPlayer.FargoDash = DashManager.DashType.None;
-                modPlayer.HasDash = true; //doesnt check this itself, so overrides most other dashes(?)
-            }
-        }
-    }
     public class SolarFlareEffect : AccessoryEffect
     {
         public override Header ToggleHeader => Header.GetHeader<CosmoHeader>();
         public override int ToggleItemType => ModContent.ItemType<SolarEnchant>();
-        public override void OnHitNPCEither(Player player, NPC target, NPC.HitInfo hitInfo, DamageClass damageClass, int baseDamage, Projectile projectile, Item item)
+        public override bool ExtraAttackEffect => true;
+        public override void PostUpdateEquips(Player player)
         {
-            if (Main.rand.NextBool(4))
-                target.AddBuff(ModContent.BuffType<SolarFlareBuff>(), 300);
+            FargoSoulsPlayer modPlayer = player.FargoSouls();
+
+            CooldownBarManager.Activate("SolarEnchantCharge", ModContent.Request<Texture2D>("FargowiltasSouls/Content/Items/Accessories/Enchantments/SolarEnchant").Value, SolarEnchant.NameColor, 
+                () => Main.LocalPlayer.FargoSouls().SolarEnchCharge / 240, true, activeFunction: () => player.HasEffect<SolarFlareEffect>());
+
+            player.endurance += 0.2f * modPlayer.SolarEnchCharge / 240f;
+            if (player.HeldItem != null && player.HeldItem.damage > 0 && player.controlUseItem)
+            {
+                if (modPlayer.SolarEnchCharge < 240)
+                {
+                    modPlayer.SolarEnchCharge += 1;
+                    if (modPlayer.SolarEnchCharge == 240)
+                    {
+                        SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/Accessories/ChargeSound"), player.Center);
+                    }
+                }
+                else
+                {
+                    //Charged particles
+                    float rotation = Main.rand.NextFloat(0, 2 * MathHelper.Pi);
+                    Vector2 pos = player.Center + 24 * Vector2.UnitX.RotatedBy(rotation);
+                    Particle spark = new SparkParticle(pos, -(0.8f * Vector2.UnitX).RotatedBy(rotation), Color.OrangeRed, 0.4f, 10);
+                    spark.Spawn();
+                }
+            }
+            else if (modPlayer.SolarEnchCharge >= 240)
+            {
+                SoundEngine.PlaySound(SoundID.DD2_BetsyFlameBreath with {Pitch = -0.6f, Volume = 0.8f}, player.Center);
+
+                bool wizBoost = modPlayer.ForceEffect<SolarEnchant>();
+                int multiplier = wizBoost ? 2 : 1;
+                int damage = 3 * 1800 * multiplier;
+                int speed = wizBoost ? 17 : 13;
+
+                Projectile.NewProjectile(player.GetSource_EffectItem<SolarFlareEffect>(), player.Center, Vector2.Zero, ModContent.ProjectileType<SolarEnchFlare>(), damage, 1f, player.whoAmI, ai2: speed);
+
+                modPlayer.SolarEnchCharge = 0;
+            }
+            else if (modPlayer.SolarEnchCharge > 0)
+            {
+                modPlayer.SolarEnchCharge--;
+            }
         }
     }
 }

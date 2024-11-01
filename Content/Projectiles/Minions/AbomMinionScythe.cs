@@ -10,7 +10,7 @@ namespace FargowiltasSouls.Content.Projectiles.Minions
 {
     public class AbomMinionScythe : AbomScytheSplit
     {
-        public override string Texture => "Terraria/Images/Projectile_274";
+        public override string Texture => "FargowiltasSouls/Content/Bosses/AbomBoss/AbomDeathScythe";
 
         public override void SetStaticDefaults()
         {

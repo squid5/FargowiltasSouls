@@ -28,10 +28,10 @@ namespace FargowiltasSouls.Content.Projectiles.Minions
         public const int MaxDistance = 300;
         public bool Reflected = false;
         ref float SlashCD => ref Projectile.ai[1];
-        ref float Action => ref Projectile.ai[0];
 
         ref float SlashRotation => ref Projectile.localAI[0];
         ref float SlashArc => ref Projectile.localAI[1];
+        ref float Action => ref Projectile.localAI[2];
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("HallowSword");
@@ -59,15 +59,18 @@ namespace FargowiltasSouls.Content.Projectiles.Minions
         {
             writer.Write(mousePos.X);
             writer.Write(mousePos.Y);
+            writer.Write(Action);
         }
         public override void ReceiveExtraAI(BinaryReader reader)
         {
             Vector2 buffer;
             buffer.X = reader.ReadSingle();
             buffer.Y = reader.ReadSingle();
+            float actionBuffer = reader.ReadSingle();
             if (Projectile.owner != Main.myPlayer)
             {
                 mousePos = buffer;
+                Action = actionBuffer;
             }
         }
 
@@ -107,10 +110,16 @@ namespace FargowiltasSouls.Content.Projectiles.Minions
                 Recover(player);
             }
 
-            if (CheckRightClick(player) && SlashCD <= 0)
+            if (CheckRightClick(player) && SlashCD <= 0 && Projectile.owner == Main.myPlayer)
+            {
+                Action = 22;
+                Projectile.netUpdate = true;
+            }
+            if (Action == 22)
             {
                 HitsLeft = 10;
                 Slash(player);
+                Projectile.netUpdate = true;
             }
             //ai156_blacklistedTargets.Clear();
 
@@ -135,7 +144,8 @@ namespace FargowiltasSouls.Content.Projectiles.Minions
             Vector2 desiredPos = mousePos + offset;
             handlePos = Vector2.Lerp(handlePos, desiredPos, 0.5f);
 
-            Vector2 desiredCenter = handlePos;// + (Projectile.rotation - MathHelper.PiOver2).ToRotationVector2() * TextureAssets.Projectile[Projectile.type].Value.Width * Projectile.scale / 2;
+            Vector2 desiredCenter = handlePos;
+            //Projectile.velocity = FargoSoulsUtil.SmartAccel(Projectile.Center, Main.MouseWorld, Projectile.velocity, 1f, 1f);
             Projectile.velocity = (desiredCenter - Projectile.Center) / 3;
 
             if (Action == 0)
@@ -235,6 +245,14 @@ namespace FargowiltasSouls.Content.Projectiles.Minions
             }
             return false;
         }
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+        {
+            if (Projectile.TryGetOwner(out Player player))
+            {
+                if (player.ForceEffect<AncientHallowMinion>())
+                    modifiers.SourceDamage *= 600f / 350f;
+            }
+        }
         private void Reflect(Projectile sword)
         {
             Player player = Main.player[sword.owner];
@@ -246,8 +264,9 @@ namespace FargowiltasSouls.Content.Projectiles.Minions
 
             foreach (Projectile p in Main.projectile.Where(p => p.active && p.hostile && p.damage > 0 && FargoSoulsUtil.CanDeleteProjectile(p) && p.damage <= damageCap && sword.Colliding(sword.Hitbox, p.Hitbox)))
             {
-                SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/parrynmuse"), p.Center);
+                SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/Accessories/parrynmuse"), p.Center);
                 Reflected = true;
+                p.FargoSouls().Reflected = true;
                 p.hostile = false;
                 p.friendly = true;
                 player.AddBuff(ModContent.BuffType<HallowCooldownBuff>(), 60 * 15);

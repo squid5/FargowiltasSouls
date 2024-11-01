@@ -1,8 +1,11 @@
-﻿using FargowiltasSouls.Content.Patreon.ParadoxWolf;
+﻿using FargowiltasSouls.Common.Graphics.Particles;
+using FargowiltasSouls.Content.Patreon.ParadoxWolf;
 using FargowiltasSouls.Content.Patreon.Potato;
+using Luminance.Core.Graphics;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
@@ -43,6 +46,8 @@ namespace FargowiltasSouls.Core.ModPlayers
         public bool Northstrider;
 
         public bool RazorContainer;
+
+        public static readonly SoundStyle RazorContainerTink = new("FargowiltasSouls/Assets/Sounds/Accessories/RazorTink")  { PitchVariance = 0.25f };
 
         public override void SaveData(TagCompound tag)
         {
@@ -164,7 +169,24 @@ namespace FargowiltasSouls.Core.ModPlayers
             }
         }
 
-
+        public override void OnHitNPCWithItem(Item item, NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            if (CompOrb && CompOrbDrainCooldown <= 0 && item.DamageType != DamageClass.Magic && item.DamageType != DamageClass.Summon)
+            {
+                CompOrbDrainCooldown = 15;
+                if (Player.CheckMana(10, true, false))
+                    Player.manaRegenDelay = Player.maxRegenDelay;
+            }
+        }
+        public override void OnHitNPCWithProj(Projectile proj, NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            if (CompOrb && CompOrbDrainCooldown <= 0 && proj.DamageType != DamageClass.Magic && proj.DamageType != DamageClass.Summon)
+            {
+                CompOrbDrainCooldown = 15;
+                if (Player.CheckMana(10, true, false))
+                    Player.manaRegenDelay = Player.maxRegenDelay;
+            }
+        }
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             if (Gittle)
@@ -187,20 +209,13 @@ namespace FargowiltasSouls.Core.ModPlayers
                     target.SimpleStrikeNPC(int.MaxValue, 0, false, 0, null, false, 0, true);
                 }
             }
-
-            if (CompOrb && CompOrbDrainCooldown <= 0)
-            {
-                CompOrbDrainCooldown = 15;
-                if (Player.CheckMana(10, true, false))
-                    Player.manaRegenDelay = Player.maxRegenDelay;
-            }
         }
 
         public override void ModifyHitNPCWithItem(Item item, NPC target, ref NPC.HitModifiers modifiers)
         {
             if (CompOrb && item.DamageType != DamageClass.Magic && item.DamageType != DamageClass.Summon)
             {
-                modifiers.FinalDamage *= 1.25f;
+                modifiers.FinalDamage *= 1.2f;
 
                 if (Player.manaSick)
                     modifiers.FinalDamage *= Player.manaSickReduction;
@@ -222,7 +237,7 @@ namespace FargowiltasSouls.Core.ModPlayers
         {
             if (CompOrb && proj.DamageType != DamageClass.Magic && proj.DamageType != DamageClass.Summon)
             {
-                modifiers.FinalDamage *= 1.25f;
+                modifiers.FinalDamage *= 1.2f;
 
                 if (Player.manaSick)
                     modifiers.FinalDamage *= Player.manaSickReduction;
@@ -314,15 +329,26 @@ namespace FargowiltasSouls.Core.ModPlayers
                 {
                     Projectile projectile = Main.projectile[i];
 
-                    if (projectile.type == ModContent.ProjectileType<RazorBlade>() && hitbox.Distance(projectile.Center) < 100)
+                    if (projectile.TypeAlive<RazorBlade>() && hitbox.Distance(projectile.Center) < 100)
                     {
-                        Player player = Main.player[projectile.owner];
+                        if (Player.whoAmI == projectile.owner)
+                        {
+                            Vector2 velocity = Vector2.Normalize((Main.MouseWorld - Player.Center)) * 30;
 
-                        Vector2 velocity = Vector2.Normalize((Main.MouseWorld - player.Center)) * 50;
-
-                        projectile.velocity = velocity;
-                        projectile.ai[0] = 1;
-                        projectile.ai[1] = 0;
+                            for (int j = 0; j < 3; j++)
+                            {
+                                Vector2 pos = projectile.Center + Main.rand.NextVector2Circular(projectile.width / 2, projectile.height / 2);
+                                Particle p = new SparkParticle(pos, Vector2.Normalize(pos - projectile.Center) * Main.rand.NextFloat(2, 5), Color.Lerp(Color.Orange, Color.Red, Main.rand.NextFloat()), 0.2f, 20);
+                                p.Spawn();
+                            }
+                            SoundEngine.PlaySound(RazorContainerTink with { Volume = 0.25f }, projectile.Center);
+                            projectile.velocity = velocity;
+                            projectile.ai[0] = 1;
+                            projectile.ai[1] = 0;
+                            projectile.ResetLocalNPCHitImmunity();
+                            projectile.netUpdate = true;
+                            NetMessage.SendData(MessageID.SyncProjectile, -1, -1, null, projectile.whoAmI);
+                        }
                     }
                 }
 

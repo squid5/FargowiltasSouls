@@ -20,7 +20,7 @@ namespace FargowiltasSouls.Content.Items.Weapons.Challengers
 
         public override void SetDefaults()
         {
-            Item.damage = 14;
+            Item.damage = 15;
             Item.DamageType = DamageClass.Melee;
             Item.width = 36;
             Item.height = 36;
@@ -37,7 +37,7 @@ namespace FargowiltasSouls.Content.Items.Weapons.Challengers
         }
         public override void AddRecipes()
         {
-            CreateRecipe().AddIngredient<TrojanSquirrelBag>(2).AddTile(TileID.Solidifier).Register();
+            CreateRecipe().AddIngredient<TrojanSquirrelBag>(2).AddTile(TileID.Solidifier).DisableDecraft().Register();
         }
     }
 }

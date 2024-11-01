@@ -8,7 +8,6 @@ namespace FargowiltasSouls.Content.Items.Accessories.Souls
 {
     public abstract class FlightMasteryWings : BaseSoul
     {
-        public abstract bool HasSupersonicSpeed { get; }
 
         public override void VerticalWingSpeeds(Player player, ref float ascentWhenFalling, ref float ascentWhenRising,
             ref float maxCanAscendMultiplier, ref float maxAscentMultiplier, ref float constantAscend)
@@ -34,14 +33,6 @@ namespace FargowiltasSouls.Content.Items.Accessories.Souls
         {
             speed = 18f;
             acceleration = 0.75f;
-
-            if (HasSupersonicSpeed && player.HasEffect<SupersonicSpeedEffect>())
-                speed = 25f;
         }
-    }
-    public class SupersonicSpeedEffect : AccessoryEffect
-    {
-        public override Header ToggleHeader => Header.GetHeader<FlightMasteryHeader>();
-        public override int ToggleItemType => ModContent.ItemType<FlightMasterySoul>();
     }
 }

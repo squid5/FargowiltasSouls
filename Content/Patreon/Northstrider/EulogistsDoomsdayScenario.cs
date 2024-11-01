@@ -37,6 +37,9 @@ namespace FargowiltasSouls.Content.Patreon.Northstrider
             int radius = 15;
             Vector2 position = player.Center;
 
+            FargoSoulsUtil.TileExplosion(player.Center, radius);
+
+            /*
             for (int x = -radius; x <= radius; x++)
             {
                 for (int y = -radius; y <= radius; y++)
@@ -54,13 +57,13 @@ namespace FargowiltasSouls.Content.Patreon.Northstrider
 
                         if (WorldGen.InWorld(xPosition, yPosition))
                         {
-                            WorldGen.KillTile(xPosition, yPosition, noItem: true);
                             tile.ClearEverything();
                             Main.Map.Update(xPosition, yPosition, 255);
                         }
                     }
                 }
             }
+            */
 
             Main.refreshMap = true;
             // Play explosion sound
@@ -83,6 +86,19 @@ namespace FargowiltasSouls.Content.Patreon.Northstrider
                     if (dist <= (radius * 14))
                     {
                         npc.StrikeInstantKill();
+                    }
+                }
+            }
+            // kill all players nearby
+            for (int i = 0; i < Main.maxPlayers; i++)
+            {
+                Player otherPlayer = Main.player[i];
+                if (otherPlayer.Alive() && player != otherPlayer)
+                {
+                    float dist = Vector2.Distance(player.Center, otherPlayer.Center);
+                    if (dist <= (radius * 14))
+                    {
+                        otherPlayer.KillMe(PlayerDeathReason.ByPlayerItem(player.whoAmI, Item), 9999, 0);
                     }
                 }
             }

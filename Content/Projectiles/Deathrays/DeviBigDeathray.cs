@@ -16,17 +16,17 @@ using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Content.Projectiles.Deathrays
 {
-    public class DeviBigDeathray : BaseDeathray, IPixelatedPrimitiveRenderer
+	public class DeviBigDeathray : BaseDeathray, IPixelatedPrimitiveRenderer
     {
         public override string Texture => "FargowiltasSouls/Content/Projectiles/Deathrays/DeviDeathray";
 
-        public static List<Asset<Texture2D>> RingTextures => new()
-        {
+        public static List<Asset<Texture2D>> RingTextures =>
+        [
             FargosTextureRegistry.DeviRingTexture,
             FargosTextureRegistry.DeviRing2Texture,
             FargosTextureRegistry.DeviRing3Texture,
             FargosTextureRegistry.DeviRing4Texture,
-        };
+        ];
 
         public DeviBigDeathray() : base(180) { }
 
@@ -46,8 +46,7 @@ namespace FargowiltasSouls.Content.Projectiles.Deathrays
         public override void AI()
         {
             if (!Main.dedServ && Main.LocalPlayer.active)
-                if (ScreenShakeSystem.OverallShakeIntensity < 7)
-                    ScreenShakeSystem.SetUniversalRumble(7);
+                FargoSoulsUtil.ScreenshakeRumble(6);
 
             Vector2? vector78 = null;
             if (Projectile.velocity.HasNaNs() || Projectile.velocity == Vector2.Zero)
@@ -70,7 +69,8 @@ namespace FargowiltasSouls.Content.Projectiles.Deathrays
             }
             if (Projectile.localAI[0] == 0f)
             {
-                SoundEngine.PlaySound(SoundID.Zombie104, Projectile.Center);
+                if (!Main.dedServ)
+                    SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/Siblings/Deviantt/DeviBigDeathray"), Projectile.Center);
             }
             float num801 = 17f;
             Projectile.localAI[0] += 1f;
@@ -170,7 +170,7 @@ namespace FargowiltasSouls.Content.Projectiles.Deathrays
             return baseWidth * 0.7f;
         }
 
-        public static Color[] DeviColors => new Color[] { new(216, 108, 224, 100), new(232, 140, 240, 100), new(224, 16, 216, 100), new(240, 220, 240, 100) };
+        public static Color[] DeviColors => [new(216, 108, 224, 100), new(232, 140, 240, 100), new(224, 16, 216, 100), new(240, 220, 240, 100)];
         public static Color ColorFunction(float trailInterpolant)
         {
             float time = (float)(0.5 * (1 + Math.Sin(1.5f * Main.GlobalTimeWrappedHourly % 1)));
@@ -230,7 +230,7 @@ namespace FargowiltasSouls.Content.Projectiles.Deathrays
 
         }
 
-        public float RingWidthFunction(float trailInterpolant) => Projectile.scale * 5;
+        public float RingWidthFunction(float trailInterpolant) => Projectile.scale * 4;
 
         public static Color RingColorFunction(float trailInterpolant)
         {
@@ -297,7 +297,7 @@ namespace FargowiltasSouls.Content.Projectiles.Deathrays
                 if (inBackground)
                     opacity = 0.5f;
                 ring.TrySetParameter("opacity", opacity);
-                PrimitiveRenderer.RenderTrail(ringDrawPoints, new(WidthFunction, ColorFunction, Pixelate: true, Shader: ring), 30);
+                PrimitiveRenderer.RenderTrail(ringDrawPoints, new(RingWidthFunction, RingColorFunction, Pixelate: true, Shader: ring), 30);
                 iterator++;
             }
         }

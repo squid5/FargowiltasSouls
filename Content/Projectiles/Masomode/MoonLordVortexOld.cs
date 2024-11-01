@@ -30,7 +30,7 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
 
             void Suck()
             {
-                foreach (Projectile p in Main.projectile.Where(p => p.active && p.friendly && p.Distance(Projectile.Center) < suckRange && !FargoSoulsUtil.IsSummonDamage(p) && FargoSoulsUtil.CanDeleteProjectile(p) && p.type != ModContent.ProjectileType<Minions.LunarCultistLightningArc>()))
+                foreach (Projectile p in Main.projectile.Where(p => p.active && p.friendly && p.Distance(Projectile.Center) < suckRange && p.CountsAsClass(DamageClass.Ranged) && FargoSoulsUtil.CanDeleteProjectile(p) && p.type != ModContent.ProjectileType<Minions.LunarCultistLightningArc>()))
                 {
                     //suck in nearby friendly projs
                     p.velocity = p.SafeDirectionTo(Projectile.Center) * p.velocity.Length();
@@ -42,7 +42,7 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
                         Player player = Main.player[p.owner];
                         if (player.active && !player.dead && !player.ghost && suck <= 0)
                         {
-                            suck = 6;
+                            suck = 60;
 
                             Vector2 dir = Projectile.SafeDirectionTo(player.Center).RotatedByRandom(MathHelper.ToRadians(10));
                             float ai1New = Main.rand.NextBool() ? 1 : -1; //randomize starting direction
@@ -55,7 +55,8 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
                 }
             };
 
-            if (suck > 0) suck--;
+            if (suck > 0) 
+                suck--;
 
             NPC npc = FargoSoulsUtil.NPCExists(Projectile.ai[1], NPCID.MoonLordCore);
             if (npc != null)

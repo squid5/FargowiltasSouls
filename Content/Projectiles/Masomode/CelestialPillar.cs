@@ -1,5 +1,6 @@
+using FargowiltasSouls.Assets.Sounds;
 using FargowiltasSouls.Content.Buffs.Masomode;
-using FargowiltasSouls.Core.Systems;
+using Luminance.Core.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -87,7 +88,8 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
                     Projectile.alpha = 0;
                     if (target != -1)
                     {
-                        SoundEngine.PlaySound(SoundID.Item89, Projectile.Center);
+                        SoundEngine.PlaySound(FargosSoundRegistry.ThrowShort with { Pitch = -0.5f }, Projectile.Center);
+                        //SoundEngine.PlaySound(SoundID.Item89, Projectile.Center);
                         Projectile.velocity = Main.player[target].Center - Projectile.Center;
                         float distance = Projectile.velocity.Length();
                         Projectile.velocity.Normalize();
@@ -165,6 +167,8 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
         public override void OnKill(int timeLeft)
         {
             SoundEngine.PlaySound(SoundID.Item92, Projectile.Center);
+            if (Main.LocalPlayer.active && !Main.dedServ)
+                ScreenShakeSystem.StartShake(10, shakeStrengthDissipationIncrement: 10f / 30);
             var type = (int)Projectile.ai[0] switch
             {
                 0 => 242,
@@ -195,7 +199,7 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
                           ModContent.ProjectileType<GlowLine>(), Projectile.damage / 3, 0f, Main.myPlayer, 7, Projectile.ai[0]);
                 }
 
-                if (WorldSavingSystem.MasochistModeReal)
+                if (Main.getGoodWorld)
                     FargoSoulsUtil.NewNPCEasy(Projectile.GetSource_FromThis(), Projectile.Center, NPCID.CultistDragonHead);
             }
         }

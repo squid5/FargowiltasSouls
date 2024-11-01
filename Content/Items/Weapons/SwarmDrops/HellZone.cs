@@ -16,11 +16,11 @@ namespace FargowiltasSouls.Content.Items.Weapons.SwarmDrops
         {
             Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
             // DisplayName.SetDefault("Hell Zone");
-            // Tooltip.SetDefault("Uses bones for ammo\n80% chance to not consume ammo\n'The reward for slaughtering many...'");
+            // Tooltip.SetDefault("Uses bones for ammo\n80% chance to not consume ammo\n'The reward for a mighty rematch...'");
             //DisplayName.AddTranslation((int)GameCulture.CultureName.Chinese, "地狱领域");
             //Tooltip.AddTranslation((int)GameCulture.CultureName.Chinese, "'屠戮众多的奖励...'");
         }
-        private static readonly int[] RiffVariants = new int[4] { 1, 2, 3, 4 };
+        private static readonly int[] RiffVariants = [1, 2, 3, 4];
         private static readonly SoundStyle badtothebone = new SoundStyle("FargowiltasSouls/Assets/Sounds/Boneriff/boneriff") with { Variants = RiffVariants, Volume = 0.2f, MaxInstances = 10, SoundLimitBehavior = SoundLimitBehavior.IgnoreNew };
         public override void SetDefaults()
         {

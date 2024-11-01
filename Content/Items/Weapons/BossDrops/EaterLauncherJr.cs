@@ -1,4 +1,5 @@
-﻿using FargowiltasSouls.Content.Projectiles.BossWeapons;
+﻿using FargowiltasSouls.Content.Projectiles;
+using FargowiltasSouls.Content.Projectiles.BossWeapons;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -17,7 +18,7 @@ namespace FargowiltasSouls.Content.Items.Weapons.BossDrops
         {
             Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
             // DisplayName.SetDefault("Rockeater Launcher");
-            // Tooltip.SetDefault("Uses rockets for ammo\n50% chance to not consume ammo\nIncreased damage to enemies in the given range\n'The reward for slaughtering many..'");
+            // Tooltip.SetDefault("Uses rockets for ammo\n50% chance to not consume ammo\nIncreased damage to enemies in the given range\n'The reward for a mighty rematch..'");
             //DisplayName.AddTranslation((int)GameCulture.CultureName.Chinese, "吞噬者发射器");
             //Tooltip.AddTranslation((int)GameCulture.CultureName.Chinese, "'屠戮众多的奖励..'");
         }
@@ -33,7 +34,7 @@ namespace FargowiltasSouls.Content.Items.Weapons.BossDrops
             Item.noMelee = true;
             Item.knockBack = 6f;
             Item.UseSound = SoundID.Item95;
-            Item.value = Item.sellPrice(0, 10);
+            Item.value = Item.sellPrice(0, 2);
             Item.rare = ItemRarityID.Blue;
             Item.autoReuse = true;
             Item.shoot = ModContent.ProjectileType<EaterRocketJr>();
@@ -77,6 +78,9 @@ namespace FargowiltasSouls.Content.Items.Weapons.BossDrops
         }
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
+            int aura = ModContent.ProjectileType<RockeaterAuraProj>();
+            if (player.ownedProjectileCounts[aura] <= 0)
+                Projectile.NewProjectile(source, player.Center, player.velocity, aura, 0, 0);
             if (Charge <= 0)
                 LoadChunk(player);
             Charge--;
@@ -91,6 +95,7 @@ namespace FargowiltasSouls.Content.Items.Weapons.BossDrops
 
         public override void HoldItem(Player player)
         {
+            /*
             if (player.itemTime > 0)
             {
                 for (int i = 0; i < 10; i++)
@@ -124,7 +129,7 @@ namespace FargowiltasSouls.Content.Items.Weapons.BossDrops
                     dust2.scale = 1f;
                 }
             }
-
+            */
         }
 
 

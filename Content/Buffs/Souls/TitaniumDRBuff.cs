@@ -17,9 +17,9 @@ namespace FargowiltasSouls.Content.Buffs.Souls
         {
             FargoSoulsPlayer modPlayer = player.FargoSouls();
             modPlayer.TitaniumDRBuff = true;
-
+            
             //kill all shards before running out
-            if (player.buffTime[buffIndex] == 2)
+            if (player.buffTime[buffIndex] == 2 && player.HasBuff<TitaniumCDBuff>())
             {
                 for (int i = 0; i < Main.maxProjectiles; i++)
                 {
@@ -31,6 +31,7 @@ namespace FargowiltasSouls.Content.Buffs.Souls
                     }
                 }
             }
+            
         }
     }
 }

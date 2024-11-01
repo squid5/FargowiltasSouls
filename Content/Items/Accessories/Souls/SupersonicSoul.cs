@@ -37,25 +37,8 @@ namespace FargowiltasSouls.Content.Items.Accessories.Souls
 
             modPlayer.SupersonicSoul = true;
 
-            if (Player.AddEffect<SupersonicSpeedEffect>(item) && !modPlayer.noSupersonic && !LumUtils.AnyBosses())
-            {
-                // 5 is the default value, I removed the config for it because the new toggler doesn't have sliders
-                Player.runAcceleration += 5f * .1f;
-                Player.maxRunSpeed += 5f * 2;
-                //frog legs
-                if (player.HasEffect<MasoAeolusFrog>())
-                {
-                    Player.autoJump = true;
-                }
-                Player.jumpSpeedBoost += 2.4f;
-                Player.maxFallSpeed += 5f;
-                Player.jumpBoost = true;
-            }
-            else
-            {
-                //calculated to match flight mastery soul, 6.75 same as frostspark
-                Player.accRunSpeed = player.AddEffect<RunSpeed>(item) ? 15.6f : 6.75f;
-            }
+            //calculated to match flight mastery soul, 6.75 same as frostspark
+            Player.accRunSpeed = player.AddEffect<RunSpeed>(item) ? 15.6f : 6.75f;
 
             if (player.AddEffect<NoMomentum>(item))
                 modPlayer.NoMomentum = true;
@@ -154,20 +137,20 @@ namespace FargowiltasSouls.Content.Items.Accessories.Souls
     public class RunSpeed : AccessoryEffect
     {
         public override Header ToggleHeader => Header.GetHeader<SupersonicHeader>();
-        public override bool IgnoresMutantPresence => true;
+        
         public override int ToggleItemType => ModContent.ItemType<SupersonicSoul>();
     }
     public class NoMomentum : AccessoryEffect
     {
         public override Header ToggleHeader => Header.GetHeader<SupersonicHeader>();
         public override int ToggleItemType => ModContent.ItemType<SupersonicSoul>();
-        public override bool IgnoresMutantPresence => true;
+        
     }
     public class SupersonicRocketBoots : AccessoryEffect
     {
         public override Header ToggleHeader => Header.GetHeader<SupersonicHeader>();
         public override int ToggleItemType => ItemID.RocketBoots;
-        public override bool IgnoresMutantPresence => true;
+        
     }
     public class SupersonicJumps : AccessoryEffect
     {
@@ -178,7 +161,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Souls
     {
         public override Header ToggleHeader => Header.GetHeader<SupersonicHeader>();
         public override int ToggleItemType => ItemID.FlyingCarpet;
-        public override bool IgnoresMutantPresence => true;
+        
     }
     public class CthulhuShield : AccessoryEffect
     {
@@ -189,7 +172,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Souls
     {
         public override Header ToggleHeader => Header.GetHeader<SupersonicHeader>();
         public override int ToggleItemType => ItemID.Tabi;
-        public override bool IgnoresMutantPresence => true;
+        
     }
     public class BlackBelt : AccessoryEffect
     {

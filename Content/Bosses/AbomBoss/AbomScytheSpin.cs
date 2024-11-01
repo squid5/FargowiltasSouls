@@ -11,7 +11,7 @@ namespace FargowiltasSouls.Content.Bosses.AbomBoss
 {
     public class AbomScytheSpin : ModProjectile
     {
-        public override string Texture => "Terraria/Images/Projectile_274";
+        public override string Texture => "FargowiltasSouls/Content/Bosses/AbomBoss/AbomDeathScythe";
 
         public override void SetStaticDefaults()
         {

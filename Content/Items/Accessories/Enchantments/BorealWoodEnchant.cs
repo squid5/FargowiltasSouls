@@ -6,6 +6,7 @@ using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static FargowiltasSouls.Content.Items.Accessories.Forces.TimberForce;
 
 namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
 {
@@ -52,13 +53,30 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
         public override int ToggleItemType => ModContent.ItemType<BorealWoodEnchant>();
         public override bool ExtraAttackEffect => true;
 
-        public override void PostUpdateEquips(Player player)
-        {
-            FargoSoulsPlayer modPlayer = player.FargoSouls();
-            if (modPlayer.BorealCD > 0)
-                modPlayer.BorealCD--;
-        }
         public override void TryAdditionalAttacks(Player player, int damage, DamageClass damageType)
+        {
+            if (player.HasEffect<TimberEffect>())
+            {
+                return;
+            }
+            BorealSnowballs(player, damage);
+        }
+        public override void OnHitNPCEither(Player player, NPC target, NPC.HitInfo hitInfo, DamageClass damageClass, int baseDamage, Projectile projectile, Item item)
+        {
+            if (player.HasEffect<TimberEffect>())
+            {
+                if (player.Distance(target.Center) > ShadewoodEffect.Range(player, true))
+                    return;
+                if (projectile != null && projectile.type == ProjectileID.SnowBallFriendly)
+                    return;
+                int damage = hitInfo.SourceDamage;
+                damage = (int)(damage * 0.35f);
+                damage = (int)MathHelper.Clamp(0, 800, damage); // big sting could be roughly 1700 here
+                BorealSnowballs(player, damage);
+            }
+                
+        }
+        public void BorealSnowballs(Player player, int damage)
         {
             FargoSoulsPlayer modPlayer = player.FargoSouls();
             if (modPlayer.BorealCD <= 0 && player.whoAmI == Main.myPlayer)
@@ -66,10 +84,12 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
                 Item item = EffectItem(player);
                 bool forceEffect = modPlayer.ForceEffect(item.type);
                 modPlayer.BorealCD = forceEffect ? 30 : 60;
+                if (player.HasEffect<TimberEffect>())
+                    modPlayer.BorealCD = 90;
 
                 Vector2 vel = Vector2.Normalize(Main.MouseWorld - player.Center) * 17f;
                 int snowballDamage = damage / 2;
-                if (!modPlayer.TerrariaSoul)
+                if (!player.HasEffect<TimberEffect>() && !modPlayer.TerrariaSoul)
                     snowballDamage = Math.Min(snowballDamage, FargoSoulsUtil.HighestDamageTypeScaling(player, forceEffect ? 300 : 30));
                 int p = Projectile.NewProjectile(player.GetSource_Accessory(item), player.Center, vel, ProjectileID.SnowBallFriendly, snowballDamage, 1, Main.myPlayer);
 

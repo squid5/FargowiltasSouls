@@ -1,7 +1,10 @@
-﻿using FargowiltasSouls.Content.Projectiles;
+﻿using FargowiltasSouls.Content.Buffs;
+using FargowiltasSouls.Content.Projectiles;
+using FargowiltasSouls.Content.UI.Elements;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using FargowiltasSouls.Core.Toggler.Content;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -13,15 +16,6 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
-
-            // DisplayName.SetDefault("Huntress Enchantment");
-            /* Tooltip.SetDefault(
-@"Attacks ignore 10 enemy defense and deal 5 flat extra damage
-Each successive attack ignores an additional 10 defense and deals 5 more damage
-This stacks up to 10 times
-Homing and minion attacks do not increase these bonuses
-Missing any attack will reset these bonuses
-'Accuracy brings power'"); */
         }
 
         public override Color nameColor => new(122, 192, 76);
@@ -80,7 +74,7 @@ Missing any attack will reset these bonuses
             {
                 FargoSoulsPlayer modPlayer = player.FargoSouls();
                 soulsProj.HuntressProj = 2;
-                bool redRiding = player.HasEffect<RedRidingEffect>();
+                bool redRiding = player.HasEffect<RedRidingHuntressEffect>();
 
                 if (modPlayer.HuntressCD == 0)
                 {
@@ -90,15 +84,20 @@ Missing any attack will reset these bonuses
                     {
                         modPlayer.HuntressStage = 10;
 
-                        if (redRiding && modPlayer.RedRidingArrowCD == 0)
+                        if (player.HasEffect<RedRidingEffect>() && modPlayer.RedRidingArrowCD == 0)
                         {
                             RedRidingEffect.SpawnArrowRain(modPlayer.Player, target);
                         }
                     }
 
                     modPlayer.HuntressCD = 30;
+
+                    CooldownBarManager.Activate("HuntressBuildup", ModContent.Request<Texture2D>("FargowiltasSouls/Content/Items/Accessories/Enchantments/HuntressEnchant").Value, new(122, 192, 76),
+                        () => modPlayer.HuntressStage / 10f, true, activeFunction: () => player.HasEffect<HuntressEffect>());
                 }
                 int bonus = modPlayer.ForceEffect<HuntressEnchant>() || redRiding ? 5 : 3;
+                if (player.HasBuff<GladiatorSpiritBuff>())
+                    bonus = 15;
                 proj.ArmorPenetration = bonus * 2 * modPlayer.HuntressStage;
                 modifiers.SourceDamage.Flat += bonus * modPlayer.HuntressStage;
             }

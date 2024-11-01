@@ -15,15 +15,11 @@ namespace FargowiltasSouls.Content.Items.Weapons.SwarmDrops
         public override void SetStaticDefaults()
         {
             Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
-            // DisplayName.SetDefault("Dragon's Demise");
-            /* Tooltip.SetDefault(@"Uses gel for ammo
-66% chance to not consume ammo
-'The reward for slaughtering many..'"); */
         }
 
         public override void SetDefaults()
         {
-            Item.damage = 210;
+            Item.damage = 240;
             Item.knockBack = 1f;
             Item.shootSpeed = 12f;
 
@@ -31,8 +27,8 @@ namespace FargowiltasSouls.Content.Items.Weapons.SwarmDrops
             Item.autoReuse = true;
             Item.useAnimation = 30;
             Item.useTime = 3;
-            Item.width = 54;
-            Item.height = 14;
+            Item.width = 122;
+            Item.height = 62;
             Item.shoot = ModContent.ProjectileType<HellFlame>();
             Item.useAmmo = AmmoID.Gel;
             Item.UseSound = SoundID.DD2_BetsyFlameBreath;

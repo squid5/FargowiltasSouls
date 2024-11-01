@@ -1,3 +1,4 @@
+using FargowiltasSouls.Content.Items.Accessories.Forces;
 using FargowiltasSouls.Content.Projectiles.Souls;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using FargowiltasSouls.Core.Toggler.Content;
@@ -14,12 +15,6 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
-
-            // DisplayName.SetDefault("Shadow Enchantment");
-            /* Tooltip.SetDefault(
-@"Two Shadow Orbs will orbit around you
-Attacking a Shadow Orb will cause it to release a burst of homing shadow energy
-'You feel your body slip into the deepest of shadows'"); */
         }
 
         public override Color nameColor => new(66, 53, 111);
@@ -56,9 +51,11 @@ Attacking a Shadow Orb will cause it to release a burst of homing shadow energy
 
         public override Header ToggleHeader => Header.GetHeader<ShadowHeader>();
         public override int ToggleItemType => ModContent.ItemType<ShadowEnchant>();
-        public override bool MinionEffect => true;
+        public override bool ExtraAttackEffect => true;
         public override void PostUpdateEquips(Player player)
         {
+            if (player.HasEffect<ShadowForceEffect>())
+                return;
             if (player.whoAmI == Main.myPlayer)
             {
                 FargoSoulsPlayer modPlayer = player.FargoSouls();

@@ -3,7 +3,6 @@ using FargowiltasSouls.Core.Systems;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -25,14 +24,14 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs
             NPCID.Sets.CantTakeLunchMoney[Type] = true;
 
             this.ExcludeFromBestiary();
-            NPC.AddDebuffImmunities(new List<int>
-            {
+            NPC.AddDebuffImmunities(
+            [
                 BuffID.OnFire,
                 BuffID.Confused,
                 BuffID.Suffocation,
                 BuffID.CursedInferno,
                 BuffID.Burning,
-            });
+            ]);
         }
 
         public override void SetDefaults()

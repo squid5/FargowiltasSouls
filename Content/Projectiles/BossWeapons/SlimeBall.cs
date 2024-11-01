@@ -21,8 +21,7 @@ namespace FargowiltasSouls.Content.Projectiles.BossWeapons
             Projectile.DamageType = DamageClass.Melee;
             Projectile.timeLeft = 180;
 
-            if (ModLoader.TryGetMod("Fargowiltas", out Mod fargo))
-                fargo.Call("LowRenderProj", Projectile);
+            FargowiltasSouls.MutantMod.Call("LowRenderProj", Projectile);
         }
 
         bool oil;

@@ -14,26 +14,6 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
-
-            // DisplayName.SetDefault("Chlorophyte Enchantment");
-
-            //             DisplayName.AddTranslation((int)GameCulture.CultureName.Chinese, "叶绿魔石");
-
-            /*string tooltip =
-@"Summons a ring of leaf crystals to shoot at nearby enemies
-Grants a double spore jump
-While using wings, spores will continuously spawn
-Allows the ability to dash slightly
-Double tap a direction
-'The jungle's essence crystallizes around you'"; */
-            // Tooltip.SetDefault(tooltip);
-
-            //             string tooltip_ch =
-            // @"召唤一圈叶状水晶射击附近的敌人
-            // 使你获得孢子二段跳能力
-            // 使用翅膀进行飞行时会在你周围不断生成孢子
-            // '丛林的精华凝结在你周围'";
-            //             Tooltip.AddTranslation((int)GameCulture.CultureName.Chinese, tooltip_ch);
         }
 
         public override Color nameColor => new(36, 137, 0);
@@ -84,7 +64,7 @@ Double tap a direction
         {
             if (player.whoAmI == Main.myPlayer && player.ownedProjectileCounts[ModContent.ProjectileType<Chlorofuck>()] == 0)
             {
-                int dmg = player.FargoSouls().ForceEffect<ChlorophyteEnchant>() ? 65 : 35;
+                int dmg = 29;
                 const int max = 5;
                 float rotation = 2f * (float)Math.PI / max;
                 for (int i = 0; i < max; i++)

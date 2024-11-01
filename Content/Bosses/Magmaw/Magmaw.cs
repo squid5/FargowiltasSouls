@@ -5,7 +5,6 @@ using FargowiltasSouls.Core.Systems;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using Terraria;
 using Terraria.DataStructures;
@@ -104,8 +103,8 @@ namespace FargowiltasSouls.Content.Bosses.Magmaw
 
             NPCID.Sets.BossBestiaryPriority.Add(NPC.type);
 
-            NPC.AddDebuffImmunities(new List<int>
-            {
+            NPC.AddDebuffImmunities(
+            [
                 BuffID.Confused,
                 BuffID.Chilled,
                 BuffID.Suffocation,
@@ -114,7 +113,7 @@ namespace FargowiltasSouls.Content.Bosses.Magmaw
                 ModContent.BuffType<HellFireBuff>(),
                 ModContent.BuffType<LethargicBuff>(),
                 ModContent.BuffType<ClippedWingsBuff>()
-            });
+            ]);
             /*
             NPCID.Sets.NPCBestiaryDrawOffset.Add(NPC.type, new NPCID.Sets.NPCBestiaryDrawModifiers()
             {
@@ -125,10 +124,10 @@ namespace FargowiltasSouls.Content.Bosses.Magmaw
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
-            bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
+            bestiaryEntry.Info.AddRange([
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.TheUnderworld,
                 new FlavorTextBestiaryInfoElement($"Mods.FargowiltasSouls.Bestiary.{Name}")
-            });
+            ]);
         }
         public override void SetDefaults()
         {
@@ -292,7 +291,7 @@ namespace FargowiltasSouls.Content.Bosses.Magmaw
         }
         public override void OnKill()
         {
-            NPC.SetEventFlagCleared(ref WorldSavingSystem.downedBoss[(int)WorldSavingSystem.Downed.Magmaw], -1);
+            NPC.SetEventFlagCleared(ref WorldSavingSystem.DownedBoss[(int)WorldSavingSystem.Downed.Magmaw], -1);
             NPC.SetEventFlagCleared(ref NPC.downedGolemBoss, 6);
         }
         public override void BossLoot(ref string name, ref int potionType)

@@ -2,18 +2,24 @@
 global using FargowiltasSouls.Core.Toggler;
 global using Luminance.Common.Utilities;
 global using LumUtils = Luminance.Common.Utilities.Utilities;
-using FargowiltasSouls.Content.Bosses.AbomBoss;
-using FargowiltasSouls.Content.Bosses.DeviBoss;
-using FargowiltasSouls.Content.Bosses.MutantBoss;
+using Fargowiltas;
+using Fargowiltas.NPCs;
+using Fargowiltas.Projectiles;
+using FargowiltasSouls.Content.Bosses.CursedCoffin;
 using FargowiltasSouls.Content.Bosses.VanillaEternity;
 using FargowiltasSouls.Content.Buffs.Boss;
 using FargowiltasSouls.Content.Buffs.Masomode;
 using FargowiltasSouls.Content.Buffs.Souls;
+using FargowiltasSouls.Content.Items.Accessories.Enchantments;
 using FargowiltasSouls.Content.Items.Accessories.Masomode;
+using FargowiltasSouls.Content.Items.Consumables;
 using FargowiltasSouls.Content.Items.Dyes;
 using FargowiltasSouls.Content.Items.Misc;
 using FargowiltasSouls.Content.NPCs.EternityModeNPCs;
+using FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.Jungle;
 using FargowiltasSouls.Content.Patreon.Volknet;
+using FargowiltasSouls.Content.Projectiles.ChallengerItems;
+using FargowiltasSouls.Content.Projectiles.Masomode;
 using FargowiltasSouls.Content.Sky;
 using FargowiltasSouls.Content.Tiles;
 using FargowiltasSouls.Content.UI;
@@ -29,7 +35,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Terraria;
+using Terraria.Audio;
 using Terraria.Chat;
+using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.Graphics.Effects;
 using Terraria.Graphics.Shaders;
@@ -43,9 +51,11 @@ namespace FargowiltasSouls
 {
     public partial class FargowiltasSouls : Mod
     {
+        public static Mod MutantMod;
+
         internal static ModKeybind FreezeKey;
         internal static ModKeybind GoldKey;
-        internal static ModKeybind SmokeBombKey;
+        //internal static ModKeybind SmokeBombKey;
         internal static ModKeybind SpecialDashKey;
         internal static ModKeybind BombKey;
         internal static ModKeybind SoulToggleKey;
@@ -65,18 +75,20 @@ namespace FargowiltasSouls
 
         public UserInterface CustomResources;
 
-        internal static Dictionary<int, int> ModProjDict = new();
+        internal static Dictionary<int, int> ModProjDict = [];
+
+        public static bool DrawingTooltips = false;
 
         internal struct TextureBuffer
         {
-            public static readonly Dictionary<int, Asset<Texture2D>> NPC = new();
-            public static readonly Dictionary<int, Asset<Texture2D>> NPCHeadBoss = new();
-            public static readonly Dictionary<int, Asset<Texture2D>> Gore = new();
-            public static readonly Dictionary<int, Asset<Texture2D>> Golem = new();
-            public static readonly Dictionary<int, Asset<Texture2D>> Dest = new();
-            public static readonly Dictionary<int, Asset<Texture2D>> GlowMask = new();
-            public static readonly Dictionary<int, Asset<Texture2D>> Extra = new();
-            public static readonly Dictionary<int, Asset<Texture2D>> Projectile = new();
+            public static readonly Dictionary<int, Asset<Texture2D>> NPC = [];
+            public static readonly Dictionary<int, Asset<Texture2D>> NPCHeadBoss = [];
+            public static readonly Dictionary<int, Asset<Texture2D>> Gore = [];
+            public static readonly Dictionary<int, Asset<Texture2D>> Golem = [];
+            public static readonly Dictionary<int, Asset<Texture2D>> Dest = [];
+            public static readonly Dictionary<int, Asset<Texture2D>> GlowMask = [];
+            public static readonly Dictionary<int, Asset<Texture2D>> Extra = [];
+            public static readonly Dictionary<int, Asset<Texture2D>> Projectile = [];
             public static Asset<Texture2D> Ninja = null;
             public static Asset<Texture2D> Probe = null;
             public static Asset<Texture2D> BoneArm = null;
@@ -87,11 +99,13 @@ namespace FargowiltasSouls
             public static Asset<Texture2D> Chain26 = null;
             public static Asset<Texture2D> Chain27 = null;
             public static Asset<Texture2D> Wof = null;
+            public static Asset<Texture2D> EyeLaser = null;
         }
 
         public override void Load()
         {
             Instance = this;
+            ModLoader.TryGetMod("Fargowiltas", out MutantMod);
 
             SkyManager.Instance["FargowiltasSouls:AbomBoss"] = new AbomSky();
             SkyManager.Instance["FargowiltasSouls:MutantBoss"] = new MutantSky();
@@ -101,7 +115,7 @@ namespace FargowiltasSouls
 
             FreezeKey = KeybindLoader.RegisterKeybind(this, "Freeze", "P");
             GoldKey = KeybindLoader.RegisterKeybind(this, "Gold", "O");
-            SmokeBombKey = KeybindLoader.RegisterKeybind(this, "SmokeBomb", "I");
+            //SmokeBombKey = KeybindLoader.RegisterKeybind(this, "SmokeBomb", "I");
             SpecialDashKey = KeybindLoader.RegisterKeybind(this, "SpecialDash", "C");
             BombKey = KeybindLoader.RegisterKeybind(this, "Bomb", "Z");
             SoulToggleKey = KeybindLoader.RegisterKeybind(this, "EffectToggle", ".");
@@ -170,107 +184,11 @@ namespace FargowiltasSouls
 
             //            PatreonMiscMethods.Load(this);
 
-            //On.Terraria.GameContent.ItemDropRules.Conditions.IsMasterMode.CanDrop += IsMasterModeOrEMode_CanDrop;
-            //On.Terraria.GameContent.ItemDropRules.Conditions.IsMasterMode.CanShowItemDropInUI += IsMasterModeOrEMode_CanShowItemDropInUI;
-            //On.Terraria.GameContent.ItemDropRules.DropBasedOnMasterMode.CanDrop += DropBasedOnMasterOrEMode_CanDrop;
-            //On.Terraria.GameContent.ItemDropRules.DropBasedOnMasterMode.TryDroppingItem_DropAttemptInfo_ItemDropRuleResolveAction += DropBasedOnMasterOrEMode_TryDroppingItem_DropAttemptInfo_ItemDropRuleResolveAction;
-
-
-            On_Player.CheckSpawn_Internal += LifeRevitalizer_CheckSpawn_Internal;
-            On_Player.AddBuff += AddBuff;
+            LoadDetours();
         }
-        private static bool LifeRevitalizer_CheckSpawn_Internal(
-            On_Player.orig_CheckSpawn_Internal orig,
-            int x, int y)
-        {
-            if (orig(x, y))
-                return true;
-
-            //Main.NewText($"{x} {y}");
-
-            int revitalizerType = ModContent.TileType<LifeRevitalizerPlaced>();
-            for (int i = -1; i <= 1; i++)
-            {
-                for (int j = -3; j <= -1; j++)
-                {
-                    int newX = x + i;
-                    int newY = y + j;
-
-                    if (!WorldGen.InWorld(newX, newY))
-                        return false;
-
-                    Tile tile = Framing.GetTileSafely(newX, newY);
-                    if (tile.TileType != revitalizerType)
-                        return false;
-                }
-            }
-
-            return true;
-        }
-
-        private void AddBuff(
-            Terraria.On_Player.orig_AddBuff orig,
-            Player self, int type, int timeToAdd, bool quiet, bool foodHack)
-        {
-            FargoSoulsPlayer modPlayer = self.FargoSouls();
-            if (Main.debuff[type]
-                && timeToAdd > 3 //dont affect auras
-                && !Main.buffNoTimeDisplay[type] //dont affect hidden time debuffs
-                && !BuffID.Sets.NurseCannotRemoveDebuff[type] //only affect debuffs that nurse can cleanse
-                && (modPlayer.ParryDebuffImmuneTime > 0
-                    || modPlayer.BetsyDashing
-                    || modPlayer.GoldShell
-                    || modPlayer.ShellHide
-                    || modPlayer.MonkDashing > 0
-                    || modPlayer.CobaltImmuneTimer > 0
-                    || modPlayer.TitaniumDRBuff)
-                && DebuffIDs.Contains(type))
-            {
-                return; //doing it this way so that debuffs previously had are retained, but existing debuffs also cannot be extended by reapplying
-            }
-
-            orig(self, type, timeToAdd, quiet, foodHack);
-        }
-
-        //private static bool IsMasterModeOrEMode_CanDrop(
-        //    On.Terraria.GameContent.ItemDropRules.Conditions.IsMasterMode.orig_CanDrop orig,
-        //    Conditions.IsMasterMode self, DropAttemptInfo info)
-        //{
-        //    // Use | instead of || so orig runs no matter what.
-        //    return WorldSavingSystem.EternityMode | orig(self, info);
-        //}
-
-        //private static bool IsMasterModeOrEMode_CanShowItemDropInUI(
-        //    On.Terraria.GameContent.ItemDropRules.Conditions.IsMasterMode.orig_CanShowItemDropInUI orig,
-        //    Conditions.IsMasterMode self)
-        //{
-        //    // Use | instead of || so orig runs no matter what.
-        //    return WorldSavingSystem.EternityMode | orig(self);
-        //}
-
-        //private static bool DropBasedOnMasterOrEMode_CanDrop(
-        //    On.Terraria.GameContent.ItemDropRules.DropBasedOnMasterMode.orig_CanDrop orig,
-        //    DropBasedOnMasterMode self, DropAttemptInfo info)
-        //{
-        //    // Use | instead of || so orig runs no matter what.
-        //    return (WorldSavingSystem.EternityMode && self.ruleForMasterMode.CanDrop(info)) | orig(self, info);
-        //}
-
-        //private static ItemDropAttemptResult DropBasedOnMasterOrEMode_TryDroppingItem_DropAttemptInfo_ItemDropRuleResolveAction(
-        //    On.Terraria.GameContent.ItemDropRules.DropBasedOnMasterMode.orig_TryDroppingItem_DropAttemptInfo_ItemDropRuleResolveAction orig,
-        //    DropBasedOnMasterMode self, DropAttemptInfo info, ItemDropRuleResolveAction resolveAction)
-        //{
-        //    ItemDropAttemptResult itemDropAttemptResult = orig(self, info, resolveAction);
-        //    return WorldSavingSystem.EternityMode ? resolveAction(self.ruleForMasterMode, info) : itemDropAttemptResult;
-        //}
 
         public override void Unload()
         {
-            //On.Terraria.GameContent.ItemDropRules.Conditions.IsMasterMode.CanDrop -= IsMasterModeOrEMode_CanDrop;
-            //On.Terraria.GameContent.ItemDropRules.Conditions.IsMasterMode.CanShowItemDropInUI -= IsMasterModeOrEMode_CanShowItemDropInUI;
-            //On.Terraria.GameContent.ItemDropRules.DropBasedOnMasterMode.CanDrop -= DropBasedOnMasterOrEMode_CanDrop;
-            //On.Terraria.GameContent.ItemDropRules.DropBasedOnMasterMode.TryDroppingItem_DropAttemptInfo_ItemDropRuleResolveAction -= DropBasedOnMasterOrEMode_TryDroppingItem_DropAttemptInfo_ItemDropRuleResolveAction;
-
             //NPC.LunarShieldPowerMax = NPC.downedMoonlord ? 50 : 100;
 
             static void RestoreSprites(Dictionary<int, Asset<Texture2D>> buffer, Asset<Texture2D>[] original)
@@ -315,7 +233,7 @@ namespace FargowiltasSouls
 
             FreezeKey = null;
             GoldKey = null;
-            SmokeBombKey = null;
+            //SmokeBombKey = null;
             SpecialDashKey = null;
             BombKey = null;
             SoulToggleKey = null;
@@ -331,8 +249,7 @@ namespace FargowiltasSouls
 
             Instance = null;
 
-            On_Player.CheckSpawn_Internal -= LifeRevitalizer_CheckSpawn_Internal;
-            On_Player.AddBuff -= AddBuff;
+            UnloadDetours();
         }
 
         public override object Call(params object[] args) => ModCallManager.ProcessAllModCalls(this, args); // Our mod calls can be found in ModCalls.cs.
@@ -446,8 +363,8 @@ namespace FargowiltasSouls
                     //wikithis.Call(3, this, ModContent.Request<Texture2D>(pathToIcon));
                 }
 
-                DebuffIDs = new List<int>
-                {
+                DebuffIDs =
+                [
                     BuffID.Bleeding,
                     BuffID.OnFire,
                     BuffID.Rabies,
@@ -494,7 +411,7 @@ namespace FargowiltasSouls
                     ModContent.BuffType<DefenselessBuff>(),
                     ModContent.BuffType<FlamesoftheUniverseBuff>(),
                     ModContent.BuffType<FlippedBuff>(),
-                    ModContent.BuffType<FlippedHallowBuff>(),
+                    ModContent.BuffType<HallowIlluminatedBuff>(),
                     ModContent.BuffType<FusedBuff>(),
                     ModContent.BuffType<GodEaterBuff>(),
                     ModContent.BuffType<GuiltyBuff>(),
@@ -539,7 +456,13 @@ namespace FargowiltasSouls
                     ModContent.BuffType<AbomRebirthBuff>(),
 
                     ModContent.BuffType<TimeFrozenBuff>()
-                };
+                ];
+
+                const int k = 1000;
+                FargoSets.NPCs.SwarmHealth[ModContent.NPCType<RoyalSubject>()] = 5100;
+                FargoSets.NPCs.SwarmHealth[ModContent.NPCType<GelatinSubject>()] = 10 * k;
+                FargoSets.NPCs.SwarmHealth[ModContent.NPCType<CrystalLeaf>()] = 80 * k;
+
                 BossChecklistCompatibility();
 
                 //Mod bossHealthBar = ModLoader.GetMod("FKBossHealthBar");
@@ -579,8 +502,9 @@ namespace FargowiltasSouls
                 //}
 
                 //mutant shop
-                Mod fargos = ModLoader.GetMod("Fargowiltas");
+                Mod fargos = FargowiltasSouls.MutantMod;
                 fargos.Call("AddSummon", 0.5f, "FargowiltasSouls", "SquirrelCoatofArms", new Func<bool>(() => WorldSavingSystem.DownedBoss[(int)WorldSavingSystem.Downed.TrojanSquirrel]), Item.buyPrice(0, 4));
+                fargos.Call("AddSummon", 2.79f, "FargowiltasSouls", "CoffinSummon", new Func<bool>(() => WorldSavingSystem.DownedBoss[(int)WorldSavingSystem.Downed.CursedCoffin]), Item.buyPrice(0, 9));
                 fargos.Call("AddSummon", 6.9f, "FargowiltasSouls", "DevisCurse", new Func<bool>(() => WorldSavingSystem.DownedDevi), Item.buyPrice(0, 17, 50));
                 fargos.Call("AddSummon", 8.7f, "FargowiltasSouls", "MechLure", new Func<bool>(() => WorldSavingSystem.DownedBoss[(int)WorldSavingSystem.Downed.BanishedBaron]), Item.buyPrice(0, 22));
                 fargos.Call("AddSummon", 11.49f, "FargowiltasSouls", "FragilePixieLamp", new Func<bool>(() => WorldSavingSystem.DownedBoss[(int)WorldSavingSystem.Downed.Lifelight]), Item.buyPrice(0, 45));
@@ -589,7 +513,10 @@ namespace FargowiltasSouls
                 //fargos.Call("AddSummon", 18.01f, "FargowiltasSouls", "TruffleWormEX", () => WorldSavingSystem.downedFishronEX, Item.buyPrice(10));
                 fargos.Call("AddSummon", 18.02f, "FargowiltasSouls", "MutantsCurse", new Func<bool>(() => WorldSavingSystem.DownedMutant), Item.buyPrice(20));
 
-
+                //stat sheet
+                fargos.Call("AddPermaUpgrade", new Item(ModContent.ItemType<RabiesVaccine>()), () => Main.LocalPlayer.FargoSouls().RabiesVaccine);
+                fargos.Call("AddPermaUpgrade", new Item(ModContent.ItemType<MutantsDiscountCard>()), () => Main.LocalPlayer.FargoSouls().MutantsDiscountCard);
+                fargos.Call("AddPermaUpgrade", new Item(ModContent.ItemType<MutantsCreditCard>()), () => Main.LocalPlayer.FargoSouls().MutantsCreditCard);
             }
             catch (Exception e)
             {
@@ -649,6 +576,7 @@ namespace FargowiltasSouls
         {
             RequestGuttedCreeper,
             RequestPerfumeHeart,
+            RequestPearlwoodStar,
             SyncCultistDamageCounterToServer,
             RequestCreeperHeal,
             RequestDeviGift,
@@ -657,9 +585,18 @@ namespace FargowiltasSouls
             SyncFishronEXLife,
             SyncTogglesOnJoin,
             SyncOneToggle,
+            SyncDefaultToggles,
             SyncCanPlayMaso,
-            SyncNanoCoreMode
-            //SpawnBossTryFromNPC
+            SyncNanoCoreMode,
+            //SpawnBossTryFromNPC,
+            HealNPC,
+            SyncSnatcherGrab,
+            SyncCursedSpiritGrab,
+            SyncCursedSpiritRelease,
+            SyncTuskRip,
+            DropMutantGift,
+            RequestEnvironmentalProjectile,
+            ToggleEternityMode,
         }
 
         public override void HandlePacket(BinaryReader reader, int whoAmI)
@@ -690,6 +627,15 @@ namespace FargowiltasSouls
                             int p = reader.ReadByte();
                             int n = reader.ReadByte();
                             Item.NewItem(Main.player[p].GetSource_OnHit(Main.npc[n]), Main.npc[n].Hitbox, ItemID.Heart);
+                        }
+                        break;
+
+                    case PacketID.RequestPearlwoodStar: //client to server
+                        if (Main.netMode == NetmodeID.Server)
+                        {
+                            int p = reader.ReadByte();
+                            int n = reader.ReadByte();
+                            Item.NewItem(Main.player[p].GetSource_OnHit(Main.npc[n]), Main.npc[n].Hitbox, ItemID.Star);
                         }
                         break;
 
@@ -788,7 +734,15 @@ namespace FargowiltasSouls
                     case PacketID.SyncOneToggle: //sync single toggle
                         {
                             Player player = Main.player[reader.ReadByte()];
-                            player.SetToggleValue(AccessoryEffectLoader.EffectType(reader.ReadString()), reader.ReadBoolean());
+                            player.SetToggleValue(AccessoryEffectLoader.GetEffect(reader.ReadString()), reader.ReadBoolean());
+                        }
+                        break;
+                    case PacketID.SyncDefaultToggles:
+                        {
+                            Player player = Main.player[reader.ReadByte()];
+                            FargoSoulsPlayer modPlayer = player.FargoSouls();
+                            modPlayer.Toggler_ExtraAttacksDisabled = reader.ReadBoolean();
+                            modPlayer.Toggler_MinionsDisabled = reader.ReadBoolean();
                         }
                         break;
 
@@ -815,6 +769,165 @@ namespace FargowiltasSouls
                     //        FargoSoulsUtil.SpawnBossTryFromNPC(p, originalType, bossType);
                     //    }
                     //    break;
+
+                    case PacketID.HealNPC:
+                        {
+                            NPC npc = FargoSoulsUtil.NPCExists(reader.ReadByte());
+                            int heal = reader.ReadInt32();
+                            if (npc != null)
+                            {
+                                npc.life += heal;
+                                if (npc.life > npc.lifeMax)
+                                    npc.life = npc.lifeMax;
+                                npc.HealEffect(heal);
+                                npc.netUpdate = true;
+                            }
+                        }
+                        break;
+
+                    case PacketID.SyncSnatcherGrab: // client to server
+                        {
+                            NPC npc = FargoSoulsUtil.NPCExists(reader.ReadByte());
+                            if (npc.TryGetGlobalNPC(out Snatchers snatcher))
+                            {
+                                snatcher.BittenPlayer = reader.ReadByte();
+                                snatcher.BiteTimer = reader.ReadInt32();
+                                npc.netUpdate = true;
+                            }
+                        }
+                        break;
+                    case PacketID.SyncCursedSpiritGrab: // client to server
+                        {
+                            NPC npc = FargoSoulsUtil.NPCExists(reader.ReadByte());
+                            if (npc.ModNPC is CursedSpirit spirit)
+                            {
+                                spirit.BittenPlayer = reader.ReadByte();
+                                spirit.BiteTimer = reader.ReadInt32();
+                                npc.netUpdate = true;
+
+                                NPC owner = FargoSoulsUtil.NPCExists(spirit.Owner, ModContent.NPCType<CursedCoffin>());
+                                if (owner.TypeAlive<CursedCoffin>())
+                                {
+                                    // Forces Coffin to enter grab punish state
+                                    owner.As<CursedCoffin>().ForceGrabPunish = 1;
+                                    owner.netUpdate = true;
+                                }
+                            }
+                        }
+                        break;
+
+                    case PacketID.SyncCursedSpiritRelease: // client to server
+                        {
+                            NPC npc = FargoSoulsUtil.NPCExists(reader.ReadByte());
+                            if (npc.ModNPC is CursedSpirit spirit)
+                            {
+                                Player victim = Main.player[reader.ReadByte()];
+                                spirit.BittenPlayer = -1;
+                                spirit.BiteTimer = -90; //cooldown
+
+                                // dash away otherwise it's bullshit
+                                npc.velocity = -npc.SafeDirectionTo(victim.Center) * 12;
+                                victim.immune = true;
+                                victim.immuneTime = Math.Max(victim.immuneTime, 30);
+                                victim.hurtCooldowns[0] = Math.Max(victim.hurtCooldowns[0], 30);
+                                victim.hurtCooldowns[1] = Math.Max(victim.hurtCooldowns[1], 30);
+
+                                npc.netUpdate = true;
+                                spirit.Timer = 0;
+                                spirit.AI3 = 0;
+
+                                if (Main.netMode == NetmodeID.Server)
+                                    NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, npc.whoAmI);
+                            }
+                        }
+                        break;
+
+
+                    case PacketID.SyncTuskRip: // client to server
+                        {
+                            NPC target = FargoSoulsUtil.NPCExists(reader.ReadByte());
+                            Player player = FargoSoulsUtil.PlayerExists(reader.ReadByte());
+                            IEnumerable<Projectile> embeddedShrapnel = Main.projectile.Where(p => p.TypeAlive<BaronTuskShrapnel>() && p.owner == player.whoAmI && p.As<BaronTuskShrapnel>().EmbeddedNPC == target);
+                            foreach (Projectile proj in embeddedShrapnel)
+                            {
+                                proj.ai[1] = 2;
+                                proj.netUpdate = true;
+                            }
+                        }
+                        break;
+                    case PacketID.DropMutantGift:
+                        {
+                            int i = reader.ReadInt32();
+                            int j = reader.ReadInt32();
+                            WorldGen.KillTile(i, j);
+                        }
+                        break;
+                    case PacketID.RequestEnvironmentalProjectile:
+                        {
+                            if (Main.netMode == NetmodeID.Server)
+                            {
+                                int type = reader.ReadInt32();
+                                Vector2 pos = reader.ReadVector2();
+                                if (type == ModContent.ProjectileType<DeerclopsDarknessHand>())
+                                {
+                                    int damage = (Main.hardMode ? 120 : 60) / 4;
+                                    int p = Projectile.NewProjectile(Entity.GetSource_NaturalSpawn(), pos, Vector2.Zero, type, damage, 2f, Main.myPlayer);
+                                    if (p.IsWithinBounds(Main.maxProjectiles))
+                                    {
+                                        Main.projectile[p].light = 1f;
+                                    }
+                                    Lighting.AddLight(pos, 1f, 1f, 1f);
+                                }
+                                else if (type == ModContent.ProjectileType<LifelightEnvironmentStar>())
+                                {
+                                    int damage = (Main.hardMode ? 120 : 60) / 4;
+                                    Projectile.NewProjectile(Terraria.Entity.GetSource_NaturalSpawn(), pos, Vector2.Zero, type, damage, 2f, Main.myPlayer, -120);
+                                }
+                                else if (type == ModContent.ProjectileType<RainLightning>())
+                                {
+                                    float ai1 = reader.ReadSingle();
+                                    int damage = (Main.hardMode ? 120 : 60) / 4;
+                                    Projectile.NewProjectile(Terraria.Entity.GetSource_NaturalSpawn(), pos, Vector2.Zero, type, damage, 2f, Main.myPlayer, Vector2.UnitY.ToRotation(), ai1);
+                                }
+                            }
+                        }
+                        break;
+
+                    case PacketID.ToggleEternityMode:
+                        {
+                            Player player = FargoSoulsUtil.PlayerExists(reader.ReadByte());
+                            if (Main.netMode == NetmodeID.Server)
+                            {
+                                if (FargoSoulsUtil.WorldIsExpertOrHarder())
+                                {
+                                    if (!LumUtils.AnyBosses())
+                                    {
+                                        WorldSavingSystem.ShouldBeEternityMode = !WorldSavingSystem.ShouldBeEternityMode;
+
+                                        int deviType = ModContent.NPCType<Deviantt>();
+                                        if (FargoSoulsUtil.HostCheck && WorldSavingSystem.ShouldBeEternityMode && !WorldSavingSystem.SpawnedDevi && !NPC.AnyNPCs(deviType))
+                                        {
+                                            WorldSavingSystem.SpawnedDevi = true;
+
+                                            Vector2 spawnPos = (Main.zenithWorld || Main.remixWorld) ? player.Center : player.Center - 1000 * Vector2.UnitY;
+                                            Projectile.NewProjectile(player.GetSource_Misc(""), spawnPos, Vector2.Zero, ModContent.ProjectileType<SpawnProj>(), 0, 0, Main.myPlayer, deviType);
+
+                                            FargoSoulsUtil.PrintLocalization("Announcement.HasAwoken", new Color(175, 75, 255), Language.GetTextValue("Mods.Fargowiltas.NPCs.Deviantt.DisplayName"));
+                                        }
+
+                                        SoundEngine.PlaySound(SoundID.Roar, player.Center);
+
+                                        if (Main.netMode == NetmodeID.Server)
+                                            NetMessage.SendData(MessageID.WorldData); //sync world
+                                    }
+                                }
+                                else
+                                {
+                                    FargoSoulsUtil.PrintLocalization($"Mods.FargowiltasSouls.Items.Masochist.WrongDifficulty", new Color(175, 75, 255));
+                                }
+                            }
+                        }
+                        break;
 
                     default:
                         break;

@@ -1,4 +1,5 @@
-﻿using FargowiltasSouls.Content.Buffs.Minions;
+﻿using Fargowiltas;
+using FargowiltasSouls.Content.Buffs.Minions;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using FargowiltasSouls.Core.Toggler.Content;
 using Terraria;
@@ -13,15 +14,6 @@ namespace FargowiltasSouls.Content.Items.Accessories.Masomode
 
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("Concentrated Rainbow Matter");
-            /* Tooltip.SetDefault(@"Grants immunity to Flames of the Universe
-Automatically use healing potions when needed
-Summons a baby rainbow slime to fight for you
-'Taste the rainbow'"); */
-            //             DisplayName.AddTranslation((int)GameCulture.CultureName.Chinese, "浓缩彩虹物质");
-            //             Tooltip.AddTranslation((int)GameCulture.CultureName.Chinese, @"'品尝彩虹'
-            // 免疫宇宙之火
-            // 召唤一个彩虹史莱姆宝宝");
 
             Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
@@ -42,12 +34,22 @@ Summons a baby rainbow slime to fight for you
             player.AddEffect<RainbowSlimeMinion>(Item);
             player.AddEffect<RainbowHealEffect>(Item);
         }
+        public override void UpdateVanity(Player player)
+        {
+            player.AddEffect<RainbowHealEffect>(Item);
+            player.FargoSouls().ConcentratedRainbowMatter = true;
+        }
+        public override void UpdateInventory(Player player)
+        {
+            player.AddEffect<RainbowHealEffect>(Item);
+            player.FargoSouls().ConcentratedRainbowMatter = true;
+        }
     }
     public class RainbowHealEffect : AccessoryEffect
     {
         public override Header ToggleHeader => Header.GetHeader<BionomicHeader>();
         public override int ToggleItemType => ModContent.ItemType<ConcentratedRainbowMatter>();
-        public override bool IgnoresMutantPresence => true;
+        
     }
     public class RainbowSlimeMinion : AccessoryEffect
     {

@@ -8,7 +8,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEve
     public class StardustEnemies : EModeNPCBehaviour
     {
         public static int[] StardustEnemyIDs =
-        {
+        [
             NPCID.StardustCellBig,
             NPCID.StardustCellSmall,
             NPCID.StardustWormHead,
@@ -19,7 +19,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEve
             NPCID.StardustJellyfishBig,
             NPCID.StardustJellyfishSmall,
             NPCID.StardustSoldier
-        };
+        ];
         public override NPCMatcher CreateMatcher() => new NPCMatcher().MatchTypeRange(
             StardustEnemyIDs
         );
@@ -42,6 +42,13 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEve
 
             target.AddBuff(BuffID.Obstructed, 20);
             target.AddBuff(BuffID.Blackout, 300);
+        }
+
+        public override bool PreKill(NPC npc)
+        {
+            if (!NPC.LunarApocalypseIsUp && !NPC.downedAncientCultist)
+                return false;
+            return base.PreKill(npc);
         }
     }
 

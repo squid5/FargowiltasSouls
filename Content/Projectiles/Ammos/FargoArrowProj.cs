@@ -9,7 +9,7 @@ namespace FargowiltasSouls.Content.Projectiles.Ammos
 {
     public class FargoArrowProj : ModProjectile
     {
-        private readonly int[] dusts = new int[] { 130, 55, 133, 131, 132 };
+        private readonly int[] dusts = [130, 55, 133, 131, 132];
         private int currentDust = 0;
         private int timer = 0;
         private Vector2 velocity;

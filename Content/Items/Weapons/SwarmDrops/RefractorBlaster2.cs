@@ -1,6 +1,5 @@
 ﻿using FargowiltasSouls.Content.Projectiles.BossWeapons;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -12,19 +11,16 @@ namespace FargowiltasSouls.Content.Items.Weapons.SwarmDrops
         {
             Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
             // DisplayName.SetDefault("Diffractor Blaster");
-            // Tooltip.SetDefault("'The reward for slaughtering many...'");
+            // Tooltip.SetDefault("'The reward for a mighty rematch...'");
             //DisplayName.AddTranslation((int)GameCulture.CultureName.Chinese, "暗星炮");
             //Tooltip.AddTranslation((int)GameCulture.CultureName.Chinese, "'由一个被击败的敌人的武器改装而来..'");
-            Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(3, 7));
-            ItemID.Sets.AnimatesAsSoul[Item.type] = true;
         }
-        public override int NumFrames => 7;
         public override void SetDefaults()
         {
             Item.CloneDefaults(ItemID.LaserRifle);
             Item.width = 98;
             Item.height = 38;
-            Item.damage = 577;
+            Item.damage = 770;
             Item.channel = true;
             Item.useTime = 24;
             Item.useAnimation = 24;

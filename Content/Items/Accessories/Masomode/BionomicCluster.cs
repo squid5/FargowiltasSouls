@@ -14,39 +14,6 @@ namespace FargowiltasSouls.Content.Items.Accessories.Masomode
 
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("Bionomic Cluster");
-            /* Tooltip.SetDefault("Grants immunity to Frostburn, Shadowflame, and Squeaky Toy" +
-                "\nGrants immunity to Flames of the Universe, Clipped Wings, Crippled, Webbed, and Purified" +
-                "\nGrants immunity to Lovestruck, Stinky, Midas, and Hexed" +
-                "\nUse to teleport to your last death point" +
-                "\nYour attacks can inflict Clipped Wings and produce hearts" +
-                "\nAttacks have a chance to squeak and deal 1 damage to you" +
-                "\nWhile attacking, gain massively increased damage and shadowflame, but less move and defenses and attack speed bonuses" +
-                "\nSummons a friendly rainbow slime" +
-                "\nCertain enemies will drop potions when defeated" +
-                "\nWhen attacking by manually clicking, increases non-summon damage by 30%" +
-                "\n[c/00FFFF:Following effects work passively from inventory or vanity slots:]" +
-                "\n    Grants immunity to Mighty Wind, Suffocation, Chilled, and Guilty" +
-                "\n    You have autofire and improved night vision" +
-                "\n    Automatically uses healing & mana potions when needed and increases pickup range for mana stars" +
-                "\n    You respawn with more life and when no boss is alive, respawn faster" +
-                "\n    Press the Frigid Spell key to cast Ice Rod" +
-                "\n    Right click to zoom and drastically improves reforges" +
-                "\n    Stabilizes gravity in space and in liquids" +
-                "\n'The amalgamate born of a thousand common enemies'"); */
-
-            // DisplayName.AddTranslation((int)GameCulture.CultureName.Chinese, "生态集群");
-            // Tooltip.AddTranslation((int)GameCulture.CultureName.Chinese, "使你免疫霜冻、暗影焰、吱吱作响的玩具、愧疚、强风和窒息减益" +
-            //     "\n使你免疫宇宙之火、剪除羽翼、残废、被网住和净化减益" +
-            //     "\n使你免热恋、恶臭、迈达斯、邪咒减益，同时免疫仙人掌刺伤和敌人的偷取物品效果" +
-            //     "\n攻击会造成剪除羽翼减益并生成霜火球和红心" +
-            //     "\n允许所有武器自动挥舞、增强夜视效果并在非Boss战期间加快你的重生速度" +
-            //     "\n在需要时自动使用魔力药水\r\n你在受到伤害时有几率发出吱吱声，并使这次受到的伤害降至1点" +
-            //     "\n在你受到伤害后会发射暗影焰触手，你在重生时以更多生命重生" +
-            //     "\n大多敌人在死亡时会掉落随机的药水，减少50%重铸价格" +
-            //     "\n召唤一只彩虹史莱姆" +
-            //     "\n使用此饰品后会将你传送至上一次死亡时的地点，右键缩放视域" +
-            //     "\n'由上千普通敌人融合而成'");
 
             Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
@@ -185,7 +152,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Masomode
             .AddIngredient(ModContent.ItemType<DeviatingEnergy>(), 10)
 
             .AddTile(TileID.MythrilAnvil)
-
+            .DisableDecraft()
             .Register();
         }
         public override bool CanRightClick() => true;

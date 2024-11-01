@@ -40,16 +40,18 @@ namespace FargowiltasSouls.Content.Items.Accessories.Souls
             BionomicCluster.PassiveEffect(player, Item);
 
             player.FargoSouls().CanAmmoCycle = true;
+            player.AddEffect<ChalicePotionEffect>(Item);
         }
 
         public override void UpdateInventory(Player player) => PassiveEffect(player, Item);
         public override void UpdateVanity(Player player) => PassiveEffect(player, Item);
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
+            FargoSoulsPlayer fargoPlayer = player.FargoSouls();
+            ChaliceoftheMoon.DeactivateMinions(fargoPlayer, Item);
 
             BionomicCluster.PassiveEffect(player, Item);
 
-            FargoSoulsPlayer fargoPlayer = player.FargoSouls();
             fargoPlayer.MasochistSoul = true;
             fargoPlayer.MasochistSoulItem = Item;
 
@@ -75,13 +77,15 @@ namespace FargowiltasSouls.Content.Items.Accessories.Souls
 
             player.AddEffect<SlimeFallEffect>(Item);
 
+            /*
             if (player.AddEffect<SlimyShieldEffect>(Item))
             {
                 player.FargoSouls().SlimyShieldItem = Item;
             }
+            */
 
             //agitating lens
-            player.AddEffect<AgitatingLensEffect>(Item);
+            //player.AddEffect<AgitatingLensEffect>(Item);
             player.AddEffect<AgitatingLensInstall>(Item);
 
             //queen stinger
@@ -109,7 +113,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Souls
 
             //corrupt heart
             fargoPlayer.DarkenedHeartItem = Item;
-            player.AddEffect<DarkenedHeartEaters>(Item);
+            //player.AddEffect<DarkenedHeartEaters>(Item);
             player.hasMagiluminescence = true;
             if (fargoPlayer.DarkenedHeartCD > 0)
                 fargoPlayer.DarkenedHeartCD -= 2;
@@ -173,7 +177,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Souls
             //wretched pouch
             player.buffImmune[BuffID.ShadowFlame] = true;
             player.buffImmune[ModContent.BuffType<ShadowflameBuff>()] = true;
-            player.AddEffect<WretchedPouchEffect>(Item);
+            //player.AddEffect<WretchedPouchEffect>(Item);
 
             //sands of time
             player.buffImmune[BuffID.WindPushed] = true;
@@ -208,12 +212,13 @@ namespace FargowiltasSouls.Content.Items.Accessories.Souls
             player.AddEffect<TimsConcoctionEffect>(Item);
 
             //wyvern feather
-            player.AddEffect<WyvernBalls>(Item);
+            //player.AddEffect<WyvernBalls>(Item); pointless; you have infinite flight at this point
 
             //dubious circuitry
             player.buffImmune[BuffID.CursedInferno] = true;
             player.buffImmune[BuffID.Ichor] = true;
             fargoPlayer.FusedLens = true;
+            fargoPlayer.DubiousCircuitry = true;
             player.AddEffect<FusedLensInstall>(Item);
             player.AddEffect<GroundStickDR>(Item);
             player.noKnockback = true;
@@ -248,9 +253,12 @@ namespace FargowiltasSouls.Content.Items.Accessories.Souls
             player.AddEffect<PumpkingsCapeEffect>(Item);
 
             //celestial rune
+            /*
             player.AddEffect<CelestialRuneAttacks>(Item);
             if (fargoPlayer.AdditionalAttacksTimer > 0)
                 fargoPlayer.AdditionalAttacksTimer -= 2;
+            */
+            player.AddEffect<CelestialRuneOnhit>(Item);
 
             //chalice
             fargoPlayer.MoonChalice = true;
@@ -259,7 +267,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Souls
             player.buffImmune[BuffID.VortexDebuff] = true;
             //player.buffImmune[BuffID.ChaosState] = true;
             fargoPlayer.GravityGlobeEXItem = Item;
-            player.AddEffect<MasoGravEffect>(Item);
+            player.AddEffect<ChalicePotionEffect>(Item);
 
             //heart of maso
             fargoPlayer.MasochistHeart = true;
@@ -272,7 +280,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Souls
             //dread shell
             player.AddEffect<DreadShellEffect>(Item);
 
-            //deerclaws
+            //deerclawps
             player.buffImmune[BuffID.Slow] = true;
             player.buffImmune[BuffID.Frozen] = true;
             player.AddEffect<DeerclawpsDive>(Item);
@@ -290,7 +298,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Souls
             player.buffImmune[ModContent.BuffType<DefenselessBuff>()] = true;
             player.buffImmune[ModContent.BuffType<FlamesoftheUniverseBuff>()] = true;
             player.buffImmune[ModContent.BuffType<FlippedBuff>()] = true;
-            player.buffImmune[ModContent.BuffType<FlippedHallowBuff>()] = true;
+            player.buffImmune[ModContent.BuffType<HallowIlluminatedBuff>()] = true;
             player.buffImmune[ModContent.BuffType<FusedBuff>()] = true;
             //player.buffImmune[ModContent.BuffType<GodEater>()] = true;
             player.buffImmune[ModContent.BuffType<GuiltyBuff>()] = true;

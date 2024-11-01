@@ -1,6 +1,4 @@
-﻿using FargowiltasSouls.Content.Projectiles;
-using FargowiltasSouls.Content.Projectiles.Deathrays;
-using Luminance.Core.Graphics;
+﻿using FargowiltasSouls.Content.Projectiles.Deathrays;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -56,8 +54,7 @@ namespace FargowiltasSouls.Content.Patreon.Duck
             Player player = Main.player[Projectile.owner];
 
             if (!Main.dedServ && Main.LocalPlayer.active)
-                if (ScreenShakeSystem.OverallShakeIntensity < 7)
-                    ScreenShakeSystem.SetUniversalRumble(7);
+                FargoSoulsUtil.ScreenshakeRumble(6);
 
             Projectile.velocity = Projectile.velocity.SafeNormalize(-Vector2.UnitY);
 
@@ -80,8 +77,8 @@ namespace FargowiltasSouls.Content.Patreon.Duck
             {
                 if (!Main.dedServ)
                 {
-                    SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/Railgun"), Projectile.Center);
-                    SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/Thunder"), player.Center + Projectile.velocity * Math.Min(Main.screenWidth / 2, 900f));
+                    SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/Weapons/Railgun") with { Volume = 0.5f }, Projectile.Center);
+                    SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/Thunder") with { Volume = 0.5f }, player.Center + Projectile.velocity * Math.Min(Main.screenWidth / 2, 900f));
                 }
 
                 Vector2 dustPos = player.Center + Projectile.velocity * 50f;

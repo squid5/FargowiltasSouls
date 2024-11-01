@@ -1,0 +1,380 @@
+AbomBoss_April.DisplayName: Босс Джавиз
+
+AbomBoss: {
+	DisplayName: Выродокк
+
+	BossChecklistIntegration: {
+		EntryName: "{$Mods.FargowiltasSouls.NPCs.AbomBoss.DisplayName}"
+		SpawnInfo: Призывается с помощью [i:FargowiltasSouls/AbomsCurse]
+		DespawnMessage: Выродокк не смог найти достойного соперника...
+		KilledAllMessage: Выродокк уничтожил всех до единого.
+	}
+}
+
+AbomSaucer.DisplayName: Мини-тарелка
+
+TrojanSquirrel: {
+	DisplayName: Троянская белка
+
+	BossChecklistIntegration: {
+		EntryName: "{$Mods.FargowiltasSouls.NPCs.TrojanSquirrel.DisplayName}"
+		SpawnInfo: Призывается с помощью [i:FargowiltasSouls/SquirrelCoatofArms]
+		DespawnMessage: Троянская белка возвращается к своему беличьему клану...
+	}
+}
+
+TrojanSquirrelArms.DisplayName: Троянская белка
+TrojanSquirrelHead.DisplayName: Троянская белка
+
+CosmosChampion: {
+	DisplayName: Эриданус, чемпион Космоса
+
+	BossChecklistIntegration: {
+		EntryName: "{$Mods.FargowiltasSouls.NPCs.CosmosChampion.DisplayName}"
+		SpawnInfo: Призывается с помощью [i:FargowiltasSouls/SigilOfChampions] в космосе.
+		DespawnMessage: Эриданус, чемпион Космоса возвращается к звёздам...
+		KilledAllMessage: Эриданус, чемпион Космоса поверг всех врагов.
+	}
+}
+
+EarthChampion: {
+	DisplayName: Чемпион Земли
+
+	BossChecklistIntegration: {
+		EntryName: "{$Mods.FargowiltasSouls.NPCs.EarthChampion.DisplayName}"
+		SpawnInfo: Призывается с помощью [i:FargowiltasSouls/SigilOfChampions] в преисподней.
+		DespawnMessage: Чемпион Земли скрывается под магмой...
+	}
+}
+
+EarthChampionHand.DisplayName: Чемпион Земли
+LesserFairy.DisplayName: Малая фея
+LesserSquirrel.DisplayName: Малая белка
+
+LifeChampion: {
+	DisplayName: Чемпион Жизни
+
+	BossChecklistIntegration: {
+		EntryName: "{$Mods.FargowiltasSouls.NPCs.LifeChampion.DisplayName}"
+		SpawnInfo: Призывается с помощью [i:FargowiltasSouls/SigilOfChampions] в биоме освящения днём.
+		DespawnMessage: Чемпион Жизни угасает...
+	}
+}
+
+NatureChampion: {
+	DisplayName: Чемпион Природы
+
+	BossChecklistIntegration: {
+		EntryName: "{$Mods.FargowiltasSouls.NPCs.NatureChampion.DisplayName}"
+		SpawnInfo: Призывается с помощью [i:FargowiltasSouls/SigilOfChampions] в снежном биоме под землёй.
+		DespawnMessage: Чемпион Природы вновь впадает в спячку...
+	}
+}
+
+NatureChampionHead.DisplayName: Чемпион Природы
+
+ShadowChampion: {
+	DisplayName: Чемпион Смерти
+
+	BossChecklistIntegration: {
+		EntryName: "{$Mods.FargowiltasSouls.NPCs.ShadowChampion.DisplayName}"
+		SpawnInfo: Призывается с помощью [i:FargowiltasSouls/SigilOfChampions] в порче или багрянце ночью.
+		DespawnMessage: Чемпион Смерти растворяется в воздухе...
+	}
+}
+
+ShadowOrb.DisplayName: Mods.FargowiltasSouls.NPCs.ShadowOrb.DisplayName
+
+SpiritChampion: {
+	DisplayName: Чемпион Духа
+
+	BossChecklistIntegration: {
+		EntryName: "{$Mods.FargowiltasSouls.NPCs.SpiritChampion.DisplayName}"
+		SpawnInfo: Призывается с помощью [i:FargowiltasSouls/SigilOfChampions] в пустыне под землёй.
+		DespawnMessage: Чемпион Духа исчезает в пустыне...
+	}
+}
+
+SpiritChampionHand.DisplayName: Чемпион Духа
+
+TerraChampion: {
+	DisplayName: Чемпион Терры
+
+	BossChecklistIntegration: {
+		EntryName: "{$Mods.FargowiltasSouls.NPCs.TerraChampion.DisplayName}"
+		SpawnInfo: Призывается с помощью [i:FargowiltasSouls/SigilOfChampions] под землёй.
+		DespawnMessage: Чемпион Терры исчезает в пещерах...
+	}
+}
+
+TerraChampionBody.DisplayName: Чемпион Терры
+TerraChampionTail.DisplayName: Чемпион Терры
+
+TimberChampion: {
+	DisplayName: Чемпион Дерева
+
+	BossChecklistIntegration: {
+		EntryName: "{$Mods.FargowiltasSouls.NPCs.TimberChampion.DisplayName}"
+		SpawnInfo: Призывается с помощью [i:FargowiltasSouls/SigilOfChampions] на поверхности днём.
+		DespawnMessage: Чемпион Дерева возвращается к своему беличьему клану...
+	}
+}
+
+TimberChampionHead.DisplayName: Чемпион Дерева
+
+WillChampion: {
+	DisplayName: Чемпион Воли
+
+	BossChecklistIntegration: {
+		EntryName: "{$Mods.FargowiltasSouls.NPCs.WillChampion.DisplayName}"
+		SpawnInfo: Призывается с помощью [i:FargowiltasSouls/SigilOfChampions] в океане.
+		DespawnMessage: Чемпион Воли возвращается в глубины...
+	}
+}
+
+TophatSquirrelCritter.DisplayName: Белка в цилиндре
+BrainClone.DisplayName: Мозг Ктулху
+BrainIllusion.DisplayName: Мозг Ктулху
+BrainIllusion2.DisplayName: Мозг Ктулху
+BrainIllusionAttack.DisplayName: Мозг Ктулху
+CreeperGutted.DisplayName: Выпотрошенный ползун
+CrystalLeaf.DisplayName: Кристальный лист
+DetonatingBubble.DisplayName: Mods.FargowiltasSouls.NPCs.DetonatingBubble.DisplayName
+DetonatingBubbleEX.DisplayName: Взрывчатый пузырь
+GelatinSlime.DisplayName: Кристальный слизень
+GelatinSubject.DisplayName: Желатиновый субъект
+RoyalSubject.DisplayName: Королевский субъект
+MutantBoss_April.DisplayName: Убийца богов Ярим
+
+MutantBoss: {
+	DisplayName: Мутант
+
+	BossChecklistIntegration: {
+		EntryName: "{$Mods.FargowiltasSouls.NPCs.MutantBoss.DisplayName}"
+		SpawnInfo: Киньте [i:FargowiltasSouls/AbominationnVoodooDoll] в лаву, когда Выродокк и Мутант присутствуют в мире.
+		DespawnMessage: Мутант вновь запечатывает свою мощь...
+		KilledAllMessage: Мутант истребил всех, кто попался под руку.
+	}
+
+	SkipP1: Мутант устал от шарад...
+
+	GFBText: {
+		Random0: Хехехехехе...
+		Random1: Тебе нравится эта боль?
+		Random2: Это чувство...
+		Random3: Я положу этому конец.
+		Random4: Глупый террариец...
+		Random5: Пусть сие будет начертано на их скудной могиле: пал от рук Мутанта.
+		Random6: Никто не достоин титула Вечного.
+		Random7: Вечная боль тебе суждена.
+		Random8: Ты не подходишь для Вечной Души.
+		Random9: Бойся моей мощи.
+		Random10: Проникатель дрожит...
+		Random11: На колени пред истинной мощью!
+		Random12: Сила сокрыта в глазах смотрящего. Абсолютная сила есть факт.
+		Random13: Стань свидетелем истинного катаклизма.
+		Random14: Я скорее назову все цифры числа Пи, чем ты победишь меня.
+		Random15: Всё только началось.
+		Random16: Даже не пытайся уворачиваться.
+		Random17: Я тренировался ради такой битвы на протяжении веков.
+		Random18: Изничтожь слабых.
+		Random19: Удача тебе не поможет.
+		Random20: Я наполню чашу твоей кровью.
+		Random21: В конце концов, вы все так малы. Только не я.
+		Random22: Я разорву тебя на неисчислимые кусочки!
+		Random23: Проклинаю тебя силой луны!
+		Random24: Это лишь часть моей силы!
+		Random25: Твоя “сила” никчёмна в сравнении со мной.
+		Random26: Каждый удар, который ты получаешь, увеличивает мою мощь в гораздо больше раз, чем ты можешь себе представить.
+		Random27: Думаешь, ты можешь победить меня?
+		Random28: Я несравнимый. Я непобедимый.
+		Random29: Всё так или иначе превращается в пыль.
+		Random30: Готов ли ты взять на себя эту ношу?
+		Random31: ОТСЮДА НЕ ВЫБРАТЬСЯ!
+		Random32: Бог хочет, чтобы ты страдал, и Бог здесь я.
+		Random33: Я нахожу тебя недостойным существовать!
+		Random34: Твоё последнее предназначение - это умереть.
+		Random35: Силы терры на моей стороне.
+		Random36: Я сломаю тебя!
+		Random37: В осколки как стекло.
+		Random38: Если ты прекратишь атаковать, может, я пощажу тебя.
+		Random39: ТЫ СТАНЕШЬ НЕ БОЛЕЕ ЧЕМ ВОСПОМИНАНИЕМ!
+		Random40: Я УБЕЖУСЬ, ЧТОБЫ НЕ ОСТАЛОСЬ НИЧЕГО, ЧТО МОЖНО ПОХОРОНИТЬ!
+		Random41: ДАЖЕ ОГНИ САМОГО АДА НЕ СРАВНЯТСЯ!
+		Random42: Мне кажется, что твои клетки слишком далеко друг от друга. Не хочешь, чтобы я исправил это?
+		Random43: Я разорву даже твои атомы на части.
+		Random44: Ты как ребёнок, ревёшь пред вечным божеством.
+		Random45: Я окрашу эти души твоей кровью.
+		Random46: Созерцай мощь Террарии!
+		Random47: Узри силу самой вселенной!
+		Random48: Из ярчайшего огня, я выхожу победителем!
+		Random49: Забудь свои мечты о возвышении!
+		Random50: Каждая кость твоего несчастного тела будет сломана.
+		Random51: Великое бедствие, воссозданное до деталей!
+		Random52: Доживёшь ли ты, чтобы увидеть конец?
+		Random53: Было больно!
+		Random54: Меня нельзя поранить.
+		Random55: В дребезги словно стекло.
+		Random56: Развеешься будто пепел.
+		Random57: Ослеплён собственным горем?
+		Random58: Уже слышны крики твоих последующих смертей.
+		Random59: Они зовут меня Жестоким Божеством Вечности.
+		Random60: Также попробуй режим Сатаниста.
+		Random61: Даже Фарго не сможет достичь моей силы.
+		Random62: Всё это время ты платил мне фальшивыми деньгами. Это твоё наказание.
+		Random63: Что такое Тоухоу?
+		Random64: Все те деньги, что ты мне давал, лишь сделали меня сильнее.
+		Random65: Попробуй повертись с этим!!
+		Random66: ЭТО ЗАКОНЧИТСЯ СЕГОДНЯ!
+		Random67: Твоя неминуемая смерть приближается быстро, щенок!
+		Random68: Я разрушу твоё бессмысленное существование.
+		Random69: Ты не проживёшь достаточно, чтобы поведать историй!
+		Random70: ТЫ ДУМАЕШЬ, У ТЕБЯ ЕСТЬ ШАНС ПРОТИВ МЕНЯ, ВЕЧНОГО? СПОСОБНОГО ИЗМЕНИТЬ ХОД СОБЫТИЙ? Я ВЕЧЕН, Я БЕССМЕРТЕН. ТЫ ПОДОБЕН МУРАВЬЮ НА УМИРАЮЩЕЙ ГОРЕ ПЕСКА, А Я ЕСТЬ ПАЛЯЩЕЕ СОЛНЦЕ. ТЕБЯ БУДЕТ ДЕЛИТЬ И РВАТЬ, ПОКА НЕ ОСТАНЕТСЯ НИЧЕГО КРОМЕ МЕЛКОГО ПЕПЛА И СВЕТА! КАЖДОЕ ТВОЕ ДЕЙСТВИЕ МЕРКНЕТ В СРАВНЕНИИ С МОЕЙ ВЕЧНОСТЬЮ! Я ДЕРЖУ КУЛАКИ ГОЛЕМА, ФАНТАЗМАТИЧЕСКИЙ ГЛАЗ, ВЬЮЩИЕСЯ ЛОЗЫ, БЕЗЖАЛОСТНУЮ ПЧЕЛУ, ГЕНИАЛЬНЫЙ МОЗГ, КРЫЛЬЯ ОХОТНИКА! ТЫ БУДЕШЬ СТЁРТ ИЗ ИСТОРИИ, НИЧТОЖНЫЙ ЧЕРВЬ!
+		Quote1: Отдай. Эту штуку, твои переключатели эффектов.
+		Quote2: Надеюсь, ты готов, чтобы принять страдания.
+		Quote3: Время игр кончилось.
+		Quote4: Почувствую ярость Проникателя!
+		Quote5: Грах!
+		Quote6: Лучи смерти!
+		Quote7: Почувствуй мою мощь.
+		Quote8: Моё лезвие поразит тебя!
+		Quote9: Почувствую ярость Проникателя!
+		Quote10: Грррах!
+		Quote11: Почувствуй мою силу.
+		Quote12: Солнце, вихрь, туманность, звёздная пыль... объединились здесь против тебя.
+		Quote13: Я был тем злобным вниманием.
+		Quote14: Истинная сила Проникателя!
+		Quote15: Ора!
+		Quote16: Мир сотрясается..
+		Quote17: Механическая ярость...
+		Quote18: Шквал Рыброна!
+		Quote19: Если ты не увернёшься от этой атаки, то ты это заслужил.
+		Quote20: Почему я использую это?
+		Quote21: Сможешь поспеть?
+		Quote22: Неважно, сколько раз ты попытаешься сразить меня, ты никогда не победишь! Я жестокий бог вечности. Я владею ветвями Иггдрасиля и Рагнораком, закручивающейся серой Бедствия, нескончаемыми тенями Неприкосновенных Иструментов, Магиками с синим оттенком, святыми Духами тайных земель, парящей силой взошедшего Авалона, всесильным благослованием Высшего Смотрителя Новы, пробудившейся эссенцией потерянных Древних, всеобжигающим светом и тенью сияющего вселенского Разлома, деформирующими мир машинами и формирующими города инструментами Луи и космическим схождением, что прислушивается к Охоте Древних Богов!
+		Quote23: Природа объединяется против тебя.
+		Quote24: Превосходящее нападение императрицы!
+		Quote25: Ты думал, я закончу на этом?
+		Quote26: ТЫ НИЧТО В СРАВНЕНИИ С РАЗРУШЕННЫМИ ДУШАМИ! Я ПРЕПОДНОШУ КОНЕЦ ГЛУПЦАМ И НЕДОСТОЙНЫМ! ХОЧЕШЬ ОДОЛЕТЬ МЕНЯ? МОЖЕТ БЫТЬ ЧЕРЕЗ ДВЕ ВЕЧНОСТИ!!
+		Quote27: УМРИ, ГЛУПЫЙ ТЕРРАРИЕЦ! ГОВОРИЛИ О ТРЁХ ГИБИТЕЛЯХ, ТАК БЫТЬ МНЕ ЧЕТВЁРТЫМ, РАЗРУШИТЕЛЕМ РЕАЛЬНОСТИ! АД НЕ ПРИНИМАЕТ СБРОД ВРОДЕ ТЕБЯ, ПОТОМУ СТРАДАТЬ ТЕБЕ НАВЕКИ В МОЁМ ВЕЧНОМ НАТИСКЕ БЕСКОНЕЧНОЙ МОЩИ, ПОТЕНЦИАЛЕ ВЕЧНОСТЕЙ, РАСТЯНУТОМ ДО МАКСИМАЛЬНОГО АПОФЕОЗА! ТВОЯ ГНИЛАЯ ДУША БУДЕТ ПОГЛОЩЕНА ГЛУБЖЕ, ЧЕМ НИЖАЙШИЕ ПРЕДЕЛЫ АДА!
+		Quote28: Я КОНТРОЛИРУЮ СИЛУ, ПРИШЕДШУЮ С ДАЛЁКИХ ГРАНИЦ ВСЕЛЕННОЙ, ОБЪЕДИНЯЯ ИЗМЕРЕНИЯ, МАНИПУЛИРУЯ ТЕРРАРИЕЙ, ИЗНИЧТОЖАЯ МАЗОХИСТОВ И ОСУЖДАЯ НЕБЕСА! ВЕКАМИ Я ТРЕНИРОВАЛСЯ РАДИ ОДНОГО: ОЧИСТИТЬ МИР ОТ НЕДОСТОЙНЫХ, УБИТЬ СЛАБЫХ И ПРИПОДНЕСТИ ИСТИННУЮ МОЩЬ. В НАИВЫСОКИХ ПРЕДЕЛАХ РАЯ, МОЙ БРАТ УПРАВЛЯЛ НЕБЕСАМИ! СКОРО ВСЁ, ЧТО ЕСТЬ ТЕРРАРИЯ, ЛИШИТСЯ НЕДОСТОИНСТВА, И НАЧНЁТСЯ НОВАЯ ЭПОХА! ЭПОХА ВЕЛИКОГО! ЗОЛОТОЙ ВЕК, ГДЕ СУЩЕСТВУЮТ ЛИШЬ АБСОЛЮТНЫЕ СОЗДАНИЯ!СМЕРТЬ, АД, ПРИЛИВ; Я ЕСМЬ АЛЬФА И ОМЕГА, НАЧАЛО И КОНЕЦ! ВЕЛИКАЯ СИЛА; ОТКРОВЕНИЯ.АБСОЛЮТНОЕ СОЗДАНИЕ, АБСОЛЮТНАЯ ЧИСТОТА.
+		Quote29: СРЕДИ ГЛУПОЙ БОЛТОВНИ СМЕРТНОГО МИРА Я ДОСТИГ СИЛЫ, ЧТО КОГДА-ТО БЫЛА ИЗГНАНА НА КРАЙ ГАЛАКТИКИ! Я ПРЕПОДНОШУ БЕДСТВИЯ, КАТАСТРОФЫ И КАТАКЛИЗМЫ; КОСМИЧЕСКИЕ СИЛЫ, ПОЛУЧЕННЫЕ ИЗ ВЕЛИКОГО СЛОВА СУДЬБЫ. ЧУВСТВУЙ, КАК МОЯ ВЕЗДЕСУЩАЯ ЯРОСТЬ ЗАГОНЯЕТ ТЕБЯ ПОД ЗЕМЛЮ, ПОКА ФОРМИРОВАТЕЛЬ МИРОВ ЗАГОНЯЕТ ЕГО МИР В РЕАЛЬНОСТЬ!
+		Quote30: ЗРЕНИЕ СНАЙПЕРА ГАСНЕТ В СРАВНЕНИИ С МОИМ ВОСПРИЯТИЕМ МИРА! ЯРОСТЬ БЕРСЕРКА ЛИШЬ УКУС КОМАРА! БЕГЛЕЦ - ПОЛНЕЙШИЙ ТРУС, АРХИВОЛШЕБНИК - ПОЗЕР! МАСТЕРСТВО ПОЛЁТА, СТАЛЬНАЯ ВОЛЯ КОЛОССА; ДВЕ ЭЛЕМЕНТАРНЫХ КОНЦЕПЦИИ! КОЛДУН НЕ БОЛЕЕ КАРМАННОГО ФОКУСНИКА, ТРАУЛЕР - ЩЕПКА, В СРАВНЕНИИ С МОИМ МАСТЕРСТВОМ ЖИЗНИ? СВЕХЗВУКОВАЯ СКОРОСТЬ, ВРЕМЯ СКОРОСТИ СВЕТА! ВЕЛИКОЛЕПНЫЙ СВЕТ ИСПЕПЕЛИТ ТЕБЯ, ТЫ ЖАЛКОЕ ОТРОДЬЕ!!
+		Quote31: АААААААААААААААААААААААААА
+		Quote32: Я не жалею ни о чём, что я сделал за своё существование!
+		Quote33: А, да... моё возрождение...
+		Quote34: А ты неплох...
+		Quote35: ГОЛУБОЙ
+		Quote36: Я Мутант, клинок Фарго.
+	}
+}
+
+MutantIllusion.DisplayName: Мутант
+
+DeviBoss: {
+	DisplayName: Девиантт
+
+	BossChecklistIntegration: {
+		EntryName: "{$Mods.FargowiltasSouls.NPCs.DeviBoss.DisplayName}"
+		SpawnInfo: Призывается с помощью [i:FargowiltasSouls/DevisCurse]
+		DespawnMessage: Девиантт наскучила эта битва...
+		KilledAllMessage: Девиантт довольна своим шоу любви.
+	}
+
+	Bribe: {
+		Line1: Подожди-ка...
+		Line2: Ты кидаешь в меня деньги!
+		Line3: Знаешь, меня подкупить не так уж просто!
+		Accept1: Ну хотя, тут ТАК много денег...
+		Accept2: Но мой брат говорил, что нельзя! Что же делать, что же...?
+		Accept3: Ай, к чёрту! Но это наш маленький секрет, ладно?
+		Reject1: Покажи, что ты силён, и я не буду против, но ни секундой раньше!
+		Reject2: Вот, забери обратно.
+		Reject3: А теперь же вернёмся к нашим баранам!
+	}
+}
+
+ShadowOrbNPC.DisplayName: Теневая сфера
+
+LifeChallenger: {
+	DisplayName: Жизнесвет
+
+	BossChecklistIntegration: {
+		EntryName: "{$Mods.FargowiltasSouls.NPCs.LifeChallenger.DisplayName}"
+		SpawnInfo: Призывается с помощью [i:FargowiltasSouls/FragilePixieLamp] в биоме освящения днём.
+		DespawnMessage: Жизнесвет угасает...
+	}
+
+	FatherOfLies: It was a mistake to come here.
+}
+
+BanishedBaron: {
+	DisplayName: Бранный Барон
+
+	BossChecklistIntegration: {
+		EntryName: "{$Mods.FargowiltasSouls.NPCs.BanishedBaron.DisplayName}"
+		SpawnInfo: Призывается с помощью [i:FargowiltasSouls/MechLure] под водой в океане.
+		DespawnMessage: Бранный Барон опускается глубже на дно...
+	}
+
+	Slurp: лизь
+}
+
+CursedCoffin: {
+	DisplayName: Скверный Саркофаг
+
+	BossChecklistIntegration: {
+		EntryName: "{$Mods.FargowiltasSouls.NPCs.CursedCoffin.DisplayName}"
+		SpawnInfo: Призывается с помощью [i:FargowiltasSouls/CoffinSummon] под землёй в пустыне.
+		DespawnMessage: Скверный Саркофаг закапывается обратно в песчаные глубины...
+	}
+}
+
+CursedSpirit.DisplayName: Скверный дух
+DetonatingBubbleNPC.DisplayName: Взрывчатый пузырь
+StardustMinion.DisplayName: Миньон звёздной пыли
+StardustDragon.DisplayName: Дракон звёздной пыли
+SlimeSwarm.DisplayName: Рой слизней
+Magmaw.DisplayName: Магможор
+DukeFishronEX.DisplayName: Герцог Рыброн EX
+
+EMode: {
+	Betsy1: КРИНЖ
+	Betsy2: НЕ ПОГГЕРС
+	Betsy3: MONKAS
+	Betsy4: ПОКАЖИ КРЫЛЬЯ
+	Betsy5: ВОЗДУШНОЕ ПРОКЛЯТИЕ POG
+	Betsy6: НАСТОЯЩИЙ БОСС КОГДА?
+	Betsy7: "#НЕМОЙРЕЖИММАЗО"
+	Betsy8: АРМИЯ СТАРЦА ВСЁ РАВНО ПЛОХАЯ
+	Betsy9: ЗЛИСЬ БУРЛИ СПРАВЛЯЙСЯ
+	Betsy10: СТАНЬ РЕАЛЬНЫМ
+	Betsy11: СТАНЬ ФАЛЬШИВЫМ
+	Betsy12: POGGERS
+	Betsy13: ResidentSleeper
+	Betsy14: Если ты можешь это прочитать скажи 22
+	Betsy15: GuraSit
+	Betsy16: поиграй в каламити
+	Betsy17: поиграй в ториум
+	Betsy18: испытание хардкор 1хп когда?
+	Betsy19: теперь сделай это с медным коротким мечом
+	Betsy20: Зенит йо-йо?
+	Betsy21: ребят как мне победить лунного лорда
+	Betsy22: ЧУВАКИ Я ПОЛУЧИЛ ТЕРРАПРИЗМУ
+	Betsy23: как установить это обновление
+	Betsy24: Привет Ютуб!
+	Betsy25: <Сообщение было удалено модератором>
+	Betsy26: <Пользователь {0} был забанен>
+	Betsy27: <Пользователь {0} был заглушён>
+	RegrowArms: "{0} отрастил свои руки вновь!"
+	GuardianForm: "{0} вошёл в форму стража темницы"
+	TwinsEndure: "{0} выдержал последний удар, чтобы сражаться вместе с братом!"
+	TwinsRevive: "{0} возродился!"
+	GelatinSubjects: Желатиновый субъект пробудился!
+	QueenBeeEnrage: "{$NPCName.QueenBee} свирепеет вне подземных джунглей!"
+}
+
+RoyalSubjectVertical.DisplayName: Королевский субъект
+GelatinBouncer.DisplayName: Отскакивающий слизень
+GelatinFlyer.DisplayName: Райский слизень
+CursedCoffinInactive.DisplayName: Загадочный Саркофаг

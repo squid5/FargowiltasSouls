@@ -14,10 +14,6 @@ namespace FargowiltasSouls.Content.Items.Armor
         public override void SetStaticDefaults()
         {
             Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
-            // DisplayName.SetDefault("Gaia Helmet");
-            /* Tooltip.SetDefault(@"10% increased damage
-5% increased critical strike chance
-Increases max number of minions and sentries by 1"); */
         }
 
         public override void SetDefaults()
@@ -95,7 +91,6 @@ Increases max number of minions and sentries by 1"); */
             player.GetAttackSpeed(DamageClass.Melee) += 0.1f;
             player.manaCost -= 0.1f;
             player.maxMinions += 4;
-            player.maxTurrets += 1;
 
 
             if (fargoPlayer.GaiaOffense)

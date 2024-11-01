@@ -1,0 +1,810 @@
+TrojanSquirrelMountBuff: {
+	DisplayName: Троянская белка
+	Description: Вы катаетесь верхом на меха-белке
+}
+
+AccursedSarcophagusBuff: {
+	DisplayName: Проклятый саркофаг
+	Description: Он будет держать свои руки подальше
+}
+
+BabyAbomBuff: {
+	DisplayName: Малыш Вырод
+	Description: Кикфлип на косе
+}
+
+BabySilhouetteBuff: {
+	DisplayName: Малыш силуэт
+	Description: Не увидит свет, пока не вырастет
+}
+
+BiteSizeBaronBuff: {
+	DisplayName: Крохотный барон
+	Description: EX форма не идёт в комплекте
+}
+
+ChibiDeviBuff: {
+	DisplayName: Чиби Деви
+	Description: Она заинтересована в 'тебе'
+}
+
+MutantSpawnBuff: {
+	DisplayName: Отпрыск Мутанта
+	Description: Отпрыск Мутанта
+}
+
+SeekerOfTreasuresBuff: {
+	DisplayName: Искатель сокровищ
+	Description: Дай ему несколько тысяч лет, чтобы вырасти
+}
+
+NibbleBuff: {
+	DisplayName: Ниббл
+	Description: Только один кусочек (пожалуйста)
+}
+
+MonkBuff: {
+	DisplayName: Медитация
+	Description: Ваш рывок Монаха готов
+}
+
+ObsidianLavaWetBuff: {
+	DisplayName: Мокрая лава
+	Description: С вас капает лава
+}
+
+TitaniumDRBuff: {
+	DisplayName: Титановый щит
+	Description: Вы получаете дополнительное сопротивление урону и сопротивление многим дебаффам
+}
+
+KingSlimeMinionBuff: {
+	DisplayName: Миниатюрный Король слизней
+	Description: Этот маленький Король слизней защитит тебя
+}
+
+DukeFishronBuff: {
+	DisplayName: Герцог Рыброн
+	Description: Герцог Рыброн сражается за вас
+}
+
+RoombaPetBuff: {
+	DisplayName: Румба
+	Description: Эта румба следует за вами
+}
+
+DoveBuff: {
+	DisplayName: Голубь
+	Description: Голубь следует за вами
+}
+
+ChibiiRemiiBuff: {
+	DisplayName: Чибии Ремии
+	Description: Devil 'Remilia Stretch'
+}
+
+PrimeMinionBuff: {
+	DisplayName: Миниатюрный Прайм
+	Description: Скелетрон Прайм сражается за вас
+}
+
+FishMinionBuff: {
+	DisplayName: Рыба
+	Description: Эта рыба сражается за вас
+}
+
+CrimetroidBuff: {
+	DisplayName: Малыш Криметроид
+	Description: Малыш следует за вами
+}
+
+BerserkerInstallBuff: {
+	DisplayName: Установка свирепости
+	Description: "'Достань их! Берсерк!'"
+}
+
+BerserkerInstallCDBuff: {
+	DisplayName: Перезарядка свирепости
+	Description: Вы пока не можете впасть в неистовство
+}
+
+BetsyDashBuff: {
+	DisplayName: Рывок
+	Description: Вы двигаетесь на высокой скорости!
+}
+
+AbomFangBuff: {
+	DisplayName: Клык мерзости
+	Description: Сила режима Вечность подчиняет вас
+}
+
+AbomPresenceBuff: {
+	DisplayName: Мерзкое присутствие
+	Description: Защита, сопротивление урону и скорость восстановления здоровья снижены; эффекты дебаффа 'Лунный укус'
+}
+
+BaronsBurdenBuff: {
+	DisplayName: Бремя Барона
+	Description:
+		'''
+		Гравитация усилена вне воды
+		Вы дышите водой вместо воздуха
+		Улучшено подводное передвижение
+		'''
+}
+
+DeviPresenceBuff: {
+	DisplayName: Аномальное присутствие
+	Description: Дружественные НИПы получают увеличенный урон
+}
+
+GrabbedBuff: {
+	DisplayName: Схвачен
+	Description: Долби по кнопкам передвижения, чтобы выбраться!
+}
+
+MutantFangBuff: {
+	DisplayName: Клык Мутанта
+	Description: Сила Режима Вечность подчиняет вас
+}
+
+MutantPresenceBuff: {
+	DisplayName: Присутствие Мутанта
+	Description: Защита, сопротивление урону и восстановление здоровья снижены; снижен радиус грэйза; выключены некоторые переключаемые эффекты
+}
+
+HellFireBuff: {
+	DisplayName: Адский огонь
+	Description: Mods.FargowiltasSouls.BuffDescription.HellFireBuff
+}
+
+MagicalCleanseCDBuff: {
+	DisplayName: Перезарядка магического очищения
+	Description: Вы пока не можете очиститься от дебаффов
+}
+
+AbomCooldownBuff: {
+	DisplayName: Перезарядка мерзости
+	Description: Вы пока не можете выдержать ещё одну атаку
+}
+
+AbomRebirthBuff: {
+	DisplayName: Мерзкое перерождение
+	Description: Вы не можете умереть, пока не получите урон
+}
+
+AnticoagulationBuff: {
+	DisplayName: Несвёртываемость
+	Description: Вы теряете здоровье. При получении урона проливаете кровь, которую враги могут выпить, чтобы стать сильнее
+}
+
+AntisocialBuff: {
+	DisplayName: Необщительный
+	Description: У вас меньше друзей и урона хлыстов
+}
+
+AtrophiedBuff: {
+	DisplayName: Атрофированный
+	Description: Ваши мышцы деградируют
+}
+
+BerserkedBuff: {
+	DisplayName: Свирепый
+	Description: Увеличен урон и скорость атаки, снижена защита, и вы не можете себя контролировать
+}
+
+BloodDrinkerBuff: {
+	DisplayName: Кровопийца
+	Description: Урон увеличен на 30%
+}
+
+BloodthirstyBuff: {
+	DisplayName: Кровожадный
+	Description: Значительно увеличивает частоту появления врагов
+}
+
+BrainOfConfusionBuff: {
+	DisplayName: Церебральный разлом
+	Description: Наносимый урон снижен на 30%
+}
+
+ClippedWingsBuff: {
+	DisplayName: Оборванные крылья
+	Description: Вы не можете использовать крылья или ракетные ботинки
+}
+
+CrippledBuff: {
+	DisplayName: Покалеченный
+	Description: Вы не можете бежать
+}
+
+CurseoftheMoonBuff: {
+	DisplayName: Проклятье луны
+	Description: Гнев луны поглощает вас
+}
+
+DefenselessBuff: {
+	DisplayName: Беззащитный
+	Description: Ваша защита полностью сломлена
+}
+
+FlamesoftheUniverseBuff: {
+	DisplayName: Пламя Космоса
+	Description: Сами небеса судят вас
+}
+
+FlippedBuff: {
+	DisplayName: Перевёрнутый
+	Description: Силы гравитации изменили своё направление
+}
+
+HallowIlluminatedBuff: {
+	DisplayName: Освещение
+	Description:
+		'''
+		Увеличивает яркость и скорость появления существ
+		Увеличивает получаемый и наносимый урон в освещённых местах
+		'''
+}
+
+FusedBuff: {
+	DisplayName: Фитиль
+	Description: Сейчас вылетит бомба!
+}
+
+GodEaterBuff: {
+	DisplayName: Пожиратель богов
+	Description: Ваша душа проклята божественным гневом
+}
+
+GuiltyBuff: {
+	DisplayName: Чувство вины
+	Description: Ваше оружие затуплено виной от убийства невинных
+}
+
+HexedBuff: {
+	DisplayName: Сглаз
+	Description: Ваши атаки лечат врагов
+}
+
+HolyPriceBuff: {
+	DisplayName: Святая расплата
+	Description: Скорость атаки снижена на 30%
+}
+
+HypothermiaBuff: {
+	DisplayName: Гипотермия
+	Description: Дружественные снаряды замедлены, и вы получаете увеличенный урон от атак холодом
+}
+
+InfestedBuff: {
+	DisplayName: Заражённый
+	Description: Дальше только хуже
+}
+
+IvyVenomBuff: {
+	DisplayName: Яд плюща
+	Description: Вы теряете здоровье, яд плюща станет нейротоксином на 20 секунде
+	Transform: Ваш яд плюща стал нейротоксином!!
+}
+
+JammedBuff: {
+	DisplayName: Заклинивший
+	Description: Ваше оружие дальнего боя неисправно
+}
+
+LethargicBuff: {
+	DisplayName: Вялый
+	Description: Ваше оружие медлительно
+}
+
+LightningRodBuff: {
+	DisplayName: Громоотвод
+	Description: Вы притягиваете разряды молнии
+}
+
+LihzahrdBlessingBuff: {
+	DisplayName: Благословение ящщеров
+	Description: Включены провода и снижена частота появления врагов в Храме Джунглей
+	Message: Свет алтаря пал на вас!
+}
+
+LihzahrdCurseBuff: {
+	DisplayName: Проклятье ящщеров
+	Description: Провода в храме джунглей выключены
+}
+
+LivingWastelandBuff: {
+	DisplayName: Живая пустошь
+	Description: Все вокруг вас начинают гнить
+}
+
+LoosePocketsBuff: {
+	DisplayName: Широкие карманы
+	Description: У вас могут забрать предметы
+}
+
+LovestruckBuff: {
+	DisplayName: Влюблённость
+	Description: Вы влюблены!
+}
+
+LowGroundBuff: {
+	DisplayName: Заземлённый
+	Description: Нет крюка, не можете стоять на платформах или жидкостях
+}
+
+LowGroundEridanusBuff: {
+	DisplayName: Заземлённый
+	Description: Не можете стоять на платформах
+}
+
+MarkedforDeathBuff: {
+	DisplayName: Помеченный смертью
+	Description: Просто не получи урона
+}
+
+MidasBuff: {
+	DisplayName: Мидас
+	Description: Вы роняете деньги при получении урона
+}
+
+MutantNibbleBuff: {
+	DisplayName: Укус Мутанта
+	Description: Вы не можете восстанавливать здоровье
+}
+
+NanoInjectionBuff: {
+	DisplayName: Нано-инъекция
+	Description: Регенерация здоровья и остальные характеристики снижены
+}
+
+NeurotoxinBuff: {
+	DisplayName: Нейротоксин
+	Description: Ваше тело прекращает работу
+}
+
+NullificationCurseBuff: {
+	DisplayName: Проклятие нуллификации
+	Description: Лунный лорд переключает иммунитеты к видам урона!
+}
+
+OceanicMaulBuff: {
+	DisplayName: Терзания океана
+	Description: Защитные характеристики и максимальное здоровье обрезаны
+	LifeUp: +5 макс. здоровья
+	LifeDown: -5 макс. здоровья
+}
+
+OceanicSealBuff: {
+	DisplayName: Печать океана
+	Description: Нет уворотов, нет кражи жизни, нет сверхзвука, нет спасения
+}
+
+OiledBuff: {
+	DisplayName: В масле
+	Description: Вы получаете больше урона от огня
+}
+
+PungentGazeBuff: {
+	DisplayName: Едкий взор
+	Description: Mods.FargowiltasSouls.BuffDescription.PungentGazeBuff
+}
+
+PurgedBuff: {
+	DisplayName: Святочищенный
+	Description: Эффекты уворота не действуют
+}
+
+PurifiedBuff: {
+	DisplayName: Очищенный
+	Description: Вы чисты
+}
+
+RefreshedBuff: {
+	DisplayName: Освежённый
+	Description: Увеличена мобильность и время полёта
+}
+
+ReverseManaFlowBuff: {
+	DisplayName: Обратный поток маны
+	Description: Ваши магические оружия ненадолго останавливает вашу ману
+}
+
+RottingBuff: {
+	DisplayName: Гниение
+	Description: Ваше тело гниёт
+}
+
+RushJobBuff: {
+	DisplayName: Работа в спешке
+	Description: Медсестра пока не может вас вылечить
+	NurseChat: С ЭТОЙ штукой за твоей спиной? Ну уж нет, сперва иди убей её!
+}
+
+SadismBuff: {
+	DisplayName: Вечность
+	Description: Сила режима Вечность с вами
+}
+
+ShadowflameBuff: {
+	DisplayName: Теневое пламя
+	Description: Вы теряете здоровье
+}
+
+SmiteBuff: {
+	DisplayName: Сражённый
+	Description: Регенерация здоровья снижена и вы получаете на 20% больше урона
+}
+
+SqueakyToyBuff: {
+	DisplayName: Игрушка-пищалка
+	Description: Ваше оружие стало вести себя словно игрушка-пищалка!
+}
+
+StunnedBuff: {
+	DisplayName: Оглушение
+	Description: Вы не можете двигаться из-за головокружения
+}
+
+SwarmingBuff: {
+	DisplayName: Рой
+	Description: Шершни атакуют со всех сторон!
+}
+
+ThiefCDBuff: {
+	DisplayName: Перезарядка воровства
+	Description: Ваши вещи пока не могут быть украдены
+}
+
+UnluckyBuff: {
+	DisplayName: Невезение
+	Description: Вы чувствуете неудачу
+}
+
+UnstableBuff: {
+	DisplayName: Нестабильный
+	Description: Вы не вписываетесь в эту реальность
+}
+
+BigBrainMinionBuff: {
+	DisplayName: Большой мозг Ктулху
+	Description: Мозг Ктулху сражается за вас
+}
+
+BrainMinionBuff: {
+	DisplayName: Мозг Ктулху
+	Description: Миниатюрный Мозг Ктулху сражается за вас
+}
+
+CrystalSkullBuff: {
+	DisplayName: Кристальный череп
+	Description: Кристальный череп защищает вас
+}
+
+EaterMinionBuff: {
+	DisplayName: Пожиратель миров
+	Description: Миниатюрный пожиратель миров сражается за вас
+}
+
+LunarCultistBuff: {
+	DisplayName: Лунный культист
+	Description: Лунный культист защищает вас
+}
+
+MutantPowerBuff: {
+	DisplayName: Сила Мутанта
+	Description: Сила Мутанта с вами
+}
+
+PlanterasChildBuff: {
+	DisplayName: Дитя Плантеры
+	Description: Дитя Плантеры защищает вас
+}
+
+ProbesBuff: {
+	DisplayName: Зонды
+	Description: Зонды защищают вас
+}
+
+PungentEyeballBuff: {
+	DisplayName: Едкий глаз
+	Description: Едкий глаз защищает вас
+}
+
+RainbowSlimeBuff: {
+	DisplayName: Радужный слизень
+	Description: Радужный слизень защищает вас
+}
+
+SaucerMinionBuff: {
+	DisplayName: Маленькая летающая тарелка
+	Description: Маленькая летающая тарелка защищает вас
+}
+
+SkeletronArmsBuff: {
+	DisplayName: Руки Скелетрона
+	Description: Руки Скелетрона защищают вас
+}
+
+SouloftheMasochistBuff: {
+	DisplayName: Душа Властителя
+	Description: Сила режима Вечность с вами
+}
+
+TrueEyesBuff: {
+	DisplayName: Истинные глаза Ктулху
+	Description: Истинные глаза Ктулху защищают вас
+}
+
+TwinsEXBuff: {
+	DisplayName: Близнецы EX
+	Description: Настоящие Близнецы сражаются за вас
+}
+
+MutantRebirthBuff: {
+	DisplayName: Перерождение Мутанта
+	Description: Воскрешение луча смерти перезаряжается
+}
+
+BabyLifelightBuff: {
+	DisplayName: Жизнесветомец
+	Description: Узри, это - свет ангела
+}
+
+BrokenShellBuff: {
+	DisplayName: Разбитый панцирь
+	Description: Вы пока не можете воспользоваться панцирем
+}
+
+CrimsonRegenBuff: {
+	DisplayName: Багряное исцеление
+	Description: Ваша жизненная сила накапливается
+}
+
+FirstStrikeBuff: {
+	DisplayName: Ударный момент
+	Description: Ваша следующая атака будет усилена
+}
+
+FossilReviveCDBuff: {
+	DisplayName: Возрождён
+	Description: Вы не можете возродиться снова
+}
+
+FrozenBuff: {
+	DisplayName: Заморожен
+	Description: Вы не можете двигаться
+}
+
+GoldenStasisBuff: {
+	DisplayName: Золотой застой
+	Description: Вы не получаете урона, но не можете двигаться
+}
+
+GoldenStasisCDBuff: {
+	DisplayName: Перезарядка Золотого застоя
+	Description: Вы пока не можете озолотиться
+}
+
+HallowCooldownBuff: {
+	DisplayName: Перезарядка освящённого меча
+	Description: Ваш меч пока не может отразить выстрел
+}
+
+HuntressBleedBuff: {
+	DisplayName: Кровотечение охотницы
+	Description: Mods.FargowiltasSouls.BuffDescription.HuntressBleedBuff
+}
+
+HuntressCDBuff: {
+	DisplayName: Перезарядка дождя стрел
+	Description: Вы пока не можете вызвать дождь из стрел
+}
+
+LeadPoisonBuff: {
+	DisplayName: Свинцовое отравление
+	Description: Mods.FargowiltasSouls.BuffDescription.LeadPoisonBuff
+}
+
+MoltenAmplifyBuff: {
+	DisplayName: Литое усиление
+	Description: Mods.FargowiltasSouls.BuffDescription.MoltenAmplifyBuff
+}
+
+OriPoisonBuff: {
+	DisplayName: Орихалковое отравление
+	Description: Mods.FargowiltasSouls.BuffDescription.OriPoisonBuff
+}
+
+ShellHideBuff: {
+	DisplayName: Панцирь
+	Description: Все выстрелы блокируются
+}
+
+SnowstormCDBuff: {
+	DisplayName: Перезарядка снежной бури
+	Description: Вы пока не можете охладить всё вокруг
+}
+
+SolarFlareBuff: {
+	DisplayName: Солнечная вспышка
+	Description: Mods.FargowiltasSouls.BuffDescription.SolarFlareBuff
+}
+
+SuperBleedBuff: {
+	DisplayName: Кровавый гейзер
+	Description: Mods.FargowiltasSouls.BuffDescription.SuperBleedBuff
+}
+
+CorruptingBuff: {
+	DisplayName: Увядание
+	Description: Вы увядаете
+}
+
+TimeFrozenBuff: {
+	DisplayName: Время, остановись!
+	Description: Вы остановлены во времени
+}
+
+TimeStopCDBuff: {
+	DisplayName: Перезарядка остановки времени
+	Description: Вы пока не можете остановить время
+}
+
+TitaniumCDBuff: {
+	DisplayName: Перезарядка Титанового щита
+	Description: Вы заряжаете Титановый щит
+}
+
+VortexCDBuff: {
+	DisplayName: Перезарядка вихря
+	Description: Вы пока не можете создать вихрь
+}
+
+SuperchargedBuff: {
+	DisplayName: Подзаряжен
+	Description: Увеличивает скорость передвижения на 20%, скорость атаки на 10%, также ваши атаки электризуют
+}
+
+MoonBowBuff: {
+	DisplayName: Улыбка полумесяца
+	Description: Ваш лук усилен лунной магией
+}
+
+TribalCharmClickBuff: {
+	DisplayName: Амулет племени
+	Description: Получите на мгновение увеличенный урон, когда вы не зажимаете кнопку для атаки
+}
+
+TwinsInstallBuff: {
+	DisplayName: Установка близнецов
+	Description: Эффекты проклятия ада и ихора
+}
+
+WretchedHexBuff: {
+	DisplayName: Скверное заклинание
+	Description: Щупальца теневого пламени и значительно увеличенный урон, но значительно сниженная скорость и защита
+}
+
+CorruptedBuff: {
+	DisplayName: Увядающий
+	Description: Вы увяли
+}
+
+CorruptedBuffForce: {
+	DisplayName: Увядающий (Артефакт)
+	Description: Вы увяли
+}
+
+JungleMimicSummonBuff: {
+	DisplayName: Мимик джунглей
+	Description: Мимик джунглей сражается за вас
+}
+
+GladiatorBuff: {
+	DisplayName: Сила Гладиатора
+	Description: Увеличивает сопротивление урону и урон, даёт иммунитет к отбрасыванию, улучшает дождь копий
+}
+
+GladiatorSpiritBuff: {
+	DisplayName: Gladiator Strength
+	Description: +15% к сопротивлению урону, +30% к урону, даёт иммунитет к отбрасыванию, улучшает урон за попадания
+}
+
+ROBBuff: {
+	DisplayName: R.O.B
+	DescPatreon: Друг, которого ты никогда не покидал с самого Brawl-а
+	DescNonPatreon: Он наконец-то в высшем классе!
+	Description: Mods.FargowiltasSouls.Buffs.ROBBuff.Description
+}
+
+RainCDBuff: {
+	DisplayName: Перезарядка зонта Дождя
+	Description: Ваш зонт ещё не готов
+}
+
+SublimationBuff: {
+	Description: Mods.FargowiltasSouls.Buffs.SublimationBuff.Description
+	DisplayName: Бафф сублимации
+}
+
+CoffinTossBuff: {
+	DisplayName: Бафф броска Саркофага
+	Description: ""
+}
+
+HellFireMarkedBuff: {
+	DisplayName: Метка адского огня
+	Description: Mods.FargowiltasSouls.Buffs.HellFireMarked.Description
+}
+
+MagicalCurseBuff: {
+	DisplayName: Бафф магического проклятия
+	Description: Mods.FargowiltasSouls.Buffs.MagicalCurseBuff.Description
+}
+
+MoonFangBuff: {
+	DisplayName: Клык луны
+	Description: Не можете восстанавливать здоровье
+}
+
+WitheredForceBuff: {
+	DisplayName: Бафф Артефакта Увядающий
+	Description: Mods.FargowiltasSouls.Buffs.WitheredForceBuff.Description
+}
+
+TimberBleedBuff: {
+	DisplayName: Бафф Лесного Кровотечения
+	Description: Mods.FargowiltasSouls.Buffs.TimberBleedBuff.Description
+}
+
+EarthPoison: {
+	DisplayName: Яд Земли
+	Description: Mods.FargowiltasSouls.Buffs.EarthPoison.Description
+}
+
+WitheredBuff: {
+	DisplayName: Увядающий
+	Description: Mods.FargowiltasSouls.Buffs.WithereddBuff.Description
+}
+
+WitheredWizardBuff: {
+	DisplayName: Увядающий
+	Description: Mods.FargowiltasSouls.Buffs.WitheredWizardBuff.Description
+}
+
+MushroomPowerBuff: {
+	DisplayName: Сила грибов
+	Description: Увеличивает урон и шанс критической атаки
+}
+
+SolarBuff: {
+	DisplayName: Усиление солнца
+	Description: Увеличивает сопротивление урону
+}
+
+VortexBuff: {
+	DisplayName: Усиление вихря
+	Description: Увеличивает шанс критической атаки
+}
+
+NebulaBuff: {
+	DisplayName: Усиление туманности
+	Description: Увеличивает восстановление здоровья
+}
+
+StardustBuff: {
+	DisplayName: Усиление звёздной пыли
+	Description: Увеличивает урон
+}
+
+AmbrosiaBuff: {
+	DisplayName: Амброзия
+	Description: +30% к урону, +30% к ближней скорости атаки, +20% к сопротивлению урона, +2.5 ед. здоровья в секунду
+}
+
+MutantDesperationBuff: {
+	DisplayName: Фантазматическая ярость
+	Description: Его последний рывок. Ты получаешь вдвое больше урона!
+}

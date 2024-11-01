@@ -21,8 +21,6 @@ namespace FargowiltasSouls.Content.Items.Accessories.Souls
     public class EternitySoul : FlightMasteryWings
     {
 
-        public override bool HasSupersonicSpeed => true;
-
         public override bool Eternity => true;
         public override int NumFrames => 10;
 
@@ -52,14 +50,14 @@ namespace FargowiltasSouls.Content.Items.Accessories.Souls
             const int linesToShow = 7;
 
             string description = Language.GetTextValue("Mods.FargowiltasSouls.Items.EternitySoul.Extra.Additional");
-            description += "                                                                                                                                               "; // blankspaces for consistent box size lmao
+            description += "                                                                                                                                                       "; // blankspaces for consistent box size lmao
 
             if (Main.GameUpdateCount % 5 == 0 || EternitySoulSystem.TooltipLines == null)
             {
-                EternitySoulSystem.TooltipLines = new();
+                EternitySoulSystem.TooltipLines = [];
                 for (int i = 0; i < linesToShow; i++)
                 {
-                    string line = Main.rand.NextFromCollection(EternitySoulSystem.Tooltips);
+                    string line = Main.rand.NextFromCollection(EternitySoulSystem.Tooltips.Where(s => s.Length < description.Length).ToList());
                     if (EternitySoulSystem.TooltipLines.Contains(line)) // duplicate
                     {
                         i--;
@@ -148,7 +146,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Souls
             player.AddEffect<EternityTin>(Item);
 
             //UNIVERSE
-            modPlayer.UniverseSoul = true;
+            modPlayer.UniverseSoul = modPlayer.UniverseSoulBuffer = true;
             modPlayer.UniverseCore = true;
             player.GetDamage(DamageClass.Generic) += 2.5f;
             player.AddEffect<UniverseSpeedEffect>(Item);
@@ -160,7 +158,6 @@ namespace FargowiltasSouls.Content.Items.Accessories.Souls
             player.yoyoGlove = true;
             player.yoyoString = true;
 
-            player.AddEffect<SniperScopeEffect>(Item);
             player.manaFlower = true;
             player.manaMagnet = true;
             player.magicCuffs = true;
@@ -198,8 +195,8 @@ namespace FargowiltasSouls.Content.Items.Accessories.Souls
     }
     public class EternitySoulSystem : ModSystem
     {
-        public static List<string> Tooltips = new();
-        public static List<string> TooltipLines = new();
+        public static List<string> Tooltips = [];
+        public static List<string> TooltipLines = [];
         public override void OnLocalizationsLoaded() // rebuild on language changed
         {
             Tooltips.Clear();
@@ -230,7 +227,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Souls
     {
         public override Header ToggleHeader => Header.GetHeader<EternityHeader>();
         public override int ToggleItemType => ModContent.ItemType<EternitySoul>();
-        public override bool IgnoresMutantPresence => true;
+        
     }
 
 }

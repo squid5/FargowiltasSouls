@@ -11,7 +11,6 @@ namespace FargowiltasSouls.Content.Items.Pets
     {
         public override void SetStaticDefaults()
         {
-            // Tooltip.SetDefault("Summons a small accursed sarcophagus\n'That's why yo' rags cursed-y'");
             Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 

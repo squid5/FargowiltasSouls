@@ -65,20 +65,25 @@ namespace FargowiltasSouls.Core.ModPlayers
             {
                 if (Player.HasEffect<StardustEffect>() && !Player.HasBuff(ModContent.BuffType<TimeStopCDBuff>()))
                 {
-                    int cooldownInSeconds = 60;
+                    int cooldownInSeconds = 90;
                     if (ForceEffect<StardustEnchant>())
-                        cooldownInSeconds = 50;
+                        cooldownInSeconds = 75;
                     if (TerrariaSoul)
-                        cooldownInSeconds = 40;
+                        cooldownInSeconds = 60;
                     if (Eternity)
                         cooldownInSeconds = 30;
                     Player.ClearBuff(ModContent.BuffType<TimeFrozenBuff>());
-                    Player.AddBuff(ModContent.BuffType<TimeStopCDBuff>(), cooldownInSeconds * 60);
+                    for (int i = 0; i < Main.maxPlayers; i++)
+                    {
+                        if (Main.player[i] != null && Main.player[i].Alive())
+                            Main.player[i].AddBuff(ModContent.BuffType<TimeStopCDBuff>(), cooldownInSeconds * 60);
+                    }
+                    
 
                     FreezeTime = true;
                     freezeLength = StardustEffect.TIMESTOP_DURATION;
 
-                    SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/ZaWarudo"), Player.Center);
+                    SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/Accessories/ZaWarudo"), Player.Center);
                 }
                 /*else if (Player.HasEffect<SnowEffect>() && !Player.HasBuff(ModContent.BuffType<SnowstormCDBuff>())
                     && !Player.HasBuff(ModContent.BuffType<MutantPresenceBuff>()))
@@ -101,7 +106,7 @@ namespace FargowiltasSouls.Core.ModPlayers
 
             if (PrecisionSeal)
             {
-                if (SoulConfig.Instance.PrecisionSealIsHold)
+                if (ClientConfig.Instance.PrecisionSealIsHold)
                     PrecisionSealNoDashNoJump = FargowiltasSouls.PrecisionSealKey.Current;
                 else
                 {
@@ -131,15 +136,15 @@ namespace FargowiltasSouls.Core.ModPlayers
 
             #endregion
 
-            if (GoldShell || Player.CCed || NoUsingItems > 2)
+            if (GoldShell || SpectreGhostTime > 0 || Player.CCed || NoUsingItems > 0)
             {
                 return;
             }
 
             #region blocked by stuns
 
-            if (FargowiltasSouls.SmokeBombKey.JustPressed && CrystalEnchantActive && SmokeBombCD == 0)
-                CrystalAssassinEnchant.SmokeBombKey(this);
+            //if (FargowiltasSouls.SmokeBombKey.JustPressed && CrystalEnchantActive && SmokeBombCD == 0)
+            //    CrystalAssassinEnchant.SmokeBombKey(this);
 
             if (FargowiltasSouls.SpecialDashKey.JustPressed && (BetsysHeartItem != null || QueenStingerItem != null))
                 SpecialDashKey();

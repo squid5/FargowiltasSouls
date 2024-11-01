@@ -1,3 +1,4 @@
+using FargowiltasSouls.Content.Items.Accessories.Forces;
 using FargowiltasSouls.Content.Projectiles.Souls;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using FargowiltasSouls.Core.Toggler.Content;
@@ -18,10 +19,6 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
-
-            // DisplayName.SetDefault("Forbidden Enchantment");
-
-            // Tooltip.SetDefault(tooltip);
         }
 
         public override Color nameColor => new(231, 178, 28);
@@ -68,9 +65,10 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
     {
         public override Header ToggleHeader => Header.GetHeader<SpiritHeader>();
         public override int ToggleItemType => ModContent.ItemType<ForbiddenEnchant>();
+        public override bool MutantsPresenceAffects => true;
         public static void ActivateForbiddenStorm(Player player)
         {
-            if (player.HasEffect<ForbiddenEffect>())
+            if (player.HasEffect<ForbiddenEffect>() && !player.HasEffect<SpiritTornadoEffect>())
             {
                 FargoSoulsPlayer modPlayer = player.FargoSouls();
                 if (modPlayer.CanSummonForbiddenStorm)
@@ -82,7 +80,9 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
         }
         public static void CommandForbiddenStorm(Player Player)
         {
-            List<int> list = new();
+            if (Player.HasEffect<SpiritTornadoEffect>())
+                return;
+            List<int> list = [];
             for (int i = 0; i < Main.maxProjectiles; i++)
             {
                 Projectile projectile = Main.projectile[i];

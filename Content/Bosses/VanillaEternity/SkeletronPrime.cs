@@ -82,9 +82,6 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
             EModeGlobalNPC.primeBoss = npc.whoAmI;
 
-            if (WorldSavingSystem.SwarmActive)
-                return result;
-
             if (npc.ai[1] == 3) //despawn faster
             {
                 if (npc.timeLeft > 60)
@@ -118,7 +115,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                 }
             }
 
-            if (npc.ai[0] != 2f || WorldSavingSystem.MasochistModeReal)
+            if (npc.ai[0] != 2f)
             {
                 if (!HaveShotGuardians && npc.ai[1] == 1f && npc.ai[2] > 2f) //spinning, do wave of guardians
                 {
@@ -134,7 +131,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                                 Vector2 vel = -10 * Vector2.UnitX;
                                 spawnPos = Main.player[npc.target].Center + spawnPos.RotatedBy(Math.PI / 2 * i);
                                 vel = vel.RotatedBy(Math.PI / 2 * i);
-                                int p = Projectile.NewProjectile(npc.GetSource_FromThis(), spawnPos, vel, ModContent.ProjectileType<PrimeGuardian>(), FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 0f, Main.myPlayer);
+                                int p = Projectile.NewProjectile(npc.GetSource_FromThis(), spawnPos, vel, ModContent.ProjectileType<PrimeGuardian>(), FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 0f, Main.myPlayer);
                                 if (p != Main.maxProjectiles)
                                     Main.projectile[p].timeLeft = 1200 / 10 + 1;
                             }
@@ -153,7 +150,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                         speed.Y += Main.rand.Next(-20, 21);
                         speed.Normalize();
 
-                        int damage = FargoSoulsUtil.ScaledProjectileDamage(npc.damage);
+                        int damage = FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage);
 
                         if (FargoSoulsUtil.HostCheck)
                         {
@@ -242,7 +239,8 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                 }
 
                 //spawn 4 more limbs
-                if (!FullySpawnedLimbs && (npc.life < npc.lifeMax * 0.6 || WorldSavingSystem.MasochistModeReal) && npc.ai[1] == 0f && npc.ai[3] >= 0f) // cannot go p3 while spinning
+                float threshold = WorldSavingSystem.MasochistModeReal ? 0.8f : 0.6f;
+                if (!FullySpawnedLimbs && npc.life < npc.lifeMax * threshold && npc.ai[1] == 0f && npc.ai[3] >= 0f) // cannot go p3 while spinning
                 {
                     if (limbTimer == 0)
                     {
@@ -275,7 +273,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     limbTimer++;
                     if (limbTimer == 60f) //first set of limb management
                     {
-                        int[] limbs = { NPCID.PrimeCannon, NPCID.PrimeLaser, NPCID.PrimeSaw, NPCID.PrimeVice };
+                        int[] limbs = [NPCID.PrimeCannon, NPCID.PrimeLaser, NPCID.PrimeSaw, NPCID.PrimeVice];
 
                         foreach (NPC l in Main.npc.Where(l => l.active && l.ai[1] == npc.whoAmI && limbs.Contains(l.type)))
                         {
@@ -310,11 +308,11 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                             int rangedArm = Main.rand.NextBool() ? NPCID.PrimeCannon : NPCID.PrimeLaser;
                             int meleeArm = Main.rand.NextBool() ? NPCID.PrimeSaw : NPCID.PrimeVice;
 
-                            int[] limbs = { NPCID.PrimeCannon, NPCID.PrimeLaser, NPCID.PrimeSaw, NPCID.PrimeVice };
+                            int[] limbs = [NPCID.PrimeCannon, NPCID.PrimeLaser, NPCID.PrimeSaw, NPCID.PrimeVice];
 
                             foreach (NPC l in Main.npc.Where(l => l.active && l.ai[1] == npc.whoAmI && limbs.Contains(l.type) && !l.GetGlobalNPC<PrimeLimb>().IsSwipeLimb))
                             {
-                                l.GetGlobalNPC<PrimeLimb>().RangedAttackMode = npc.type == rangedArm || npc.type == meleeArm;
+                                l.GetGlobalNPC<PrimeLimb>().RangedAttackMode = !(npc.type == rangedArm || npc.type == meleeArm);
 
                                 int heal = l.lifeMax;
                                 l.life = Math.Min(l.life + l.lifeMax / 2, l.lifeMax);
@@ -360,7 +358,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             // it's also kept for structural reasons, and since phase 1 still exists in masomode
             if (npc.ai[0] != 2f) //go phase 2 instantly
             {
-                float threshold = WorldSavingSystem.MasochistModeReal ? 0.8f : 1f;  //instant in emode, 80% in maso
+                float threshold = 1f; //instant
                 if (npc.life <= npc.lifeMax * threshold /*.8*/)
                 {
                     npc.ai[0] = 2f;
@@ -380,12 +378,14 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
         public override bool CheckDead(NPC npc)
         {
-            if (npc.ai[1] != 2f && !WorldSavingSystem.SwarmActive)
+            if (npc.ai[1] != 2f)
             {
                 SoundEngine.PlaySound(SoundID.Roar, npc.Center);
                 npc.life = npc.lifeMax / 630;
                 if (npc.life < 100)
                     npc.life = 100;
+                if (WorldSavingSystem.SwarmActive && npc.life > 666)
+                    npc.life = 666;
                 npc.defDefense = 9999;
                 npc.defense = 9999;
                 npc.defDamage *= 13;
@@ -507,9 +507,6 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             if (NoContactDamageTimer > 0)
                 NoContactDamageTimer--;
 
-            if (WorldSavingSystem.SwarmActive)
-                return true;
-
             NPC head = FargoSoulsUtil.NPCExists(npc.ai[1], NPCID.SkeletronPrime);
             if (head == null)
             {
@@ -549,6 +546,8 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             if (npc.timeLeft < 600)
                 npc.timeLeft = 600;
 
+            npc.chaseable = false;
+
             if (npc.dontTakeDamage)
             {
                 if (npc.buffType[0] != 0)
@@ -575,7 +574,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                         if (FargoSoulsUtil.HostCheck)
                         {
                             Vector2 speed = new Vector2(16f, 0f).RotatedBy(npc.rotation + Math.PI / 2);
-                            Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, speed, ModContent.ProjectileType<MechElectricOrb>(), FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 0f, Main.myPlayer);
+                            Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, speed, ModContent.ProjectileType<MechElectricOrb>(), FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 0f, Main.myPlayer);
                         }
                     }
                 }
@@ -700,7 +699,9 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
                 if (IsSwipeLimb) //swipe AI
                 {
-                    if (!SwipeLimbAI())
+                    if (Main.getGoodWorld)
+                        useNormalAi = true;
+                    else if (!SwipeLimbAI())
                         return false;
                 }
                 else if (head.ai[1] == 1 || head.ai[1] == 2) //other limbs while prime spinning
@@ -838,7 +839,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                                         if (FargoSoulsUtil.HostCheck)
                                         {
                                             Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, 7.5f * baseVel.RotatedBy(MathHelper.ToRadians(1f) * j),
-                                                  ProjectileID.DeathLaser, FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 0f, Main.myPlayer);
+                                                  ProjectileID.DeathLaser, FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 0f, Main.myPlayer);
                                         }
                                     }
                                 }
@@ -853,7 +854,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                                     if (FargoSoulsUtil.HostCheck)
                                     {
                                         Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, 7.5f * baseVel.RotatedBy(MathHelper.ToRadians(1f) * j),
-                                            ProjectileID.DeathLaser, FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 0f, Main.myPlayer);
+                                            ProjectileID.DeathLaser, FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 0f, Main.myPlayer);
                                     }
                                 }
                             }

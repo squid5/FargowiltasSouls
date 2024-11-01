@@ -1,8 +1,11 @@
 ﻿using FargowiltasSouls.Common.Graphics.Particles;
+using FargowiltasSouls.Content.Items.Accessories.Enchantments;
 using FargowiltasSouls.Content.Projectiles.Souls;
+using FargowiltasSouls.Core.AccessoryEffectSystem;
 using FargowiltasSouls.Core.Systems;
 using Luminance.Core.Graphics;
 using Microsoft.Xna.Framework;
+using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -59,6 +62,12 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
 
             return base.PreAI();
         }
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+        {
+            if (target.townNPC)
+                return;
+            modifiers.SourceDamage *= 10;
+        }
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             target.AddBuff(BuffID.Electrified, 120);
@@ -87,6 +96,19 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
 
             return base.PreDraw(ref lightColor);
         }
-        public override bool CanHitPlayer(Player target) => Telegraphing ? false : base.CanHitPlayer(target);
+        public override bool CanHitPlayer(Player target)
+        {
+            if (Telegraphing)
+                return false;
+            if (target.HasEffect<LightningImmunity>())
+                return false;
+            return base.CanHitPlayer(target);
+        }
+        public override bool? CanHitNPC(NPC target)
+        {
+            if (target.townNPC && Main.player.Any(p => p.Alive() && p.HasEffect<LightningImmunity>()))
+                return false;
+            return base.CanHitNPC(target);
+        }
     }
 }

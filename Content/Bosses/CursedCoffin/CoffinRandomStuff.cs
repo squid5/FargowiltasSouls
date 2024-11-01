@@ -1,10 +1,10 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework;
 using System;
-using Terraria;
-using Terraria.DataStructures;
 using Terraria.ID;
+using Terraria;
 using Terraria.ModLoader;
+using Terraria.DataStructures;
 
 namespace FargowiltasSouls.Content.Bosses.CursedCoffin
 {
@@ -14,7 +14,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Banished Baron Scrap");
-            ProjectileID.Sets.TrailCacheLength[Type] = 3;
+            ProjectileID.Sets.TrailCacheLength[Type] = 6;
             ProjectileID.Sets.TrailingMode[Type] = 2;
             Main.projFrames[Type] = Frames;
         }
@@ -32,7 +32,7 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
         }
         public ref float ObjectType => ref Projectile.ai[0];
         public ref float StartHeight => ref Projectile.ai[1];
-        public static float Gravity(float objectType) =>
+        public static float Gravity(float objectType) => 
             objectType switch
             {
                 5 => 0.15f, // vase
@@ -89,6 +89,14 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
                 Vector2 value4 = Projectile.oldPos[i];
                 float num165 = Projectile.oldRot[i];
                 Main.EntitySpriteDraw(texture2D13, value4 + drawOffset + Projectile.Size / 2f - Main.screenPosition + new Vector2(0, Projectile.gfxOffY), new Rectangle?(rectangle), color27, num165, origin2, Projectile.scale, effects, 0);
+            }
+            for (int j = 0; j < 12; j++)
+            {
+                Vector2 afterimageOffset = (MathHelper.TwoPi * j / 12f).ToRotationVector2() * 2f *  Projectile.scale;
+                Color glowColor = CoffinDarkSouls.GlowColor;
+
+
+                Main.spriteBatch.Draw(texture2D13, Projectile.Center + drawOffset + afterimageOffset - Main.screenPosition, new Rectangle?(rectangle), glowColor, Projectile.rotation, origin2, Projectile.scale, effects, 0f);
             }
             Main.EntitySpriteDraw(texture2D13, Projectile.Center + drawOffset - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY), new Rectangle?(rectangle), Projectile.GetAlpha(lightColor), Projectile.rotation, origin2, Projectile.scale, effects, 0);
             return false;

@@ -2,6 +2,7 @@ using FargowiltasSouls.Common.Utilities;
 using FargowiltasSouls.Content.Buffs.Masomode;
 using FargowiltasSouls.Content.Projectiles;
 using FargowiltasSouls.Content.Projectiles.Masomode;
+using FargowiltasSouls.Core;
 using FargowiltasSouls.Core.Globals;
 using FargowiltasSouls.Core.NPCMatching;
 using FargowiltasSouls.Core.Systems;
@@ -19,6 +20,8 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
     public class EyeofCthulhu : EModeNPCBehaviour
     {
         public override NPCMatcher CreateMatcher() => new NPCMatcher().MatchType(NPCID.EyeofCthulhu);
+
+        public bool recolor = SoulConfig.Instance.BossRecolors && WorldSavingSystem.EternityMode;
 
         public int AITimer;
         public int ScytheSpawnTimer;
@@ -78,9 +81,6 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             ref float ai_Timer = ref npc.ai[2];
             EModeGlobalNPC.eyeBoss = npc.whoAmI;
 
-            if (WorldSavingSystem.SwarmActive)
-                return true;
-
             void SpawnServants()
             {
                 if (npc.life <= npc.lifeMax * 0.65 && NPC.CountNPCS(NPCID.ServantofCthulhu) < 9 && FargoSoulsUtil.HostCheck)
@@ -99,8 +99,8 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                 }
             }
 
-            npc.dontTakeDamage = npc.alpha > 50;
-            if (npc.dontTakeDamage)
+            //npc.dontTakeDamage = npc.alpha > 50;
+            if (npc.alpha > 50)
                 Lighting.AddLight(npc.Center, 0.75f, 1.35f, 1.5f);
 
             if (ScytheSpawnTimer > 0)
@@ -109,13 +109,13 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                 {
                     if (IsInFinalPhase && !WorldSavingSystem.MasochistModeReal)
                     {
-                        int p = Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, Vector2.Zero, ModContent.ProjectileType<BloodScythe>(), FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 1f, Main.myPlayer);
+                        int p = Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, Vector2.Zero, ModContent.ProjectileType<BloodScythe>(), FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 1f, Main.myPlayer);
                         if (p != Main.maxProjectiles)
                             Main.projectile[p].timeLeft = 75;
                     }
                     else
                     {
-                        Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, Vector2.Normalize(npc.velocity), ModContent.ProjectileType<BloodScythe>(), FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 1f, Main.myPlayer);
+                        Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, Vector2.Normalize(npc.velocity), ModContent.ProjectileType<BloodScythe>(), FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 1f, Main.myPlayer);
                     }
                 }
                 ScytheSpawnTimer--;
@@ -166,7 +166,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                 {
                     ScytheRingIsOnCD = true;
                     if (FargoSoulsUtil.HostCheck)
-                        FargoSoulsUtil.XWay(8, npc.GetSource_FromThis(), npc.Center, ModContent.ProjectileType<BloodScythe>(), 1.5f, FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 0);
+                        FargoSoulsUtil.XWay(8, npc.GetSource_FromThis(), npc.Center, ModContent.ProjectileType<BloodScythe>(), 1.5f, FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 0);
                 }
             }
             else
@@ -249,8 +249,6 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                         if (npc.alpha < 0)
                         {
                             npc.alpha = 0;
-                            if (WorldSavingSystem.MasochistModeReal && AITimer < 90)
-                                AITimer = 90;
                         }
 
                         const float PI = (float)Math.PI;
@@ -268,7 +266,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
                         for (int i = 0; i < 3; i++)
                         {
-                            int d = Dust.NewDust(npc.position, npc.width, npc.height, DustID.Vortex, 0f, 0f, 0, default, 1.5f);
+                            int d = Dust.NewDust(npc.position, npc.width, npc.height, recolor? DustID.Vortex : DustID.BloodWater, 0f, 0f, 0, default, 1.5f);
                             Main.dust[d].noGravity = true;
                             Main.dust[d].noLight = true;
                             Main.dust[d].velocity *= 4f;
@@ -333,7 +331,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                             //if (WorldSavingSystem.MasochistModeReal)
                             //    SpawnServants();
                             if (FargoSoulsUtil.HostCheck)
-                                FargoSoulsUtil.XWay(8, npc.GetSource_FromThis(), npc.Center, ModContent.ProjectileType<BloodScythe>(), 1f, FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 0);
+                                FargoSoulsUtil.XWay(8, npc.GetSource_FromThis(), npc.Center, ModContent.ProjectileType<BloodScythe>(), 1f, FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 0);
 
                             npc.netUpdate = true;
                         }
@@ -439,7 +437,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                         {
                             for (int i = 0; i < 3; i++)
                             {
-                                int d = Dust.NewDust(npc.position, npc.width, npc.height, DustID.Vortex, 0f, 0f, 0, default, 1.5f);
+                                int d = Dust.NewDust(npc.position, npc.width, npc.height, recolor ? DustID.Vortex : DustID.BloodWater, 0f, 0f, 0, default, 1.5f);
                                 Main.dust[d].noGravity = true;
                                 Main.dust[d].noLight = true;
                                 Main.dust[d].velocity *= 4f;
@@ -476,7 +474,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     npc.alpha += 4;
                     for (int i = 0; i < 3; i++)
                     {
-                        int d = Dust.NewDust(npc.position, npc.width, npc.height, DustID.Vortex, 0f, 0f, 0, default, 1.5f);
+                        int d = Dust.NewDust(npc.position, npc.width, npc.height, recolor ? DustID.Vortex : DustID.BloodWater, 0f, 0f, 0, default, 1.5f);
                         Main.dust[d].noGravity = true;
                         Main.dust[d].noLight = true;
                         Main.dust[d].velocity *= 4f;
@@ -501,7 +499,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                         npc.alpha += 4;
                         for (int i = 0; i < 3; i++)
                         {
-                            int d = Dust.NewDust(npc.position, npc.width, npc.height, DustID.Vortex, 0f, 0f, 0, default, 1.5f);
+                            int d = Dust.NewDust(npc.position, npc.width, npc.height, recolor ? DustID.Vortex : DustID.BloodWater, 0f, 0f, 0, default, 1.5f);
                             Main.dust[d].noGravity = true;
                             Main.dust[d].noLight = true;
                             Main.dust[d].velocity *= 4f;
@@ -571,7 +569,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                         {
                             if (npc.alpha % (aDif * 10) <= aDif && FargoSoulsUtil.HostCheck)
                             {
-                                Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, Vector2.Normalize(npc.velocity), ModContent.ProjectileType<BloodScythe>(), FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 1f, Main.myPlayer);
+                                Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, Vector2.Normalize(npc.velocity), ModContent.ProjectileType<BloodScythe>(), FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 1f, Main.myPlayer);
                             }
                         }
                         if (npc.alpha < 245 - delay && npc.alpha > 30) //curve towards player
@@ -593,7 +591,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                             npc.position -= npc.velocity / 2;
                             for (int i = 0; i < 3; i++)
                             {
-                                int d = Dust.NewDust(npc.position, npc.width, npc.height, DustID.Vortex, 0f, 0f, 0, default, 1.5f);
+                                int d = Dust.NewDust(npc.position, npc.width, npc.height, recolor ? DustID.Vortex : DustID.BloodWater, 0f, 0f, 0, default, 1.5f);
                                 Main.dust[d].noGravity = true;
                                 Main.dust[d].noLight = true;
                                 Main.dust[d].velocity *= 4f;
@@ -622,7 +620,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                             Vector2 speed = Vector2.UnitY;
                             for (int i = 0; i < 30; i++)
                             {
-                                Projectile.NewProjectile(npc.GetSource_FromThis(), spawnPos, speed, ModContent.ProjectileType<BloodScythe>(), FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 1f, Main.myPlayer);
+                                Projectile.NewProjectile(npc.GetSource_FromThis(), spawnPos, speed, ModContent.ProjectileType<BloodScythe>(), FargoSoulsUtil.ScaledProjectileDamage(NPC.defDamage), 1f, Main.myPlayer);
                                 spawnPos.X += 72 * direction;
                                 speed.Y += 0.15f;
                             }
@@ -633,7 +631,6 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             else
             {
                 npc.alpha = 0;
-                npc.dontTakeDamage = false;
             }
 
             // Drop summon

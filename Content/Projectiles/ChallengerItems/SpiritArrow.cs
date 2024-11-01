@@ -26,9 +26,10 @@ namespace FargowiltasSouls.Content.Projectiles.ChallengerItems
             Projectile.hostile = false;
             Projectile.friendly = true;
             AIType = 14;
-            Projectile.penetrate = 1;
+            Projectile.penetrate = 10;
             Projectile.tileCollide = true;
             Projectile.ignoreWater = true;
+            Projectile.DamageType = DamageClass.Ranged;
         }
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) //circular hitbox
         {
@@ -52,8 +53,8 @@ namespace FargowiltasSouls.Content.Projectiles.ChallengerItems
             {
                 if (FargoSoulsUtil.HostCheck)
                 {
-                    int SplitDamage = Projectile.damage / 2;
-                    Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<SpiritArrowFlame>(), SplitDamage, Projectile.knockBack, Main.myPlayer);
+                    int SplitDamage = (int)(Projectile.originalDamage / 2.5f);
+                    Projectile.NewProjectile(Projectile.InheritSource(Projectile), Main.rand.NextVector2FromRectangle(Projectile.Hitbox), Projectile.velocity / 4f, ModContent.ProjectileType<SpiritArrowFlame>(), SplitDamage, Projectile.knockBack, Main.myPlayer);
                 }
                 Projectile.ai[1] = 0;
                 //spawn spirit  flame
@@ -65,7 +66,11 @@ namespace FargowiltasSouls.Content.Projectiles.ChallengerItems
             Projectile.ai[0] += 1f;
             Projectile.ai[1] += 1f;
         }
-
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+        {
+            if (target.life > Projectile.damage && Projectile.penetrate > 1)
+                Projectile.penetrate = 1;
+        }
         public override Color? GetAlpha(Color lightColor) => new Color(255, 255, 255, 610 - Main.mouseTextColor * 2) * Projectile.Opacity;
 
         public override bool PreDraw(ref Color lightColor)

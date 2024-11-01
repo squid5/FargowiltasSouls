@@ -1,37 +1,43 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿
 <Project Sdk="Microsoft.NET.Sdk">
   <Import Project="..\tModLoader.targets" />
   <PropertyGroup>
     <AssemblyName>FargowiltasSouls</AssemblyName>
-    <TargetFramework>net6.0</TargetFramework>
-    <PlatformTarget>AnyCPU</PlatformTarget>
 	  <LangVersion>preview</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <AdditionalFiles Remove="Content\Items\Items\**" />
+    <AdditionalFiles Remove="Content\WorldGen\**" />
     <Compile Remove="Content\Items\Items\**" />
+    <Compile Remove="Content\WorldGen\**" />
     <Compile Remove="Folders to Port\**" />
     <EmbeddedResource Remove="Content\Items\Items\**" />
+    <EmbeddedResource Remove="Content\WorldGen\**" />
     <EmbeddedResource Remove="Folders to Port\**" />
     <None Remove="Content\Items\Items\**" />
+    <None Remove="Content\WorldGen\**" />
     <None Remove="Folders to Port\**" />
   </ItemGroup>
   <ItemGroup>
-    <None Remove="Common\Graphics\Particles\ParticleTextures\BloomParticle.png" />
+    <None Remove="Assets\UI\OncomingMutantnt.png" />
+    <None Remove="Content\Bosses\CursedCoffin\CursedCoffin_FTW.png" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="tModLoader.CodeAssist" Version="0.1.*" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Assets\ExtraTextures\Noise\" />
+    <Folder Include="Assets\Sounds\VanillaEternity\KingSlime\" />
     <Folder Include="Content\WorldGen\" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Luminance">
+      <HintPath>Luminance.dll</HintPath>
+    </Reference>
     <Reference Include="Fargowiltas">
       <HintPath>Fargowiltas.dll</HintPath>
     </Reference>
     <Reference Include="Luminance">
       <HintPath>Luminance.dll</HintPath>
+    </Reference>
+    <Reference Include="StructureHelper">
+      <HintPath>StructureHelper.dll</HintPath>
     </Reference>
   </ItemGroup>
 </Project>

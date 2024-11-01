@@ -1,4 +1,3 @@
-using Luminance.Core.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -55,6 +54,12 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
                 Projectile.velocity = Main.player[Main.npc[ai0].target].Center - Projectile.Center;
                 Projectile.velocity = Projectile.velocity / 60 * modifier; //move from npc to player*/
                 Projectile.rotation = (float)Math.PI * 2f / 55 * modifier * Projectile.localAI[0];
+
+                if (Projectile.ai[0] % 30 == 0)
+                {
+                    if (!Main.dedServ)
+                        SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/ReticleBeep"), Projectile.Center);
+                }
             }
             else //if (Projectile.ai[0] < 145)
             {
@@ -91,8 +96,7 @@ namespace FargowiltasSouls.Content.Projectiles.Masomode
                     if (FargoSoulsUtil.HostCheck)
                         Projectile.NewProjectile(Terraria.Entity.InheritSource(Projectile), spawnPos, vel, ModContent.ProjectileType<WOFChain>(), Projectile.damage, 0f, Main.myPlayer);
 
-                    if (ScreenShakeSystem.OverallShakeIntensity < 4)
-                        ScreenShakeSystem.SetUniversalRumble(4);
+                    FargoSoulsUtil.ScreenshakeRumble(4);
 
                     SoundEngine.PlaySound(SoundID.NPCDeath13 with { Volume = 0.5f }, Projectile.Center);
 

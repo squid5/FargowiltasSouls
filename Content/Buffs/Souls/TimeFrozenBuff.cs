@@ -29,22 +29,11 @@ namespace FargowiltasSouls.Content.Buffs.Souls
 
         public override void Update(Player player, ref int buffIndex)
         {
-            if (player.mount.Active)
-                player.mount.Dismount(player);
-
-            player.controlLeft = false;
-            player.controlRight = false;
-            player.controlJump = false;
-            player.controlDown = false;
-            player.controlUseItem = false;
-            player.controlUseTile = false;
-            player.controlHook = false;
-            player.controlMount = false;
+            player.Incapacitate();
             player.velocity = player.oldVelocity;
             player.position = player.oldPosition;
 
             player.FargoSouls().MutantNibble = true; //no heal
-            player.FargoSouls().NoUsingItems = 2;
 
             FargowiltasSouls.ManageMusicTimestop(player.buffTime[buffIndex] < 5);
 
@@ -67,7 +56,7 @@ namespace FargowiltasSouls.Content.Buffs.Souls
                     filter.Activate();
 
                 if (player.buffTime[buffIndex] == 90)
-                    SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/ZaWarudoResume"), player.Center);
+                    SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/Accessories/ZaWarudoResume"), player.Center);
 
                 if (SoulConfig.Instance.ForcedFilters && Main.WaveQuality == 0)
                     Main.WaveQuality = 1;

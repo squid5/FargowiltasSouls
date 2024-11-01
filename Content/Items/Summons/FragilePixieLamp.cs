@@ -11,9 +11,6 @@ namespace FargowiltasSouls.Content.Items.Summons
     {
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("Crystalline Effigy");
-            // Tooltip.SetDefault("While in the Hallow during day, hold out to break, angering the pixies' master");
-
             Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 5;
         }
 
@@ -39,6 +36,7 @@ namespace FargowiltasSouls.Content.Items.Summons
                 .AddIngredient(ItemID.SoulofLight, 2)
                 .AddIngredient(ItemID.CrystalShard, 3)
                 .AddTile(TileID.MythrilAnvil)
+                .DisableDecraft()
                 .Register();
         }
 

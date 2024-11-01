@@ -1,3 +1,4 @@
+using FargowiltasSouls.Assets.Sounds;
 using FargowiltasSouls.Content.Bosses.TrojanSquirrel;
 using FargowiltasSouls.Content.Projectiles.Minions;
 using Luminance.Core.Graphics;
@@ -17,7 +18,6 @@ namespace FargowiltasSouls.Content.Projectiles.ChallengerItems
         public static readonly int ExplosionDiameter = 450;
         public override string Texture => "FargowiltasSouls/Content/Bosses/BanishedBaron/BaronNuke";
 
-        private SoundStyle Beep = new("FargowiltasSouls/Assets/Sounds/NukeBeep");
         public override void SetStaticDefaults()
         {
             Main.projFrames[Type] = 4;
@@ -84,7 +84,7 @@ namespace FargowiltasSouls.Content.Projectiles.ChallengerItems
             }
             Vector2 target = TargetX * Vector2.UnitX + TargetY * Vector2.UnitY;
             Projectile.rotation = (-Projectile.SafeDirectionTo(target)).ToRotation();
-
+            
             if (Projectile.timeLeft <= 3)
             {
                 Projectile.width = ExplosionDiameter;
@@ -98,13 +98,13 @@ namespace FargowiltasSouls.Content.Projectiles.ChallengerItems
             }
             if (Projectile.timeLeft % 5 == 0)
             {
-                SoundEngine.PlaySound(Beep, Projectile.Center);
+                SoundEngine.PlaySound(FargosSoundRegistry.NukeBeep, Projectile.Center);
             }
         }
 
         public override void OnKill(int timeLeft)
         {
-            ScreenShakeSystem.StartShake(15, shakeStrengthDissipationIncrement: 15f / 30);
+            ScreenShakeSystem.StartShake(10, shakeStrengthDissipationIncrement: 10f / 30);
             void EchsplodeMinion(Projectile p, ref int hitsLeft)
             {
                 if (hitsLeft <= 0)

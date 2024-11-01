@@ -164,7 +164,7 @@ MutantBoss: {
 		// Random2: This feeling...
 		// Random3: I will bring an end to this.
 		// Random4: Foolish Terrarian...
-		// Random5: Have it writ upon thy meagre grave: Felled by the Mutant.
+		// Random5: Have it writ upon thy meagre grave: Felled by Mutant.
 		// Random6: None may claim the title of Eternal.
 		// Random7: Eternal pain upon thee.
 		// Random8: You are unfit of the Eternal Soul.
@@ -373,3 +373,8 @@ EMode: {
 	GelatinSubjects: Sujeitos Gelatinosos acordaram!
 	QueenBeeEnrage: "{$NPCName.QueenBee} se enfureceu fora da Selva Subterrânea!"
 }
+
+// RoyalSubjectVertical.DisplayName: Royal Subject
+// GelatinBouncer.DisplayName: Bouncy Slime
+// GelatinFlyer.DisplayName: Heavenly Slime
+// CursedCoffinInactive.DisplayName: Mysterious Coffin

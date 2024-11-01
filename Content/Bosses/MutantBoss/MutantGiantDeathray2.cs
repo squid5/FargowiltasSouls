@@ -73,8 +73,7 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
             base.AI();
 
             if (!Main.dedServ && Main.LocalPlayer.active)
-                if (ScreenShakeSystem.OverallShakeIntensity < 7)
-                    ScreenShakeSystem.SetUniversalRumble(7);
+                FargoSoulsUtil.ScreenshakeRumble(6);
 
             Projectile.timeLeft = 2;
 
@@ -127,7 +126,11 @@ namespace FargowiltasSouls.Content.Bosses.MutantBoss
             }
             if (Projectile.localAI[0] == 0f)
             {
-                SoundEngine.PlaySound(SoundID.Zombie104 with { Volume = 1.5f }, Main.player[Main.myPlayer].Center);
+                if (!Main.dedServ)
+                {
+                    SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/Siblings/Deviantt/DeviBigDeathray") with { Volume = 1.5f }, Projectile.Center);
+                    SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/Siblings/Mutant/FinalSpark") with { Volume = 1.5f }, Projectile.Center);
+                }
             }
             float num801 = 10f;
             Projectile.localAI[0] += 1f;

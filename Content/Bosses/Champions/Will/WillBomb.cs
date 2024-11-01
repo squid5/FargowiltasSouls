@@ -78,7 +78,7 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Will
             SoundEngine.PlaySound(SoundID.Item92, Projectile.Center);
 
             if (Main.LocalPlayer.active)
-                ScreenShakeSystem.StartShake(15, shakeStrengthDissipationIncrement: 15f / 30);
+                ScreenShakeSystem.StartShake(10, shakeStrengthDissipationIncrement: 10f / 30);
 
             if (FargoSoulsUtil.HostCheck)
             {

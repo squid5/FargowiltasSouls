@@ -1,5 +1,6 @@
 using FargowiltasSouls.Common.Utilities;
 using FargowiltasSouls.Content.Bosses.Champions.Will;
+using FargowiltasSouls.Content.Bosses.MutantBoss;
 using FargowiltasSouls.Content.Buffs.Masomode;
 using FargowiltasSouls.Content.Items.Placables;
 using FargowiltasSouls.Content.NPCs.EternityModeNPCs;
@@ -9,10 +10,12 @@ using FargowiltasSouls.Core.Globals;
 using FargowiltasSouls.Core.NPCMatching;
 using FargowiltasSouls.Core.Systems;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.IO;
 using Terraria;
 using Terraria.Audio;
+using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -35,7 +38,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
         public bool InPhase2;
 
         public bool DroppedSummon;
-
+        public bool SubjectDR;
 
         public override void SendExtraAI(NPC npc, BitWriter bitWriter, BinaryWriter binaryWriter)
         {
@@ -81,8 +84,11 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
             EModeGlobalNPC.beeBoss = npc.whoAmI;
 
-            if (WorldSavingSystem.SwarmActive)
-                return result;
+            if (npc.ai[0] == 2 && npc.HasValidTarget)
+            {
+                float lerp = Math.Min(++npc.ai[1] / 3000f, 1f);
+                npc.velocity = Vector2.Lerp(npc.velocity, npc.DirectionTo(Main.player[npc.target].Center) * npc.velocity.Length(), lerp);
+            }
 
 
             if (npc.HasPlayerTarget && npc.HasValidTarget && (!Main.player[npc.target].ZoneJungle
@@ -97,7 +103,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                 {
                     float rotation = Main.rand.NextFloat(0.03f, 0.18f);
                     Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center + new Vector2(3 * npc.direction, 15), Main.rand.NextFloat(8f, 24f) * Main.rand.NextVector2Unit(),
-                        ModContent.ProjectileType<Bee>(), FargoSoulsUtil.ScaledProjectileDamage(npc.damage, 1.5f), 0f, Main.myPlayer, npc.target, Main.rand.NextBool() ? -rotation : rotation);
+                        ModContent.ProjectileType<Bee>(), FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage, 1.5f), 0f, Main.myPlayer, npc.target, Main.rand.NextBool() ? -rotation : rotation);
                 }
             }
             else
@@ -149,7 +155,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             if (!InPhase2 && npc.life < npc.lifeMax / 2) //enable new attack and roar below 50%
             {
                 InPhase2 = true;
-                SoundEngine.PlaySound(SoundID.Roar, npc.Center);
+                SoundEngine.PlaySound(SoundID.Zombie125, npc.Center);
 
                 if (WorldSavingSystem.MasochistModeReal)
                     SpawnedRoyalSubjectWave1 = false; //do this again
@@ -158,10 +164,10 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                 NetSync(npc);
             }
 
-            if (NPC.AnyNPCs(ModContent.NPCType<RoyalSubject>()))
+            SubjectDR = NPC.AnyNPCs(ModContent.NPCType<RoyalSubject>());
+            if (SubjectDR)
             {
                 npc.HitSound = SoundID.NPCHit4;
-                npc.color = new Color(127, 127, 127);
 
                 int dustId = Dust.NewDust(npc.position, npc.width, npc.height, DustID.Stone, 0f, 0f, 100, default, 2f);
                 Main.dust[dustId].noGravity = true;
@@ -189,7 +195,6 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             else
             {
                 npc.HitSound = SoundID.NPCHit1;
-                npc.color = default;
 
                 if (InPhase2 && HiveThrowTimer % 2 == 0)
                     HiveThrowTimer++; //throw hives faster when no royal subjects alive
@@ -205,7 +210,16 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                         Main.player[npc.target].Center - 2000 * Vector2.UnitY, Vector2.UnitY,
                         ModContent.ProjectileType<WillDeathraySmall>(),
                         (int)(npc.damage * .75), 0f, Main.myPlayer,
-                        Main.player[npc.target].Center.X, npc.whoAmI);
+                        Main.player[npc.target].Center.X, npc.whoAmI, 1f);
+
+                    for (int i = 0; i < 22; i++)
+                    {
+                        Vector2 rand = Vector2.UnitX * Main.rand.NextFloat(-100, 100) - Vector2.UnitY * 90 * i;
+                        Vector2 spawnPos = Main.player[npc.target].Center - 22 * 90 * Vector2.UnitY + rand;
+                        Vector2 speed = new Vector2(Main.rand.NextFloat(-0.1f, 0.1f), 22);
+                        Projectile.NewProjectile(npc.GetSource_FromThis(), spawnPos, speed, ModContent.ProjectileType<RoyalSubjectProjectile>(),
+                            FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 0f, Main.myPlayer);
+                    }
                 }
             }
 
@@ -226,7 +240,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     if (FargoSoulsUtil.HostCheck)
                     {
                         Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, distance, ModContent.ProjectileType<Beehive>(),
-                            FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 0f, Main.myPlayer, time - 5);
+                            FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 0f, Main.myPlayer, time - 5);
                     }
                 }
 
@@ -251,10 +265,19 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                             NetSync(npc);
 
                             if (FargoSoulsUtil.HostCheck)
-                                Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, Vector2.Zero, ModContent.ProjectileType<GlowRing>(), 0, 0f, Main.myPlayer, npc.whoAmI, npc.type);
+                            {
+                                for (int j = -1; j <= 1; j += 2)
+                                {
+                                    for (int i = -1; i <= 1; i++)
+                                    {
+                                        Vector2 dir = j * 3 * Vector2.UnitX.RotatedBy(i * MathHelper.Pi / 7);
+                                        Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center + dir, Vector2.Zero, ModContent.ProjectileType<MutantGlowything>(), 0, 0f, Main.myPlayer, dir.ToRotation(), npc.whoAmI, 1f);
+                                    }
+                                }
+                            }
 
                             if (npc.HasValidTarget)
-                                SoundEngine.PlaySound(SoundID.ForceRoarPitched, Main.player[npc.target].Center); //eoc roar
+                                SoundEngine.PlaySound(SoundID.Zombie125, Main.player[npc.target].Center); //eoc roar
 
                             if (WorldSavingSystem.MasochistModeReal)
                                 BeeSwarmTimer += 30;
@@ -280,7 +303,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                             for (int i = -1; i <= 1; i += 2)
                             {
                                 Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center + new Vector2(3 * npc.direction, 15), i * Main.rand.NextFloat(9f, 18f) * Vector2.UnitX.RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-45, 45))),
-                                    ModContent.ProjectileType<Bee>(), FargoSoulsUtil.ScaledProjectileDamage(npc.damage, WorldSavingSystem.MasochistModeReal ? 4f / 3 : 1), 0f, Main.myPlayer, npc.target, Main.rand.NextBool() ? -rotation : rotation);
+                                    ModContent.ProjectileType<Bee>(), FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage, WorldSavingSystem.MasochistModeReal ? 4f / 3 : 1), 0f, Main.myPlayer, npc.target, Main.rand.NextBool() ? -rotation : rotation);
                             }
                         }
                     }
@@ -407,12 +430,21 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
         public override void ModifyIncomingHit(NPC npc, ref NPC.HitModifiers modifiers)
         {
-            if (!WorldSavingSystem.SwarmActive && NPC.AnyNPCs(ModContent.NPCType<RoyalSubject>()))
-                modifiers.FinalDamage /= 2;
+            if (SubjectDR)
+                modifiers.FinalDamage /= 3;
 
             base.ModifyIncomingHit(npc, ref modifiers);
         }
-
+        public override void UpdateLifeRegen(NPC npc, ref int damage)
+        {
+            if (npc.lifeRegen >= 0)
+                return;
+            if (SubjectDR)
+            {
+                npc.lifeRegen /= 2;
+                damage /= 2;
+            }
+        }
         public override void LoadSprites(NPC npc, bool recolor)
         {
             base.LoadSprites(npc, recolor);
@@ -420,6 +452,28 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             LoadNPCSprite(recolor, npc.type);
             LoadBossHeadSprite(recolor, 14);
             LoadGoreRange(recolor, 303, 308);
+        }
+
+        public override bool PreDraw(NPC npc, SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
+            if (SubjectDR && !npc.IsABestiaryIconDummy)
+            {
+                spriteBatch.End();
+                spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.ZoomMatrix);
+
+                ArmorShaderData shader = GameShaders.Armor.GetShaderFromItemId(ItemID.ReflectiveSilverDye);
+                shader.Apply(npc, new Terraria.DataStructures.DrawData?());
+            }
+            return true;
+        }
+
+        public override void PostDraw(NPC npc, SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
+            if (SubjectDR && !npc.IsABestiaryIconDummy)
+            {
+                spriteBatch.End();
+                spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.ZoomMatrix);
+            }
         }
     }
 }

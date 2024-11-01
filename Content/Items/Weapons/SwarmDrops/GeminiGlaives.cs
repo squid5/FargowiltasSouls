@@ -14,6 +14,7 @@ namespace FargowiltasSouls.Content.Items.Weapons.SwarmDrops
         public override void SetStaticDefaults()
         {
             Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            ItemID.Sets.ItemsThatAllowRepeatedRightClick[Type] = true;
             ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<OpticStaffEX>();
             // DisplayName.SetDefault("Gemini Glaives");
             /* Tooltip.SetDefault("Fire different glaives depending on mouse click" +

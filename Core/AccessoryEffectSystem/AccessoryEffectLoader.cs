@@ -9,7 +9,7 @@ namespace FargowiltasSouls.Core.AccessoryEffectSystem
 {
     public static class AccessoryEffectLoader
     {
-        public static List<AccessoryEffect> AccessoryEffects = new();
+        public static List<AccessoryEffect> AccessoryEffects = [];
         internal static void Register(AccessoryEffect effect)
         {
             effect.Index = AccessoryEffects.Count;
@@ -30,36 +30,41 @@ namespace FargowiltasSouls.Core.AccessoryEffectSystem
             effectPlayer.EquippedEffects[effect.Index] = true;
             effectPlayer.EffectItems[effect.Index] = item;
 
-            if (effect.MinionEffect || effect.ExtraAttackEffect)
-            {
-
-                if (modPlayer.PrimeSoulActive)
-                {
-                    if (!player.HasEffect(effect)) // Don't stack per item
-                        modPlayer.PrimeSoulItemCount++;
-                    return false;
-                }
-            }
-
-            if (!effect.IgnoresMutantPresence && effect.HasToggle && modPlayer.MutantPresence)
+            if (effectPlayer.DeactivatedEffects[effect.Index])
                 return false;
 
             if (effect.HasToggle)
             {
+                if (modPlayer.MutantPresence && (effect.MutantsPresenceAffects || effect.MinionEffect))
+                    return false;
+
+                if (effect.MinionEffect)
+                {
+                    if (modPlayer.GalacticMinionsDeactivated)
+                    {
+                        effectPlayer.DeactivatedEffects[effect.Index] = true;
+                        modPlayer.DeactivatedMinionEffectCount++;
+                        return false;
+                    }
+                    if (modPlayer.Toggler_MinionsDisabled)
+                        return false;
+                }
+                if (effect.ExtraAttackEffect && modPlayer.Toggler_ExtraAttacksDisabled)
+                    return false;
+
                 SoulsItem soulsItem = item != null && item.ModItem is SoulsItem si ? si : null;
                 if (!player.GetToggleValue(effect, true))
                 {
                     if (soulsItem != null)
-                        soulsItem.HasDisabledEffects = SoulConfig.Instance.ItemDisabledTooltip;
+                        soulsItem.HasDisabledEffects = ClientConfig.Instance.ItemDisabledTooltip;
                     return false;
                 }
                 if (soulsItem != null)
-                    soulsItem.HasDisabledEffects = SoulConfig.Instance.ItemDisabledTooltip && AccessoryEffects.Any(e => !player.GetToggleValue(e, true) && e.EffectItem(player) == item);
+                    soulsItem.HasDisabledEffects = ClientConfig.Instance.ItemDisabledTooltip && AccessoryEffects.Any(e => !player.GetToggleValue(e, true) && e.EffectItem(player) == item);
             }
 
             if (!effectPlayer.ActiveEffects[effect.Index])
             {
-
                 effectPlayer.ActiveEffects[effect.Index] = true;
                 return true;
             }
@@ -69,7 +74,7 @@ namespace FargowiltasSouls.Core.AccessoryEffectSystem
         public static bool HasEffect(this Player player, AccessoryEffect accessoryEffect) => player.AccessoryEffects().ActiveEffects[accessoryEffect.Index];
         public static Item EffectItem<T>(this Player player) where T : AccessoryEffect => player.AccessoryEffects().EffectItems[ModContent.GetInstance<T>().Index];
         public static IEntitySource GetSource_EffectItem<T>(this Player player) where T : AccessoryEffect => ModContent.GetInstance<T>().GetSource_EffectItem(player);
-        public static T EffectType<T>() where T : AccessoryEffect => ModContent.GetInstance<T>();
-        public static AccessoryEffect EffectType(string internalName) => ModContent.Find<AccessoryEffect>(internalName);
+        public static T GetEffect<T>() where T : AccessoryEffect => ModContent.GetInstance<T>();
+        public static AccessoryEffect GetEffect(string internalName) => ModContent.Find<AccessoryEffect>(internalName);
     }
 }

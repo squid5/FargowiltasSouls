@@ -122,9 +122,18 @@ namespace FargowiltasSouls.Content.Bosses.Champions.Will
 
         public override void OnKill(int timeLeft)
         {
-            if (FargoSoulsUtil.HostCheck)
+            if (Projectile.ai[2] == 0f)
             {
-                Projectile.NewProjectile(Terraria.Entity.InheritSource(Projectile), Projectile.Center, Projectile.velocity, ModContent.ProjectileType<WillDeathrayBig>(), Projectile.damage, 0f, Main.myPlayer, 0f, Projectile.ai[1]);
+                if (FargoSoulsUtil.HostCheck)
+                    Projectile.NewProjectile(Terraria.Entity.InheritSource(Projectile), Projectile.Center, Projectile.velocity, ModContent.ProjectileType<WillDeathrayBig>(), Projectile.damage, 0f, Main.myPlayer, 0f, Projectile.ai[1]);
+            }
+            else
+            {
+                Terraria.Audio.SoundEngine.PlaySound(SoundID.Zombie125 with { 
+                    MaxInstances = 0, 
+                    SoundLimitBehavior = Terraria.Audio.SoundLimitBehavior.ReplaceOldest,
+                    Volume = 1.5f
+                }, Projectile.Center + Vector2.UnitY * 2000);
             }
         }
 

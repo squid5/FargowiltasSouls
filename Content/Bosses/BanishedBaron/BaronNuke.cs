@@ -20,7 +20,7 @@ namespace FargowiltasSouls.Content.Bosses.BanishedBaron
 
         private readonly int ExplosionDiameter = WorldSavingSystem.MasochistModeReal ? 500 : 500;
 
-        public static readonly SoundStyle Beep = new("FargowiltasSouls/Assets/Sounds/NukeBeep");
+        public static readonly SoundStyle Beep = new("FargowiltasSouls/Assets/Sounds/Challengers/Baron/NukeBeep");
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Banished Baron's Spicy Beeping Nuclear Torpedo of Death and Destruction");
@@ -174,20 +174,20 @@ namespace FargowiltasSouls.Content.Bosses.BanishedBaron
                 return;
             }
             target.FargoSouls().MaxLifeReduction += 50;
-            target.AddBuff(ModContent.BuffType<OceanicMaulBuff>(), 60 * 30);
+            target.AddBuff(ModContent.BuffType<OceanicMaulBuff>(), 60 * 20);
             target.AddBuff(BuffID.OnFire3, 60 * 10);
             target.AddBuff(BuffID.BrokenArmor, 60 * 40);
 
         }
         public override void OnKill(int timeLeft)
         {
-            ScreenShakeSystem.StartShake(15, shakeStrengthDissipationIncrement: 15f / 30);
+            ScreenShakeSystem.StartShake(10, shakeStrengthDissipationIncrement: 10f / 30);
 
             for (int i = 0; i < 200; i++)
             {
                 Vector2 pos = Projectile.Center + new Vector2(0, Main.rand.NextFloat(ExplosionDiameter * 0.8f)).RotatedBy(Main.rand.NextFloat(MathHelper.TwoPi)); //circle with highest density in middle
                 Vector2 vel = (pos - Projectile.Center) / 500;
-                Particle p = new ExpandingBloomParticle(pos, vel, Color.Lerp(Color.Yellow, Color.Red, pos.Distance(Projectile.Center) / (ExplosionDiameter / 2f)), startScale: Vector2.One * 3, endScale: Vector2.One * 6, lifetime: 60);
+                Particle p = new ExpandingBloomParticle(pos, vel, Color.Lerp(Color.Yellow, Color.Red, pos.Distance(Projectile.Center) / (ExplosionDiameter / 2f)), startScale: Vector2.One * 3, endScale: Vector2.One * 0, lifetime: 60);
                 p.Velocity *= 2f;
                 p.Spawn();
                 //int d = Dust.NewDust(pos, 0, 0, DustID.Fireworks, 0f, 0f, 0, default, 1.5f);
@@ -253,8 +253,7 @@ namespace FargowiltasSouls.Content.Bosses.BanishedBaron
 
             SpriteEffects effects = Projectile.spriteDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
-            Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.UseBlendState(BlendState.Additive);
             for (int i = 0; i < ProjectileID.Sets.TrailCacheLength[Projectile.type]; i++)
             {
                 Color color27 = color26 * 0.5f;
@@ -263,8 +262,7 @@ namespace FargowiltasSouls.Content.Bosses.BanishedBaron
                 float num165 = Projectile.oldRot[i];
                 Main.EntitySpriteDraw(texture2D13, value4 + drawOffset + Projectile.Size / 2f - Main.screenPosition + new Vector2(0, Projectile.gfxOffY), new Rectangle?(rectangle), color27, num165, origin2, Projectile.scale, effects, 0);
             }
-            Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.ZoomMatrix);
+            Main.spriteBatch.ResetToDefault();
 
             Main.EntitySpriteDraw(texture2D13, Projectile.Center + drawOffset - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY), new Rectangle?(rectangle), Projectile.GetAlpha(lightColor), Projectile.rotation, origin2, Projectile.scale, effects, 0);
 

@@ -1,15 +1,20 @@
+using FargowiltasSouls.Content.Bosses.CursedCoffin;
+using FargowiltasSouls.Content.Bosses.MutantBoss;
 using FargowiltasSouls.Content.Buffs;
 using FargowiltasSouls.Content.Buffs.Boss;
 using FargowiltasSouls.Content.Buffs.Masomode;
 using FargowiltasSouls.Content.Buffs.Souls;
 using FargowiltasSouls.Content.Items.Accessories.Enchantments;
+using FargowiltasSouls.Content.Items.Accessories.Expert;
 using FargowiltasSouls.Content.Items.Accessories.Forces;
 using FargowiltasSouls.Content.Items.Accessories.Masomode;
 using FargowiltasSouls.Content.Items.Accessories.Souls;
 using FargowiltasSouls.Content.Items.Dyes;
 using FargowiltasSouls.Content.Items.Weapons.SwarmDrops;
 using FargowiltasSouls.Content.Projectiles;
+using FargowiltasSouls.Content.UI.Elements;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
+using FargowiltasSouls.Core.Globals;
 using FargowiltasSouls.Core.Systems;
 using Microsoft.Xna.Framework;
 using System;
@@ -22,6 +27,7 @@ using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using Terraria.ModLoader.Default;
 using Terraria.ModLoader.IO;
 using static FargowiltasSouls.Core.Systems.DashManager;
 
@@ -31,15 +37,16 @@ namespace FargowiltasSouls.Core.ModPlayers
     {
         public ToggleBackend Toggler = new();
 
-        public Dictionary<AccessoryEffect, bool> TogglesToSync = new();
+        public Dictionary<AccessoryEffect, bool> TogglesToSync = [];
 
-        public List<AccessoryEffect> disabledToggles = new();
+        public List<AccessoryEffect> disabledToggles = [];
 
-        public List<BaseEnchant> EquippedEnchants = new();
+        public List<BaseEnchant> EquippedEnchants = [];
 
 
         public bool IsStandingStill;
         public float AttackSpeed;
+        public float UseTimeDebt;
         public float WingTimeModifier = 1f;
 
         public bool FreeEaterSummon = true;
@@ -48,14 +55,29 @@ namespace FargowiltasSouls.Core.ModPlayers
         public float RustRifleReloadZonePos = 0;
         public float RustRifleTimer = 0;
 
-        public int RockeaterDistance = EaterLauncher.BaseDistance;
+        public int EgyptianFlailCD = 0;
+        public int SKSCancelTimer;
 
-        public bool fireNoDamage = false;
+        public int RockeaterDistance = EaterLauncher.BaseDistance;
 
         public int The22Incident;
 
-        public Dictionary<int, bool> KnownBuffsToPurify = new();
+        public bool SpawnedCoffinGhost = false;
+        public bool Grappled = false;
 
+        public float LockedMana = 0;
+
+        public Dictionary<int, bool> KnownBuffsToPurify = [];
+
+        public bool Toggler_ExtraAttacksDisabled = false;
+        public bool Toggler_MinionsDisabled = false;
+        public int ToggleRebuildCooldown = 0;
+        public int EmodeToggleCooldown = 0;
+        public bool UsingAnkh => Player.HeldItem.type == ModContent.ItemType<AccursedAnkh>() && Player.ItemAnimationActive;
+        public bool ImmuneToDamage => 
+            BetsyDashing ||
+            GoldShell || 
+            SpectreGhostTime > 0;
 
         public bool IsStillHoldingInSameDirectionAsMovement
             => (Player.velocity.X > 0 && Player.controlRight)
@@ -67,6 +89,8 @@ namespace FargowiltasSouls.Core.ModPlayers
         public bool IsInADashState
             => (Player.dashDelay == -1 || IsDashingTimer > 0) && Player.grapCount <= 0;
 
+        public bool BossAliveLastFrame = false;
+
         public override void SaveData(TagCompound tag)
         {
             var playerData = new List<string>();
@@ -77,7 +101,8 @@ namespace FargowiltasSouls.Core.ModPlayers
             if (RabiesVaccine) playerData.Add("RabiesVaccine");
             if (DeerSinew) playerData.Add("DeerSinew");
             if (HasClickedWrench) playerData.Add("HasClickedWrench");
-
+            if (Toggler_ExtraAttacksDisabled) playerData.Add("Toggler_ExtraAttacksDisabled");
+            if (Toggler_MinionsDisabled) playerData.Add("Toggler_MinionsDisabled");
 
             tag.Add($"{Mod.Name}.{Player.name}.Data", playerData);
 
@@ -104,6 +129,8 @@ namespace FargowiltasSouls.Core.ModPlayers
             RabiesVaccine = playerData.Contains("RabiesVaccine");
             DeerSinew = playerData.Contains("DeerSinew");
             HasClickedWrench = playerData.Contains("HasClickedWrench");
+            Toggler_ExtraAttacksDisabled = playerData.Contains("Toggler_ExtraAttacksDisabled");
+            Toggler_MinionsDisabled = playerData.Contains("Toggler_MinionsDisabled");
 
             List<string> disabledToggleNames = tag.GetList<string>($"{Mod.Name}.{Player.name}.TogglesOff").ToList();
             disabledToggles = ToggleLoader.LoadedToggles.Keys.Where(x => disabledToggleNames.Contains(x.Name)).ToList();
@@ -113,6 +140,7 @@ namespace FargowiltasSouls.Core.ModPlayers
             Toggler.TryLoad();
             Toggler.LoadPlayerToggles(this);
             disabledToggles.Clear();
+            CooldownBarManager.Instance.RemoveAllChildren();
 
             if (!ModLoader.TryGetMod("FargowiltasMusic", out Mod _))
             {
@@ -121,7 +149,7 @@ namespace FargowiltasSouls.Core.ModPlayers
             }
             if (!ModLoader.TryGetMod("FargowiltasCrossmod", out Mod soulsDLC))
             {
-                List<string> supportedMods = new();
+                List<string> supportedMods = [];
                 if (ModLoader.TryGetMod("CalamityMod", out Mod calamity))
                 {
                     supportedMods.Add(calamity.DisplayName);
@@ -169,7 +197,6 @@ namespace FargowiltasSouls.Core.ModPlayers
             }
 
         }
-
         public override void ResetEffects()
         {
             HasDash = false;
@@ -184,6 +211,8 @@ namespace FargowiltasSouls.Core.ModPlayers
 
             WingTimeModifier = 1f;
 
+            if (Player.Alive())
+                SpawnedCoffinGhost = false;
 
             QueenStingerItem = null;
             EridanusSet = false;
@@ -217,15 +246,14 @@ namespace FargowiltasSouls.Core.ModPlayers
             //            #region enchantments 
             PetsActive = true;
             //CrimsonRegen = false;
+            LifeForceActive = false;
             MinionCrits = false;
             FirstStrike = false;
             ShellHide = false;
             GoldShell = false;
             LavaWet = false;
 
-            WoodEnchantItem = null;
             WoodEnchantDiscount = false;
-            fireNoDamage = false;
 
             SnowVisual = false;
             ApprenticeEnchantActive = false;
@@ -233,7 +261,6 @@ namespace FargowiltasSouls.Core.ModPlayers
             CrystalEnchantActive = false;
             IronRecipes = false;
             ChlorophyteEnchantActive = false;
-            PearlwoodStar = false;
 
             if (!MonkEnchantActive)
                 Player.ClearBuff(ModContent.BuffType<MonkBuff>());
@@ -251,6 +278,8 @@ namespace FargowiltasSouls.Core.ModPlayers
 
             //            #endregion
 
+            MiningImmunity = false;
+
             //souls
             MeleeSoul = false;
             MagicSoul = false;
@@ -262,7 +291,11 @@ namespace FargowiltasSouls.Core.ModPlayers
             FlightMasterySoul = false;
             RangedEssence = false;
             BuilderMode = false;
-            UniverseSoul = false;
+            if (!UniverseSoulBuffer)
+            {
+                UniverseSoul = false;
+            }
+            UniverseSoulBuffer = false;
             UniverseCore = false;
             FishSoul1 = false;
             FishSoul2 = false;
@@ -270,15 +303,22 @@ namespace FargowiltasSouls.Core.ModPlayers
             VoidSoul = false;
             Eternity = false;
 
-            PrimeSoulItemCount = 0;
-            if (!PrimeSoulActiveBuffer)
+            DeactivatedMinionEffectCount= 0;
+            if (!GalacticMinionsDeactivatedBuffer)
             {
-                PrimeSoulActive = false;
+                GalacticMinionsDeactivated = false;
             }
-            PrimeSoulActiveBuffer = false;
+            GalacticMinionsDeactivatedBuffer = false;
 
-            if (ForceEffects != null)
-                ForceEffects.Clear();
+            /*
+            if (!JumpsDisabledBuffer)
+            {
+                JumpsDisabled = false;
+            }
+            JumpsDisabledBuffer = false;
+            */
+
+            ForceEffects?.Clear();
 
             //maso
             SlimyShieldItem = null;
@@ -290,6 +330,7 @@ namespace FargowiltasSouls.Core.ModPlayers
             CrystalSkullMinion = false;
             FusedLens = false;
             FusedLensCanDebuff = false;
+            DubiousCircuitry = false;
             Supercharged = false;
             Probes = false;
             MagicalBulb = false;
@@ -341,6 +382,8 @@ namespace FargowiltasSouls.Core.ModPlayers
             GelicWingsItem = null;
             ConcentratedRainbowMatter = false;
 
+            Ambrosia = false;
+
             //debuffs
             Hexed = false;
             Unstable = false;
@@ -353,11 +396,13 @@ namespace FargowiltasSouls.Core.ModPlayers
             NoMomentum = false;
             Bloodthirsty = false;
             DisruptedFocus = false;
+            BaronsBurden = false;
 
             Smite = false;
             Anticoagulation = false;
             GodEater = false;
             FlamesoftheUniverse = false;
+            IvyVenom = false;
             MutantNibble = false;
             Asocial = false;
             Kneecapped = false;
@@ -374,15 +419,21 @@ namespace FargowiltasSouls.Core.ModPlayers
             DeathMarked = false;
             Hypothermia = false;
             Midas = false;
-            if (MutantPresence == false)
-                PresenceTogglerTimer = 0;
-            MutantPresence = MutantPresence && Player.HasBuff(ModContent.BuffType<MutantPresenceBuff>());
+            if (!MutantPresenceBuffer)
+            {
+                if (MutantPresence == false)
+                    PresenceTogglerTimer = 0;
+                MutantPresence = MutantPresence && Player.HasBuff(ModContent.BuffType<MutantPresenceBuff>());
+            }
+            MutantPresenceBuffer = false;
             HadMutantPresence = MutantPresence;
+            MutantDesperation = false;
             MutantFang = false;
             DevianttPresence = false;
             Swarming = false;
             LowGround = false;
             Flipped = false;
+            Illuminated = false;
             LihzahrdCurse = false;
             //LihzahrdBlessing = false;
             Berserked = false;
@@ -403,12 +454,21 @@ namespace FargowiltasSouls.Core.ModPlayers
             if (WizardEnchantActive)
             {
                 WizardEnchantActive = false;
-                for (int i = 3; i <= 9; i++)
+                List<Item> accessories = [];
+                for (int i = 3; i < 10; i++)
+                    if (Player.IsItemSlotUnlockedAndUsable(i))
+                        accessories.Add(Player.armor[i]);
+                AccessorySlotLoader loader = LoaderManager.Get<AccessorySlotLoader>();
+                ModAccessorySlotPlayer modSlotPlayer = Player.GetModPlayer<ModAccessorySlotPlayer>();
+                for (int i = 0; i < modSlotPlayer.SlotCount; i++)
+                    if (loader.ModdedIsItemSlotUnlockedAndUsable(i, Player))
+                        accessories.Add(loader.Get(i, Player).FunctionalItem);
+                for (int i = 0; i < accessories.Count - 1; i++)
                 {
-                    if (!Player.armor[i].IsAir && (Player.armor[i].type == ModContent.ItemType<WizardEnchant>() || Player.armor[i].type == ModContent.ItemType<CosmoForce>()))
+                    if (!accessories[i].IsAir && (accessories[i].type == ModContent.ItemType<WizardEnchant>() || accessories[i].type == ModContent.ItemType<CosmoForce>()))
                     {
                         WizardEnchantActive = true;
-                        Item ench = Player.armor[i + 1];
+                        Item ench = accessories[i + 1];
                         if (ench != null && !ench.IsAir && ench.ModItem != null && ench.ModItem is BaseEnchant)
                         {
                             WizardedItem = ench;
@@ -422,11 +482,25 @@ namespace FargowiltasSouls.Core.ModPlayers
                 MashCounter--;
             Mash = false;
 
+            if (Player.grapCount <= 0)
+                Grappled = false;
+
+            if (!FargoSoulsUtil.BossIsAlive(ref EModeGlobalNPC.mutantBoss, ModContent.NPCType<MutantBoss>()) && !EModeGlobalNPC.mutantBoss.IsWithinBounds(Main.maxNPCs))
+                The22Incident = 0;
+
         }
         public override void OnRespawn()
         {
             if (NymphsPerfumeRespawn)
                 NymphsPerfumeRestoreLife = 6;
+        }
+        public override void ModifyScreenPosition()
+        {
+            Projectile ghost = Main.projectile.FirstOrDefault(p => p.TypeAlive<CoffinPlayerSoul>() && p.owner == Player.whoAmI);
+            if (ghost != null && ghost.Alive())
+            {
+                Main.screenPosition = ghost.Center - (new Vector2(Main.screenWidth, Main.screenHeight) / 2);
+            }
         }
         public override void UpdateDead()
         {
@@ -437,6 +511,12 @@ namespace FargowiltasSouls.Core.ModPlayers
 
             SandsofTime = wasSandsOfTime;
             NymphsPerfumeRespawn = wasNymphsPerfumeRespawn;
+
+            if (!SpawnedCoffinGhost && NPC.AnyNPCs(ModContent.NPCType<CursedCoffin>()))
+            {
+                SpawnedCoffinGhost = true;
+                Projectile.NewProjectile(Player.GetSource_FromThis(), Player.Center, Vector2.Zero, ModContent.ProjectileType<CoffinPlayerSoul>(), 0, 0, Player.whoAmI);
+            }
 
             if (SandsofTime && !LumUtils.AnyBosses() && Player.respawnTimer > 10)
                 Player.respawnTimer -= Eternity ? 6 : 1;
@@ -493,7 +573,7 @@ namespace FargowiltasSouls.Core.ModPlayers
             DeviGrazeBonus = 0;
             MutantEyeCD = 60;
 
-            MythrilTimer = MythrilMaxTime;
+            MythrilTimer = 0;
             BeetleEnchantDefenseTimer = 0;
 
             Mash = false;
@@ -571,7 +651,6 @@ namespace FargowiltasSouls.Core.ModPlayers
                 LifeReductionUpdateTimer = 0;
             }
         }
-
         public override float UseSpeedMultiplier(Item item)
         {
             int useTime = item.useTime;
@@ -600,23 +679,27 @@ namespace FargowiltasSouls.Core.ModPlayers
                 {
                     MythrilEffect.CalcMythrilAttackSpeed(this, item);
                 }
-
-                if (Player.HasEffect<WretchedPouchEffect>() && !MasochistSoul && AttackSpeed > 1f)
+                
+                float originalAttackSpeed = AttackSpeed;
+                float originalUseTime = useTime / AttackSpeed;
+                if (UseTimeDebt > 1f)
                 {
-                    float diff = AttackSpeed - 1f;
-                    diff /= 2;
-                    AttackSpeed -= diff;
+                    //when accummulated enough debt, pay it off. use time will round down this tick.
+                    UseTimeDebt -= 1f;
                 }
+                else //normally, force use time to round up
+                {
+                    //modify attack speed so it rounds up
+                    int useTimeRoundUp = (int)Math.Round(useTime / AttackSpeed, MidpointRounding.ToPositiveInfinity);
+                    //Main.NewText($"pre {useTime / AttackSpeed}, target {useTimeRoundUp}");
+                    while (useTime / AttackSpeed < useTimeRoundUp)
+                        AttackSpeed -= .01f; //small increments to avoid skipping past any integers
+                    //Main.NewText($"result {useTime / AttackSpeed}");
 
-                //modify attack speed so it rounds up
-                //int useTimeRoundUp = (int)Math.Round(useTime / AttackSpeed, MidpointRounding.ToPositiveInfinity);
-                //if (useTimeRoundUp < useTime) //sanity check
-                //{
-                //    while (useTime / AttackSpeed < useTimeRoundUp)
-                //    {
-                //        AttackSpeed -= .01f; //small increments to avoid skipping past any integers
-                //    }
-                //}
+                    float newUseTime = useTime / AttackSpeed;
+                    UseTimeDebt += newUseTime - originalUseTime; //track the sub-1 unit "debt" of shorter useTime
+                }
+                //Main.NewText($"oldASpd: {originalAttackSpeed}, newASpd: {AttackSpeed}, oldUT: {originalUseTime}, newUT: {(useTime / AttackSpeed)}, debt: {UseTimeDebt}");
 
                 //checks so weapons dont break
                 while (useTime / AttackSpeed < 1)
@@ -634,6 +717,13 @@ namespace FargowiltasSouls.Core.ModPlayers
             }
 
             return AttackSpeed;
+        }
+        public override void OnConsumeMana(Item item, int manaConsumed)
+        {
+            if (ReverseManaFlow)
+            {
+                LockedMana += manaConsumed;
+            }
         }
 
         public override void DrawEffects(PlayerDrawSet drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright)
@@ -879,11 +969,12 @@ namespace FargowiltasSouls.Core.ModPlayers
                 Item potion = Player.QuickHeal_GetItemToUse();
                 if (potion != null)
                 {
-                    int heal = GetHealMultiplier(potion.healLife);
-                    if (Player.statLife < Player.statLifeMax2 - heal && //only heal when full benefit (no wasted overheal)
-                        (Player.statLife < Player.statLifeMax2 * 0.4 && //heal when very low AND when danger nearby (not after respawn in safety)
-                        Main.npc.Any(n => n.active && n.damage > 0 && !n.friendly
-                                     && Player.Distance(n.Center) < 1200 && (n.noTileCollide || Collision.CanHitLine(Player.Center, 0, 0, n.Center, 0, 0)))))
+                    int heal = Player.GetHealLife(potion); //GetHealMultiplier(potion.healLife);
+                    float threshold = ClientConfig.Instance.RainbowHealThreshold / 100f;
+                    if (Player.statLife < Player.statLifeMax2 * threshold && //heal when low
+                        //Player.statLife < Player.statLifeMax2 - heal && //only heal when full benefit (no wasted overheal)
+                        Main.npc.Any(n => n.active && n.damage > 0 && !n.friendly //only heal when danger nearby (not after respawn in safety)
+                            && Player.Distance(n.Center) < 1200 && (n.noTileCollide || Collision.CanHitLine(Player.Center, 0, 0, n.Center, 0, 0))))
                     {
                         Player.QuickHeal();
                     }
@@ -911,6 +1002,16 @@ namespace FargowiltasSouls.Core.ModPlayers
                         return false; //short circuits the rest, this is deliberate
                     }
                 }
+                if (Player.whoAmI == Main.myPlayer && retVal && Player.HasEffect<SpectreEffect>() && !Player.HasBuff<FossilReviveCDBuff>())
+                {
+                    SpectreEffect.SpectreRevive(Player);
+                    retVal = false;
+                }
+                if (Player.whoAmI == Main.myPlayer && retVal && Player.HasEffect<FossilEffect>() && !Player.HasBuff<FossilReviveCDBuff>())
+                {
+                    FossilEffect.FossilRevive(Player);
+                    retVal = false;
+                }
 
                 if (Player.whoAmI == Main.myPlayer && retVal && MutantSetBonusItem != null && Player.FindBuffIndex(ModContent.BuffType<MutantRebirthBuff>()) == -1)
                 {
@@ -925,8 +1026,6 @@ namespace FargowiltasSouls.Core.ModPlayers
                     Main.NewText(text, Color.LimeGreen);
                     Player.AddBuff(ModContent.BuffType<MutantRebirthBuff>(), LumUtils.SecondsToFrames(120f));
                     retVal = false;
-
-                    Projectile.NewProjectile(Player.GetSource_Accessory(MutantSetBonusItem), Player.Center, -Vector2.UnitY, ModContent.ProjectileType<GiantDeathray>(), (int)(7000 * Player.ActualClassDamage(DamageClass.Magic)), 10f, Player.whoAmI);
                 }
 
                 if (Player.whoAmI == Main.myPlayer && retVal && AbomWandItem != null && !AbominableWandRevived)
@@ -964,6 +1063,9 @@ namespace FargowiltasSouls.Core.ModPlayers
                 if (Rotting)
                     damageSource = DeathByLocalization("Rotting");
 
+                if (IvyVenom)
+                    damageSource = PlayerDeathReason.ByOther(9);
+
                 if (Shadowflame)
                     damageSource = DeathByLocalization("Shadowflame");
 
@@ -981,6 +1083,15 @@ namespace FargowiltasSouls.Core.ModPlayers
 
             if (StatLifePrevious > 0 && Player.statLife > StatLifePrevious)
                 StatLifePrevious = Player.statLife;
+
+            if (!retVal)
+            {
+                if (!Main.dedServ)
+                    SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/Accessories/Revive"), Player.Center);
+
+                if (Player.whoAmI == Main.myPlayer && MutantSetBonusItem != null)
+                    Projectile.NewProjectile(Player.GetSource_Accessory(MutantSetBonusItem), Player.Center, -Vector2.UnitY, ModContent.ProjectileType<GiantDeathray>(), (int)(7000 * Player.ActualClassDamage(DamageClass.Magic)), 10f, Player.whoAmI);
+            }
 
             return retVal;
         }
@@ -1004,34 +1115,36 @@ namespace FargowiltasSouls.Core.ModPlayers
                 Player.bodyFrame.Y = Player.bodyFrame.Height * 10;
                 if (shieldTimer > 0)
                 {
-                    List<int> shaders = new()
-                    {
-                        GameShaders.Armor.GetShaderIdFromItemId(ItemID.ReflectiveSilverDye)
-                    };
+                    List<int> shaders = [];
+                    if (Player.HasEffect<SilverEffect>())
+                        shaders.Add(GameShaders.Armor.GetShaderIdFromItemId(ItemID.ReflectiveSilverDye));
                     if (Player.HasEffect<DreadShellEffect>())
                         shaders.Add(GameShaders.Armor.GetShaderIdFromItemId(ItemID.BloodbathDye));
                     if (Player.HasEffect<PumpkingsCapeEffect>())
                         shaders.Add(GameShaders.Armor.GetShaderIdFromItemId(ItemID.PixieDye));
 
-                    int shader = shaders[(int)(Main.GameUpdateCount / 4 % shaders.Count)];
-                    drawInfo.cBody = shader;
-                    drawInfo.cHead = shader;
-                    drawInfo.cLegs = shader;
-                    drawInfo.cWings = shader;
-                    drawInfo.cHandOn = shader;
-                    drawInfo.cHandOff = shader;
-                    drawInfo.cShoe = shader;
-                    drawInfo.cBack = shader;
-                    drawInfo.cBackpack = shader;
-                    drawInfo.cShield = shader;
-                    drawInfo.cNeck = shader;
-                    drawInfo.cHandOn = shader;
-                    drawInfo.cHandOff = shader;
-                    drawInfo.cBalloon = shader;
-                    drawInfo.cBalloonFront = shader;
-                    drawInfo.cFace = shader;
-                    drawInfo.cFaceHead = shader;
-                    drawInfo.cFront = shader;
+                    if (shaders.Count > 0)
+                    {
+                        int shader = shaders[(int)(Main.GameUpdateCount / 4 % shaders.Count)];
+                        drawInfo.cBody = shader;
+                        drawInfo.cHead = shader;
+                        drawInfo.cLegs = shader;
+                        drawInfo.cWings = shader;
+                        drawInfo.cHandOn = shader;
+                        drawInfo.cHandOff = shader;
+                        drawInfo.cShoe = shader;
+                        drawInfo.cBack = shader;
+                        drawInfo.cBackpack = shader;
+                        drawInfo.cShield = shader;
+                        drawInfo.cNeck = shader;
+                        drawInfo.cHandOn = shader;
+                        drawInfo.cHandOff = shader;
+                        drawInfo.cBalloon = shader;
+                        drawInfo.cBalloonFront = shader;
+                        drawInfo.cFace = shader;
+                        drawInfo.cFaceHead = shader;
+                        drawInfo.cFront = shader;
+                    }
                 }
             }
         }
@@ -1094,10 +1207,10 @@ namespace FargowiltasSouls.Core.ModPlayers
             Player.hideMisc[1] = true;
         }
 
-        public static void Squeak(Vector2 center)
+        public static void Squeak(Vector2 center, float volume = 1f)
         {
             if (!Main.dedServ)
-                SoundEngine.PlaySound(new SoundStyle($"FargowiltasSouls/Assets/Sounds/SqueakyToy/squeak{Main.rand.Next(1, 7)}"), center);
+                SoundEngine.PlaySound(new SoundStyle($"FargowiltasSouls/Assets/Sounds/SqueakyToy/squeak{Main.rand.Next(1, 7)}") with { Volume = volume }, center);
         }
 
         private int InfestedExtraDot()
@@ -1198,7 +1311,7 @@ namespace FargowiltasSouls.Core.ModPlayers
 
         public override void HideDrawLayers(PlayerDrawSet drawInfo)
         {
-            if (BetsyDashing || ShellHide || GoldShell)
+            if (BetsyDashing || ShellHide || GoldShell || SpectreGhostTime > 0)
             {
                 foreach (var layer in PlayerDrawLayerLoader.Layers)
                 {
@@ -1243,17 +1356,31 @@ namespace FargowiltasSouls.Core.ModPlayers
                     multiplier = 1.10f;
             }
 
+            if (MutantPresence)
+                multiplier *= 0.5f;
+
             heal = (int)(heal * multiplier);
 
             return heal;
         }
-
         public override void GetHealLife(Item item, bool quickHeal, ref int healValue)
         {
             healValue = GetHealMultiplier(healValue);
+            if (Player.HasEffect<ShroomiteHealEffect>())
+                if (item.type == ItemID.Mushroom && healValue < 75)
+                    healValue = 50;
+
             if (Player.HasEffect<HallowEffect>())
             {
-                healValue = 0;
+                
+                if (FargowiltasSouls.DrawingTooltips)
+                {
+                    float mult = Player.ForceEffect<HallowEffect>() ? 1.7f : 1.4f;
+                    healValue = (int)(healValue * mult);
+                }
+                    
+                else
+                    healValue = 0;
             }
         }
 
@@ -1280,6 +1407,13 @@ namespace FargowiltasSouls.Core.ModPlayers
 
         public override void SyncPlayer(int toWho, int fromWho, bool newPlayer)
         {
+            ModPacket defaultPacket = Mod.GetPacket();
+            defaultPacket.Write((byte)FargowiltasSouls.PacketID.SyncDefaultToggles);
+            defaultPacket.Write((byte)Player.whoAmI);
+            defaultPacket.Write(Toggler_ExtraAttacksDisabled);
+            defaultPacket.Write(Toggler_MinionsDisabled);
+            defaultPacket.Send(toWho, fromWho);
+
             foreach (KeyValuePair<AccessoryEffect, bool> toggle in TogglesToSync)
             {
                 ModPacket packet = Mod.GetPacket();
@@ -1340,9 +1474,8 @@ namespace FargowiltasSouls.Core.ModPlayers
             hurtbox.Y -= hurtbox.Height / 2;
             return hurtbox;
         }
-        public bool ForceEffect(ModItem modItem)
+        public bool ForceEffect(ModItem modItem, bool allowPaused = false)
         {
-            //This will probably be made less ugly in a future refactor update.
             bool CheckForces(int type)
             {
                 int force = BaseEnchant.Force[type];
@@ -1359,7 +1492,10 @@ namespace FargowiltasSouls.Core.ModPlayers
             if (TerrariaSoul)
                 return true;
 
-            if (Main.gamePaused || modItem == null || modItem.Item == null || modItem.Item.IsAir)
+            if (ForceEffects.Contains(ModContent.ItemType<CosmoForce>()))
+                return true;
+
+            if ((Main.gamePaused && !allowPaused) || modItem == null || modItem.Item == null || modItem.Item.IsAir)
                 return false;
 
             if (modItem is BaseEnchant)
@@ -1373,14 +1509,14 @@ namespace FargowiltasSouls.Core.ModPlayers
 
             return false;
         }
-        public bool ForceEffect<T>() where T : BaseEnchant => ForceEffect(ModContent.GetInstance<T>());
-        public bool ForceEffect(int? enchType)
+        public bool ForceEffect<T>(bool allowPaused = false) where T : BaseEnchant => ForceEffect(ModContent.GetInstance<T>(), allowPaused);
+        public bool ForceEffect(int? enchType, bool allowPaused = false)
         {
             if (enchType == null || enchType <= 0)
                 return false;
 
             ModItem item = ModContent.GetModItem((int)enchType);
-            return item != null && ForceEffect(item);
+            return item != null && ForceEffect(item, allowPaused);
         }
         public override void PreSavePlayer()
         {

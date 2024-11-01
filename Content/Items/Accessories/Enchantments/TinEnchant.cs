@@ -1,7 +1,9 @@
 using FargowiltasSouls.Content.Items.Accessories.Souls;
+using FargowiltasSouls.Content.UI.Elements;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using FargowiltasSouls.Core.Toggler.Content;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
 using Terraria.ID;
@@ -51,7 +53,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
 
         public override Header ToggleHeader => Header.GetHeader<TerraHeader>();
         public override int ToggleItemType => ModContent.ItemType<TinEnchant>();
-        public override bool IgnoresMutantPresence => true;
+        
 
         public override void PostUpdateEquips(Player player)
         {
@@ -70,6 +72,10 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
 
             if (modPlayer.TinProcCD > 0)
                 modPlayer.TinProcCD--;
+
+            if (Main.myPlayer == player.whoAmI)
+                CooldownBarManager.Activate("TinCritCharge", ModContent.Request<Texture2D>("FargowiltasSouls/Content/Items/Accessories/Enchantments/TinEnchant").Value, new(162, 139, 78), 
+                    () => (float)Main.LocalPlayer.FargoSouls().TinCrit / Main.LocalPlayer.FargoSouls().TinCritMax, true, activeFunction: () => player.HasEffect<TinEffect>());
         }
         public override void OnHitNPCEither(Player player, NPC target, NPC.HitInfo hitInfo, DamageClass damageClass, int baseDamage, Projectile projectile, Item item)
         {
@@ -129,7 +135,7 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
             TinHurt(player);
         }
         //reset crit
-        public static void TinHurt(Player player)
+        public static void TinHurt(Player player, bool fullReset = false)
         {
             FargoSoulsPlayer modPlayer = player.FargoSouls();
             float oldCrit = modPlayer.TinCrit;
@@ -150,6 +156,8 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
             {
                 modPlayer.TinCrit = 5;
             }
+            if (fullReset)
+                modPlayer.TinCrit = 0;
 
             double diff = Math.Round(oldCrit - modPlayer.TinCrit, 1);
             if (diff > 0)

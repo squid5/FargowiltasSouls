@@ -14,11 +14,10 @@ using FargowiltasSouls.Core.Systems;
 using FargowiltasSouls.Core.Globals;
 using FargowiltasSouls.Common.Utilities;
 using FargowiltasSouls.Core.NPCMatching;
-using Luminance.Core.Graphics;
 
 namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 {
-	public class Deerclops : EModeNPCBehaviour
+    public class Deerclops : EModeNPCBehaviour
     {
         public override NPCMatcher CreateMatcher() => new NPCMatcher().MatchType(NPCID.Deerclops);
 
@@ -32,6 +31,8 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
         public bool DroppedSummon;
 
+        public int ForceDespawnTimer;
+        public int LockDirection;
 
         public override void SendExtraAI(NPC npc, BitWriter bitWriter, BinaryWriter binaryWriter)
         {
@@ -88,9 +89,6 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
             EModeGlobalNPC.deerBoss = npc.whoAmI;
 
-            if (WorldSavingSystem.SwarmActive)
-                return result;
-
             const int MaxBerserkTime = 600;
 
             BerserkSpeedupTimer -= 1;
@@ -115,7 +113,11 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                 TeleportTimer++;
 
             if (Main.LocalPlayer.active && !Main.LocalPlayer.ghost && !Main.LocalPlayer.dead && npc.Distance(Main.LocalPlayer.Center) < 1000)
+            {
                 Main.LocalPlayer.AddBuff(ModContent.BuffType<LowGroundBuff>(), 2);
+                Main.LocalPlayer.buffImmune[BuffID.Frozen] = true;
+            }
+                
 
             switch ((int)npc.ai[0])
             {
@@ -167,10 +169,12 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                             {
                                 SoundEngine.PlaySound(SoundID.Roar, npc.Center);
 
-                                SpawnFreezeHands(npc);
+                                SpawnFreezeHands(npc, Main.player[npc.target]);
                             }
 
                             npc.alpha += 5;
+                            if (WorldSavingSystem.SwarmActive)
+                                npc.alpha -= 2;
                             if (npc.alpha > 255)
                             {
                                 npc.alpha = 255;
@@ -283,8 +287,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                     if (EnteredPhase3)
                     {
                         if (!Main.dedServ)
-                            if (ScreenShakeSystem.OverallShakeIntensity < 7)
-                                ScreenShakeSystem.SetUniversalRumble(7);
+                            FargoSoulsUtil.ScreenshakeRumble(6);
 
                         if (npc.ai[1] > 30) //roaring
                         {
@@ -314,6 +317,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
 
                         if (npc.ai[1] == 0)
                         {
+                            LockDirection = npc.direction;
                             if (EnteredPhase2)
                             {
                                 if (npc.alpha == 0) //i.e. dont randomize when coming out of tp
@@ -332,7 +336,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                                 Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, Vector2.Zero, ProjectileID.DD2OgreSmash, 0, 0f, Main.myPlayer);
                             }
                         }
-
+                        npc.direction = LockDirection;
                         Vector2 eye = npc.Center + new Vector2(64 * npc.direction, -24f) * npc.scale;
 
                         if (WorldSavingSystem.MasochistModeReal)
@@ -358,7 +362,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                                     float rotation = MathHelper.Pi * (WorldSavingSystem.MasochistModeReal ? 1f : 0.8f) / time * -npc.direction;
 
                                     if (FargoSoulsUtil.HostCheck)
-                                        Projectile.NewProjectile(npc.GetSource_FromThis(), eye, Vector2.UnitY, ModContent.ProjectileType<DeerclopsDeathray>(), FargoSoulsUtil.ScaledProjectileDamage(npc.damage, 2f), 0f, Main.myPlayer, rotation, time);
+                                        Projectile.NewProjectile(npc.GetSource_FromThis(), eye, Vector2.UnitY, ModContent.ProjectileType<DeerclopsDeathray>(), FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage, 2f), 0f, Main.myPlayer, rotation, time);
                                 }
 
                                 npc.ai[1] += increment; //more endlag than normal
@@ -394,15 +398,13 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
                             && Main.player[npc.target].Bottom.Y < npc.Top.Y - 16 * 5)
                         {
                             //freeze them and drag them down
-                            SpawnFreezeHands(npc);
+                            SpawnFreezeHands(npc, Main.player[npc.target]);
                         }
                     }
                     break;
 
                 case 6: //trying to return home
-                    npc.TargetClosest();
-
-                    if (npc.ai[1] > 120 && (!npc.HasValidTarget || npc.Distance(Main.player[npc.target].Center) > 1600))
+                    if (++ForceDespawnTimer > 180)
                     {
                         if (FargoSoulsUtil.HostCheck) //force despawn
                         {
@@ -434,15 +436,15 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             return result;
         }
 
-        static void SpawnFreezeHands(NPC npc)
+        public static void SpawnFreezeHands(Entity source, Player targetPlayer)
         {
             if (FargoSoulsUtil.HostCheck)
             {
                 const int max = 12;
                 for (int i = 0; i < 12; i++)
                 {
-                    Vector2 spawnPos = Main.player[npc.target].Center + 16 * Main.rand.NextFloat(6, 36) * Vector2.UnitX.RotatedBy(MathHelper.TwoPi / max * (i + Main.rand.NextFloat()));
-                    Projectile.NewProjectile(npc.GetSource_FromThis(), spawnPos, Vector2.Zero, ModContent.ProjectileType<DeerclopsHand>(), 0, 0f, Main.myPlayer, npc.target);
+                    Vector2 spawnPos = targetPlayer.Center + 16 * Main.rand.NextFloat(6, 36) * Vector2.UnitX.RotatedBy(MathHelper.TwoPi / max * (i + Main.rand.NextFloat()));
+                    Projectile.NewProjectile(source.GetSource_FromThis(), spawnPos, Vector2.Zero, ModContent.ProjectileType<DeerclopsHand>(), 0, 0f, Main.myPlayer, targetPlayer.whoAmI);
                 }
             }
         }
@@ -465,6 +467,7 @@ namespace FargowiltasSouls.Content.Bosses.VanillaEternity
             LoadNPCSprite(recolor, npc.type);
             LoadBossHeadSprite(recolor, 39);
             LoadGore(recolor, 1270);
+            LoadGore(recolor, 1271);
             LoadGore(recolor, 1272);
             LoadGore(recolor, 1273);
             LoadGore(recolor, 1274);

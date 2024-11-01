@@ -13,12 +13,6 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
-
-            // DisplayName.SetDefault("Ancient Hallowed Enchantment");
-            /* Tooltip.SetDefault(
-@"You gain a shield that can reflect projectiles
-Summons a Terraprisma familiar that scales with minion damage
-'Have you power enough to wield me?'"); */
         }
 
         public override Color nameColor => new(150, 133, 100);
@@ -41,8 +35,7 @@ Summons a Terraprisma familiar that scales with minion damage
             FargoSoulsPlayer modPlayer = player.FargoSouls();
 
             bool minion = player.AddEffect<AncientHallowMinion>(item);
-            int damage = modPlayer.ForceEffect<AncientHallowEnchant>() ? 600 : 350;
-            modPlayer.AddMinion(item, minion, ModContent.ProjectileType<HallowSword>(), damage, 2);
+            modPlayer.AddMinion(item, minion, ModContent.ProjectileType<HallowSword>(), 350, 2);
         }
 
         public static Color GetFairyQueenWeaponsColor(float alphaChannelMultiplier, float lerpToWhite, float rawHueOverride)

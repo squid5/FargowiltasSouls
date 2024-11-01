@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.Audio;
-using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Content.Projectiles.Minions
@@ -71,7 +70,10 @@ namespace FargowiltasSouls.Content.Projectiles.Minions
                 oldHeartCount = (int)Projectile.localAI[0];
 
                 if (Projectile.localAI[0] >= NekomiHood.MAX_HEARTS)
-                    SoundEngine.PlaySound(SoundID.Item43, Projectile.Center);
+                {
+                    if (!Main.dedServ)
+                        SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/FullMeter"), Projectile.Center);
+                }
             }
 
             if (Projectile.localAI[0] >= NekomiHood.MAX_HEARTS)

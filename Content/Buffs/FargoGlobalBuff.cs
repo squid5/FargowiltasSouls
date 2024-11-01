@@ -28,17 +28,20 @@ namespace FargowiltasSouls.Content.Buffs
             }
         }
 
-        public static int[] DebuffsToLetDecreaseNormally => new int[] {
+        public static int[] DebuffsToLetDecreaseNormally => [
             BuffID.Frozen,
             BuffID.Stoned,
             BuffID.Cursed,
             ModContent.BuffType<FusedBuff>(),
             ModContent.BuffType<TimeFrozenBuff>(),
             ModContent.BuffType<StunnedBuff>()
-        };
+        ];
 
         public override void Update(int type, Player player, ref int buffIndex)
         {
+            FargoSoulsPlayer modPlayer = player.FargoSouls();
+            EModePlayer emodePlayer = player.Eternity();
+
             switch (type)
             {
                 case BuffID.Slimed:
@@ -47,10 +50,10 @@ namespace FargowiltasSouls.Content.Buffs
                         player.FargoSouls().Slimed = true;
                     break;
 
-                case BuffID.BrainOfConfusionBuff:
-                    if (WorldSavingSystem.EternityMode)
-                        player.AddBuff(ModContent.BuffType<BrainOfConfusionBuff>(), player.buffTime[buffIndex] * 2);
-                    break;
+                //case BuffID.BrainOfConfusionBuff:
+                    //if (WorldSavingSystem.EternityMode)
+                        //player.AddBuff(ModContent.BuffType<BrainOfConfusionBuff>(), player.buffTime[buffIndex] * 2);
+                    //break;
 
                 case BuffID.OnFire:
                     if (WorldSavingSystem.EternityMode && Main.raining && player.position.Y < Main.worldSurface * 16
@@ -65,7 +68,7 @@ namespace FargowiltasSouls.Content.Buffs
 
                 case BuffID.Dazed:
                     if (player.whoAmI == Main.myPlayer && player.buffTime[buffIndex] % 60 == 55)
-                        SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/DizzyBird"));
+                        SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/Debuffs/DizzyBird"));
                     break;
 
 
@@ -84,14 +87,17 @@ namespace FargowiltasSouls.Content.Buffs
                 default:
                     break;
             }
-
-            if (WorldSavingSystem.EternityMode && player.buffTime[buffIndex] > 5 && Main.debuff[type] && player.Eternity().ShorterDebuffsTimer <= 0
+            if ((WorldSavingSystem.EternityMode || modPlayer.UsingAnkh) && player.buffTime[buffIndex] > 5 && Main.debuff[type] && emodePlayer.ShorterDebuffsTimer <= 0
                 && !Main.buffNoTimeDisplay[type]
                 && type != BuffID.Tipsy && (!BuffID.Sets.NurseCannotRemoveDebuff[type] || type == BuffID.ManaSickness || type == BuffID.PotionSickness)
                 && !DebuffsToLetDecreaseNormally.Contains(type)
                 && !(type == BuffID.Confused && FargoSoulsUtil.BossIsAlive(ref EModeGlobalNPC.brainBoss, NPCID.BrainofCthulhu)))
             {
                 player.buffTime[buffIndex] -= 1;
+                if (modPlayer.UsingAnkh && player.itemTime % 2 == 1)
+                {
+                    player.buffTime[buffIndex] -= 1;
+                }
             }
 
             base.Update(type, player, ref buffIndex);
@@ -117,22 +123,28 @@ namespace FargowiltasSouls.Content.Buffs
                             Player player = Main.player.FirstOrDefault(p => p.active && !p.dead && p.HasEffect<AncientShadowDarkness>());
                             if (player != null && player.active && !player.dead)
                             {
-                                for (int i = 0; i < Main.maxNPCs; i++)
+                                FargoSoulsPlayer modPlayer = player.FargoSouls();
+                                if (modPlayer.AncientShadowFlameCooldown <= 0)
                                 {
-                                    NPC target = Main.npc[i];
-                                    if (target.active && !target.friendly && Vector2.Distance(npc.Center, target.Center) < 250)
+                                    modPlayer.AncientShadowFlameCooldown = 30;
+                                    for (int i = 0; i < Main.maxNPCs; i++)
                                     {
-                                        Vector2 velocity = Vector2.Normalize(target.Center - npc.Center) * 5;
-                                        int p = Projectile.NewProjectile(player.GetSource_FromThis(), npc.Center, velocity, ProjectileID.ShadowFlame, 40 + FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 0, Main.myPlayer);
-                                        if (p.IsWithinBounds(Main.maxProjectiles))
+                                        NPC target = Main.npc[i];
+                                        if (target.active && !target.friendly && Vector2.Distance(npc.Center, target.Center) < 250)
                                         {
-                                            Main.projectile[p].friendly = true;
-                                            Main.projectile[p].hostile = false;
+                                            Vector2 velocity = Vector2.Normalize(target.Center - npc.Center) * 5;
+                                            int p = Projectile.NewProjectile(player.GetSource_FromThis(), npc.Center, velocity, ProjectileID.ShadowFlame, 40 + FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 0, Main.myPlayer);
+                                            if (p.IsWithinBounds(Main.maxProjectiles))
+                                            {
+                                                Main.projectile[p].friendly = true;
+                                                Main.projectile[p].hostile = false;
+                                            }
+                                            if (Main.rand.NextBool(3))
+                                                break;
                                         }
-                                        if (Main.rand.NextBool(3))
-                                            break;
                                     }
                                 }
+                                
                             }
                         }
 

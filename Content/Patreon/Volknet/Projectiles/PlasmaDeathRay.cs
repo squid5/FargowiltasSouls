@@ -1,6 +1,4 @@
-﻿using FargowiltasSouls.Content.Projectiles;
-using Luminance.Core.Graphics;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using Terraria;
@@ -50,8 +48,7 @@ namespace FargowiltasSouls.Content.Patreon.Volknet.Projectiles
             CastLights();
 
             if (!Main.dedServ)
-                if (ScreenShakeSystem.OverallShakeIntensity < 8)
-                    ScreenShakeSystem.SetUniversalRumble(8);
+                FargoSoulsUtil.ScreenshakeRumble(6);
 
             if (Projectile.ai[1] < LaserWidth / 2)       //20
             {

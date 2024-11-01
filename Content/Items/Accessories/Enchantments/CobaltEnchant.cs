@@ -1,3 +1,4 @@
+using FargowiltasSouls.Content.Items.Accessories.Forces;
 using FargowiltasSouls.Content.Projectiles.Souls;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using FargowiltasSouls.Core.Toggler.Content;
@@ -13,12 +14,6 @@ namespace FargowiltasSouls.Content.Items.Accessories.Enchantments
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
-
-            // DisplayName.SetDefault("Cobalt Enchantment");
-            /* Tooltip.SetDefault(
-@"Grants an explosion jump that inflicts Oiled and grants brief invulnerability
-When you are hurt, you violently explode to damage nearby enemies
-'I can't believe it's not Palladium'"); */
         }
 
         public override Color nameColor => new(61, 164, 196);
@@ -59,7 +54,10 @@ When you are hurt, you violently explode to damage nearby enemies
 
         public override void OnHurt(Player player, Player.HurtInfo info)
         {
-            if (player.whoAmI == Main.myPlayer)
+            bool canProc = true;
+            if (!player.HasEffect<EarthForceEffect>())
+                canProc = player.FargoSouls().WeaponUseTimer <= 0;
+            if (player.whoAmI == Main.myPlayer && canProc)
             {
                 FargoSoulsPlayer modPlayer = player.FargoSouls();
 
@@ -74,11 +72,11 @@ When you are hurt, you violently explode to damage nearby enemies
                     cap = 400;
                 }
 
-                if (modPlayer.TerrariaSoul)
+                if (player.HasEffect<EarthForceEffect>() || modPlayer.TerrariaSoul)
                 {
-                    baseDamage = 300;
+                    baseDamage = 600;
                     multiplier = 5;
-                    cap = 600;
+                    cap = 2500;
                 }
 
                 int explosionDamage = baseDamage + info.Damage * multiplier;

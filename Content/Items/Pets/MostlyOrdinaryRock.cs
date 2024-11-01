@@ -11,7 +11,6 @@ namespace FargowiltasSouls.Content.Items.Pets
     {
         public override void SetStaticDefaults()
         {
-            // Tooltip.SetDefault("Summons a seeker of treasures\n'Freshly hatched from a... rock?'");
             Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 

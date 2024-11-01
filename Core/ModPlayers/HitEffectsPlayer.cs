@@ -3,11 +3,9 @@ using FargowiltasSouls.Content.Buffs.Souls;
 using FargowiltasSouls.Content.Items.Accessories.Enchantments;
 using FargowiltasSouls.Content.Projectiles.Masomode;
 using FargowiltasSouls.Content.Projectiles.Minions;
-using FargowiltasSouls.Content.Projectiles.Souls;
 using FargowiltasSouls.Content.Projectiles;
 using Microsoft.Xna.Framework;
 using System;
-using FargowiltasSouls.Common.Utilities;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria;
@@ -16,8 +14,6 @@ using FargowiltasSouls.Core.Globals;
 using FargowiltasSouls.Content.Bosses.DeviBoss;
 using FargowiltasSouls.Content.Bosses.AbomBoss;
 using FargowiltasSouls.Content.Bosses.MutantBoss;
-using FargowiltasSouls.Content.Buffs;
-using Terraria.WorldBuilding;
 using Terraria.Audio;
 using FargowiltasSouls.Content.Items.Accessories.Masomode;
 using FargowiltasSouls.Core.Systems;
@@ -27,7 +23,7 @@ using Luminance.Core.Graphics;
 
 namespace FargowiltasSouls.Core.ModPlayers
 {
-	public partial class FargoSoulsPlayer
+    public partial class FargoSoulsPlayer
     {
         public override void ModifyHitNPCWithProj(Projectile proj, NPC target, ref NPC.HitModifiers modifiers)
         {
@@ -43,19 +39,10 @@ namespace FargowiltasSouls.Core.ModPlayers
             if (SqueakyToy)
             {
                 modifiers.FinalDamage.Base = 1;
-                Squeak(target.Center);
+                Squeak(target.Center, 0.4f);
                 return;
             }
 
-            if (Asocial && FargoSoulsUtil.IsSummonDamage(proj, true, false))
-            {
-                modifiers.Null();
-            }
-
-            if (Atrophied && (proj.CountsAsClass(DamageClass.Melee) || proj.CountsAsClass(DamageClass.Throwing)))
-            {
-                modifiers.Null();
-            }
             ModifyHitNPCBoth(target, ref modifiers, proj.DamageType);
         }
 
@@ -66,13 +53,8 @@ namespace FargowiltasSouls.Core.ModPlayers
             if (SqueakyToy)
             {
                 modifiers.SetMaxDamage(1);
-                Squeak(target.Center);
+                Squeak(target.Center, 0.4f);
                 return;
-            }
-
-            if (Atrophied)
-            {
-                modifiers.Null();
             }
 
             ModifyHitNPCBoth(target, ref modifiers, item.DamageType);
@@ -108,11 +90,9 @@ namespace FargowiltasSouls.Core.ModPlayers
                             SoundEngine.PlaySound(SoundID.Item147 with { Pitch = 1, Volume = 0.7f }, target.Center);
                         }
                     }
-                    if (MinionCrits && damageClass.CountsAsClass(DamageClass.Summon) && !TerrariaSoul)
-                        hitInfo.Damage = (int)(hitInfo.Damage * 0.75);
                 }
 
-                if (Hexed || (ReverseManaFlow && damageClass == DamageClass.Magic))
+                if (Hexed)
                 {
                     target.life += hitInfo.Damage;
                     target.HealEffect(hitInfo.Damage);
@@ -142,6 +122,18 @@ namespace FargowiltasSouls.Core.ModPlayers
                 Player.ClearBuff(ModContent.BuffType<FirstStrikeBuff>());
                 //target.defense -= 5;
                 target.AddBuff(BuffID.BrokenArmor, 600);
+            }
+
+            if (Illuminated)
+            {
+                float maxBonus = 0.15f;
+
+                Color light = Lighting.GetColor(Player.Center.ToTileCoordinates());
+                float modifier = (light.R + light.G + light.B) / 700f;
+                modifier = MathHelper.Clamp(modifier, 0, 1);
+
+                modifier = 1 + maxBonus * modifier;
+                modifiers.FinalDamage *= modifier;
             }
         }
 
@@ -350,6 +342,18 @@ namespace FargowiltasSouls.Core.ModPlayers
             if (proj.coldDamage && Hypothermia)
                 dr -= 0.2f;
 
+            if (Illuminated)
+            {
+                float maxDRReduction = 0.25f;
+
+                Color light = Lighting.GetColor(Player.Center.ToTileCoordinates());
+                float modifier = (light.R + light.G + light.B) / 700f;
+                modifier = MathHelper.Clamp(modifier, 0, 1);
+
+                modifier = maxDRReduction * modifier;
+                dr -= modifier;
+            }
+
             dr += Player.AccessoryEffects().ProjectileDamageDR(proj, ref modifiers);
 
             ApplyDR(Player, dr, ref modifiers);
@@ -402,14 +406,14 @@ namespace FargowiltasSouls.Core.ModPlayers
 
         public override bool CanBeHitByNPC(NPC npc, ref int CooldownSlot)
         {
-            if (BetsyDashing || GoldShell)
+            if (ImmuneToDamage)
                 return false;
             return true;
         }
 
         public override bool CanBeHitByProjectile(Projectile proj)
         {
-            if (BetsyDashing || GoldShell)
+            if (ImmuneToDamage)
                 return false;
             if (Player.HasEffect<PrecisionSealHurtbox>() && !proj.Colliding(proj.Hitbox, GetPrecisionHurtbox()))
                 return false;
@@ -429,15 +433,25 @@ namespace FargowiltasSouls.Core.ModPlayers
             if (DeathMarked)
                 modifiers.SourceDamage *= 1.5f;
 
-            if (Player.whoAmI == Main.myPlayer && !noDodge && Player.HasEffect<SqueakEffect>() && Main.rand.NextBool(10))
+            if (MutantDesperation)
+                modifiers.SourceDamage *= 2f;
+
+            if (Player.whoAmI == Main.myPlayer && !noDodge && Player.HasEffect<SqueakEffect>())
             {
-                Squeak(Player.Center);
-                modifiers.SetMaxDamage(1);
+                int chanceDenominator = 10;
+                if (Player.EffectItem<SqueakEffect>() == null || Player.EffectItem<SqueakEffect>().type != ModContent.ItemType<SqueakyToy>())
+                    chanceDenominator = 20;
+
+                if (Main.rand.NextBool(chanceDenominator))
+                {
+                    Squeak(Player.Center, 0.4f);
+                    modifiers.SetMaxDamage(1);
+                }
             }
 
             modifiers.ModifyHurtInfo += TryParryAttack;
 
-            if (StyxSet && !BetsyDashing && !GoldShell && Player.ownedProjectileCounts[ModContent.ProjectileType<StyxArmorScythe>()] > 0)
+            if (StyxSet && !ImmuneToDamage && Player.ownedProjectileCounts[ModContent.ProjectileType<StyxArmorScythe>()] > 0)
             {
                 modifiers.ModifyHurtInfo += (ref Player.HurtInfo hurtInfo) =>
                 {
@@ -476,10 +490,12 @@ namespace FargowiltasSouls.Core.ModPlayers
 
             MahoganyCanUseDR = false;
 
+            TimeSinceHurt = 0;
+
             if (Player.HasBuff(ModContent.BuffType<TitaniumDRBuff>())
                 && !Player.HasBuff(ModContent.BuffType<TitaniumCDBuff>()))
             {
-                Player.AddBuff(ModContent.BuffType<TitaniumCDBuff>(), LumUtils.SecondsToFrames(10));
+                Player.AddBuff(ModContent.BuffType<TitaniumCDBuff>(), LumUtils.SecondsToFrames(15));
             }
 
             if (NekomiSet && NekomiHitCD <= 0)
@@ -493,7 +509,7 @@ namespace FargowiltasSouls.Core.ModPlayers
                 int heartsToConsume = NekomiMeter / meterPerHeart;
                 if (heartsToConsume > heartsLost)
                     heartsToConsume = heartsLost;
-                Player.AddBuff(BuffID.RapidHealing, LumUtils.SecondsToFrames(heartsToConsume) * 5 / heartsLost);
+                Player.AddBuff(BuffID.RapidHealing, LumUtils.SecondsToFrames(heartsToConsume) * 4 / heartsLost);
 
                 NekomiMeter -= meterLost;
                 if (NekomiMeter < 0)
@@ -548,7 +564,7 @@ namespace FargowiltasSouls.Core.ModPlayers
                         {
                             Player.KillMe(Terraria.DataStructures.PlayerDeathReason.ByCustomReason(Language.GetTextValue("Mods.FargowiltasSouls.DeathMessage.TwentyTwo", Player.name)), 22222222, 0);
                             Projectile.NewProjectile(Player.GetSource_Death(), Player.Center, Vector2.Zero, ModContent.ProjectileType<TwentyTwo>(), 0, 0f, Main.myPlayer);
-                            ScreenShakeSystem.StartShake(15, shakeStrengthDissipationIncrement: 15f / 120);
+                            ScreenShakeSystem.StartShake(10, shakeStrengthDissipationIncrement: 10f / 30);
                         }
                     }
                 }

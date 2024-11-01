@@ -46,6 +46,7 @@ namespace FargowiltasSouls.Content.Patreon.DemonKing
 
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = 10;
+            Projectile.ArmorPenetration = 400;
         }
 
         public override void SendExtraAI(BinaryWriter writer)

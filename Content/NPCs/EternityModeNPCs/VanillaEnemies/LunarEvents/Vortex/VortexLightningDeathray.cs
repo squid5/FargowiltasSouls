@@ -1,12 +1,12 @@
 ﻿using FargowiltasSouls.Content.Projectiles.Deathrays;
 using FargowiltasSouls.Core.Systems;
-using Luminance.Core.Graphics;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework;
 using System;
-using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria;
+using Luminance.Core.Graphics;
 
 namespace FargowiltasSouls.Content.Bosses.Champions.Will
 {

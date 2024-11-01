@@ -14,7 +14,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEve
     public class SolarEnemies : EModeNPCBehaviour
     {
         public static int[] SolarEnemyIDs =
-        {
+        [
             NPCID.SolarCrawltipedeHead,
             NPCID.SolarCrawltipedeBody,
             NPCID.SolarCrawltipedeTail,
@@ -27,7 +27,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEve
             NPCID.SolarFlare,
             NPCID.SolarGoop
 
-        };
+        ];
         public override NPCMatcher CreateMatcher() => new NPCMatcher().MatchTypeRange(
             SolarEnemyIDs
         );
@@ -47,6 +47,12 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEve
 
             target.AddBuff(BuffID.OnFire, 600);
             target.AddBuff(BuffID.Burning, 300);
+        }
+        public override bool PreKill(NPC npc)
+        {
+            if (!NPC.LunarApocalypseIsUp && !NPC.downedAncientCultist)
+                return false;
+            return base.PreKill(npc);
         }
     }
 
@@ -90,7 +96,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEve
                     {
                         distance.Normalize();
                         distance *= 6f;
-                        int p = Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, distance, ProjectileID.FlamesTrap, FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 0f, Main.myPlayer);
+                        int p = Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, distance, ProjectileID.FlamesTrap, FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 0f, Main.myPlayer);
                         Main.projectile[p].friendly = false;
                         SoundEngine.PlaySound(SoundID.Item34, npc.Center);
                     }
@@ -123,7 +129,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEve
         {
             base.AI(npc);
 
-            if (IsCultistProjectile && !WorldSavingSystem.SwarmActive && !WorldSavingSystem.MasochistModeReal)
+            if (IsCultistProjectile && !WorldSavingSystem.MasochistModeReal)
                 npc.position += npc.velocity * Math.Min(0.5f, ++Timer / 60f - 1f);
         }
     }
@@ -201,7 +207,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.LunarEve
                 Vector2 velocity = Main.player[t].Center - npc.Center;
                 velocity.Normalize();
                 velocity *= 14f;
-                Projectile.NewProjectile(npc.GetSource_FromAI(), npc.Center, velocity, ModContent.ProjectileType<DrakanianDaybreak>(), FargoSoulsUtil.ScaledProjectileDamage(npc.damage), 1f, Main.myPlayer);
+                Projectile.NewProjectile(npc.GetSource_FromAI(), npc.Center, velocity, ModContent.ProjectileType<DrakanianDaybreak>(), FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage), 1f, Main.myPlayer);
             }
             SoundEngine.PlaySound(SoundID.Item1, npc.Center);
             if (Main.rand.NextBool())

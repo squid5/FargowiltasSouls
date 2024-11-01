@@ -11,9 +11,6 @@ namespace FargowiltasSouls.Content.Items.Armor
         public override void SetStaticDefaults()
         {
             Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
-            // DisplayName.SetDefault("Nekomi Hoodie");
-            /* Tooltip.SetDefault(@"Slightly increases your life regeneration
-Reduces damage taken by 5%"); */
         }
 
         public override void SetDefaults()
@@ -22,7 +19,7 @@ Reduces damage taken by 5%"); */
             Item.height = 18;
             Item.rare = ItemRarityID.LightRed;
             Item.value = Item.sellPrice(0, 1, 50);
-            Item.defense = 11;
+            Item.defense = 10;
         }
 
         public override void UpdateEquip(Player player)

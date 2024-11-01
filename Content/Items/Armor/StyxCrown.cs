@@ -2,6 +2,7 @@
 using FargowiltasSouls.Content.Projectiles;
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -14,10 +15,6 @@ namespace FargowiltasSouls.Content.Items.Armor
         public override void SetStaticDefaults()
         {
             Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
-            // DisplayName.SetDefault("Styx Crown");
-            /* Tooltip.SetDefault(@"10% increased damage
-10% increased critical strike chance
-Increases max number of minions and sentries by 3"); */
             ArmorIDs.Head.Sets.DrawHatHair[Item.headSlot] = true;
         }
 
@@ -114,6 +111,11 @@ Increases max number of minions and sentries by 3"); */
                 if (player.whoAmI == Main.myPlayer && player.ownedProjectileCounts[scytheType] < MAX_SCYTHES)
                 {
                     Projectile.NewProjectile(player.GetSource_Accessory(item), player.Center, Vector2.Zero, scytheType, 0, 10f, player.whoAmI, player.ownedProjectileCounts[scytheType], -1f);
+                    if (++player.ownedProjectileCounts[scytheType] >= MAX_SCYTHES)
+                    {
+                        if (!Main.dedServ)
+                            SoundEngine.PlaySound(new SoundStyle("FargowiltasSouls/Assets/Sounds/FullMeter"), player.Center);
+                    }
                 }
             }
 

@@ -84,7 +84,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.Hallow
                         for (int i = 0; i < max; i++)
                         {
                             Projectile.NewProjectile(npc.GetSource_FromThis(), npc.Center, distance + spread * Main.rand.NextVector2Circular(-1f, 1f),
-                                ModContent.ProjectileType<RainbowSlimeSpike>(), FargoSoulsUtil.ScaledProjectileDamage(npc.damage, 4f / 8), 0f, Main.myPlayer, ai0);
+                                ModContent.ProjectileType<RainbowSlimeSpike>(), FargoSoulsUtil.ScaledProjectileDamage(npc.defDamage, 4f / 8), 0f, Main.myPlayer, ai0);
                         }
                     }
                 }
@@ -140,7 +140,7 @@ namespace FargowiltasSouls.Content.NPCs.EternityModeNPCs.VanillaEnemies.Hallow
             {
                 if (FargoSoulsUtil.HostCheck)
                 {
-                    int[] slimes = { NPCID.Crimslime, NPCID.Pinky, NPCID.Gastropod, NPCID.CorruptSlime };
+                    int[] slimes = [NPCID.Crimslime, NPCID.Pinky, NPCID.Gastropod, NPCID.CorruptSlime];
 
                     for (int i = 0; i < slimes.Length; i++)
                     {
