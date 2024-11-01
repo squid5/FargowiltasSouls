@@ -1,4 +1,5 @@
 ﻿using FargowiltasSouls.Content.Items.Accessories.Enchantments;
+using FargowiltasSouls.Content.Items.Misc;
 using FargowiltasSouls.Content.Projectiles;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using FargowiltasSouls.Core.Globals;
@@ -234,6 +235,8 @@ namespace FargowiltasSouls //lets everything access it without using
 
         public static DamageClass ProcessDamageTypeFromHeldItem(this Player player)
         {
+            if (player.HeldItem.type == ModContent.ItemType<EternityAdvisor>()) // Prevent advisor shenanigans
+                return DamageClass.Default;
             if (player.HeldItem.damage <= 0 || player.HeldItem.pick > 0 || player.HeldItem.axe > 0 || player.HeldItem.hammer > 0)
                 return DamageClass.Summon;
             else if (player.HeldItem.DamageType.CountsAsClass(DamageClass.Melee))

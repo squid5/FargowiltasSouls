@@ -67,6 +67,13 @@ namespace FargowiltasSouls.Content.Bosses.CursedCoffin
         public override void OnSpawn(IEntitySource source)
         {
             Targeting();
+            Player player = Main.player[NPC.target];
+            if (!player.Alive() || player.Distance(CoffinArena.Center.ToWorldCoordinates()) > 1000)
+            {
+                NPC.active = false;
+                NPC.netUpdate = true;
+                return;
+            }
             /*
 			Player player = Main.player[NPC.target];
 			if (player.Alive())
