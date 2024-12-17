@@ -25,6 +25,7 @@ namespace FargowiltasSouls.Core.ModPlayers
         public int LightningCounter;
         public int LightLevelCounter;
         public int HallowFlipCheckTimer;
+        public int StalactiteCounter;
 
        
         public override void PreUpdate()
@@ -608,6 +609,44 @@ namespace FargowiltasSouls.Core.ModPlayers
                         }
                     }
                     Lighting.AddLight(pos, 1f, 1f, 1f);
+                }
+            }
+        }
+
+        private void DestroStalactites()
+        {
+            StalactiteCounter++;
+            if (StalactiteCounter > LumUtils.SecondsToFrames(10))
+            {
+                StalactiteCounter = 0;
+                Vector2 pos = Player.Center;
+                int projType = ModContent.ProjectileType<EnvironmentStalactite>();
+                if (Main.netMode == NetmodeID.MultiplayerClient)
+                {
+                    if (Player.whoAmI == Main.myPlayer)
+                    {
+                        var netMessage = Mod.GetPacket();
+                        netMessage.Write((byte)FargowiltasSouls.PacketID.RequestEnvironmentalProjectile);
+                        netMessage.Write(projType);
+                        netMessage.WriteVector2(pos);
+                        netMessage.Send();
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < 5; i++)
+                    {
+                        int tilePosX = (int)Main.player[npc.target].Center.X + Main.rand.Next(-10, 10);
+                        int tilePosY = (int)Main.player[npc.target].Center.Y / 16;            
+                        for (int j = 0; j < 100; j++)
+                        {
+                            if (Main.tileStone[Framing.GetTileSafely(tilePosX, tilePosY).TileType]){
+                                break;
+                            }
+                            tilePosY--;
+                        }
+                        Projectile.NewProjectile(Terraria.Entity.GetSource_NaturalSpawn(), tilePosX, tilePosY, 0, 5, projType, 5);
+                    }
                 }
             }
         }
